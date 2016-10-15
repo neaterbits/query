@@ -5,7 +5,7 @@
     <artifactId>root</artifactId>
     <version>0.0.1-SNAPSHOT</version>
   </parent>
-  <artifactId>sql-dsl</artifactId>
+  <artifactId>query-sql-dsl</artifactId>
 
 	<build>
 		<plugins>
@@ -25,7 +25,7 @@
 	<dependencies>
 		<dependency>
 			<groupId>com.neaterbits.util</groupId>
-			<artifactId>util</artifactId>
+			<artifactId>util-base</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
 		<dependency>
