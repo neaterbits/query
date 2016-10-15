@@ -38,6 +38,7 @@
 
 	<modules>
 		<module>sql-dsl</module>
+		<module>util-java8</module>
 	</modules>
 
 	<build>

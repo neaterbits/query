@@ -5,7 +5,7 @@
     <artifactId>root</artifactId>
     <version>0.0.1-SNAPSHOT</version>
   </parent>
-  <artifactId>query-sql-dsl</artifactId>
+  <artifactId>query-util-java8</artifactId>
 
 	<build>
 		<plugins>
@@ -28,11 +28,11 @@
 			<artifactId>util-base</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
-		<dependency>
-			<groupId>com.neaterbits.query</groupId>
-			<artifactId>query-util-java8</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
-		</dependency>
+      <dependency>
+            <groupId>cglib</groupId>
+            <artifactId>cglib</artifactId>
+            <version>3.2.0</version>
+        </dependency>
 	</dependencies>
 
 </project>
