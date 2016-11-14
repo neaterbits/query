@@ -10,29 +10,23 @@ import java.util.List;
 
 final class ClauseCollectorImpl {
 	
-	private final ClausesImpl<?, ?> clausesImpl;
-	private final List<ConditionImpl> conditions;
+	private final List<ClauseImpl> clauses;
 
-	ClauseCollectorImpl(ClausesImpl<?, ?> clausesImpl) {
+	ClauseCollectorImpl() {
+		this.clauses = new ArrayList<ClauseImpl>();
+	}
 		
-		if (clausesImpl == null) {
-			throw new IllegalArgumentException("clausesImpl == null");
+	
+	void add(ClausesImpl<?, ?> clause, ConditionImpl condition) {
+		
+		if (clause == null) {
+			throw new IllegalArgumentException("clause == null");
 		}
 
-		this.clausesImpl = clausesImpl;
-		this.conditions = new ArrayList<ConditionImpl>();
-	}
-
-	ClausesImpl<?, ?> getClausesImpl() {
-		return clausesImpl;
-	}
-
-	
-	void add(ConditionImpl condition) {
 		if (condition == null) {
 			throw new IllegalArgumentException("condition == null");
 		}
 
-		conditions.add(condition);
+		clauses.add(new ClauseImpl(clause, condition));
 	}
 }

@@ -6,9 +6,15 @@ abstract class ClausesImpl<MODEL, RESULT>
 
 	final ClauseCollectorImpl clauseCollector;
 
-	ClausesImpl(BaseQueryEntity last) {
+	ClausesImpl(ClausesImpl<MODEL, RESULT> last) {
+		super(last);
+		
+		this.clauseCollector = last.clauseCollector;
+	}
+	
+	ClausesImpl(BaseQueryEntity last, ClauseCollectorImpl collector) {
 		super(last);
 
-		this.clauseCollector = new ClauseCollectorImpl(this);
+		this.clauseCollector = collector;
 	}
 }

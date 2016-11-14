@@ -6,8 +6,8 @@ class ComparativeClauseImpl<MODEL, RESULT, R extends Comparable<R>, L extends Lo
 	extends ConditionClauseImpl<MODEL, RESULT, R, L>
 	implements ComparativeClause<MODEL, RESULT, R, L> {
 
-	ComparativeClauseImpl(ClauseCollectorImpl collector, Function<?, ?> getter) {
-		super(collector, getter);
+	ComparativeClauseImpl(ClausesImpl<MODEL, RESULT> clause, Function<?, ?> getter) {
+		super(clause, getter);
 	}
 
 	@Override

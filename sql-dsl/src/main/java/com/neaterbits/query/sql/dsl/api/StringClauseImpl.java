@@ -4,8 +4,8 @@ final class StringClauseImpl<MODEL, RESULT, L extends LogicalClauses<MODEL, RESU
 		extends ComparativeClauseImpl<MODEL, RESULT, String, L>
 		implements StringClause<MODEL, RESULT, L> {
 
-	public StringClauseImpl(ClauseCollectorImpl collector, StringFunction<?> getter) {
-		super(collector, getter);
+	StringClauseImpl(ClausesImpl<MODEL, RESULT> clause, StringFunction<?> getter) {
+		super(clause, getter);
 	}
 
 	private ConditionValueLiteralStringImpl makeValue(String value) {

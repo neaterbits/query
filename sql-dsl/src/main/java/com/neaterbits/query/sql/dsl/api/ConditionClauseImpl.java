@@ -2,22 +2,23 @@ package com.neaterbits.query.sql.dsl.api;
 
 import java.util.function.Function;
 
-class ConditionClauseImpl<MODEL, RESULT, R, L extends LogicalClauses<MODEL, RESULT>> implements ConditionClause<MODEL, RESULT, R, L> {
+class ConditionClauseImpl<MODEL, RESULT, R, L extends LogicalClauses<MODEL, RESULT>>
+	implements ConditionClause<MODEL, RESULT, R, L> {
 
-	private final ClauseCollectorImpl collector;
+	private final ClausesImpl<MODEL, RESULT> clause;
 	final Function<?, ?> getter;
 
-	ConditionClauseImpl(ClauseCollectorImpl collector, Function<?, ?> getter) {
+	ConditionClauseImpl(ClausesImpl<MODEL, RESULT> clause, Function<?, ?> getter) {
 
-		if (collector == null) {
-			throw new IllegalArgumentException("collector == null");
+		if (clause == null) {
+			throw new IllegalArgumentException("clause == null");
 		}
 
 		if (getter == null) {
 			throw new IllegalArgumentException("getter == null");
 		}
 
-		this.collector = collector;
+		this.clause = clause;
 		this.getter = getter;
 	}
 
@@ -30,7 +31,7 @@ class ConditionClauseImpl<MODEL, RESULT, R, L extends LogicalClauses<MODEL, RESU
 			throw new IllegalArgumentException("condition == null");
 		}
 
-		collector.add(condition);
+		clause.clauseCollector.add(clause, condition);
 		
 		return getLogicalClause();
 	}
@@ -38,7 +39,7 @@ class ConditionClauseImpl<MODEL, RESULT, R, L extends LogicalClauses<MODEL, RESU
 	
 	@SuppressWarnings("unchecked")
 	private L getLogicalClause() {
-		return (L)collector.getClausesImpl();
+		return (L)clause;
 	}
 
 	@Override
