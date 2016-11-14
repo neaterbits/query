@@ -1,7 +1,7 @@
 package com.neaterbits.query.sql.dsl.api;
 
-public interface StringFunction<T> {
+import java.util.function.Function;
 
-	String apply(T obj);
+public interface StringFunction<T> extends Function<T, String> {
 	
 }

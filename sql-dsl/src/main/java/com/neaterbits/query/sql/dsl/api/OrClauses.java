@@ -4,8 +4,8 @@ import java.util.function.Function;
 
 public interface OrClauses<MODEL, RESULT> extends LogicalClauses<MODEL, RESULT> {
 
-    <R> ConditionClause<MODEL, RESULT, R, OrClauses<MODEL, RESULT>> or(Function<RESULT, R> getter);
+    <T, RR> ConditionClause<MODEL, RESULT, RR, OrClauses<MODEL, RESULT>> or(Function<T, RR> getter);
     
-    StringClause<MODEL, RESULT, OrClauses<MODEL, RESULT>> or(StringFunction<RESULT> getter);
+    <T> StringClause<MODEL, RESULT, OrClauses<MODEL, RESULT>> or(StringFunction<T> getter);
 
 }
