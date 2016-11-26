@@ -1,6 +1,5 @@
 package com.neaterbits.query.sql.dsl.api.standalone;
 
-import java.util.function.Function;
 import java.util.function.Supplier;
 
 import org.junit.Test;
