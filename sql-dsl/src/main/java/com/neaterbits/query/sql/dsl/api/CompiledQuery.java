@@ -13,7 +13,7 @@ final class CompiledQuery {
 	private final Class<?> resultType;
 	private final CompiledConditions conditions;
 
-	CompiledQuery(Class<?> resultType, CompiledConditions conditions) {
+	private CompiledQuery(Class<?> resultType, CompiledConditions conditions) {
 
 		if (resultType == null) {
 			throw new IllegalArgumentException("resultType == null");

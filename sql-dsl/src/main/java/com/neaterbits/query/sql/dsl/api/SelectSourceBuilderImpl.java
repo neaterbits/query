@@ -1,13 +1,13 @@
 package com.neaterbits.query.sql.dsl.api;
 
 
-abstract class SelectSourceBuilderImpl<MODEL, RESULT> extends BaseQueryEntity implements SelectSourceBuilder<MODEL, RESULT> {
+abstract class SelectSourceBuilderImpl<MODEL, RESULT> extends BaseQueryEntity<MODEL> implements SelectSourceBuilder<MODEL, RESULT> {
 
 //	private Class<?> [] classes;
 //	private Alias<?> [] aliases;
 
-	SelectSourceBuilderImpl(Class<?> resultType) {
-		super(new QueryCollectorImpl(resultType));
+	SelectSourceBuilderImpl(Class<?> resultType, ModelCompiler<MODEL> modelCompiler) {
+		super(new QueryCollectorImpl(resultType), modelCompiler);
 	}
 	
 	@Override

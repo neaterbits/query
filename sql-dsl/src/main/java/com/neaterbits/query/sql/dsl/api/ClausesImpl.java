@@ -1,7 +1,7 @@
 package com.neaterbits.query.sql.dsl.api;
 
 abstract class ClausesImpl<MODEL, RESULT>
-	extends BaseQueryEntity
+	extends BaseQueryEntity<MODEL>
 	implements LogicalClauses<MODEL, RESULT> {
 
 	final ClauseCollectorImpl clauseCollector;
@@ -12,7 +12,7 @@ abstract class ClausesImpl<MODEL, RESULT>
 		this.clauseCollector = last.clauseCollector;
 	}
 	
-	ClausesImpl(BaseQueryEntity last, ClauseCollectorImpl collector) {
+	ClausesImpl(BaseQueryEntity<MODEL> last, ClauseCollectorImpl collector) {
 		super(last);
 
 		this.clauseCollector = collector;
@@ -20,7 +20,14 @@ abstract class ClausesImpl<MODEL, RESULT>
 	
 	@Override
 	public final MODEL compile() {
-		throw new UnsupportedOperationException("TODO"); 
+		
+		// Get collected query
+		final QueryCollectorImpl queryCollector = getQueryCollector();
+		
+		// Compile the collectd query
+		final CompiledQuery compiledQuery = CompiledQuery.compile(queryCollector);
+		
+		// Compile into model (better name for this operation?)
+		return getModelCompiler().compile(compiledQuery);
 	}
-
 }
