@@ -29,4 +29,9 @@ final class ClauseCollectorImpl {
 
 		clauses.add(new ClauseImpl(clause, condition));
 	}
+
+
+	List<ClauseImpl> getClauses() {
+		return clauses;
+	}
 }

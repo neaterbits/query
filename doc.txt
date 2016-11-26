@@ -1,0 +1,28 @@
+
+- hvordan finne query som er ?
+
+
+statiske queries - kompilering.
+ad-hoc queris - 
+
+bør være samme API.
+Men hvordan trigge kompilering? Vi kompilerer alltid. Men skjer dette i siste? Eller bare en end().
+Vi vet ikke i builder om er flere etterpå.
+Kanskje beste er å legge til compile() som en egen greie i builderen.
+Og så execute() som egen opsjon, samme interface på det kompilerte som på den andre.
+Men kan være lurt å gå veien via compile() uansett slik at viser at det er et kompileringssteg som tar tid og som vil finne sted før en kan eksekvere.
+
+
+For det kompilerte queryet så kan en da gjøre executeOn(...)
+med shorthands for collections, sets, lister osv.
+
+
+
+
+
+
+
+
+
+
+

@@ -1,5 +1,8 @@
 package com.neaterbits.query.sql.dsl.api.standalone;
 
+import java.util.function.Function;
+import java.util.function.Supplier;
+
 import org.junit.Test;
 
 import com.neaterbits.query.sql.dsl.api.Alias;
@@ -9,13 +12,20 @@ import com.neaterbits.query.sql.dsl.api.testvo.Person;
 import com.neaterbits.query.sql.dsl.api.testvo.Role;
 
 import static com.neaterbits.query.sql.dsl.api.Select.selectOne;
-import static com.neaterbits.query.sql.dsl.api.Select.alias;
+import static com.neaterbits.query.sql.dsl.api.Select.aliasAlias;
 
 public class SQLAPITest {
 
     @Test
     public void testTableBased() {
-
+    	
+    	final Alias<Company> c = aliasAlias(Company.class);
+    	
+    	
+    	final Company company = null;
+    	
+    	final Supplier<Integer> f = company::getId;
+    	
         selectOne(ResultVO.class)
 
         	.map(Company::getId)		.to(ResultVO::setCompanyId)
@@ -26,18 +36,16 @@ public class SQLAPITest {
 
         	.where(Company::getName)		.startsWith("Foo")
         	  .and(Company::getId)			.isEqualTo(Employee::getCompanyId)
-        	  .and(Employee::getPersonId)	.isEqualTo(Person::getId);
 
         	// where-clause
         	//.whereString(Company::getId)
-
-        	;
+        	 ;
 
     }
 
     @Test
     public void testAliasBased() {
-        final Alias<Role> role = alias(Role.class);
+        final Alias<Role> role = aliasAlias(Role.class);
     }
 
     private static class Foo {

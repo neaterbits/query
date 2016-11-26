@@ -2,7 +2,7 @@ package com.neaterbits.query.sql.dsl.api;
 
 import java.util.function.Function;
 
-public class ConditionGreaterThanOrEqualImpl extends ConditionComparisonImpl  {
+final class ConditionGreaterThanOrEqualImpl extends ConditionComparisonImpl  {
 
 	ConditionGreaterThanOrEqualImpl(Function<?, ?> getter, ConditionValueImpl value) {
 		super(getter, value);

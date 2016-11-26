@@ -7,7 +7,7 @@ public class Select {
 		if (cl == null) {
 			throw new IllegalArgumentException("cl == null");
 		}
-	
+
 		return new SingleMapToResultImpl<MAPPED_RESULT>(cl);
 	}
 
@@ -34,8 +34,8 @@ public class Select {
 
 		return new MultiTypeResultImpl<TYPE_RESULT>(cl);
 	}
-	
-    public static <T> Alias<T> alias(Class<T> aliasType) {
+
+    public static <T> Alias<T> aliasAlias(Class<T> aliasType) {
 		if (aliasType == null) {
 			throw new IllegalArgumentException("aliasType == null");
 		}
