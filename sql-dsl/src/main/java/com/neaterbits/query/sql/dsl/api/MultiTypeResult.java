@@ -1,5 +1,5 @@
 package com.neaterbits.query.sql.dsl.api;
 
-public interface MultiTypeResult<RESULT> extends MultiSelectSourceBuilder<RESULT> {
+public interface MultiTypeResult<MODEL, RESULT> extends MultiSelectSourceBuilder<MODEL, RESULT> {
 
 }

@@ -1,7 +1,7 @@
 package com.neaterbits.query.sql.dsl.api;
 
-abstract class BaseMapToResultImpl<RESULT> 
-	extends SelectSourceBuilderImpl<RESULT> {
+abstract class BaseMapToResultImpl<MODEL, RESULT> 
+	extends SelectSourceBuilderImpl<MODEL, RESULT> {
 
 	private final MappingCollector mappingCollector;
 

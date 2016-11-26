@@ -1,7 +1,7 @@
 package com.neaterbits.query.sql.dsl.api;
 
-final class SingleTypeResultImpl<RESULT> extends BaseTypeResultImpl<RESULT> 
-	implements SingleTypeResult<RESULT> {
+final class SingleTypeResultImpl<MODEL, RESULT> extends BaseTypeResultImpl<MODEL, RESULT> 
+	implements SingleTypeResult<MODEL, RESULT> {
 
 	SingleTypeResultImpl(Class<?> resultType) {
 		super(resultType);

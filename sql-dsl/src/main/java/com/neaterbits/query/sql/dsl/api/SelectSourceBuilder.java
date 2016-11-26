@@ -1,21 +1,21 @@
 package com.neaterbits.query.sql.dsl.api;
 
 
-public interface SelectSourceBuilder<RESULT> {
+public interface SelectSourceBuilder<MODEL, RESULT> {
 
 	/**
 	 * Pure table search
 	 * @param tables
 	 */
 	
-	WhereClauseBuilder<Void, ?> from(Class<?> ... tables);
+	WhereClauseBuilder<MODEL, RESULT> from(Class<?> ... tables);
 
     /**
      * Pure aliases search
      * @param aliases
      */
     
-    WhereClauseBuilder<Void, ?> from(Alias<?> ... aliases);
+    WhereClauseBuilder<MODEL, RESULT> from(Alias<?> ... aliases);
     
     /* TODO: Mix of tables and aliases ? */
     

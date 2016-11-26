@@ -1,6 +1,6 @@
 package com.neaterbits.query.sql.dsl.api;
 
 
-public interface SingleTypeResult<TYPE_RESULT> extends SingleSelectSourceBuilder<TYPE_RESULT> {
+public interface SingleTypeResult<MODEL, TYPE_RESULT> extends SingleSelectSourceBuilder<MODEL, TYPE_RESULT> {
 
 }

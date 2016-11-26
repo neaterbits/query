@@ -3,13 +3,13 @@ package com.neaterbits.query.sql.dsl.api;
 import java.util.function.BiConsumer;
 import java.util.function.Function;
 
-final class ResultMapperToImpl<RESULT, R, SOURCE extends SelectSourceBuilder<RESULT>>
-		implements ResultMapperTo<RESULT, R, SOURCE> {
+final class ResultMapperToImpl<MODEL, RESULT, R, SOURCE extends SelectSourceBuilder<MODEL, RESULT>>
+		implements ResultMapperTo<MODEL, RESULT, R, SOURCE> {
 
 	private final Function<?, ?> fromGetter;
-	private final BaseMapToResultImpl<RESULT> impl;
+	private final BaseMapToResultImpl<MODEL, RESULT> impl;
 
-	ResultMapperToImpl(Function<?, ?> fromGetter, BaseMapToResultImpl<RESULT> impl) {
+	ResultMapperToImpl(Function<?, ?> fromGetter, BaseMapToResultImpl<MODEL, RESULT> impl) {
 		
 		if (fromGetter == null) {
 			throw new IllegalArgumentException("fromGetter == null");

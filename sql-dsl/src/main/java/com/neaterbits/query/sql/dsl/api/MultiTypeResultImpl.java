@@ -1,7 +1,7 @@
 package com.neaterbits.query.sql.dsl.api;
 
-final class MultiTypeResultImpl<RESULT> extends BaseTypeResultImpl<RESULT>
-	implements MultiTypeResult<RESULT> {
+final class MultiTypeResultImpl<MODEL, RESULT> extends BaseTypeResultImpl<MODEL, RESULT>
+	implements MultiTypeResult<MODEL, RESULT> {
 
 	MultiTypeResultImpl(Class<?> resultType) {
 		super(resultType);

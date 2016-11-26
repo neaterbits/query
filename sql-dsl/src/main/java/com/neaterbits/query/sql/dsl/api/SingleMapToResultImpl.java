@@ -2,17 +2,17 @@ package com.neaterbits.query.sql.dsl.api;
 
 import java.util.function.Function;
 
-public class SingleMapToResultImpl<RESULT>
-	extends BaseMapToResultImpl<RESULT> implements SingleMapToResult<RESULT> {
+public class SingleMapToResultImpl<MODEL, RESULT>
+	extends BaseMapToResultImpl<MODEL, RESULT> implements SingleMapToResult<MODEL, RESULT> {
 
 	SingleMapToResultImpl(Class<?> resultType) {
 		super(resultType);
 	}
 
 	@Override
-	public <T, R> ResultMapperTo<RESULT, R, SingleMapToResult<RESULT>>
+	public <T, R> ResultMapperTo<MODEL, RESULT, R, SingleMapToResult<MODEL, RESULT>>
 				map(Function<T, R> getter) {
 
-		return new ResultMapperToImpl<RESULT, R, SingleMapToResult<RESULT>>(getter, this);
+		return new ResultMapperToImpl<MODEL, RESULT, R, SingleMapToResult<MODEL, RESULT>>(getter, this);
 	}
 }

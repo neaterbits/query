@@ -1,6 +1,6 @@
 package com.neaterbits.query.sql.dsl.api;
 
-abstract class BaseTypeResultImpl<RESULT> extends SelectSourceBuilderImpl<RESULT> {
+abstract class BaseTypeResultImpl<MODEL, RESULT> extends SelectSourceBuilderImpl<MODEL, RESULT> {
 
 	BaseTypeResultImpl(Class<?> resultType) {
 		super(resultType);

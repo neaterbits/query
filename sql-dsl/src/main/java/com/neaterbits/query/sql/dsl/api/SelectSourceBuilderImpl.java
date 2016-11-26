@@ -1,7 +1,7 @@
 package com.neaterbits.query.sql.dsl.api;
 
 
-abstract class SelectSourceBuilderImpl<RESULT> extends BaseQueryEntity implements SelectSourceBuilder<RESULT> {
+abstract class SelectSourceBuilderImpl<MODEL, RESULT> extends BaseQueryEntity implements SelectSourceBuilder<MODEL, RESULT> {
 
 //	private Class<?> [] classes;
 //	private Alias<?> [] aliases;
@@ -11,7 +11,7 @@ abstract class SelectSourceBuilderImpl<RESULT> extends BaseQueryEntity implement
 	}
 	
 	@Override
-	public final WhereClauseBuilder<Void, ?> from(Class<?> ... classes) {
+	public final WhereClauseBuilder<MODEL, RESULT> from(Class<?> ... classes) {
 		
 		if (classes.length == 0) {
 			throw new IllegalArgumentException("no classes");
@@ -22,7 +22,7 @@ abstract class SelectSourceBuilderImpl<RESULT> extends BaseQueryEntity implement
 		
 		getQueryCollector().setSources(new SelectSourceClassesImpl(classes));
 		
-		final WhereClauseBuilderImpl<Void, ?> ret =  new WhereClauseBuilderImpl<Void, RESULT>(this);
+		final WhereClauseBuilderImpl<MODEL, RESULT> ret =  new WhereClauseBuilderImpl<MODEL, RESULT>(this);
 
 		getQueryCollector().setClauses(ret.clauseCollector);
 		
@@ -30,7 +30,7 @@ abstract class SelectSourceBuilderImpl<RESULT> extends BaseQueryEntity implement
 	}
 
 	@Override
-	public final WhereClauseBuilder<Void, ?> from(Alias<?> ... aliases) {
+	public final WhereClauseBuilder<MODEL, RESULT> from(Alias<?> ... aliases) {
 //		if (classes.length == 0) {
 //			throw new IllegalArgumentException("no classes");
 //		}
@@ -40,7 +40,7 @@ abstract class SelectSourceBuilderImpl<RESULT> extends BaseQueryEntity implement
 
 		getQueryCollector().setSources(new SelectSourceAliasesImpl(aliases));
 
-		final WhereClauseBuilderImpl<Void, ?> ret = new WhereClauseBuilderImpl<Void, RESULT>(this);
+		final WhereClauseBuilderImpl<MODEL, RESULT> ret = new WhereClauseBuilderImpl<MODEL, RESULT>(this);
 		
 		getQueryCollector().setClauses(ret.clauseCollector);
 		

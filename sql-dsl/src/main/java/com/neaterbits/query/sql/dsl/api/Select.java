@@ -3,36 +3,36 @@ package com.neaterbits.query.sql.dsl.api;
 
 public class Select {
 
-	public static <MAPPED_RESULT> SingleMapToResult<MAPPED_RESULT> selectOne(Class<MAPPED_RESULT> cl) {
+	public static <MAPPED_RESULT> SingleMapToResult<SingleQuery<MAPPED_RESULT>, MAPPED_RESULT> selectOne(Class<MAPPED_RESULT> cl) {
 		if (cl == null) {
 			throw new IllegalArgumentException("cl == null");
 		}
 
-		return new SingleMapToResultImpl<MAPPED_RESULT>(cl);
+		return new SingleMapToResultImpl<SingleQuery<MAPPED_RESULT>, MAPPED_RESULT>(cl);
 	}
 
-	public static <MAPPED_RESULT> MultiMapToResult<MAPPED_RESULT> selectList(Class<MAPPED_RESULT> cl) {
+	public static <MAPPED_RESULT> MultiMapToResult<MultiQuery<MAPPED_RESULT>, MAPPED_RESULT> selectList(Class<MAPPED_RESULT> cl) {
 		if (cl == null) {
 			throw new IllegalArgumentException("cl == null");
 		}
 
-		return new MultiMapToResultImpl<MAPPED_RESULT>(cl);
+		return new MultiMapToResultImpl<MultiQuery<MAPPED_RESULT>, MAPPED_RESULT>(cl);
 	}
 
-	public static <TYPE_RESULT> SingleTypeResult<TYPE_RESULT> selectOneFrom(Class<TYPE_RESULT> cl) {
+	public static <TYPE_RESULT> SingleTypeResult<SingleQuery<TYPE_RESULT>, TYPE_RESULT> selectOneFrom(Class<TYPE_RESULT> cl) {
 		if (cl == null) {
 			throw new IllegalArgumentException("cl == null");
 		}
 
-		return new SingleTypeResultImpl<TYPE_RESULT>(cl);
+		return new SingleTypeResultImpl<SingleQuery<TYPE_RESULT>, TYPE_RESULT>(cl);
 	}
 
-	public static <TYPE_RESULT> MultiTypeResult<TYPE_RESULT> selectListFrom(Class<TYPE_RESULT> cl) {
+	public static <TYPE_RESULT> MultiTypeResult<MultiQuery<TYPE_RESULT>, TYPE_RESULT> selectListFrom(Class<TYPE_RESULT> cl) {
 		if (cl == null) {
 			throw new IllegalArgumentException("cl == null");
 		}
 
-		return new MultiTypeResultImpl<TYPE_RESULT>(cl);
+		return new MultiTypeResultImpl<MultiQuery<TYPE_RESULT>, TYPE_RESULT>(cl);
 	}
 
     public static <T> Alias<T> aliasAlias(Class<T> aliasType) {

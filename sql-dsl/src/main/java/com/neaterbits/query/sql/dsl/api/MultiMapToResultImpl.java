@@ -2,18 +2,18 @@ package com.neaterbits.query.sql.dsl.api;
 
 import java.util.function.Function;
 
-final class MultiMapToResultImpl<RESULT>
-		extends BaseMapToResultImpl<RESULT>
-		implements MultiMapToResult<RESULT> {
+final class MultiMapToResultImpl<MODEL, RESULT>
+		extends BaseMapToResultImpl<MODEL, RESULT>
+		implements MultiMapToResult<MODEL, RESULT> {
 
 	MultiMapToResultImpl(Class<?> resultType) {
 		super(resultType);
 	}
 
 	@Override
-	public <T, R> ResultMapperTo<RESULT, R, MultiMapToResult<RESULT>>
+	public <T, R> ResultMapperTo<MODEL, RESULT, R, MultiMapToResult<MODEL, RESULT>>
 				map(Function<T, R> getter) {
 
-		return new ResultMapperToImpl<RESULT, R, MultiMapToResult<RESULT>>(getter, this);
+		return new ResultMapperToImpl<MODEL, RESULT, R, MultiMapToResult<MODEL, RESULT>>(getter, this);
 	}
 }

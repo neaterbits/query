@@ -39,6 +39,7 @@ public class SQLAPITest {
 
         	// where-clause
         	//.whereString(Company::getId)
+        	  .compile()
         	 ;
 
     }
