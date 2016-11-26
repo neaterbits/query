@@ -17,4 +17,10 @@ abstract class ClausesImpl<MODEL, RESULT>
 
 		this.clauseCollector = collector;
 	}
+	
+	@Override
+	public final MODEL compile() {
+		throw new UnsupportedOperationException("TODO"); 
+	}
+
 }
