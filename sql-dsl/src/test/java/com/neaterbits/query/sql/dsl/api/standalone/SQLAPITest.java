@@ -7,6 +7,8 @@ import org.junit.Test;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import com.neaterbits.query.sql.dsl.api.Alias;
+import com.neaterbits.query.sql.dsl.api.Param;
+import com.neaterbits.query.sql.dsl.api.QueryDataSource;
 import com.neaterbits.query.sql.dsl.api.SingleQuery;
 import com.neaterbits.query.sql.dsl.api.testvo.Company;
 import com.neaterbits.query.sql.dsl.api.testvo.Employee;
@@ -22,6 +24,10 @@ public class SQLAPITest {
     public void testTableBased() {
     	
     	final Alias<Company> c = aliasAlias(Company.class);
+    	
+    	final QueryDataSource ds = null;
+    	
+    	final Param<Integer> param = null;
     	
     	
     	final Company company = null;
@@ -42,9 +48,20 @@ public class SQLAPITest {
 
         	// where-clause
         	//.whereString(Company::getId)
-        	  .compile()
-        	 ;
-        
+        	.compile();
+
+        	ResultVO result = query.executeOn(ds)
+        	 .with(param).setTo(123)
+        	  .and(param).setTo(345)
+        	  .get();
+
+        	result = query.execute(b -> b
+				.with(param).setTo(123)
+				.and(param).setTo(456)
+				
+				.on(ds)
+			);
+
         assertThat(query).isNotNull();
     }
 

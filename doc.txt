@@ -22,6 +22,7 @@ Må sende inn parametre
 
  - for tabeller
  - for variabler, om er satt.
+
  - må kunne mikse variabler og konstanter.
 
 
@@ -35,6 +36,12 @@ execute(b ->
  .on(Foo.class, fooList)
  .on(Bar.class, barList))
 
+
+executeOn(dataSource)
+	.with(x)
+        .and(foo).as(fkfk)
+	.and(ba).as(baz)
+.get();
 
 
 

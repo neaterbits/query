@@ -1,11 +1,14 @@
 package com.neaterbits.query.sql.dsl.api;
 
-import java.util.Collection;
+import java.util.function.Function;
+
 
 public interface QueryOps<RESULT, RESULT_TYPE> extends Query<RESULT> {
 	
-	RESULT_TYPE execute(Collection<?> ... collections);
-	
-	RESULT_TYPE execute(QueryDataSource dataSource);
+	QueryResultGetterParamsInitialBuilder<RESULT_TYPE> executeOn(QueryDataSource dataSource);
+
+	RESULT_TYPE execute(Function<QueryParamsInitialBuilder, QueryParamsEnd> builder);
 
 }
+
+
