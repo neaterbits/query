@@ -4,7 +4,7 @@ import java.util.function.Function;
 
 final class AndClausesImpl<MODEL, RESULT> extends ClausesImpl<MODEL, RESULT> implements AndClauses<MODEL, RESULT> {
 
-	AndClausesImpl(AndClausesImpl<MODEL, RESULT> last) {
+	AndClausesImpl(WhereClauseBuilderImpl<MODEL, RESULT> last) {
 		super(last);
 	}
 

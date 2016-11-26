@@ -18,6 +18,26 @@ med shorthands for collections, sets, lister osv.
 
 
 
+Må sende inn parametre
+
+ - for tabeller
+ - for variabler, om er satt.
+ - må kunne mikse variabler og konstanter.
+
+
+executeWith(b -> b.set(param, value)
+.on(l ->)
+
+execute(b ->
+ b
+ .set(param, value)
+ .on(pojo())
+ .on(Foo.class, fooList)
+ .on(Bar.class, barList))
+
+
+
+
 
 
 

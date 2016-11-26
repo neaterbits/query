@@ -4,7 +4,7 @@ import java.util.function.Function;
 
 final class OrClausesImpl<MODEL, RESULT> extends ClausesImpl<MODEL, RESULT> implements OrClauses<MODEL, RESULT>{
 
-	OrClausesImpl(OrClausesImpl<MODEL, RESULT> last) {
+	OrClausesImpl(WhereClauseBuilderImpl<MODEL, RESULT> last) {
 		super(last);
 	}
 

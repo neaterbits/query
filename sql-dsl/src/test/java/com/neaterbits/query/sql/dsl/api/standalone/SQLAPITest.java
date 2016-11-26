@@ -4,7 +4,10 @@ import java.util.function.Supplier;
 
 import org.junit.Test;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import com.neaterbits.query.sql.dsl.api.Alias;
+import com.neaterbits.query.sql.dsl.api.SingleQuery;
 import com.neaterbits.query.sql.dsl.api.testvo.Company;
 import com.neaterbits.query.sql.dsl.api.testvo.Employee;
 import com.neaterbits.query.sql.dsl.api.testvo.Person;
@@ -25,7 +28,8 @@ public class SQLAPITest {
     	
     	final Supplier<Integer> f = company::getId;
     	
-        selectOne(ResultVO.class)
+        final SingleQuery<ResultVO > query =
+        		selectOne(ResultVO.class)
 
         	.map(Company::getId)		.to(ResultVO::setCompanyId)
         	.map(Person::getId)		   	.to(ResultVO::setPersonId)
@@ -40,7 +44,8 @@ public class SQLAPITest {
         	//.whereString(Company::getId)
         	  .compile()
         	 ;
-
+        
+        assertThat(query).isNotNull();
     }
 
     @Test

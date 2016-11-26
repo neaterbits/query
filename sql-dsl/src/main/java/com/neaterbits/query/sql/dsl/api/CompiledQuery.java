@@ -64,21 +64,19 @@ final class CompiledQuery {
 		}
 		else {
 			final Class<?> clauseClass = list.get(1).getClause().getClass();
-			
 			final List<ConditionImpl> conditions = new ArrayList<ConditionImpl>(num);
-			
+
 			conditions.add(list.get(0).getCondition());
-			
+
 			for (int i = 1; i < num; ++ i) {
-				
+
 				final ClauseImpl clause = list.get(i);
-				
 				final Class<?> otherClauseClass = clause.getClause().getClass();
-				
+
 				if (!clauseClass.equals(otherClauseClass)) {
-					throw new IllegalStateException("class mismatch");
+					throw new IllegalStateException("class mismatch: " + clauseClass.getSimpleName() + "/" + otherClauseClass.getSimpleName());
 				}
-				
+
 				conditions.add(clause.getCondition());
 			}
 			
@@ -89,7 +87,9 @@ final class CompiledQuery {
 				ret = new CompiledConditionsOr(conditions);
 			}
 			else {
-				throw new IllegalStateException("Unknown clause class " + clauseClass);
+				throw new IllegalStateException("Unknown clause class "
+					    + clauseClass.getSimpleName()
+						+ ", at 0 = " + list.get(0).getClause().getClass().getSimpleName());
 			}
 		}
 

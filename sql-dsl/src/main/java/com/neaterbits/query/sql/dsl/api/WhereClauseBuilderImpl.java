@@ -7,7 +7,7 @@ final class WhereClauseBuilderImpl<MODEL, RESULT>
 	implements WhereClauseBuilder<MODEL, RESULT>,
 	AndOrLogicalClauses<MODEL, RESULT> {
 
-	WhereClauseBuilderImpl(BaseQueryEntity last) {
+	WhereClauseBuilderImpl(BaseQueryEntity<MODEL> last) {
 		super(last, new ClauseCollectorImpl());
 	}
 
@@ -28,26 +28,36 @@ final class WhereClauseBuilderImpl<MODEL, RESULT>
 	@Override
 	public <T, RR> ConditionClause<MODEL, RESULT, RR, AndClauses<MODEL, RESULT>>
 			and(Function<T, RR> getter) {
-		return new ConditionClauseImpl<MODEL, RESULT, RR, AndClauses<MODEL,RESULT>>(this, getter);
+		
+		final AndClausesImpl<MODEL, RESULT> andClauses = new AndClausesImpl<>(this);
+		
+		return new ConditionClauseImpl<MODEL, RESULT, RR, AndClauses<MODEL,RESULT>>(andClauses, getter);
 	}
 
 	@Override
 	public <T> StringClause<MODEL, RESULT, AndClauses<MODEL, RESULT>>
 			and(StringFunction<T> getter) {
-		return new StringClauseImpl<MODEL, RESULT, AndClauses<MODEL,RESULT>>(this, getter);
+		
+		final AndClausesImpl<MODEL, RESULT> andClauses = new AndClausesImpl<>(this);
+		
+		return new StringClauseImpl<MODEL, RESULT, AndClauses<MODEL,RESULT>>(andClauses, getter);
 	}
 
 	@Override
 	public <T, RR> ConditionClause<MODEL, RESULT, RR, OrClauses<MODEL, RESULT>>
 			or(Function<T, RR> getter) {
+
+		final OrClausesImpl<MODEL, RESULT> orClauses = new OrClausesImpl<>(this);
 		
-		return new ConditionClauseImpl<MODEL, RESULT, RR, OrClauses<MODEL,RESULT>>(this, getter);
+		return new ConditionClauseImpl<MODEL, RESULT, RR, OrClauses<MODEL,RESULT>>(orClauses, getter);
 	}
 
 	@Override
 	public <T> StringClause<MODEL, RESULT, OrClauses<MODEL, RESULT>> or(
 			StringFunction<T> getter) {
 
-		return new StringClauseImpl<MODEL, RESULT, OrClauses<MODEL,RESULT>>(this, getter);
+		final OrClausesImpl<MODEL, RESULT> orClauses = new OrClausesImpl<>(this);
+
+		return new StringClauseImpl<MODEL, RESULT, OrClauses<MODEL,RESULT>>(orClauses, getter);
 	}
 }
