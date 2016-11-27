@@ -25,7 +25,12 @@ abstract class ClausesImpl<MODEL, RESULT>
 		final QueryCollectorImpl queryCollector = getQueryCollector();
 		
 		// Compile the collectd query
-		final CompiledQuery compiledQuery = CompiledQuery.compile(queryCollector);
+		CompiledQuery compiledQuery;
+		try {
+			compiledQuery = CompiledQuery.compile(queryCollector);
+		} catch (CompileException ex) {
+			throw new IllegalStateException("Failed to compile", ex);
+		}
 		
 		// Compile into model (better name for this operation?)
 		return getModelCompiler().compile(compiledQuery);

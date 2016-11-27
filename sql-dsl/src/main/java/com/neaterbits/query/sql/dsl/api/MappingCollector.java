@@ -19,4 +19,8 @@ final class MappingCollector {
 
 		collectedMapping.add(mapping);
 	}
+
+	public List<CollectedMapping> getCollectedMappings() {
+		return collectedMapping;
+	}
 }

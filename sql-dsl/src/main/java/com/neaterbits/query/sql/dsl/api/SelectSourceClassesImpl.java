@@ -5,7 +5,8 @@ final class SelectSourceClassesImpl extends SelectSourceImpl {
 	private final Class<?> [] classes;
 
 	SelectSourceClassesImpl(Class<?>[] classes) {
-		
+		super(classes);
+
 		if (classes == null) {
 			throw new IllegalArgumentException("classes == null");
 		}

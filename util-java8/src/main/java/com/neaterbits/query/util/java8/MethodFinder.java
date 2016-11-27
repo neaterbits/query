@@ -30,6 +30,17 @@ public class MethodFinder {
 	
 	private static <T> Method findMethod(Class<T> cl, Consumer<T> consumer) {
 		
+		final Method ret = findMethodOrNull(cl, consumer);
+		
+		if (ret == null) {
+			throw new IllegalStateException("Failed to get method");
+		}
+		
+		return ret;
+	}
+		
+	private static <T> Method findMethodOrNull(Class<T> cl, Consumer<T> consumer) {
+		
 		final Enhancer enhancer = new Enhancer();
 		
 		enhancer.setSuperclass(cl);
@@ -43,11 +54,7 @@ public class MethodFinder {
 		
 		consumer.accept(proxy);
 		
-		if (methodStore.method == null) {
-			throw new IllegalStateException("Failed to get method");
-		}
-		
-		return methodStore.method;
+		return methodStore.method == null ? null : methodStore.method;
 	}
 
 	public static <T, R> Method find(Class<T> cl, Function<T, R> func) {
@@ -68,5 +75,26 @@ public class MethodFinder {
 
 	public static <S, T, U> Method find(Class<S> cl, TriConsumer<S, T, U> func) {
 		return findMethod(cl, o -> func.accept(o, null, null));
+	}
+
+	// Find or null
+	public static <T, R> Method findOrNull(Class<T> cl, Function<T, R> func) {
+		return findMethodOrNull(cl, o -> func.apply(o));
+	}
+
+	public static <T, R, S> Method findOrNull(Class<T> cl, BiFunction<T, S, R> func) {
+		return findMethodOrNull(cl, o -> func.apply(o, null));
+	}
+
+	public static <T, R> Method findOrNull(Class<T> cl, Consumer<T> func) {
+		return findMethodOrNull(cl, o -> func.accept(o));
+	}
+
+	public static <T, S> Method findOrNull(Class<T> cl, BiConsumer<T, S> func) {
+		return findMethodOrNull(cl, o -> func.accept(o, null));
+	}
+
+	public static <S, T, U> Method findOrNUll(Class<S> cl, TriConsumer<S, T, U> func) {
+		return findMethodOrNull(cl, o -> func.accept(o, null, null));
 	}
 }

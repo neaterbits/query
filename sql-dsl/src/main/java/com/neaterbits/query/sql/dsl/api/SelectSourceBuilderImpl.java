@@ -38,7 +38,7 @@ abstract class SelectSourceBuilderImpl<MODEL, RESULT> extends BaseQueryEntity<MO
 //		this.classes = null;
 //		this.aliases = aliases;
 
-		getQueryCollector().setSources(new SelectSourceAliasesImpl(aliases));
+		getQueryCollector().setSources(new SelectSourceAliasAliasesImpl(aliases));
 
 		final WhereClauseBuilderImpl<MODEL, RESULT> ret = new WhereClauseBuilderImpl<MODEL, RESULT>(this);
 		

@@ -2,6 +2,8 @@ package com.neaterbits.query.sql.dsl.api;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.BiFunction;
+import java.util.function.Function;
 
 /**
  * Representation of query where we have compiled all information 
@@ -13,11 +15,16 @@ final class CompiledQuery {
 	private final Class<?> resultType;
 	
 	
+	private final CompiledMappings mappings;
 	private final SelectSourceImpl selectSources; // Types in the "from" part of query
 	
 	private final CompiledConditions conditions;
 
-	private CompiledQuery(Class<?> resultType, SelectSourceImpl selectSources, CompiledConditions conditions) {
+	private CompiledQuery(
+			Class<?> resultType,
+			CompiledMappings mappings,
+			SelectSourceImpl selectSources,
+			CompiledConditions conditions) {
 
 		if (resultType == null) {
 			throw new IllegalArgumentException("resultType == null");
@@ -28,13 +35,14 @@ final class CompiledQuery {
 		}
 
 		this.resultType = resultType;
+		this.mappings = mappings;
 		this.selectSources = selectSources;
 		
 		// may be null if no conditions
 		this.conditions = conditions;
 	}
 	
-	static CompiledQuery compile(QueryCollectorImpl collector) {
+	static CompiledQuery compile(QueryCollectorImpl collector) throws CompileException {
 		if (collector == null) {
 			throw new IllegalArgumentException("collector == null");
 		}
@@ -48,11 +56,60 @@ final class CompiledQuery {
 		else {
 			compiledConditions = null;
 		}
+		
+		final SelectSourceImpl sources = collector.getSources();
+		
+		final Class<?> resultType = collector.getResultType();
+		final CompiledMappings compiledMappings;
+		
+		final CompiledGetterSetterCache cache = new CompiledGetterSetterCache();
+		
+		if (collector.getMappings() != null) {
+			compiledMappings = compileMappings(resultType, collector.getMappings(), sources, cache);
+		}
+		else {
+			compiledMappings = null;
+		}
 
 		return new CompiledQuery(
-				collector.getResultType(),
+				resultType,
+				compiledMappings,
 				collector.getSources(),
 				compiledConditions);
+	}
+
+	private static CompiledMappings compileMappings(
+			Class<?> resultType,
+			MappingCollector mappingCollector,
+			SelectSourceImpl selectSource,
+			CompiledGetterSetterCache cache) throws CompileException {
+
+		final List<CollectedMapping> collectedMappings = mappingCollector.getCollectedMappings();
+		final List<CompiledMapping> compiledMappings = new ArrayList<>(collectedMappings.size());
+
+		for (CollectedMapping collected : collectedMappings) {
+			final CompiledMapping compiled = compileMapping(resultType, collected, selectSource, cache);
+
+			compiledMappings.add(compiled);
+		}
+
+		return new CompiledMappings(compiledMappings);
+	}
+
+	private static CompiledMapping compileMapping(
+			Class<?> resultType,
+			CollectedMapping collected,
+			SelectSourceImpl selectSource,
+			CompiledGetterSetterCache cache) throws CompileException {
+
+		final CompiledGetter mapGetter = selectSource.compileGetter(collected.getGetter(), cache);
+		final CompiledSetter mapSetter = cache.compileSetterUntyped(resultType, collected.getSetter());
+		
+		if (mapSetter == null) {
+			throw new CompileException("Unknown mapping setter " + collected);
+		}
+
+		return new CompiledMapping(mapGetter, mapSetter);
 	}
 	
 	private static CompiledConditions compileConditions(ClauseCollectorImpl clauses) {
