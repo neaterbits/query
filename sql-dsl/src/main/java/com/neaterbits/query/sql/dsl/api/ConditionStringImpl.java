@@ -4,7 +4,7 @@ import java.util.function.Function;
 
 abstract class ConditionStringImpl extends ValueConditionImpl {
 
-	ConditionStringImpl(Function<?, ?> getter, ConditionValueLiteralStringImpl value) {
+	ConditionStringImpl(Function<?, ?> getter, ConditionValueImpl value) {
 		super(getter, value);
 	}
 }

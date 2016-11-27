@@ -4,7 +4,7 @@ import java.util.function.Function;
 
 final class ConditionStringEndsWith extends ConditionStringImpl {
 
-	ConditionStringEndsWith(Function<?, ?> getter, ConditionValueLiteralStringImpl value) {
+	ConditionStringEndsWith(Function<?, ?> getter, ConditionValueImpl value) {
 		super(getter, value);
 	}
 

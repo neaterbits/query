@@ -22,10 +22,19 @@ class ConditionClauseImpl<MODEL, RESULT, R, L extends LogicalClauses<MODEL, RESU
 		this.getter = getter;
 	}
 
-	final <V> ConditionValueImpl makeValue(V value) {
-		return new ConditionValueLiteralImpl(value);
+	final <V> BaseConditionValueLiteralImpl<V> makeLiteralValue(V value) {
+		return new ConditionValueLiteralImpl<>(value);
 	}
 
+	final <V> ConditionValueParamImpl makeParamValue(Param<V> param) {
+		return new ConditionValueParamImpl(param);
+	}
+
+	final <V> ConditionValueGetterImpl makeGetterValue(Function<?, V> value) {
+		return new ConditionValueGetterImpl(value);
+	}
+	
+	
 	final L addCondition(ConditionImpl condition) {
 		if (condition == null) {
 			throw new IllegalArgumentException("condition == null");
@@ -49,7 +58,17 @@ class ConditionClauseImpl<MODEL, RESULT, R, L extends LogicalClauses<MODEL, RESU
 			throw new IllegalArgumentException("other == null");
 		}
 		
-		return addCondition(new ConditionEqualToImpl(getter, makeValue(other)));
+		return addCondition(new ConditionEqualToImpl(getter, makeLiteralValue(other)));
+	}
+
+	@Override
+	public final L isEqualTo(Param<R> other) {
+		
+		if (other == null) {
+			throw new IllegalArgumentException("other == null");
+		}
+		
+		return addCondition(new ConditionEqualToImpl(getter, makeParamValue(other)));
 	}
 
 	@Override
@@ -59,7 +78,7 @@ class ConditionClauseImpl<MODEL, RESULT, R, L extends LogicalClauses<MODEL, RESU
 			throw new IllegalArgumentException("other == null");
 		}
 		
-		return addCondition(new ConditionEqualToImpl(getter, makeValue(other)));
+		return addCondition(new ConditionEqualToImpl(getter, makeGetterValue(other)));
 	}
 
 	@Override
@@ -69,7 +88,17 @@ class ConditionClauseImpl<MODEL, RESULT, R, L extends LogicalClauses<MODEL, RESU
 			throw new IllegalArgumentException("other == null");
 		}
 
-		return addCondition(new ConditionNotEqualToImpl(getter, makeValue(other)));
+		return addCondition(new ConditionNotEqualToImpl(getter, makeLiteralValue(other)));
+	}
+
+	@Override
+	public final L isNotEqualTo(Param<R> other) {
+
+		if (other == null) {
+			throw new IllegalArgumentException("other == null");
+		}
+
+		return addCondition(new ConditionNotEqualToImpl(getter, makeParamValue(other)));
 	}
 
 	@Override
@@ -79,7 +108,7 @@ class ConditionClauseImpl<MODEL, RESULT, R, L extends LogicalClauses<MODEL, RESU
 			throw new IllegalArgumentException("other == null");
 		}
 
-		return addCondition(new ConditionNotEqualToImpl(getter, makeValue(other)));
+		return addCondition(new ConditionNotEqualToImpl(getter, makeGetterValue(other)));
 	}
 
 	@Override

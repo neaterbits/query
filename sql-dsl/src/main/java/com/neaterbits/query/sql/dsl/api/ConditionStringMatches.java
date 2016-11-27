@@ -4,7 +4,7 @@ import java.util.function.Function;
 
 final class ConditionStringMatches extends ConditionStringImpl {
 
-	ConditionStringMatches(Function<?, ?> getter, ConditionValueLiteralStringImpl value) {
+	ConditionStringMatches(Function<?, ?> getter, ConditionValueImpl value) {
 		super(getter, value);
 	}
 

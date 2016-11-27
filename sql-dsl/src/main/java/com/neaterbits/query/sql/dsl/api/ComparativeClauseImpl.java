@@ -16,25 +16,45 @@ class ComparativeClauseImpl<MODEL, RESULT, R extends Comparable<R>, L extends Lo
 			throw new IllegalArgumentException("value == null");
 		}
 		
-		return addCondition(new ConditionGreaterThanImpl(getter, makeValue(value)));
+		return addCondition(new ConditionGreaterThanImpl(getter, makeLiteralValue(value)));
 	}
 
+	
+	@Override
+	public final LogicalClauses<MODEL, RESULT> isGreaterThan(Param<R> value) {
+		if (value == null) {
+			throw new IllegalArgumentException("value == null");
+		}
+		
+		return addCondition(new ConditionGreaterThanImpl(getter, makeParamValue(value)));
+	}
+
+	
 	@Override
 	public final <T> LogicalClauses<MODEL, RESULT> isGreaterThan(Function<T, R> getter) {
 		if (getter == null) {
 			throw new IllegalArgumentException("getter == null");
 		}
 		
-		return addCondition(new ConditionGreaterThanImpl(getter, makeValue(getter)));
+		return addCondition(new ConditionGreaterThanImpl(this.getter, makeGetterValue(getter)));
 	}
 
 	@Override
-	public final LogicalClauses<MODEL, RESULT> isGreaterOrEqualTo(RESULT value) {
+	public final LogicalClauses<MODEL, RESULT> isGreaterOrEqualTo(R value) {
 		if (value == null) {
 			throw new IllegalArgumentException("value == null");
 		}
 		
-		return addCondition(new ConditionGreaterThanOrEqualImpl(getter, makeValue(value)));
+		return addCondition(new ConditionGreaterThanOrEqualImpl(getter, makeLiteralValue(value)));
+	}
+
+	@Override
+	public final LogicalClauses<MODEL, RESULT> isGreaterOrEqualTo(Param<R> value) {
+		if (value == null) {
+			throw new IllegalArgumentException("value == null");
+		}
+		
+		return addCondition(new ConditionGreaterThanOrEqualImpl(getter, makeParamValue(value)));
 	}
 
 	@Override
@@ -43,7 +63,7 @@ class ComparativeClauseImpl<MODEL, RESULT, R extends Comparable<R>, L extends Lo
 			throw new IllegalArgumentException("getter == null");
 		}
 		
-		return addCondition(new ConditionGreaterThanOrEqualImpl(getter, makeValue(getter)));
+		return addCondition(new ConditionGreaterThanOrEqualImpl(this.getter, makeGetterValue(getter)));
 	}
 
 	@Override
@@ -52,7 +72,16 @@ class ComparativeClauseImpl<MODEL, RESULT, R extends Comparable<R>, L extends Lo
 			throw new IllegalArgumentException("value == null");
 		}
 		
-		return addCondition(new ConditionLessThanImpl(getter, makeValue(value)));
+		return addCondition(new ConditionLessThanImpl(getter, makeLiteralValue(value)));
+	}
+
+	@Override
+	public final LogicalClauses<MODEL, RESULT> isLesserThan(Param<R> value) {
+		if (value == null) {
+			throw new IllegalArgumentException("value == null");
+		}
+		
+		return addCondition(new ConditionLessThanImpl(getter, makeParamValue(value)));
 	}
 
 	@Override
@@ -61,7 +90,7 @@ class ComparativeClauseImpl<MODEL, RESULT, R extends Comparable<R>, L extends Lo
 			throw new IllegalArgumentException("getter == null");
 		}
 		
-		return addCondition(new ConditionLessThanImpl(getter, makeValue(getter)));
+		return addCondition(new ConditionLessThanImpl(this.getter, makeGetterValue(getter)));
 	}
 
 	@Override
@@ -70,7 +99,16 @@ class ComparativeClauseImpl<MODEL, RESULT, R extends Comparable<R>, L extends Lo
 			throw new IllegalArgumentException("value == null");
 		}
 		
-		return addCondition(new ConditionLessThanOrEqualImpl(getter, makeValue(value)));
+		return addCondition(new ConditionLessThanOrEqualImpl(getter, makeLiteralValue(value)));
+	}
+
+	@Override
+	public final LogicalClauses<MODEL, RESULT> isLesserOrEqualTo(Param<R> value) {
+		if (value == null) {
+			throw new IllegalArgumentException("value == null");
+		}
+		
+		return addCondition(new ConditionLessThanOrEqualImpl(getter, makeParamValue(value)));
 	}
 
 	@Override
@@ -79,6 +117,6 @@ class ComparativeClauseImpl<MODEL, RESULT, R extends Comparable<R>, L extends Lo
 			throw new IllegalArgumentException("getter == null");
 		}
 		
-		return addCondition(new ConditionLessThanOrEqualImpl(getter, makeValue(getter)));
+		return addCondition(new ConditionLessThanOrEqualImpl(this.getter, makeGetterValue(getter)));
 	}
 }

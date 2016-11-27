@@ -4,7 +4,7 @@ import java.util.function.Function;
 
 final class ConditionStringContains extends ConditionStringImpl {
 
-	ConditionStringContains(Function<?, ?> getter, ConditionValueLiteralStringImpl value) {
+	ConditionStringContains(Function<?, ?> getter, ConditionValueImpl value) {
 		super(getter, value);
 	}
 

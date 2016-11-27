@@ -8,7 +8,7 @@ final class StringClauseImpl<MODEL, RESULT, L extends LogicalClauses<MODEL, RESU
 		super(clause, getter);
 	}
 
-	private ConditionValueLiteralStringImpl makeValue(String value) {
+	private ConditionValueLiteralStringImpl makeLiteralValue(String value) {
 		
 		if (value == null) {
 			throw new IllegalArgumentException("value == null");
@@ -23,7 +23,16 @@ final class StringClauseImpl<MODEL, RESULT, L extends LogicalClauses<MODEL, RESU
 			throw new IllegalArgumentException("value == null");
 		}
 		
-		return addCondition(new ConditionStringStartsWith(getter, makeValue(value)));
+		return addCondition(new ConditionStringStartsWith(getter, makeLiteralValue(value)));
+	}
+
+	@Override
+	public L startsWith(Param<String> param) {
+		if (param == null) {
+			throw new IllegalArgumentException("param == null");
+		}
+		
+		return addCondition(new ConditionStringStartsWith(getter, makeParamValue(param)));
 	}
 
 	@Override
@@ -32,7 +41,16 @@ final class StringClauseImpl<MODEL, RESULT, L extends LogicalClauses<MODEL, RESU
 			throw new IllegalArgumentException("value == null");
 		}
 		
-		return addCondition(new ConditionStringEndsWith(getter, makeValue(value)));
+		return addCondition(new ConditionStringEndsWith(getter, makeLiteralValue(value)));
+	}
+
+	@Override
+	public L endsWith(Param<String> param) {
+		if (param == null) {
+			throw new IllegalArgumentException("param == null");
+		}
+		
+		return addCondition(new ConditionStringEndsWith(getter, makeParamValue(param)));
 	}
 
 	@Override
@@ -41,7 +59,16 @@ final class StringClauseImpl<MODEL, RESULT, L extends LogicalClauses<MODEL, RESU
 			throw new IllegalArgumentException("value == null");
 		}
 		
-		return addCondition(new ConditionStringContains(getter, makeValue(value)));
+		return addCondition(new ConditionStringContains(getter, makeLiteralValue(value)));
+	}
+
+	@Override
+	public L contains(Param<String> param) {
+		if (param == null) {
+			throw new IllegalArgumentException("param == null");
+		}
+		
+		return addCondition(new ConditionStringContains(getter, makeParamValue(param)));
 	}
 
 	@Override
@@ -50,6 +77,15 @@ final class StringClauseImpl<MODEL, RESULT, L extends LogicalClauses<MODEL, RESU
 			throw new IllegalArgumentException("regex == null");
 		}
 		
-		return addCondition(new ConditionStringMatches(getter, makeValue(regex)));
+		return addCondition(new ConditionStringMatches(getter, makeLiteralValue(regex)));
+	}
+
+	@Override
+	public L matches(Param<String> param) {
+		if (param == null) {
+			throw new IllegalArgumentException("param == null");
+		}
+		
+		return addCondition(new ConditionStringMatches(getter, makeParamValue(param)));
 	}
 }

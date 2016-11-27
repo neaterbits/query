@@ -4,7 +4,7 @@ import java.util.function.Function;
 
 final class ConditionStringStartsWith extends ConditionStringImpl {
 
-	ConditionStringStartsWith(Function<?, ?> getter, ConditionValueLiteralStringImpl value) {
+	ConditionStringStartsWith(Function<?, ?> getter, ConditionValueImpl value) {
 		super(getter, value);
 	}
 
