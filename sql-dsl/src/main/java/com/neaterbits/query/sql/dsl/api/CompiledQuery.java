@@ -11,15 +11,24 @@ import java.util.List;
 final class CompiledQuery {
 
 	private final Class<?> resultType;
+	
+	
+	private final SelectSourceImpl selectSources; // Types in the "from" part of query
+	
 	private final CompiledConditions conditions;
 
-	private CompiledQuery(Class<?> resultType, CompiledConditions conditions) {
+	private CompiledQuery(Class<?> resultType, SelectSourceImpl selectSources, CompiledConditions conditions) {
 
 		if (resultType == null) {
 			throw new IllegalArgumentException("resultType == null");
 		}
+		
+		if (selectSources == null) {
+			throw new IllegalArgumentException("selectSources == null");
+		}
 
 		this.resultType = resultType;
+		this.selectSources = selectSources;
 		
 		// may be null if no conditions
 		this.conditions = conditions;
@@ -40,7 +49,10 @@ final class CompiledQuery {
 			compiledConditions = null;
 		}
 
-		return new CompiledQuery(collector.getResultType(), compiledConditions);
+		return new CompiledQuery(
+				collector.getResultType(),
+				collector.getSources(),
+				compiledConditions);
 	}
 	
 	private static CompiledConditions compileConditions(ClauseCollectorImpl clauses) {

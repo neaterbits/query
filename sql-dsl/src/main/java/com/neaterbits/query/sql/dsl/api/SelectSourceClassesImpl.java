@@ -4,10 +4,14 @@ final class SelectSourceClassesImpl extends SelectSourceImpl {
 
 	private final Class<?> [] classes;
 
-	public SelectSourceClassesImpl(Class<?>[] classes) {
+	SelectSourceClassesImpl(Class<?>[] classes) {
 		
 		if (classes == null) {
 			throw new IllegalArgumentException("classes == null");
+		}
+		
+		if (classes.length == 0) {
+			throw new IllegalArgumentException("no classes");
 		}
 		
 		this.classes = classes;

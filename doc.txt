@@ -44,6 +44,14 @@ executeOn(dataSource)
 .get();
 
 
+---
+
+
+alias vs tabell.
+
+Resolves i executoren.
+
+
 
 
 
