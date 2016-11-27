@@ -45,7 +45,7 @@ public class Select {
 		return alias;
     }
 
-    public static <T> Param<T> param(Class<T> paramType) {
+    private static <T> Param<T> param(Class<T> paramType) {
 		if (paramType == null) {
 			throw new IllegalArgumentException("paramType == null");
 		}
@@ -53,5 +53,14 @@ public class Select {
 		final ParamImpl<T> param = new ParamImpl<T>(paramType);
 
 		return param;
+    }
+    
+    // Parameters. We only support known base types that support equals()/hashCode() 
+    public static Param<Integer> intParam() {
+    	return param(Integer.class);
+    }
+
+    public static Param<String> stringParam() {
+    	return param(String.class);
     }
 }

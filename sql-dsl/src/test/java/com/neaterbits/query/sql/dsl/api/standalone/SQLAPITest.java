@@ -17,7 +17,7 @@ import com.neaterbits.query.sql.dsl.api.testvo.Role;
 
 import static com.neaterbits.query.sql.dsl.api.Select.selectOne;
 import static com.neaterbits.query.sql.dsl.api.Select.aliasAlias;
-import static com.neaterbits.query.sql.dsl.api.Select.param;
+import static com.neaterbits.query.sql.dsl.api.Select.intParam;
 
 public class SQLAPITest {
 
@@ -28,8 +28,8 @@ public class SQLAPITest {
     	
     	final QueryDataSource ds = null;
     	
-    	final Param<Integer> param1 = param(Integer.class);
-    	final Param<Integer> param2 = param(Integer.class);
+    	final Param<Integer> param1 = intParam();
+    	final Param<Integer> param2 = intParam();
     	
     	
     	final Company company = null;
