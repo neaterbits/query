@@ -17,6 +17,7 @@ import com.neaterbits.query.sql.dsl.api.testvo.Role;
 
 import static com.neaterbits.query.sql.dsl.api.Select.selectOne;
 import static com.neaterbits.query.sql.dsl.api.Select.aliasAlias;
+import static com.neaterbits.query.sql.dsl.api.Select.param;
 
 public class SQLAPITest {
 
@@ -27,7 +28,8 @@ public class SQLAPITest {
     	
     	final QueryDataSource ds = null;
     	
-    	final Param<Integer> param = null;
+    	final Param<Integer> param1 = param(Integer.class);
+    	final Param<Integer> param2 = param(Integer.class);
     	
     	
     	final Company company = null;
@@ -51,13 +53,13 @@ public class SQLAPITest {
         	.compile();
 
         	ResultVO result = query.executeOn(ds)
-        	 .with(param).setTo(123)
-        	  .and(param).setTo(345)
+        	 .with(param1).setTo(123)
+        	  .and(param2).setTo(345)
         	  .get();
 
         	result = query.execute(b -> b
-				.with(param).setTo(123)
-				.and(param).setTo(456)
+				.with(param1).setTo(123)
+				 .and(param2).setTo(456)
 				
 				.on(ds)
 			);

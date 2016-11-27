@@ -28,7 +28,7 @@ final class QueryCollectorImpl {
 	}
 
 	QueryCollectorImpl(Class<?> resultType, MappingCollector mappings,
-			SelectSourceImpl sources, ClauseCollectorImpl clauses) {
+			SelectSourceImpl sources, ClauseCollectorImpl clauses, boolean isMulti) {
 		
 		if (resultType == null) {
 			throw new IllegalArgumentException("resultType == null");

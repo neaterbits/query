@@ -1,6 +1,6 @@
 package com.neaterbits.query.sql.dsl.api;
 
-abstract class BaseQueryImpl<RESULT> implements Query<RESULT> {
+abstract class BaseQueryImpl<RESULT, RESULT_INSTANCE_TYPE> implements Query<RESULT_INSTANCE_TYPE> {
 
 	private final CompiledQuery compiledQuery;
 	
@@ -11,4 +11,6 @@ abstract class BaseQueryImpl<RESULT> implements Query<RESULT> {
 	final CompiledQuery getCompiledQuery() {
 		return compiledQuery;
 	}
+	
+	abstract RESULT executeOn(QueryDataSourceBase dataSource);
 }
