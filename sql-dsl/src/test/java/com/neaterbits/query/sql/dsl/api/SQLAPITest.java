@@ -2,6 +2,10 @@ package com.neaterbits.query.sql.dsl.api;
 
 import java.util.function.Supplier;
 
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
+
 import org.junit.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -21,53 +25,65 @@ import static com.neaterbits.query.sql.dsl.api.Select.intParam;
 
 public class SQLAPITest {
 
+	private static final EntityManagerFactory emf = Persistence.createEntityManagerFactory("query-jpa-test");
+	
     @Test
     public void testTableBased() {
     	
-    	final Alias<Company> c = aliasAlias(Company.class);
-    	
-    	final QueryDataSource ds = new QueryDataSourceJPA();
-    	
-    	final Param<Integer> param1 = intParam();
-    	final Param<Integer> param2 = intParam();
-    	
-    	
-    	final Company company = null;
-    	
-    	final Supplier<Long> f = company::getId;
-    	
-        final SingleQuery<ResultVO > query =
-        		selectOne(ResultVO.class)
+    	EntityManager em = null;
+    	try {
+    		em = emf.createEntityManager();
 
-        	.map(Company::getId)		.to(ResultVO::setCompanyId)
-        	.map(Person::getId)		   	.to(ResultVO::setPersonId)
-        	.map(Person::getFirstName)	.to(ResultVO::setFirstName)
-
-        	.from(Company.class, Person.class, Role.class)
-
-        	.where(Company::getName)		.startsWith("Foo")
-        	  .and(Company::getId)			.isEqualTo(Employee::getCompanyId)
-
-        	// where-clause
-        	//.whereString(Company::getId)
-        	.compile();
-
-        	ResultVO result = query.prepare(ds)
-        	 .executeWith(param1).setTo(123)
-        	         .and(param2).setTo(345)
-        	  .get();
-
-        	/*
-        	
-        	result = query.execute(b -> b
-				.with(param1).setTo(123)
-				 .and(param2).setTo(456)
-				
-				.on(ds)
-			);
-			*/
-
-        assertThat(query).isNotNull();
+    		final Alias<Company> c = aliasAlias(Company.class);
+	    	
+	    	final QueryDataSource ds = new QueryDataSourceJPA(em);
+	    	
+	    	final Param<Integer> param1 = intParam();
+	    	final Param<Integer> param2 = intParam();
+	    	
+	    	
+	    	final Company company = null;
+	    	
+	    	final Supplier<Long> f = company::getId;
+	    	
+	        final SingleQuery<ResultVO > query =
+	        		selectOne(ResultVO.class)
+	
+	        	.map(Company::getId)		.to(ResultVO::setCompanyId)
+	        	.map(Person::getId)		   	.to(ResultVO::setPersonId)
+	        	.map(Person::getFirstName)	.to(ResultVO::setFirstName)
+	
+	        	.from(Company.class, Person.class, Role.class)
+	
+	        	.where(Company::getName)		.startsWith("Foo")
+	        	  .and(Company::getId)			.isEqualTo(Employee::getCompanyId)
+	
+	        	// where-clause
+	        	//.whereString(Company::getId)
+	        	.compile();
+	
+	        	ResultVO result = query.prepare(ds)
+	        	 .executeWith(param1).setTo(123)
+	        	         .and(param2).setTo(345)
+	        	  .get();
+	
+	        	/*
+	        	
+	        	result = query.execute(b -> b
+					.with(param1).setTo(123)
+					 .and(param2).setTo(456)
+					
+					.on(ds)
+				);
+				*/
+	
+	        assertThat(query).isNotNull();
+    	}
+    	finally {
+    		if (em != null) {
+    			em.close();
+    		}
+    	}
     }
 
     @Test
