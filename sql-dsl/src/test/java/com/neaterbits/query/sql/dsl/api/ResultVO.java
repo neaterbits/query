@@ -1,25 +1,25 @@
-package com.neaterbits.query.sql.dsl.api.standalone;
+package com.neaterbits.query.sql.dsl.api;
 
 public class ResultVO {
-    private Integer companyId;
-    private String personId;
+    private Long companyId;
+    private Long personId;
     private String firstName;
     private String lastName;
     private String roleName;
 
-	public Integer getCompanyId() {
+	public Long getCompanyId() {
 		return companyId;
 	}
 
-	public void setCompanyId(Integer companyId) {
+	public void setCompanyId(Long companyId) {
         this.companyId = companyId;
     }
 
-	public String getPersonId() {
+	public Long getPersonId() {
 		return personId;
 	}
 
-	public void setPersonId(String personId) {
+	public void setPersonId(Long personId) {
 		this.personId = personId;
 	}
 

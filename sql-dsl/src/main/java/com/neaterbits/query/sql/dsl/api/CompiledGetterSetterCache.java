@@ -41,4 +41,33 @@ final class CompiledGetterSetterCache {
 		
 		return m == null ? null : new CompiledSetter(setter, m);
 	}
+	
+	
+	CompiledGetter findGetterFromTypes(Class<?> [] types, Function<?, ?> getter) throws CompileException {
+		CompiledGetter ret = null;
+		
+		for (Class<?> type : types) {
+			
+			CompiledGetter found;
+			
+			try {
+				found = compileGetterUntyped(type, getter);
+			}
+			catch (ClassCastException ex) {
+				// Instance not of right type
+				continue;
+			}
+			
+			if (found != null) {
+				if (ret != null) {
+					throw new CompileException("More than one getter found: " + getter);
+				}
+				
+				ret = found;
+			}
+		}
+
+		return ret;
+	}
+	
 }

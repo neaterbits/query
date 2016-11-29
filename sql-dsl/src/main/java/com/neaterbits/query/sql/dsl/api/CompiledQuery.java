@@ -2,8 +2,6 @@ package com.neaterbits.query.sql.dsl.api;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.BiFunction;
-import java.util.function.Function;
 
 /**
  * Representation of query where we have compiled all information 
@@ -41,7 +39,23 @@ final class CompiledQuery {
 		// may be null if no conditions
 		this.conditions = conditions;
 	}
+
+	Class<?> getResultType() {
+		return resultType;
+	}
+
+	CompiledMappings getMappings() {
+		return mappings;
+	}
+
+	CompiledConditions getConditions() {
+		return conditions;
+	}
 	
+	SelectSources getSelectSources() {
+		return selectSources;
+	}
+
 	static CompiledQuery compile(QueryCollectorImpl collector) throws CompileException {
 		if (collector == null) {
 			throw new IllegalArgumentException("collector == null");

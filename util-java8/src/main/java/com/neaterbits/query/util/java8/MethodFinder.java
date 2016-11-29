@@ -38,7 +38,21 @@ public class MethodFinder {
 		
 		return ret;
 	}
+
+	@SuppressWarnings("unchecked")
+	private static <T> T createProxy(Class<T> cl, Enhancer enhancer) {
+		final T proxy;
 		
+		try {
+			proxy = (T)enhancer.create();
+		}
+		catch (RuntimeException ex) {
+			throw new IllegalStateException("Failed to create proxy for class " + cl.getName(), ex);
+		}
+
+		return proxy;
+	}
+	
 	private static <T> Method findMethodOrNull(Class<T> cl, Consumer<T> consumer) {
 		
 		final Enhancer enhancer = new Enhancer();
@@ -48,9 +62,8 @@ public class MethodFinder {
 		final MethodStore methodStore = new MethodStore();
 
 		enhancer.setCallback(methodStore);
-		
-		@SuppressWarnings("unchecked")
-		final T proxy = (T)enhancer.create();
+	
+		final T proxy = createProxy(cl, enhancer);
 		
 		consumer.accept(proxy);
 		

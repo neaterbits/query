@@ -12,4 +12,8 @@ final class CompiledMappings {
 	CompiledMappings(Collection<CompiledMapping> mappings) {
 		this.mappings = Collections.unmodifiableList(new ArrayList<>(mappings));
 	}
+
+	public List<CompiledMapping> getMappings() {
+		return mappings;
+	}
 }

@@ -1,4 +1,4 @@
-package com.neaterbits.query.sql.dsl.api.standalone;
+package com.neaterbits.query.sql.dsl.api;
 
 import java.util.function.Supplier;
 
@@ -6,14 +6,14 @@ import org.junit.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import com.neaterbits.query.jpatest.model.Company;
+import com.neaterbits.query.jpatest.model.Employee;
+import com.neaterbits.query.jpatest.model.Person;
+import com.neaterbits.query.jpatest.model.Role;
 import com.neaterbits.query.sql.dsl.api.Alias;
 import com.neaterbits.query.sql.dsl.api.Param;
 import com.neaterbits.query.sql.dsl.api.QueryDataSource;
 import com.neaterbits.query.sql.dsl.api.SingleQuery;
-import com.neaterbits.query.sql.dsl.api.testvo.Company;
-import com.neaterbits.query.sql.dsl.api.testvo.Employee;
-import com.neaterbits.query.sql.dsl.api.testvo.Person;
-import com.neaterbits.query.sql.dsl.api.testvo.Role;
 
 import static com.neaterbits.query.sql.dsl.api.Select.selectOne;
 import static com.neaterbits.query.sql.dsl.api.Select.aliasAlias;
@@ -26,7 +26,7 @@ public class SQLAPITest {
     	
     	final Alias<Company> c = aliasAlias(Company.class);
     	
-    	final QueryDataSource ds = null;
+    	final QueryDataSource ds = new QueryDataSourceJPA();
     	
     	final Param<Integer> param1 = intParam();
     	final Param<Integer> param2 = intParam();
@@ -34,7 +34,7 @@ public class SQLAPITest {
     	
     	final Company company = null;
     	
-    	final Supplier<Integer> f = company::getId;
+    	final Supplier<Long> f = company::getId;
     	
         final SingleQuery<ResultVO > query =
         		selectOne(ResultVO.class)
@@ -57,12 +57,15 @@ public class SQLAPITest {
         	  .and(param2).setTo(345)
         	  .get();
 
+        	/*
+        	
         	result = query.execute(b -> b
 				.with(param1).setTo(123)
 				 .and(param2).setTo(456)
 				
 				.on(ds)
 			);
+			*/
 
         assertThat(query).isNotNull();
     }

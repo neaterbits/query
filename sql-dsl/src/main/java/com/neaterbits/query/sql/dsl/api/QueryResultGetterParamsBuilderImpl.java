@@ -28,8 +28,8 @@ final class QueryResultGetterParamsBuilderImpl<RESULT_TYPE>
 			throw new IllegalArgumentException("dataSource == null");
 		}
 
-		if (query != null) {
-			throw new IllegalArgumentException("query != null");
+		if (query == null) {
+			throw new IllegalArgumentException("query == null");
 		}
 
 		this.queryParamCollector = queryParamCollector;
