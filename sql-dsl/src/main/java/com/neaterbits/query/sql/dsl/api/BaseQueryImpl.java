@@ -11,6 +11,4 @@ abstract class BaseQueryImpl<RESULT, RESULT_INSTANCE_TYPE> implements Query<RESU
 	final CompiledQuery getCompiledQuery() {
 		return compiledQuery;
 	}
-	
-	abstract RESULT executeOn(QueryDataSourceBase dataSource);
 }

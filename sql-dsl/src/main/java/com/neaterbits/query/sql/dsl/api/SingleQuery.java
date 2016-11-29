@@ -8,7 +8,7 @@ package com.neaterbits.query.sql.dsl.api;
  *  
  */
 
-public interface SingleQuery<RESULT> extends QueryOps<RESULT, RESULT> {
+public interface SingleQuery<RESULT> extends CompiledQueryOps<RESULT, RESULT, SinglePreparedQuery<RESULT>> {
 
 	
 }

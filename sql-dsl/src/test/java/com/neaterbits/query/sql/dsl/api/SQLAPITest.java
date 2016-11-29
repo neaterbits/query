@@ -52,9 +52,9 @@ public class SQLAPITest {
         	//.whereString(Company::getId)
         	.compile();
 
-        	ResultVO result = query.executeOn(ds)
-        	 .with(param1).setTo(123)
-        	  .and(param2).setTo(345)
+        	ResultVO result = query.prepare(ds)
+        	 .executeWith(param1).setTo(123)
+        	         .and(param2).setTo(345)
         	  .get();
 
         	/*

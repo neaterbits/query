@@ -1,7 +1,5 @@
 package com.neaterbits.query.sql.dsl.api;
 
-import java.util.List;
-
 /**
  * Query data source implementation for JPA
  * @author nhl
@@ -11,7 +9,7 @@ import java.util.List;
 final class QueryDataSourceJPA extends QueryDataSourceBase {
 
 	@Override
-	<RESULT_TYPE> RESULT_TYPE executeSingleQuery(CompiledQuery query) {
+	DSPreparedQuery prepareSingleQuery(CompiledQuery query) {
 		if (query == null) {
 			throw new IllegalArgumentException("query == null");
 		}
@@ -20,7 +18,7 @@ final class QueryDataSourceJPA extends QueryDataSourceBase {
 	}
 
 	@Override
-	<RESULT_TYPE> List<RESULT_TYPE> executeMultiQuery(CompiledQuery query) {
+	DSPreparedQuery prepareMultiQuery(CompiledQuery query) {
 		if (query == null) {
 			throw new IllegalArgumentException("query == null");
 		}
