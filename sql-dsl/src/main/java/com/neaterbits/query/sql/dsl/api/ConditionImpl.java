@@ -1,12 +1,11 @@
 package com.neaterbits.query.sql.dsl.api;
 
-import java.util.function.Function;
 
 abstract class ConditionImpl {
 
-	private final Function<?, ?> getter;
+	private final Getter getter;
 	
-	ConditionImpl(Function<?, ?> getter) {
+	ConditionImpl(Getter getter) {
 		if (getter == null) {
 			throw new IllegalArgumentException("getter == null");
 		}
@@ -15,7 +14,7 @@ abstract class ConditionImpl {
 	}
 
 
-	final Function<?, ?> getGetter() {
+	final Getter getGetter() {
 		return getter;
 	}
 

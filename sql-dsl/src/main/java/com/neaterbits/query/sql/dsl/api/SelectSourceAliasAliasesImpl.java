@@ -28,4 +28,11 @@ final class SelectSourceAliasAliasesImpl extends SelectSourceImpl {
 		
 		return ret;
 	}
+
+	@Override
+	CompiledGetter compileGetter(CollectedMapping mapping,
+			CompiledGetterSetterCache cache) throws CompileException {
+
+		throw new UnsupportedOperationException("TODO");
+	}
 }

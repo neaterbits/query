@@ -1,12 +1,11 @@
 package com.neaterbits.query.sql.dsl.api;
 
-import java.util.function.Function;
 
 abstract class ValueConditionImpl extends ConditionImpl {
 
 	private final ConditionValueImpl value;
 	
-	ValueConditionImpl(Function<?, ?> getter, ConditionValueImpl value) {
+	ValueConditionImpl(Getter getter, ConditionValueImpl value) {
 		super(getter);
 
 		if (value == null) {

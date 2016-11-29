@@ -1,14 +1,16 @@
 package com.neaterbits.query.sql.dsl.api;
 
 import java.util.function.Function;
+import java.util.function.Supplier;
 
 class ConditionClauseImpl<MODEL, RESULT, R, L extends LogicalClauses<MODEL, RESULT>>
-	implements ConditionClause<MODEL, RESULT, R, L> {
+	implements ConditionClauseTable<MODEL, RESULT, R, L>,
+			   ConditionClauseAlias<MODEL, RESULT, R, L>{
 
 	private final ClausesImpl<MODEL, RESULT> clause;
-	final Function<?, ?> getter;
+	final Getter getter;
 
-	ConditionClauseImpl(ClausesImpl<MODEL, RESULT> clause, Function<?, ?> getter) {
+	ConditionClauseImpl(ClausesImpl<MODEL, RESULT> clause, Getter getter) {
 
 		if (clause == null) {
 			throw new IllegalArgumentException("clause == null");
@@ -31,7 +33,11 @@ class ConditionClauseImpl<MODEL, RESULT, R, L extends LogicalClauses<MODEL, RESU
 	}
 
 	final <V> ConditionValueGetterImpl makeGetterValue(Function<?, V> value) {
-		return new ConditionValueGetterImpl(value);
+		return new ConditionValueGetterImpl(ClausesImpl.makeGetter(value));
+	}
+	
+	final <V> ConditionValueGetterImpl makeGetterValue(Supplier<V> value) {
+		return new ConditionValueGetterImpl(ClausesImpl.makeGetter(value));
 	}
 	
 	
@@ -80,6 +86,17 @@ class ConditionClauseImpl<MODEL, RESULT, R, L extends LogicalClauses<MODEL, RESU
 		
 		return addCondition(new ConditionEqualToImpl(getter, makeGetterValue(other)));
 	}
+	
+
+	@Override
+	public final L isEqualTo(Supplier<R> other) {
+
+		if (other == null) {
+			throw new IllegalArgumentException("other == null");
+		}
+		
+		return addCondition(new ConditionEqualToImpl(getter, makeGetterValue(other)));
+	}
 
 	@Override
 	public final L isNotEqualTo(R other) {
@@ -104,6 +121,16 @@ class ConditionClauseImpl<MODEL, RESULT, R, L extends LogicalClauses<MODEL, RESU
 	@Override
 	public final <T> L isNotEqualTo(Function<T, R> other) {
 
+		if (other == null) {
+			throw new IllegalArgumentException("other == null");
+		}
+
+		return addCondition(new ConditionNotEqualToImpl(getter, makeGetterValue(other)));
+	}
+
+	
+	@Override
+	public final L isNotEqualTo(Supplier<R> other) {
 		if (other == null) {
 			throw new IllegalArgumentException("other == null");
 		}

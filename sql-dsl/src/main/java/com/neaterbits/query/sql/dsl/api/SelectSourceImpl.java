@@ -1,10 +1,11 @@
 package com.neaterbits.query.sql.dsl.api;
 
-import java.util.function.Function;
 
 abstract class SelectSourceImpl implements SelectSources {
 
 	private final Class<?> [] types;
+
+	abstract CompiledGetter compileGetter(CollectedMapping mapping, CompiledGetterSetterCache cache) throws CompileException;
 	
 	SelectSourceImpl(Class<?> [] types) {
 		
@@ -16,18 +17,7 @@ abstract class SelectSourceImpl implements SelectSources {
 	}
 
 	@Override
-	public Class<?>[] getTypes() {
+	public final Class<?>[] getTypes() {
 		return types;
-	}
-
-	final CompiledGetter compileGetter(Function<?, ?> getter, CompiledGetterSetterCache cache) throws CompileException {
-
-		final CompiledGetter ret = cache.findGetterFromTypes(types, getter);
-		
-		if (ret == null) {
-			throw new CompileException("No getter found: " + getter);
-		}
-		
-		return ret;
 	}
 }

@@ -1,10 +1,8 @@
 package com.neaterbits.query.sql.dsl.api;
 
-import java.util.function.Function;
-
 final class ConditionGreaterThanImpl extends ConditionComparisonImpl {
 
-	ConditionGreaterThanImpl(Function<?, ?> getter, ConditionValueImpl value) {
+	ConditionGreaterThanImpl(Getter getter, ConditionValueImpl value) {
 		super(getter, value);
 	}
 

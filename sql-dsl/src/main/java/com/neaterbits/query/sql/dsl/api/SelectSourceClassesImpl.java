@@ -21,4 +21,17 @@ final class SelectSourceClassesImpl extends SelectSourceImpl {
 	Class<?>[] getClasses() {
 		return classes;
 	}
+
+	final CompiledGetter compileGetter(CollectedMapping mapping, CompiledGetterSetterCache cache) throws CompileException {
+
+		final CollectedMappingTable tableMapping = (CollectedMappingTable)mapping;
+		
+		final CompiledGetter ret = cache.findGetterFromTypes(getTypes(), tableMapping.getGetter());
+		
+		if (ret == null) {
+			throw new CompileException("No getter found: " + tableMapping.getGetter());
+		}
+		
+		return ret;
+	}
 }

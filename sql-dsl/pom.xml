@@ -34,15 +34,6 @@
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
 		
-		
-		<!-- Test -->
-		
-		<dependency>
-			<groupId>com.neaterbits.query</groupId>
-			<artifactId>query-jpa-test</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
-			<scope>test</scope>
-		</dependency>
 	</dependencies>
 
 </project>

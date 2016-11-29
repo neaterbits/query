@@ -4,7 +4,7 @@ final class StringClauseImpl<MODEL, RESULT, L extends LogicalClauses<MODEL, RESU
 		extends ComparativeClauseImpl<MODEL, RESULT, String, L>
 		implements StringClause<MODEL, RESULT, L> {
 
-	StringClauseImpl(ClausesImpl<MODEL, RESULT> clause, StringFunction<?> getter) {
+	StringClauseImpl(ClausesImpl<MODEL, RESULT> clause, Getter getter) {
 		super(clause, getter);
 	}
 

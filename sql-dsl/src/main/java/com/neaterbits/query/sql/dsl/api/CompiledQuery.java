@@ -116,7 +116,7 @@ final class CompiledQuery {
 			SelectSourceImpl selectSource,
 			CompiledGetterSetterCache cache) throws CompileException {
 
-		final CompiledGetter mapGetter = selectSource.compileGetter(collected.getGetter(), cache);
+		final CompiledGetter mapGetter = selectSource.compileGetter(collected, cache);
 		final CompiledSetter mapSetter = cache.compileSetterUntyped(resultType, collected.getSetter());
 		
 		if (mapSetter == null) {

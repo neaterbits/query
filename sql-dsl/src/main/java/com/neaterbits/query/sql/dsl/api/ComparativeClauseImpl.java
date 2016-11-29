@@ -1,12 +1,14 @@
 package com.neaterbits.query.sql.dsl.api;
 
 import java.util.function.Function;
+import java.util.function.Supplier;
 
 class ComparativeClauseImpl<MODEL, RESULT, R extends Comparable<R>, L extends LogicalClauses<MODEL, RESULT>> 
 	extends ConditionClauseImpl<MODEL, RESULT, R, L>
-	implements ComparativeClause<MODEL, RESULT, R, L> {
+	implements ComparativeClauseTable<MODEL, RESULT, R, L>,
+			   ComparativeClauseAlias<MODEL, RESULT, R, L> {
 
-	ComparativeClauseImpl(ClausesImpl<MODEL, RESULT> clause, Function<?, ?> getter) {
+	ComparativeClauseImpl(ClausesImpl<MODEL, RESULT> clause, Getter getter) {
 		super(clause, getter);
 	}
 
@@ -113,6 +115,45 @@ class ComparativeClauseImpl<MODEL, RESULT, R extends Comparable<R>, L extends Lo
 
 	@Override
 	public final <T> LogicalClauses<MODEL, RESULT> isLesserOrEqualTo(Function<T, R> getter) {
+		if (getter == null) {
+			throw new IllegalArgumentException("getter == null");
+		}
+		
+		return addCondition(new ConditionLessThanOrEqualImpl(this.getter, makeGetterValue(getter)));
+	}
+
+	
+	// -------------------- Alias specific --------------------
+
+	@Override
+	public final LogicalClauses<MODEL, RESULT> isGreaterThan(Supplier<R> getter) {
+		if (getter == null) {
+			throw new IllegalArgumentException("getter == null");
+		}
+		
+		return addCondition(new ConditionGreaterThanImpl(this.getter, makeGetterValue(getter)));
+	}
+
+	@Override
+	public LogicalClauses<MODEL, RESULT> isGreaterOrEqualTo(Supplier<R> getter) {
+		if (getter == null) {
+			throw new IllegalArgumentException("getter == null");
+		}
+		
+		return addCondition(new ConditionGreaterThanOrEqualImpl(this.getter, makeGetterValue(getter)));
+	}
+
+	@Override
+	public LogicalClauses<MODEL, RESULT> isLesserThan(Supplier<R> getter) {
+		if (getter == null) {
+			throw new IllegalArgumentException("getter == null");
+		}
+		
+		return addCondition(new ConditionLessThanImpl(this.getter, makeGetterValue(getter)));
+	}
+
+	@Override
+	public LogicalClauses<MODEL, RESULT> isLesserOrEqualTo(Supplier<R> getter) {
 		if (getter == null) {
 			throw new IllegalArgumentException("getter == null");
 		}

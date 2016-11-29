@@ -1,11 +1,23 @@
 package com.neaterbits.query.sql.dsl.api;
 
+import java.util.function.Function;
+import java.util.function.Supplier;
+
 abstract class ClausesImpl<MODEL, RESULT>
 	extends BaseQueryEntity<MODEL>
 	implements LogicalClauses<MODEL, RESULT> {
 
 	final ClauseCollectorImpl clauseCollector;
 
+	static Getter makeGetter(Function<?, ?> getter) {
+		return new FunctionGetter(getter);
+	}
+
+	static Getter makeGetter(Supplier<?> getter) {
+		return new SupplierGetter(getter);
+	}
+
+	
 	ClausesImpl(ClausesImpl<MODEL, RESULT> last) {
 		super(last);
 		

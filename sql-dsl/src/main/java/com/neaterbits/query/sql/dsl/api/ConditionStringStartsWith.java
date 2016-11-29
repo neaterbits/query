@@ -1,10 +1,8 @@
 package com.neaterbits.query.sql.dsl.api;
 
-import java.util.function.Function;
-
 final class ConditionStringStartsWith extends ConditionStringImpl {
 
-	ConditionStringStartsWith(Function<?, ?> getter, ConditionValueImpl value) {
+	ConditionStringStartsWith(Getter getter, ConditionValueImpl value) {
 		super(getter, value);
 	}
 

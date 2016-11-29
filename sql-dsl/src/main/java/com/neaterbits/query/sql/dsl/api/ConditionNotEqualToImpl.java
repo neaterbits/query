@@ -1,10 +1,9 @@
 package com.neaterbits.query.sql.dsl.api;
 
-import java.util.function.Function;
 
 final class ConditionNotEqualToImpl extends ValueConditionImpl {
 
-	ConditionNotEqualToImpl(Function<?, ?> getter, ConditionValueImpl value) {
+	ConditionNotEqualToImpl(Getter getter, ConditionValueImpl value) {
 		super(getter, value);
 	}
 

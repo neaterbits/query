@@ -1,5 +1,10 @@
 package com.neaterbits.query.sql.dsl.api;
 
+import java.lang.reflect.InvocationHandler;
+import java.lang.reflect.Method;
+
+import com.neaterbits.query.util.java8.MethodFinder;
+
 
 public class Select {
 
@@ -35,6 +40,47 @@ public class Select {
 		return new MultiTypeResultImpl<MultiQuery<TYPE_RESULT>, TYPE_RESULT>(cl, compiledQuery -> new MultiQueryImpl<>(compiledQuery));
 	}
 
+
+	private static final Method aliasGetTypeMethod;
+	
+	static {
+		try {
+			aliasGetTypeMethod = IAlias.class.getMethod("getType");
+		} catch (NoSuchMethodException | SecurityException ex) {
+			throw new IllegalStateException("Failed to get IAlias.getType() method", ex);
+		}
+	}
+	
+	
+    public static <T> T alias(Class<T> aliasType) {
+		if (aliasType == null) {
+			throw new IllegalArgumentException("aliasType == null");
+		}
+		
+		// Create a dynamic-proxy for the aliased type
+		
+		final InvocationHandler handler = (proxy, method, args) -> {
+			final Object ret;
+			
+			if (method.getDeclaringClass().equals(IAlias.class)) {
+				if (!method.equals(aliasGetTypeMethod)) {
+					throw new IllegalArgumentException("Expected getType to be called");
+				}
+				
+				ret = aliasType;
+			}
+			else {
+				throw new UnsupportedOperationException("N/A");
+			}
+
+			return ret;
+		};
+		
+		
+		return MethodFinder.enhance(aliasType, new Class<?> [] { IAlias.class }, handler);
+    }
+    
+	
     public static <T> Alias<T> aliasAlias(Class<T> aliasType) {
 		if (aliasType == null) {
 			throw new IllegalArgumentException("aliasType == null");

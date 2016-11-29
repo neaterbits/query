@@ -24,6 +24,17 @@
 
 	<dependencies>
 		<dependency>
+			<groupId>com.neaterbits.query</groupId>
+			<artifactId>query-sql-dsl</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>com.neaterbits.query</groupId>
+			<artifactId>query-jpa</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+		
+		<dependency>
 			<groupId>org.eclipse.persistence</groupId>
 			<artifactId>eclipselink</artifactId>
 			<version>2.6.4</version>

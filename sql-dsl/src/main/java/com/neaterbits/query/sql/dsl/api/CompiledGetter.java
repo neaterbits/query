@@ -1,32 +1,21 @@
 package com.neaterbits.query.sql.dsl.api;
 
 import java.lang.reflect.Method;
-import java.util.function.Function;
 
-final class CompiledGetter {
+abstract class CompiledGetter {
 
-	private final Function<?, ?> getter;
 	private final Method getterMethod;
 
-	CompiledGetter(Function<?, ?> getter, Method getterMethod) {
-		
-		if (getter == null) {
-			throw new IllegalArgumentException("getter == null");
-		}
+	CompiledGetter(Method getterMethod) {
 		
 		if (getterMethod == null) {
 			throw new IllegalArgumentException("getterMethod == null");
 		}
 		
-		this.getter = getter;
 		this.getterMethod = getterMethod;
 	}
 
-	Function<?, ?> getGetter() {
-		return getter;
-	}
-
-	Method getGetterMethod() {
+	final Method getGetterMethod() {
 		return getterMethod;
 	}
 }

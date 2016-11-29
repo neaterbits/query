@@ -1,10 +1,8 @@
 package com.neaterbits.query.sql.dsl.api;
 
-import java.util.function.Function;
-
 final class ConditionInImpl extends ValueConditionImpl {
 
-	ConditionInImpl(Function<?, ?> getter, ConditionValueImpl value) {
+	ConditionInImpl(Getter getter, ConditionValueImpl value) {
 		super(getter, value);
 	}
 

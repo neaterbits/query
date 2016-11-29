@@ -2,11 +2,14 @@ package com.neaterbits.query.sql.dsl.api;
 
 import java.util.function.BiConsumer;
 import java.util.function.Function;
+import java.util.function.Supplier;
 
 final class ResultMapperToImpl<MODEL, RESULT, R, SOURCE extends SelectSourceBuilder<MODEL, RESULT>>
 		implements ResultMapperTo<MODEL, RESULT, R, SOURCE> {
 
 	private final Function<?, ?> fromGetter;
+	private final Supplier<?> fromSupplier;
+	
 	private final BaseMapToResultImpl<MODEL, RESULT> impl;
 
 	ResultMapperToImpl(Function<?, ?> fromGetter, BaseMapToResultImpl<MODEL, RESULT> impl) {
@@ -21,6 +24,23 @@ final class ResultMapperToImpl<MODEL, RESULT, R, SOURCE extends SelectSourceBuil
 		
 		
 		this.fromGetter = fromGetter;
+		this.fromSupplier = null;
+		this.impl = impl;
+	}
+
+	ResultMapperToImpl(Supplier<?> fromSupplier, BaseMapToResultImpl<MODEL, RESULT> impl) {
+		
+		if (fromSupplier == null) {
+			throw new IllegalArgumentException("fromGetter == null");
+		}
+
+		if (impl == null) {
+			throw new IllegalArgumentException("impl == null");
+		}
+		
+
+		this.fromGetter = null;
+		this.fromSupplier = fromSupplier;
 		this.impl = impl;
 	}
 
@@ -32,7 +52,17 @@ final class ResultMapperToImpl<MODEL, RESULT, R, SOURCE extends SelectSourceBuil
 			throw new IllegalArgumentException("setter == null");
 		}
 
-		impl.getMappingCollector().add(fromGetter, setter);
+		final MappingCollector mappingCollector = impl.getMappingCollector();
+
+		if (fromGetter != null) {
+			mappingCollector.add(fromGetter, setter);
+		}
+		else if (fromSupplier != null) {
+			mappingCollector.add(fromSupplier, setter);
+		}
+		else {
+			throw new IllegalStateException("Neither getter nor supplier set");
+		}
 		
 		return (SOURCE)impl;
 	}
