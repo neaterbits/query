@@ -1,26 +1,50 @@
 package com.neaterbits.query.sql.dsl.api;
 
+import java.lang.reflect.Method;
+import java.util.function.Supplier;
+
 
 final class SelectSourceAliasesImpl extends SelectSourceImpl {
 
+	private final IAlias [] aliases;
+	
 	
 	public SelectSourceAliasesImpl(Object [] aliases) {
 		super(getTypes(aliases));
+		
+		this.aliases = new IAlias[aliases.length];
+		
+		for (int i = 0; i < aliases.length; ++ i) {
+			this.aliases[i] = (IAlias)aliases[i];
+		}
 	}
-	
+
 	@Override
 	CompiledGetter compileGetter(CollectedMapping mapping, CompiledGetterSetterCache cache) throws CompileException {
 		
 		final CollectedMappingAlias aliasMapping = (CollectedMappingAlias)mapping;
 
-		final CompiledGetter ret = cache.findGetterFromTypes(getTypes(), aliasMapping.getGetter());
+		final Supplier<?> getter = aliasMapping.getGetter();
 		
-		if (ret == null) {
-			throw new IllegalStateException("Failed to find getter method for alias");
-		}
+		// Trigger supplier
+		getter.get();
 		
 
-		return ret;
+		Method lastMethod = null;
+		// Clear all aliases
+		for (IAlias alias : aliases) {
+			 lastMethod = alias.getLastInvokedMethod();
+			 
+			 if (lastMethod != null) {
+				 break;
+			 }
+		}
+		
+		if (lastMethod == null) {
+			throw new IllegalArgumentException("Method not invoked on alias, not an alias Supplier");
+		}
+
+		return new CompiledGetterSupplier(getter, lastMethod);
 	}
 	
 	private static Class<?> [] getTypes(Object [] aliases) {
@@ -52,7 +76,7 @@ final class SelectSourceAliasesImpl extends SelectSourceImpl {
 
 			final IAlias iAlias = (IAlias)alias;
 			
-			aliases[i] = iAlias.getType();
+			ret[i] = iAlias.getType();
 		}
 		
 		return ret;

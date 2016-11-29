@@ -42,12 +42,15 @@ public class Select {
 
 
 	private static final Method aliasGetTypeMethod;
+	private static final Method aliasGetLastInvokedMethod;
 	
 	static {
 		try {
 			aliasGetTypeMethod = IAlias.class.getMethod("getType");
+			aliasGetLastInvokedMethod = IAlias.class.getMethod("getLastInvokedMethod");
+			
 		} catch (NoSuchMethodException | SecurityException ex) {
-			throw new IllegalStateException("Failed to get IAlias.getType() method", ex);
+			throw new IllegalStateException("Failed to get IAlias method", ex);
 		}
 	}
 	
@@ -59,25 +62,49 @@ public class Select {
 		
 		// Create a dynamic-proxy for the aliased type
 		
-		final InvocationHandler handler = (proxy, method, args) -> {
+		final InvocationHandler handler = new AliasInvocationHandler(aliasType);
+		
+		return MethodFinder.enhance(aliasType, new Class<?> [] { IAlias.class }, handler);
+    }
+    
+    private static class AliasInvocationHandler implements InvocationHandler {
+
+    	private final Class<?> aliasType;
+    	
+    	private Method lastInvokedMethod;
+    	
+    	
+		AliasInvocationHandler(Class<?> aliasType) {
+			this.aliasType = aliasType;
+			this.lastInvokedMethod = null;
+		}
+
+
+		@Override
+		public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
 			final Object ret;
 			
 			if (method.getDeclaringClass().equals(IAlias.class)) {
-				if (!method.equals(aliasGetTypeMethod)) {
-					throw new IllegalArgumentException("Expected getType to be called");
+				if (method.equals(aliasGetTypeMethod)) {
+					ret = aliasType;
 				}
-				
-				ret = aliasType;
+				else if (method.equals(aliasGetLastInvokedMethod)) {
+					ret = lastInvokedMethod;
+					this.lastInvokedMethod = null;
+				}
+				else {
+					throw new IllegalArgumentException("Unknown IAlias method " + method.getName());
+				}
 			}
 			else {
-				throw new UnsupportedOperationException("N/A: " + method.getName());
+				// Store last invoked for later retrieval
+				lastInvokedMethod = method;
+				
+				ret = null;
 			}
 
 			return ret;
-		};
-		
-		
-		return MethodFinder.enhance(aliasType, new Class<?> [] { IAlias.class }, handler);
+		}
     }
     
 	

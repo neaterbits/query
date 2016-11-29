@@ -3,7 +3,6 @@ package com.neaterbits.query.sql.dsl.api;
 import java.lang.reflect.Method;
 import java.util.function.BiConsumer;
 import java.util.function.Function;
-import java.util.function.Supplier;
 
 import com.neaterbits.query.util.java8.MethodFinder;
 
@@ -29,13 +28,6 @@ final class CompiledGetterSetterCache {
 		
 		return m == null ? null : new CompiledGetterFunction(getter, m);
 	}
-
-	private CompiledGetter compileGetterUntyped(Class<?> cl, Supplier<?> getter) {
-		@SuppressWarnings({ "unchecked", "rawtypes" })
-		final Method m = MethodFinder.findOrNull((Class)cl, (Supplier)getter);
-		
-		return m == null ? null : new CompiledGetterSupplier(getter, m);
-	}
 	
 	<T, R> CompiledSetter compileSetterTyped(Class<T> cl, BiConsumer<T, R> setter) {
 		final Method m = MethodFinder.findOrNull(cl, setter);
@@ -52,33 +44,6 @@ final class CompiledGetterSetterCache {
 	
 	
 	CompiledGetter findGetterFromTypes(Class<?> [] types, Function<?, ?> getter) throws CompileException {
-		CompiledGetter ret = null;
-		
-		for (Class<?> type : types) {
-			
-			CompiledGetter found;
-			
-			try {
-				found = compileGetterUntyped(type, getter);
-			}
-			catch (ClassCastException ex) {
-				// Instance not of right type
-				continue;
-			}
-			
-			if (found != null) {
-				if (ret != null) {
-					throw new CompileException("More than one getter found: " + getter);
-				}
-				
-				ret = found;
-			}
-		}
-
-		return ret;
-	}
-	
-	CompiledGetter findGetterFromTypes(Class<?> [] types, Supplier<?> getter) throws CompileException {
 		CompiledGetter ret = null;
 		
 		for (Class<?> type : types) {
