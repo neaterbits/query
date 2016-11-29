@@ -4,7 +4,10 @@ import java.util.function.Function;
 import java.util.function.Supplier;
 
 public class SingleMapToResultImpl<MODEL, RESULT>
-	extends BaseMapToResultImpl<MODEL, RESULT> implements SingleMapToResult<MODEL, RESULT> {
+	extends BaseMapToResultImpl<MODEL, RESULT>
+	implements SingleMapToResult<MODEL, RESULT>,
+			   SingleMapToResultTable<MODEL, RESULT>,
+			   SingleMapToResultAlias<MODEL, RESULT> {
 
 	SingleMapToResultImpl(Class<?> resultType, ModelCompiler<MODEL> modelCompiler) {
 		super(resultType, modelCompiler);

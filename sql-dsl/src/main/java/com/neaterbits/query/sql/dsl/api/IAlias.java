@@ -1,6 +1,6 @@
 package com.neaterbits.query.sql.dsl.api;
 
-interface IAlias {
+public interface IAlias {
 
 	Class<?> getType();
 	

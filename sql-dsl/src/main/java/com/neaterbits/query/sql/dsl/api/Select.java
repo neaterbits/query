@@ -70,7 +70,7 @@ public class Select {
 				ret = aliasType;
 			}
 			else {
-				throw new UnsupportedOperationException("N/A");
+				throw new UnsupportedOperationException("N/A: " + method.getName());
 			}
 
 			return ret;
