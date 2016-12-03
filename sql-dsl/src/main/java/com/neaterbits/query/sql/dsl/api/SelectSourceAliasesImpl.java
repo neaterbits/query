@@ -19,6 +19,10 @@ final class SelectSourceAliasesImpl extends SelectSourceImpl {
 		}
 	}
 
+	IAlias[] getAliases() {
+		return aliases;
+	}
+
 	@Override
 	CompiledGetter compileGetter(CollectedMapping mapping, CompiledGetterSetterCache cache) throws CompileException {
 		

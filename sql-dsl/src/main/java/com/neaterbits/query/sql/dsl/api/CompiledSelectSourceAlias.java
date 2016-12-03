@@ -4,8 +4,8 @@ final class CompiledSelectSourceAlias extends CompiledSelectSource {
 
 	private final IAlias alias;
 	
-	CompiledSelectSourceAlias(IAlias alias, String name) {
-		super(alias.getType(), name);
+	CompiledSelectSourceAlias(SelectSourceAliasesImpl selectSource, IAlias alias, String name) {
+		super(selectSource, alias.getType(), name);
 		
 		this.alias = alias;
 	}

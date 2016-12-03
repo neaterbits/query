@@ -3,6 +3,8 @@ package com.neaterbits.query.sql.dsl.api;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.neaterbits.query.util.java8.Coll8;
+
 /**
  * Representation of query where we have compiled all information 
  *
@@ -14,14 +16,14 @@ final class CompiledQuery {
 	
 	
 	private final CompiledMappings mappings;
-	private final SelectSourceImpl selectSources; // Types in the "from" part of query
+	private final CompiledSelectSources selectSources;
 	
 	private final CompiledConditions conditions;
 
 	private CompiledQuery(
 			Class<?> resultType,
 			CompiledMappings mappings,
-			SelectSourceImpl selectSources,
+			CompiledSelectSources selectSources,
 			CompiledConditions conditions) {
 
 		if (resultType == null) {
@@ -52,7 +54,7 @@ final class CompiledQuery {
 		return conditions;
 	}
 	
-	SelectSources getSelectSources() {
+	CompiledSelectSources getSelectSources() {
 		return selectSources;
 	}
 
@@ -71,12 +73,12 @@ final class CompiledQuery {
 			compiledConditions = null;
 		}
 		
-		final SelectSourceImpl sources = collector.getSources();
-		
 		final Class<?> resultType = collector.getResultType();
 		final CompiledMappings compiledMappings;
 		
 		final CompiledGetterSetterCache cache = new CompiledGetterSetterCache();
+
+		final SelectSourceImpl sources = collector.getSources();
 		
 		if (collector.getMappings() != null) {
 			compiledMappings = compileMappings(resultType, collector.getMappings(), sources, cache);
@@ -85,10 +87,12 @@ final class CompiledQuery {
 			compiledMappings = null;
 		}
 
+		final CompiledSelectSources compiledSources = compileSelectSources(sources);
+
 		return new CompiledQuery(
 				resultType,
 				compiledMappings,
-				collector.getSources(),
+				compiledSources,
 				compiledConditions);
 	}
 
@@ -108,6 +112,51 @@ final class CompiledQuery {
 		}
 
 		return new CompiledMappings(compiledMappings);
+	}
+
+	private static CompiledSelectSources compileSelectSources(SelectSourceImpl sources) {
+
+		final CompiledSelectSources compiled;
+		final List<CompiledSelectSource> compiledList = new ArrayList<>();
+
+		// Figure out the type of select source
+		if (sources instanceof SelectSourceClassesImpl) {
+			// table names
+			final SelectSourceClassesImpl selectSourceClasses = (SelectSourceClassesImpl)sources;
+
+			for (Class<?> cl : selectSourceClasses.getClasses()) {
+				final String name = cl.getName().toLowerCase();
+
+				if (Coll8.has(compiledList, e -> e.getName().equals(name))) {
+					throw new IllegalStateException("Two entity classes with same lowercase name \"" + name + "\"");
+				}
+
+				final CompiledSelectSourceClass c = new CompiledSelectSourceClass(selectSourceClasses, cl, name);
+
+				compiledList.add(c);
+			}
+		}
+		else if (sources instanceof SelectSourceAliasesImpl) {
+
+			final SelectSourceAliasesImpl selectSourceAliases = (SelectSourceAliasesImpl)sources;
+
+			int aliasNo = 0;
+			
+			for (IAlias alias : selectSourceAliases.getAliases()) {
+				final CompiledSelectSourceAlias c = new CompiledSelectSourceAlias(selectSourceAliases, alias, "al" + aliasNo);
+
+				compiledList.add(c);
+
+				++ aliasNo;
+			}
+		}
+		else {
+			throw new IllegalArgumentException("Unknown select sources type " + sources);
+		}
+
+		compiled = new CompiledSelectSources(sources, compiledList);
+		
+		return compiled;
 	}
 
 	private static CompiledMapping compileMapping(

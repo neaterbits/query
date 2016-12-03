@@ -10,6 +10,7 @@ abstract class CompiledConditions {
 	private final List<ConditionImpl> conditions;
 
 	CompiledConditions(Collection<ConditionImpl> conditions) {
+
 		if (conditions == null) {
 			throw new IllegalArgumentException("conditions == null");
 		}
@@ -21,3 +22,4 @@ abstract class CompiledConditions {
 		return conditions;
 	}
 }
+

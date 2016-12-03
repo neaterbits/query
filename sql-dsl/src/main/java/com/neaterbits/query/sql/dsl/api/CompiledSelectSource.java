@@ -1,12 +1,18 @@
 package com.neaterbits.query.sql.dsl.api;
 
-abstract class CompiledSelectSource {
+abstract class CompiledSelectSource extends CompiledQueryElement<SelectSourceImpl> {
 
 	private final Class<?> type;
 	private final String name;
 	
-	CompiledSelectSource(Class<?> type, String name) {
-		
+	CompiledSelectSource(SelectSourceImpl original, Class<?> type, String name) {
+
+		super(original);
+
+		if (original == null) {
+			throw new IllegalArgumentException("original == null");
+		}
+
 		if (type == null) {
 			throw new IllegalArgumentException("type == null");
 		}

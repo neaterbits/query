@@ -11,12 +11,18 @@ import java.util.List;
  *
  */
 
-final class CompiledSelectSources {
+final class CompiledSelectSources extends CompiledQueryElement<SelectSourceImpl> {
 
 	private final List<CompiledSelectSource> sources;
 
-	CompiledSelectSources(List<CompiledSelectSource> sources) {
+	CompiledSelectSources(SelectSourceImpl original, List<CompiledSelectSource> sources) {
 		
+		super(original);
+
+		if (original == null) {
+			throw new IllegalArgumentException("original == null");
+		}
+
 		if (sources == null) {
 			throw new IllegalArgumentException("sources == null");
 		}
