@@ -9,12 +9,11 @@ final class CompiledGetterSupplier extends CompiledGetter {
 
 	CompiledGetterSupplier(Supplier<?> getter, Method getterMethod) {
 		super(getterMethod);
-		
+
 		if (getter == null) {
 			throw new IllegalArgumentException("getter == null");
 		}
-		
-		
+
 		this.getter = getter;
 	}
 
