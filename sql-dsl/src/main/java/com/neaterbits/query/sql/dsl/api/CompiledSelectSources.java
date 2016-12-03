@@ -11,12 +11,13 @@ import java.util.List;
  *
  */
 
-final class CompiledSelectSources extends CompiledQueryElement<SelectSourceImpl> {
+abstract class CompiledSelectSources<T extends CompiledSelectSource> extends CompiledQueryElement<SelectSourceImpl> {
 
-	private final List<CompiledSelectSource> sources;
+	private final List<T> sources;
 
-	CompiledSelectSources(SelectSourceImpl original, List<CompiledSelectSource> sources) {
-		
+	abstract CompiledFieldReference makeFieldReference(CollectedMapping mapping, CompiledGetterSetterCache cache) throws CompileException;
+	
+	CompiledSelectSources(SelectSourceImpl original, List<T> sources) {
 		super(original);
 
 		if (original == null) {
@@ -30,7 +31,8 @@ final class CompiledSelectSources extends CompiledQueryElement<SelectSourceImpl>
 		this.sources = Collections.unmodifiableList(new ArrayList<>(sources));
 	}
 
-	List<CompiledSelectSource> getSources() {
+	final List<T> getSources() {
 		return sources;
 	}
 }
+

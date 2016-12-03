@@ -22,6 +22,7 @@ final class SelectSourceClassesImpl extends SelectSourceImpl {
 		return classes;
 	}
 
+	@Override
 	final CompiledGetter compileGetter(CollectedMapping mapping, CompiledGetterSetterCache cache) throws CompileException {
 
 		final CollectedMappingTable tableMapping = (CollectedMappingTable)mapping;

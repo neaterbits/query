@@ -6,8 +6,8 @@ import java.util.function.Function;
 final class CollectedMappingTable extends CollectedMapping {
 	private final Function<?, ?> getter;
 	
-	CollectedMappingTable(Function<?, ?> getter, BiConsumer<?, ?> setter) {
-		super(setter);
+	CollectedMappingTable(QueryBuilderItem original, Function<?, ?> getter, BiConsumer<?, ?> setter) {
+		super(original, setter);
 		
 		if (getter == null) {
 			throw new IllegalArgumentException("getter == null");

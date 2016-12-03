@@ -6,8 +6,8 @@ import java.util.function.Supplier;
 final class CollectedMappingAlias extends CollectedMapping {
 	private final Supplier<?> getter;
 	
-	CollectedMappingAlias(Supplier<?> getter, BiConsumer<?, ?> setter) {
-		super(setter);
+	CollectedMappingAlias(QueryBuilderItem original, Supplier<?> getter, BiConsumer<?, ?> setter) {
+		super(original, setter);
 		
 		if (getter == null) {
 			throw new IllegalArgumentException("getter == null");

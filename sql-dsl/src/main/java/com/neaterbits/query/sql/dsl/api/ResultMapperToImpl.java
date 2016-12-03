@@ -5,6 +5,7 @@ import java.util.function.Function;
 import java.util.function.Supplier;
 
 final class ResultMapperToImpl<MODEL, RESULT, R, SOURCE extends SelectSourceBuilder<MODEL, RESULT>>
+		extends QueryBuilderItem
 		implements ResultMapperTo<MODEL, RESULT, R, SOURCE> {
 
 	private final Function<?, ?> fromGetter;
@@ -55,10 +56,10 @@ final class ResultMapperToImpl<MODEL, RESULT, R, SOURCE extends SelectSourceBuil
 		final MappingCollector mappingCollector = impl.getMappingCollector();
 
 		if (fromGetter != null) {
-			mappingCollector.add(fromGetter, setter);
+			mappingCollector.add(this, fromGetter, setter);
 		}
 		else if (fromSupplier != null) {
-			mappingCollector.add(fromSupplier, setter);
+			mappingCollector.add(this, fromSupplier, setter);
 		}
 		else {
 			throw new IllegalStateException("Neither getter nor supplier set");

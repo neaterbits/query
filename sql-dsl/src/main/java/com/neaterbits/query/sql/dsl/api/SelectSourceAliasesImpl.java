@@ -8,7 +8,6 @@ final class SelectSourceAliasesImpl extends SelectSourceImpl {
 
 	private final IAlias [] aliases;
 	
-	
 	public SelectSourceAliasesImpl(Object [] aliases) {
 		super(getTypes(aliases));
 		
@@ -22,7 +21,7 @@ final class SelectSourceAliasesImpl extends SelectSourceImpl {
 	IAlias[] getAliases() {
 		return aliases;
 	}
-
+	
 	@Override
 	CompiledGetter compileGetter(CollectedMapping mapping, CompiledGetterSetterCache cache) throws CompileException {
 		
@@ -32,7 +31,6 @@ final class SelectSourceAliasesImpl extends SelectSourceImpl {
 		
 		// Trigger supplier
 		getter.get();
-		
 
 		Method lastMethod = null;
 		// Clear all aliases
@@ -43,7 +41,7 @@ final class SelectSourceAliasesImpl extends SelectSourceImpl {
 				 break;
 			 }
 		}
-		
+
 		if (lastMethod == null) {
 			throw new IllegalArgumentException("Method not invoked on alias, not an alias Supplier");
 		}

@@ -8,22 +8,21 @@ import com.neaterbits.query.util.java8.Coll8;
 /**
  * Representation of query where we have compiled all information 
  *
- */
+ */	
 
 final class CompiledQuery {
 
 	private final Class<?> resultType;
 	
-	
 	private final CompiledMappings mappings;
-	private final CompiledSelectSources selectSources;
+	private final CompiledSelectSources<?> selectSources;
 	
 	private final CompiledConditions conditions;
 
 	private CompiledQuery(
 			Class<?> resultType,
 			CompiledMappings mappings,
-			CompiledSelectSources selectSources,
+			CompiledSelectSources<?> selectSources,
 			CompiledConditions conditions) {
 
 		if (resultType == null) {
@@ -53,8 +52,8 @@ final class CompiledQuery {
 	CompiledConditions getConditions() {
 		return conditions;
 	}
-	
-	CompiledSelectSources getSelectSources() {
+
+	CompiledSelectSources<?> getSelectSources() {
 		return selectSources;
 	}
 
@@ -79,15 +78,15 @@ final class CompiledQuery {
 		final CompiledGetterSetterCache cache = new CompiledGetterSetterCache();
 
 		final SelectSourceImpl sources = collector.getSources();
+
+		final CompiledSelectSources<?> compiledSources = compileSelectSources(sources);
 		
 		if (collector.getMappings() != null) {
-			compiledMappings = compileMappings(resultType, collector.getMappings(), sources, cache);
+			compiledMappings = compileMappings(resultType, collector.getMappings(), sources, compiledSources, cache);
 		}
 		else {
 			compiledMappings = null;
 		}
-
-		final CompiledSelectSources compiledSources = compileSelectSources(sources);
 
 		return new CompiledQuery(
 				resultType,
@@ -100,13 +99,20 @@ final class CompiledQuery {
 			Class<?> resultType,
 			MappingCollector mappingCollector,
 			SelectSourceImpl selectSource,
+			CompiledSelectSources<?> compiledSelectSources,
 			CompiledGetterSetterCache cache) throws CompileException {
 
 		final List<CollectedMapping> collectedMappings = mappingCollector.getCollectedMappings();
 		final List<CompiledMapping> compiledMappings = new ArrayList<>(collectedMappings.size());
 
 		for (CollectedMapping collected : collectedMappings) {
-			final CompiledMapping compiled = compileMapping(resultType, collected, selectSource, cache);
+
+			final CompiledMapping compiled = compileMapping(
+					resultType,
+					collected,
+					selectSource,
+					compiledSelectSources,
+					cache);
 
 			compiledMappings.add(compiled);
 		}
@@ -114,13 +120,14 @@ final class CompiledQuery {
 		return new CompiledMappings(compiledMappings);
 	}
 
-	private static CompiledSelectSources compileSelectSources(SelectSourceImpl sources) {
+	private static CompiledSelectSources<?> compileSelectSources(SelectSourceImpl sources) {
 
-		final CompiledSelectSources compiled;
-		final List<CompiledSelectSource> compiledList = new ArrayList<>();
+		final CompiledSelectSources<?> compiled;
 
 		// Figure out the type of select source
 		if (sources instanceof SelectSourceClassesImpl) {
+			final List<CompiledSelectSourceClass> compiledList = new ArrayList<>();
+			
 			// table names
 			final SelectSourceClassesImpl selectSourceClasses = (SelectSourceClassesImpl)sources;
 
@@ -135,8 +142,11 @@ final class CompiledQuery {
 
 				compiledList.add(c);
 			}
+
+			compiled = new CompiledSelectSourcesClass(sources, compiledList);
 		}
 		else if (sources instanceof SelectSourceAliasesImpl) {
+			final List<CompiledSelectSourceAlias> compiledList = new ArrayList<>();
 
 			final SelectSourceAliasesImpl selectSourceAliases = (SelectSourceAliasesImpl)sources;
 
@@ -149,13 +159,13 @@ final class CompiledQuery {
 
 				++ aliasNo;
 			}
+
+			compiled = new CompiledSelectSourcesAlias(sources, compiledList);
 		}
 		else {
 			throw new IllegalArgumentException("Unknown select sources type " + sources);
 		}
 
-		compiled = new CompiledSelectSources(sources, compiledList);
-		
 		return compiled;
 	}
 
@@ -163,16 +173,18 @@ final class CompiledQuery {
 			Class<?> resultType,
 			CollectedMapping collected,
 			SelectSourceImpl selectSource,
+			CompiledSelectSources<?> compiledSelectSources,
 			CompiledGetterSetterCache cache) throws CompileException {
 
-		final CompiledGetter mapGetter = selectSource.compileGetter(collected, cache);
 		final CompiledSetter mapSetter = cache.compileSetterUntyped(resultType, collected.getSetter());
 		
 		if (mapSetter == null) {
 			throw new CompileException("Unknown mapping setter " + collected);
 		}
+		
+		final CompiledFieldReference fieldReference = compiledSelectSources.makeFieldReference(collected, cache);
 
-		return new CompiledMapping(mapGetter, mapSetter);
+		return new CompiledMapping(fieldReference, mapSetter);
 	}
 	
 	private static CompiledConditions compileConditions(ClauseCollectorImpl clauses) {
