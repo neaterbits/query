@@ -1,7 +1,9 @@
 package com.neaterbits.query.sql.dsl.api;
 
 
-abstract class SelectSourceImpl implements SelectSources {
+abstract class SelectSourceImpl
+			extends QueryBuilderItem
+			implements SelectSources {
 
 	private final Class<?> [] types;
 

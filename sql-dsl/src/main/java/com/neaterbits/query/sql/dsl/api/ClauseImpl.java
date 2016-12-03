@@ -1,6 +1,6 @@
 package com.neaterbits.query.sql.dsl.api;
 
-final class ClauseImpl {
+final class ClauseImpl extends QueryBuilderItem {
 
 	private final ClausesImpl<?, ?> clause;
 	private final ConditionImpl condition;

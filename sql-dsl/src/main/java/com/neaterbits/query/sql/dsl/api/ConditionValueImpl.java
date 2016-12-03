@@ -1,5 +1,5 @@
 package com.neaterbits.query.sql.dsl.api;
 
-abstract class ConditionValueImpl  {
+abstract class ConditionValueImpl extends QueryBuilderItem {
 
 }
