@@ -1,6 +1,7 @@
 package com.neaterbits.query.jpatest.testconnection;
 
-import static org.junit.Assert.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.Assert.assertNotNull;
 
 import java.util.List;
 
@@ -11,8 +12,6 @@ import javax.persistence.Persistence;
 import org.junit.Test;
 
 import com.neaterbits.query.jpatest.model.Company;
-
-import static org.assertj.core.api.Assertions.assertThat;
 
 
 

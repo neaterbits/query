@@ -1,7 +1,6 @@
 package com.neaterbits.query.sql.dsl.api.pojo;
 
 import com.neaterbits.query.sql.dsl.api.CollectionModel;
-import com.neaterbits.query.sql.dsl.api.WhereClauseBuilder;
 import com.neaterbits.query.sql.dsl.api.SingleModel;
 import com.neaterbits.query.sql.dsl.api.WhereClauseBuilderAll;
 

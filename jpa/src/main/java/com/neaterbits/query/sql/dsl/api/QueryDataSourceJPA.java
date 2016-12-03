@@ -2,12 +2,6 @@ package com.neaterbits.query.sql.dsl.api;
 
 import javax.persistence.EntityManager;
 
-import com.neaterbits.query.sql.dsl.api.CompiledMapping;
-import com.neaterbits.query.sql.dsl.api.CompiledMappings;
-import com.neaterbits.query.sql.dsl.api.CompiledQuery;
-import com.neaterbits.query.sql.dsl.api.DSPreparedQuery;
-import com.neaterbits.query.sql.dsl.api.QueryDataSourceBase;
-
 /**
  * Query data source implementation for JPA
  * @author nhl

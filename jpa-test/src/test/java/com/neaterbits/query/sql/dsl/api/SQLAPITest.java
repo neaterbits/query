@@ -1,26 +1,21 @@
 package com.neaterbits.query.sql.dsl.api;
 
 
+import static com.neaterbits.query.sql.dsl.api.Select.alias;
+import static com.neaterbits.query.sql.dsl.api.Select.intParam;
+import static com.neaterbits.query.sql.dsl.api.Select.selectOne;
+import static org.assertj.core.api.Assertions.assertThat;
+
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
 import org.junit.Test;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
-import com.neaterbits.query.sql.dsl.api.QueryDataSourceJPA;
 import com.neaterbits.query.jpatest.model.Company;
 import com.neaterbits.query.jpatest.model.Employee;
 import com.neaterbits.query.jpatest.model.Person;
 import com.neaterbits.query.jpatest.model.Role;
-import com.neaterbits.query.sql.dsl.api.Param;
-import com.neaterbits.query.sql.dsl.api.QueryDataSource;
-import com.neaterbits.query.sql.dsl.api.SingleQuery;
-
-import static com.neaterbits.query.sql.dsl.api.Select.selectOne;
-import static com.neaterbits.query.sql.dsl.api.Select.intParam;
-import static com.neaterbits.query.sql.dsl.api.Select.alias;
 
 public class SQLAPITest {
 
