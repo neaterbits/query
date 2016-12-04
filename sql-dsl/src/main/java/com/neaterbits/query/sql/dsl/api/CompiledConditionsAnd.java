@@ -4,7 +4,7 @@ import java.util.Collection;
 
 final class CompiledConditionsAnd extends CompiledConditions {
 
-	CompiledConditionsAnd(Collection<ConditionImpl> conditions) {
+	CompiledConditionsAnd(Collection<CompiledCondition> conditions) {
 		super(conditions);
 	}
 }

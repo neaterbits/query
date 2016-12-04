@@ -1,6 +1,7 @@
 package com.neaterbits.query.sql.dsl.api;
 
-public class CompiledFieldReference extends CompiledQueryElement<QueryBuilderItem> {
+final class CompiledFieldReference extends CompiledQueryElement<QueryBuilderItem> {
+
 	private final CompiledSelectSource source;
 	private final CompiledGetter getter;
 
@@ -23,7 +24,12 @@ public class CompiledFieldReference extends CompiledQueryElement<QueryBuilderIte
 		this.source = source;
 		this.getter = getter;
 	}
-	
-	
 
+	CompiledSelectSource getSource() {
+		return source;
+	}
+
+	CompiledGetter getGetter() {
+		return getter;
+	}
 }

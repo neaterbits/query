@@ -53,23 +53,14 @@ final class CompiledQuery {
 		return conditions;
 	}
 
-	CompiledSelectSources<?> getSelectSources() {
-		return selectSources;
+	@SuppressWarnings("unchecked")
+	CompiledSelectSources<CompiledSelectSource> getSelectSources() {
+		return (CompiledSelectSources<CompiledSelectSource>)selectSources;
 	}
 
 	static CompiledQuery compile(QueryCollectorImpl collector) throws CompileException {
 		if (collector == null) {
 			throw new IllegalArgumentException("collector == null");
-		}
-		
-		final CompiledConditions compiledConditions;
-		
-		// Check all clauses etc
-		if (collector.getClauses() != null) {
-			compiledConditions = compileConditions(collector.getClauses());
-		}
-		else {
-			compiledConditions = null;
 		}
 		
 		final Class<?> resultType = collector.getResultType();
@@ -86,6 +77,16 @@ final class CompiledQuery {
 		}
 		else {
 			compiledMappings = null;
+		}
+
+		final CompiledConditions compiledConditions;
+		
+		// Check all clauses etc
+		if (collector.getClauses() != null) {
+			compiledConditions = compileConditions(collector.getClauses(), compiledSources, cache);
+		}
+		else {
+			compiledConditions = null;
 		}
 
 		return new CompiledQuery(
@@ -182,12 +183,16 @@ final class CompiledQuery {
 			throw new CompileException("Unknown mapping setter " + collected);
 		}
 		
-		final CompiledFieldReference fieldReference = compiledSelectSources.makeFieldReference(collected, cache);
+		final CompiledFieldReference fieldReference = compiledSelectSources.makeFieldReference(
+				collected,
+				collected.getGetter(),
+				cache);
 
 		return new CompiledMapping(fieldReference, mapSetter);
 	}
 	
-	private static CompiledConditions compileConditions(ClauseCollectorImpl clauses) {
+	private static CompiledConditions compileConditions(ClauseCollectorImpl clauses, CompiledSelectSources<?> sources, CompiledGetterSetterCache cache)
+		throws CompileException {
 
 		final List<ClauseImpl> list = clauses.getClauses();
 		
@@ -204,13 +209,17 @@ final class CompiledQuery {
 		final int num = list.size();
 		
 		if (num == 1) {
-			ret = new CompiledConditionsSingle(list.get(0).getCondition());
+			
+			final CompiledCondition singleCondition = compileCondition(list.get(0).getCondition(), sources, cache);
+			
+			ret = new CompiledConditionsSingle(singleCondition);
 		}
 		else {
 			final Class<?> clauseClass = list.get(1).getClause().getClass();
-			final List<ConditionImpl> conditions = new ArrayList<ConditionImpl>(num);
+			final List<CompiledCondition> conditions = new ArrayList<>(num);
 
-			conditions.add(list.get(0).getCondition());
+			
+			conditions.add(compileCondition(list.get(0).getCondition(), sources, cache));
 
 			for (int i = 1; i < num; ++ i) {
 
@@ -221,7 +230,7 @@ final class CompiledQuery {
 					throw new IllegalStateException("class mismatch: " + clauseClass.getSimpleName() + "/" + otherClauseClass.getSimpleName());
 				}
 
-				conditions.add(clause.getCondition());
+				conditions.add(compileCondition(clause.getCondition(), sources, cache));
 			}
 			
 			if (clauseClass.equals(AndClausesImpl.class)) {
@@ -237,6 +246,17 @@ final class CompiledQuery {
 			}
 		}
 
+		return ret;
+	}
+
+	private static CompiledCondition compileCondition(ConditionImpl condition, CompiledSelectSources<?> sources, CompiledGetterSetterCache cache) throws CompileException {
+		
+		if (condition == null) {
+			throw new IllegalArgumentException("condition == null");
+		}
+		
+		final CompiledCondition ret = new CompiledCondition(condition, sources.makeFieldReference(condition, condition.getGetter(), cache));
+		
 		return ret;
 	}
 }

@@ -9,14 +9,16 @@ final class CompiledSelectSourcesClass extends CompiledSelectSources<CompiledSel
 	}
 
 	@Override
-	CompiledFieldReference makeFieldReference(CollectedMapping mapping, CompiledGetterSetterCache cache) throws CompileException {
+	CompiledFieldReference makeFieldReference(QueryBuilderItem original, Getter inputGetter, CompiledGetterSetterCache cache) throws CompileException {
 
-		final CollectedMappingTable tableMapping = (CollectedMappingTable)mapping;
+		final FunctionGetter functionGetter = (FunctionGetter)inputGetter;
 		
-		final CompiledGetter compiledGetter = cache.findGetterFromTypes(getOriginal().getTypes(), tableMapping.getGetter());
+		final CompiledGetter compiledGetter = cache.findGetterFromTypes(
+				getOriginal().getTypes(),
+				functionGetter.getter);
 		
 		if (compiledGetter == null) {
-			throw new CompileException("No getter found: " + tableMapping.getGetter());
+			throw new CompileException("No getter found: " + functionGetter);
 		}
 
 		final Class<?> type = compiledGetter.getGetterMethod().getDeclaringClass();
@@ -35,7 +37,7 @@ final class CompiledSelectSourcesClass extends CompiledSelectSources<CompiledSel
 			throw new IllegalStateException("Unable to find compiled source for type " + type.getName());
 		}
 
-		return new CompiledFieldReference(mapping.getOriginal(), found, compiledGetter);
+		return new CompiledFieldReference(original, found, compiledGetter);
 	}
 }
 

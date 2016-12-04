@@ -1,6 +1,13 @@
 package com.neaterbits.query.sql.dsl.api;
 
+import java.lang.reflect.Member;
+import java.lang.reflect.Method;
+import java.util.function.Consumer;
+
 import javax.persistence.EntityManager;
+import javax.persistence.metamodel.Attribute;
+import javax.persistence.metamodel.EntityType;
+import javax.persistence.metamodel.Metamodel;
 
 /**
  * Query data source implementation for JPA
@@ -13,7 +20,7 @@ final class QueryDataSourceJPA extends QueryDataSourceBase {
 	private final EntityManager em;
 
 	QueryDataSourceJPA(EntityManager entityManager) {
-		
+
 		if (entityManager == null) {
 			throw new IllegalArgumentException("entityManager == null");
 		}
@@ -24,10 +31,15 @@ final class QueryDataSourceJPA extends QueryDataSourceBase {
 	private JPAPreparedQuery prepareQuery(CompiledQuery query) {
 
 		final StringBuilder sb = new StringBuilder();
+
+		prepare(sb, query);
+
+		final String jpql = sb.toString();
+	
+		System.out.println("## jpql:\n" + jpql);
 		
-		
-		final javax.persistence.Query jpaQuery = em.createQuery(sb.toString());
-		
+		final javax.persistence.Query jpaQuery = em.createQuery(jpql);
+
 		return new JPAPreparedQuery(jpaQuery);
 	}
 	
@@ -36,46 +48,264 @@ final class QueryDataSourceJPA extends QueryDataSourceBase {
 		return "_result";
 	}
 
-	private static String sourceName(Class<?> entityType) {
-		return entityType.getSimpleName().toLowerCase();
+	private String entityName(Class<?> entityType) {
+		return entityType.getSimpleName();
 	}
-	
-	private static void prepare(StringBuilder sb, CompiledQuery query) {
+
+	private void prepare(StringBuilder sb, CompiledQuery query) {
 		
 		final Class<?> resultType = query.getResultType();
-		
+
 		sb.append("SELECT ");
 
 		final CompiledMappings mappings = query.getMappings();
-
 		if (mappings != null) {
-
-			// We are returning a mapped type, get each value
-			for (CompiledMapping mapping : mappings.getMappings()) {
-				// Must return mappings
-			}
+			prepareMappings(sb, mappings);
 		}
 		else {
 			sb.append(resultType.getSimpleName()).append(" ").append(resultVarName(resultType));
 		}
+
+		sb.append("\n").append("FROM ");
+		
+		// Add all select sources
+		prepareSelectSources(sb, (CompiledSelectSources<CompiledSelectSource>)query.getSelectSources());
+		
+		// Prepare clauses if present
+		
+	}
+	
+	
+	private void prepareMappings(StringBuilder sb, CompiledMappings mappings) {
+		
+		commaSeparated(sb, mappings.getMappings(), (CompiledMapping mapping) -> {
+
+			final CompiledFieldReference field = mapping.getField();
+
+			prepareFieldReference(sb, field);
+		});
+	}
+
+	private void prepareSelectSources(StringBuilder sb, CompiledSelectSources<CompiledSelectSource> sources) {
+
+		commaSeparated(sb, sources.getSources(), (CompiledSelectSource source) -> {
+
+			final String entityName = entityName(source.getType());
+
+			sb.append(entityName).append(' ').append(source.getName());
+		});
+	}
+	
+	private void prepareFieldReference(StringBuilder sb, CompiledFieldReference field) {
+
+		final CompiledSelectSource source = field.getSource();
+
+		final CompiledGetter getter = field.getGetter();
+
+		final String columnName = getColumnNameForGetter(source, getter);
+
+		sb.append(source.getName()).append('.').append(columnName);
+	}
+	
+	private void prepareConditions(StringBuilder sb, CompiledConditions conditions) {
+
+		boolean first = true;
+		
+		final String opString;
+		
+		if (conditions instanceof CompiledConditionsAnd) {
+			opString = "AND";
+		}
+		else if (conditions instanceof CompiledConditionsOr) {
+			opString = "OR";
+		}
+		else if (conditions instanceof CompiledConditionsSingle) {
+			opString = null;
+		}
+		else {
+			throw new IllegalStateException("unknown conditions " + conditions.getClass());
+		}
+
+		for (CompiledCondition condition : conditions.getConditions()) {
+			if (first) {
+				sb.append("WHERE");
+			}
+			else {
+				sb.append(opString);
+			}
+			
+			sb.append(' ');
+			
+			prepareFieldReference(sb, condition.getLhs());
+			
+			// Operator
+			
+			
+			// Value
+			
+		}
+	}
+	
+	private static final class ConditionToOperatorVisitor implements ConditionVisitor<StringBuilder, Void> {
+
+		@Override
+		public Void onEqualTo(ConditionEqualToImpl condition,
+				StringBuilder param) {
+			// TODO Auto-generated method stub
+			return null;
+		}
+
+		@Override
+		public Void onNotEqualTo(ConditionNotEqualToImpl condition,
+				StringBuilder param) {
+			// TODO Auto-generated method stub
+			return null;
+		}
+
+		@Override
+		public Void onIn(ConditionInImpl condition, StringBuilder param) {
+			// TODO Auto-generated method stub
+			return null;
+		}
+
+		@Override
+		public Void onGreaterThan(ConditionGreaterThanImpl condition,
+				StringBuilder param) {
+			// TODO Auto-generated method stub
+			return null;
+		}
+
+		@Override
+		public Void onGreaterThanOrEqual(
+				ConditionGreaterThanOrEqualImpl condition, StringBuilder param) {
+			// TODO Auto-generated method stub
+			return null;
+		}
+
+		@Override
+		public Void onLessThan(ConditionLessThanImpl condition,
+				StringBuilder param) {
+			// TODO Auto-generated method stub
+			return null;
+		}
+
+		@Override
+		public Void onLessThanOrEqual(ConditionLessThanOrEqualImpl condition,
+				StringBuilder param) {
+			// TODO Auto-generated method stub
+			return null;
+		}
+
+		@Override
+		public Void onStartsWith(ConditionStringStartsWith condition,
+				StringBuilder param) {
+			// TODO Auto-generated method stub
+			return null;
+		}
+
+		@Override
+		public Void onEndsWith(ConditionStringEndsWith condition,
+				StringBuilder param) {
+			// TODO Auto-generated method stub
+			return null;
+		}
+
+		@Override
+		public Void onContains(ConditionStringContains condition, StringBuilder param) {
+			
+			//param.append("LIKE '%").append(condition.getValue().)
+			
+			return null;
+		}
+
+		@Override
+		public Void onMatches(ConditionStringMatches condition, StringBuilder param) {
+			throw new IllegalArgumentException("matches not supported");
+		}
+	}
+	
+	
+	private static <T> void commaSeparated(StringBuilder sb, Iterable<T> iter, Consumer<T> c) {
+		separated(sb, iter, ", ", c);
+	}
+	
+	private static <T> void separated(StringBuilder sb, Iterable<T> iter, String separator, Consumer<T> c) {
+		boolean first = true;
+
+		// We are returning a mapped type, get each value
+		for (T t : iter) {
+			// Must return mappings
+			if (!first) {
+				sb.append(separator);
+			}
+			else {
+				first = false;
+			}
+
+			c.accept(t);
+		}
+	}
+
+	private String getColumnNameForGetter(CompiledSelectSource source, CompiledGetter getter) {
+
+		// Look up in entity manager
+		
+		final Metamodel metaModel = em.getEntityManagerFactory().getMetamodel();
+		final EntityType<?> entityType = metaModel.entity(source.getType());
+
+		if (entityType == null) {
+			throw new IllegalStateException("No entity type for " + source.getType());
+		}
+
+		final Attribute<?, ?> attr = findAttr(entityType, getter.getGetterMethod());
+		
+		if (attr == null) {
+			throw new IllegalArgumentException("No attribute for getter " + getter);
+		}
+
+		return attr.getName();
+	}
+	
+	private static Attribute<?, ?> findAttr(EntityType<?> entityType, Method getterMethod) {
+		Attribute<?, ?> found = null;
+		
+		// Find attribute
+		for (Attribute<?, ?> attr : entityType.getAttributes()) {
+			final Member m  = attr.getJavaMember();
+
+			if (m instanceof Method) {
+				final Method method = (Method)m;
+				
+				if (method.equals(getterMethod)) {
+					found = attr;
+				}
+			}
+			else {
+				throw new UnsupportedOperationException("Does not support field members for now");
+			}
+		}
+
+		return found;
 	}
 	
 
 	@Override
 	DSPreparedQuery prepareSingleQuery(CompiledQuery query) {
+
 		if (query == null) {
 			throw new IllegalArgumentException("query == null");
 		}
-		
+
 		return prepareQuery(query);
 	}
 
 	@Override
 	DSPreparedQuery prepareMultiQuery(CompiledQuery query) {
+
 		if (query == null) {
 			throw new IllegalArgumentException("query == null");
 		}
-		
+
 		return prepareQuery(query);
 	}
 }

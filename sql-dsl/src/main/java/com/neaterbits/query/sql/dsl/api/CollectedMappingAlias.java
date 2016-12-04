@@ -7,7 +7,7 @@ final class CollectedMappingAlias extends CollectedMapping {
 	private final Supplier<?> getter;
 	
 	CollectedMappingAlias(QueryBuilderItem original, Supplier<?> getter, BiConsumer<?, ?> setter) {
-		super(original, setter);
+		super(original, new SupplierGetter(getter), setter);
 		
 		if (getter == null) {
 			throw new IllegalArgumentException("getter == null");
@@ -16,7 +16,7 @@ final class CollectedMappingAlias extends CollectedMapping {
 		this.getter = getter;
 	}
 
-	Supplier<?> getGetter() {
+	Supplier<?> getSupplierGetter() {
 		return getter;
 	}
 }

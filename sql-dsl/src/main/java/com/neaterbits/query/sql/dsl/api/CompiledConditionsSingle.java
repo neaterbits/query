@@ -5,7 +5,7 @@ import java.util.Arrays;
 // Just one single condition
 final class CompiledConditionsSingle extends CompiledConditions {
 
-	public CompiledConditionsSingle(ConditionImpl condition) {
+	public CompiledConditionsSingle(CompiledCondition condition) {
 		super(Arrays.asList(condition));
 	}
 }

@@ -27,7 +27,7 @@ final class SelectSourceAliasesImpl extends SelectSourceImpl {
 		
 		final CollectedMappingAlias aliasMapping = (CollectedMappingAlias)mapping;
 
-		final Supplier<?> getter = aliasMapping.getGetter();
+		final Supplier<?> getter = aliasMapping.getSupplierGetter();
 		
 		// Trigger supplier
 		getter.get();

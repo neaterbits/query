@@ -15,7 +15,7 @@ abstract class CompiledSelectSources<T extends CompiledSelectSource> extends Com
 
 	private final List<T> sources;
 
-	abstract CompiledFieldReference makeFieldReference(CollectedMapping mapping, CompiledGetterSetterCache cache) throws CompileException;
+	abstract CompiledFieldReference makeFieldReference(QueryBuilderItem original, Getter inputGetter, CompiledGetterSetterCache cache) throws CompileException;
 	
 	CompiledSelectSources(SelectSourceImpl original, List<T> sources) {
 		super(original);

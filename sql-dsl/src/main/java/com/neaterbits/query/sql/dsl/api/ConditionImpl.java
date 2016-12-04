@@ -1,7 +1,7 @@
 package com.neaterbits.query.sql.dsl.api;
 
 
-abstract class ConditionImpl {
+abstract class ConditionImpl extends QueryBuilderItem {
 
 	private final Getter getter;
 	

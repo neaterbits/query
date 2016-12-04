@@ -2,9 +2,9 @@ package com.neaterbits.query.sql.dsl.api;
 
 final class CompiledCondition {
 	private final ConditionImpl original;
-	private final CompiledGetter lhs;
+	private final CompiledFieldReference lhs;
 	
-	CompiledCondition(ConditionImpl original, CompiledGetter lhs) {
+	CompiledCondition(ConditionImpl original, CompiledFieldReference lhs) {
 		
 		if (original == null) {
 			throw new IllegalArgumentException("original == null");
@@ -22,7 +22,7 @@ final class CompiledCondition {
 		return original;
 	}
 
-	CompiledGetter getLhs() {
+	CompiledFieldReference getLhs() {
 		return lhs;
 	}
 }

@@ -27,10 +27,10 @@ final class SelectSourceClassesImpl extends SelectSourceImpl {
 
 		final CollectedMappingTable tableMapping = (CollectedMappingTable)mapping;
 		
-		final CompiledGetter ret = cache.findGetterFromTypes(getTypes(), tableMapping.getGetter());
+		final CompiledGetter ret = cache.findGetterFromTypes(getTypes(), tableMapping.getFunctionGetter());
 		
 		if (ret == null) {
-			throw new CompileException("No getter found: " + tableMapping.getGetter());
+			throw new CompileException("No getter found: " + tableMapping.getFunctionGetter());
 		}
 		
 		return ret;

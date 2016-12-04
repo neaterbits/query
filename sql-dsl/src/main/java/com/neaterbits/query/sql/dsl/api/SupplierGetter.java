@@ -14,4 +14,8 @@ final class SupplierGetter extends Getter {
 		
 		this.getter = getter;
 	}
+
+	Supplier<?> getGetter() {
+		return getter;
+	}
 }

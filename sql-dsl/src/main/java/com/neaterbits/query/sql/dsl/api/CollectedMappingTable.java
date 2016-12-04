@@ -7,7 +7,7 @@ final class CollectedMappingTable extends CollectedMapping {
 	private final Function<?, ?> getter;
 	
 	CollectedMappingTable(QueryBuilderItem original, Function<?, ?> getter, BiConsumer<?, ?> setter) {
-		super(original, setter);
+		super(original, new FunctionGetter(getter), setter);
 		
 		if (getter == null) {
 			throw new IllegalArgumentException("getter == null");
@@ -16,7 +16,7 @@ final class CollectedMappingTable extends CollectedMapping {
 		this.getter = getter;
 	}
 
-	Function<?, ?> getGetter() {
+	Function<?, ?> getFunctionGetter() {
 		return getter;
 	}
 }

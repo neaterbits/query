@@ -7,9 +7,9 @@ import java.util.List;
 
 abstract class CompiledConditions {
 
-	private final List<ConditionImpl> conditions;
+	private final List<CompiledCondition> conditions;
 
-	CompiledConditions(Collection<ConditionImpl> conditions) {
+	CompiledConditions(Collection<CompiledCondition> conditions) {
 
 		if (conditions == null) {
 			throw new IllegalArgumentException("conditions == null");
@@ -18,7 +18,7 @@ abstract class CompiledConditions {
 		this.conditions = Collections.unmodifiableList(new ArrayList<>(conditions));
 	}
 
-	List<ConditionImpl> getConditions() {
+	final List<CompiledCondition> getConditions() {
 		return conditions;
 	}
 }

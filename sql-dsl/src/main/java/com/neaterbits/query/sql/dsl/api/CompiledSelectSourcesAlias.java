@@ -10,12 +10,12 @@ final class CompiledSelectSourcesAlias extends CompiledSelectSources<CompiledSel
 		super(original, sources);
 	}
 
+
 	@Override
-	CompiledFieldReference makeFieldReference(CollectedMapping mapping, CompiledGetterSetterCache cache) throws CompileException {
+	CompiledFieldReference makeFieldReference(QueryBuilderItem original, Getter inputGetter, CompiledGetterSetterCache cache) throws CompileException {
+		final SupplierGetter supplierGetter = (SupplierGetter)inputGetter;
 
-		final CollectedMappingAlias aliasMapping = (CollectedMappingAlias)mapping;
-
-		final Supplier<?> getter = aliasMapping.getGetter();
+		final Supplier<?> getter = supplierGetter.getGetter();
 		
 		// Trigger supplier
 		getter.get();
@@ -41,6 +41,6 @@ final class CompiledSelectSourcesAlias extends CompiledSelectSources<CompiledSel
 
 		final CompiledGetter compiledGetter = new CompiledGetterSupplier(getter, lastMethod);
 		
-		return new CompiledFieldReference(mapping.getOriginal(), foundSelectSource, compiledGetter);
+		return new CompiledFieldReference(original, foundSelectSource, compiledGetter);
 	}
 }
