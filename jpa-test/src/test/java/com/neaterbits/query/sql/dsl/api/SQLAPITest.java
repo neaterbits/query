@@ -163,10 +163,49 @@ public class SQLAPITest {
 		
         return result;
 	}
+
+	@Test
+    public void testAliasBased() {
+    	
+		final Company company = alias(Company.class);
+		
+		final Company acme = new Company(-1, "Acme");
+		final Company foo = new Company(-1, "Foo");
+
+		
+        final SingleQuery<CompanyResultVO> startsWithAc =
+        		selectOneOrNull(CompanyResultVO.class)
+
+        	.map(company::getName).to(CompanyResultVO::setName)
+        	
+        	.from(company)
+        	.where(company::getName).startsWith("Ac")
+
+        	.compile();
+		
+		store(s  -> s.add(acme)).
+		check(ds -> {
+	        checkSelectOneOrNull(
+	        		ds,
+	        		new CompanyResultVO(acme.getName()),
+	        		startsWithAc,
+	        		q -> q.execute());
+		});
+
+		// Search for foo as well, should return no matches
+		store(s  -> s.add(foo)).
+		check(ds -> {
+	        checkSelectOneOrNull(
+	        		ds,
+	        		null,
+	        		startsWithAc,
+	        		q -> q.execute());
+		});
+	}
 	
 
-    @Test
-    public void testAliasBased() {
+    //@Test
+    public void testAliasBasedObsolete() {
     	EntityManager em = null;
     	try {
     		em = emf.createEntityManager();
