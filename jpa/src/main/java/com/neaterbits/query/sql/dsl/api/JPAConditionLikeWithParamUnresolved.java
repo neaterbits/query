@@ -4,16 +4,37 @@ final class JPAConditionLikeWithParamUnresolved extends JPAConditionUnresolved {
 
 	private final boolean wildcardBefore;
 	private final boolean wildcardAfter;
+	private final Param<?> param;
 	
-	public JPAConditionLikeWithParamUnresolved(String prefix, boolean wildcardBefore, boolean wildcardAfter) {
+	public JPAConditionLikeWithParamUnresolved(String prefix, boolean wildcardBefore, boolean wildcardAfter, Param<?> param) {
 		super(prefix);
+
+		if (param == null) {
+			throw new IllegalArgumentException("param == null");
+		}
 
 		this.wildcardBefore = wildcardBefore;
 		this.wildcardAfter = wildcardAfter;
+		this.param = param;
 	}
 
 	@Override
-	void append(StringBuilder sb) {
-		throw new UnsupportedOperationException("TODO");
+	void append(StringBuilder sb, ParamValueResolver resolver) {
+
+		final Object value = resolver.resolveParam(param);
+		
+		if (value == null) {
+			throw new IllegalStateException("No value for param " + param);
+		}
+
+		if (wildcardBefore) {
+			sb.append("%");
+		}
+
+		sb.append((String)value);
+
+		if (wildcardAfter) {
+			sb.append("%");
+		}
 	}
 }

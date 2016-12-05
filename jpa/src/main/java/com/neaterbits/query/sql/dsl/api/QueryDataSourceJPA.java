@@ -28,19 +28,11 @@ final class QueryDataSourceJPA extends QueryDataSourceBase {
 		this.em = entityManager;
 	}
 	
-	private JPACompletePreparedQuery prepareQuery(CompiledQuery query) {
+	private JPABasePreparedQuery prepareQuery(CompiledQuery query) {
 
 		final StringBuilder sb = new StringBuilder();
 
-		prepare(sb, query);
-
-		final String jpql = sb.toString();
-	
-		System.out.println("## jpql:\n" + jpql);
-		
-		final javax.persistence.Query jpaQuery = em.createQuery(jpql);
-
-		return new JPACompletePreparedQuery(query.isSingleResult(), jpaQuery);
+		return prepare(sb, query);
 	}
 	
 	// TODO: Assure unique
@@ -52,7 +44,7 @@ final class QueryDataSourceJPA extends QueryDataSourceBase {
 		return entityType.getSimpleName();
 	}
 
-	private void prepare(StringBuilder sb, CompiledQuery query) {
+	private JPABasePreparedQuery prepare(StringBuilder sb, CompiledQuery query) {
 		
 		final Class<?> resultType = query.getResultType();
 
@@ -74,13 +66,39 @@ final class QueryDataSourceJPA extends QueryDataSourceBase {
 		// Prepare conditions if present
 		
 		
+		final JPABasePreparedQuery ret;
+		
 		if (query.getConditions() != null) {
 			
 			final ParamNameAssigner paramNameAssigner = new ParamNameAssigner();
 			final CompileConditionParam param = new CompileConditionParam(paramNameAssigner, em);
 			
-			prepareConditions(query.getConditions(), param);
+			final JPAOp op = prepareConditions(query.getConditions(), param);
+			
+			if (param.hasUnresolved()) {
+				ret = new JPAHalfwayPreparedQuery(query.isSingleResult(), paramNameAssigner, sb.toString(), op, param.getConditions(), em);
+			}
+			else {
+				param.addAllConditions(sb, null);
+
+				ret = makeComplete(query, paramNameAssigner, sb);
+			}
 		}
+		else {
+			ret = makeComplete(query, null, sb);
+		}
+		
+		return ret;
+	}
+	
+	private JPACompletePreparedQuery makeComplete(CompiledQuery query, ParamNameAssigner paramNameAssigner, StringBuilder sb) {
+		final String jpql = sb.toString();
+		
+		System.out.println("## jpql:\n" + jpql);
+		
+		final javax.persistence.Query jpaQuery = em.createQuery(jpql);
+
+		return new JPACompletePreparedQuery(query.isSingleResult(), paramNameAssigner, jpaQuery);
 	}
 	
 	
@@ -119,20 +137,24 @@ final class QueryDataSourceJPA extends QueryDataSourceBase {
 
 	private static final ConditionToOperatorVisitor conditionToOperatorVisitor = new ConditionToOperatorVisitor();
 	
-	private void prepareConditions(CompiledConditions conditions, CompileConditionParam param) {
+	private JPAOp prepareConditions(CompiledConditions conditions, CompileConditionParam param) {
 
 		boolean first = true;
 		
 		final String opString;
+		final JPAOp op;
 		
 		if (conditions instanceof CompiledConditionsAnd) {
 			opString = "AND";
+			op = JPAOp.AND;
 		}
 		else if (conditions instanceof CompiledConditionsOr) {
 			opString = "OR";
+			op = JPAOp.OR;
 		}
 		else if (conditions instanceof CompiledConditionsSingle) {
 			opString = null;
+			op = null;
 		}
 		else {
 			throw new IllegalStateException("unknown conditions " + conditions.getClass());
@@ -144,20 +166,25 @@ final class QueryDataSourceJPA extends QueryDataSourceBase {
 
 			if (first) {
 				os = "WHERE";
+				first = false;
 			}
 			else {
 				os = opString;
 			}
 			
-			param.append(os);
+			param.append(" ").append(os).append(" ");
 
 			prepareFieldReference(param::append, condition.getLhs(), em);
+			
+			param.append(" ");
 
 			param.setValue(condition.getValue());
 			
 			// Operator and value
 			condition.getOriginal().visit(conditionToOperatorVisitor, param);
 		}
+
+		return op;
 	}
 	
 	
@@ -259,12 +286,33 @@ final class QueryDataSourceJPA extends QueryDataSourceBase {
 
 		if (value instanceof ConditionValueLiteralStringImpl) {
 
-			value.visit(conditionValueVisitor, param);
+			param.append("'");
+			
+			if (wildcardBefore) {
+				param.append("%");
+			}
+			
+			final String stringValue = ((ConditionValueLiteralStringImpl)value).getLiteral();
+
+			if (stringValue == null) {
+				throw new IllegalArgumentException("stringValue == null");
+			}
+
+			param.append(stringValue);
+
+			if (wildcardAfter) {
+				param.append("%");
+			}
+
+			param.append("'");
 
 			param.completeResolvedCondition();
 		}
 		else if (value instanceof ConditionValueParamImpl) {
-			param.unresolvedCondition(prefix -> new JPAConditionLikeWithParamUnresolved(prefix, wildcardBefore, wildcardAfter));
+			
+			final ConditionValueParamImpl conditionValueParam = (ConditionValueParamImpl)value;
+			
+			param.unresolvedCondition(prefix -> new JPAConditionLikeWithParamUnresolved(prefix, wildcardBefore, wildcardAfter, conditionValueParam.getParam()));
 		}
 		else {
 			throw new UnsupportedOperationException("Neither string nor param value for LIKE query: " + value.getClass().getName());

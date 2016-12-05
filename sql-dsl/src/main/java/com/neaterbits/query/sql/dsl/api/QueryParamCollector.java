@@ -3,7 +3,7 @@ package com.neaterbits.query.sql.dsl.api;
 import java.util.ArrayList;
 import java.util.List;
 
-final class QueryParamCollector {
+final class QueryParamCollector implements ParamValueResolver {
 
 	private final List<QueryParamAndValue> collected;
 
@@ -27,8 +27,21 @@ final class QueryParamCollector {
 		collected.add(new QueryParamAndValue(impl, value));
 	}
 
-	List<QueryParamAndValue> getCollected() {
+	private List<QueryParamAndValue> getCollected() {
 		return collected;
+	}
+
+	@Override
+	public Object resolveParam(Param<?> param) {
+		
+		// Find value
+		for (QueryParamAndValue paramAndValue : getCollected()) {
+			if (paramAndValue.getParam() == param) {
+				return paramAndValue.getValue();
+			}
+		}
+		
+		return null;
 	}
 }
 

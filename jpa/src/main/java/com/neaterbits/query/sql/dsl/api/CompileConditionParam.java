@@ -5,7 +5,8 @@ import java.util.List;
 import java.util.function.Function;
 
 import javax.persistence.EntityManager;
-import javax.persistence.metamodel.Metamodel;
+
+import com.neaterbits.query.util.java8.Coll8;
 
 final class CompileConditionParam {
 
@@ -17,7 +18,7 @@ final class CompileConditionParam {
 	private ConditionValueImpl value;
 
 	CompileConditionParam(ParamNameAssigner paramNameAssigner, EntityManager entityManager) {
-		
+
 		if (paramNameAssigner == null) {
 			throw new IllegalArgumentException("paramNameAssigner == null");
 		}
@@ -30,6 +31,10 @@ final class CompileConditionParam {
 		this.paramNameAssigner = paramNameAssigner;
 		this.entityManager = entityManager;
 		this.conditions = new ArrayList<>();
+	}
+
+	boolean hasUnresolved() {
+		return Coll8.has(conditions, condition -> condition instanceof JPAConditionUnresolved);
 	}
 
 	CompileConditionParam append(String s) {
@@ -74,7 +79,7 @@ final class CompileConditionParam {
 			throw new IllegalArgumentException("param == null");
 		}
 		
-		final String name = paramNameAssigner.getName(param);
+		final String name = paramNameAssigner.getOrAllocateName(param);
 		
 		append(":").append(name);
 	}
@@ -93,5 +98,15 @@ final class CompileConditionParam {
 
 	EntityManager getEntityManager() {
 		return entityManager;
+	}
+
+	void addAllConditions(StringBuilder sb, ParamValueResolver resolver) {
+		addAllConditions(sb, conditions, resolver);
+	}
+
+	static void addAllConditions(StringBuilder sb, List<JPACondition> conditions, ParamValueResolver resolver) {
+		for (JPACondition condition : conditions) {
+			condition.append(sb, resolver);
+		}
 	}
 }

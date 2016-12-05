@@ -6,8 +6,8 @@ final class JPACompletePreparedQuery extends JPABasePreparedQuery {
 
 	private final javax.persistence.Query jpaQuery;
 
-	JPACompletePreparedQuery(boolean singleResult, Query jpaQuery) {
-		super(singleResult);
+	JPACompletePreparedQuery(boolean singleResult, ParamNameAssigner paramNameAssigner, Query jpaQuery) {
+		super(singleResult, paramNameAssigner);
 		
 		if (jpaQuery == null) {
 			throw new IllegalArgumentException("jpaQuery == null");
@@ -17,9 +17,8 @@ final class JPACompletePreparedQuery extends JPABasePreparedQuery {
 	}
 
 	@Override
-	public Object execute() {
-		return isSingleResult()
-				? jpaQuery.getSingleResult()
-				: jpaQuery.getResultList();
+	public Object execute(ParamValueResolver paramCollector) {
+
+		return executeWithParams(jpaQuery, paramCollector);
 	}
 }

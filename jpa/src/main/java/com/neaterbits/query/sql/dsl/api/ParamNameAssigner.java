@@ -2,6 +2,7 @@ package com.neaterbits.query.sql.dsl.api;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.function.BiConsumer;
 
 import com.neaterbits.util.IdentityKey;
 
@@ -24,7 +25,7 @@ final class ParamNameAssigner {
 		this.curParam = 0;
 	}
 
-	String getName(Param<?> param) {
+	String getOrAllocateName(Param<?> param) {
 
 		if (param == null) {
 			throw new IllegalArgumentException("param == null");
@@ -42,6 +43,23 @@ final class ParamNameAssigner {
 		}
 
 		return name;
+	}
+
+	String getExistingName(Param<?> param) {
+
+		if (param == null) {
+			throw new IllegalArgumentException("param == null");
+		}
+
+		final IdentityKey<Param<?>> key = new IdentityKey<>(param);
+
+		return names.get(key);
+	}
+	
+	void forEach(BiConsumer<Param<?>, String> consumer) {
+		for (Map.Entry<IdentityKey<Param<?>>, String> entry : names.entrySet()) {
+			consumer.accept(entry.getKey().get(), entry.getValue());
+		}
 	}
 }
 

@@ -4,7 +4,7 @@ abstract class JPACondition {
 
 	private final String prefix;
 
-	abstract void append(StringBuilder sb);
+	abstract void append(StringBuilder sb, ParamValueResolver resolver);
 	
 	JPACondition(String prefix) {
 		

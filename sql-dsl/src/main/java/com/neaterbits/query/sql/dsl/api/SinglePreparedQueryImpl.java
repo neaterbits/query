@@ -8,7 +8,8 @@ final class SinglePreparedQueryImpl<RESULT> extends BasePreparedQueryImpl<RESULT
 	}
 
 	@Override
+	@SuppressWarnings("unchecked")
 	RESULT executeOn(DSPreparedQuery query, QueryParamCollector collectedParams) {
-		throw new UnsupportedOperationException("TODO");
+		return (RESULT)query.execute(collectedParams);
 	}
 }
