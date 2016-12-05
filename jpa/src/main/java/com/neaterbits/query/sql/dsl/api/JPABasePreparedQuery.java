@@ -1,19 +1,24 @@
 package com.neaterbits.query.sql.dsl.api;
 
+import javax.persistence.NoResultException;
 import javax.persistence.Query;
 
 abstract class JPABasePreparedQuery implements DSPreparedQuery {
 
-	private final boolean singleResult;
+	private final QueryResultMode resultMode;
 	private final ParamNameAssigner paramNameAssigner;
 
-	JPABasePreparedQuery(boolean singleResult, ParamNameAssigner paramNameAssigner) {
+	JPABasePreparedQuery(QueryResultMode resultMode, ParamNameAssigner paramNameAssigner) {
 		
+		if (resultMode == null) {
+			throw new IllegalArgumentException("resultMode == null");
+		}
+
 		if (paramNameAssigner == null) {
 			throw new IllegalArgumentException("paramNameAssigner == null");
 		}
 		
-		this.singleResult = singleResult;
+		this.resultMode = resultMode;
 		this.paramNameAssigner = paramNameAssigner;
 	}
 
@@ -27,7 +32,28 @@ abstract class JPABasePreparedQuery implements DSPreparedQuery {
 			jpaQuery.setParameter(name, paramCollector.resolveParam(param));
 			
 		});
+
+		Object ret;
 		
-		return singleResult ? jpaQuery.getSingleResult() : jpaQuery.getResultList();
+		switch (resultMode) {
+		case SINGLE:
+			try {
+				ret = jpaQuery.getSingleResult();
+			}
+			catch (NoResultException ex) {
+				ret = null;
+			}
+			break;
+			
+			
+		case MULTI:
+			ret = jpaQuery.getResultList();
+			break;
+			
+		default:
+			throw new UnsupportedOperationException("Unknown result mode " + resultMode);
+		}
+		
+		return ret;
 	}
 }

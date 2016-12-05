@@ -14,8 +14,8 @@ final class JPAHalfwayPreparedQuery extends JPABasePreparedQuery {
 	private final EntityManager entityManager;
 	
 	
-	JPAHalfwayPreparedQuery(boolean singleResult, ParamNameAssigner paramNameAssigner, String base, JPAOp op, List<JPACondition> conditions, EntityManager entityManager) {
-		super(singleResult, paramNameAssigner);
+	JPAHalfwayPreparedQuery(QueryResultMode resultMode, ParamNameAssigner paramNameAssigner, String base, JPAOp op, List<JPACondition> conditions, EntityManager entityManager) {
+		super(resultMode, paramNameAssigner);
 		
 		if (base == null) {
 			throw new IllegalArgumentException("base == null");

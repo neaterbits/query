@@ -7,7 +7,7 @@ package com.neaterbits.query.sql.dsl.api;
 
 final class QueryCollectorImpl {
 
-	private final boolean singleResult;
+	private final QueryResultMode resultMode;
 	
 	// The expected result type
 	private final Class<?> resultType;
@@ -21,18 +21,27 @@ final class QueryCollectorImpl {
 	// Select clauses
 	private ClauseCollectorImpl clauses;
 	
-	QueryCollectorImpl(boolean singleResult, Class<?> resultType) {
+	QueryCollectorImpl(QueryResultMode resultMode, Class<?> resultType) {
+
+		if (resultMode == null) {
+			throw new IllegalArgumentException("resultMode == null");
+		}
+
 		if (resultType == null) {
 			throw new IllegalArgumentException("resultType == null");
 		}
 
-		this.singleResult = singleResult;
+		this.resultMode = resultMode;
 		this.resultType = resultType;
 	}
 
-	QueryCollectorImpl(boolean singleResult, Class<?> resultType, MappingCollector mappings,
+	QueryCollectorImpl(QueryResultMode resultMode, Class<?> resultType, MappingCollector mappings,
 			SelectSourceImpl sources, ClauseCollectorImpl clauses, boolean isMulti) {
 		
+		if (resultMode == null) {
+			throw new IllegalArgumentException("resultMode == null");
+		}
+
 		if (resultType == null) {
 			throw new IllegalArgumentException("resultType == null");
 		}
@@ -45,7 +54,7 @@ final class QueryCollectorImpl {
 			throw new IllegalArgumentException("clauses == null");
 		}
 
-		this.singleResult = singleResult;
+		this.resultMode = resultMode;
 		this.resultType = resultType;
 		this.mappings = mappings;
 		this.sources = sources;
@@ -53,8 +62,8 @@ final class QueryCollectorImpl {
 	}
 
 	
-	boolean isSingleResult() {
-		return singleResult;
+	QueryResultMode getResultMode() {
+		return resultMode;
 	}
 	
 	

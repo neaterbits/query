@@ -76,7 +76,7 @@ final class QueryDataSourceJPA extends QueryDataSourceBase {
 			final JPAOp op = prepareConditions(query.getConditions(), param);
 			
 			if (param.hasUnresolved()) {
-				ret = new JPAHalfwayPreparedQuery(query.isSingleResult(), paramNameAssigner, sb.toString(), op, param.getConditions(), em);
+				ret = new JPAHalfwayPreparedQuery(query.getResultMode(), paramNameAssigner, sb.toString(), op, param.getConditions(), em);
 			}
 			else {
 				param.addAllConditions(sb, null);
@@ -98,7 +98,7 @@ final class QueryDataSourceJPA extends QueryDataSourceBase {
 		
 		final javax.persistence.Query jpaQuery = em.createQuery(jpql);
 
-		return new JPACompletePreparedQuery(query.isSingleResult(), paramNameAssigner, jpaQuery);
+		return new JPACompletePreparedQuery(query.getResultMode(), paramNameAssigner, jpaQuery);
 	}
 	
 	
