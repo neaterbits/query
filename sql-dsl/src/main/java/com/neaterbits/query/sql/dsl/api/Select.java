@@ -40,6 +40,22 @@ public class Select {
 		return new MultiTypeResultImpl<MultiQuery<TYPE_RESULT>, TYPE_RESULT>(cl, compiledQuery -> new MultiQueryImpl<>(compiledQuery));
 	}
 
+	public static <TYPE_RESULT> WhereClauseBuilderTableSingle<SingleQuery<TYPE_RESULT>, TYPE_RESULT> oneFrom(Class<TYPE_RESULT> cl) {
+		if (cl == null) {
+			throw new IllegalArgumentException("cl == null");
+		}
+
+		return new SingleTableResultImpl<SingleQuery<TYPE_RESULT>, TYPE_RESULT>(QueryResultMode.SINGLE, cl, compiledQuery -> new SingleQueryImpl<>(compiledQuery));
+	}
+
+	public static <TYPE_RESULT> WhereClauseBuilderTableSingle<MultiQuery<TYPE_RESULT>, TYPE_RESULT> listFrom(Class<TYPE_RESULT> cl) {
+		if (cl == null) {
+			throw new IllegalArgumentException("cl == null");
+		}
+
+		return new SingleTableResultImpl<MultiQuery<TYPE_RESULT>, TYPE_RESULT>(QueryResultMode.MULTI, cl, compiledQuery -> new MultiQueryImpl<>(compiledQuery));
+	}
+
 
 	private static final Method aliasGetTypeMethod;
 	private static final Method aliasGetLastInvokedMethod;

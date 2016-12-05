@@ -4,6 +4,8 @@ package com.neaterbits.query.sql.dsl.api;
 import static com.neaterbits.query.sql.dsl.api.Select.alias;
 import static com.neaterbits.query.sql.dsl.api.Select.intParam;
 import static com.neaterbits.query.sql.dsl.api.Select.selectOneOrNull;
+import static com.neaterbits.query.sql.dsl.api.Select.selectOneFrom;
+import static com.neaterbits.query.sql.dsl.api.Select.oneFrom;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.function.Consumer;
@@ -66,6 +68,39 @@ public class SQLAPITest {
 		});
 	}
 
+	@Test
+    public void testTableBasedOne() {
+    	
+		final Company acme = new Company(-1, "Acme");
+		final Company foo = new Company(-2, "Foo");
+
+		
+        final SingleQuery<Company> startsWithAc =
+        		oneFrom(Company.class)
+        			.where(Company::getName).startsWith("Ac")
+        			.compile();
+		
+		store(s  -> s.add(acme)
+					 .add(foo)).
+		check(ds -> {
+	        checkSelectOneOrNull(
+	        		ds,
+	        		new Company(-1, acme.getName()),
+	        		startsWithAc,
+	        		q -> q.execute());
+		});
+
+		// Search for foo as well, should return no matches
+		store(s  -> s.add(foo)).
+		check(ds -> {
+	        checkSelectOneOrNull(
+	        		ds,
+	        		null,
+	        		startsWithAc,
+	        		q -> q.execute());
+		});
+	}
+	
 	private static QueryTestDSCheck store(Consumer<QueryTestDSBuilder> b) {
 		return new QueryTestDSJPA("query-jpa-test").store(b);
 	}

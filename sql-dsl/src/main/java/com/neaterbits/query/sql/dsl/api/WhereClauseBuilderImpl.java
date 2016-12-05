@@ -4,7 +4,7 @@ import java.util.function.Function;
 import java.util.function.Supplier;
 
 final class WhereClauseBuilderImpl<MODEL, RESULT>
-	extends ClausesImpl<MODEL, RESULT>
+	extends ClausesImplInitial<MODEL, RESULT>
 	implements WhereClauseBuilderTable<MODEL, RESULT>,
 			   WhereClauseBuilderAlias<MODEL, RESULT>,
 			   AndOrLogicalClausesTable<MODEL, RESULT>,

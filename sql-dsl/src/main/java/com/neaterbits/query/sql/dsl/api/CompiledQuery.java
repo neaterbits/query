@@ -213,7 +213,7 @@ final class CompiledQuery {
 			throw new IllegalStateException("no clauses");
 		}
 
-		if (!(list.get(0).getClause() instanceof WhereClauseBuilderImpl<?, ?>)) {
+		if (!(list.get(0).getClause() instanceof ClausesImplInitial<?, ?>)) {
 			throw new IllegalStateException("first entry is not a whereclause");
 		}
 		

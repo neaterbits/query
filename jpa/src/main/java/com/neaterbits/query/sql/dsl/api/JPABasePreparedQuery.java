@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.function.BiConsumer;
 
 import javax.persistence.NoResultException;
+import javax.persistence.NonUniqueResultException;
 import javax.persistence.Query;
 
 abstract class JPABasePreparedQuery implements DSPreparedQuery {
@@ -18,10 +19,6 @@ abstract class JPABasePreparedQuery implements DSPreparedQuery {
 			throw new IllegalArgumentException("resultMode == null");
 		}
 
-		if (paramNameAssigner == null) {
-			throw new IllegalArgumentException("paramNameAssigner == null");
-		}
-		
 		this.compiledQuery = compiledQuery;
 		this.paramNameAssigner = paramNameAssigner;
 	}
@@ -31,11 +28,14 @@ abstract class JPABasePreparedQuery implements DSPreparedQuery {
 	}
 	
 	final Object executeWithParams(Query jpaQuery, ParamValueResolver paramCollector) {
-		paramNameAssigner.forEach((Param<?> param, String name) -> {
-			
-			jpaQuery.setParameter(name, paramCollector.resolveParam(param));
-			
-		});
+		
+		if (paramNameAssigner != null) {
+			paramNameAssigner.forEach((Param<?> param, String name) -> {
+				
+				jpaQuery.setParameter(name, paramCollector.resolveParam(param));
+				
+			});
+		}
 
 		Object ret;
 		
@@ -98,7 +98,7 @@ abstract class JPABasePreparedQuery implements DSPreparedQuery {
 			
 		}
 		else {
-			if (!compiledQuery.getClass().isAssignableFrom(input.getClass())) {
+			if (!compiledQuery.getResultType().isAssignableFrom(input.getClass())) {
 				throw new IllegalStateException("not mapped and result not of mapped class: " + input.getClass().getName());
 			}
 			

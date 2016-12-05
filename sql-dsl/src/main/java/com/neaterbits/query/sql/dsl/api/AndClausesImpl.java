@@ -7,7 +7,7 @@ final class AndClausesImpl<MODEL, RESULT> extends ClausesImpl<MODEL, RESULT>
 			implements AndClausesTable<MODEL, RESULT>,
 					   AndClausesAlias<MODEL, RESULT> {
 
-	AndClausesImpl(WhereClauseBuilderImpl<MODEL, RESULT> last) {
+	AndClausesImpl(ClausesImplInitial<MODEL, RESULT> last) {
 		super(last);
 	}
 

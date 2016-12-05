@@ -30,6 +30,13 @@ abstract class ClausesImpl<MODEL, RESULT>
 		this.clauseCollector = collector;
 	}
 	
+	ClausesImpl(QueryCollectorImpl queryCollector, ModelCompiler<MODEL> modelCompiler, ClauseCollectorImpl collector) {
+		super(queryCollector, modelCompiler);
+		
+		this.clauseCollector = collector;
+	}
+
+	
 	@Override
 	public final MODEL compile() {
 		

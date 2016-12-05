@@ -6,7 +6,7 @@ import java.util.function.Supplier;
 final class OrClausesImpl<MODEL, RESULT> extends ClausesImpl<MODEL, RESULT>
 			implements OrClausesTable<MODEL, RESULT>, OrClausesAlias<MODEL, RESULT>{
 
-	OrClausesImpl(WhereClauseBuilderImpl<MODEL, RESULT> last) {
+	OrClausesImpl(ClausesImplInitial<MODEL, RESULT> last) {
 		super(last);
 	}
 
