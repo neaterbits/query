@@ -11,4 +11,6 @@ interface ConditionValueVisitor<T, R> {
 	R onGetter(ConditionValueGetterImpl value, T param);
 
 	R onParam(ConditionValueParamImpl value, T param);
+
+	R onFieldReference(ConditionValueFieldRerefenceImpl value, T param);
 }

@@ -77,7 +77,7 @@ final class QueryDataSourceJPA extends QueryDataSourceBase {
 		if (query.getConditions() != null) {
 			
 			final ParamNameAssigner paramNameAssigner = new ParamNameAssigner();
-			final CompileConditionParam param = new CompileConditionParam(paramNameAssigner);
+			final CompileConditionParam param = new CompileConditionParam(paramNameAssigner, em);
 			
 			prepareConditions(query.getConditions(), param);
 		}
@@ -90,7 +90,7 @@ final class QueryDataSourceJPA extends QueryDataSourceBase {
 
 			final CompiledFieldReference field = mapping.getField();
 
-			prepareFieldReference(sb::append, field);
+			prepareFieldReference(sb::append, field, em);
 		});
 	}
 
@@ -104,13 +104,13 @@ final class QueryDataSourceJPA extends QueryDataSourceBase {
 		});
 	}
 	
-	private void prepareFieldReference(Consumer<String> c, CompiledFieldReference field) {
+	private static void prepareFieldReference(Consumer<String> c, CompiledFieldReference field, EntityManager em) {
 
 		final CompiledSelectSource source = field.getSource();
 
 		final CompiledGetter getter = field.getGetter();
 
-		final String columnName = getColumnNameForGetter(source, getter);
+		final String columnName = getColumnNameForGetter(source, getter, em);
 
 		c.accept(source.getName());
 		c.accept(".");
@@ -151,8 +151,10 @@ final class QueryDataSourceJPA extends QueryDataSourceBase {
 			
 			param.append(os);
 
-			prepareFieldReference(param::append, condition.getLhs());
+			prepareFieldReference(param::append, condition.getLhs(), em);
 
+			param.setValue(condition.getValue());
+			
 			// Operator and value
 			condition.getOriginal().visit(conditionToOperatorVisitor, param);
 		}
@@ -163,7 +165,7 @@ final class QueryDataSourceJPA extends QueryDataSourceBase {
 
 		@Override
 		public Void onEqualTo(ConditionEqualToImpl condition, CompileConditionParam param) {
-			appendOpAndValue("=", condition.getValue(), param);
+			appendOpAndValue("=", param.getValue(), param);
 
 			return null;
 		}
@@ -171,7 +173,7 @@ final class QueryDataSourceJPA extends QueryDataSourceBase {
 		@Override
 		public Void onNotEqualTo(ConditionNotEqualToImpl condition, CompileConditionParam param) {
 			
-			appendOpAndValue("!=", condition.getValue(), param);
+			appendOpAndValue("!=", param.getValue(), param);
 			
 			return null;
 		}
@@ -191,7 +193,7 @@ final class QueryDataSourceJPA extends QueryDataSourceBase {
 		@Override
 		public Void onGreaterThan(ConditionGreaterThanImpl condition, CompileConditionParam param) {
 
-			appendOpAndValue(">", condition.getValue(), param);
+			appendOpAndValue(">", param.getValue(), param);
 
 			return null;
 		}
@@ -199,7 +201,7 @@ final class QueryDataSourceJPA extends QueryDataSourceBase {
 		@Override
 		public Void onGreaterThanOrEqual(ConditionGreaterThanOrEqualImpl condition, CompileConditionParam param) {
 
-			appendOpAndValue(">=", condition.getValue(), param);
+			appendOpAndValue(">=", param.getValue(), param);
 			
 			return null;
 		}
@@ -207,7 +209,7 @@ final class QueryDataSourceJPA extends QueryDataSourceBase {
 		@Override
 		public Void onLessThan(ConditionLessThanImpl condition, CompileConditionParam param) {
 
-			appendOpAndValue("<", condition.getValue(), param);
+			appendOpAndValue("<", param.getValue(), param);
 
 			return null;
 		}
@@ -215,7 +217,7 @@ final class QueryDataSourceJPA extends QueryDataSourceBase {
 		@Override
 		public Void onLessThanOrEqual(ConditionLessThanOrEqualImpl condition, CompileConditionParam param) {
 
-			appendOpAndValue("<=", condition.getValue(), param);
+			appendOpAndValue("<=", param.getValue(), param);
 
 			return null;
 		}
@@ -223,7 +225,7 @@ final class QueryDataSourceJPA extends QueryDataSourceBase {
 		@Override
 		public Void onStartsWith(ConditionStringStartsWith condition, CompileConditionParam param) {
 
-			appendLike(false, true, condition.getValue(), param);
+			appendLike(false, true, param.getValue(), param);
 
 			return null;
 		}
@@ -231,7 +233,7 @@ final class QueryDataSourceJPA extends QueryDataSourceBase {
 		@Override
 		public Void onEndsWith(ConditionStringEndsWith condition, CompileConditionParam param) {
 
-			appendLike(true, false, condition.getValue(), param);
+			appendLike(true, false, param.getValue(), param);
 
 			return null;
 		}
@@ -239,7 +241,7 @@ final class QueryDataSourceJPA extends QueryDataSourceBase {
 		@Override
 		public Void onContains(ConditionStringContains condition, CompileConditionParam param) {
 
-			appendLike(true, true, condition.getValue(), param);
+			appendLike(true, true, param.getValue(), param);
 
 			return null;
 		}
@@ -278,7 +280,8 @@ final class QueryDataSourceJPA extends QueryDataSourceBase {
 		param.completeResolvedCondition();
 	}
 
-	private static final ConditionValueVisitor<CompileConditionParam, Void> conditionValueVisitor = new ConditionValueVisitor<CompileConditionParam, Void>() {
+	private static final ConditionValueVisitor<CompileConditionParam, Void> conditionValueVisitor
+						= new ConditionValueVisitor<CompileConditionParam, Void>() {
 
 		@Override
 		public Void onLiteralAny(ConditionValueLiteralAnyImpl<?> value, CompileConditionParam param) {
@@ -324,6 +327,14 @@ final class QueryDataSourceJPA extends QueryDataSourceBase {
 		public Void onGetter(ConditionValueGetterImpl value, CompileConditionParam param) {
 			throw new UnsupportedOperationException("Getter should have been compiled");
 		}
+
+		@Override
+		public Void onFieldReference(ConditionValueFieldRerefenceImpl value, CompileConditionParam param) {
+			
+			prepareFieldReference(param::append, value.getFieldReference(), param.getEntityManager());
+			
+			return null;
+		}
 	};
 	
 	private static void appendStringLiteral(String literal, CompileConditionParam param) {
@@ -365,12 +376,12 @@ final class QueryDataSourceJPA extends QueryDataSourceBase {
 		}
 	}
 
-	private String getColumnNameForGetter(CompiledSelectSource source, CompiledGetter getter) {
+	private static String getColumnNameForGetter(CompiledSelectSource source, CompiledGetter getter, EntityManager em) {
 
 		// Look up in entity manager
 		
 		final Metamodel metaModel = em.getEntityManagerFactory().getMetamodel();
-		final EntityType<?> entityType = metaModel.entity(source.getType());
+				final EntityType<?> entityType = metaModel.entity(source.getType());
 
 		if (entityType == null) {
 			throw new IllegalStateException("No entity type for " + source.getType());

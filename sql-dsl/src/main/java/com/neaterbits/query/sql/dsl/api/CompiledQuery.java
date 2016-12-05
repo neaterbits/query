@@ -264,7 +264,27 @@ final class CompiledQuery {
 			throw new IllegalArgumentException("condition == null");
 		}
 		
-		final CompiledCondition ret = new CompiledCondition(condition, sources.makeFieldReference(condition, condition.getGetter(), cache));
+		final CompiledFieldReference lhs = sources.makeFieldReference(condition, condition.getGetter(), cache);
+		
+		ConditionValueImpl value;
+		
+		if (condition instanceof ValueConditionImpl) {
+			value = ((ValueConditionImpl)condition).getValue();
+			
+			if (value instanceof ConditionValueGetterImpl) {
+				// Getter value, should compile
+				final Getter valueGetter = ((ConditionValueGetterImpl)value).getGetter();
+				
+				final CompiledFieldReference rhs = sources.makeFieldReference(value, valueGetter, cache);
+				
+				value = new ConditionValueFieldRerefenceImpl(rhs);
+			}
+		}
+		else {
+			value = null;
+		}
+
+		final CompiledCondition ret = new CompiledCondition(condition, lhs, value);
 		
 		return ret;
 	}

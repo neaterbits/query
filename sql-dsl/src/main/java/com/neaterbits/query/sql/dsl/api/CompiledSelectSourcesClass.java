@@ -1,5 +1,6 @@
 package com.neaterbits.query.sql.dsl.api;
 
+import java.util.Arrays;
 import java.util.List;
 
 final class CompiledSelectSourcesClass extends CompiledSelectSources<CompiledSelectSourceClass> {
@@ -18,7 +19,7 @@ final class CompiledSelectSourcesClass extends CompiledSelectSources<CompiledSel
 				functionGetter.getter);
 		
 		if (compiledGetter == null) {
-			throw new CompileException("No getter found: " + functionGetter);
+			throw new CompileException("No getter found: " + functionGetter + " among types " + Arrays.toString(getOriginal().getTypes()));
 		}
 
 		final Class<?> type = compiledGetter.getGetterMethod().getDeclaringClass();

@@ -4,20 +4,31 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Function;
 
+import javax.persistence.EntityManager;
+import javax.persistence.metamodel.Metamodel;
+
 final class CompileConditionParam {
 
 	private final StringBuilder conditionSB;
 	private final ParamNameAssigner paramNameAssigner;
+	private final EntityManager entityManager;
 	private final List<JPACondition> conditions;
+	
+	private ConditionValueImpl value;
 
-	CompileConditionParam(ParamNameAssigner paramNameAssigner) {
+	CompileConditionParam(ParamNameAssigner paramNameAssigner, EntityManager entityManager) {
 		
 		if (paramNameAssigner == null) {
 			throw new IllegalArgumentException("paramNameAssigner == null");
 		}
 
+		if (entityManager == null) {
+			throw new IllegalArgumentException("entityManager == null");
+		}
+
 		this.conditionSB = new StringBuilder();
 		this.paramNameAssigner = paramNameAssigner;
+		this.entityManager = entityManager;
 		this.conditions = new ArrayList<>();
 	}
 
@@ -25,6 +36,15 @@ final class CompileConditionParam {
 		conditionSB.append(s);
 
 		return this;
+	}
+
+	
+	ConditionValueImpl getValue() {
+		return value;
+	}
+
+	void setValue(ConditionValueImpl value) {
+		this.value = value;
 	}
 
 	void completeResolvedCondition() {
@@ -70,5 +90,8 @@ final class CompileConditionParam {
 	List<JPACondition> getConditions() {
 		return conditions;
 	}
-	
+
+	EntityManager getEntityManager() {
+		return entityManager;
+	}
 }

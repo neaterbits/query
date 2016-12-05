@@ -9,6 +9,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import javax.persistence.metamodel.EntityType;
+import javax.persistence.metamodel.Metamodel;
 
 import org.junit.Test;
 
@@ -24,6 +26,8 @@ public class SQLAPITest {
 	@Test
     public void testTableBased() {
     	
+		dumpMetaModel(emf.getMetamodel());
+		
     	EntityManager em = null;
     	try {
     		em = emf.createEntityManager();
@@ -40,7 +44,7 @@ public class SQLAPITest {
 	        	.map(Person::getId)			.to(ResultVO::setPersonId)
 	        	.map(Person::getFirstName)	.to(ResultVO::setFirstName)
 	
-	        	.from(Company.class, Person.class, Role.class)
+	        	.from(Company.class, Person.class, Employee.class, Role.class)
 	
 	        	.where(Company::getName)		.startsWith("Foo")
 	        	  .and(Company::getId)			.isEqualTo(Employee::getCompanyId)
@@ -70,6 +74,12 @@ public class SQLAPITest {
     		}
     	}
     }
+	
+	private static void dumpMetaModel(Metamodel model) {
+		for (EntityType<?> entityType : model.getEntities()) {
+			System.out.println("Got entity: " + entityType.getName() + " of type " + entityType.getJavaType().getName() + ", persistence type " + entityType.getPersistenceType());
+		}
+	}
 
     @Test
     public void testAliasBased() {
