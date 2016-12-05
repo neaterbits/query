@@ -246,10 +246,10 @@ final class CompiledQuery {
 				conditions.add(compileCondition(clause.getCondition(), sources, cache));
 			}
 			
-			if (clauseClass.equals(AndClausesImpl.class)) {
+			if (clauseClass.equals(AndClausesImpl.class) || clauseClass.equals(AndClausesImplTableSingle.class)) {
 				ret = new CompiledConditionsAnd(conditions);
 			}
-			else if (clauseClass.equals(OrClausesImpl.class)) {
+			else if (clauseClass.equals(OrClausesImpl.class) || clauseClass.equals(OrClausesImplTableSingle.class)) {
 				ret = new CompiledConditionsOr(conditions);
 			}
 			else {

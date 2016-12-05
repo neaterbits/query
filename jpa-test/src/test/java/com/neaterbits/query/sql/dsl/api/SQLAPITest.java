@@ -6,16 +6,18 @@ import static com.neaterbits.query.sql.dsl.api.Select.intParam;
 import static com.neaterbits.query.sql.dsl.api.Select.selectOneOrNull;
 import static com.neaterbits.query.sql.dsl.api.Select.selectOneFrom;
 import static com.neaterbits.query.sql.dsl.api.Select.oneFrom;
+import static com.neaterbits.query.sql.dsl.api.Select.listFrom;
 import static org.assertj.core.api.Assertions.assertThat;
 
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
-import javax.persistence.metamodel.EntityType;
-import javax.persistence.metamodel.Metamodel;
 
 import org.junit.Test;
 
@@ -69,7 +71,7 @@ public class SQLAPITest {
 	}
 
 	@Test
-    public void testTableBasedOne() {
+    public void testSingleTable() {
     	
 		final Company acme = new Company(-1, "Acme");
 		final Company foo = new Company(-2, "Foo");
@@ -99,6 +101,23 @@ public class SQLAPITest {
 	        		startsWithAc,
 	        		q -> q.execute());
 		});
+
+        final MultiQuery<Company> startsWithAcOrEndsWithoo =
+        		listFrom(Company.class)
+        			.where(Company::getName).startsWith("Ac")
+        			.   or(Company::getName).endsWith("oo")
+        			.compile();
+	
+		store(s  -> s.add(acme)
+				 .add(foo)).
+		check(ds -> {
+			checkSelectListUnordered(
+			    ds,
+       			startsWithAcOrEndsWithoo,
+       			q -> q.execute(),
+       			new Company(-1, acme.getName()),
+       			new Company(-2, foo.getName()));
+			});
 	}
 	
 	private static QueryTestDSCheck store(Consumer<QueryTestDSBuilder> b) {
@@ -122,6 +141,29 @@ public class SQLAPITest {
     		assertThat(result).isEqualTo(expected);
     	}
 	}
+
+	private <T> void checkSelectListUnordered(QueryDataSource ds, MultiQuery<T> query, Function<PreparedQueryOps<List<T>>, List<T>> execute, T ... expected) {
+
+		final List<T> ret = checkSelectListCommon(ds, query, execute, expected);
+		
+		final Set<T> set = new HashSet<>(ret);
+
+		assertThat(set).containsExactly(expected);
+	}
+	
+	private <T> List<T> checkSelectListCommon(QueryDataSource ds, MultiQuery<T> query, Function<PreparedQueryOps<List<T>>, List<T>> execute, T ... expected) {
+		PreparedQueryOps<List<T>> ops = query.prepare(ds);
+
+		final List<T> result = execute.apply(ops);
+    			
+        assertThat(query).isNotNull();
+    	
+        assertThat(result).isNotNull();
+        assertThat(result.size()).isEqualTo(expected.length);
+		
+        return result;
+	}
+	
 
     @Test
     public void testAliasBased() {

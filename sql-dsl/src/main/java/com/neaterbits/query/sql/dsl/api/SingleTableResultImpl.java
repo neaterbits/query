@@ -47,7 +47,7 @@ final class SingleTableResultImpl<MODEL, RESULT>
 	public <RR> ConditionClauseTable<MODEL, RESULT, RR, AndClausesTableSingle<MODEL, RESULT>>
 			and(Function<RESULT, RR> getter) {
 		
-		final AndClausesImpl<MODEL, RESULT> andClauses = new AndClausesImpl<>(this);
+		final AndClausesImplTableSingle<MODEL, RESULT> andClauses = new AndClausesImplTableSingle<>(this);
 		
 		return new ConditionClauseImpl<MODEL, RESULT, RR, AndClausesTableSingle<MODEL,RESULT>>(andClauses, makeGetter(getter));
 	}
@@ -56,7 +56,7 @@ final class SingleTableResultImpl<MODEL, RESULT>
 	public StringClause<MODEL, RESULT, AndClausesTableSingle<MODEL, RESULT>>
 			and(StringFunction<RESULT> getter) {
 
-		final AndClausesImpl<MODEL, RESULT> andClauses = new AndClausesImpl<>(this);
+		final AndClausesImplTableSingle<MODEL, RESULT> andClauses = new AndClausesImplTableSingle<>(this);
 		
 		return new StringClauseImpl<MODEL, RESULT, AndClausesTableSingle<MODEL,RESULT>>(andClauses, makeGetter(getter));
 	}
@@ -66,7 +66,7 @@ final class SingleTableResultImpl<MODEL, RESULT>
 	public <RR> ConditionClause<MODEL, RESULT, RR, OrClausesTableSingle<MODEL, RESULT>>
 			or(Function<RESULT, RR> getter) {
 
-		final OrClausesImpl<MODEL, RESULT> orClauses = new OrClausesImpl<>(this);
+		final OrClausesImplTableSingle<MODEL, RESULT> orClauses = new OrClausesImplTableSingle<>(this);
 		
 		return new ConditionClauseImpl<MODEL, RESULT, RR, OrClausesTableSingle<MODEL,RESULT>>(orClauses, makeGetter(getter));
 	}
@@ -75,7 +75,7 @@ final class SingleTableResultImpl<MODEL, RESULT>
 	public StringClause<MODEL, RESULT, OrClausesTableSingle<MODEL, RESULT>>
 			or(StringFunction<RESULT> getter) {
 
-		final OrClausesImpl<MODEL, RESULT> orClauses = new OrClausesImpl<>(this);
+		final OrClausesImplTableSingle<MODEL, RESULT> orClauses = new OrClausesImplTableSingle<>(this);
 
 		return new StringClauseImpl<MODEL, RESULT, OrClausesTableSingle<MODEL,RESULT>>(orClauses, makeGetter(getter));
 	}
