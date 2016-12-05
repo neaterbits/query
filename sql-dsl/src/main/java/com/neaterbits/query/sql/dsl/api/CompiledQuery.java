@@ -142,7 +142,7 @@ final class CompiledQuery {
 			final SelectSourceClassesImpl selectSourceClasses = (SelectSourceClassesImpl)sources;
 
 			for (Class<?> cl : selectSourceClasses.getClasses()) {
-				final String name = cl.getName().toLowerCase();
+				final String name = cl.getSimpleName().toLowerCase();
 
 				if (Coll8.has(compiledList, e -> e.getName().equals(name))) {
 					throw new IllegalStateException("Two entity classes with same lowercase name \"" + name + "\"");
@@ -273,6 +273,7 @@ final class CompiledQuery {
 			
 			if (value instanceof ConditionValueGetterImpl) {
 				// Getter value, should compile
+				
 				final Getter valueGetter = ((ConditionValueGetterImpl)value).getGetter();
 				
 				final CompiledFieldReference rhs = sources.makeFieldReference(value, valueGetter, cache);
