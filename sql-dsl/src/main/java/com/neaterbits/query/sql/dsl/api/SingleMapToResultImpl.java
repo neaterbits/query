@@ -15,7 +15,7 @@ public class SingleMapToResultImpl<MODEL, RESULT>
 
 	@Override
 	public <T, R> ResultMapperTo<MODEL, RESULT, R, SingleMapToResultTable<MODEL, RESULT>>
-				mapF(Function<T, R> getter) {
+				map(Function<T, R> getter) {
 
 		return new ResultMapperToImpl<MODEL, RESULT, R, SingleMapToResultTable<MODEL, RESULT>>(getter, this);
 	}

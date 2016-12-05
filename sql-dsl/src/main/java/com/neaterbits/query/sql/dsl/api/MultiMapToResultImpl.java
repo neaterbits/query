@@ -13,7 +13,7 @@ final class MultiMapToResultImpl<MODEL, RESULT>
 
 	@Override
 	public <T, R> ResultMapperTo<MODEL, RESULT, R, MultiMapToResultTable<MODEL, RESULT>>
-				mapF(Function<T, R> getter) {
+				map(Function<T, R> getter) {
 
 		return new ResultMapperToImpl<MODEL, RESULT, R, MultiMapToResultTable<MODEL, RESULT>>(getter, this);
 	}

@@ -36,9 +36,9 @@ public class SQLAPITest {
 	        final SingleQuery<ResultVO > query =
 	        		selectOne(ResultVO.class)
 	
-	        	.mapF(Company::getId)		.to(ResultVO::setCompanyId)
-	        	.mapF(Person::getId)		.to(ResultVO::setPersonId)
-	        	.mapF(Person::getFirstName)	.to(ResultVO::setFirstName)
+	        	.map(Company::getId)		.to(ResultVO::setCompanyId)
+	        	.map(Person::getId)			.to(ResultVO::setPersonId)
+	        	.map(Person::getFirstName)	.to(ResultVO::setFirstName)
 	
 	        	.from(Company.class, Person.class, Role.class)
 	

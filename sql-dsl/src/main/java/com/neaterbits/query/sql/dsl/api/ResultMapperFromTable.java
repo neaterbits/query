@@ -4,6 +4,6 @@ import java.util.function.Function;
 
 public interface ResultMapperFromTable<MODEL, RESULT, SOURCE extends SelectSourceBuilder<MODEL, RESULT>> {
 
-	<T, R> ResultMapperTo<MODEL, RESULT, R, SOURCE> mapF(Function<T, R> getter);
+	<T, R> ResultMapperTo<MODEL, RESULT, R, SOURCE> map(Function<T, R> getter);
 
 }

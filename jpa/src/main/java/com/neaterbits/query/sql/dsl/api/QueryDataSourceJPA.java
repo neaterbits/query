@@ -9,8 +9,6 @@ import javax.persistence.metamodel.Attribute;
 import javax.persistence.metamodel.EntityType;
 import javax.persistence.metamodel.Metamodel;
 
-import com.neaterbits.query.sql.dsl.api.QueryDataSourceJPA.CompileConditionParam;
-
 /**
  * Query data source implementation for JPA
  * @author nhl
@@ -239,7 +237,6 @@ final class QueryDataSourceJPA extends QueryDataSourceBase {
 		public Void onContains(ConditionStringContains condition, CompileConditionParam param) {
 			
 			param.sb.append("LIKE '%");
-			appendC
 			
 			return null;
 		}
