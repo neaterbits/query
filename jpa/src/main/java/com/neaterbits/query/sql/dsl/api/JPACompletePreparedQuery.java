@@ -6,8 +6,8 @@ final class JPACompletePreparedQuery extends JPABasePreparedQuery {
 
 	private final javax.persistence.Query jpaQuery;
 
-	JPACompletePreparedQuery(QueryResultMode resultMode, ParamNameAssigner paramNameAssigner, Query jpaQuery) {
-		super(resultMode, paramNameAssigner);
+	JPACompletePreparedQuery(CompiledQuery compiledQuery, ParamNameAssigner paramNameAssigner, Query jpaQuery) {
+		super(compiledQuery, paramNameAssigner);
 		
 		if (jpaQuery == null) {
 			throw new IllegalArgumentException("jpaQuery == null");

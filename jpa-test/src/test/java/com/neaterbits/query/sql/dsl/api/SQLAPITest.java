@@ -3,7 +3,7 @@ package com.neaterbits.query.sql.dsl.api;
 
 import static com.neaterbits.query.sql.dsl.api.Select.alias;
 import static com.neaterbits.query.sql.dsl.api.Select.intParam;
-import static com.neaterbits.query.sql.dsl.api.Select.selectOne;
+import static com.neaterbits.query.sql.dsl.api.Select.selectOneOrNull;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.function.Consumer;
@@ -33,30 +33,45 @@ public class SQLAPITest {
     public void testTableBased() {
     	
 		final Company acme = new Company(-1, "Acme");
+		final Company foo = new Company(-1, "Foo");
+
 		
-		store( s -> s
-				.add(acme))
-		.check(ds -> {
-	        final SingleQuery<CompanyResultVO> query =
-	        		selectOne(CompanyResultVO.class)
-	
-	        	.map(Company::getName).to(CompanyResultVO::setName)
-	        	
-	        	.from(Company.class)
-	        	.where(Company::getName).startsWith("Ac")
+        final SingleQuery<CompanyResultVO> startsWithAc =
+        		selectOneOrNull(CompanyResultVO.class)
 
-	        	.compile();
+        	.map(Company::getName).to(CompanyResultVO::setName)
+        	
+        	.from(Company.class)
+        	.where(Company::getName).startsWith("Ac")
 
-	        checkSelectOne(ds, new CompanyResultVO(acme.getName()), query, q -> q.execute());
+        	.compile();
+		
+		store(s  -> s.add(acme)).
+		check(ds -> {
+	        checkSelectOneOrNull(
+	        		ds,
+	        		new CompanyResultVO(acme.getName()),
+	        		startsWithAc,
+	        		q -> q.execute());
 		});
-    }
+
+		// Search for foo as well, should return no matches
+		store(s  -> s.add(foo)).
+		check(ds -> {
+	        checkSelectOneOrNull(
+	        		ds,
+	        		null,
+	        		startsWithAc,
+	        		q -> q.execute());
+		});
+	}
 
 	private static QueryTestDSCheck store(Consumer<QueryTestDSBuilder> b) {
 		return new QueryTestDSJPA("query-jpa-test").store(b);
 	}
 	
 	
-	private <T> void checkSelectOne(QueryDataSource ds, T expected, SingleQuery<T> query, Function<PreparedQueryOps<T>, T> execute) {
+	private <T> void checkSelectOneOrNull(QueryDataSource ds, T expected, SingleQuery<T> query, Function<PreparedQueryOps<T>, T> execute) {
     			
 		PreparedQueryOps<T> ops = query.prepare(ds);
 
@@ -91,7 +106,7 @@ public class SQLAPITest {
 	    	
 	    	
 	        final SingleQuery<ResultVO > query =
-	        		selectOne(ResultVO.class)
+	        		selectOneOrNull(ResultVO.class)
 	
 	        	.map(company::getId)		.to(ResultVO::setCompanyId)
 	        	.map(person::getId)		   	.to(ResultVO::setPersonId)

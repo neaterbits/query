@@ -8,7 +8,7 @@ import com.neaterbits.query.util.java8.MethodFinder;
 
 public class Select {
 
-	public static <MAPPED_RESULT> SingleMapToResult<SingleQuery<MAPPED_RESULT>, MAPPED_RESULT> selectOne(Class<MAPPED_RESULT> cl) {
+	public static <MAPPED_RESULT> SingleMapToResult<SingleQuery<MAPPED_RESULT>, MAPPED_RESULT> selectOneOrNull(Class<MAPPED_RESULT> cl) {
 		if (cl == null) {
 			throw new IllegalArgumentException("cl == null");
 		}

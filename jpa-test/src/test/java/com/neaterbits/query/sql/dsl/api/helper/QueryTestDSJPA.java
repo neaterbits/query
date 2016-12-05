@@ -12,14 +12,14 @@ import javax.persistence.metamodel.Metamodel;
 import com.neaterbits.query.sql.dsl.api.QueryDataSource;
 import com.neaterbits.query.sql.dsl.api.QueryDataSourceJPA;
 
-public final class QueryTestDSJPA extends QueryTestDS implements QueryTestDSCheck {
+public final class QueryTestDSJPA extends QueryTestDS {
 
 	private final EntityManagerFactory emf;
 
 	public QueryTestDSJPA(String persistenceUnitName) {
 		this.emf = Persistence.createEntityManagerFactory(persistenceUnitName);
 	}
-	
+
 	@Override
 	public QueryTestDSCheck store(Consumer<QueryTestDSBuilder> dsBuilder) {
 
@@ -41,14 +41,14 @@ public final class QueryTestDSJPA extends QueryTestDS implements QueryTestDSChec
 			for (Object instance : instances) {
 				em.persist(instance);
 			}
-			
+
 			em.getTransaction().commit();
 			ok = true;
 		}
 		finally {
 			
 			try {
-				if (!ok) {
+				if (!ok && em.getTransaction().isActive()) {
 					em.getTransaction().rollback();
 				}
 			}
@@ -56,9 +56,8 @@ public final class QueryTestDSJPA extends QueryTestDS implements QueryTestDSChec
 				em.close();
 			}
 		}
-		
-		
-		return this;
+
+		return new Checker(emf, instances);
 	}
 
 	private static void dumpMetaModel(Metamodel model) {
@@ -66,18 +65,46 @@ public final class QueryTestDSJPA extends QueryTestDS implements QueryTestDSChec
 			System.out.println("Got entity: " + entityType.getName() + " of type " + entityType.getJavaType().getName() + ", persistence type " + entityType.getPersistenceType());
 		}
 	}
-	
-	@Override
-	public void check(Consumer<QueryDataSource> testBuilder) {
 
-		final EntityManager em = emf.createEntityManager();
-		final QueryDataSource dataSource = new QueryDataSourceJPA(em);
+	private static class Checker implements QueryTestDSCheck {
+		private final EntityManagerFactory emf;
+		private final List<Object> instances;
 
-		try {
-			testBuilder.accept(dataSource);
+		public Checker(EntityManagerFactory emf, List<Object> instances) {
+			this.emf = emf;
+			this.instances = instances;
 		}
-		finally {
-			em.close();
+
+		@Override
+		public void check(Consumer<QueryDataSource> testBuilder) {
+
+			final EntityManager em = emf.createEntityManager();
+			final QueryDataSource dataSource = new QueryDataSourceJPA(em);
+
+			try {
+				testBuilder.accept(dataSource);
+			}
+			finally {
+				safelyDeleteInstances(em);
+			}
+		}
+		
+		private void safelyDeleteInstances(EntityManager em) {
+			try {
+				em.getTransaction().begin();
+				
+				for (Object instance : instances) {
+					
+					instance = em.merge(instance);
+					
+					em.remove(instance);
+				}
+				
+				em.getTransaction().commit();
+			}
+			finally {
+				em.close();
+			}
 		}
 	}
 }

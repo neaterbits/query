@@ -29,4 +29,9 @@ final class CompiledSetter {
 		return setterMethod;
 	}
 
+	@SuppressWarnings({"unchecked", "rawtypes"})
+	void set(Object o, Object val) {
+		((BiConsumer)setter).accept(o, val);
+	}
+	
 }
