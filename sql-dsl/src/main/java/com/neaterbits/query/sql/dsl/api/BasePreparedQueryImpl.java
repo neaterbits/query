@@ -21,10 +21,10 @@ abstract class BasePreparedQueryImpl<RESULT_TYPE> implements PreparedQueryOps<RE
 		this.preparedQuery = preparedQuery;
 	}
 
-	@Override
+	@SuppressWarnings("unchecked")
 	public final RESULT_TYPE execute() {
-		// Execute direc
-		return null;
+		// Execute directly
+		return (RESULT_TYPE)preparedQuery.execute(null);
 	}
 
 

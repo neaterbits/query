@@ -6,6 +6,9 @@ import static com.neaterbits.query.sql.dsl.api.Select.intParam;
 import static com.neaterbits.query.sql.dsl.api.Select.selectOne;
 import static org.assertj.core.api.Assertions.assertThat;
 
+import java.util.function.Consumer;
+import java.util.function.Function;
+
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
@@ -18,6 +21,9 @@ import com.neaterbits.query.jpatest.model.Company;
 import com.neaterbits.query.jpatest.model.Employee;
 import com.neaterbits.query.jpatest.model.Person;
 import com.neaterbits.query.jpatest.model.Role;
+import com.neaterbits.query.sql.dsl.api.helper.QueryTestDSBuilder;
+import com.neaterbits.query.sql.dsl.api.helper.QueryTestDSCheck;
+import com.neaterbits.query.sql.dsl.api.helper.QueryTestDSJPA;
 
 public class SQLAPITest {
 
@@ -26,59 +32,45 @@ public class SQLAPITest {
 	@Test
     public void testTableBased() {
     	
-		dumpMetaModel(emf.getMetamodel());
+		final Company acme = new Company(-1, "Acme");
 		
-    	EntityManager em = null;
-    	try {
-    		em = emf.createEntityManager();
-
-	    	final QueryDataSource ds = new QueryDataSourceJPA(em);
-	    	
-	    	final Param<Integer> param1 = intParam();
-	    	final Param<Integer> param2 = intParam();
-	    	
-	        final SingleQuery<ResultVO > query =
-	        		selectOne(ResultVO.class)
+		store( s -> s
+				.add(acme))
+		.check(ds -> {
+	        final SingleQuery<CompanyResultVO> query =
+	        		selectOne(CompanyResultVO.class)
 	
-	        	.map(Company::getId)		.to(ResultVO::setCompanyId)
-	        	.map(Person::getId)			.to(ResultVO::setPersonId)
-	        	.map(Person::getFirstName)	.to(ResultVO::setFirstName)
-	
-	        	.from(Company.class, Person.class, Employee.class, Role.class)
-	
-	        	.where(Company::getName)		.startsWith("Foo")
-	        	  .and(Company::getId)			.isEqualTo(Employee::getCompanyId)
-	
-	        	// where-clause
-	        	//.whereString(Company::getId)
-	        	.compile();
-	
-	        	ResultVO result = query.prepare(ds)
-	        	 .executeWith(param1).setTo(123)
-	        	         .and(param2).setTo(345)
-	        	  .get();
-	
+	        	.map(Company::getName).to(CompanyResultVO::setName)
 	        	
-	        	//result = query.execute(b -> b
-				//	.with(param1).setTo(123)
-				//	 .and(param2).setTo(456)
-					
-				//	.on(ds)
-				//);
-	
-	        assertThat(query).isNotNull();
-    	}
-    	finally {
-    		if (em != null) {
-    			em.close();
-    		}
-    	}
+	        	.from(Company.class)
+	        	.where(Company::getName).startsWith("Ac")
+
+	        	.compile();
+
+	        checkSelectOne(ds, new CompanyResultVO(acme.getName()), query, q -> q.execute());
+		});
     }
+
+	private static QueryTestDSCheck store(Consumer<QueryTestDSBuilder> b) {
+		return new QueryTestDSJPA("query-jpa-test").store(b);
+	}
 	
-	private static void dumpMetaModel(Metamodel model) {
-		for (EntityType<?> entityType : model.getEntities()) {
-			System.out.println("Got entity: " + entityType.getName() + " of type " + entityType.getJavaType().getName() + ", persistence type " + entityType.getPersistenceType());
-		}
+	
+	private <T> void checkSelectOne(QueryDataSource ds, T expected, SingleQuery<T> query, Function<PreparedQueryOps<T>, T> execute) {
+    			
+		PreparedQueryOps<T> ops = query.prepare(ds);
+
+		final T result = execute.apply(ops);
+    			
+        assertThat(query).isNotNull();
+    	
+    	if (expected == null) {
+    		assertThat(result).isNull();
+    	}
+    	else {
+    		assertThat(result).isNotSameAs(expected);
+    		assertThat(result).isEqualTo(expected);
+    	}
 	}
 
     @Test

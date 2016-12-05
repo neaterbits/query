@@ -15,11 +15,11 @@ import javax.persistence.metamodel.Metamodel;
  *
  */
 
-final class QueryDataSourceJPA extends QueryDataSourceBase {
+public final class QueryDataSourceJPA extends QueryDataSourceBase {
 
 	private final EntityManager em;
 
-	QueryDataSourceJPA(EntityManager entityManager) {
+	public QueryDataSourceJPA(EntityManager entityManager) {
 
 		if (entityManager == null) {
 			throw new IllegalArgumentException("entityManager == null");
