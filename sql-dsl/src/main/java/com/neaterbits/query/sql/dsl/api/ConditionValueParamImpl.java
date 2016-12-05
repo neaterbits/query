@@ -11,4 +11,13 @@ final class ConditionValueParamImpl extends ConditionValueImpl {
 
 		this.param = param;
 	}
+	
+	Param<?> getParam() {
+		return param;
+	}
+
+	@Override
+	<T, R> R visit(ConditionValueVisitor<T, R> visitor, T param) {
+		return visitor.onParam(this, param);
+	}
 }

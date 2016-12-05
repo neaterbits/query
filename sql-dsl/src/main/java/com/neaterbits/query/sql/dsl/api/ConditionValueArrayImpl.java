@@ -11,4 +11,9 @@ final class ConditionValueArrayImpl extends ConditionValueImpl {
 	Object[] getValues() {
 		return values;
 	}
+
+	@Override
+	<T, R> R visit(ConditionValueVisitor<T, R> visitor, T param) {
+		return visitor.onArray(this, param);
+	}
 }

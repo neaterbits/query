@@ -12,4 +12,13 @@ final class ConditionValueGetterImpl extends ConditionValueImpl {
 
 		this.getter = getter;
 	}
+
+	Getter getGetter() {
+		return getter;
+	}
+
+	@Override
+	<T, R> R visit(ConditionValueVisitor<T, R> visitor, T param) {
+		return visitor.onGetter(this, param);
+	}
 }

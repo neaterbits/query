@@ -10,7 +10,7 @@ public class SingleMapToResultImpl<MODEL, RESULT>
 			   SingleMapToResultAlias<MODEL, RESULT> {
 
 	SingleMapToResultImpl(Class<?> resultType, ModelCompiler<MODEL> modelCompiler) {
-		super(resultType, modelCompiler);
+		super(true, resultType, modelCompiler);
 	}
 
 	@Override

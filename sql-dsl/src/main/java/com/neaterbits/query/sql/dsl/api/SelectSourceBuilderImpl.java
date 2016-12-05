@@ -10,8 +10,8 @@ abstract class SelectSourceBuilderImpl<MODEL, RESULT> extends BaseQueryEntity<MO
 //	private Class<?> [] classes;
 //	private Alias<?> [] aliases;
 
-	SelectSourceBuilderImpl(Class<?> resultType, ModelCompiler<MODEL> modelCompiler) {
-		super(new QueryCollectorImpl(resultType), modelCompiler);
+	SelectSourceBuilderImpl(boolean singleResult, Class<?> resultType, ModelCompiler<MODEL> modelCompiler) {
+		super(new QueryCollectorImpl(singleResult, resultType), modelCompiler);
 	}
 	
 	@Override

@@ -5,4 +5,9 @@ final class ConditionValueLiteralStringImpl extends BaseConditionValueLiteralImp
 	ConditionValueLiteralStringImpl(String literal) {
 		super(literal);
 	}
+
+	@Override
+	<T, R> R visit(ConditionValueVisitor<T, R> visitor, T param) {
+		return visitor.onLiteralString(this, param);
+	}
 }

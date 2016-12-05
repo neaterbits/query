@@ -25,7 +25,7 @@ class ConditionClauseImpl<MODEL, RESULT, R, L extends LogicalClauses<MODEL, RESU
 	}
 
 	final <V> BaseConditionValueLiteralImpl<V> makeLiteralValue(V value) {
-		return new ConditionValueLiteralImpl<>(value);
+		return new ConditionValueLiteralAnyImpl<>(value);
 	}
 
 	final <V> ConditionValueParamImpl makeParamValue(Param<V> param) {
@@ -35,12 +35,11 @@ class ConditionClauseImpl<MODEL, RESULT, R, L extends LogicalClauses<MODEL, RESU
 	final <V> ConditionValueGetterImpl makeGetterValue(Function<?, V> value) {
 		return new ConditionValueGetterImpl(ClausesImpl.makeGetter(value));
 	}
-	
+
 	final <V> ConditionValueGetterImpl makeGetterValue(Supplier<V> value) {
 		return new ConditionValueGetterImpl(ClausesImpl.makeGetter(value));
 	}
-	
-	
+
 	final L addCondition(ConditionImpl condition) {
 		if (condition == null) {
 			throw new IllegalArgumentException("condition == null");

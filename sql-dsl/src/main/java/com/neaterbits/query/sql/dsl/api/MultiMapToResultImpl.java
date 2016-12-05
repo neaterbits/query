@@ -8,7 +8,7 @@ final class MultiMapToResultImpl<MODEL, RESULT>
 		implements MultiMapToResult<MODEL, RESULT> {
 
 	MultiMapToResultImpl(Class<?> resultType, ModelCompiler<MODEL> modelCompiler) {
-		super(resultType, modelCompiler);
+		super(false, resultType, modelCompiler);
 	}
 
 	@Override

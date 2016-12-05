@@ -7,6 +7,8 @@ package com.neaterbits.query.sql.dsl.api;
 
 final class QueryCollectorImpl {
 
+	private final boolean singleResult;
+	
 	// The expected result type
 	private final Class<?> resultType;
 	
@@ -19,15 +21,16 @@ final class QueryCollectorImpl {
 	// Select clauses
 	private ClauseCollectorImpl clauses;
 	
-	QueryCollectorImpl(Class<?> resultType) {
+	QueryCollectorImpl(boolean singleResult, Class<?> resultType) {
 		if (resultType == null) {
 			throw new IllegalArgumentException("resultType == null");
 		}
 
+		this.singleResult = singleResult;
 		this.resultType = resultType;
 	}
 
-	QueryCollectorImpl(Class<?> resultType, MappingCollector mappings,
+	QueryCollectorImpl(boolean singleResult, Class<?> resultType, MappingCollector mappings,
 			SelectSourceImpl sources, ClauseCollectorImpl clauses, boolean isMulti) {
 		
 		if (resultType == null) {
@@ -42,12 +45,19 @@ final class QueryCollectorImpl {
 			throw new IllegalArgumentException("clauses == null");
 		}
 
+		this.singleResult = singleResult;
 		this.resultType = resultType;
 		this.mappings = mappings;
 		this.sources = sources;
 		this.clauses = clauses;
 	}
 
+	
+	boolean isSingleResult() {
+		return singleResult;
+	}
+	
+	
 	Class<?> getResultType() {
 		return resultType;
 	}

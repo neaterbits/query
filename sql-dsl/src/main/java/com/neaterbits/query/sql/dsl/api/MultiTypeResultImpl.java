@@ -4,6 +4,6 @@ final class MultiTypeResultImpl<MODEL, RESULT> extends BaseTypeResultImpl<MODEL,
 	implements MultiTypeResult<MODEL, RESULT> {
 
 	MultiTypeResultImpl(Class<?> resultType, ModelCompiler<MODEL> modelCompiler) {
-		super(resultType, modelCompiler);
+		super(false, resultType, modelCompiler);
 	}
 }

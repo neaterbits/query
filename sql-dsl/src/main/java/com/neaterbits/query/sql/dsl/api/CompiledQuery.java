@@ -12,6 +12,8 @@ import com.neaterbits.query.util.java8.Coll8;
 
 final class CompiledQuery {
 
+	private final boolean singleResult;
+	
 	private final Class<?> resultType;
 	
 	private final CompiledMappings mappings;
@@ -20,6 +22,7 @@ final class CompiledQuery {
 	private final CompiledConditions conditions;
 
 	private CompiledQuery(
+			boolean singleResult,
 			Class<?> resultType,
 			CompiledMappings mappings,
 			CompiledSelectSources<?> selectSources,
@@ -33,12 +36,17 @@ final class CompiledQuery {
 			throw new IllegalArgumentException("selectSources == null");
 		}
 
+		this.singleResult = singleResult;
 		this.resultType = resultType;
 		this.mappings = mappings;
 		this.selectSources = selectSources;
 		
 		// may be null if no conditions
 		this.conditions = conditions;
+	}
+
+	boolean isSingleResult() {
+		return singleResult;
 	}
 
 	Class<?> getResultType() {
@@ -90,6 +98,7 @@ final class CompiledQuery {
 		}
 
 		return new CompiledQuery(
+				collector.isSingleResult(),
 				resultType,
 				compiledMappings,
 				compiledSources,

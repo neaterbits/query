@@ -28,7 +28,7 @@ final class QueryDataSourceJPA extends QueryDataSourceBase {
 		this.em = entityManager;
 	}
 	
-	private JPAPreparedQuery prepareQuery(CompiledQuery query) {
+	private JPACompletePreparedQuery prepareQuery(CompiledQuery query) {
 
 		final StringBuilder sb = new StringBuilder();
 
@@ -40,7 +40,7 @@ final class QueryDataSourceJPA extends QueryDataSourceBase {
 		
 		final javax.persistence.Query jpaQuery = em.createQuery(jpql);
 
-		return new JPAPreparedQuery(jpaQuery);
+		return new JPACompletePreparedQuery(query.isSingleResult(), jpaQuery);
 	}
 	
 	// TODO: Assure unique
@@ -71,8 +71,16 @@ final class QueryDataSourceJPA extends QueryDataSourceBase {
 		// Add all select sources
 		prepareSelectSources(sb, (CompiledSelectSources<CompiledSelectSource>)query.getSelectSources());
 		
-		// Prepare clauses if present
+		// Prepare conditions if present
 		
+		
+		if (query.getConditions() != null) {
+			
+			final ParamNameAssigner paramNameAssigner = new ParamNameAssigner();
+			final CompileConditionParam param = new CompileConditionParam(paramNameAssigner);
+			
+			prepareConditions(query.getConditions(), param);
+		}
 	}
 	
 	
@@ -82,7 +90,7 @@ final class QueryDataSourceJPA extends QueryDataSourceBase {
 
 			final CompiledFieldReference field = mapping.getField();
 
-			prepareFieldReference(sb, field);
+			prepareFieldReference(sb::append, field);
 		});
 	}
 
@@ -96,7 +104,7 @@ final class QueryDataSourceJPA extends QueryDataSourceBase {
 		});
 	}
 	
-	private void prepareFieldReference(StringBuilder sb, CompiledFieldReference field) {
+	private void prepareFieldReference(Consumer<String> c, CompiledFieldReference field) {
 
 		final CompiledSelectSource source = field.getSource();
 
@@ -104,15 +112,15 @@ final class QueryDataSourceJPA extends QueryDataSourceBase {
 
 		final String columnName = getColumnNameForGetter(source, getter);
 
-		sb.append(source.getName()).append('.').append(columnName);
+		c.accept(source.getName());
+		c.accept(".");
+		c.accept(columnName);
 	}
-	
+
 	private static final ConditionToOperatorVisitor conditionToOperatorVisitor = new ConditionToOperatorVisitor();
 	
 	private void prepareConditions(CompiledConditions conditions, CompileConditionParam param) {
 
-		final StringBuilder sb = param.sb;
-		
 		boolean first = true;
 		
 		final String opString;
@@ -131,113 +139,108 @@ final class QueryDataSourceJPA extends QueryDataSourceBase {
 		}
 
 		for (CompiledCondition condition : conditions.getConditions()) {
+
+			final String os;
+
 			if (first) {
-				sb.append("WHERE");
+				os = "WHERE";
 			}
 			else {
-				sb.append(opString);
+				os = opString;
 			}
+			
+			param.append(os);
 
-			sb.append(' ');
-
-			prepareFieldReference(sb, condition.getLhs());
+			prepareFieldReference(param::append, condition.getLhs());
 
 			// Operator and value
 			condition.getOriginal().visit(conditionToOperatorVisitor, param);
-			
 		}
 	}
-	
-	private static class CompileConditionParam {
-		private final StringBuilder sb;
-		private final ParamNameAssigner paramNameAssigner;
-
-		CompileConditionParam(StringBuilder sb, ParamNameAssigner paramNameAssigner) {
-			
-			if (sb == null) {
-				throw new IllegalArgumentException("sb == null");
-			}
-			
-			if (paramNameAssigner == null) {
-				throw new IllegalArgumentException("paramNameAssigner == null");
-			}
-			
-			this.sb = sb;
-			this.paramNameAssigner = paramNameAssigner;
-		}
-	}
-	
 	
 	
 	private static final class ConditionToOperatorVisitor implements ConditionVisitor<CompileConditionParam, Void> {
 
 		@Override
 		public Void onEqualTo(ConditionEqualToImpl condition, CompileConditionParam param) {
-			// TODO Auto-generated method stub
+			appendOpAndValue("=", condition.getValue(), param);
+
 			return null;
 		}
 
 		@Override
-		public Void onNotEqualTo(ConditionNotEqualToImpl condition,
-				CompileConditionParam param) {
-			// TODO Auto-generated method stub
+		public Void onNotEqualTo(ConditionNotEqualToImpl condition, CompileConditionParam param) {
+			
+			appendOpAndValue("!=", condition.getValue(), param);
+			
 			return null;
 		}
 
 		@Override
 		public Void onIn(ConditionInImpl condition, CompileConditionParam param) {
-			// TODO Auto-generated method stub
+
+			param.append("(");
+			
+			condition.getValue().visit(conditionValueVisitor, param);
+
+			param.append(")");
+
 			return null;
 		}
 
 		@Override
-		public Void onGreaterThan(ConditionGreaterThanImpl condition,
-				CompileConditionParam param) {
-			// TODO Auto-generated method stub
+		public Void onGreaterThan(ConditionGreaterThanImpl condition, CompileConditionParam param) {
+
+			appendOpAndValue(">", condition.getValue(), param);
+
 			return null;
 		}
 
 		@Override
-		public Void onGreaterThanOrEqual(
-				ConditionGreaterThanOrEqualImpl condition,
-				CompileConditionParam param) {
-			// TODO Auto-generated method stub
+		public Void onGreaterThanOrEqual(ConditionGreaterThanOrEqualImpl condition, CompileConditionParam param) {
+
+			appendOpAndValue(">=", condition.getValue(), param);
+			
 			return null;
 		}
 
 		@Override
-		public Void onLessThan(ConditionLessThanImpl condition,
-				CompileConditionParam param) {
-			// TODO Auto-generated method stub
+		public Void onLessThan(ConditionLessThanImpl condition, CompileConditionParam param) {
+
+			appendOpAndValue("<", condition.getValue(), param);
+
 			return null;
 		}
 
 		@Override
-		public Void onLessThanOrEqual(ConditionLessThanOrEqualImpl condition,
-				CompileConditionParam param) {
-			// TODO Auto-generated method stub
+		public Void onLessThanOrEqual(ConditionLessThanOrEqualImpl condition, CompileConditionParam param) {
+
+			appendOpAndValue("<=", condition.getValue(), param);
+
 			return null;
 		}
 
 		@Override
-		public Void onStartsWith(ConditionStringStartsWith condition,
-				CompileConditionParam param) {
-			// TODO Auto-generated method stub
+		public Void onStartsWith(ConditionStringStartsWith condition, CompileConditionParam param) {
+
+			appendLike(false, true, condition.getValue(), param);
+
 			return null;
 		}
 
 		@Override
-		public Void onEndsWith(ConditionStringEndsWith condition,
-				CompileConditionParam param) {
-			// TODO Auto-generated method stub
+		public Void onEndsWith(ConditionStringEndsWith condition, CompileConditionParam param) {
+
+			appendLike(true, false, condition.getValue(), param);
+
 			return null;
 		}
 
 		@Override
 		public Void onContains(ConditionStringContains condition, CompileConditionParam param) {
-			
-			param.sb.append("LIKE '%");
-			
+
+			appendLike(true, true, condition.getValue(), param);
+
 			return null;
 		}
 
@@ -246,9 +249,98 @@ final class QueryDataSourceJPA extends QueryDataSourceBase {
 			throw new IllegalArgumentException("matches not supported");
 		}
 	}
-	
-	private void appendStringValue(ConditionStringImpl condition, CompileConditionParam param) {
+
+
+	private static void appendLike(boolean wildcardBefore, boolean wildcardAfter, ConditionValueImpl value, CompileConditionParam param) {
+
+		param.append("LIKE ");
+
+		if (value instanceof ConditionValueLiteralStringImpl) {
+
+			value.visit(conditionValueVisitor, param);
+
+			param.completeResolvedCondition();
+		}
+		else if (value instanceof ConditionValueParamImpl) {
+			param.unresolvedCondition(prefix -> new JPAConditionLikeWithParamUnresolved(prefix, wildcardBefore, wildcardAfter));
+		}
+		else {
+			throw new UnsupportedOperationException("Neither string nor param value for LIKE query: " + value.getClass().getName());
+		}
+	}
+
+
+	private static void appendOpAndValue(String op, ConditionValueImpl value, CompileConditionParam param) {
+		param.append(op).append(" ");
 		
+		value.visit(conditionValueVisitor, param);
+		
+		param.completeResolvedCondition();
+	}
+
+	private static final ConditionValueVisitor<CompileConditionParam, Void> conditionValueVisitor = new ConditionValueVisitor<CompileConditionParam, Void>() {
+
+		@Override
+		public Void onLiteralAny(ConditionValueLiteralAnyImpl<?> value, CompileConditionParam param) {
+
+			appendLiteral(value.getLiteral(), param);
+			
+			return null;
+		}
+
+		@Override
+		public Void onLiteralString(ConditionValueLiteralStringImpl value, CompileConditionParam param) {
+
+			appendStringLiteral(value.getLiteral(), param);
+
+			return null;
+		}
+
+		@Override
+		public Void onArray(ConditionValueArrayImpl value, CompileConditionParam param) {
+
+			final Object [] values = value.getValues();
+			
+			for (int i = 0;  i < values.length; ++ i) {
+				if (i > 0) {
+					param.append(", ");
+				}
+			
+				appendLiteral(values[i], param);
+			}
+
+			return null;
+		}
+		
+		@Override
+		public Void onParam(ConditionValueParamImpl value, CompileConditionParam param) {
+			
+			param.appendParam(value.getParam());
+			
+			return null;
+		}
+
+		@Override
+		public Void onGetter(ConditionValueGetterImpl value, CompileConditionParam param) {
+			throw new UnsupportedOperationException("Getter should have been compiled");
+		}
+	};
+	
+	private static void appendStringLiteral(String literal, CompileConditionParam param) {
+		param.append("'").append(literal).append("'");
+	}
+	
+	private static void appendLiteral(Object literal, CompileConditionParam param) {
+		
+		if (literal instanceof String) {
+			appendStringLiteral((String)literal, param);
+		}
+		else if (literal instanceof Integer) {
+			param.append(String.valueOf((Integer)literal));
+		}
+		else {
+			throw new UnsupportedOperationException("Unknown literal of type " + literal.getClass().getName());
+		}
 	}
 	
 	

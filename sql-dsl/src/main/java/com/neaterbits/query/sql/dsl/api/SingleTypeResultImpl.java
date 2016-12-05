@@ -4,6 +4,6 @@ final class SingleTypeResultImpl<MODEL, RESULT> extends BaseTypeResultImpl<MODEL
 	implements SingleTypeResult<MODEL, RESULT> {
 
 	SingleTypeResultImpl(Class<?> resultType, ModelCompiler<MODEL> modelCompiler) {
-		super(resultType, modelCompiler);
+		super(true, resultType, modelCompiler);
 	}
 }
