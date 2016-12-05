@@ -9,6 +9,8 @@ import javax.persistence.metamodel.Attribute;
 import javax.persistence.metamodel.EntityType;
 import javax.persistence.metamodel.Metamodel;
 
+import com.neaterbits.query.sql.dsl.api.QueryDataSourceJPA.CompileConditionParam;
+
 /**
  * Query data source implementation for JPA
  * @author nhl
@@ -107,8 +109,12 @@ final class QueryDataSourceJPA extends QueryDataSourceBase {
 		sb.append(source.getName()).append('.').append(columnName);
 	}
 	
-	private void prepareConditions(StringBuilder sb, CompiledConditions conditions) {
+	private static final ConditionToOperatorVisitor conditionToOperatorVisitor = new ConditionToOperatorVisitor();
+	
+	private void prepareConditions(CompiledConditions conditions, CompileConditionParam param) {
 
+		final StringBuilder sb = param.sb;
+		
 		boolean first = true;
 		
 		final String opString;
@@ -133,95 +139,119 @@ final class QueryDataSourceJPA extends QueryDataSourceBase {
 			else {
 				sb.append(opString);
 			}
-			
+
 			sb.append(' ');
-			
+
 			prepareFieldReference(sb, condition.getLhs());
-			
-			// Operator
-			
-			
-			// Value
+
+			// Operator and value
+			condition.getOriginal().visit(conditionToOperatorVisitor, param);
 			
 		}
 	}
 	
-	private static final class ConditionToOperatorVisitor implements ConditionVisitor<StringBuilder, Void> {
+	private static class CompileConditionParam {
+		private final StringBuilder sb;
+		private final ParamNameAssigner paramNameAssigner;
+
+		CompileConditionParam(StringBuilder sb, ParamNameAssigner paramNameAssigner) {
+			
+			if (sb == null) {
+				throw new IllegalArgumentException("sb == null");
+			}
+			
+			if (paramNameAssigner == null) {
+				throw new IllegalArgumentException("paramNameAssigner == null");
+			}
+			
+			this.sb = sb;
+			this.paramNameAssigner = paramNameAssigner;
+		}
+	}
+	
+	
+	
+	private static final class ConditionToOperatorVisitor implements ConditionVisitor<CompileConditionParam, Void> {
 
 		@Override
-		public Void onEqualTo(ConditionEqualToImpl condition,
-				StringBuilder param) {
+		public Void onEqualTo(ConditionEqualToImpl condition, CompileConditionParam param) {
 			// TODO Auto-generated method stub
 			return null;
 		}
 
 		@Override
 		public Void onNotEqualTo(ConditionNotEqualToImpl condition,
-				StringBuilder param) {
+				CompileConditionParam param) {
 			// TODO Auto-generated method stub
 			return null;
 		}
 
 		@Override
-		public Void onIn(ConditionInImpl condition, StringBuilder param) {
+		public Void onIn(ConditionInImpl condition, CompileConditionParam param) {
 			// TODO Auto-generated method stub
 			return null;
 		}
 
 		@Override
 		public Void onGreaterThan(ConditionGreaterThanImpl condition,
-				StringBuilder param) {
+				CompileConditionParam param) {
 			// TODO Auto-generated method stub
 			return null;
 		}
 
 		@Override
 		public Void onGreaterThanOrEqual(
-				ConditionGreaterThanOrEqualImpl condition, StringBuilder param) {
+				ConditionGreaterThanOrEqualImpl condition,
+				CompileConditionParam param) {
 			// TODO Auto-generated method stub
 			return null;
 		}
 
 		@Override
 		public Void onLessThan(ConditionLessThanImpl condition,
-				StringBuilder param) {
+				CompileConditionParam param) {
 			// TODO Auto-generated method stub
 			return null;
 		}
 
 		@Override
 		public Void onLessThanOrEqual(ConditionLessThanOrEqualImpl condition,
-				StringBuilder param) {
+				CompileConditionParam param) {
 			// TODO Auto-generated method stub
 			return null;
 		}
 
 		@Override
 		public Void onStartsWith(ConditionStringStartsWith condition,
-				StringBuilder param) {
+				CompileConditionParam param) {
 			// TODO Auto-generated method stub
 			return null;
 		}
 
 		@Override
 		public Void onEndsWith(ConditionStringEndsWith condition,
-				StringBuilder param) {
+				CompileConditionParam param) {
 			// TODO Auto-generated method stub
 			return null;
 		}
 
 		@Override
-		public Void onContains(ConditionStringContains condition, StringBuilder param) {
+		public Void onContains(ConditionStringContains condition, CompileConditionParam param) {
 			
-			//param.append("LIKE '%").append(condition.getValue().)
+			param.sb.append("LIKE '%");
+			appendC
 			
 			return null;
 		}
 
 		@Override
-		public Void onMatches(ConditionStringMatches condition, StringBuilder param) {
+		public Void onMatches(ConditionStringMatches condition, CompileConditionParam param) {
 			throw new IllegalArgumentException("matches not supported");
 		}
+	}
+	
+	private void appendStringValue(ConditionStringImpl condition, CompileConditionParam param) {
+		
 	}
 	
 	
