@@ -56,7 +56,125 @@ Resolves i executoren.
 
 
 
+-----
 
+
+
+Combined-queries ?
+
+
+
+
+andLower(foo::bar)
+
+and(o -> o.lower(foo::bar)).
+
+and(lower(foo::bar))
+
+and().lower(foo::bar)
+
+sum(foo::bar)
+
+sum().distinct(foo::bar)
+
+
+==
+
+* andLower(foo::bar)
+  - tyngre å lese and vs or?
+  - mange kombinasjoner - mange forslag i IDen
+  + 
+
+* and(o -> o.lower(foo::bar))
+  - verbost
+  - kræsjer med vanlig tabellrader.
+
+* and(lower(foo::bar))
+ - mere paranteser å nøste
+ - må inkludere static, eller være i interface som implementeres.
+
+ + parantesene scoper brukbart
+  (-) er egentlig ikke scopet likevel.
+
+
+and().lower(foo::bar)
+
+ - ikke scopet (men er heller ikke hele and-en uansett)
+ + ikke prototye kræsj
+ + fleksiblelt med å legge til mere.
+ + færre kombinasjoner
+
+--
+
+Om skulle nøste:
+
+and(field(foo::bar).isEqualTo("baz"))
+
+bedre med:
+and(foo::bar).isEqualTo("baz")
+
+
+an
+--
+
+subselects:
+
+and().select().sum(foo::bar).from(foo).isGreaterThan(10)
+
+ - Bedre å scope? Vanskelig å lese at er subselect
+
+and(sum(foo::bar).from(foo)).isGreaterThan(10)
+ - fortsatt litt vanskelig å lese?
+ - må ha static
+ + scopa
+ 
+and(s -> s.sum(foo::bar).from(foo)).isGreaterThan(10)
+
+ - litt verbost
+ - kan kræsje på signatur?
+ + mere scopa, mere klart skille
+ + kaller intern builder
+
+------
+
+Selections fra ?
+Kunne vi kutta From? Måtte da hatt aliasene i context.
+Men aliasene er egentlig From.
+Men hva med tabeller? Her må vi ha from, ellers vet vi ikke tabellene, måtte eksekvert på alle managed entities.
+Eventuelt pre-registrert de i q.
+
+
+q.select(Foo::company)
+.leftJoin(Foo.class, Bar.class).
+.leftOuterJoin(Foo.class, Bar.class).
+.innerJoin(Foo.class, Bar.class)
+.where()
+
+
+private static final Select q = select();
+
+
+Foo foo = q.alias(Foo.class);
+
+final List<Foo> fooList;
+
+q.sum(foo::getNumber).of(fooList)
+
+Færrest mulig allokeringer, kan pre-kompilere query.
+
+q.where(Foo::getNumber).isEqualTo(1).of(fooList);
+
+q.select(Foo.class).where(foo -> fo.getNumber() == 1).of(fooList);
+
+---
+
+Shorthands for liste-behandling?
+
+int sum = sum(Foo::getNumber).of(fooList);
+
+
+
+Kan
 
 
 
