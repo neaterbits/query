@@ -7,10 +7,9 @@ package com.neaterbits.query.sql.dsl.api;
 
 final class QueryCollectorImpl {
 
-	private final QueryResultMode resultMode;
 	
 	// The expected result type
-	private final Class<?> resultType;
+	private final QueryResult result;
 	
 	// Optional mappings to map result to result type
 	private MappingCollector mappings;
@@ -21,29 +20,21 @@ final class QueryCollectorImpl {
 	// Select clauses
 	private ClauseCollectorImpl clauses;
 	
-	QueryCollectorImpl(QueryResultMode resultMode, Class<?> resultType) {
+	QueryCollectorImpl(QueryResult result) {
 
-		if (resultMode == null) {
-			throw new IllegalArgumentException("resultMode == null");
+		if (result == null) {
+			throw new IllegalArgumentException("result == null");
 		}
 
-		if (resultType == null) {
-			throw new IllegalArgumentException("resultType == null");
-		}
-
-		this.resultMode = resultMode;
-		this.resultType = resultType;
+		this.result = result;
 	}
 
-	QueryCollectorImpl(QueryResultMode resultMode, Class<?> resultType, MappingCollector mappings,
+	QueryCollectorImpl(QueryResult result, MappingCollector mappings,
 			SelectSourceImpl sources, ClauseCollectorImpl clauses, boolean isMulti) {
 		
-		if (resultMode == null) {
-			throw new IllegalArgumentException("resultMode == null");
-		}
 
-		if (resultType == null) {
-			throw new IllegalArgumentException("resultType == null");
+		if (result == null) {
+			throw new IllegalArgumentException("result == null");
 		}
 		
 		if (sources == null) {
@@ -54,22 +45,29 @@ final class QueryCollectorImpl {
 			throw new IllegalArgumentException("clauses == null");
 		}
 
-		this.resultMode = resultMode;
-		this.resultType = resultType;
+		this.result = result;
 		this.mappings = mappings;
 		this.sources = sources;
 		this.clauses = clauses;
 	}
 
 	
+	/*
 	QueryResultMode getResultMode() {
-		return resultMode;
+		return result.getMode();
 	}
+	*/
 	
 	
 	Class<?> getResultType() {
-		return resultType;
+		return result.getType();
 	}
+	
+	QueryResult getResult() {
+		return result;
+	}
+
+	
 
 //	void setResultType(Class<?> resultType) {
 //		

@@ -5,8 +5,8 @@ abstract class BaseMapToResultImpl<MODEL, RESULT>
 
 	private final MappingCollector mappingCollector;
 
-	BaseMapToResultImpl(QueryResultMode resultMode, Class<?> resultType, ModelCompiler<MODEL> modelCompiler) {
-		super(resultMode, resultType, modelCompiler);
+	BaseMapToResultImpl(QueryResult result, ModelCompiler<MODEL> modelCompiler) {
+		super(result, modelCompiler);
 
 		this.mappingCollector = new MappingCollector();
 

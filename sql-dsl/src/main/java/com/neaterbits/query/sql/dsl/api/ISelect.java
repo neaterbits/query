@@ -4,10 +4,10 @@ import java.math.BigDecimal;
 
 public interface ISelect 
 	extends SumFunction<
-				NumericResult<Short>,
-				NumericResult<Integer>,
-				NumericResult<Long>,
-				NumericResult<BigDecimal>>
+				NumericTableResult<Short>,
+				NumericTableResult<Integer>,
+				NumericTableResult<Long>,
+				NumericTableResult<BigDecimal>>
 
 {
 	<MAPPED_RESULT> SingleMapToResult<SingleQuery<MAPPED_RESULT>, MAPPED_RESULT> selectOneOrNull(Class<MAPPED_RESULT> cl);

@@ -3,6 +3,7 @@ package com.neaterbits.query.sql.dsl.api;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.math.BigDecimal;
+import java.util.function.Function;
 
 import com.neaterbits.query.util.java8.MethodFinder;
 
@@ -13,13 +14,21 @@ final class SelectImpl implements ISelect {
 	private static final Method aliasGetTypeMethod;
 	private static final Method aliasGetLastInvokedMethod;
 	
+	private static <T> ModelCompiler<SingleQuery<T>> singleQueryCompiler() {
+		return compiledQuery -> new SingleQueryImpl<>(compiledQuery);
+	}
+
+	private static <T> ModelCompiler<MultiQuery<T>> multiQueryCompiler() {
+		return compiledQuery -> new MultiQueryImpl<>(compiledQuery);
+	}
+	
 	@Override
 	public <MAPPED_RESULT> SingleMapToResult<SingleQuery<MAPPED_RESULT>, MAPPED_RESULT> selectOneOrNull(Class<MAPPED_RESULT> cl) {
 		if (cl == null) {
 			throw new IllegalArgumentException("cl == null");
 			}
 
-		return new SingleMapToResultImpl<SingleQuery<MAPPED_RESULT>, MAPPED_RESULT>(cl, compiledQuery -> new SingleQueryImpl<>(compiledQuery));
+		return new SingleMapToResultImpl<SingleQuery<MAPPED_RESULT>, MAPPED_RESULT>(cl, singleQueryCompiler());
 	}
 
 	@Override
@@ -28,7 +37,7 @@ final class SelectImpl implements ISelect {
 			throw new IllegalArgumentException("cl == null");
 		}
 
-		return new MultiMapToResultImpl<MultiQuery<MAPPED_RESULT>, MAPPED_RESULT>(cl, compiledQuery -> new MultiQueryImpl<>(compiledQuery));
+		return new MultiMapToResultImpl<MultiQuery<MAPPED_RESULT>, MAPPED_RESULT>(cl, multiQueryCompiler());
 	}
 
 	@Override
@@ -37,7 +46,7 @@ final class SelectImpl implements ISelect {
 			throw new IllegalArgumentException("cl == null");
 		}
 
-		return new SingleTypeResultImpl<SingleQuery<TYPE_RESULT>, TYPE_RESULT>(cl, compiledQuery -> new SingleQueryImpl<>(compiledQuery));
+		return new SingleTypeResultImpl<SingleQuery<TYPE_RESULT>, TYPE_RESULT>(cl, singleQueryCompiler());
 	}
 
 	@Override
@@ -46,7 +55,7 @@ final class SelectImpl implements ISelect {
 			throw new IllegalArgumentException("cl == null");
 		}
 
-		return new MultiTypeResultImpl<MultiQuery<TYPE_RESULT>, TYPE_RESULT>(cl, compiledQuery -> new MultiQueryImpl<>(compiledQuery));
+		return new MultiTypeResultImpl<MultiQuery<TYPE_RESULT>, TYPE_RESULT>(cl, multiQueryCompiler());
 	}
 
 	@Override
@@ -55,7 +64,7 @@ final class SelectImpl implements ISelect {
 			throw new IllegalArgumentException("cl == null");
 		}
 
-		return new SingleTableResultImpl<SingleQuery<TYPE_RESULT>, TYPE_RESULT>(QueryResultMode.SINGLE, cl, compiledQuery -> new SingleQueryImpl<>(compiledQuery));
+		return new SingleTableResultImpl<SingleQuery<TYPE_RESULT>, TYPE_RESULT>(new QueryResultEntitySingle(cl), singleQueryCompiler());
 	}
 
 	@Override
@@ -64,7 +73,7 @@ final class SelectImpl implements ISelect {
 			throw new IllegalArgumentException("cl == null");
 		}
 
-		return new SingleTableResultImpl<MultiQuery<TYPE_RESULT>, TYPE_RESULT>(QueryResultMode.MULTI, cl, compiledQuery -> new MultiQueryImpl<>(compiledQuery));
+		return new SingleTableResultImpl<MultiQuery<TYPE_RESULT>, TYPE_RESULT>(new QueryResultEntityMulti(cl), multiQueryCompiler());
 	}
 	
 	static {
@@ -170,27 +179,28 @@ final class SelectImpl implements ISelect {
 	
 	// ------------------------ Sum ------------------------
 	
+
+	private <T, NUM> NumericTableResult<NUM> sum(Function<T, NUM> field, Class<NUM> cl) {
+		return new AggregateTableResultImpl<>(new QueryResultSum(cl), singleQueryCompiler());
+	}
+	
 	@Override
-	public <T> NumericResult<Short> sum(ShortFunction<T> field) {
-		// TODO Auto-generated method stub
-		return null;
+	public <T> NumericTableResult<Short> sum(ShortFunction<T> field) {
+		return sum(field, Short.class);
 	}
 
 	@Override
-	public <T> NumericResult<Integer> sum(IntegerFunction<T> field) {
-		// TODO Auto-generated method stub
-		return null;
+	public <T> NumericTableResult<Integer> sum(IntegerFunction<T> field) {
+		return sum(field, Integer.class);
 	}
 
 	@Override
-	public <T> NumericResult<Long> sum(LongFunction<T> field) {
-		// TODO Auto-generated method stub
-		return null;
+	public <T> NumericTableResult<Long> sum(LongFunction<T> field) {
+		return sum(field, Long.class);
 	}
 
 	@Override
-	public <T> NumericResult<BigDecimal> sum(BigDecimalFunction<T> field) {
-		// TODO Auto-generated method stub
-		return null;
+	public <T> NumericTableResult<BigDecimal> sum(BigDecimalFunction<T> field) {
+		return sum(field, BigDecimal.class);
 	}
 }

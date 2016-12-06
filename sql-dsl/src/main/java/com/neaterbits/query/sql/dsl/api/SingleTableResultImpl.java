@@ -8,19 +8,19 @@ final class SingleTableResultImpl<MODEL, RESULT>
 			WhereClauseBuilderTableSingle<MODEL, RESULT>,
 			AndOrLogicalClausesTableSingle<MODEL, RESULT>
 				  {
-	SingleTableResultImpl(QueryResultMode resultMode, Class<?> resultType, ModelCompiler<MODEL> modelCompiler) {
+	SingleTableResultImpl(QueryResult result, ModelCompiler<MODEL> modelCompiler) {
 		super(
-				makeCollector(resultMode, resultType),
+				makeCollector(result),
 				modelCompiler,
 				new ClauseCollectorImpl());
 		
 		getQueryCollector().setClauses(super.clauseCollector);
 	}
 	
-	private static QueryCollectorImpl makeCollector(QueryResultMode resultMode, Class<?> resultType) {
-		final QueryCollectorImpl collector = new QueryCollectorImpl(resultMode, resultType);
+	private static QueryCollectorImpl makeCollector(QueryResult result) {
+		final QueryCollectorImpl collector = new QueryCollectorImpl(result);
 		
-		collector.setSources(new SelectSourceClassesImpl(new Class<?> [] { resultType }));
+		collector.setSources(new SelectSourceClassesImpl(new Class<?> [] { result.getType() }));
 		
 		return collector;
 	}

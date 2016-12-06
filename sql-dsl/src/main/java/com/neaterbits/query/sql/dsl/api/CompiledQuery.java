@@ -12,9 +12,7 @@ import com.neaterbits.query.util.java8.Coll8;
 
 final class CompiledQuery {
 
-	private final QueryResultMode resultMode;
-	
-	private final Class<?> resultType;
+	private final QueryResult result;
 	
 	private final CompiledMappings mappings;
 	private final CompiledSelectSources<?> selectSources;
@@ -22,26 +20,20 @@ final class CompiledQuery {
 	private final CompiledConditions conditions;
 
 	private CompiledQuery(
-			QueryResultMode resultMode,
-			Class<?> resultType,
+			QueryResult result,
 			CompiledMappings mappings,
 			CompiledSelectSources<?> selectSources,
 			CompiledConditions conditions) {
 
-		if (resultMode == null) {
-			throw new IllegalArgumentException("resultMode == null");
-		}
-
-		if (resultType == null) {
-			throw new IllegalArgumentException("resultType == null");
+		if (result == null) {
+			throw new IllegalArgumentException("result == null");
 		}
 		
 		if (selectSources == null) {
 			throw new IllegalArgumentException("selectSources == null");
 		}
 
-		this.resultMode = resultMode;
-		this.resultType = resultType;
+		this.result = result;
 		this.mappings = mappings;
 		this.selectSources = selectSources;
 		
@@ -50,11 +42,11 @@ final class CompiledQuery {
 	}
 
 	QueryResultMode getResultMode() {
-		return resultMode;
+		return result.getMode();
 	}
 
 	Class<?> getResultType() {
-		return resultType;
+		return result.getType();
 	}
 
 	CompiledMappings getMappings() {
@@ -94,7 +86,7 @@ final class CompiledQuery {
 		final CompiledConditions compiledConditions;
 		
 		// Check all clauses etc
-		if (collector.getClauses() != null) {
+		if (collector.getClauses() != null && !collector.getClauses().getClauses().isEmpty()) {
 			compiledConditions = compileConditions(collector.getClauses(), compiledSources, cache);
 		}
 		else {
@@ -102,8 +94,7 @@ final class CompiledQuery {
 		}
 
 		return new CompiledQuery(
-				collector.getResultMode(),
-				resultType,
+				collector.getResult(),
 				compiledMappings,
 				compiledSources,
 				compiledConditions);

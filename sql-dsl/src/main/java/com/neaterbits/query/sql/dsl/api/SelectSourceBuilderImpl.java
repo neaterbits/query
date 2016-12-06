@@ -10,8 +10,8 @@ abstract class SelectSourceBuilderImpl<MODEL, RESULT> extends BaseQueryEntity<MO
 //	private Class<?> [] classes;
 //	private Alias<?> [] aliases;
 
-	SelectSourceBuilderImpl(QueryResultMode resultMode, Class<?> resultType, ModelCompiler<MODEL> modelCompiler) {
-		super(new QueryCollectorImpl(resultMode, resultType), modelCompiler);
+	SelectSourceBuilderImpl(QueryResult result, ModelCompiler<MODEL> modelCompiler) {
+		super(new QueryCollectorImpl(result), modelCompiler);
 	}
 	
 	@Override
@@ -52,7 +52,7 @@ abstract class SelectSourceBuilderImpl<MODEL, RESULT> extends BaseQueryEntity<MO
 	}
 
 	@Override
-	public WhereClauseBuilderAlias<MODEL, RESULT> from(Object... aliases) {
+	public final WhereClauseBuilderAlias<MODEL, RESULT> from(Object... aliases) {
 		
 		if (aliases.length == 0) {
 			throw new IllegalArgumentException("no aliases");

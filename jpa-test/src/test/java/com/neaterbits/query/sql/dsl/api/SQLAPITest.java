@@ -7,8 +7,10 @@ import static com.neaterbits.query.sql.dsl.api.Select.selectOneOrNull;
 import static com.neaterbits.query.sql.dsl.api.Select.selectOneFrom;
 import static com.neaterbits.query.sql.dsl.api.Select.oneFrom;
 import static com.neaterbits.query.sql.dsl.api.Select.listFrom;
+import static com.neaterbits.query.sql.dsl.api.Select.sum;
 import static org.assertj.core.api.Assertions.assertThat;
 
+import java.math.BigDecimal;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -119,6 +121,28 @@ public class SQLAPITest {
        			new Company(-2, foo.getName()));
 			});
 	}
+	
+	
+	@Test
+    public void testSum() {
+		final Company acme = new Company(-1, "Acme", new BigDecimal("100.90"));
+		final Company foo = new Company(-2, "Foo", new BigDecimal("75.49"));
+		
+		final SingleQuery<BigDecimal> query = 
+				sum(Company::getStockPrice).from(Company.class)
+				.compile();
+		
+		store(s  -> s.add(acme)
+				 .add(foo))
+		.check(ds -> {
+			final BigDecimal ret = query.prepare(ds).execute();
+			
+			assertThat(ret).isNotNull();
+			assertThat(ret.compareTo(new BigDecimal("176.39"))).isEqualTo(0);
+		});
+		
+	}
+	
 	
 	private static QueryTestDSCheck store(Consumer<QueryTestDSBuilder> b) {
 		return new QueryTestDSJPA("query-jpa-test").store(b);

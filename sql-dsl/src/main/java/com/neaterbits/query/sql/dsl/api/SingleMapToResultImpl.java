@@ -10,7 +10,7 @@ public class SingleMapToResultImpl<MODEL, RESULT>
 			   SingleMapToResultAlias<MODEL, RESULT> {
 
 	SingleMapToResultImpl(Class<?> resultType, ModelCompiler<MODEL> modelCompiler) {
-		super(QueryResultMode.SINGLE, resultType, modelCompiler);
+		super(new QueryResultMappedSingle(resultType), modelCompiler);
 	}
 
 	@Override

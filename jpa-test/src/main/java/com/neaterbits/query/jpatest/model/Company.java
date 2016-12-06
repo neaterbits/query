@@ -1,5 +1,7 @@
 package com.neaterbits.query.jpatest.model;
 
+import java.math.BigDecimal;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -9,7 +11,10 @@ import javax.persistence.Id;
 public class Company {
 
 	private long id;
+	
 	private String name;
+	
+	private BigDecimal stockPrice;
 	
 	public Company() {
 		
@@ -18,6 +23,12 @@ public class Company {
 	public Company(long id, String name) {
 		this.id = id;
 		this.name = name;
+	}
+
+	public Company(long id, String name, BigDecimal stockPrice) {
+		this.id = id;
+		this.name = name;
+		this.stockPrice = stockPrice;
 	}
 
 	@Id @GeneratedValue
@@ -36,6 +47,14 @@ public class Company {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+	
+	public BigDecimal getStockPrice() {
+		return stockPrice;
+	}
+
+	public void setStockPrice(BigDecimal stockPrice) {
+		this.stockPrice = stockPrice;
 	}
 
 	@Override

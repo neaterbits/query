@@ -1,5 +1,6 @@
 package com.neaterbits.query.sql.dsl.api;
 
+import java.math.BigDecimal;
 
 public interface Select {
 
@@ -35,6 +36,23 @@ public interface Select {
 		return SelectImpl.selectImpl.aliasAlias(aliasType);
     }
 
+    public static <T> NumericTableResult<Short> sum(ShortFunction<T> field) {
+    	return SelectImpl.selectImpl.sum(field);
+    }
+	
+    public static <T> NumericTableResult<Integer> sum(IntegerFunction<T> field) {
+    	return SelectImpl.selectImpl.sum(field);
+    }
+
+    public static <T> NumericTableResult<Long> sum(LongFunction<T> field) {
+    	return SelectImpl.selectImpl.sum(field);
+    }
+
+    public static <T> NumericTableResult<BigDecimal> sum(BigDecimalFunction<T> field) {
+    	return SelectImpl.selectImpl.sum(field);
+    }
+    
+    
     /*
     public static <T> Param<T> param(Class<T> paramType) {
 		return SelectImpl.selectImpl.param(paramType);
