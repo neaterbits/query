@@ -1,6 +1,15 @@
 package com.neaterbits.query.sql.dsl.api;
 
-public interface ISelect {
+import java.math.BigDecimal;
+
+public interface ISelect 
+	extends SumFunction<
+				NumericResult<Short>,
+				NumericResult<Integer>,
+				NumericResult<Long>,
+				NumericResult<BigDecimal>>
+
+{
 	<MAPPED_RESULT> SingleMapToResult<SingleQuery<MAPPED_RESULT>, MAPPED_RESULT> selectOneOrNull(Class<MAPPED_RESULT> cl);
 
 	<MAPPED_RESULT> MultiMapToResult<MultiQuery<MAPPED_RESULT>, MAPPED_RESULT> selectList(Class<MAPPED_RESULT> cl);
@@ -23,5 +32,4 @@ public interface ISelect {
     Param<Integer> intParam();
 
     Param<String> stringParam();
-
 }

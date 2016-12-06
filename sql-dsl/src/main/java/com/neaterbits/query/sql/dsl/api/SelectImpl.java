@@ -2,6 +2,7 @@ package com.neaterbits.query.sql.dsl.api;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
+import java.math.BigDecimal;
 
 import com.neaterbits.query.util.java8.MethodFinder;
 
@@ -163,5 +164,33 @@ final class SelectImpl implements ISelect {
     public Param<String> stringParam() {
     	return param(String.class);
     }
+
+	// ======================== Aggregate functions ========================
 	
+	
+	// ------------------------ Sum ------------------------
+	
+	@Override
+	public <T> NumericResult<Short> sum(ShortFunction<T> field) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public <T> NumericResult<Integer> sum(IntegerFunction<T> field) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public <T> NumericResult<Long> sum(LongFunction<T> field) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public <T> NumericResult<BigDecimal> sum(BigDecimalFunction<T> field) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }
