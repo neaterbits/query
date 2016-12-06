@@ -2,7 +2,7 @@ package com.neaterbits.query.sql.dsl.api;
 
 final class QueryResultSum extends QueryResultAggregate {
 
-	QueryResultSum(Class<?> type) {
-		super(type);
+	QueryResultSum(Class<?> type, Getter getter) {
+		super(type, getter);
 	}
 }

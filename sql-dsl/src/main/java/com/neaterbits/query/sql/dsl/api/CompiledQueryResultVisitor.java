@@ -6,4 +6,6 @@ public interface CompiledQueryResultVisitor<T, R> {
 
 	R onMapped(CompiledQueryResultMapped result, T param);
 	
+	R onAggregate(CompiledQueryResultAggregate result, T param);
+
 }

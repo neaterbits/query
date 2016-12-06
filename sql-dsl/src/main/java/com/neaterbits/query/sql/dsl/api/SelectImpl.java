@@ -181,7 +181,7 @@ final class SelectImpl implements ISelect {
 	
 
 	private <T, NUM> NumericTableResult<NUM> sum(Function<T, NUM> field, Class<NUM> cl) {
-		return new AggregateTableResultImpl<>(new QueryResultSum(cl), singleQueryCompiler());
+		return new AggregateTableResultImpl<>(new QueryResultSum(cl, new FunctionGetter(field)), singleQueryCompiler());
 	}
 	
 	@Override

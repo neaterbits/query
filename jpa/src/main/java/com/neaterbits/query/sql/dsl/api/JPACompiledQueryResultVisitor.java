@@ -28,6 +28,25 @@ final class JPACompiledQueryResultVisitor implements CompiledQueryResultVisitor<
 		return null;
 	}
 
+	@Override
+	public Void onAggregate(CompiledQueryResultAggregate result, StringBuilder sb) {
+
+		final QueryResultAggregate original = (QueryResultAggregate)result.getOriginal();
+		
+		if (original instanceof QueryResultSum) {
+			sb.append("sum (");
+			
+			QueryDataSourceJPA.prepareFieldReference(sb::append, result.getField(), em);
+			
+			sb.append(")");
+		}
+		else {
+			throw new UnsupportedOperationException("Unknown aggregate: " + original.getClass().getName());
+		}
+		
+		return null;
+	}
+
 	// TODO: Assure unique
 	private static String resultVarName(Class<?> resultType) {
 		return "_result";

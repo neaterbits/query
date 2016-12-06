@@ -110,10 +110,13 @@ final class CompiledQuery {
 		else if (result instanceof QueryResultEntity) {
 			ret = new CompiledQueryResultEntity((QueryResultEntity)result);
 		}
+		else if (result instanceof QueryResultAggregate) {
+			ret = compileAggregateQueryResult((QueryResultAggregate)result, compiledSources, cache);
+		}
 		else {
 			throw new UnsupportedOperationException("Unknown query result type " + result.getClass().getName());
 		}
-		
+
 		return ret;
 	}
 
@@ -140,6 +143,19 @@ final class CompiledQuery {
 		}
 
 		return new CompiledMappings(compiledMappings);
+	}
+	
+	private static CompiledQueryResultAggregate compileAggregateQueryResult(
+			QueryResultAggregate result,
+			CompiledSelectSources<?> compiledSelectSources,
+			CompiledGetterSetterCache cache) throws CompileException {
+
+		final CompiledFieldReference fieldReference = compiledSelectSources.makeFieldReference(
+				result,
+				result.getGetter(),
+				cache);
+
+		return new CompiledQueryResultAggregate(result, fieldReference);
 	}
 
 	private static CompiledSelectSources<?> compileSelectSources(SelectSourceImpl sources) {

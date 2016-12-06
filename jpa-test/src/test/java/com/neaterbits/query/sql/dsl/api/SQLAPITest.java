@@ -137,6 +137,9 @@ public class SQLAPITest {
 			final BigDecimal ret = query.prepare(ds).execute();
 			
 			assertThat(ret).isNotNull();
+			
+			System.out.println("Got ret " + ret);
+			
 			assertThat(ret.compareTo(new BigDecimal("176.39"))).isEqualTo(0);
 		});
 		

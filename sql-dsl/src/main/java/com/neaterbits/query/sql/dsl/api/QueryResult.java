@@ -1,6 +1,6 @@
 package com.neaterbits.query.sql.dsl.api;
 
-abstract class QueryResult {
+abstract class QueryResult extends QueryBuilderItem {
 	private final Class<?> type;
 	
 	abstract QueryResultMode getMode();

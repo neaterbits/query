@@ -124,6 +124,16 @@ abstract class JPABasePreparedQuery implements DSPreparedQuery {
 			
 			return input;
 		}
+
+		@Override
+		public Object onAggregate(CompiledQueryResultAggregate result, Object input) {
+			
+			if (!result.getOriginal().getType().equals(input.getClass())) {
+				throw new IllegalStateException("Not of aggregated type " + result.getOriginal().getType().getName() + ": " + input.getClass().getName());
+			}
+
+			return input;
+		}
 	};
 	
 }

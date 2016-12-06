@@ -49,6 +49,7 @@ public class Company {
 		this.name = name;
 	}
 	
+	@Column(precision=8,scale=3)
 	public BigDecimal getStockPrice() {
 		return stockPrice;
 	}
