@@ -12,16 +12,14 @@ import com.neaterbits.query.util.java8.Coll8;
 
 final class CompiledQuery {
 
-	private final QueryResult result;
-	
-	private final CompiledMappings mappings;
+	private final CompiledQueryResult result;
+
 	private final CompiledSelectSources<?> selectSources;
 	
 	private final CompiledConditions conditions;
 
 	private CompiledQuery(
-			QueryResult result,
-			CompiledMappings mappings,
+			CompiledQueryResult result,
 			CompiledSelectSources<?> selectSources,
 			CompiledConditions conditions) {
 
@@ -34,7 +32,6 @@ final class CompiledQuery {
 		}
 
 		this.result = result;
-		this.mappings = mappings;
 		this.selectSources = selectSources;
 		
 		// may be null if no conditions
@@ -42,15 +39,15 @@ final class CompiledQuery {
 	}
 
 	QueryResultMode getResultMode() {
-		return result.getMode();
+		return result.getOriginal().getMode();
+	}
+
+	CompiledQueryResult getResult() {
+		return result;
 	}
 
 	Class<?> getResultType() {
-		return result.getType();
-	}
-
-	CompiledMappings getMappings() {
-		return mappings;
+		return result.getOriginal().getType();
 	}
 
 	CompiledConditions getConditions() {
@@ -67,21 +64,11 @@ final class CompiledQuery {
 			throw new IllegalArgumentException("collector == null");
 		}
 		
-		final Class<?> resultType = collector.getResultType();
-		final CompiledMappings compiledMappings;
-		
 		final CompiledGetterSetterCache cache = new CompiledGetterSetterCache();
-
 		final SelectSourceImpl sources = collector.getSources();
 
 		final CompiledSelectSources<?> compiledSources = compileSelectSources(sources);
-		
-		if (collector.getMappings() != null) {
-			compiledMappings = compileMappings(resultType, collector.getMappings(), sources, compiledSources, cache);
-		}
-		else {
-			compiledMappings = null;
-		}
+		final CompiledQueryResult compiledQueryResult = compileQueryResult(collector, compiledSources, cache);
 
 		final CompiledConditions compiledConditions;
 		
@@ -92,12 +79,42 @@ final class CompiledQuery {
 		else {
 			compiledConditions = null;
 		}
+		
 
-		return new CompiledQuery(
-				collector.getResult(),
-				compiledMappings,
-				compiledSources,
-				compiledConditions);
+		return new CompiledQuery(compiledQueryResult, compiledSources, compiledConditions);
+	}
+	
+	private static CompiledQueryResult compileQueryResult(QueryCollectorImpl collector, CompiledSelectSources<?> compiledSources, CompiledGetterSetterCache cache) throws CompileException {
+		
+		final CompiledQueryResult ret;
+		
+		final QueryResult result = collector.getResult();
+		
+		if (result instanceof QueryResultMapped) {
+			
+			if (collector.getMappings() != null) {
+				
+				final CompiledMappings compiledMappings = compileMappings(
+						result.getType(),
+						collector.getMappings(),
+						collector.getSources(),
+						compiledSources,
+						cache);
+				
+				ret = new CompiledQueryResultMapped((QueryResultMapped)result, compiledMappings);
+			}
+			else {
+				throw new IllegalStateException("No mappings for result " + result);
+			}
+		}
+		else if (result instanceof QueryResultEntity) {
+			ret = new CompiledQueryResultEntity((QueryResultEntity)result);
+		}
+		else {
+			throw new UnsupportedOperationException("Unknown query result type " + result.getClass().getName());
+		}
+		
+		return ret;
 	}
 
 	private static CompiledMappings compileMappings(

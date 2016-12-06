@@ -4,7 +4,6 @@ package com.neaterbits.query.sql.dsl.api;
 import static com.neaterbits.query.sql.dsl.api.Select.alias;
 import static com.neaterbits.query.sql.dsl.api.Select.intParam;
 import static com.neaterbits.query.sql.dsl.api.Select.selectOneOrNull;
-import static com.neaterbits.query.sql.dsl.api.Select.selectOneFrom;
 import static com.neaterbits.query.sql.dsl.api.Select.oneFrom;
 import static com.neaterbits.query.sql.dsl.api.Select.listFrom;
 import static com.neaterbits.query.sql.dsl.api.Select.sum;

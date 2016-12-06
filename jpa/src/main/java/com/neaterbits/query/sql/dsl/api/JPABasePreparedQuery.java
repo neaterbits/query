@@ -2,10 +2,8 @@ package com.neaterbits.query.sql.dsl.api;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.BiConsumer;
 
 import javax.persistence.NoResultException;
-import javax.persistence.NonUniqueResultException;
 import javax.persistence.Query;
 
 abstract class JPABasePreparedQuery implements DSPreparedQuery {
@@ -42,7 +40,7 @@ abstract class JPABasePreparedQuery implements DSPreparedQuery {
 		switch (compiledQuery.getResultMode()) {
 		case SINGLE:
 			try {
-				ret = mapSingle(jpaQuery.getSingleResult());
+				ret = mapSingle(compiledQuery.getResult(), jpaQuery.getSingleResult());
 			}
 			catch (NoResultException ex) {
 				ret = null;
@@ -51,7 +49,7 @@ abstract class JPABasePreparedQuery implements DSPreparedQuery {
 			
 			
 		case MULTI:
-			ret = mapMultiple(jpaQuery.getResultList());
+			ret = mapMultiple(compiledQuery.getResult(), jpaQuery.getResultList());
 			break;
 			
 		default:
@@ -61,22 +59,39 @@ abstract class JPABasePreparedQuery implements DSPreparedQuery {
 		return ret;
 	}
 	
-	private Object createResult() {
+	private static Object createResult(QueryResult result) {
 		try {
-			return compiledQuery.getResultType().newInstance();
+			return result.getType().newInstance();
 		} catch (InstantiationException | IllegalAccessException ex) {
-			throw new IllegalStateException("Failed to instantiate result type " + compiledQuery.getResultType().getName(), ex);
+			throw new IllegalStateException("Failed to instantiate result type " + result.getType().getName(), ex);
 		}
 	}
 	
-	private Object mapSingle(Object input) {
+	private Object mapSingle(CompiledQueryResult result, Object input) {
 
-		final Object ret;
+		return result.visit(mapResultVisitor, input);
 		
-		if (compiledQuery.getMappings() != null) {
-			ret = createResult();
+	}
+	
+	private List<Object> mapMultiple(CompiledQueryResult result,  @SuppressWarnings("rawtypes") List input) {
+		
+		final List<Object> ret = new ArrayList<>(input.size());
+		
+		for (Object o : input) {
+			ret.add(mapSingle(result, o));
+		}
+
+		return ret;
+	}
+	
+	
+	private static final CompiledQueryResultVisitor<Object, Object> mapResultVisitor = new CompiledQueryResultVisitor<Object, Object>() {
+		
+		@Override
+		public Object onMapped(CompiledQueryResultMapped result, Object input) {
+			final Object ret = createResult(result.getOriginal());
 			
-			final List<CompiledMapping> mappings = compiledQuery.getMappings().getMappings();
+			final List<CompiledMapping> mappings = result.getMappings().getMappings();
 
 			switch (mappings.size()) {
 				case 0:
@@ -96,26 +111,19 @@ abstract class JPABasePreparedQuery implements DSPreparedQuery {
 					break;
 			}
 			
+			return ret;
 		}
-		else {
-			if (!compiledQuery.getResultType().isAssignableFrom(input.getClass())) {
+		
+		@Override
+		public Object onEntity(CompiledQueryResultEntity result, Object input) {
+
+			
+			if (!result.getOriginal().getType().isAssignableFrom(input.getClass())) {
 				throw new IllegalStateException("not mapped and result not of mapped class: " + input.getClass().getName());
 			}
 			
-			ret = input;
+			return input;
 		}
-		
-		return ret;
-	}
+	};
 	
-	private List<Object> mapMultiple(@SuppressWarnings("rawtypes") List input) {
-		
-		final List<Object> ret = new ArrayList<>(input.size());
-		
-		for (Object o : input) {
-			ret.add(mapSingle(o));
-		}
-
-		return ret;
-	}
 }
