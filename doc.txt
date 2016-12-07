@@ -90,14 +90,18 @@ sum().distinct(foo::bar)
   - kræsjer med vanlig tabellrader.
 
 * and(lower(foo::bar))
+  and(lower(trim(foo::bar)))
  - mere paranteser å nøste
  - må inkludere static, eller være i interface som implementeres.
+ - må alltid allokere nye instanser og returnere
+ - andre kan sende inn ikke-kompatible instanser.
 
  + parantesene scoper brukbart
-  (-) er egentlig ikke scopet likevel.
+  (-) er egentlig ikke scopet likevel - siden returnerer instans utenfra.
 
 
-and().lower(foo::bar)
+* and().lower(foo::bar)
+  and().lower().trim(foo::bar)
 
  - ikke scopet (men er heller ikke hele and-en uansett)
  + ikke prototye kræsj
@@ -175,6 +179,178 @@ int sum = sum(Foo::getNumber).of(fooList);
 
 
 Kan
+
+
+
+================
+
+
+Joins osv. på lister
+
+
+Enkle queries:
+
+sum(Foo::getBar).from(fooList)
+
+Trenger vi å lage metoder? Har statisk typesikkerhet så kan bare eksekvere direkte og summere i disse enkle tilfellene hvor det ikke er joins.
+Hva når det er joins? Trenger antakelig ikke kompilere her heller.
+
+
+Flere tilfeller:
+
+ - lokal runtime (eks: desktop) : trenger ikke kompilering 
+ - compile-time => JS generering: Må vite metadata for å kompilere.
+ - compile-time + reflection: Når skal generere JS, må vite hvilke metoder/VOer vi skal krysskompilere
+ - compile-time + reflection: Når skal sammenligne med eksisterende metadata som DB tabeller
+
+
+Når trenger vi vite from() klassene? Viktig for å finne typene. Kan vi bruke generic-typen?
+Fint om kan se på denne for å finne typene som vi skal kryss-kompilere for.
+
+Hvis ikke så kunne en funnet dette via en Query som en sender med.
+
+
+-----
+
+
+POJO eksekvering.
+
+Enkel: 
+ - løkke med evaluering and eller or
+ - emit løkke-over-data? Eller bare kode JS som evaluerer query-struktur?
+  * nok bedre å emitte spesialisert kode. Trenger reflection.
+
+
+Joins:
+
+ - inner-join
+  * gjette hvilken entry som gir færrest treff? Mest sansynlig den med færres entries.
+  * lage Set<> av join criteria
+  * loope over andre. Mulig er kjappere å sjekke test enn join-criteria, kommer an på.
+
+ Lager slutt-resultat liste.
+
+ - outer-join
+   * må loope over den som ikke er outer for *kun* disse skal med.
+   * må så loope over andre og ta med alle som matcher, selv om ikke matcher de andre.
+
+
+Multiple inner-joins?
+
+
+Hvordan få til JPQL-syntax der looper over en collection som et alias?
+Se JPQL inner join syntax.
+Eller bare skippe denne?
+
+
+Kort-syntax for lister
+
+select(Foo::getFoo, Bar::getBar)
+  .join(fooList).to(barList)
+	.on(Foo::getId).isEqualTo(Bar::getFooId)
+
+Men vi ønsker deklarativt så da måtte vi hatt typer eller parametre  
+
+
+select(Foo::getFoo, Bar::getBar)
+  .join(Foo::getId).to(Bar::getFooId)
+
+eller bare som under om vi kjenner foreign keys.
+
+select(Foo::getFoo, Bar::getBar)
+  .join(Foo.class).to(Bar.class)
+
+Men hva om vi har flere mulige måter å joine på ? For JPA kan ha flere mulig collections. Bedre å bare skippe denne muligheten?
+
+
+select(Foo::getFoo, Bar::getBar)
+  .join(Foo::getAllBars)
+
+Med aliaser ? Unngå dette inntil motsatte er bevist.
+
+select(Foo::getFoo, barAlias::getBar)
+  .join(Foo::getAllBars).as(barAlias)
+
+
+Hvis vet en datasource først så kan vi finne select-sourcene ganske enkelt,
+kan også komprimere de bra.
+
+Trenger ikke from().
+Men får ikke kompilert getterne uten from().
+
+Så kan være nyttig med å ha en query-greie som på forhånd vet om entitetene.
+
+private static final Select select = jpa("query-unit-noe");
+
+Så kan vi cache de typene som behøvs, selv om mange å søke igjennom i starten.
+Kan dele de statisk når vi bygger query.
+
+Så vi må ha en kilde for type-info i så fall, da slipper vi from() som bare er redundant.
+from() kan være fint for å se hva som er med i query så kunne være optional evt.
+
+Uansett å vite på forhånd alle typer som kan oppstå.
+
+select.sum(Foo::getFoo)
+.where(Foo::getBar).gt(10)
+  .and().lower(Foo::getBaz).startsWith("baz");
+
+
+Så vi har et generelt "typespace" som vi sette inn i query.
+
+
+====
+
+
+Hvordan uttrykke query som JavaScript?
+vi outputter JS-løkker som utfører and-en på data direkte.
+
+Så vi må ha doOrLoop(<noe som representerer lista>) som genererer kode.
+
+Så vi har en QueryExecutor som for JS bare samler opp JSen mens for Java regner ut resultatet.
+
+Viktigste er å beholde samme optimaliserings-logikk i JS og Java med hva vi itererere først og siste, altså samme (enkle) query planner.
+
+Men ikke vits i å optimalisere veldig i starten, mest å holde mulighetene åpne for dette.
+
+
+===
+
+OBS! Dynamiske queries? Med data som blir oppdatert asynkront i bakgrunnen. Har med paging å gjøre, første synlige element osv.
+Kan holde første synlige element i lista stabilt og oppdatere resten i GUI dynamisk.
+Samme problematikk som Nebula gallery.
+
+
+===
+
+
+TypeSpace:
+
+- TypeSpace må kunne ha et API som gjør at kan bit-pakkes senere for å kun lage en enkel instans for ad-hoc queries.
+Men for AdHoc er det mulig er mere aktuelt med å bare samle lambdaene.
+Så to arrays. Issue er at vi ikke vet på forhånd hvor stort query er.
+
+ - korte queries : et par-tre harkoda ops og lambdaer slik at holder med en enkelt instans i minne.
+ - lange queries : arrays som vi lager etter hvert med opsjonene som trengs. Så vi allokerere arrays-ene så fort trengs for å eksekvere. Antakeligvis en god del raskere enn Streams
+siden bare en enkelt allokering i enkle tilfeller.
+
+
+- Men i starten er det prekompilerte queries som gjelder, for hvis ikke vil de ikke kunne anvendes for web.
+
+
+- Vi ser ikke på om datasource er local eller remote, vi definerer JPA direkte og select()er ut av dise.
+
+===
+
+Tre-bygging. Må kunne bygge trær rett ut av selectene inn i result-VOer.
+Må være hensiktsmessig i forhold til GUI-trær slik at kan select()e rett fra GUI (men DAO-lag ønskelig? Trenger da konkrete VO typer å jobbe på).
+Antakelig det beste å ikke tillate select-er fra DB/persistent DS direkte fra views. Bør alltid gå gjnnom modellen, som returnere VOer av noe slag.
+
+
+===
+
+Bør ha query-API som ikke antar egne sub instanser? Men kan fikses senere.
+
+===
 
 
 
