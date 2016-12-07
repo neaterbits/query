@@ -1,9 +1,10 @@
 package com.neaterbits.query.sql.dsl.api;
 
 import java.lang.reflect.Method;
-import java.util.Arrays;
 import java.util.function.Function;
 import java.util.function.Supplier;
+
+import com.neaterbits.util.compat.Coll;
 
 abstract class TypeMapBase {
 
@@ -11,17 +12,18 @@ abstract class TypeMapBase {
 			QueryBuilderItem original,
 			Getter inputGetter,
 			CompiledGetterSetterCache cache,
-			Class<?> [] types,
-			Iterable<T> iterable) throws CompileException {
+			Iterable<T> iterable,
+			Function<T, Class<?>> classGetter) throws CompileException {
 
 		final FunctionGetter functionGetter = (FunctionGetter)inputGetter;
 		
-		final CompiledGetter compiledGetter = cache.findGetterFromTypesArray(
-				types,
-				functionGetter.getter);
+		final CompiledGetter compiledGetter = cache.findGetterFromTypes(
+				iterable, 
+				functionGetter.getter,
+				classGetter);
 		
 		if (compiledGetter == null) {
-			throw new CompileException("No getter found: " + functionGetter + " among types " + Arrays.toString(types));
+			throw new CompileException("No getter found: " + functionGetter + " among types " + Coll.toArrayList(iterable));
 		}
 
 		final Class<?> type = compiledGetter.getGetterMethod().getDeclaringClass();

@@ -49,10 +49,16 @@ final class CompiledGetterSetterCache {
 	}
 	
 	CompiledGetter findGetterFromTypes(Iterable<Class<?>> types, Function<?, ?> getter) throws CompileException {
+		return findGetterFromTypes(types, getter, type -> type);
+	}
+
+	<T> CompiledGetter findGetterFromTypes(Iterable<T> iter, Function<?, ?> getter, Function<T, Class<?>> mapper) throws CompileException {
 		
 		CompiledGetter ret = null;
 		
-		for (Class<?> type : types) {
+		for (T t : iter) {
+			
+			final Class<?> type = mapper.apply(t);
 			
 			CompiledGetter found;
 			

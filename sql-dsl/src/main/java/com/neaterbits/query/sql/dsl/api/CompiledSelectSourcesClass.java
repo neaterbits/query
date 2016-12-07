@@ -10,7 +10,7 @@ final class CompiledSelectSourcesClass extends CompiledSelectSources<CompiledSel
 
 	@Override
 	public CompiledFieldReference makeFieldReference(QueryBuilderItem original, Getter inputGetter, CompiledGetterSetterCache cache) throws CompileException {
-		return TypeMapBase.makeFieldReferenceFromClasses(original, inputGetter, cache, getOriginal().getTypes(), getSources());
+		return TypeMapBase.makeFieldReferenceFromClasses(original, inputGetter, cache, getSources(), s -> s.getType());
 	}
 }
 
