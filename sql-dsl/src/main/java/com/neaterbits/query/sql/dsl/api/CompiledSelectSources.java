@@ -11,12 +11,12 @@ import java.util.List;
  *
  */
 
-abstract class CompiledSelectSources<T extends CompiledSelectSource> extends CompiledQueryElement<SelectSourceImpl> {
+abstract class CompiledSelectSources<T extends CompiledSelectSource>
+	extends CompiledQueryElement<SelectSourceImpl>
+	implements TypeMap {
 
 	private final List<T> sources;
 
-	abstract CompiledFieldReference makeFieldReference(QueryBuilderItem original, Getter inputGetter, CompiledGetterSetterCache cache) throws CompileException;
-	
 	CompiledSelectSources(SelectSourceImpl original, List<T> sources) {
 		super(original);
 

@@ -27,7 +27,7 @@ final class SelectSourceClassesImpl extends SelectSourceImpl {
 
 		final CollectedMappingTable tableMapping = (CollectedMappingTable)mapping;
 		
-		final CompiledGetter ret = cache.findGetterFromTypes(getTypes(), tableMapping.getFunctionGetter());
+		final CompiledGetter ret = cache.findGetterFromTypesArray(getTypes(), tableMapping.getFunctionGetter());
 		
 		if (ret == null) {
 			throw new CompileException("No getter found: " + tableMapping.getFunctionGetter());

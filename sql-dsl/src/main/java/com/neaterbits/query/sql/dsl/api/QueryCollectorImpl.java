@@ -17,6 +17,8 @@ final class QueryCollectorImpl {
 	// Select sources (tables or aliases)
 	private SelectSourceImpl sources;
 
+	private JoinCollector joins;
+
 	// Select clauses
 	private ClauseCollectorImpl clauses;
 	
@@ -30,7 +32,8 @@ final class QueryCollectorImpl {
 	}
 
 	QueryCollectorImpl(QueryResult result, MappingCollector mappings,
-			SelectSourceImpl sources, ClauseCollectorImpl clauses, boolean isMulti) {
+			SelectSourceImpl sources,
+			ClauseCollectorImpl clauses, boolean isMulti) {
 		
 
 		if (result == null) {

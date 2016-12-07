@@ -104,7 +104,7 @@ public final class QueryDataSourceJPA extends QueryDataSourceBase {
 	
 	static void prepareFieldReference(Consumer<String> c, CompiledFieldReference field, EntityManager em) {
 
-		final CompiledSelectSource source = field.getSource();
+		final TypeMapSource source = field.getSource();
 
 		final CompiledGetter getter = field.getGetter();
 
@@ -170,7 +170,7 @@ public final class QueryDataSourceJPA extends QueryDataSourceBase {
 	
 
 
-	private static String getColumnNameForGetter(CompiledSelectSource source, CompiledGetter getter, EntityManager em) {
+	private static String getColumnNameForGetter(TypeMapSource source, CompiledGetter getter, EntityManager em) {
 
 		// Look up in entity manager
 		

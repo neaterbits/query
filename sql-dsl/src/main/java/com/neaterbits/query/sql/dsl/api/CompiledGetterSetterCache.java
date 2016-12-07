@@ -1,6 +1,7 @@
 package com.neaterbits.query.sql.dsl.api;
 
 import java.lang.reflect.Method;
+import java.util.Arrays;
 import java.util.function.BiConsumer;
 import java.util.function.Function;
 
@@ -43,7 +44,12 @@ final class CompiledGetterSetterCache {
 	}
 	
 	
-	CompiledGetter findGetterFromTypes(Class<?> [] types, Function<?, ?> getter) throws CompileException {
+	CompiledGetter findGetterFromTypesArray(Class<?> [] types, Function<?, ?> getter) throws CompileException {
+		return findGetterFromTypes(Arrays.asList(types), getter);
+	}
+	
+	CompiledGetter findGetterFromTypes(Iterable<Class<?>> types, Function<?, ?> getter) throws CompileException {
+		
 		CompiledGetter ret = null;
 		
 		for (Class<?> type : types) {
