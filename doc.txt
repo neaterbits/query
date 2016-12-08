@@ -355,3 +355,34 @@ Bør ha query-API som ikke antar egne sub instanser? Men kan fikses senere.
 
 
 
+
+---
+
+
+- Kan ha conditions som er for flere kilder.
+- alle join conditions må være spesifisert i joins
+- 
+
+
+- sorterer på source (alias eller klasse - er vel name egentlig)
+- vi looper over og finner alle som matcher for å slippe gjøre noe med datastruktur. Må ha iterator-lignende for dette som opererer på indekser, dvs int.
+
+ * når vi genererer query så emitter vi sjekk for hver enkelt av queryiene som matcher. Så vi finner hver enkelt i inputen som matcher "vår" join og emitter koden for denne
+uavhengig.
+
+
+Subselects ? Emittes som ekstra kall? Kan ha input parametre som skal matches for hver rad som er utført.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
