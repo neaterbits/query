@@ -4,4 +4,9 @@ abstract class QueryResultMapped extends QueryResult {
 	QueryResultMapped(Class<?> type) {
 		super(type);
 	}
+
+	@Override
+	final QueryResultGathering getGathering() {
+		return QueryResultGathering.MAPPED;
+	}
 }

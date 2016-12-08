@@ -20,7 +20,12 @@ abstract class QueryResultAggregate extends QueryResult {
 	}
 
 	@Override
-	final QueryResultMode getMode() {
-		return QueryResultMode.SINGLE;
+	final QueryResultDimension getDimension() {
+		return QueryResultDimension.SINGLE;
+	}
+
+	@Override
+	final QueryResultGathering getGathering() {
+		return QueryResultGathering.AGGREGATE;
 	}
 }

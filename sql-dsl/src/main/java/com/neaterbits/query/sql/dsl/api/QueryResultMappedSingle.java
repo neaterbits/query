@@ -7,7 +7,7 @@ final class QueryResultMappedSingle extends QueryResultMapped {
 	}
 
 	@Override
-	QueryResultMode getMode() {
-		return QueryResultMode.SINGLE;
+	QueryResultDimension getDimension() {
+		return QueryResultDimension.SINGLE;
 	}
 }

@@ -17,6 +17,11 @@ final class CompiledGetterSupplier extends CompiledGetter {
 		this.getter = getter;
 	}
 
+	@Override
+	Object execute(Object instance) {
+		throw new UnsupportedOperationException("Base class calls reflection, TODO: more optimal way");
+	}
+
 	Supplier<?> getGetter() {
 		return getter;
 	}

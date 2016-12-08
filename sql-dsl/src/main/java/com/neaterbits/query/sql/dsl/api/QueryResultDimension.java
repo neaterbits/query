@@ -1,6 +1,6 @@
 package com.neaterbits.query.sql.dsl.api;
 
-public enum QueryResultMode {
+enum QueryResultDimension {
 
 	SINGLE,
 	MULTI;

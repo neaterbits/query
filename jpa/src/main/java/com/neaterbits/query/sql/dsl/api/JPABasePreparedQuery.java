@@ -99,14 +99,14 @@ abstract class JPABasePreparedQuery implements DSPreparedQuery {
 				
 				case 1:
 					// Just one field
-					mappings.get(0).getSetter().set(ret, input);
+					mappings.get(0).getSetter().execute(ret, input);
 					break;
 					
 				default:
 					// More tha one
 					final Object [] vals = (Object[])input;
 					for (int i = 0; i < vals.length; ++ i) {
-						mappings.get(i).getSetter().set(ret, vals[i]);
+						mappings.get(i).getSetter().execute(ret, vals[i]);
 					}
 					break;
 			}

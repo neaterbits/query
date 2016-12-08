@@ -30,7 +30,7 @@ final class ExecuteQueryPOJOs {
 		// base on clauses
 		// must figure out the type of result first
 
-		final QueryResultMode resultMode = queryResult.getOriginal().getMode();
+		final QueryResultDimension resultMode = queryResult.getOriginal().getDimension();
 		
 		switch (resultMode) {
 		
@@ -46,22 +46,6 @@ final class ExecuteQueryPOJOs {
 		// Loop over all clauses
 		final CompiledConditions conditions = query.getConditions();
 		
-		if (conditions != null) {
-			
-			if (conditions instanceof CompiledConditionsAnd) {
-				
-			}
-			else if (conditions instanceof CompiledConditionsOr) {
-				
-			}
-			else if (conditions instanceof CompiledConditionsSingle) {
-				
-			}
-			else {
-				throw new UnsupportedOperationException("Unknown condition type "
-								+ conditions.getClass().getSimpleName());
-			}
-		}
 	}
 
 	private static void doSingle(CompiledCondition condition) {

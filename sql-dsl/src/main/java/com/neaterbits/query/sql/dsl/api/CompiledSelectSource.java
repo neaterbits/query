@@ -4,8 +4,9 @@ abstract class CompiledSelectSource extends CompiledQueryElement<SelectSourceImp
 
 	private final Class<?> type;
 	private final String name;
+	private final int idx;
 	
-	CompiledSelectSource(SelectSourceImpl original, Class<?> type, String name) {
+	CompiledSelectSource(SelectSourceImpl original, Class<?> type, String name, int idx) {
 
 		super(original);
 
@@ -23,6 +24,7 @@ abstract class CompiledSelectSource extends CompiledQueryElement<SelectSourceImp
 		
 		this.type = type;
 		this.name = name;
+		this.idx = idx;
 	}
 
 	@Override
@@ -33,6 +35,11 @@ abstract class CompiledSelectSource extends CompiledQueryElement<SelectSourceImp
 	@Override
 	public final String getName() {
 		return name;
+	}
+
+	@Override
+	public int getIdx() {
+		return idx;
 	}
 
 	@Override

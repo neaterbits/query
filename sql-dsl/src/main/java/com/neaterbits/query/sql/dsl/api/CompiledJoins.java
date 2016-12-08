@@ -18,4 +18,8 @@ abstract class CompiledJoins {
 		
 		this.joins = joins;
 	}
+
+	final List<CompiledJoin> getJoins() {
+		return joins;
+	}
 }

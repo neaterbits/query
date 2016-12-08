@@ -4,7 +4,8 @@ import java.lang.reflect.Method;
 import java.util.function.BiConsumer;
 
 final class CompiledSetter {
-	private final BiConsumer<?, ?> setter;
+	@SuppressWarnings("rawtypes")
+	private final BiConsumer setter;
 	private final Method setterMethod;
 
 	CompiledSetter(BiConsumer<?, ?> getter, Method setterMethod) {
@@ -21,6 +22,11 @@ final class CompiledSetter {
 		this.setterMethod = setterMethod;
 	}
 
+	@SuppressWarnings("unchecked")
+	void execute(Object input, Object value) {
+		setter.accept(input, value);
+	}
+	
 	BiConsumer<?, ?> getSetter() {
 		return setter;
 	}
@@ -28,10 +34,4 @@ final class CompiledSetter {
 	Method getSetterMethod() {
 		return setterMethod;
 	}
-
-	@SuppressWarnings({"unchecked", "rawtypes"})
-	void set(Object o, Object val) {
-		((BiConsumer)setter).accept(o, val);
-	}
-	
 }

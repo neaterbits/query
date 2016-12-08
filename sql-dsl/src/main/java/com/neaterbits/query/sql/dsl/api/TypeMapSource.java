@@ -6,4 +6,5 @@ interface TypeMapSource {
 	
 	String getName();
 	
+	int getIdx();
 }

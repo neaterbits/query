@@ -28,7 +28,15 @@ final class CompiledCondition {
 		return lhs;
 	}
 
+	TypeMapSource getLhsSource() {
+		return lhs.getSource();
+	}
+
 	ConditionValueImpl getValue() {
 		return value;
+	}
+
+	boolean evaluate(Object instance) {
+		throw new UnsupportedOperationException("TODO");
 	}
 }

@@ -43,8 +43,12 @@ final class CompiledQuery {
 		this.joins = joins;
 	}
 
-	QueryResultMode getResultMode() {
-		return result.getOriginal().getMode();
+	QueryResultDimension getResultMode() {
+		return result.getOriginal().getDimension();
+	}
+	
+	QueryResultGathering getGathering() {
+		return result.getOriginal().getGathering();
 	}
 
 	CompiledQueryResult getResult() {
@@ -92,7 +96,7 @@ final class CompiledQuery {
 		final CompiledJoins joins;
 		
 		if (collector.getJoins() != null) {
-			joins = compileJoins(collector.getJoins());
+			joins = compileJoins(collector.getJoins(), compiledSources, cache);
 		}
 		else {
 			joins = null;
@@ -209,6 +213,8 @@ final class CompiledQuery {
 			// table names
 			final SelectSourceClassesImpl selectSourceClasses = (SelectSourceClassesImpl)sources;
 
+			int classNo = 0;
+			
 			for (Class<?> cl : selectSourceClasses.getClasses()) {
 				final String name = cl.getSimpleName().toLowerCase();
 
@@ -216,9 +222,11 @@ final class CompiledQuery {
 					throw new IllegalStateException("Two entity classes with same lowercase name \"" + name + "\"");
 				}
 
-				final CompiledSelectSourceClass c = new CompiledSelectSourceClass(selectSourceClasses, cl, name);
+				final CompiledSelectSourceClass c = new CompiledSelectSourceClass(selectSourceClasses, cl, name, classNo);
 
 				compiledList.add(c);
+
+				++ classNo;
 			}
 
 			compiled = new CompiledSelectSourcesClass(sources, compiledList);
@@ -231,7 +239,7 @@ final class CompiledQuery {
 			int aliasNo = 0;
 			
 			for (IAlias alias : selectSourceAliases.getAliases()) {
-				final CompiledSelectSourceAlias c = new CompiledSelectSourceAlias(selectSourceAliases, alias, "al" + aliasNo);
+				final CompiledSelectSourceAlias c = new CompiledSelectSourceAlias(selectSourceAliases, alias, "al" + aliasNo, aliasNo);
 
 				compiledList.add(c);
 
@@ -247,7 +255,7 @@ final class CompiledQuery {
 		return compiled;
 	}
 
-	private static CompiledJoins compileJoins(JoinCollector collector) {
+	private static CompiledJoins compileJoins(JoinCollector collector, CompiledSelectSources<?> sources, CompiledGetterSetterCache cache) throws CompileException {
 		
 		final List<CollectedJoin> collected = collector.getJoins();
 		
@@ -278,7 +286,10 @@ final class CompiledQuery {
 				}
 			}
 			
-			final CompiledJoin compiledJoin = new CompiledJoin(join);
+			final CompiledFieldReference left = sources.makeFieldReference(join, join.getLeftGetter(), cache);
+			final CompiledFieldReference right = sources.makeFieldReference(join, join.getLeftGetter(), cache);
+			
+			final CompiledJoin compiledJoin = new CompiledJoin(join, left.getSource(), right.getSource());
 
 			compiledJoins.add(compiledJoin);
 		}
