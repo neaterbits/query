@@ -1,8 +1,6 @@
 package com.neaterbits.query.sql.dsl.api;
 
-import java.lang.reflect.Method;
 import java.util.List;
-import java.util.function.Supplier;
 
 final class CompiledSelectSourcesAlias extends CompiledSelectSources<CompiledSelectSourceAlias> {
 

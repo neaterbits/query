@@ -102,11 +102,9 @@ final class QueryCollectorImpl {
 		this.mappings = mappings;
 	}
 
-
 	SelectSourceImpl getSources() {
 		return sources;
 	}
-
 
 	void setSources(SelectSourceImpl sources) {
 		
@@ -119,6 +117,23 @@ final class QueryCollectorImpl {
 		}
 		
 		this.sources = sources;
+	}
+
+	JoinCollector getJoins() {
+		return joins;
+	}
+
+	void setJoins(JoinCollector joins) {
+
+		if (joins == null) {
+			throw new IllegalArgumentException("joins == null");
+		}
+
+		if (this.joins == null) {
+			throw new IllegalStateException("joins already set");
+		}
+
+		this.joins = joins;
 	}
 
 	ClauseCollectorImpl getClauses() {
@@ -137,6 +152,8 @@ final class QueryCollectorImpl {
 		
 		this.clauses = clauses;
 	}
+	
+	
 
 	void verify(VerificationErrorCollector collector) {
 		throw new UnsupportedOperationException("TODO");

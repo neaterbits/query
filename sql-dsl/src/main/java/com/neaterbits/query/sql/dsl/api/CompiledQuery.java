@@ -16,11 +16,14 @@ final class CompiledQuery {
 
 	private final CompiledSelectSources<?> selectSources;
 	
+	private final CompiledJoins joins;
+	
 	private final CompiledConditions conditions;
 
 	private CompiledQuery(
 			CompiledQueryResult result,
 			CompiledSelectSources<?> selectSources,
+			CompiledJoins joins,
 			CompiledConditions conditions) {
 
 		if (result == null) {
@@ -36,6 +39,8 @@ final class CompiledQuery {
 		
 		// may be null if no conditions
 		this.conditions = conditions;
+		
+		this.joins = joins;
 	}
 
 	QueryResultMode getResultMode() {
@@ -59,6 +64,10 @@ final class CompiledQuery {
 		return (CompiledSelectSources<CompiledSelectSource>)selectSources;
 	}
 
+	public CompiledJoins getJoins() {
+		return joins;
+	}
+
 	static CompiledQuery compile(QueryCollectorImpl collector) throws CompileException {
 		if (collector == null) {
 			throw new IllegalArgumentException("collector == null");
@@ -80,9 +89,18 @@ final class CompiledQuery {
 			compiledConditions = null;
 		}
 		
+		final CompiledJoins joins;
+		
+		if (collector.getJoins() != null) {
+			joins = compileJoins(collector.getJoins());
+		}
+		else {
+			joins = null;
+		}
 
-		return new CompiledQuery(compiledQueryResult, compiledSources, compiledConditions);
+		return new CompiledQuery(compiledQueryResult, compiledSources, joins, compiledConditions);
 	}
+
 	
 	private static CompiledQueryResult compileQueryResult(QueryCollectorImpl collector, CompiledSelectSources<?> compiledSources, CompiledGetterSetterCache cache) throws CompileException {
 		
@@ -119,6 +137,20 @@ final class CompiledQuery {
 
 		return ret;
 	}
+	
+	private static CompiledQueryResultAggregate compileAggregateQueryResult(
+			QueryResultAggregate result,
+			CompiledSelectSources<?> compiledSelectSources,
+			CompiledGetterSetterCache cache) throws CompileException {
+
+		final CompiledFieldReference fieldReference = compiledSelectSources.makeFieldReference(
+				result,
+				result.getGetter(),
+				cache);
+
+		return new CompiledQueryResultAggregate(result, fieldReference);
+	}
+
 
 	private static CompiledMappings compileMappings(
 			Class<?> resultType,
@@ -145,19 +177,27 @@ final class CompiledQuery {
 		return new CompiledMappings(compiledMappings);
 	}
 	
-	private static CompiledQueryResultAggregate compileAggregateQueryResult(
-			QueryResultAggregate result,
+	private static CompiledMapping compileMapping(
+			Class<?> resultType,
+			CollectedMapping collected,
+			SelectSourceImpl selectSource,
 			CompiledSelectSources<?> compiledSelectSources,
 			CompiledGetterSetterCache cache) throws CompileException {
 
+		final CompiledSetter mapSetter = cache.compileSetterUntyped(resultType, collected.getSetter());
+		
+		if (mapSetter == null) {
+			throw new CompileException("Unknown mapping setter " + collected);
+		}
+		
 		final CompiledFieldReference fieldReference = compiledSelectSources.makeFieldReference(
-				result,
-				result.getGetter(),
+				collected,
+				collected.getGetter(),
 				cache);
 
-		return new CompiledQueryResultAggregate(result, fieldReference);
+		return new CompiledMapping(fieldReference, mapSetter);
 	}
-
+	
 	private static CompiledSelectSources<?> compileSelectSources(SelectSourceImpl sources) {
 
 		final CompiledSelectSources<?> compiled;
@@ -207,26 +247,49 @@ final class CompiledQuery {
 		return compiled;
 	}
 
-	private static CompiledMapping compileMapping(
-			Class<?> resultType,
-			CollectedMapping collected,
-			SelectSourceImpl selectSource,
-			CompiledSelectSources<?> compiledSelectSources,
-			CompiledGetterSetterCache cache) throws CompileException {
-
-		final CompiledSetter mapSetter = cache.compileSetterUntyped(resultType, collected.getSetter());
+	private static CompiledJoins compileJoins(JoinCollector collector) {
 		
-		if (mapSetter == null) {
-			throw new CompileException("Unknown mapping setter " + collected);
+		final List<CollectedJoin> collected = collector.getJoins();
+		
+		final List<CompiledJoin> compiledJoins = new ArrayList<>(collected.size());
+		
+		Boolean isClass = null;
+		
+		for (CollectedJoin join : collector.getJoins()) {
+
+			final boolean thisOneIsClass;
+			
+			if (join instanceof CollectedJoinClasses) {
+				thisOneIsClass = true;
+			}
+			else if (join instanceof CollectedJoinAliases) {
+				thisOneIsClass = false;
+			}
+			else {
+				throw new UnsupportedOperationException("Unknown join type " + join.getClass().getName());
+			}
+			
+			if (isClass == null) {
+				isClass = thisOneIsClass;
+			}
+			else {
+				if (isClass != thisOneIsClass) {
+					throw new IllegalStateException("Both class and alias joins");
+				}
+			}
+			
+			final CompiledJoin compiledJoin = new CompiledJoin(join);
+
+			compiledJoins.add(compiledJoin);
 		}
 		
-		final CompiledFieldReference fieldReference = compiledSelectSources.makeFieldReference(
-				collected,
-				collected.getGetter(),
-				cache);
+		final CompiledJoins ret = isClass
+				? new CompiledJoinsClasses(compiledJoins)
+				: new CompiledJoinsAliases(compiledJoins);
 
-		return new CompiledMapping(fieldReference, mapSetter);
+		return ret;
 	}
+	
 	
 	private static CompiledConditions compileConditions(ClauseCollectorImpl clauses, CompiledSelectSources<?> sources, CompiledGetterSetterCache cache)
 		throws CompileException {
