@@ -28,5 +28,12 @@ abstract class CollectedJoin extends QueryBuilderItem {
 	final JoinType getJoinType() {
 		return joinType;
 	}
-	
+
+	final Class<?> getLeftType() {
+		return leftType;
+	}
+
+	final Class<?> getRightType() {
+		return rightType;
+	}
 }
