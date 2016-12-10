@@ -3,8 +3,30 @@ package com.neaterbits.query.sql.dsl.api;
 final class ExecutableQueryForCompiledQuery implements ExecutableQuery<CompiledQuery> {
 
 	@Override
-	public QueryResultDimension getResultMode(CompiledQuery query) {
+	public QueryResultDimension getDimension(CompiledQuery query) {
 		return query.getResultMode();
+	}
+	
+	@Override
+	public QueryResultGathering getGathering(CompiledQuery query) {
+		
+		return query.getGathering();
+	}
+
+	@Override
+	public AggregateFunction getAggregateResultFunction(CompiledQuery query) {
+		return ((QueryResultAggregate)query.getResult().getOriginal()).getAggregateFunction();
+	}
+	
+	
+	@Override
+	public NumericType getAggregateNumericType(CompiledQuery query) {
+		return ((QueryResultAggregate)query.getResult().getOriginal()).getNumericType();
+	}
+
+	@Override
+	public Object getAggregateResultValue(CompiledQuery query, Object instance) {
+		return ((CompiledQueryResultAggregate)query.getResult()).getField().getValue(instance);
 	}
 
 	@Override
@@ -19,6 +41,21 @@ final class ExecutableQueryForCompiledQuery implements ExecutableQuery<CompiledQ
 		final CompiledQueryResultMapped mapped = (CompiledQueryResultMapped)query.getResult();
 		
 		return mapped.getMappings().getMappings().size();
+	}
+
+	@Override
+	public Object createMappedInstance(CompiledQuery query) {
+		
+		final Class<?> type = query.getResult().getOriginal().getType();
+		final Object ret;
+
+		try {
+			ret = type.newInstance();
+		} catch (InstantiationException | IllegalAccessException ex) {
+			throw new IllegalStateException("Failed to instantia type " + type);
+		}
+		
+		return ret;
 	}
 
 	@Override
@@ -71,23 +108,23 @@ final class ExecutableQueryForCompiledQuery implements ExecutableQuery<CompiledQ
 	}
 
 	@Override
-	public ConditionType getConditionType(CompiledQuery query) {
+	public ConditionsType getConditionType(CompiledQuery query) {
 		
 		final CompiledConditions conditions = query.getConditions();
 		
-		final ConditionType ret;
+		final ConditionsType ret;
 		
 		if (conditions == null) {
-			ret = ConditionType.NONE;
+			ret = ConditionsType.NONE;
 		}
 		else if (conditions instanceof CompiledConditionsAnd) {
-			ret = ConditionType.AND;
+			ret = ConditionsType.AND;
 		}
 		else if (conditions instanceof CompiledConditionsOr) {
-			ret = ConditionType.OR;
+			ret = ConditionsType.OR;
 		}
 		else if (conditions instanceof CompiledConditionsSingle) {
-			ret = ConditionType.SINGLE;
+			ret = ConditionsType.SINGLE;
 		}
 		else {
 			throw new UnsupportedOperationException("Unknown condition type "

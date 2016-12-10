@@ -4,6 +4,6 @@ import java.util.Collection;
 
 abstract class ExecuteQueryPOJOsInput {
 
-	abstract Collection<?> getPOJOsForName(String name);
+	abstract Collection<?> getPOJOs(int idx);
 	
 }

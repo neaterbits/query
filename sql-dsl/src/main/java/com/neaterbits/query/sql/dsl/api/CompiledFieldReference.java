@@ -4,6 +4,10 @@ final class CompiledFieldReference extends CompiledQueryElement<QueryBuilderItem
 
 	private final TypeMapSource source;
 	private final CompiledGetter getter;
+	
+	final Object getValue(Object instance) {
+		return getter.execute(instance);
+	}
 
 	CompiledFieldReference(QueryBuilderItem original, TypeMapSource source, CompiledGetter getter) {
 

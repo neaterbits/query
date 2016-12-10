@@ -96,14 +96,14 @@ abstract class JPABasePreparedQuery implements DSPreparedQuery {
 			switch (mappings.size()) {
 				case 0:
 					throw new IllegalStateException("empty mappings");
-				
+
 				case 1:
 					// Just one field
 					mappings.get(0).getSetter().execute(ret, input);
 					break;
 					
 				default:
-					// More tha one
+					// More than one
 					final Object [] vals = (Object[])input;
 					for (int i = 0; i < vals.length; ++ i) {
 						mappings.get(i).getSetter().execute(ret, vals[i]);

@@ -10,15 +10,32 @@ package com.neaterbits.query.sql.dsl.api;
  */
 
 interface ExecutableQuery<QUERY> {
-	
-	enum ConditionType {
-		AND,
-		OR,
-		SINGLE,
-		NONE;
+
+	public default int getNumResultParts(QUERY query) {
+		
+		final int numResultParts;
+		final QueryResultGathering gathering = getGathering(query);
+
+		switch (gathering) {
+		case AGGREGATE:
+		case ENTITY:
+			numResultParts = 1;
+			break;
+			
+		case MAPPED:
+			numResultParts = getMappingCount(query);
+			break;
+
+		default:
+			throw new UnsupportedOperationException("Unknown query gathering " + gathering);
+		}
+
+		return numResultParts;
 	}
 	
+	
 
+	
 	/**
 	 * Result mode, whether produces a single or multiple results
 	 * 
@@ -27,8 +44,16 @@ interface ExecutableQuery<QUERY> {
 	 * @return mode - single or multi response
 	 */
 	
-	QueryResultDimension getResultMode(QUERY query);
+	QueryResultDimension getDimension(QUERY query);
 
+	QueryResultGathering getGathering(QUERY query);
+	
+	AggregateFunction getAggregateResultFunction(QUERY query);
+
+	NumericType getAggregateNumericType(QUERY query);
+	
+	Object getAggregateResultValue(QUERY query, Object instance);
+	
 	/**
 	 * Get count of mappings from result
 	 * @param query the query
@@ -38,7 +63,30 @@ interface ExecutableQuery<QUERY> {
 	
 	int getMappingCount(QUERY query);
 
+	Object createMappedInstance(QUERY query);
 
+
+	/**
+	 * Execute mapping getter on a particular instance
+	 * 
+	 * @param query a query
+	 * @param mappingIdx index of mapping, 0 to getMappingCount() - 1
+	 * @param instance instance to perform getter on
+	 * @return
+	 */
+	
+	Object executeMappingGetter(QUERY query, int mappingIdx, Object instance);
+	
+	/**
+	 * Set a value in mapping
+	 * 
+	 * @param query a query
+	 * @param mappingIdx index of mapping
+	 * @param instance the instance to set value on
+	 * @param value value to set
+	 */
+	
+	void executeMappingSetter(QUERY query, int mappingIdx, Object instance, Object value);
 	
 	/**
 	 * Get the total number of sources (eg. what is in "from" of an SQL)
@@ -67,28 +115,6 @@ interface ExecutableQuery<QUERY> {
 	int getJoinRightSourceIdx(QUERY query, int joinIdx);
 	
 	
-	/**
-	 * Execute mapping getter on a particular instance
-	 * 
-	 * @param query a query
-	 * @param mappingIdx index of mapping, 0 to getMappingCount() - 1
-	 * @param instance instance to perform getter on
-	 * @return
-	 */
-	
-	Object executeMappingGetter(QUERY query, int mappingIdx, Object instance);
-	
-	/**
-	 * Set a value in mapping
-	 * 
-	 * @param query a query
-	 * @param mappingIdx index of mapping
-	 * @param instance the instance to set value on
-	 * @param value value to set
-	 */
-	
-	void executeMappingSetter(QUERY query, int mappingIdx, Object instance, Object value);
-	
 	
 	/**
 	 * 
@@ -96,7 +122,13 @@ interface ExecutableQuery<QUERY> {
 	
 	int getConditionCount(QUERY query);
 
-	ConditionType getConditionType(QUERY query);
+	/**
+	 * Get type of condition for this query
+	 * @param query
+	 * @return
+	 */
+	
+	ConditionsType getConditionType(QUERY query);
 	
 	int getConditionSourceIdx(QUERY query, int conditionIdx);
 
