@@ -1,10 +1,11 @@
 package com.neaterbits.query.sql.dsl.api;
 
-import java.util.function.Supplier;
 
 public interface AndClausesAlias<MODEL, RESULT> extends AndClauses<MODEL, RESULT> {
 
-	<RR> ConditionClauseAlias<MODEL, RESULT, RR, AndClausesAlias<MODEL, RESULT>> and(Supplier<RR> getter);
+	ConditionClauseAlias<MODEL, RESULT, Integer, AndClausesAlias<MODEL, RESULT>> and(IntegerSupplier getter);
+
+	ConditionClauseAlias<MODEL, RESULT, Long, AndClausesAlias<MODEL, RESULT>> and(LongSupplier getter);
 
     StringClause<MODEL, RESULT, AndClausesAlias<MODEL, RESULT>> and(StringSupplier getter);
 

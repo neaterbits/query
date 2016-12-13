@@ -1,6 +1,5 @@
 package com.neaterbits.query.sql.dsl.api;
 
-import java.util.function.Function;
 
 final class AndClausesImplTableSingle<MODEL, RESULT> extends ClausesImpl<MODEL, RESULT>
 	implements AndClausesTableSingle<MODEL, RESULT> {
@@ -10,8 +9,8 @@ final class AndClausesImplTableSingle<MODEL, RESULT> extends ClausesImpl<MODEL, 
 	}
 
 	@Override
-	public <RR> ConditionClauseTable<MODEL, RESULT, RR, AndClausesTableSingle<MODEL, RESULT>> and(Function<RESULT, RR> getter) {
-		return new ConditionClauseImpl<MODEL, RESULT, RR, AndClausesTableSingle<MODEL,RESULT>>(this, makeGetter(getter));
+	public ConditionClauseTable<MODEL, RESULT, Integer, AndClausesTableSingle<MODEL, RESULT>> and(IntegerFunction<RESULT> getter) {
+		return new ConditionClauseImpl<MODEL, RESULT, Integer, AndClausesTableSingle<MODEL,RESULT>>(this, makeGetter(getter));
 	}
 
 	@Override

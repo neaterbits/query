@@ -10,9 +10,22 @@ final class OrClausesImpl<MODEL, RESULT> extends ClausesImpl<MODEL, RESULT>
 		super(last);
 	}
 
-	@Override
-	public <T, RR> ConditionClause<MODEL, RESULT, RR, OrClausesTable<MODEL, RESULT>> or(Function<T, RR> getter) {
+	private <T, RR> ConditionClause<MODEL, RESULT, RR, OrClausesTable<MODEL, RESULT>> orClassImpl(Function<T, RR> getter) {
 		return new ConditionClauseImpl<MODEL, RESULT, RR, OrClausesTable<MODEL,RESULT>>(this, makeGetter(getter));
+	}
+	
+	private <RR> ConditionClause<MODEL, RESULT, RR, OrClausesAlias<MODEL, RESULT>> orAliasImpl(Supplier<RR> getter) {
+		return new ConditionClauseImpl<MODEL, RESULT, RR, OrClausesAlias<MODEL,RESULT>>(this, makeGetter(getter));
+	}
+
+	@Override
+	public <T> ConditionClause<MODEL, RESULT, Integer, OrClausesTable<MODEL, RESULT>> or(IntegerFunction<T> getter) {
+		return orClassImpl(getter);
+	}
+
+	@Override
+	public <T> ConditionClause<MODEL, RESULT, Long, OrClausesTable<MODEL, RESULT>> or(LongFunction<T> getter) {
+		return orClassImpl(getter);
 	}
 
 	@Override
@@ -21,8 +34,13 @@ final class OrClausesImpl<MODEL, RESULT> extends ClausesImpl<MODEL, RESULT>
 	}
 
 	@Override
-	public <RR> ConditionClause<MODEL, RESULT, RR, OrClausesAlias<MODEL, RESULT>> or(Supplier<RR> getter) {
-		return new ConditionClauseImpl<MODEL, RESULT, RR, OrClausesAlias<MODEL,RESULT>>(this, makeGetter(getter));
+	public ConditionClause<MODEL, RESULT, Integer, OrClausesAlias<MODEL, RESULT>> or(IntegerSupplier getter) {
+		return orAliasImpl(getter);
+	}
+
+	@Override
+	public ConditionClause<MODEL, RESULT, Long, OrClausesAlias<MODEL, RESULT>> or(LongSupplier getter) {
+		return orAliasImpl(getter);
 	}
 
 	@Override

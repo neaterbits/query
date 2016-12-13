@@ -1,7 +1,5 @@
 package com.neaterbits.query.sql.dsl.api;
 
-import java.util.function.Function;
-
 final class OrClausesImplTableSingle<MODEL, RESULT> extends ClausesImpl<MODEL, RESULT>
 		implements OrClausesTableSingle<MODEL, RESULT> {
 	
@@ -10,8 +8,8 @@ final class OrClausesImplTableSingle<MODEL, RESULT> extends ClausesImpl<MODEL, R
 	}
 
 	@Override
-	public <RR> ConditionClause<MODEL, RESULT, RR, OrClausesTableSingle<MODEL, RESULT>> or(Function<RESULT, RR> getter) {
-		return new ConditionClauseImpl<MODEL, RESULT, RR, OrClausesTableSingle<MODEL,RESULT>>(this, makeGetter(getter));
+	public ConditionClause<MODEL, RESULT, Integer, OrClausesTableSingle<MODEL, RESULT>> or(IntegerFunction<RESULT> getter) {
+		return new ConditionClauseImpl<MODEL, RESULT, Integer, OrClausesTableSingle<MODEL,RESULT>>(this, makeGetter(getter));
 	}
 
 	@Override

@@ -44,12 +44,12 @@ final class SingleTableResultImpl<MODEL, RESULT>
 
 	// ------------------------  AND ------------------------
 	@Override
-	public <RR> ConditionClauseTable<MODEL, RESULT, RR, AndClausesTableSingle<MODEL, RESULT>>
-			and(Function<RESULT, RR> getter) {
+	public ConditionClauseTable<MODEL, RESULT, Integer, AndClausesTableSingle<MODEL, RESULT>>
+			and(IntegerFunction<RESULT> getter) {
 		
 		final AndClausesImplTableSingle<MODEL, RESULT> andClauses = new AndClausesImplTableSingle<>(this);
 		
-		return new ConditionClauseImpl<MODEL, RESULT, RR, AndClausesTableSingle<MODEL,RESULT>>(andClauses, makeGetter(getter));
+		return new ConditionClauseImpl<MODEL, RESULT, Integer, AndClausesTableSingle<MODEL,RESULT>>(andClauses, makeGetter(getter));
 	}
 
 	@Override
@@ -63,12 +63,12 @@ final class SingleTableResultImpl<MODEL, RESULT>
 	
 	// ------------------------  OR ------------------------
 	@Override
-	public <RR> ConditionClause<MODEL, RESULT, RR, OrClausesTableSingle<MODEL, RESULT>>
-			or(Function<RESULT, RR> getter) {
+	public ConditionClause<MODEL, RESULT, Integer, OrClausesTableSingle<MODEL, RESULT>>
+			or(IntegerFunction<RESULT> getter) {
 
 		final OrClausesImplTableSingle<MODEL, RESULT> orClauses = new OrClausesImplTableSingle<>(this);
 		
-		return new ConditionClauseImpl<MODEL, RESULT, RR, OrClausesTableSingle<MODEL,RESULT>>(orClauses, makeGetter(getter));
+		return new ConditionClauseImpl<MODEL, RESULT, Integer, OrClausesTableSingle<MODEL,RESULT>>(orClauses, makeGetter(getter));
 	}
 
 	@Override

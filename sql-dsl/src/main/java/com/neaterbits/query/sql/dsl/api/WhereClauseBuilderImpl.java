@@ -14,6 +14,8 @@ final class WhereClauseBuilderImpl<MODEL, RESULT>
 		super(last, new ClauseCollectorImpl());
 	}
 	
+	
+	
 	// ------------------------  WHERE ------------------------
 	@Override
 	public <T, RR> ConditionClause<MODEL, RESULT, RR, AndOrLogicalClausesTable<MODEL, RESULT>> where(Function<T, RR> getter) {
@@ -40,12 +42,16 @@ final class WhereClauseBuilderImpl<MODEL, RESULT>
 	}
 
 	// ------------------------  AND ------------------------
+
+	
 	@Override
-	public <T, RR> ConditionClauseTable<MODEL, RESULT, RR, AndClausesTable<MODEL, RESULT>> and(Function<T, RR> getter) {
-		
-		final AndClausesImpl<MODEL, RESULT> andClauses = new AndClausesImpl<>(this);
-		
-		return new ConditionClauseImpl<MODEL, RESULT, RR, AndClausesTable<MODEL,RESULT>>(andClauses, makeGetter(getter));
+	public <T> ConditionClauseTable<MODEL, RESULT, Integer, AndClausesTable<MODEL, RESULT>> and(IntegerFunction<T> getter) {
+		return andClassImpl(getter);
+	}
+
+	@Override
+	public <T> ConditionClauseTable<MODEL, RESULT, Long, AndClausesTable<MODEL, RESULT>> and(LongFunction<T> getter) {
+		return andClassImpl(getter);
 	}
 
 	@Override
@@ -57,11 +63,13 @@ final class WhereClauseBuilderImpl<MODEL, RESULT>
 	}
 	
 	@Override
-	public <RR> ConditionClauseAlias<MODEL, RESULT, RR, AndClausesAlias<MODEL, RESULT>> and(Supplier<RR> getter) {
+	public ConditionClauseAlias<MODEL, RESULT, Integer, AndClausesAlias<MODEL, RESULT>> and(IntegerSupplier getter) {
+		return andAliasImpl(getter);
+	}
 
-		final AndClausesImpl<MODEL, RESULT> andClauses = new AndClausesImpl<>(this);
-		
-		return new ConditionClauseImpl<MODEL, RESULT, RR, AndClausesAlias<MODEL,RESULT>>(andClauses, makeGetter(getter));
+	@Override
+	public ConditionClauseAlias<MODEL, RESULT, Long, AndClausesAlias<MODEL, RESULT>> and(LongSupplier getter) {
+		return andAliasImpl(getter);
 	}
 
 	@Override
@@ -74,31 +82,34 @@ final class WhereClauseBuilderImpl<MODEL, RESULT>
 	
 
 	// ------------------------  OR ------------------------
-	@Override
-	public <T, RR> ConditionClause<MODEL, RESULT, RR, OrClausesTable<MODEL, RESULT>>
-			or(Function<T, RR> getter) {
-
-		final OrClausesImpl<MODEL, RESULT> orClauses = new OrClausesImpl<>(this);
-		
-		return new ConditionClauseImpl<MODEL, RESULT, RR, OrClausesTable<MODEL,RESULT>>(orClauses, makeGetter(getter));
-	}
 
 	@Override
-	public <T> StringClause<MODEL, RESULT, OrClausesTable<MODEL, RESULT>> or(
-			StringFunction<T> getter) {
-
-		final OrClausesImpl<MODEL, RESULT> orClauses = new OrClausesImpl<>(this);
-
-		return new StringClauseImpl<MODEL, RESULT, OrClausesTable<MODEL,RESULT>>(orClauses, makeGetter(getter));
+	public <T> ConditionClause<MODEL, RESULT, Integer, OrClausesTable<MODEL, RESULT>> or(IntegerFunction<T> getter) {
+		return orClassImpl(getter);
 	}
 
 	
 	@Override
-	public <RR> ConditionClause<MODEL, RESULT, RR, OrClausesAlias<MODEL, RESULT>> or(Supplier<RR> getter) {
+	public <T> ConditionClause<MODEL, RESULT, Long, OrClausesTable<MODEL, RESULT>> or(LongFunction<T> getter) {
+		return orClassImpl(getter);
+	}
 
+
+	@Override
+	public <T> StringClause<MODEL, RESULT, OrClausesTable<MODEL, RESULT>> or(StringFunction<T> getter) {
 		final OrClausesImpl<MODEL, RESULT> orClauses = new OrClausesImpl<>(this);
-		
-		return new ConditionClauseImpl<MODEL, RESULT, RR, OrClausesAlias<MODEL,RESULT>>(orClauses, makeGetter(getter));
+
+		return new StringClauseImpl<MODEL, RESULT, OrClausesTable<MODEL,RESULT>>(orClauses, makeGetter(getter));
+	}
+	
+	@Override
+	public ConditionClause<MODEL, RESULT, Integer, OrClausesAlias<MODEL, RESULT>> or(IntegerSupplier getter) {
+		return orAliasImpl(this, getter);
+	}
+	
+	@Override
+	public ConditionClause<MODEL, RESULT, Long, OrClausesAlias<MODEL, RESULT>> or(LongSupplier getter) {
+		return orAliasImpl(this, getter);
 	}
 
 	@Override
@@ -108,6 +119,36 @@ final class WhereClauseBuilderImpl<MODEL, RESULT>
 
 		return new StringClauseImpl<MODEL, RESULT, OrClausesAlias<MODEL,RESULT>>(orClauses, makeGetter(getter));
 	}
-	
+
+	// ------------------------  AND helpers ------------------------
+
+	private <T, RR> ConditionClauseTable<MODEL, RESULT, RR, AndClausesTable<MODEL, RESULT>> andClassImpl(Function<T, RR> getter) {
+		
+		final AndClausesImpl<MODEL, RESULT> andClauses = new AndClausesImpl<>(this);
+		
+		return new ConditionClauseImpl<MODEL, RESULT, RR, AndClausesTable<MODEL,RESULT>>(andClauses, makeGetter(getter));
+	}
+
+	private <RR> ConditionClauseAlias<MODEL, RESULT, RR, AndClausesAlias<MODEL, RESULT>> andAliasImpl(Supplier<RR> getter) {
+
+		final AndClausesImpl<MODEL, RESULT> andClauses = new AndClausesImpl<>(this);
+		
+		return new ConditionClauseImpl<MODEL, RESULT, RR, AndClausesAlias<MODEL,RESULT>>(andClauses, makeGetter(getter));
+	}
+
+	// ------------------------  OR helpers ------------------------
+	final <T, RR> ConditionClause<MODEL, RESULT, RR, OrClausesTable<MODEL, RESULT>> orClassImpl(Function<T, RR> getter) {
+		final OrClausesImpl<MODEL, RESULT> orClauses = new OrClausesImpl<>(this);
+
+		return new ConditionClauseImpl<MODEL, RESULT, RR, OrClausesTable<MODEL,RESULT>>(orClauses, makeGetter(getter));
+	}
+
+	final <RR> ConditionClause<MODEL, RESULT, RR, OrClausesAlias<MODEL, RESULT>> orAliasImpl(ClausesImplInitial<MODEL, RESULT> last, Supplier<RR> getter) {
+
+		final OrClausesImpl<MODEL, RESULT> orClauses = new OrClausesImpl<>(last);
+
+		return new ConditionClauseImpl<MODEL, RESULT, RR, OrClausesAlias<MODEL,RESULT>>(orClauses, makeGetter(getter));
+	}
+
 	
 }
