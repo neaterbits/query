@@ -37,6 +37,15 @@ final class CompiledGetterSetterCache {
 	}
 
 	<T, R> CompiledSetter compileSetterUntyped(Class<?> cl, BiConsumer<?, ?> setter) {
+		
+		if (cl == null) {
+			throw new IllegalArgumentException("cl == null");
+		}
+		
+		if (setter == null) {
+			throw new IllegalArgumentException("setter == null");
+		}
+		
 		@SuppressWarnings({ "unchecked", "rawtypes" })
 		final Method m = MethodFinder.findOrNull((Class)cl, (BiConsumer)setter);
 		

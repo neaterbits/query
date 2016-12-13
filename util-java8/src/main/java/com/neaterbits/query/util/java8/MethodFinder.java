@@ -57,6 +57,14 @@ public class MethodFinder {
 	
 	private static <T> Method findMethodOrNull(Class<T> cl, Consumer<T> consumer) {
 		
+		if (cl == null) {
+			throw new IllegalArgumentException("cl == null");
+		}
+		
+		if (consumer == null) {
+			throw new IllegalArgumentException("consumer == null");
+		}
+		
 		final Enhancer enhancer = new Enhancer();
 		
 		enhancer.setSuperclass(cl);
@@ -66,6 +74,10 @@ public class MethodFinder {
 		enhancer.setCallback(methodStore);
 	
 		final T proxy = createProxy(cl, enhancer);
+		
+		if (proxy == null) {
+			throw new IllegalStateException("proxy == null");
+		}
 		
 		consumer.accept(proxy);
 		
@@ -136,7 +148,18 @@ public class MethodFinder {
 	}
 
 	public static <T, S> Method findOrNull(Class<T> cl, BiConsumer<T, S> func) {
-		return findMethodOrNull(cl, o -> func.accept(o, null));
+		
+		if (cl == null) {
+			throw new IllegalArgumentException("cl == null");
+		}
+		
+		if (func == null) {
+			throw new IllegalArgumentException("func == null");
+		}
+		
+		final Consumer<T> consumer = o -> func.accept(o, null);
+		
+		return findMethodOrNull(cl, consumer);
 	}
 
 	public static <S, T, U> Method findOrNUll(Class<S> cl, TriConsumer<S, T, U> func) {

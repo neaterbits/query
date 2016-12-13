@@ -8,6 +8,7 @@ final class JoinCollector {
 	private final List<CollectedJoin> joins;
 
 	JoinCollector() {
+		
 		this.joins = new ArrayList<>();
 	}
 	
@@ -18,6 +19,11 @@ final class JoinCollector {
 		
 		joins.add(join);
 	}
+	
+	CollectedJoin getLast() {
+		return joins.get(joins.size() - 1);
+	}
+
 
 	List<CollectedJoin> getJoins() {
 		return joins;

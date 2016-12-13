@@ -1,5 +1,6 @@
 package com.neaterbits.query.jpatest.model;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -7,19 +8,30 @@ import javax.persistence.Id;
 @Entity
 public class Employee {
 	
+	private long id;
 	private long companyId;
-	private String personId;
+	private long personId;
 	
 	public Employee() {
 		
 	}
 	
-	public Employee(long companyId, String personId) {
+	public Employee(long id, long companyId, long personId) {
+		this.id = id;
 		this.companyId = companyId;
 		this.personId = personId;
 	}
 
 	@Id @GeneratedValue
+	public long getId() {
+		return id;
+	}
+
+	public void setId(long id) {
+		this.id = id;
+	}
+	
+	@Column
 	public long getCompanyId() {
 		return companyId;
 	}
@@ -28,11 +40,12 @@ public class Employee {
 		this.companyId = companyId;
 	}
 
-	public String getPersonId() {
+	@Column
+	public long getPersonId() {
 		return personId;
 	}
 
-	public void setPersonId(String personId) {
+	public void setPersonId(long personId) {
 		this.personId = personId;
 	}
 }

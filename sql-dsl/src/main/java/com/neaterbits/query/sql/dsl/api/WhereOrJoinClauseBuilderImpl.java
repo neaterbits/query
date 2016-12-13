@@ -3,19 +3,130 @@ package com.neaterbits.query.sql.dsl.api;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
-final class WhereClauseBuilderImpl<MODEL, RESULT>
+final class WhereOrJoinClauseBuilderImpl<MODEL, RESULT>
 	extends ClausesImplInitial<MODEL, RESULT>
-	implements WhereClauseBuilderTable<MODEL, RESULT>,
-			   WhereClauseBuilderAlias<MODEL, RESULT>,
+	implements WhereOrJoinBuilderTable<MODEL, RESULT>,
+			   WhereOrJoinBuilderAlias<MODEL, RESULT>,
 			   AndOrLogicalClausesTable<MODEL, RESULT>,
-			   AndOrLogicalClausesAlias<MODEL, RESULT> {
+			   AndOrLogicalClausesAlias<MODEL, RESULT>,
+			   
+			   JoinConditionTable<MODEL, RESULT, Object, Object>,
+			   JoinConditionAlias<MODEL, RESULT> {
 
-	WhereClauseBuilderImpl(BaseQueryEntity<MODEL> last) {
+	WhereOrJoinClauseBuilderImpl(BaseQueryEntity<MODEL> last) {
 		super(last, new ClauseCollectorImpl());
 	}
+
+	// ------------------------  JOIN ------------------------
 	
 	
+	private JoinCollector addJoin(CollectedJoin collectedJoin) {
+
+		JoinCollector joinCollector = getQueryCollector().getJoins();
+		
+		if (joinCollector == null) {
+			joinCollector = new JoinCollector();
+			getQueryCollector().setJoins(joinCollector);
+		}
+
+		joinCollector.addJoin(collectedJoin);
+		
+		return joinCollector;
+	}
 	
+	// -- Table -- 
+	
+	@SuppressWarnings("unchecked")
+	private <LEFT, RIGHT> JoinConditionTable<MODEL, RESULT, LEFT, RIGHT> getJoinConditionTable() {
+		return (JoinConditionTable<MODEL, RESULT, LEFT, RIGHT>)this;
+	}
+	
+	@Override
+	public <LEFT, RIGHT> JoinConditionTable<MODEL, RESULT, LEFT, RIGHT> innerJoin(Class<LEFT> leftType, Class<RIGHT> rightType) {
+
+		final CollectedJoinClasses collectedJoin = new CollectedJoinClasses(JoinType.INNER, leftType, rightType);
+		
+		addJoin(collectedJoin);
+		
+		return getJoinConditionTable();
+	}
+
+	@Override
+	public <LEFT, RIGHT> JoinConditionTable<MODEL, RESULT, LEFT, RIGHT> leftJoin(Class<LEFT> leftType, Class<RIGHT> rightType) {
+
+		final CollectedJoinClasses collectedJoin = new CollectedJoinClasses(JoinType.LEFT, leftType, rightType);
+		
+		addJoin(collectedJoin);
+		
+		return getJoinConditionTable();
+	}
+
+	@Override
+	public JoinConditionTable<MODEL, RESULT, Object, Object> compare(IntegerFunction<Object> left, IntegerFunction<Object> right) {
+		
+		final FunctionGetter leftGetter = new FunctionGetter(left); 
+		final FunctionGetter rightGetter = new FunctionGetter(right); 
+		
+		final CollectedJoin curJoin = getQueryCollector().getJoins().getLast();
+		
+		final CollectedJoinCondition joinCondition = new CollectedJoinConditionClasses(leftGetter, rightGetter);
+		
+		curJoin.addJoinCondition(joinCondition);
+		
+		return getJoinConditionTable();
+	}
+	
+	// -- Alias  --
+	
+	private <LEFT, RIGHT> JoinConditionAlias<MODEL, RESULT> getJoinConditionAlias() {
+		return (JoinConditionAlias<MODEL, RESULT>)this;
+	}
+	
+
+	@Override
+	public JoinConditionAlias<MODEL, RESULT> innerJoin(Object left, Object right) {
+
+		final CollectedJoinAliases collectedJoin = new CollectedJoinAliases(JoinType.INNER, (IAlias)left, (IAlias)right);
+		
+		addJoin(collectedJoin);
+		
+		return getJoinConditionAlias();
+	}
+
+	@Override
+	public JoinConditionAlias<MODEL, RESULT> leftJoin(Object left, Object right) {
+
+		final CollectedJoinAliases collectedJoin = new CollectedJoinAliases(JoinType.LEFT, (IAlias)left, (IAlias)right);
+		
+		addJoin(collectedJoin);
+		
+		return getJoinConditionAlias();
+	}
+
+	private <R> JoinConditionAlias<MODEL, RESULT> compareAlias(Supplier<R> left, Supplier<R> right) {
+		
+		final SupplierGetter leftGetter = new SupplierGetter(left); 
+		final SupplierGetter rightGetter = new SupplierGetter(right); 
+		
+		final CollectedJoin curJoin = getQueryCollector().getJoins().getLast();
+		
+		final CollectedJoinCondition joinCondition = new CollectedJoinConditionAliases(leftGetter, rightGetter);
+		
+		curJoin.addJoinCondition(joinCondition);
+		
+		return getJoinConditionAlias();
+	}
+
+	@Override
+	public JoinConditionAlias<MODEL, RESULT> compare(IntegerSupplier left, IntegerSupplier right) {
+		return compareAlias(left, right);
+	}
+	
+	@Override
+	public JoinConditionAlias<MODEL, RESULT> compare(LongSupplier left, LongSupplier right) {
+		return compareAlias(left, right);
+	}
+
 	// ------------------------  WHERE ------------------------
 	@Override
 	public <T, RR> ConditionClause<MODEL, RESULT, RR, AndOrLogicalClausesTable<MODEL, RESULT>> where(Function<T, RR> getter) {
@@ -149,6 +260,4 @@ final class WhereClauseBuilderImpl<MODEL, RESULT>
 
 		return new ConditionClauseImpl<MODEL, RESULT, RR, OrClausesAlias<MODEL,RESULT>>(orClauses, makeGetter(getter));
 	}
-
-	
 }

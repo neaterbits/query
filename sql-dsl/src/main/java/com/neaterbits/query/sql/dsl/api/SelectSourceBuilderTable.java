@@ -7,7 +7,7 @@ public interface SelectSourceBuilderTable<MODEL, RESULT> extends SelectSourceBui
 	 * @param tables
 	 */
 	
-	WhereClauseBuilderTable<MODEL, RESULT> from(Class<?> ... tables);
+	WhereOrJoinBuilderTable<MODEL, RESULT> from(Class<?> ... tables);
 	
 	
 }

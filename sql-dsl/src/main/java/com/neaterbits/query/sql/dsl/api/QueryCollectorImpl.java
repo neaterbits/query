@@ -129,7 +129,7 @@ final class QueryCollectorImpl {
 			throw new IllegalArgumentException("joins == null");
 		}
 
-		if (this.joins == null) {
+		if (this.joins != null) {
 			throw new IllegalStateException("joins already set");
 		}
 

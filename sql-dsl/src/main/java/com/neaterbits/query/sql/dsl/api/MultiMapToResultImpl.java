@@ -5,7 +5,8 @@ import java.util.function.Supplier;
 
 final class MultiMapToResultImpl<MODEL, RESULT>
 		extends BaseMapToResultImpl<MODEL, RESULT>
-		implements MultiMapToResult<MODEL, RESULT> {
+		implements MultiMapToResult<MODEL, RESULT>,
+		           MultiMapToResultAlias<MODEL, RESULT> {
 
 	MultiMapToResultImpl(Class<?> resultType, ModelCompiler<MODEL> modelCompiler) {
 		super(new QueryResultMappedMulti(resultType), modelCompiler);

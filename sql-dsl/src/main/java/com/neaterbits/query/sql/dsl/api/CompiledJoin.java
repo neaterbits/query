@@ -43,8 +43,8 @@ final class CompiledJoin {
 		this.conditions = conditions;
 	}
 
-	CollectedJoin getOriginal() {
-		return original;
+	JoinType getJoinType() {
+		return original.getJoinType();
 	}
 	
 	TypeMapSource getLeft() {

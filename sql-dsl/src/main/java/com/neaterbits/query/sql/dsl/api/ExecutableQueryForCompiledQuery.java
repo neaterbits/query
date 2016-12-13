@@ -86,7 +86,7 @@ final class ExecutableQueryForCompiledQuery implements ExecutableQuery<CompiledQ
 
 	@Override
 	public JoinType getJoinType(CompiledQuery query, int joinIdx) {
-		return query.getJoins().getJoins().get(joinIdx).getOriginal().getJoinType();
+		return query.getJoins().getJoins().get(joinIdx).getJoinType();
 	}
 
 	@Override

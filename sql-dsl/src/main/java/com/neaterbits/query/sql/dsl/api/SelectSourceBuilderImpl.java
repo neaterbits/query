@@ -15,7 +15,7 @@ abstract class SelectSourceBuilderImpl<MODEL, RESULT> extends BaseQueryEntity<MO
 	}
 	
 	@Override
-	public final WhereClauseBuilderTable<MODEL, RESULT> from(Class<?> ... classes) {
+	public final WhereOrJoinBuilderTable<MODEL, RESULT> from(Class<?> ... classes) {
 		
 		if (classes.length == 0) {
 			throw new IllegalArgumentException("no classes");
@@ -26,7 +26,7 @@ abstract class SelectSourceBuilderImpl<MODEL, RESULT> extends BaseQueryEntity<MO
 		
 		getQueryCollector().setSources(new SelectSourceClassesImpl(classes));
 		
-		final WhereClauseBuilderImpl<MODEL, RESULT> ret =  new WhereClauseBuilderImpl<MODEL, RESULT>(this);
+		final WhereOrJoinClauseBuilderImpl<MODEL, RESULT> ret =  new WhereOrJoinClauseBuilderImpl<MODEL, RESULT>(this);
 
 		getQueryCollector().setClauses(ret.clauseCollector);
 		
@@ -44,7 +44,7 @@ abstract class SelectSourceBuilderImpl<MODEL, RESULT> extends BaseQueryEntity<MO
 
 		getQueryCollector().setSources(new SelectSourceAliasAliasesImpl(aliases));
 
-		final WhereClauseBuilderImpl<MODEL, RESULT> ret = new WhereClauseBuilderImpl<MODEL, RESULT>(this);
+		final WhereOrJoinClauseBuilderImpl<MODEL, RESULT> ret = new WhereOrJoinClauseBuilderImpl<MODEL, RESULT>(this);
 		
 		getQueryCollector().setClauses(ret.clauseCollector);
 		
@@ -52,7 +52,7 @@ abstract class SelectSourceBuilderImpl<MODEL, RESULT> extends BaseQueryEntity<MO
 	}
 
 	@Override
-	public final WhereClauseBuilderAlias<MODEL, RESULT> from(Object... aliases) {
+	public final WhereOrJoinBuilderAlias<MODEL, RESULT> from(Object... aliases) {
 		
 		if (aliases.length == 0) {
 			throw new IllegalArgumentException("no aliases");
@@ -60,7 +60,7 @@ abstract class SelectSourceBuilderImpl<MODEL, RESULT> extends BaseQueryEntity<MO
 		
 		getQueryCollector().setSources(new SelectSourceAliasesImpl(aliases));
 
-		final WhereClauseBuilderImpl<MODEL, RESULT> ret = new WhereClauseBuilderImpl<MODEL, RESULT>(this);
+		final WhereOrJoinClauseBuilderImpl<MODEL, RESULT> ret = new WhereOrJoinClauseBuilderImpl<MODEL, RESULT>(this);
 		
 		getQueryCollector().setClauses(ret.clauseCollector);
 		

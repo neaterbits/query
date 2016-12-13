@@ -53,10 +53,12 @@ public final class QueryDataSourceJPA extends QueryDataSourceBase {
 		
 		// Add all select sources
 		prepareSelectSources(sb, (CompiledSelectSources<CompiledSelectSource>)query.getSelectSources());
+
+		if (query.getJoins() != null) {
+			prepareJoins(sb, query.getJoins());
+		}
 		
 		// Prepare conditions if present
-		
-		
 		final JPABasePreparedQuery ret;
 		
 		if (query.getConditions() != null) {
@@ -114,7 +116,32 @@ public final class QueryDataSourceJPA extends QueryDataSourceBase {
 		c.accept(".");
 		c.accept(columnName);
 	}
+	
+	private void prepareJoins(StringBuilder sb, CompiledJoins joins) {
+		for (CompiledJoin join : joins.getJoins()) {
+			switch (join.getJoinType()) {
+			
+			
+			case LEFT:
+				sb.append(" LEFT JOIN ");
+				break;
+				
+			case INNER:
+				sb.append(" INNER JOIN ");
+				break;
+				
+			default:
+				throw new UnsupportedOperationException("Unknown join condition ");
+			}
 
+			for (CompiledJoinCondition joinCondition : join.getConditions()) {
+				
+			}
+			
+		}
+	}
+	
+	
 	private static final JPAConditionToOperatorVisitor conditionToOperatorVisitor = new JPAConditionToOperatorVisitor();
 	
 	private JPAOp prepareConditions(CompiledConditions conditions, CompileConditionParam param) {

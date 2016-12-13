@@ -4,6 +4,7 @@ package com.neaterbits.query.sql.dsl.api;
 import static com.neaterbits.query.sql.dsl.api.Select.alias;
 import static com.neaterbits.query.sql.dsl.api.Select.intParam;
 import static com.neaterbits.query.sql.dsl.api.Select.selectOneOrNull;
+import static com.neaterbits.query.sql.dsl.api.Select.selectList;
 import static com.neaterbits.query.sql.dsl.api.Select.oneFrom;
 import static com.neaterbits.query.sql.dsl.api.Select.listFrom;
 import static com.neaterbits.query.sql.dsl.api.Select.sum;
@@ -181,9 +182,13 @@ public class SQLAPITest {
 		PreparedQueryOps<List<T>> ops = query.prepare(ds);
 
 		final List<T> result = execute.apply(ops);
-    			
+
+		for (int i = 0; i < result.size(); ++ i) {
+			System.out.println("result " + i + ": " + result.get(i));
+		}
+
         assertThat(query).isNotNull();
-    	
+
         assertThat(result).isNotNull();
         assertThat(result.size()).isEqualTo(expected.length);
 		
@@ -230,6 +235,154 @@ public class SQLAPITest {
 	}
 	
 
+	static class CompanyPersonResultVO {
+		private Long companyId;
+		private Long personId;
+		private String firstName;
+		private String lastName;
+		
+		CompanyPersonResultVO() {
+			
+		}
+		
+		CompanyPersonResultVO(long companyId, long personId, String firstName, String lastName) {
+			this.companyId = companyId;
+			this.personId = personId;
+			this.firstName = firstName;
+			this.lastName = lastName;
+		}
+
+		public void setCompanyId(Long companyId) {
+			this.companyId = companyId;
+		}
+
+		public void setPersonId(Long personId) {
+			this.personId = personId;
+		}
+
+		public void setFirstName(String firstName) {
+			this.firstName = firstName;
+		}
+
+		public void setLastName(String lastName) {
+			this.lastName = lastName;
+		}
+
+		@Override
+		public int hashCode() {
+			final int prime = 31;
+			int result = 1;
+			result = prime * result + (int) (companyId ^ (companyId >>> 32));
+			result = prime * result + ((firstName == null) ? 0 : firstName.hashCode());
+			result = prime * result + ((lastName == null) ? 0 : lastName.hashCode());
+			result = prime * result + (int) (personId ^ (personId >>> 32));
+			return result;
+		}
+
+		@Override
+		public boolean equals(Object obj) {
+			if (this == obj)
+				return true;
+			if (obj == null)
+				return false;
+			if (getClass() != obj.getClass())
+				return false;
+			CompanyPersonResultVO other = (CompanyPersonResultVO) obj;
+			if (companyId != other.companyId)
+				return false;
+			if (firstName == null) {
+				if (other.firstName != null)
+					return false;
+			} else if (!firstName.equals(other.firstName))
+				return false;
+			if (lastName == null) {
+				if (other.lastName != null)
+					return false;
+			} else if (!lastName.equals(other.lastName))
+				return false;
+			if (personId != other.personId)
+				return false;
+			return true;
+		}
+
+		@Override
+		public String toString() {
+			return "CompanyPersonResultVO [companyId=" + companyId + ", personId=" + personId + ", firstName="
+					+ firstName + ", lastName=" + lastName + "]";
+		}
+	}
+	
+	@Test
+    public void testAliasBasedJoin() {
+    	
+		final Company  company  = alias(Company.class);
+		final Employee employee = alias(Employee.class);
+		final Person   person   = alias(Person.class);
+		
+		final int acmeCompanyId = 1;
+		final int fooCompanyId = 2;
+		
+		final Company acme = new Company(acmeCompanyId, "Acme");
+		final Company foo = new Company(fooCompanyId, "Foo");
+
+		final long fooPerson1Id = 123L;
+		final long fooPerson2Id = 124L;
+		
+		final Person fooPerson1 = new Person(fooPerson1Id, "Foo1", "Person1");
+		final Person fooPerson2 = new Person(fooPerson2Id, "Foo2", "Person2");
+		
+		final int fooEmployeeId1 = 231; 
+		final int fooEmployeeId2 = 232; 
+		
+		final Employee fooEmp1 = new Employee(fooEmployeeId1, foo.getId(), fooPerson1.getId());
+		final Employee fooEmp2 = new Employee(fooEmployeeId2, foo.getId(), fooPerson2.getId());
+		
+        final MultiQuery<CompanyPersonResultVO> startsWithFoo =
+        		selectList(CompanyPersonResultVO.class)
+
+        	.map(company::getId)      .to(CompanyPersonResultVO::setCompanyId)
+        	.map(person::getId)       .to(CompanyPersonResultVO::setPersonId)
+        	.map(person::getFirstName).to(CompanyPersonResultVO::setFirstName)
+        	.map(person::getLastName) .to(CompanyPersonResultVO::setLastName)
+        	
+        	.from(company, employee, person)
+
+        	.innerJoin(company, person)
+        		.compare(company::getId, employee::getCompanyId)
+
+        	.innerJoin(employee, person)
+        		.compare(employee::getPersonId, person::getId)
+
+        	.where(company::getName).startsWith("Fo")
+
+        	.compile();
+		
+		store(s  -> s.add(acme).add(foo)).
+		check(ds -> {
+			/*
+	        checkSelectOneOrNull(
+	        		ds,
+	        		new CompanyResultVO(acme.getName()),
+	        		startsWithAc,
+	        		q -> q.execute());
+			 */
+		});
+
+		// Search for foo as well, should return no matches
+		store(s  -> s
+				.add(acme).add(foo)
+				.add(fooEmp1).add(fooPerson1)
+				.add(fooEmp2).add(fooPerson2)).
+		check(ds -> {
+			checkSelectListUnordered(
+				    ds,
+	       			startsWithFoo,
+	       			q -> q.execute(),
+	       			new CompanyPersonResultVO(fooCompanyId, fooPerson1Id, "Foo", "Person"));
+		});
+	}
+	
+	
     //@Test
     public void testAliasBasedObsolete() {
     	EntityManager em = null;

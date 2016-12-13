@@ -8,7 +8,7 @@ public interface SelectSourceBuilderAlias<MODEL, RESULT> extends SelectSourceBui
      * @param aliases
      */
     
-    WhereClauseBuilderAlias<MODEL, RESULT> from(Object ... aliases);
+    WhereOrJoinBuilderAlias<MODEL, RESULT> from(Object ... aliases);
 
 	
 }
