@@ -1,16 +1,13 @@
 package com.neaterbits.query.sql.dsl.api;
 
-import java.util.ArrayList;
-import java.util.List;
-
-abstract class CollectedJoin extends QueryBuilderItem {
-
+abstract class CollectedJoinCondition extends QueryBuilderItem {
 	private final JoinType joinType;
 	private final Class<?> leftType;
+	private final Getter leftGetter;
 	private final Class<?> rightType;
-	private final List<CollectedJoinCondition> conditions;
+	private final Getter rightGetter;
 
-	CollectedJoin(JoinType joinType, Class<?> leftType, Class<?> rightType) {
+	CollectedJoinCondition(JoinType joinType, Class<?> leftType, Getter leftGetter, Class<?> rightType, Getter rightGetter) {
 		
 		if (joinType == null) {
 			throw new IllegalArgumentException("joinType == null");
@@ -19,28 +16,24 @@ abstract class CollectedJoin extends QueryBuilderItem {
 		if (leftType == null) {
 			throw new IllegalArgumentException("leftType == null");
 		}
+		
+		if (leftGetter == null) {
+			throw new IllegalArgumentException("leftGetter == null");
+		}
 
 		if (rightType == null) {
 			throw new IllegalArgumentException("rightType == null");
 		}
 		
-		this.joinType = joinType;
-		this.leftType = leftType;
-		this.rightType = rightType;
-		this.conditions = new ArrayList<>();
-	}
-
-
-	final void addJoinCondition(CollectedJoinCondition condition) {
-		if (condition == null) {
-			throw new IllegalArgumentException("condition == null");
+		if (rightGetter == null) {
+			throw new IllegalArgumentException("rightGetter == null");
 		}
 		
-		this.conditions.add(condition);
-	}
-	
-	final List<CollectedJoinCondition> getJoinConditions() {
-		return conditions;
+		this.joinType = joinType;
+		this.leftType = leftType;
+		this.leftGetter = leftGetter;
+		this.rightType = rightType;
+		this.rightGetter = rightGetter;
 	}
 
 	final JoinType getJoinType() {
@@ -51,7 +44,15 @@ abstract class CollectedJoin extends QueryBuilderItem {
 		return leftType;
 	}
 	
+	final Getter getLeftGetter() {
+		return leftGetter;
+	}
+
 	final Class<?> getRightType() {
 		return rightType;
+	}
+
+	final Getter getRightGetter() {
+		return rightGetter;
 	}
 }

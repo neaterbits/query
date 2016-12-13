@@ -99,6 +99,34 @@ final class ExecutableQueryForCompiledQuery implements ExecutableQuery<CompiledQ
 		return query.getJoins().getJoins().get(joinIdx).getRight().getIdx();
 	}
 
+	
+	@Override
+	public int getJoinConditionCount(CompiledQuery query, int joinIdx) {
+		return query.getJoins().getJoins().size();
+	}
+
+	/*
+	@Override
+	public ConditionsType getJoinConditionType(CompiledQuery query) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	*/
+
+	@Override
+	public int getJoinConditionLeftSourceIdx(CompiledQuery query, int joinIdx, int conditionIdx) {
+		return query.getJoins().getJoins().get(joinIdx).getConditions().get(conditionIdx).getLeft().getIdx();
+	}
+
+	@Override
+	public int getJoinConditionRightSourceIdx(CompiledQuery query, int joinIdx, int conditionIdx) {
+		return query.getJoins().getJoins().get(joinIdx).getConditions().get(conditionIdx).getRight().getIdx();
+	}
+
+	@Override
+	public boolean evaluateJoinCondition(CompiledQuery query, int joinIdx, Object instance1, Object instance2, int conditionIdx) {
+		return query.getJoins().getJoins().get(joinIdx).getConditions().get(conditionIdx).evaluate(instance1, instance2);
+	}
 
 	@Override
 	public int getConditionCount(CompiledQuery query) {

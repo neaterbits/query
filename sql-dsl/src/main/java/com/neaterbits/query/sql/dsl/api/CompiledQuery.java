@@ -264,32 +264,70 @@ final class CompiledQuery {
 		Boolean isClass = null;
 		
 		for (CollectedJoin join : collector.getJoins()) {
+			final List<CollectedJoinCondition> collectedConditons = join.getJoinConditions();
+			final List<CompiledJoinCondition> compiledJoinConditions = new ArrayList<>(collectedConditons.size());
 
-			final boolean thisOneIsClass;
-			
+			TypeMapSource leftSource = null;
+			TypeMapSource rightSource = null;
+
 			if (join instanceof CollectedJoinClasses) {
-				thisOneIsClass = true;
+				if (join.getLeftType() != null && join.getRightType() != null) {
+					leftSource  = sources.getClassesSource(join.getLeftType());
+					rightSource = sources.getClassesSource(join.getRightType());
+				}
+				
+				isClass = true;
 			}
 			else if (join instanceof CollectedJoinAliases) {
-				thisOneIsClass = false;
+				final CollectedJoinAliases aliasJoin = (CollectedJoinAliases)join;
+				leftSource  = sources.getAliasesSource(aliasJoin.getLeftAlias());
+				rightSource = sources.getAliasesSource(aliasJoin.getRightAlias());
+				isClass = false;
 			}
 			else {
 				throw new UnsupportedOperationException("Unknown join type " + join.getClass().getName());
 			}
 			
-			if (isClass == null) {
-				isClass = thisOneIsClass;
-			}
-			else {
-				if (isClass != thisOneIsClass) {
-					throw new IllegalStateException("Both class and alias joins");
+			
+			for (CollectedJoinCondition joinCondition : collectedConditons) {
+				
+				final boolean thisOneIsClass;
+
+				if (joinCondition instanceof CollectedJoinConditionClasses) {
+					thisOneIsClass = true;
 				}
+				else if (joinCondition instanceof CollectedJoinConditionAliases) {
+					thisOneIsClass = false;
+				}
+				else {
+					throw new UnsupportedOperationException("Unknown join type " + joinCondition.getClass().getName());
+				}
+				
+				if (isClass == null) {
+					isClass = thisOneIsClass;
+				}
+				else {
+					if (isClass != thisOneIsClass) {
+						throw new IllegalStateException("Both class and alias joins");
+					}
+				}
+				
+				final CompiledFieldReference left = sources.makeFieldReference(joinCondition, joinCondition.getLeftGetter(), cache);
+				final CompiledFieldReference right = sources.makeFieldReference(joinCondition, joinCondition.getRightGetter(), cache);
+				
+				final CompiledJoinCondition compiledJoinCondition = new CompiledJoinCondition(joinCondition, left.getSource(), right.getSource());
+		
+				compiledJoinConditions.add(compiledJoinCondition);
 			}
+
 			
-			final CompiledFieldReference left = sources.makeFieldReference(join, join.getLeftGetter(), cache);
-			final CompiledFieldReference right = sources.makeFieldReference(join, join.getLeftGetter(), cache);
+				
 			
-			final CompiledJoin compiledJoin = new CompiledJoin(join, left.getSource(), right.getSource());
+			final CompiledJoin compiledJoin = new CompiledJoin(
+					join,
+					leftSource,
+					rightSource,
+					compiledJoinConditions);
 
 			compiledJoins.add(compiledJoin);
 		}
@@ -300,6 +338,7 @@ final class CompiledQuery {
 
 		return ret;
 	}
+	
 	
 	
 	private static CompiledConditions compileConditions(ClauseCollectorImpl clauses, CompiledSelectSources<?> sources, CompiledGetterSetterCache cache)

@@ -114,6 +114,16 @@ interface ExecutableQuery<QUERY> {
 	
 	int getJoinRightSourceIdx(QUERY query, int joinIdx);
 	
+	int getJoinConditionCount(QUERY query, int joinIdx);
+
+	//ConditionsType getJoinConditionType(QUERY query);
+	
+	// TODO: Might make sure through validation that is always the same as the main left and source indices
+	// but for now, just assume they may be differ
+	int getJoinConditionLeftSourceIdx(QUERY query, int joinIdx, int conditionIdx);
+	int getJoinConditionRightSourceIdx(QUERY query, int joinIdx, int conditionIdx);
+	
+	boolean evaluateJoinCondition(QUERY query, int joinIdx, Object instance1, Object instance2, int conditionIdx);
 	
 	
 	/**

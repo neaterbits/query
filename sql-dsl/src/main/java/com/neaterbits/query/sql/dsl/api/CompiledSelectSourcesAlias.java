@@ -19,4 +19,23 @@ final class CompiledSelectSourcesAlias extends CompiledSelectSources<CompiledSel
 				getSources(),
 				(CompiledSelectSourceAlias source) -> source.getAlias());
 	}
+
+
+	@Override
+	TypeMapSource getClassesSource(Class<?> type) {
+		throw new IllegalStateException("Expected aliases: " + type);
+	}
+
+
+	@Override
+	TypeMapSource getAliasesSource(IAlias alias) {
+		
+		for (CompiledSelectSourceAlias compiled : getSources()) {
+			if (compiled.getAlias() == alias) {
+				return compiled;
+			}
+		}
+		
+		throw new IllegalStateException("Unable to find alias " + alias);
+	}
 }

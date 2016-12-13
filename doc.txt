@@ -375,6 +375,25 @@ Subselects ? Emittes som ekstra kall? Kan ha input parametre som skal matches fo
 
 
 
+-----
+
+
+Enkel non-set Join i løkke?
+
+Må joine mot alle andre, så kan kun beregne joins helt til slutt i innester løkka?
+
+Men joiner på andre felter, joiner på IDene mellom de.
+
+Så slik sett på hvert nivå.
+Men retning på joins? Joiner mot de som er tidligere i rekursjon for med de som er senere så joiner vi motsatt vei.
+
+
+
+
+
+
+
+
 
 
 

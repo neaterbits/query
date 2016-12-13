@@ -12,5 +12,22 @@ final class CompiledSelectSourcesClass extends CompiledSelectSources<CompiledSel
 	public CompiledFieldReference makeFieldReference(QueryBuilderItem original, Getter inputGetter, CompiledGetterSetterCache cache) throws CompileException {
 		return TypeMapBase.makeFieldReferenceFromClasses(original, inputGetter, cache, getSources(), s -> s.getType());
 	}
+
+	@Override
+	TypeMapSource getClassesSource(Class<?> type) {
+		
+		for (CompiledSelectSourceClass compiled : getSources()) {
+			if (compiled.getType().equals(type)) {
+				return compiled;
+			}
+		}
+
+		throw new IllegalStateException("Unknown class source " + type);
+	}
+
+	@Override
+	TypeMapSource getAliasesSource(IAlias alias) {
+		throw new IllegalStateException("Expected type: " + alias);
+	}
 }
 

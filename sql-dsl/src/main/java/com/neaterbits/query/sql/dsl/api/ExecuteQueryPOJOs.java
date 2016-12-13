@@ -206,15 +206,186 @@ final class ExecuteQueryPOJOs<QUERY> extends ExecutableQueryAggregateComputation
 		return ExecuteQueryUtil.mapToOneMappedInstance(q, query, scratch);
 	}
 
+	private Object loopJoinedWithSets(QUERY query, int numResultParts, ExecuteQueryPOJOsInput input, int numConditions) {
+		return null;
+	}
+	
+
+	
+	// ************************ Joined loop utilizing purely looping ************************
+	
+	// Loop joined with just comparing over all datastructures that are joinable in a loop, useful and faster for shorter lists of data
+	// so similar for relatively short lists compared to cost of creating sets
+	// useful as a learning experience as well
+	// this is similar to the non-joined case
+	//
+	// NOTE: Extremely poor performance when joining multiple lists of large numbers
+	// eg. n1 * n2 * n3 * n4 .. where nX is the number of elements in list number X 
+	// but for two lists of say 10 items each, this is 100 iterations so probably faster.
+	// will require measurement for tuning but for later study
+	
+	
+	private Object loopJoinedNoSets(QUERY query, int numResultParts, ExecuteQueryPOJOsInput input, int numConditions) {
+		final int numSelectSources = q.getSourceCount(query);
+		
+		// TODO: Handle 1 result part case? no need for array
+		final Object[] scratch = new Object[numResultParts];
+
+		final int joinCount = q.getJoinCount(query);
+		
+		if (joinCount == 0) {
+			throw new IllegalStateException("No joins");
+		}
+
+		Object result = computeInitialResult(query);
+		
+		result = loopJoinedNoSets(query, numResultParts, input, 0, numSelectSources, scratch, numConditions, joinCount, result);
+		
+		return result;
+	}
+	
+	
+	// Non-joined simple case. Means outer-join of all structures
+	private Object loopJoinedNoSets(QUERY query, int numResultParts,
+			ExecuteQueryPOJOsInput input, int sourceIdx, int numSources,
+			Object [] scratch, int numConditions, int numJoins, Object result) {
+		
+		
+		final Collection<?> source = input.getPOJOs(sourceIdx);
+		
+
+		for (Object o : source) {
+			// Loop over conditions to see if should be added
+			
+			if (   joinMatches(query, sourceIdx, scratch, o, numJoins)
+			    && numConditions == 0 || matches(query, sourceIdx, o, numConditions)) {
+				
+				scratch[sourceIdx] = o;
+
+				if (sourceIdx == numSources - 1) {
+					// emit scratch area
+					
+					result = computeResult(query, result, scratch);
+				}
+				else {
+					// Recurse to next source idx
+					loopNonJoined(query, numResultParts, input, sourceIdx + 1,
+							numSources, scratch, numConditions, result);
+				}
+			}
+		}
+		
+		return result;
+	}
+	
+	private boolean joinMatches(QUERY query, int thisSourceIdx, Object [] scratch, Object o, int numJoins) {
+		
+		if (numJoins == 0) {
+			throw new IllegalArgumentException("numJoins == 0");
+		}
+		
+		// Must join towards all previous data in either order ( <other>.somfield == <this>.somefield or other way around)
+		
+		for (int s = 0; s < thisSourceIdx; ++ s) {
+			// Loop over all joins in query
+			for (int joinIdx = 0; joinIdx < numJoins; ++ joinIdx) {
+
+				final int leftJoinSource  = q.getJoinLeftSourceIdx(query, joinIdx);
+				final int rightJoinSource = q.getJoinRightSourceIdx(query, joinIdx);
+				
+				if (leftJoinSource == rightJoinSource) {
+					throw new IllegalStateException("Joining to self");
+				}
+				
+
+				if (s == leftJoinSource && thisSourceIdx == rightJoinSource) {
+
+					if (!joinConditionsMatch(query, thisSourceIdx, o, joinIdx, leftJoinSource, rightJoinSource, scratch)) {
+						return false;
+					}
+					
+				}
+				else if (s == rightJoinSource && thisSourceIdx == leftJoinSource) {
+
+					if (!joinConditionsMatch(query, thisSourceIdx, o, joinIdx, leftJoinSource, rightJoinSource, scratch)) {
+						return false;
+					}
+					
+				}
+				else {
+					// If no join condition, then we will return a match which in turn means we will not
+					// join and will get product of all matching rows
+				}
+			}
+		}
+
+		// No inner loop exit, which means we matched
+		return true;
+	}
+
+	private boolean joinConditionsMatch(QUERY query, int thisSourceIdx, Object thisInstance, int joinIdx, int joinLeftSourceIdx, int joinRightSourceIdx, Object [] scratch) {
+
+		final int numJoinConditions = q.getJoinConditionCount(query, joinIdx);
+
+		for (int conditionIdx = 0; conditionIdx < numJoinConditions; ++ conditionIdx) {
+
+			final int conditionLeftSourceIdx  = q.getJoinConditionLeftSourceIdx(query, joinIdx, conditionIdx);
+			final int conditionRightSourceIdx = q.getJoinConditionRightSourceIdx(query, joinIdx, conditionIdx);
+
+			// Get instances to match
+			if (conditionLeftSourceIdx == conditionRightSourceIdx) {
+				throw new IllegalStateException("Joining to self");
+			}
+			
+			if (
+				   (conditionLeftSourceIdx == joinLeftSourceIdx && conditionRightSourceIdx == joinRightSourceIdx)
+				|| (conditionLeftSourceIdx == joinRightSourceIdx && conditionRightSourceIdx == joinLeftSourceIdx )) {
+			
+
+				// Match
+				
+				final Object left;
+				final Object right;
+				
+				if (thisSourceIdx == conditionLeftSourceIdx) {
+					left = thisInstance;
+					right = scratch[conditionRightSourceIdx];
+				}
+				else if (thisSourceIdx == conditionRightSourceIdx) {
+					left = scratch[conditionLeftSourceIdx];
+					right = thisInstance;
+				}
+				else {
+					throw new IllegalStateException("thisSourceIdx matches neither left nor right conditions source idx");
+				}
+
+				final boolean match = q.evaluateJoinCondition(query, joinIdx, left, right, conditionIdx);
+
+				if (!match) {
+					// Join condition failed to match so we should skip this instance
+					return false;
+				}
+			}
+			else {
+				throw new IllegalStateException("Join idxes do not match");
+			}
+		}
+
+		return true;
+	}
+	
+	
+	// ************************ Non-joined loop ************************
+
 	// Non-joined simple case. Means outer-join of all structures
 	private Object loopNonJoined(QUERY query, int numResultParts, ExecuteQueryPOJOsInput input, int numConditions) {
 		final int numSelectSources = q.getSourceCount(query);
 		
-		// TODO: Handle 1 result part case
+		// TODO: Handle 1 result part case? no need for array
 		final Object[] scratch = new Object[numResultParts];
 
 		Object result = computeInitialResult(query);
-		
+
 		final Object ret = loopNonJoined(query, numResultParts, input, 0, numSelectSources, scratch, numConditions, result);
 		
 		/*
