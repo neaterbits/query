@@ -16,7 +16,7 @@ import com.neaterbits.query.util.java8.MethodFinder;
  */
 
 final class CompiledGetterSetterCache {
-	
+
 	<T, R> CompiledGetter compileGetterTyped(Class<T> cl, Function<T, R> getter) {
 		final Method m = MethodFinder.findOrNull(cl, getter);
 		

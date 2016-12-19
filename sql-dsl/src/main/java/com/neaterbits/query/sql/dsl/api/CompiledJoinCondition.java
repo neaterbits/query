@@ -1,6 +1,6 @@
 package com.neaterbits.query.sql.dsl.api;
 
-final class CompiledJoinCondition {
+abstract class CompiledJoinCondition {
 	private final CollectedJoinCondition original;
 	private final TypeMapSource left;
 	private final TypeMapSource right;
@@ -21,10 +21,6 @@ final class CompiledJoinCondition {
 		this.original = original;
 		this.left = left;
 		this.right = right;
-	}
-
-	CollectedJoinCondition getOriginal() {
-		return original;
 	}
 
 	TypeMapSource getLeft() {

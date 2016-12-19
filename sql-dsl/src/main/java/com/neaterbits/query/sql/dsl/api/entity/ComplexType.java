@@ -11,6 +11,9 @@ public enum ComplexType {
 	private ComplexType(boolean isIdentifiable) {
 		this.isIdentifiable = isIdentifiable;
 	}
-	
+
+	public boolean isIdentifiable() {
+		return isIdentifiable;
+	}
 }
 

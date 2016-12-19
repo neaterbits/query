@@ -84,6 +84,10 @@ public final class QueryTestDSJPA extends QueryTestDS {
 			try {
 				testBuilder.accept(dataSource);
 			}
+			catch (RuntimeException ex) {
+				System.err.println("Got runtime exception in check: " + ex);
+				ex.printStackTrace(System.err);
+			}
 			finally {
 				safelyDeleteInstances(em);
 			}

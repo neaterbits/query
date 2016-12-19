@@ -2,29 +2,25 @@ package com.neaterbits.query.sql.dsl.api.entity;
 
 import java.lang.reflect.AccessibleObject;
 import java.lang.reflect.Field;
+import java.lang.reflect.Member;
 import java.lang.reflect.Method;
-import java.lang.reflect.ParameterizedType;
-import java.lang.reflect.Type;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
-import java.util.Set;
 
 public class EntityModelUtil<MANAGED, EMBEDDED, IDENTIFIABLE, ATTRIBUTE, COLL extends Collection<ATTRIBUTE>> {
 	
 	private final EntityModel<MANAGED, EMBEDDED, IDENTIFIABLE, ATTRIBUTE, COLL> model;
 	
-	EntityModelUtil(EntityModel<MANAGED, EMBEDDED, IDENTIFIABLE, ATTRIBUTE, COLL> model) {
+	protected EntityModelUtil(EntityModel<MANAGED, EMBEDDED, IDENTIFIABLE, ATTRIBUTE, COLL> model) {
 		this.model = model;
 	}
 
-	public List<EntityAttribute> getAttributes(MANAGED managed) {
+	List<EntityAttribute> getAttributes(MANAGED managed) {
 
 		final COLL attributes = model.getAttributes(managed);
 
 		final List<EntityAttribute> ret = new ArrayList<>();
-		
 		
 		for (ATTRIBUTE jpaAttr : attributes) {
 			final EntityAttribute entityAttribute = makeEntityAttribute(jpaAttr);
@@ -32,45 +28,95 @@ public class EntityModelUtil<MANAGED, EMBEDDED, IDENTIFIABLE, ATTRIBUTE, COLL ex
 			if (entityAttribute == null) {
 				throw new IllegalStateException("entityAttribute == null");
 			}
-			
 		}
 		
-		// TODO Auto-generated method stub
-		return null;
+		return ret;
 	}
 	
-	private EntityAttribute makeEntityAttribute(ATTRIBUTE jpaAttr) {
+	private EntityAttribute makeEntityAttribute(ATTRIBUTE attr) {
 
-		final AttributeType attrType = model.getAttributeType(jpaAttr);
+		final AttributeType attrType = model.getAttributeType(attr);
 		
-		if (model.isAssociation(jpaAttr)) {
+		final EntityAttribute ret;
+
+		final String name = model.getAttributeName(attr);
+		final String [] columns = model.getAttributeColumns(attr);
+		final Class<?> javaType = model.getAttributeJavaType(attr);
+		final Member member = model.getAttributeJavaMember(attr);
+		
+		switch (attrType) {
+		
+		case SCALAR:
+			ret = new ScalarAttribute(name, columns, attrType, javaType, member);
+			break;
 			
-		}
-		else {
+		case EMBEDDED:
+			ret = new EmbeddedAttribute(name, columns, attrType, javaType, member);
+			break;
 			
+		case RELATION:
+			final RelationType relationType = model.getRelationType(attr);
+
+			switch (relationType) {
 			
-			// Just regular
-			if (attrType.isCollection()) {
-				throw new IllegalStateException("Non-association that is a collection: " + model.getAttributeName(jpaAttr));
+			case ONE_TO_ONE:
+				ret = new OneToOneAttribute(name, columns, javaType, member);
+				break;
+			
+			case ONE_TO_MANY:
+				final Class<?> memberType = getCollectionAttributeGenericType(member);
+				ret = new OneToManyAttribute(name, columns, javaType, member, memberType);
+				break;
+
+			case MANY_TO_ONE:
+				ret = new ManyToOneAttribute(name, columns, javaType, member);
+				break;
+
+			default:
+				throw new UnsupportedOperationException("Unknown relation type " + relationType);
+			
 			}
-			
+			break;
+
+		default:
+			throw new UnsupportedOperationException("Unknown attribute type " + attrType);
 		}
 		
-		
-		return null;
+		return ret;
 	}
 
+	public final List<Relation> findRelations(Class<?> entity1, Class<?> entity2) {
+		
+		final ArrayList<Relation> relations1 = new ArrayList<>();
+		
+		// Find relations in one direction
+		findRelationFields(entity1, entity2, relations1);
 
-	static List<JPARelation> findRelations(Class<?> entity1, Class<?> entity2) {
-		
-		final ArrayList<JPARelation> relations = new ArrayList<>();
-		
-//		findRelationFields(entity1, entity2, model, relations);
-		
-		return null;
+
+		return relations1;
 	}
 
-	private void findRelationFields(Class<?> entity1, Class<?> entity2, List<JPARelation> dst) {
+	public final Relation findOneToManyRelation(Class<?> entity1, Class<?> entity2, Method getter) {
+		final MANAGED managed1 = model.getManaged(entity1);
+
+		Relation relation = null;
+		
+		for (ATTRIBUTE attr : model.getAttributes(managed1)) {
+
+			final AttributeType attrType = model.getAttributeType(attr);
+			
+			if (   attrType == AttributeType.RELATION
+				&& model.getAttributeJavaMember(attr).equals(getter)) {
+
+				relation = getRelation(entity1, attr, entity2);
+				break;
+			}
+		}
+
+		return relation;
+	}
+	
+	private void findRelationFields(Class<?> entity1, Class<?> entity2, List<Relation> dst) {
 
 		final MANAGED entity = model.getManaged(entity1);
 		
@@ -80,132 +126,93 @@ public class EntityModelUtil<MANAGED, EMBEDDED, IDENTIFIABLE, ATTRIBUTE, COLL ex
 			
 			System.out.println("Got attr of name " + attrName);
 
-			
-			if (!model.isAssociation(attr)) {
-				// continue
-				
-				System.out.println("## found association attribute " + attrName);
-			}
-			
 			final AttributeType attrType = model.getAttributeType(attr);
-
-			if (attrType.isCollection()) {
-				System.out.println("## found collection attribute " + attrName);
-
+			
+			if (attrType != AttributeType.RELATION) {
+				continue;
 			}
-			else {
-				
-				
-				// One-to-one?
-				System.out.println("## found singular attribute " + attrName);
+
+			final Relation relation = getRelation(entity1, attr, entity2);
+			
+			if (relation != null) {
+				// Found relation
+				dst.add(relation);
 			}
 		}
 	}
-	/*
+
 	
-	private JPARelation getRelation(Class<?> fromClass, MANAGED fromEntity, ATTRIBUTE attr,  Class<?> toClass, MANAGED toEntity) {
+	private Relation getRelation(Class<?> fromClass, ATTRIBUTE attr,  Class<?> toClass) {
 		
-		final JPARelation ret;
+		final Relation ret;
 		
-		final AttributeType attrType = model.getAttributeType(attr);
-		
-		if (attrType.isCollection()) {
-			ret = getCollectionRelation(fromClass, fromEntity, attr, toClass, toEntity);
-		}
-		else {
-			ret = getSingleRelation(fromClass, fromEntity, attr, toClass, toEntity);
+		// What kind of relation is this?
+		final RelationType relationType = model.getRelationType(attr);
+
+		switch (relationType) {
+		case ONE_TO_ONE:
+			ret = getSingleRelation(relationType, fromClass, attr, toClass);
+			break;
+
+		case MANY_TO_ONE:
+			ret = getSingleRelation(relationType, fromClass, attr, toClass);
+			break;
+
+		case ONE_TO_MANY:
+			ret = getCollectionRelation(relationType, fromClass, attr, toClass);
+			break;
+
+		case MANY_TO_MANY:
+		default:
+			throw new UnsupportedOperationException("Unsupported relation type " + relationType);
 		}
 
 		return ret;
 	}
-	
-	private JPARelation getCollectionRelation(Class<?> fromClass, MANAGED fromEntity, ATTRIBUTE attr,  Class<?> toClass, MANAGED toEntity) {
+
+	private Relation getCollectionRelation(RelationType relationType, Class<?> fromEntityClass, ATTRIBUTE attr, Class<?> toClassMatch) {
 
 		// Look for annotation
-		final AccessibleObject accessible = (AccessibleObject)model.getAttributeJavaMemeber(attr);
 		
-		Class<?> memberType = getCollectionAttributeGenericType(accessible);
-		
-		final OneToMany oneToMany = accessible.getDeclaredAnnotation(OneToMany.class);
-		
-		if (oneToMany == null) {
-			throw new UnsupportedOperationException("No one-to-many for ");
-		}
+		final Relation ret;
 
-		// Check whether target is same as toClass
+		final Class<?> toEntityClass = model.getAssociationTarget(attr);
 		
-		if (memberType == null) {
-			memberType = oneToMany.targetEntity();
+		if (toClassMatch == null || toEntityClass.equals(toClassMatch)) {
+			final RelationField from = new RelationField(fromEntityClass, makeEntityAttribute(attr));
 			
-			if (memberType == null) {
-				throw new IllegalStateException("memberType neither specified with generics nor through members");
-			}
-		}
+			final ATTRIBUTE targetAttribute = model.getAssociationTargetAttribute(attr); 
+			final RelationField to = new RelationField(toEntityClass, makeEntityAttribute(targetAttribute));
 
-		final JPARelation ret;
-
-		if (memberType.equals(toClass)) {
-			// Relation from one to other
-			final JPARelationField from = new JPARelationField(fromClass, fromEntity, attr);
-			final JPARelationField to = new JPARelationField(toClass, toEntity, findToAttrOrForMappedByException(toEntity, oneToMany.mappedBy()));
-
-			ret = new JPARelation(from, to);
+			ret = new Relation(relationType, from, to);
 		}
 		else {
 			ret = null;
 		}
 
-
 		return ret;
 	}
 
-	private static JPARelation getSingleRelation(Class<?> fromClass, EntityType<?> fromEntity, Attribute<?, ?> fromAttr,  Class<?> toClass, EntityType<?> toEntity) {
+	private Relation getSingleRelation(RelationType relationType, Class<?> fromClass, ATTRIBUTE fromAttr,  Class<?> toClassMatch) {
 
 		// Look for annotation
-		final Member member = fromAttr.getJavaMember();
+		final Member member = model.getAttributeJavaMember(fromAttr);
 		
-		final AccessibleObject accessible = (AccessibleObject)fromAttr.getJavaMember();
+		final AccessibleObject accessible = (AccessibleObject)member;
 
 		// Get member type for singular
 		final Class<?> cl = getSingularType(accessible);
 
-		final JPARelation ret;
+		final Relation ret;
 		
-		if (cl.equals(toClass)) {
-		
-			final OneToOne oneToOne;
-			final ManyToOne manyToOne ;
-	
-			
-			Attribute<?, ?> toAttr = null;
-			
-			if (null != (oneToOne = accessible.getDeclaredAnnotation(OneToOne.class))) {
-				if (oneToOne.mappedBy() != null) {
-					toAttr = findToAttrOrForMappedByException(toEntity, oneToOne.mappedBy());
-				}
-			}
-			else if (null != (manyToOne = accessible.getDeclaredAnnotation(ManyToOne.class))) {
-				// We are at the opposite-side
-				final JoinColumn joinColumn = accessible.getDeclaredAnnotation(JoinColumn.class);
-				
-				// TODO: Support without JoinColumn?
-				if (joinColumn == null) {
-					throw new IllegalStateException("No join-column for ManyToOne attr");
-				}
-	
-				//
-				toAttr = findToAttrForManyToOneOrException(toEntity, joinColumn);
-	
-			}
-			else {
-				throw new IllegalStateException("Neither OnToOne or ManyToOne for singular association: " + fromAttr.getName());
-			}
-
+		if (toClassMatch == null || cl.equals(toClassMatch)) {
 			// Relation from one to other
-			final JPARelationField from = new JPARelationField(fromClass, fromEntity, fromAttr);
-			final JPARelationField to = new JPARelationField(toClass, toEntity, toAttr);
+			final RelationField from = new RelationField(fromClass, makeEntityAttribute(fromAttr));
 
-			ret = new JPARelation(from, to);
+			final ATTRIBUTE targetAttribute = model.getAssociationTargetAttribute(fromAttr); 
+			final RelationField to = new RelationField(toClassMatch, makeEntityAttribute(targetAttribute));
+
+			ret = new Relation(relationType, from, to);
 		}
 		else {
 			// Some other entity
@@ -233,63 +240,10 @@ public class EntityModelUtil<MANAGED, EMBEDDED, IDENTIFIABLE, ATTRIBUTE, COLL ex
 
 		return cl;
 	}
-	*/
 
 
-	private static Class<?> getCollectionAttributeGenericType(AccessibleObject accessible) {
-	
-		final Type genericType;
-		final Class<?> cl;
-		
-		if (accessible instanceof Field) {
-			
-			final Field f = (Field)accessible;
-			
-			genericType = f.getGenericType();
-			cl = f.getType();
-		}
-		else if (accessible instanceof Method) {
-			final Method m = (Method)accessible;
-			
-			if (m.getParameterTypes().length != 0) {
-				throw new UnsupportedOperationException("Expected getter");
-			}
-			
-			genericType = m.getGenericReturnType();
-			cl = m.getReturnType();
-		}
-		else {
-			throw new UnsupportedOperationException("Unsupported accessible type: " + accessible.getClass().getName());
-		}
-		
-		if (!
-				(    Collection.class.equals(cl)
-			      || List.class.equals(cl)
-			      || Set.class.equals(cl))				
-		   ) {
-			throw new UnsupportedOperationException("Not a supported collection class: " + cl);
-		}
-		
-		
-		final Class<?> ret;
-		
-		if (genericType instanceof ParameterizedType) {
-
-			final ParameterizedType parameterizedType = (ParameterizedType)genericType;
-			final Type[] typeArgs = parameterizedType.getActualTypeArguments();
-
-			if (typeArgs.length != 1) {
-				throw new UnsupportedOperationException("Expected exactly one type arg, got " + Arrays.toString(typeArgs));
-			}
-
-			ret = (Class<?>)typeArgs[0];
-		}
-		else {
-			ret = null;
-		}
-
-		return ret;
+	private static Class<?> getCollectionAttributeGenericType(Member member) {
+		return EntityUtil.getGenericCollectionMemberType((AccessibleObject)member);
 	}
-
 
 }

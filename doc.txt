@@ -437,3 +437,38 @@ Siden vi ikke joiner på felter. Men burde kunne custom-joine også som vi uttry
 							Arrays.toString(attr.getJavaType().getTypeParameters())); // [0getGenericInterfaces()));
 		*/
 
+
+
+
+		
+		final OneToMany oneToMany = accessible.getDeclaredAnnotation(OneToMany.class);
+		
+		if (oneToMany == null) {
+			throw new UnsupportedOperationException("No one-to-many for ");
+		}
+
+
+
+		// Check whether target is same as toClass
+		if (memberType == null) {
+			memberType = oneToMany.targetEntity();
+			
+			if (memberType == null) {
+				throw new IllegalStateException("memberType neither specified with generics nor through members");
+			}
+		}
+
+		final Relation ret;
+
+		if (memberType.equals(toClass)) {
+			// Relation from one to other
+			final RelationField from = new RelationField(fromClass, makeEntityAttribute(attr));
+			final RelationField to = new RelationField(toClass, toEntity, findToAttrOrForMappedByException(toEntity, oneToMany.mappedBy()));
+
+			ret = new Relation(from, to);
+		}
+		else {
+			ret = null;
+		}
+
+

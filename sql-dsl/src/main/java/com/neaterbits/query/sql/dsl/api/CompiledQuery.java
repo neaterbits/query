@@ -299,6 +299,12 @@ final class CompiledQuery {
 				else if (joinCondition instanceof CollectedJoinConditionComparisonAliases) {
 					thisOneIsClass = false;
 				}
+				else if (joinCondition instanceof CollectedJoinConditionOneToManyClass) {
+					thisOneIsClass = true;
+				}
+				else if (joinCondition instanceof CollectedJoinConditionOneToManyAlias) {
+					thisOneIsClass = false;
+				}
 				else {
 					throw new UnsupportedOperationException("Unknown join type " + joinCondition.getClass().getName());
 				}
@@ -321,7 +327,31 @@ final class CompiledQuery {
 					final CompiledFieldReference left = sources.makeFieldReference(joinCondition, joinConditionComparison.getLeftGetter(), cache);
 					final CompiledFieldReference right = sources.makeFieldReference(joinCondition, joinConditionComparison.getRightGetter(), cache);
 					
-					compiledJoinCondition = new CompiledJoinCondition(joinCondition, left.getSource(), right.getSource());
+					compiledJoinCondition = new CompiledJoinConditionComparison(joinConditionComparison, left, right);
+				}
+				else if (joinCondition instanceof CollectedJoinConditionOneToMany) {
+
+					final CollectedJoinConditionOneToMany oneToMany = (CollectedJoinConditionOneToMany)joinCondition;
+					final CompiledFieldReference collection = sources.makeFieldReference(joinCondition, oneToMany.getCollectionGetter(), cache);
+					
+					final TypeMapSource left;
+					final TypeMapSource right;
+
+					final Class<?> collectionSourceType = collection.getSource().getType();
+
+					if (collectionSourceType.equals(leftSource.getType())) {
+						left = leftSource;
+						right = rightSource;
+					}
+					else if (collectionSourceType.equals(rightSource.getType())) {
+						left = rightSource;
+						right = leftSource;
+					}
+					else {
+						throw new UnsupportedOperationException("Could not match neither left nor right : collection=" + collectionSourceType + ", left=" + leftSource.getType() + ", right=" + rightSource.getType());
+					}
+
+					compiledJoinCondition = new CompiledJoinConditionOneToMany(oneToMany, left, right, collection);
 				}
 				else {
 					throw new UnsupportedOperationException("Unknown join condition instance " + joinCondition.getClass().getSimpleName());
@@ -329,7 +359,7 @@ final class CompiledQuery {
 
 				compiledJoinConditions.add(compiledJoinCondition);
 			}
-			
+
 			final CompiledJoin compiledJoin = new CompiledJoin(
 					join,
 					leftSource,
@@ -338,7 +368,7 @@ final class CompiledQuery {
 
 			compiledJoins.add(compiledJoin);
 		}
-		
+
 		final CompiledJoins ret = isClass
 				? new CompiledJoinsClasses(compiledJoins)
 				: new CompiledJoinsAliases(compiledJoins);

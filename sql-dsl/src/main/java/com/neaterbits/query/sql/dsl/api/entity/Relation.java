@@ -1,11 +1,14 @@
 package com.neaterbits.query.sql.dsl.api.entity;
 
-final class JPARelation {
-
+public final class Relation {
 	private final RelationField from;
 	private final RelationField to;
 
-	JPARelation(RelationField from, RelationField to) {
+	Relation(RelationType type, RelationField from, RelationField to) {
+
+		if (type == null) {
+			throw new IllegalArgumentException("type == null");
+		}
 
 		if (from == null) {
 			throw new IllegalArgumentException("from == null");
@@ -19,11 +22,11 @@ final class JPARelation {
 		this.to = to;
 	}
 
-	RelationField getFrom() {
+	public RelationField getFrom() {
 		return from;
 	}
 
-	RelationField getTo() {
+	public RelationField getTo() {
 		return to;
 	}
 }

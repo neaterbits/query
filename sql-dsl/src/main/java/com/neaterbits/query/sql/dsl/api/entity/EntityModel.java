@@ -1,5 +1,6 @@
 package com.neaterbits.query.sql.dsl.api.entity;
 
+import java.lang.reflect.Member;
 import java.util.Collection;
 
 public interface EntityModel<MANAGED, EMBEDDED, IDENTIFIABLE, ATTRIBUTE, ATTRIBUTE_COLL extends Collection<ATTRIBUTE>> {
@@ -26,9 +27,20 @@ public interface EntityModel<MANAGED, EMBEDDED, IDENTIFIABLE, ATTRIBUTE, ATTRIBU
 	
 	ScalarType getScalarIdType(IDENTIFIABLE identifiable);
 
-	boolean isAssociation(ATTRIBUTE attribute);
-
 	AttributeType getAttributeType(ATTRIBUTE attribute);
+
+	RelationType getRelationType(ATTRIBUTE attribute);
 	
 	String getAttributeName(ATTRIBUTE attribute);
+
+	String [] getAttributeColumns(ATTRIBUTE attribute);
+
+	Class<?> getAttributeJavaType(ATTRIBUTE attribute);
+	
+	Member getAttributeJavaMember(ATTRIBUTE attribute);
+	
+	Class<?> getAssociationTarget(ATTRIBUTE attribute);
+	
+	ATTRIBUTE getAssociationTargetAttribute(ATTRIBUTE attribute);
+	
 }

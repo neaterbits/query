@@ -1,6 +1,6 @@
 package com.neaterbits.query.sql.dsl.api.entity;
 
-final class RelationField {
+public final class RelationField {
 
 	private final Class<?> type;
 	private final EntityAttribute attribute;
@@ -19,12 +19,12 @@ final class RelationField {
 		this.attribute = attribute;
 	}
 
-	Class<?> getType() {
+	public Class<?> getType() {
 		return type;
 	}
 
 
-	EntityAttribute getAttribute() {
+	public IEntityAttribute getAttribute() {
 		return attribute;
 	}
 }

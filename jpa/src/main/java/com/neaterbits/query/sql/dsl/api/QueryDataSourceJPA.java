@@ -2,14 +2,16 @@ package com.neaterbits.query.sql.dsl.api;
 
 import java.lang.reflect.Member;
 import java.lang.reflect.Method;
+import java.util.List;
 import java.util.function.Consumer;
 
 import javax.persistence.EntityManager;
 import javax.persistence.metamodel.Attribute;
-import javax.persistence.metamodel.CollectionAttribute;
 import javax.persistence.metamodel.EntityType;
+import javax.persistence.metamodel.ManagedType;
 import javax.persistence.metamodel.Metamodel;
-import javax.persistence.metamodel.PluralAttribute;
+
+import com.neaterbits.query.sql.dsl.api.entity.Relation;
 
 /**
  * Query data source implementation for JPA
@@ -21,6 +23,8 @@ public final class QueryDataSourceJPA extends QueryDataSourceBase {
 
 	private final EntityManager em;
 	private final JPACompiledQueryResultVisitor queryResultVisitor;
+	private final JPAEntityModel entityModel;
+	private final JPAEntityModelUtil entityModelUtil;
 
 	public QueryDataSourceJPA(EntityManager entityManager) {
 
@@ -30,6 +34,8 @@ public final class QueryDataSourceJPA extends QueryDataSourceBase {
 
 		this.em = entityManager;
 		this.queryResultVisitor = new JPACompiledQueryResultVisitor(em);
+		this.entityModel = new JPAEntityModel(em.getMetamodel());
+		this.entityModelUtil = new JPAEntityModelUtil(entityModel);
 	}
 	
 	private JPABasePreparedQuery prepareQuery(CompiledQuery query) {
@@ -53,11 +59,13 @@ public final class QueryDataSourceJPA extends QueryDataSourceBase {
 
 		sb.append("\n").append("FROM ");
 		
+		final CompiledSelectSources<CompiledSelectSource> sources = (CompiledSelectSources<CompiledSelectSource>)query.getSelectSources();
+		
 		// Add all select sources
-		prepareSelectSources(sb, (CompiledSelectSources<CompiledSelectSource>)query.getSelectSources());
+		prepareSelectSources(sb, sources);
 
 		if (query.getJoins() != null) {
-			prepareJoins(sb, query.getJoins());
+			prepareJoins(sb, query.getJoins(), sources);
 		}
 		
 		// Prepare conditions if present
@@ -119,10 +127,12 @@ public final class QueryDataSourceJPA extends QueryDataSourceBase {
 		c.accept(columnName);
 	}
 	
-	private void prepareJoins(StringBuilder sb, CompiledJoins joins) {
+	private void prepareJoins(StringBuilder sb, CompiledJoins joins, CompiledSelectSources<CompiledSelectSource> sources) {
+		
+		int joinParamIdx = 0;
+		
 		for (CompiledJoin join : joins.getJoins()) {
 			switch (join.getJoinType()) {
-			
 			
 			case LEFT:
 				sb.append(" LEFT JOIN ");
@@ -136,42 +146,84 @@ public final class QueryDataSourceJPA extends QueryDataSourceBase {
 				throw new UnsupportedOperationException("Unknown join condition ");
 			}
 
-			for (CompiledJoinCondition joinCondition : join.getConditions()) {
-				
-			}
-			
+			joinParamIdx = addRelationFromMetaModel(sb, join, sources, joinParamIdx);
 		}
 	}
 
-	private static void findRelationFromMetaModel(CompiledJoin join, Metamodel metaModel) {
+	private int addRelationFromMetaModel(StringBuilder sb, CompiledJoin join, CompiledSelectSources<CompiledSelectSource> sources, int joinParamIdx) {
 
 		// First must find the types for this join
 		final Class<?> leftType  = join.getLeft().getType();
-		final Class<?> rightType = join.getLeft().getType();
+		final Class<?> rightType = join.getRight().getType();
 
-		final EntityType<?> leftEntityType  =  metaModel.entity(leftType);
-		final EntityType<?> rightEntityType =  metaModel.entity(rightType);
+		final ManagedType<?> leftEntityType  =  entityModel.getManaged(leftType);
+		final ManagedType<?> rightEntityType =  entityModel.getManaged(rightType);
 
 		if (leftEntityType.equals(rightEntityType)) {
-			throw new IllegalStateException("Left entity equals right entity: "  + leftEntityType.getName() + " / " + rightEntityType.getName());
+			throw new IllegalStateException("Left entity equals right entity: "  + leftEntityType + " / " + rightEntityType);
 		}
 
 		// Look at conditions to see if there is a join on any of the conditions
 		if (join.getConditions().isEmpty()) {
+			
 			// Must find exactly one relation from this one to other
-			final Attribute attr = leftEntityType.getAttribute("foo");
-
-			final PluralAttribute pluralAttr = (PluralAttribute)attr;
-
-			final CollectionAttribute collectionAttr = (CollectionAttribute)pluralAttr;
+			final List<Relation> leftToRight =  entityModelUtil.findRelations(leftType, rightType);
+			final List<Relation> rightToLeft =  entityModelUtil.findRelations(leftType, rightType);
 			
+			if (leftToRight.size() != 1) {
+				throw new IllegalStateException("Expected exactly one relation from " + leftType + " to " + rightType);
+			}
 			
-					
+			// final Relation leftRelation = leftToRight.get(0);
+			
+			if (rightToLeft.size() != 1) {
+				throw new IllegalStateException("Expected exactly one relation from " + rightType + " to " + leftType);
+			}
+			
+			// Got one relation
+			//final Relation rightRelation = rightToLeft.get(0);
 		}
 		else {
-			// Must find metamodel entry that matches the foreign key patterns
-			throw new UnsupportedOperationException("TODO");
+			// Must find metamodel entry that matches the foreign key patterns specified
+			for (CompiledJoinCondition condition : join.getConditions()) {
+				// Find something that matches this condition in correcto order
+
+				if (condition instanceof CompiledJoinConditionComparison) {
+					
+					final CompiledJoinConditionComparison comparison = (CompiledJoinConditionComparison)condition;
+					
+					// Joining two fields
+					throw new UnsupportedOperationException("TODO: support field join");
+					
+				}
+				else if (condition instanceof CompiledJoinConditionOneToMany) {
+					final CompiledJoinConditionOneToMany oneToMany = (CompiledJoinConditionOneToMany)condition;
+
+					final CompiledGetter getter = oneToMany.getCollectionGetter();
+					
+					// Must figure out which relation attribute this is ?
+					final Relation relation = entityModelUtil.findOneToManyRelation(oneToMany.getLeft().getType(), oneToMany.getRight().getType(), getter.getGetterMethod());
+					
+					if (relation == null) {
+						throw new IllegalStateException("Failed to find relation for " + getter.getGetterMethod());
+					}
+					
+					// Output JPA join on collection
+					// from name in from-clause
+					sb.append(" ")
+					  .append(entityName(oneToMany.getLeft().getType())).append(".").append(relation.getFrom().getAttribute().getName())
+					  .append(" ")
+					  .append(" join").append(joinParamIdx ++);
+
+					// TODO: Join comparison on rhs?
+				}
+				else {
+					throw new UnsupportedOperationException("Unknown join condition type " + condition.getClass().getName());
+				}
+			}
 		}
+		
+		return joinParamIdx;
 	}
 	
 	// Must find whether there are multiple or just one mathing join between two tables.
