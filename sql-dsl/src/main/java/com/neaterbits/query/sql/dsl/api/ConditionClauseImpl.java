@@ -76,6 +76,7 @@ class ConditionClauseImpl<MODEL, RESULT, R, L extends LogicalClauses<MODEL, RESU
 		return addCondition(new ConditionEqualToImpl(getter, makeParamValue(other)));
 	}
 
+	/* Only join in Join constructs
 	@Override
 	public final <T> L isEqualTo(Function<T, R> other) {
 		
@@ -96,6 +97,7 @@ class ConditionClauseImpl<MODEL, RESULT, R, L extends LogicalClauses<MODEL, RESU
 		
 		return addCondition(new ConditionEqualToImpl(getter, makeGetterValue(other)));
 	}
+	*/
 
 	@Override
 	public final L isNotEqualTo(R other) {
@@ -117,6 +119,7 @@ class ConditionClauseImpl<MODEL, RESULT, R, L extends LogicalClauses<MODEL, RESU
 		return addCondition(new ConditionNotEqualToImpl(getter, makeParamValue(other)));
 	}
 
+	/*
 	@Override
 	public final <T> L isNotEqualTo(Function<T, R> other) {
 
@@ -136,6 +139,7 @@ class ConditionClauseImpl<MODEL, RESULT, R, L extends LogicalClauses<MODEL, RESU
 
 		return addCondition(new ConditionNotEqualToImpl(getter, makeGetterValue(other)));
 	}
+	*/
 
 	@Override
 	@SafeVarargs

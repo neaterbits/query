@@ -2,23 +2,29 @@ package com.neaterbits.query.jpatest.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 @Entity
 public class Employee {
 	
 	private long id;
-	private long companyId;
+	private Company company;
+	private Company company2;
 	private long personId;
+	
+	
 	
 	public Employee() {
 		
 	}
 	
-	public Employee(long id, long companyId, long personId) {
+	public Employee(long id, Company company, long personId) {
 		this.id = id;
-		this.companyId = companyId;
+		this.company = company;
 		this.personId = personId;
 	}
 
@@ -31,15 +37,26 @@ public class Employee {
 		this.id = id;
 	}
 	
-	@Column
-	public long getCompanyId() {
-		return companyId;
+	@ManyToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name="company_id")
+	public Company getCompany() {
+		return company;
 	}
 
-	public void setCompanyId(long companyId) {
-		this.companyId = companyId;
+	public void setCompany(Company company) {
+		this.company = company;
 	}
 
+	@ManyToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name="company_id2")
+	public Company getCompany2() {
+		return company;
+	}
+
+	public void setCompany2(Company company) {
+		this.company = company;
+	}
+	
 	@Column
 	public long getPersonId() {
 		return personId;

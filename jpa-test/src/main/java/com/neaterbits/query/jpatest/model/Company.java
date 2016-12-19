@@ -1,11 +1,14 @@
 package com.neaterbits.query.jpatest.model;
 
 import java.math.BigDecimal;
+import java.util.Collection;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
 @Entity
 public class Company {
@@ -15,6 +18,9 @@ public class Company {
 	private String name;
 	
 	private BigDecimal stockPrice;
+	
+	private List<Employee> employees;
+	private List<Employee> employees2;
 	
 	public Company() {
 		
@@ -57,7 +63,25 @@ public class Company {
 	public void setStockPrice(BigDecimal stockPrice) {
 		this.stockPrice = stockPrice;
 	}
+	
+	@OneToMany(mappedBy="company")
+	public List<Employee> getEmployees() {
+		return employees;
+	}
 
+	public void setEmployees(List<Employee> employees) {
+		this.employees = employees;
+	}
+
+	@OneToMany(mappedBy="company2")
+	public List<Employee> getEmployees2() {
+		return employees2;
+	}
+
+	public void setEmployees2(List<Employee> employees2) {
+		this.employees2 = employees2;
+	}
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;

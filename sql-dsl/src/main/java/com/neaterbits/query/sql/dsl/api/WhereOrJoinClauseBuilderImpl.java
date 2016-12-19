@@ -61,6 +61,20 @@ final class WhereOrJoinClauseBuilderImpl<MODEL, RESULT>
 		return getJoinConditionTable();
 	}
 
+	
+	@Override
+	public JoinConditionTable<MODEL, RESULT, Object, Object> on(CollectionFunction<Object, Object> joinCollection) {
+		final FunctionGetter collectionGetter = new FunctionGetter(joinCollection); 
+
+		final CollectedJoin curJoin = getQueryCollector().getJoins().getLast();
+
+		final CollectedJoinCondition joinCondition = new CollectedJoinConditionOneToManyClass(collectionGetter);
+		
+		curJoin.addJoinCondition(joinCondition);
+		
+		return getJoinConditionTable();
+	}
+
 	@Override
 	public JoinConditionTable<MODEL, RESULT, Object, Object> compare(IntegerFunction<Object> left, IntegerFunction<Object> right) {
 		
@@ -69,7 +83,7 @@ final class WhereOrJoinClauseBuilderImpl<MODEL, RESULT>
 		
 		final CollectedJoin curJoin = getQueryCollector().getJoins().getLast();
 		
-		final CollectedJoinCondition joinCondition = new CollectedJoinConditionClasses(leftGetter, rightGetter);
+		final CollectedJoinCondition joinCondition = new CollectedJoinConditionComparisonClasses(leftGetter, rightGetter);
 		
 		curJoin.addJoinCondition(joinCondition);
 		
@@ -110,7 +124,20 @@ final class WhereOrJoinClauseBuilderImpl<MODEL, RESULT>
 		
 		final CollectedJoin curJoin = getQueryCollector().getJoins().getLast();
 		
-		final CollectedJoinCondition joinCondition = new CollectedJoinConditionAliases(leftGetter, rightGetter);
+		final CollectedJoinCondition joinCondition = new CollectedJoinConditionComparisonAliases(leftGetter, rightGetter);
+		
+		curJoin.addJoinCondition(joinCondition);
+		
+		return getJoinConditionAlias();
+	}
+
+	@Override
+	public JoinConditionAlias<MODEL, RESULT> on(CollectionSupplier joinCollection) {
+		final SupplierGetter collectionGetter = new SupplierGetter(joinCollection); 
+		
+		final CollectedJoin curJoin = getQueryCollector().getJoins().getLast();
+		
+		final CollectedJoinCondition joinCondition = new CollectedJoinConditionOneToManyAlias(collectionGetter);
 		
 		curJoin.addJoinCondition(joinCondition);
 		
@@ -261,3 +288,4 @@ final class WhereOrJoinClauseBuilderImpl<MODEL, RESULT>
 		return new ConditionClauseImpl<MODEL, RESULT, RR, OrClausesAlias<MODEL,RESULT>>(orClauses, makeGetter(getter));
 	}
 }
+

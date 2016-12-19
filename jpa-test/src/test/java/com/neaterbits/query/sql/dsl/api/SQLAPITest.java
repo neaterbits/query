@@ -37,17 +37,17 @@ public class SQLAPITest {
 
 	@Test
     public void testTableBased() {
-    	
+
 		final Company acme = new Company(-1, "Acme");
 		final Company foo = new Company(-1, "Foo");
 
-		
         final SingleQuery<CompanyResultVO> startsWithAc =
         		selectOneOrNull(CompanyResultVO.class)
 
         	.map(Company::getName).to(CompanyResultVO::setName)
         	
         	.from(Company.class)
+
         	.where(Company::getName).startsWith("Ac")
 
         	.compile();
@@ -78,7 +78,6 @@ public class SQLAPITest {
 		final Company acme = new Company(-1, "Acme");
 		final Company foo = new Company(-2, "Foo");
 
-		
         final SingleQuery<Company> startsWithAc =
         		oneFrom(Company.class)
         			.where(Company::getName).startsWith("Ac")
@@ -334,8 +333,8 @@ public class SQLAPITest {
 		final int fooEmployeeId1 = 231; 
 		final int fooEmployeeId2 = 232; 
 		
-		final Employee fooEmp1 = new Employee(fooEmployeeId1, foo.getId(), fooPerson1.getId());
-		final Employee fooEmp2 = new Employee(fooEmployeeId2, foo.getId(), fooPerson2.getId());
+		final Employee fooEmp1 = new Employee(fooEmployeeId1, foo, fooPerson1.getId());
+		final Employee fooEmp2 = new Employee(fooEmployeeId2, foo, fooPerson2.getId());
 		
         final MultiQuery<CompanyPersonResultVO> startsWithFoo =
         		selectList(CompanyPersonResultVO.class)
@@ -347,8 +346,8 @@ public class SQLAPITest {
         	
         	.from(company, employee, person)
 
-        	.innerJoin(company, person)
-        		.compare(company::getId, employee::getCompanyId)
+        	.innerJoin(company, employee)
+        		.on(company::getEmployees)
 
         	.innerJoin(employee, person)
         		.compare(employee::getPersonId, person::getId)
@@ -408,9 +407,10 @@ public class SQLAPITest {
 	        	.map(person::getFirstName)	.to(ResultVO::setFirstName)
 	
 	        	.from(company, person, role)
-	
+	        	.innerJoin(company, employee)
+	        		.on(company::getEmployees)
+
 	        	.where(company::getName)		.startsWith("Foo")
-	        	  .and(company::getId)			.isEqualTo(employee::getCompanyId)
 	
 	        	.compile();
 	

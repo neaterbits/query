@@ -6,8 +6,10 @@ import java.util.function.Consumer;
 
 import javax.persistence.EntityManager;
 import javax.persistence.metamodel.Attribute;
+import javax.persistence.metamodel.CollectionAttribute;
 import javax.persistence.metamodel.EntityType;
 import javax.persistence.metamodel.Metamodel;
+import javax.persistence.metamodel.PluralAttribute;
 
 /**
  * Query data source implementation for JPA
@@ -140,7 +142,40 @@ public final class QueryDataSourceJPA extends QueryDataSourceBase {
 			
 		}
 	}
+
+	private static void findRelationFromMetaModel(CompiledJoin join, Metamodel metaModel) {
+
+		// First must find the types for this join
+		final Class<?> leftType  = join.getLeft().getType();
+		final Class<?> rightType = join.getLeft().getType();
+
+		final EntityType<?> leftEntityType  =  metaModel.entity(leftType);
+		final EntityType<?> rightEntityType =  metaModel.entity(rightType);
+
+		if (leftEntityType.equals(rightEntityType)) {
+			throw new IllegalStateException("Left entity equals right entity: "  + leftEntityType.getName() + " / " + rightEntityType.getName());
+		}
+
+		// Look at conditions to see if there is a join on any of the conditions
+		if (join.getConditions().isEmpty()) {
+			// Must find exactly one relation from this one to other
+			final Attribute attr = leftEntityType.getAttribute("foo");
+
+			final PluralAttribute pluralAttr = (PluralAttribute)attr;
+
+			final CollectionAttribute collectionAttr = (CollectionAttribute)pluralAttr;
+			
+			
+					
+		}
+		else {
+			// Must find metamodel entry that matches the foreign key patterns
+			throw new UnsupportedOperationException("TODO");
+		}
+	}
 	
+	// Must find whether there are multiple or just one mathing join between two tables.
+	// should usually be just one
 	
 	private static final JPAConditionToOperatorVisitor conditionToOperatorVisitor = new JPAConditionToOperatorVisitor();
 	

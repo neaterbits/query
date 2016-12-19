@@ -293,10 +293,10 @@ final class CompiledQuery {
 				
 				final boolean thisOneIsClass;
 
-				if (joinCondition instanceof CollectedJoinConditionClasses) {
+				if (joinCondition instanceof CollectedJoinConditionComparisonClasses) {
 					thisOneIsClass = true;
 				}
-				else if (joinCondition instanceof CollectedJoinConditionAliases) {
+				else if (joinCondition instanceof CollectedJoinConditionComparisonAliases) {
 					thisOneIsClass = false;
 				}
 				else {
@@ -312,16 +312,23 @@ final class CompiledQuery {
 					}
 				}
 				
-				final CompiledFieldReference left = sources.makeFieldReference(joinCondition, joinCondition.getLeftGetter(), cache);
-				final CompiledFieldReference right = sources.makeFieldReference(joinCondition, joinCondition.getRightGetter(), cache);
+				final CompiledJoinCondition compiledJoinCondition;
 				
-				final CompiledJoinCondition compiledJoinCondition = new CompiledJoinCondition(joinCondition, left.getSource(), right.getSource());
-		
+				if (joinCondition instanceof CollectedJoinConditionComparison) {
+
+					final CollectedJoinConditionComparison joinConditionComparison = (CollectedJoinConditionComparison)joinCondition;
+
+					final CompiledFieldReference left = sources.makeFieldReference(joinCondition, joinConditionComparison.getLeftGetter(), cache);
+					final CompiledFieldReference right = sources.makeFieldReference(joinCondition, joinConditionComparison.getRightGetter(), cache);
+					
+					compiledJoinCondition = new CompiledJoinCondition(joinCondition, left.getSource(), right.getSource());
+				}
+				else {
+					throw new UnsupportedOperationException("Unknown join condition instance " + joinCondition.getClass().getSimpleName());
+				}
+
 				compiledJoinConditions.add(compiledJoinCondition);
 			}
-
-			
-				
 			
 			final CompiledJoin compiledJoin = new CompiledJoin(
 					join,

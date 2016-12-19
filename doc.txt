@@ -390,6 +390,20 @@ Men retning på joins? Joiner mot de som er tidligere i rekursjon for med de som
 
 
 
+JPA joins? Må i første omgang joine på collections antakelig.
+Så må ha en måte å spesifisere dette på.
+
+Behøvs egentlig bare selve collection som skal joins på, men kan ha en verbos versjon her også.
+
+
+join()
+
+Burde ha bare on(foo::getFooBar)
+
+Siden vi ikke joiner på felter. Men burde kunne custom-joine også som vi uttrykker enten i where-clause eller i JPA >= 2.1 joins.
+
+
+----
 
 
 
@@ -404,4 +418,22 @@ Men retning på joins? Joiner mot de som er tidligere i rekursjon for med de som
 
 
 
+----
+
+
+		/*
+			System.out.println("## generic return type: " + m.getGenericReturnType().getTypeName());
+			
+			final Type type = m.getGenericReturnType();
+			
+			final ParameterizedType genReturnType = (ParameterizedType)type;
+
+			final Type collectionMemberType = genReturnType.getActualTypeArguments()[0];
+			
+			System.out.println("## generic return class: " + ((Class<?>)collectionMemberType).getName());
+			
+			
+			System.out.println("## found collection attribute " + attr.getName() + " of type " + attr.getJavaType() + ", generic type " +
+							Arrays.toString(attr.getJavaType().getTypeParameters())); // [0getGenericInterfaces()));
+		*/
 
