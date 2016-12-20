@@ -1,4 +1,4 @@
-package com.neaterbits.query.sql.dsl.api.helper;
+package com.neaterbits.query.sql.dsl.api.testhelper;
 
 
 public interface QueryTestDSBuilder {

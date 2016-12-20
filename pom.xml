@@ -38,6 +38,7 @@
 
 	<modules>
 		<module>sql-dsl</module>
+		<module>sql-dsl-test</module>
 		<module>jpa</module>
 		<module>jpa-test</module>
 		<module>util-java8</module>

@@ -26,9 +26,9 @@ import com.neaterbits.query.jpatest.model.Company;
 import com.neaterbits.query.jpatest.model.Employee;
 import com.neaterbits.query.jpatest.model.Person;
 import com.neaterbits.query.jpatest.model.Role;
-import com.neaterbits.query.sql.dsl.api.helper.QueryTestDSBuilder;
-import com.neaterbits.query.sql.dsl.api.helper.QueryTestDSCheck;
-import com.neaterbits.query.sql.dsl.api.helper.QueryTestDSJPA;
+import com.neaterbits.query.sql.dsl.api.helper.jpa.QueryTestDSJPA;
+import com.neaterbits.query.sql.dsl.api.testhelper.QueryTestDSBuilder;
+import com.neaterbits.query.sql.dsl.api.testhelper.QueryTestDSCheck;
 
 public class SQLAPITest {
 

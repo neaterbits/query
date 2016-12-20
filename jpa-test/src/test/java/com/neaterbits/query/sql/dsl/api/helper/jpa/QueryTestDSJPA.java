@@ -1,4 +1,4 @@
-package com.neaterbits.query.sql.dsl.api.helper;
+package com.neaterbits.query.sql.dsl.api.helper.jpa;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -9,6 +9,7 @@ import javax.persistence.metamodel.Metamodel;
 
 import com.neaterbits.query.sql.dsl.api.QueryDataSource;
 import com.neaterbits.query.sql.dsl.api.QueryDataSourceJPA;
+import com.neaterbits.query.sql.dsl.api.testhelper.QueryTestDSBasePersistent;
 
 public final class QueryTestDSJPA extends QueryTestDSBasePersistent<EntityManagerFactory, EntityManager, EntityTransaction> {
 

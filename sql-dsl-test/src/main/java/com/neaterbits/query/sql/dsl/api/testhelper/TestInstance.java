@@ -1,6 +1,6 @@
-package com.neaterbits.query.sql.dsl.api.helper;
+package com.neaterbits.query.sql.dsl.api.testhelper;
 
-class TestInstance {
+final class TestInstance {
 	private final Object instance;
 	private final Object pk;
 	
@@ -18,11 +18,11 @@ class TestInstance {
 		this.pk = pk;
 	}
 
-	public Object getInstance() {
+	Object getInstance() {
 		return instance;
 	}
 
-	public Object getPK() {
+	Object getPK() {
 		return pk;
 	}
 }

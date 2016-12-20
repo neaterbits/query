@@ -1,15 +1,12 @@
-package com.neaterbits.query.sql.dsl.api.helper;
+package com.neaterbits.query.sql.dsl.api.testhelper;
 
 import java.util.List;
 import java.util.function.BiFunction;
 import java.util.function.Consumer;
 
-import javax.persistence.metamodel.EntityType;
-import javax.persistence.metamodel.Metamodel;
-
 import com.neaterbits.query.sql.dsl.api.QueryDataSource;
 
-abstract class QueryTestDSBasePersistent<CTX, ENTITIES, TRANSACTION> extends QueryTestDS {
+public abstract class QueryTestDSBasePersistent<CTX, ENTITIES, TRANSACTION> extends QueryTestDS {
 
 	private final CTX ctx;
 	private final BiFunction<CTX, Object, Object> getPK;
@@ -32,7 +29,7 @@ abstract class QueryTestDSBasePersistent<CTX, ENTITIES, TRANSACTION> extends Que
 	
 	protected abstract QueryDataSource createDataSource(ENTITIES entities);
 
-	QueryTestDSBasePersistent(CTX ctx, BiFunction<CTX, Object, Object> getPK) {
+	protected QueryTestDSBasePersistent(CTX ctx, BiFunction<CTX, Object, Object> getPK) {
 
 		this.ctx = ctx;
 		this.getPK = getPK; 
