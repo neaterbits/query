@@ -17,4 +17,9 @@ final class CompiledJoinConditionOneToMany extends CompiledJoinCondition {
 	CompiledGetter getCollectionGetter() {
 		return collection.getGetter();
 	}
+
+	@Override
+	boolean evaluate(Object instance1, Object instance2) {
+		throw new UnsupportedOperationException("TODO - not supported for lists?");
+	}
 }

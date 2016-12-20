@@ -19,4 +19,25 @@ final class CompiledJoinConditionComparison extends CompiledJoinCondition {
 	public CompiledFieldReference getRhs() {
 		return right;
 	}
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	boolean evaluate(Object instance1, Object instance2) {
+		final Object lhs = left.getValue(instance1);
+		final Object rhs = right.getValue(instance2);
+
+		final boolean ret;
+		
+		if (lhs == null) {
+			ret = rhs == null;
+		}
+		else if (rhs == null) {
+			ret = true;
+		}
+		else {
+			ret = ((Comparable<Object>)lhs).compareTo((Comparable<Object>)rhs) == 0;
+		}
+		
+		return ret;
+	}
 }

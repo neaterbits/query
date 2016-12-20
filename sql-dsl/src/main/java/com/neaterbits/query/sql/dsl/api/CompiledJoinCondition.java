@@ -31,7 +31,5 @@ abstract class CompiledJoinCondition {
 		return right;
 	}
 
-	boolean evaluate(Object instance1, Object instance2) {
-		throw new UnsupportedOperationException("TODO");
-	}
+	abstract boolean evaluate(Object instance1, Object instance2);
 }

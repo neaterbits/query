@@ -31,9 +31,17 @@ final class ExecuteQueryUtil {
 			default:
 				// More than one
 				for (int i = 0; i < scratch.length(); ++ i) {
-					final Object value = q.executeMappingGetter(query, i, scratch.get(i));
+					
+					final Object instance = scratch.get(i);
+					
+					try {
+					final Object value = q.executeMappingGetter(query, i, instance);
 
 					q.executeMappingSetter(query, i, result, value);
+					}
+					catch (RuntimeException ex) {
+						throw new IllegalStateException("Expection while mapping scratch  " + i + " of class " + instance.getClass().getSimpleName(), ex);
+					}
 				}
 				break;
 		}

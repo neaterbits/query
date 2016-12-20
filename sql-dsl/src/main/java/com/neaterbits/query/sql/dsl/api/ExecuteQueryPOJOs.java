@@ -263,14 +263,12 @@ final class ExecuteQueryPOJOs<QUERY> extends ExecutableQueryAggregateComputation
 				scratch.set(sourceIdx, o);
 
 				if (sourceIdx == numSources - 1) {
-					// emit scratch area
-					
 					result = computeResult(query, result, scratch);
 				}
 				else {
 					// Recurse to next source idx
-					loopNonJoined(query, numResultParts, input, sourceIdx + 1,
-							numSources, scratch, numConditions, result);
+					loopJoinedNoSets(query, numResultParts, input, sourceIdx + 1,
+							numSources, scratch, numConditions, numJoins, result);
 				}
 			}
 		}
