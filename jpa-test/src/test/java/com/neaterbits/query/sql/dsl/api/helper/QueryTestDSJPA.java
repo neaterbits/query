@@ -2,6 +2,7 @@ package com.neaterbits.query.sql.dsl.api.helper;
 
 import java.util.List;
 import java.util.function.Consumer;
+import java.util.function.Function;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -15,31 +16,37 @@ import com.neaterbits.query.sql.dsl.api.QueryDataSourceJPA;
 public final class QueryTestDSJPA extends QueryTestDS {
 
 	private final EntityManagerFactory emf;
+	private final Function<Object, Object> getPK;
 
 	public QueryTestDSJPA(String persistenceUnitName) {
+
 		this.emf = Persistence.createEntityManagerFactory(persistenceUnitName);
+
+		this.getPK = instance -> emf.getPersistenceUnitUtil().getIdentifier(instance); 
 	}
 
 	@Override
 	public QueryTestDSCheck store(Consumer<QueryTestDSBuilder> dsBuilder) {
 
-		final QueryTestDSBuilder b = new QueryTestDSBuilder();
-		
-		dsBuilder.accept(b);
-		
-		final List<Object> instances = b.getInstances();
+		final QueryTestDSBuilder b = new QueryTestDSBuilder(getPK);
+
+		final EntityManager em = emf.createEntityManager();
+
+		final List<TestInstance> instances = b.getInstances();
 		
 		boolean ok = false;
-		
-		final EntityManager em = emf.createEntityManager();
-		
-		dumpMetaModel(em.getMetamodel());
-		
+
 		em.getTransaction().begin();
 		
 		try {
-			for (Object instance : instances) {
-				em.persist(instance);
+			
+			dsBuilder.accept(b);
+			
+			
+			dumpMetaModel(em.getMetamodel());
+		
+			for (TestInstance instance : instances) {
+				em.persist(instance.getInstance());
 			}
 
 			em.getTransaction().commit();
@@ -68,9 +75,9 @@ public final class QueryTestDSJPA extends QueryTestDS {
 
 	private static class Checker implements QueryTestDSCheck {
 		private final EntityManagerFactory emf;
-		private final List<Object> instances;
+		private final List<TestInstance> instances;
 
-		public Checker(EntityManagerFactory emf, List<Object> instances) {
+		public Checker(EntityManagerFactory emf, List<TestInstance> instances) {
 			this.emf = emf;
 			this.instances = instances;
 		}
@@ -96,12 +103,16 @@ public final class QueryTestDSJPA extends QueryTestDS {
 		private void safelyDeleteInstances(EntityManager em) {
 			try {
 				em.getTransaction().begin();
-				
-				for (Object instance : instances) {
+
+				for (TestInstance instance : instances) {
 					
-					instance = em.merge(instance);
+					final Object found = em.find(instance.getInstance().getClass(), instance.getPK());
 					
-					em.remove(instance);
+					if (found == null) {
+						throw new IllegalStateException("found == null");
+					}
+					
+					em.remove(found);
 				}
 				
 				em.getTransaction().commit();

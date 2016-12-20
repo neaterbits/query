@@ -12,11 +12,11 @@ final class CompiledJoinConditionComparison extends CompiledJoinCondition {
 		this.right = right;
 	}
 	
-	CompiledGetter getLeftGetter() {
-		return left.getGetter();
+	public CompiledFieldReference getLhs() {
+		return left;
 	}
-	
-	CompiledGetter getRightGetter() {
-		return right.getGetter();
+
+	public CompiledFieldReference getRhs() {
+		return right;
 	}
 }

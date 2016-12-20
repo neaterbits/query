@@ -11,6 +11,7 @@ import static com.neaterbits.query.sql.dsl.api.Select.sum;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.math.BigDecimal;
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -172,9 +173,13 @@ public class SQLAPITest {
 
 		final List<T> ret = checkSelectListCommon(ds, query, execute, expected);
 		
-		final Set<T> set = new HashSet<>(ret);
-
-		assertThat(set).containsExactly(expected);
+		// Check that contains the same number of items as the expected
+		
+		final CountMap<T> resultMap = new CountMap<>(ret);
+		
+		final CountMap<T> expectedMap = new CountMap<>(Arrays.asList(expected));
+		
+		assertThat(resultMap).isEqualTo(expectedMap);
 	}
 	
 	private <T> List<T> checkSelectListCommon(QueryDataSource ds, MultiQuery<T> query, Function<PreparedQueryOps<List<T>>, List<T>> execute, T ... expected) {
@@ -377,7 +382,10 @@ public class SQLAPITest {
 				    ds,
 	       			startsWithFoo,
 	       			q -> q.execute(),
-	       			new CompanyPersonResultVO(fooCompanyId, fooPerson1Id, "Foo", "Person"));
+	       			new CompanyPersonResultVO(fooCompanyId, fooPerson1Id, "Foo1", "Person1"),
+	       			new CompanyPersonResultVO(fooCompanyId, fooPerson1Id, "Foo1", "Person1"),
+	       			new CompanyPersonResultVO(fooCompanyId, fooPerson2Id, "Foo2", "Person2"),
+	       			new CompanyPersonResultVO(fooCompanyId, fooPerson2Id, "Foo2", "Person2"));
 		});
 	}
 	

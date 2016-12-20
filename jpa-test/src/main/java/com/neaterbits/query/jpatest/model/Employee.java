@@ -13,7 +13,6 @@ public class Employee {
 	
 	private long id;
 	private Company company;
-	private Company company2;
 	private long personId;
 	
 	
@@ -47,16 +46,6 @@ public class Employee {
 		this.company = company;
 	}
 
-	@ManyToOne(fetch=FetchType.LAZY)
-	@JoinColumn(name="company_id2")
-	public Company getCompany2() {
-		return company;
-	}
-
-	public void setCompany2(Company company) {
-		this.company = company;
-	}
-	
 	@Column
 	public long getPersonId() {
 		return personId;

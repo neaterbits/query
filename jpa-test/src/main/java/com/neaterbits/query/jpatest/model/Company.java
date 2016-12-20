@@ -20,7 +20,6 @@ public class Company {
 	private BigDecimal stockPrice;
 	
 	private List<Employee> employees;
-	private List<Employee> employees2;
 	
 	public Company() {
 		
@@ -73,15 +72,6 @@ public class Company {
 		this.employees = employees;
 	}
 
-	@OneToMany(mappedBy="company2")
-	public List<Employee> getEmployees2() {
-		return employees2;
-	}
-
-	public void setEmployees2(List<Employee> employees2) {
-		this.employees2 = employees2;
-	}
-	
 	@Override
 	public int hashCode() {
 		final int prime = 31;

@@ -2,6 +2,7 @@ package com.neaterbits.query.sql.dsl.api;
 
 import java.lang.reflect.Member;
 import java.lang.reflect.Method;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
 
@@ -20,6 +21,7 @@ import com.neaterbits.query.sql.dsl.api.entity.Relation;
  */
 
 public final class QueryDataSourceJPA extends QueryDataSourceBase {
+	
 
 	private final EntityManager em;
 	private final JPACompiledQueryResultVisitor queryResultVisitor;
@@ -64,8 +66,10 @@ public final class QueryDataSourceJPA extends QueryDataSourceBase {
 		// Add all select sources
 		prepareSelectSources(sb, sources);
 
+		List<CompiledJoinConditionComparison> addJoinToWhere = new ArrayList<>();
+		
 		if (query.getJoins() != null) {
-			prepareJoins(sb, query.getJoins(), sources);
+			prepareJoins(sb, query.getJoins(), sources, addJoinToWhere);
 		}
 		
 		// Prepare conditions if present
@@ -75,9 +79,10 @@ public final class QueryDataSourceJPA extends QueryDataSourceBase {
 			
 			final ParamNameAssigner paramNameAssigner = new ParamNameAssigner();
 			final CompileConditionParam param = new CompileConditionParam(paramNameAssigner, em);
-			
-			final JPAOp op = prepareConditions(query.getConditions(), param);
-			
+			final CompiledConditions conditions = query.getConditions();
+
+			final JPAOp op = prepareConditions(conditions, param, addJoinToWhere);
+
 			if (param.hasUnresolved()) {
 				ret = new JPAHalfwayPreparedQuery(query, paramNameAssigner, sb.toString(), op, param.getConditions(), em);
 			}
@@ -90,7 +95,7 @@ public final class QueryDataSourceJPA extends QueryDataSourceBase {
 		else {
 			ret = makeComplete(query, null, sb);
 		}
-		
+
 		return ret;
 	}
 	
@@ -127,30 +132,37 @@ public final class QueryDataSourceJPA extends QueryDataSourceBase {
 		c.accept(columnName);
 	}
 	
-	private void prepareJoins(StringBuilder sb, CompiledJoins joins, CompiledSelectSources<CompiledSelectSource> sources) {
+	private void prepareJoins(StringBuilder sb, CompiledJoins joins, CompiledSelectSources<CompiledSelectSource> sources, List<CompiledJoinConditionComparison> addJoinToWhere) {
 		
 		int joinParamIdx = 0;
 		
 		for (CompiledJoin join : joins.getJoins()) {
-			switch (join.getJoinType()) {
+			joinParamIdx = addRelationFromMetaModel(sb, join, sources, joinParamIdx, addJoinToWhere);
+		}
+	}
+	
+	private void appendJoinStatement(StringBuilder sb, CompiledJoin join) {
+		switch (join.getJoinType()) {
+		
+		case LEFT:
+			sb.append(" LEFT JOIN ");
+			break;
 			
-			case LEFT:
-				sb.append(" LEFT JOIN ");
-				break;
-				
-			case INNER:
-				sb.append(" INNER JOIN ");
-				break;
-				
-			default:
-				throw new UnsupportedOperationException("Unknown join condition ");
-			}
-
-			joinParamIdx = addRelationFromMetaModel(sb, join, sources, joinParamIdx);
+		case INNER:
+			sb.append(" INNER JOIN ");
+			break;
+			
+		default:
+			throw new UnsupportedOperationException("Unknown join condition ");
 		}
 	}
 
-	private int addRelationFromMetaModel(StringBuilder sb, CompiledJoin join, CompiledSelectSources<CompiledSelectSource> sources, int joinParamIdx) {
+	private int addRelationFromMetaModel(
+			StringBuilder sb,
+			CompiledJoin join,
+			CompiledSelectSources<CompiledSelectSource> sources,
+			int joinParamIdx,
+			List<CompiledJoinConditionComparison> addJoinToWhere) {
 
 		// First must find the types for this join
 		final Class<?> leftType  = join.getLeft().getType();
@@ -165,6 +177,7 @@ public final class QueryDataSourceJPA extends QueryDataSourceBase {
 
 		// Look at conditions to see if there is a join on any of the conditions
 		if (join.getConditions().isEmpty()) {
+			appendJoinStatement(sb, join);
 			
 			// Must find exactly one relation from this one to other
 			final List<Relation> leftToRight =  entityModelUtil.findRelations(leftType, rightType);
@@ -190,13 +203,22 @@ public final class QueryDataSourceJPA extends QueryDataSourceBase {
 
 				if (condition instanceof CompiledJoinConditionComparison) {
 					
+					if (join.getJoinType() != JoinType.INNER) {
+						throw new IllegalStateException("Can only do inner joins when performin field comparison");
+					}
+
 					final CompiledJoinConditionComparison comparison = (CompiledJoinConditionComparison)condition;
+
+					// Joining two fields. TODO Which version of JPA are we?
+
+					// Add as where-queries for later on
 					
-					// Joining two fields
-					throw new UnsupportedOperationException("TODO: support field join");
-					
+					addJoinToWhere.add(comparison);
 				}
 				else if (condition instanceof CompiledJoinConditionOneToMany) {
+					
+					appendJoinStatement(sb, join);
+
 					final CompiledJoinConditionOneToMany oneToMany = (CompiledJoinConditionOneToMany)condition;
 
 					final CompiledGetter getter = oneToMany.getCollectionGetter();
@@ -208,10 +230,14 @@ public final class QueryDataSourceJPA extends QueryDataSourceBase {
 						throw new IllegalStateException("Failed to find relation for " + getter.getGetterMethod());
 					}
 					
+					final String entityAliasName = condition.getLeft().getName();
+					final String collectionAttrName = relation.getFrom().getAttribute().getName();
+					
+					
 					// Output JPA join on collection
 					// from name in from-clause
 					sb.append(" ")
-					  .append(entityName(oneToMany.getLeft().getType())).append(".").append(relation.getFrom().getAttribute().getName())
+					  .append(entityAliasName).append(".").append(collectionAttrName)
 					  .append(" ")
 					  .append(" join").append(joinParamIdx ++);
 
@@ -230,40 +256,68 @@ public final class QueryDataSourceJPA extends QueryDataSourceBase {
 	// should usually be just one
 	
 	private static final JPAConditionToOperatorVisitor conditionToOperatorVisitor = new JPAConditionToOperatorVisitor();
-	
-	private JPAOp prepareConditions(CompiledConditions conditions, CompileConditionParam param) {
 
-		boolean first = true;
-		
-		final String opString;
+	private JPAOp getJPAOp(CompiledConditions conditions) {
 		final JPAOp op;
 		
 		if (conditions instanceof CompiledConditionsAnd) {
-			opString = "AND";
 			op = JPAOp.AND;
 		}
 		else if (conditions instanceof CompiledConditionsOr) {
-			opString = "OR";
 			op = JPAOp.OR;
 		}
 		else if (conditions instanceof CompiledConditionsSingle) {
-			opString = null;
 			op = null;
 		}
 		else {
 			throw new IllegalStateException("unknown conditions " + conditions.getClass());
 		}
 
+		return op;
+	}
+	
+	private JPAOp prepareConditions(CompiledConditions conditions, CompileConditionParam param, List<CompiledJoinConditionComparison> joinComparisonConditions) {
+
+		
+		final JPAOp op = getJPAOp(conditions);
+		
+		String os = "WHERE";
+		
+		final boolean nestConditions =
+				
+				       JPAOp.OR.equals(op)
+					&& !conditions.getConditions().isEmpty()
+					&& !joinComparisonConditions.isEmpty();
+		
+		if (!joinComparisonConditions.isEmpty()) {
+			
+			for (CompiledJoinConditionComparison comparison : joinComparisonConditions) {
+				
+				if (os == null) {
+					throw new IllegalStateException("os == null");
+				}
+
+				param.append(" ").append(os).append(" ");
+
+				// Output join condition as regular join
+				prepareFieldReference(param::append, comparison.getLhs(), em);
+
+				param.append(" = ");
+
+				prepareFieldReference(param::append, comparison.getRhs(), em);
+
+				os = "AND";
+			}
+
+			if (nestConditions) {
+				os = "AND (";
+			}
+		}
+
 		for (CompiledCondition condition : conditions.getConditions()) {
 
-			final String os;
-
-			if (first) {
-				os = "WHERE";
-				first = false;
-			}
-			else {
-				os = opString;
+			if (os == null) {
+				throw new IllegalStateException("os == null");
 			}
 			
 			param.append(" ").append(os).append(" ");
@@ -276,6 +330,12 @@ public final class QueryDataSourceJPA extends QueryDataSourceBase {
 			
 			// Operator and value
 			condition.getOriginal().visit(conditionToOperatorVisitor, param);
+
+			os = op != null ? op.getOpString() : null;
+		}
+
+		if (nestConditions) {
+			param.append(" )");
 		}
 
 		return op;
