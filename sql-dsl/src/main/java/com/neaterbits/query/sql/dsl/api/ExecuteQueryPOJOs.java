@@ -58,7 +58,7 @@ final class ExecuteQueryPOJOs<QUERY> extends ExecutableQueryAggregateComputation
 		else {
 			// Loop over all clauses to test
 			
-			ret = loopNonJoined(query, numResultParts, input, numConditions, new ConditionValuesScratch());
+			ret = loopNonJoined(query, numResultParts, input, numConditions);
 		}
 
 		return ret;
@@ -104,7 +104,7 @@ final class ExecuteQueryPOJOs<QUERY> extends ExecutableQueryAggregateComputation
 		return new ArrayList<>();
 	}
 	
-	private Object computeResult(QUERY query, Object last, Object [] scratch) {
+	private Object computeResult(QUERY query, Object last, ExecuteQueryScratch scratch) {
 		
 		final QueryResultGathering gathering = q.getGathering(query);
 		
@@ -130,17 +130,17 @@ final class ExecuteQueryPOJOs<QUERY> extends ExecutableQueryAggregateComputation
 		return ret;
 	}
 	
-	private Object addToEntity(QUERY query, Object last, Object [] scratch) {
+	private Object addToEntity(QUERY query, Object last, ExecuteQueryScratch scratch) {
 		
 		final QueryResultDimension dimension = q.getDimension(query);
 
 		final Object ret;
 
-		if (scratch.length != 1) {
+		if (scratch.length() != 1) {
 			throw new IllegalArgumentException("Expected 1 scratch column");
 		}
 		
-		final Object instance = scratch[0];
+		final Object instance = scratch.get(0);
 		
 		if (instance == null) {
 			throw new IllegalStateException("Got 0 scrach instance");
@@ -177,7 +177,7 @@ final class ExecuteQueryPOJOs<QUERY> extends ExecutableQueryAggregateComputation
 		return last;
 	}
 
-	private Object addToMapped(QUERY query, Object last, Object [] scratch) {
+	private Object addToMapped(QUERY query, Object last, ExecuteQueryScratch scratch) {
 		
 		final QueryResultDimension dimension = q.getDimension(query);
 
@@ -202,7 +202,7 @@ final class ExecuteQueryPOJOs<QUERY> extends ExecutableQueryAggregateComputation
 		return ret;
 	}
 
-	private Object map(QUERY query, Object [] scratch) {
+	private Object map(QUERY query, ExecuteQueryScratch scratch) {
 		return ExecuteQueryUtil.mapToOneMappedInstance(q, query, scratch);
 	}
 
@@ -229,8 +229,7 @@ final class ExecuteQueryPOJOs<QUERY> extends ExecutableQueryAggregateComputation
 		final int numSelectSources = q.getSourceCount(query);
 		
 		// TODO: Handle 1 result part case? no need for array
-		final Object[] scratch = new Object[numResultParts];
-		final ConditionValuesScratch condValScratch = new ConditionValuesScratch();
+		final ExecuteQueryScratch scratch = new ExecuteQueryScratch(numResultParts);
 
 		final int joinCount = q.getJoinCount(query);
 		
@@ -240,7 +239,7 @@ final class ExecuteQueryPOJOs<QUERY> extends ExecutableQueryAggregateComputation
 
 		Object result = computeInitialResult(query);
 		
-		result = loopJoinedNoSets(query, numResultParts, input, 0, numSelectSources, scratch, numConditions, joinCount, result, condValScratch);
+		result = loopJoinedNoSets(query, numResultParts, input, 0, numSelectSources, scratch, numConditions, joinCount, result);
 		
 		return result;
 	}
@@ -249,7 +248,7 @@ final class ExecuteQueryPOJOs<QUERY> extends ExecutableQueryAggregateComputation
 	// Non-joined simple case. Means outer-join of all structures
 	private Object loopJoinedNoSets(QUERY query, int numResultParts,
 			ExecuteQueryPOJOsInput input, int sourceIdx, int numSources,
-			Object [] scratch, int numConditions, int numJoins, Object result, ConditionValuesScratch condValScratch) {
+			ExecuteQueryScratch scratch, int numConditions, int numJoins, Object result) {
 		
 		
 		final Collection<?> source = input.getPOJOs(sourceIdx);
@@ -259,9 +258,9 @@ final class ExecuteQueryPOJOs<QUERY> extends ExecutableQueryAggregateComputation
 			// Loop over conditions to see if should be added
 			
 			if (   joinMatches(query, sourceIdx, scratch, o, numJoins)
-			    && numConditions == 0 || matches(query, sourceIdx, o, numConditions, condValScratch)) {
+			    && numConditions == 0 || matches(query, sourceIdx, o, numConditions, scratch)) {
 				
-				scratch[sourceIdx] = o;
+				scratch.set(sourceIdx, o);
 
 				if (sourceIdx == numSources - 1) {
 					// emit scratch area
@@ -271,7 +270,7 @@ final class ExecuteQueryPOJOs<QUERY> extends ExecutableQueryAggregateComputation
 				else {
 					// Recurse to next source idx
 					loopNonJoined(query, numResultParts, input, sourceIdx + 1,
-							numSources, scratch, numConditions, result, condValScratch);
+							numSources, scratch, numConditions, result);
 				}
 			}
 		}
@@ -279,7 +278,7 @@ final class ExecuteQueryPOJOs<QUERY> extends ExecutableQueryAggregateComputation
 		return result;
 	}
 	
-	private boolean joinMatches(QUERY query, int thisSourceIdx, Object [] scratch, Object o, int numJoins) {
+	private boolean joinMatches(QUERY query, int thisSourceIdx, ExecuteQueryScratch scratch, Object o, int numJoins) {
 		
 		if (numJoins == 0) {
 			throw new IllegalArgumentException("numJoins == 0");
@@ -324,7 +323,7 @@ final class ExecuteQueryPOJOs<QUERY> extends ExecutableQueryAggregateComputation
 		return true;
 	}
 
-	private boolean joinConditionsMatch(QUERY query, int thisSourceIdx, Object thisInstance, int joinIdx, int joinLeftSourceIdx, int joinRightSourceIdx, Object [] scratch) {
+	private boolean joinConditionsMatch(QUERY query, int thisSourceIdx, Object thisInstance, int joinIdx, int joinLeftSourceIdx, int joinRightSourceIdx, ExecuteQueryScratch scratch) {
 
 		final int numJoinConditions = q.getJoinConditionCount(query, joinIdx);
 
@@ -350,10 +349,10 @@ final class ExecuteQueryPOJOs<QUERY> extends ExecutableQueryAggregateComputation
 				
 				if (thisSourceIdx == conditionLeftSourceIdx) {
 					left = thisInstance;
-					right = scratch[conditionRightSourceIdx];
+					right = scratch.get(conditionRightSourceIdx);
 				}
 				else if (thisSourceIdx == conditionRightSourceIdx) {
-					left = scratch[conditionLeftSourceIdx];
+					left = scratch.get(conditionLeftSourceIdx);
 					right = thisInstance;
 				}
 				else {
@@ -379,15 +378,15 @@ final class ExecuteQueryPOJOs<QUERY> extends ExecutableQueryAggregateComputation
 	// ************************ Non-joined loop ************************
 
 	// Non-joined simple case. Means outer-join of all structures
-	private Object loopNonJoined(QUERY query, int numResultParts, ExecuteQueryPOJOsInput input, int numConditions, ConditionValuesScratch condValScratch) {
+	private Object loopNonJoined(QUERY query, int numResultParts, ExecuteQueryPOJOsInput input, int numConditions) {
 		final int numSelectSources = q.getSourceCount(query);
 		
 		// TODO: Handle 1 result part case? no need for array
-		final Object[] scratch = new Object[numResultParts];
+		final ExecuteQueryScratch scratch = new ExecuteQueryScratch(numResultParts);
 
 		Object result = computeInitialResult(query);
 
-		final Object ret = loopNonJoined(query, numResultParts, input, 0, numSelectSources, scratch, numConditions, result, condValScratch);
+		final Object ret = loopNonJoined(query, numResultParts, input, 0, numSelectSources, scratch, numConditions, result);
 		
 		/*
 		// For each select source, loop over
@@ -409,7 +408,7 @@ final class ExecuteQueryPOJOs<QUERY> extends ExecutableQueryAggregateComputation
 	// Non-joined simple case. Means outer-join of all structures
 	private Object loopNonJoined(QUERY query, int numResultParts,
 			ExecuteQueryPOJOsInput input, int sourceIdx, int numSources,
-			Object [] scratch, int numConditions, Object result, ConditionValuesScratch condValScratch) {
+			ExecuteQueryScratch scratch, int numConditions, Object result) {
 		
 		
 		final Collection<?> source = input.getPOJOs(sourceIdx);
@@ -418,8 +417,8 @@ final class ExecuteQueryPOJOs<QUERY> extends ExecutableQueryAggregateComputation
 
 		for (Object o : source) {
 			// Loop over conditions to see if should be added
-			if (numConditions == 0 || matches(query, sourceIdx, o, numConditions, condValScratch)) {
-				scratch[sourceIdx] = o;
+			if (numConditions == 0 || matches(query, sourceIdx, o, numConditions, scratch)) {
+				scratch.set(sourceIdx, o);
 
 				if (sourceIdx == numSources - 1) {
 					// emit scratch area
@@ -429,7 +428,7 @@ final class ExecuteQueryPOJOs<QUERY> extends ExecutableQueryAggregateComputation
 				else {
 					// Recurse to next source idx
 					loopNonJoined(query, numResultParts, input, sourceIdx + 1,
-							numSources, scratch, numConditions, result, condValScratch);
+							numSources, scratch, numConditions, result);
 				}
 			}
 		}
@@ -500,5 +499,4 @@ final class ExecuteQueryPOJOs<QUERY> extends ExecutableQueryAggregateComputation
 		return false;
 	}
 
-	
 }

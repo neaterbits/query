@@ -1,6 +1,6 @@
 package com.neaterbits.query.sql.dsl.api;
 
-final class ConditionValuesScratch {
+class ConditionValuesScratch {
 
 	private ParamValueResolver collectedParams;
 	private Object lhs;

@@ -4,11 +4,11 @@ package com.neaterbits.query.sql.dsl.api;
 final class ExecuteQueryUtil {
 
 
-	static <QUERY> Object mapToOneMappedInstance(ExecutableQuery<QUERY> q, QUERY query, Object [] scratch) {
+	static <QUERY> Object mapToOneMappedInstance(ExecutableQuery<QUERY> q, QUERY query, ExecuteQueryScratch scratch) {
 		
 		final int mappingCount = q.getMappingCount(query);
 		
-		if (scratch.length != mappingCount) {
+		if (scratch.length() != mappingCount) {
 			throw new IllegalStateException("Mismatch between sratch bug and mapping count");
 		}
 		
@@ -22,7 +22,7 @@ final class ExecuteQueryUtil {
 			case 1:
 				// Just one field
 				// Get value
-				final Object singleValue = q.executeMappingGetter(query, 0, scratch[0]);
+				final Object singleValue = q.executeMappingGetter(query, 0, scratch.get(0));
 				
 				// Set value into result
 				q.executeMappingSetter(query, 0, result, singleValue);
@@ -30,8 +30,8 @@ final class ExecuteQueryUtil {
 				
 			default:
 				// More than one
-				for (int i = 0; i < scratch.length; ++ i) {
-					final Object value = q.executeMappingGetter(query, i, scratch[i]);
+				for (int i = 0; i < scratch.length(); ++ i) {
+					final Object value = q.executeMappingGetter(query, i, scratch.get(i));
 
 					q.executeMappingSetter(query, i, result, value);
 				}

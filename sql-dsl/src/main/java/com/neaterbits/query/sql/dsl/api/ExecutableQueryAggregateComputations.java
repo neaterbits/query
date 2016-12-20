@@ -108,14 +108,14 @@ abstract class ExecutableQueryAggregateComputations<QUERY> extends ExecuteQueryB
 		return ret;
 	}
 	
-	final Object addToAggregateResult(QUERY query, Object last, Object [] scratch) {
+	final Object addToAggregateResult(QUERY query, Object last, ExecuteQueryScratch scratch) {
 		final AggregateFunction aggregateFunction = q.getAggregateResultFunction(query);
 		
-		if (scratch.length != 1) {
+		if (scratch.length() != 1) {
 			throw new IllegalArgumentException("Expected exactly one scratch field");
 		}
 		
-		final Object value = q.getAggregateResultValue(query, scratch[0]);
+		final Object value = q.getAggregateResultValue(query, scratch.get(0));
 		
 		final Object ret;
 		
