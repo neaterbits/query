@@ -11,10 +11,7 @@ import static com.neaterbits.query.sql.dsl.api.Select.sum;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.math.BigDecimal;
-import java.util.Arrays;
-import java.util.List;
 import java.util.function.Consumer;
-import java.util.function.Function;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -27,10 +24,11 @@ import com.neaterbits.query.jpatest.model.Employee;
 import com.neaterbits.query.jpatest.model.Person;
 import com.neaterbits.query.jpatest.model.Role;
 import com.neaterbits.query.sql.dsl.api.helper.jpa.QueryTestDSJPA;
+import com.neaterbits.query.sql.dsl.api.testhelper.BaseSQLAPITest;
 import com.neaterbits.query.sql.dsl.api.testhelper.QueryTestDSBuilder;
 import com.neaterbits.query.sql.dsl.api.testhelper.QueryTestDSCheck;
 
-public class SQLAPITest {
+public class SQLAPITest extends BaseSQLAPITest {
 
 	private static final EntityManagerFactory emf = Persistence.createEntityManagerFactory("query-jpa-test");
 
@@ -147,54 +145,6 @@ public class SQLAPITest {
 	
 	private static QueryTestDSCheck store(Consumer<QueryTestDSBuilder> b) {
 		return new QueryTestDSJPA("query-jpa-test").store(b);
-	}
-	
-	
-	private <T> void checkSelectOneOrNull(QueryDataSource ds, T expected, SingleQuery<T> query, Function<PreparedQueryOps<T>, T> execute) {
-    			
-		PreparedQueryOps<T> ops = query.prepare(ds);
-
-		final T result = execute.apply(ops);
-    			
-        assertThat(query).isNotNull();
-    	
-    	if (expected == null) {
-    		assertThat(result).isNull();
-    	}
-    	else {
-    		assertThat(result).isNotSameAs(expected);
-    		assertThat(result).isEqualTo(expected);
-    	}
-	}
-
-	private <T> void checkSelectListUnordered(QueryDataSource ds, MultiQuery<T> query, Function<PreparedQueryOps<List<T>>, List<T>> execute, T ... expected) {
-
-		final List<T> ret = checkSelectListCommon(ds, query, execute, expected);
-		
-		// Check that contains the same number of items as the expected
-		
-		final CountMap<T> resultMap = new CountMap<>(ret);
-		
-		final CountMap<T> expectedMap = new CountMap<>(Arrays.asList(expected));
-		
-		assertThat(resultMap).isEqualTo(expectedMap);
-	}
-	
-	private <T> List<T> checkSelectListCommon(QueryDataSource ds, MultiQuery<T> query, Function<PreparedQueryOps<List<T>>, List<T>> execute, T ... expected) {
-		PreparedQueryOps<List<T>> ops = query.prepare(ds);
-
-		final List<T> result = execute.apply(ops);
-
-		for (int i = 0; i < result.size(); ++ i) {
-			System.out.println("result " + i + ": " + result.get(i));
-		}
-
-        assertThat(query).isNotNull();
-
-        assertThat(result).isNotNull();
-        assertThat(result.size()).isEqualTo(expected.length);
-		
-        return result;
 	}
 
 	@Test
@@ -420,7 +370,7 @@ public class SQLAPITest {
 	
 	        	.compile();
 	
-	        	ResultVO result = query.prepare(ds)
+	        	query.prepare(ds)
 	        	 .executeWith(param1).setTo(123)
 	        	         .and(param2).setTo(345)
 	        	  .get();
@@ -440,17 +390,5 @@ public class SQLAPITest {
     			em.close();
     		}
     	}
-    }
-
-    private static class Foo {
-    	private String test;
-
-		public String getTest() {
-			return test;
-		}
-
-		public void setTest(String test) {
-			this.test = test;
-		}
     }
 }

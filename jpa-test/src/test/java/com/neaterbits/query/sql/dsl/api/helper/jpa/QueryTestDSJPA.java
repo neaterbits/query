@@ -31,7 +31,6 @@ public final class QueryTestDSJPA extends QueryTestDSBasePersistent<EntityManage
 		return transaction;
 	}
 
-
 	@Override
 	protected void persist(EntityManager em, Object instance) {
 		em.persist(instance);
@@ -39,8 +38,9 @@ public final class QueryTestDSJPA extends QueryTestDSBasePersistent<EntityManage
 
 	@Override
 	protected void remove(EntityManager em, Object instance, Object pk) {
+
 		final Object found = em.find(instance.getClass(), pk);
-		
+
 		if (found == null) {
 			throw new IllegalStateException("found == null");
 		}
