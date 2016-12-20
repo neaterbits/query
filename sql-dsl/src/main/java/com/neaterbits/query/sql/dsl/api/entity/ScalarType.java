@@ -25,6 +25,7 @@ public enum ScalarType {
 	;
 
 	private static final Map<Class<?>, ScalarType> byType;
+	
 
 	static {
 
@@ -54,6 +55,10 @@ public enum ScalarType {
 		
 		this.primitiveClass = primitiveClass;
 		this.objectType = objectType;
+
+		if (!Comparable.class.isAssignableFrom(objectType)) {
+			throw new IllegalStateException("Type is not comparable: " + objectType);
+		}
 	}
 	
 	public static ScalarType fromType(Class<?> type) {

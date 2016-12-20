@@ -32,7 +32,7 @@ final class ExecuteQueryPOJOs<QUERY> extends ExecutableQueryAggregateComputation
 	*/
 
 	
-	Object execute(QUERY query, ExecuteQueryPOJOsInput input) {
+	Object execute(QUERY query, ExecuteQueryPOJOsInput input, ParamValueResolver collectedParams) {
 		
 		final int joinCount = q.getJoinCount(query);
 		
@@ -58,7 +58,7 @@ final class ExecuteQueryPOJOs<QUERY> extends ExecutableQueryAggregateComputation
 		else {
 			// Loop over all clauses to test
 			
-			ret = loopNonJoined(query, numResultParts, input, numConditions);
+			ret = loopNonJoined(query, numResultParts, input, numConditions, new ConditionValuesScratch());
 		}
 
 		return ret;
@@ -107,8 +107,6 @@ final class ExecuteQueryPOJOs<QUERY> extends ExecutableQueryAggregateComputation
 	private Object computeResult(QUERY query, Object last, Object [] scratch) {
 		
 		final QueryResultGathering gathering = q.getGathering(query);
-		
-		//fortsett: Kan i stedet kalle denne logikken fra inner-loop og så bare holde en variabel som sendes inn og returners for hver gang
 		
 		final Object ret;
 		
@@ -232,6 +230,7 @@ final class ExecuteQueryPOJOs<QUERY> extends ExecutableQueryAggregateComputation
 		
 		// TODO: Handle 1 result part case? no need for array
 		final Object[] scratch = new Object[numResultParts];
+		final ConditionValuesScratch condValScratch = new ConditionValuesScratch();
 
 		final int joinCount = q.getJoinCount(query);
 		
@@ -241,7 +240,7 @@ final class ExecuteQueryPOJOs<QUERY> extends ExecutableQueryAggregateComputation
 
 		Object result = computeInitialResult(query);
 		
-		result = loopJoinedNoSets(query, numResultParts, input, 0, numSelectSources, scratch, numConditions, joinCount, result);
+		result = loopJoinedNoSets(query, numResultParts, input, 0, numSelectSources, scratch, numConditions, joinCount, result, condValScratch);
 		
 		return result;
 	}
@@ -250,7 +249,7 @@ final class ExecuteQueryPOJOs<QUERY> extends ExecutableQueryAggregateComputation
 	// Non-joined simple case. Means outer-join of all structures
 	private Object loopJoinedNoSets(QUERY query, int numResultParts,
 			ExecuteQueryPOJOsInput input, int sourceIdx, int numSources,
-			Object [] scratch, int numConditions, int numJoins, Object result) {
+			Object [] scratch, int numConditions, int numJoins, Object result, ConditionValuesScratch condValScratch) {
 		
 		
 		final Collection<?> source = input.getPOJOs(sourceIdx);
@@ -260,7 +259,7 @@ final class ExecuteQueryPOJOs<QUERY> extends ExecutableQueryAggregateComputation
 			// Loop over conditions to see if should be added
 			
 			if (   joinMatches(query, sourceIdx, scratch, o, numJoins)
-			    && numConditions == 0 || matches(query, sourceIdx, o, numConditions)) {
+			    && numConditions == 0 || matches(query, sourceIdx, o, numConditions, condValScratch)) {
 				
 				scratch[sourceIdx] = o;
 
@@ -272,7 +271,7 @@ final class ExecuteQueryPOJOs<QUERY> extends ExecutableQueryAggregateComputation
 				else {
 					// Recurse to next source idx
 					loopNonJoined(query, numResultParts, input, sourceIdx + 1,
-							numSources, scratch, numConditions, result);
+							numSources, scratch, numConditions, result, condValScratch);
 				}
 			}
 		}
@@ -380,7 +379,7 @@ final class ExecuteQueryPOJOs<QUERY> extends ExecutableQueryAggregateComputation
 	// ************************ Non-joined loop ************************
 
 	// Non-joined simple case. Means outer-join of all structures
-	private Object loopNonJoined(QUERY query, int numResultParts, ExecuteQueryPOJOsInput input, int numConditions) {
+	private Object loopNonJoined(QUERY query, int numResultParts, ExecuteQueryPOJOsInput input, int numConditions, ConditionValuesScratch condValScratch) {
 		final int numSelectSources = q.getSourceCount(query);
 		
 		// TODO: Handle 1 result part case? no need for array
@@ -388,7 +387,7 @@ final class ExecuteQueryPOJOs<QUERY> extends ExecutableQueryAggregateComputation
 
 		Object result = computeInitialResult(query);
 
-		final Object ret = loopNonJoined(query, numResultParts, input, 0, numSelectSources, scratch, numConditions, result);
+		final Object ret = loopNonJoined(query, numResultParts, input, 0, numSelectSources, scratch, numConditions, result, condValScratch);
 		
 		/*
 		// For each select source, loop over
@@ -410,7 +409,7 @@ final class ExecuteQueryPOJOs<QUERY> extends ExecutableQueryAggregateComputation
 	// Non-joined simple case. Means outer-join of all structures
 	private Object loopNonJoined(QUERY query, int numResultParts,
 			ExecuteQueryPOJOsInput input, int sourceIdx, int numSources,
-			Object [] scratch, int numConditions, Object result) {
+			Object [] scratch, int numConditions, Object result, ConditionValuesScratch condValScratch) {
 		
 		
 		final Collection<?> source = input.getPOJOs(sourceIdx);
@@ -419,7 +418,7 @@ final class ExecuteQueryPOJOs<QUERY> extends ExecutableQueryAggregateComputation
 
 		for (Object o : source) {
 			// Loop over conditions to see if should be added
-			if (numConditions == 0 || matches(query, sourceIdx, o, numConditions)) {
+			if (numConditions == 0 || matches(query, sourceIdx, o, numConditions, condValScratch)) {
 				scratch[sourceIdx] = o;
 
 				if (sourceIdx == numSources - 1) {
@@ -430,7 +429,7 @@ final class ExecuteQueryPOJOs<QUERY> extends ExecutableQueryAggregateComputation
 				else {
 					// Recurse to next source idx
 					loopNonJoined(query, numResultParts, input, sourceIdx + 1,
-							numSources, scratch, numConditions, result);
+							numSources, scratch, numConditions, result, condValScratch);
 				}
 			}
 		}
@@ -439,7 +438,7 @@ final class ExecuteQueryPOJOs<QUERY> extends ExecutableQueryAggregateComputation
 	}
 	
 	
-	private boolean matches(QUERY query, int sourceIdx, Object instance, int numConditions) {
+	private boolean matches(QUERY query, int sourceIdx, Object instance, int numConditions, ConditionValuesScratch scratch) {
 		// Loop over conditions
 		final ConditionsType type = q.getConditionType(query);
 		
@@ -447,15 +446,15 @@ final class ExecuteQueryPOJOs<QUERY> extends ExecutableQueryAggregateComputation
 		
 		switch (type) {
 			case SINGLE:
-				ret = match(query, sourceIdx, instance, 0);
+				ret = match(query, sourceIdx, instance, 0, scratch);
 				break;
 				
 			case AND:
-				ret = matchAnd(query, sourceIdx, instance, numConditions);
+				ret = matchAnd(query, sourceIdx, instance, numConditions, scratch);
 				break;
 				
 			case OR:
-				ret = matchOr(query, sourceIdx, instance, numConditions);
+				ret = matchOr(query, sourceIdx, instance, numConditions, scratch);
 				break;
 				
 			default:
@@ -465,12 +464,12 @@ final class ExecuteQueryPOJOs<QUERY> extends ExecutableQueryAggregateComputation
 		return ret;
 	}
 	
-	private boolean match(QUERY query, int sourceIdx, Object instance, int conditionIdx) {
+	private boolean match(QUERY query, int sourceIdx, Object instance, int conditionIdx, ConditionValuesScratch scratch) {
 		
 		final boolean ret;
 		
 		if (q.getConditionSourceIdx(query, conditionIdx) == sourceIdx) {
-			ret = q.evaluateCondition(query, instance, conditionIdx);
+			ret = q.evaluateCondition(query, instance, conditionIdx, scratch);
 		}
 		else {
 			ret = true; // for a different source, return true
@@ -480,10 +479,10 @@ final class ExecuteQueryPOJOs<QUERY> extends ExecutableQueryAggregateComputation
 	}
 
 
-	private boolean matchAnd(QUERY query, int sourceIdx, Object instance, int numConditions) {
+	private boolean matchAnd(QUERY query, int sourceIdx, Object instance, int numConditions, ConditionValuesScratch scratch) {
 		
 		for (int conditionIdx = 0; conditionIdx < numConditions; ++ conditionIdx) {
-			if (!match(query, sourceIdx, instance, conditionIdx)) {
+			if (!match(query, sourceIdx, instance, conditionIdx, scratch)) {
 				return false;
 			}
 		}
@@ -491,9 +490,9 @@ final class ExecuteQueryPOJOs<QUERY> extends ExecutableQueryAggregateComputation
 		return true;
 	}
 
-	private boolean matchOr(QUERY query, int sourceIdx, Object instance, int numConditions) {
+	private boolean matchOr(QUERY query, int sourceIdx, Object instance, int numConditions, ConditionValuesScratch scratch) {
 		for (int conditionIdx = 0; conditionIdx < numConditions; ++ conditionIdx) {
-			if (match(query, sourceIdx, instance, conditionIdx)) {
+			if (match(query, sourceIdx, instance, conditionIdx, scratch)) {
 				return true;
 			}
 		}

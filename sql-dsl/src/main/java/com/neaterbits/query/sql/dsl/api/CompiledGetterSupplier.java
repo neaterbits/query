@@ -19,7 +19,10 @@ final class CompiledGetterSupplier extends CompiledGetter {
 
 	@Override
 	Object execute(Object instance) {
-		throw new UnsupportedOperationException("Base class calls reflection, TODO: more optimal way");
+		// TODO
+		System.err.println(getClass().getSimpleName() + ": Base class calls reflection, TODO: more optimal way");
+		
+		return super.execute(instance);
 	}
 
 	Supplier<?> getGetter() {

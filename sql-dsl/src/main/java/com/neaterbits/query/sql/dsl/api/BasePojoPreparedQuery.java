@@ -27,7 +27,6 @@ abstract class BasePojoPreparedQuery<QUERY> implements DSPreparedQuery {
 
 	@Override
 	public Object execute(ParamValueResolver collectedParams) {
-		// TODO Auto-generated method stub
-		return executor.execute(query, input);
+		return executor.execute(query, input, collectedParams);
 	}
 }

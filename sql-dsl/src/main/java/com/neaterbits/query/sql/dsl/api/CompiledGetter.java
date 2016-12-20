@@ -6,15 +6,6 @@ import java.lang.reflect.Method;
 abstract class CompiledGetter {
 
 	private final Method getterMethod;
-
-	// TODO: Call lambda
-	Object execute(Object instance) {
-		try {
-			return getterMethod.invoke(instance);
-		} catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException ex) {
-			throw new IllegalStateException("Failed to invoke getter", ex);
-		}
-	}
 	
 	CompiledGetter(Method getterMethod) {
 		
@@ -25,6 +16,20 @@ abstract class CompiledGetter {
 		this.getterMethod = getterMethod;
 	}
 
+	// TODO: Call lambda
+	Object execute(Object instance) {
+
+		final Object ret;
+
+		try {
+			ret = getterMethod.invoke(instance);
+		} catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException ex) {
+			throw new IllegalStateException("Failed to invoke getter on" + instance.getClass().getName() + ": " + getterMethod, ex);
+		}
+
+		return ret;
+	}
+	
 	final Method getGetterMethod() {
 		return getterMethod;
 	}

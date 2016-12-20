@@ -21,18 +21,23 @@ final class ExecuteQueryUtil {
 
 			case 1:
 				// Just one field
-				q.executeMappingSetter(query, 0, result, scratch[0]);
+				// Get value
+				final Object singleValue = q.executeMappingGetter(query, 0, scratch[0]);
+				
+				// Set value into result
+				q.executeMappingSetter(query, 0, result, singleValue);
 				break;
 				
 			default:
-				// More tha one
+				// More than one
 				for (int i = 0; i < scratch.length; ++ i) {
-					q.executeMappingSetter(query, 0, result, scratch[i]);
+					final Object value = q.executeMappingGetter(query, i, scratch[i]);
+
+					q.executeMappingSetter(query, i, result, value);
 				}
 				break;
 		}
 		
 		return result;
 	}
-	
 }

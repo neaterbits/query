@@ -1,9 +1,15 @@
 package com.neaterbits.query.sql.dsl.api;
 
+import java.lang.reflect.Method;
+
+import com.neaterbits.query.sql.dsl.api.entity.ScalarType;
+
 final class CompiledCondition {
 	private final ConditionImpl original;
 	private final CompiledFieldReference lhs;
 	private final ConditionValueImpl value;
+	
+	private final ScalarType scalarType; // All conditions are scalars
 	
 	CompiledCondition(ConditionImpl original, CompiledFieldReference lhs, ConditionValueImpl value) {
 		
@@ -18,6 +24,15 @@ final class CompiledCondition {
 		this.original = original;
 		this.lhs = lhs;
 		this.value = value;
+
+		final Method getterMethod = lhs.getGetter().getGetterMethod();
+		final Class<?> type = getterMethod.getReturnType();
+
+		this.scalarType = ScalarType.fromType(type);
+
+		if (scalarType == null) {
+			throw new IllegalArgumentException("Unable to get scalar type from " + getterMethod);
+		}
 	}
 
 	ConditionImpl getOriginal() {
@@ -36,7 +51,7 @@ final class CompiledCondition {
 		return value;
 	}
 
-	boolean evaluate(Object instance) {
-		throw new UnsupportedOperationException("TODO");
+	ScalarType getScalarType() {
+		return scalarType;
 	}
 }

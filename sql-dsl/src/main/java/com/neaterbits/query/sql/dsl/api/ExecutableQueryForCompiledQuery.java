@@ -1,5 +1,8 @@
 package com.neaterbits.query.sql.dsl.api;
 
+
+import com.neaterbits.query.sql.dsl.api.entity.ScalarType;
+
 final class ExecutableQueryForCompiledQuery implements ExecutableQuery<CompiledQuery> {
 
 	@Override
@@ -62,7 +65,9 @@ final class ExecutableQueryForCompiledQuery implements ExecutableQuery<CompiledQ
 	public Object executeMappingGetter(CompiledQuery query, int mappingIdx, Object instance) {
 		final CompiledQueryResultMapped mapped = (CompiledQueryResultMapped)query.getResult();
 		
-		return mapped.getMappings().getMappings().get(mappingIdx).executeGetter(instance);
+		final CompiledMapping mapping = mapped.getMappings().getMappings().get(mappingIdx);
+		
+		return mapping.executeGetter(instance);
 	}
 
 	@Override
@@ -168,8 +173,68 @@ final class ExecutableQueryForCompiledQuery implements ExecutableQuery<CompiledQ
 	}
 
 	@Override
-	public boolean evaluateCondition(CompiledQuery query, Object instance, int conditionIdx) {
-		return query.getConditions().getConditions().get(conditionIdx).evaluate(instance);
+	public boolean evaluateCondition(CompiledQuery query, Object instance, int conditionIdx, ConditionValuesScratch scratch) {
+		
+		final CompiledCondition condition = query.getConditions().getConditions().get(conditionIdx);
+		
+		// Must evaluate condition with params.
+		// First figure lhs
+		final Object lhs  = condition.getLhs().getValue(instance);
+
+		// Then figure rhs
+		final Object rhs = condition.getValue().visit(valueVisitor, scratch.getCollectedParams());
+		
+		// At last, evaluate
+		scratch.init(lhs, rhs);
+		
+		final ScalarType scalarType = condition.getScalarType();
+		
+		final boolean ret;
+		
+		if (scalarType == ScalarType.STRING) {
+			ret = condition.getOriginal().visit(stringEvaluator, scratch);
+		}
+		else {
+			ret = condition.getOriginal().visit(comparableEvaluator, scratch);
+		}
+
+		return ret;
 	}
 
+	private static final ConditionEvaluatorComparable comparableEvaluator = new ConditionEvaluatorComparable();
+	private static final ConditionEvaluatorComparableString stringEvaluator = new ConditionEvaluatorComparableString();
+	
+	
+	private static final ConditionValueVisitor<ParamValueResolver, Object> valueVisitor = new ConditionValueVisitor<ParamValueResolver, Object>() {
+		
+		@Override
+		public Object onParam(ConditionValueParamImpl value, ParamValueResolver param) {
+			return param.resolveParam(value.getParam());
+		}
+		
+		@Override
+		public Object onLiteralString(ConditionValueLiteralStringImpl value, ParamValueResolver param) {
+			return value.getLiteral();
+		}
+		
+		@Override
+		public Object onLiteralAny(ConditionValueLiteralAnyImpl<?> value, ParamValueResolver param) {
+			return value.getLiteral();
+		}
+		
+		@Override
+		public Object onGetter(ConditionValueGetterImpl value, ParamValueResolver param) {
+			throw new UnsupportedOperationException("Should only call getters in joins");
+		}
+		
+		@Override
+		public Object onFieldReference(ConditionValueFieldRerefenceImpl value, ParamValueResolver param) {
+			throw new UnsupportedOperationException("Should only call getters in joins");
+		}
+		
+		@Override
+		public Object onArray(ConditionValueArrayImpl value, ParamValueResolver param) {
+			return value.getValues();
+		}
+	};
 }

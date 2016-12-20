@@ -142,6 +142,6 @@ interface ExecutableQuery<QUERY> {
 	
 	int getConditionSourceIdx(QUERY query, int conditionIdx);
 
-	boolean evaluateCondition(QUERY query, Object instance, int conditionIdx);
+	boolean evaluateCondition(QUERY query, Object instance, int conditionIdx, ConditionValuesScratch scratch);
 	
 }
