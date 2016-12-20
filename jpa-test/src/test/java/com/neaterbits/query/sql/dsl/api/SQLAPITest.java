@@ -27,11 +27,22 @@ import com.neaterbits.query.sql.dsl.api.helper.jpa.QueryTestDSJPA;
 import com.neaterbits.query.sql.dsl.api.testhelper.BaseSQLAPITest;
 import com.neaterbits.query.sql.dsl.api.testhelper.QueryTestDSBuilder;
 import com.neaterbits.query.sql.dsl.api.testhelper.QueryTestDSCheck;
+import com.neaterbits.query.sql.dsl.api.testhelper.QueryTestDSCombined;
 
 public class SQLAPITest extends BaseSQLAPITest {
 
 	private static final EntityManagerFactory emf = Persistence.createEntityManagerFactory("query-jpa-test");
 
+	private static QueryTestDSCheck store(Consumer<QueryTestDSBuilder> b) {
+		
+		return new QueryTestDSCombined(
+				//() -> new QueryTestDSCombined(),
+				() -> new QueryTestDSJPA("query-jpa-test"))
+				
+				.store(b);
+	}
+
+	
 	@Test
     public void testTableBased() {
 
@@ -143,10 +154,6 @@ public class SQLAPITest extends BaseSQLAPITest {
 	}
 	
 	
-	private static QueryTestDSCheck store(Consumer<QueryTestDSBuilder> b) {
-		return new QueryTestDSJPA("query-jpa-test").store(b);
-	}
-
 	@Test
     public void testAliasBased() {
     	

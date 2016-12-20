@@ -120,5 +120,4 @@ public abstract class QueryTestDSBasePersistent<CTX, ENTITIES, TRANSACTION> exte
 			}
 		}
 	}
-	
 }
