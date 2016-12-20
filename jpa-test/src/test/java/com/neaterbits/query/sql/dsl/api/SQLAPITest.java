@@ -23,6 +23,7 @@ import com.neaterbits.query.jpatest.model.Company;
 import com.neaterbits.query.jpatest.model.Employee;
 import com.neaterbits.query.jpatest.model.Person;
 import com.neaterbits.query.jpatest.model.Role;
+import com.neaterbits.query.sql.dsl.api.entity.QueryMetaModel;
 import com.neaterbits.query.sql.dsl.api.helper.jpa.QueryTestDSJPA;
 import com.neaterbits.query.sql.dsl.api.testhelper.BaseSQLAPITest;
 import com.neaterbits.query.sql.dsl.api.testhelper.QueryTestDSBuilder;
@@ -33,11 +34,13 @@ import com.neaterbits.query.sql.dsl.api.testhelper.QueryTestDSInMemory;
 public class SQLAPITest extends BaseSQLAPITest {
 
 	private static final EntityManagerFactory emf = Persistence.createEntityManagerFactory("query-jpa-test");
+	
+	private static final QueryMetaModel jpaQueryMetaModel = new JPAQueryMetaModel(emf.getMetamodel());
 
 	private static QueryTestDSCheck store(Consumer<QueryTestDSBuilder> b) {
 		
 		return new QueryTestDSCombined(
-				() -> new QueryTestDSInMemory(),
+				() -> new QueryTestDSInMemory(jpaQueryMetaModel),
 				() -> new QueryTestDSJPA("query-jpa-test"))
 				
 				.store(b);
@@ -195,83 +198,6 @@ public class SQLAPITest extends BaseSQLAPITest {
 	}
 	
 
-	static class CompanyPersonResultVO {
-		private Long companyId;
-		private Long personId;
-		private String firstName;
-		private String lastName;
-		
-		CompanyPersonResultVO() {
-			
-		}
-		
-		CompanyPersonResultVO(long companyId, long personId, String firstName, String lastName) {
-			this.companyId = companyId;
-			this.personId = personId;
-			this.firstName = firstName;
-			this.lastName = lastName;
-		}
-
-		public void setCompanyId(Long companyId) {
-			this.companyId = companyId;
-		}
-
-		public void setPersonId(Long personId) {
-			this.personId = personId;
-		}
-
-		public void setFirstName(String firstName) {
-			this.firstName = firstName;
-		}
-
-		public void setLastName(String lastName) {
-			this.lastName = lastName;
-		}
-
-		@Override
-		public int hashCode() {
-			final int prime = 31;
-			int result = 1;
-			result = prime * result + (int) (companyId ^ (companyId >>> 32));
-			result = prime * result + ((firstName == null) ? 0 : firstName.hashCode());
-			result = prime * result + ((lastName == null) ? 0 : lastName.hashCode());
-			result = prime * result + (int) (personId ^ (personId >>> 32));
-			return result;
-		}
-
-		@Override
-		public boolean equals(Object obj) {
-			if (this == obj)
-				return true;
-			if (obj == null)
-				return false;
-			if (getClass() != obj.getClass())
-				return false;
-			CompanyPersonResultVO other = (CompanyPersonResultVO) obj;
-			if (companyId != other.companyId)
-				return false;
-			if (firstName == null) {
-				if (other.firstName != null)
-					return false;
-			} else if (!firstName.equals(other.firstName))
-				return false;
-			if (lastName == null) {
-				if (other.lastName != null)
-					return false;
-			} else if (!lastName.equals(other.lastName))
-				return false;
-			if (personId != other.personId)
-				return false;
-			return true;
-		}
-
-		@Override
-		public String toString() {
-			return "CompanyPersonResultVO [companyId=" + companyId + ", personId=" + personId + ", firstName="
-					+ firstName + ", lastName=" + lastName + "]";
-		}
-	}
-	
 	@Test
     public void testAliasBasedJoin() {
     	

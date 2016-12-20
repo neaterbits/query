@@ -30,6 +30,4 @@ abstract class CompiledJoinCondition {
 	TypeMapSource getRight() {
 		return right;
 	}
-
-	abstract boolean evaluate(Object instance1, Object instance2);
 }

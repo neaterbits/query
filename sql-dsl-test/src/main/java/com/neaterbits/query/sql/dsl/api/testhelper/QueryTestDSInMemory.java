@@ -5,10 +5,16 @@ import java.util.function.Consumer;
 
 import com.neaterbits.query.sql.dsl.api.QueryDataSource;
 import com.neaterbits.query.sql.dsl.api.QueryDataSourcePojoWithList;
+import com.neaterbits.query.sql.dsl.api.entity.QueryMetaModel;
 
 public final class QueryTestDSInMemory extends QueryTestDS {
 
+	private final QueryMetaModel queryMetaModel;
 	
+	public QueryTestDSInMemory(QueryMetaModel queryMetaModel) {
+		this.queryMetaModel = queryMetaModel;
+	}
+
 	@Override
 	public QueryTestDSCheck store(Consumer<QueryTestDSBuilder> dsBuilder) {
 
@@ -29,7 +35,7 @@ public final class QueryTestDSInMemory extends QueryTestDS {
 		@Override
 		public void check(Consumer<QueryDataSource> testBuilder) {
 
-			final QueryDataSource dataSource = new QueryDataSourcePojoWithList(instances);
+			final QueryDataSource dataSource = new QueryDataSourcePojoWithList(instances, queryMetaModel);
 
 			testBuilder.accept(dataSource);
 		}

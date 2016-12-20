@@ -391,8 +391,6 @@ final class CompiledQuery {
 		return ret;
 	}
 	
-	
-	
 	private static CompiledConditions compileConditions(ClauseCollectorImpl clauses, CompiledSelectSources<?> sources, CompiledGetterSetterCache cache)
 		throws CompileException {
 
@@ -420,7 +418,6 @@ final class CompiledQuery {
 			final Class<?> clauseClass = list.get(1).getClause().getClass();
 			final List<CompiledCondition> conditions = new ArrayList<>(num);
 
-			
 			conditions.add(compileCondition(list.get(0).getCondition(), sources, cache));
 
 			for (int i = 1; i < num; ++ i) {

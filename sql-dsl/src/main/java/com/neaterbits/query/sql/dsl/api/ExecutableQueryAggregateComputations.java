@@ -111,7 +111,7 @@ abstract class ExecutableQueryAggregateComputations<QUERY> extends ExecuteQueryB
 	final Object addToAggregateResult(QUERY query, Object last, ExecuteQueryScratch scratch) {
 		final AggregateFunction aggregateFunction = q.getAggregateResultFunction(query);
 		
-		if (scratch.length() != 1) {
+		if (!scratch.numResultPartsIs(1)) {
 			throw new IllegalArgumentException("Expected exactly one scratch field");
 		}
 		

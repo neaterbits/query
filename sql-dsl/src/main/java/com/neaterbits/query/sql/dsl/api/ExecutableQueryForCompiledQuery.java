@@ -1,6 +1,13 @@
 package com.neaterbits.query.sql.dsl.api;
 
 
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Member;
+import java.lang.reflect.Method;
+
+import com.neaterbits.query.sql.dsl.api.entity.IEntityAttribute;
+import com.neaterbits.query.sql.dsl.api.entity.OneToManyJoinConditionResolver;
+import com.neaterbits.query.sql.dsl.api.entity.Relation;
 import com.neaterbits.query.sql.dsl.api.entity.ScalarType;
 
 final class ExecutableQueryForCompiledQuery implements ExecutableQuery<CompiledQuery> {
@@ -12,7 +19,6 @@ final class ExecutableQueryForCompiledQuery implements ExecutableQuery<CompiledQ
 	
 	@Override
 	public QueryResultGathering getGathering(CompiledQuery query) {
-		
 		return query.getGathering();
 	}
 
@@ -20,7 +26,6 @@ final class ExecutableQueryForCompiledQuery implements ExecutableQuery<CompiledQ
 	public AggregateFunction getAggregateResultFunction(CompiledQuery query) {
 		return ((QueryResultAggregate)query.getResult().getOriginal()).getAggregateFunction();
 	}
-	
 	
 	@Override
 	public NumericType getAggregateNumericType(CompiledQuery query) {
@@ -44,6 +49,13 @@ final class ExecutableQueryForCompiledQuery implements ExecutableQuery<CompiledQ
 		final CompiledQueryResultMapped mapped = (CompiledQueryResultMapped)query.getResult();
 		
 		return mapped.getMappings().getMappings().size();
+	}
+
+	@Override
+	public int getMappingSourceIdx(CompiledQuery query, int mappingIdx) {
+		final CompiledQueryResultMapped mapped = (CompiledQueryResultMapped)query.getResult();
+
+		return mapped.getMappings().getMappings().get(mappingIdx).getField().getSource().getIdx();
 	}
 
 	@Override
@@ -91,23 +103,23 @@ final class ExecutableQueryForCompiledQuery implements ExecutableQuery<CompiledQ
 
 	@Override
 	public JoinType getJoinType(CompiledQuery query, int joinIdx) {
-		return query.getJoins().getJoins().get(joinIdx).getJoinType();
+		return getJoin(query, joinIdx).getJoinType();
 	}
 
 	@Override
 	public int getJoinLeftSourceIdx(CompiledQuery query, int joinIdx) {
-		return query.getJoins().getJoins().get(joinIdx).getLeft().getIdx();
+		return getJoin(query, joinIdx).getLeft().getIdx();
 	}
 
 	@Override
 	public int getJoinRightSourceIdx(CompiledQuery query, int joinIdx) {
-		return query.getJoins().getJoins().get(joinIdx).getRight().getIdx();
+		return getJoin(query, joinIdx).getRight().getIdx();
 	}
 
 	
 	@Override
 	public int getJoinConditionCount(CompiledQuery query, int joinIdx) {
-		return query.getJoins().getJoins().size();
+		return getJoin(query, joinIdx).getConditions().size();
 	}
 
 	/*
@@ -118,19 +130,125 @@ final class ExecutableQueryForCompiledQuery implements ExecutableQuery<CompiledQ
 	}
 	*/
 
+	
 	@Override
 	public int getJoinConditionLeftSourceIdx(CompiledQuery query, int joinIdx, int conditionIdx) {
-		return query.getJoins().getJoins().get(joinIdx).getConditions().get(conditionIdx).getLeft().getIdx();
+
+		return getJoin(query, joinIdx).getConditions().get(conditionIdx).getLeft().getIdx();
 	}
 
 	@Override
 	public int getJoinConditionRightSourceIdx(CompiledQuery query, int joinIdx, int conditionIdx) {
-		return query.getJoins().getJoins().get(joinIdx).getConditions().get(conditionIdx).getRight().getIdx();
+
+		return getJoin(query, joinIdx).getConditions().get(conditionIdx).getRight().getIdx();
+	}
+	
+	private CompiledJoin getJoin(CompiledQuery query, int joinIdx) {
+		final CompiledJoin join = query.getJoins().getJoins().get(joinIdx);
+
+		return join;
 	}
 
 	@Override
-	public boolean evaluateJoinCondition(CompiledQuery query, int joinIdx, Object instance1, Object instance2, int conditionIdx) {
-		return query.getJoins().getJoins().get(joinIdx).getConditions().get(conditionIdx).evaluate(instance1, instance2);
+	public boolean evaluateJoinCondition(CompiledQuery query, int joinIdx, Object instance1, Object instance2, int conditionIdx, OneToManyJoinConditionResolver oneToManyResolver) {
+		
+		final CompiledJoinCondition condition = query.getJoins().getJoins().get(joinIdx).getConditions().get(conditionIdx);
+		
+		// Evaluate now
+		
+		final boolean ret;
+		
+		if (condition instanceof CompiledJoinConditionComparison) {
+			ret = evaluateJoinConditionComparison((CompiledJoinConditionComparison)condition, instance1, instance2);
+		}
+		else if (condition instanceof CompiledJoinConditionOneToMany) {
+			// Check whether we are able to evaluate this using direct-mapping
+			ret = evaluateJoinConditionOneToMany((CompiledJoinConditionOneToMany)condition, instance1, instance2, oneToManyResolver);
+		}
+		else {
+			throw new UnsupportedOperationException("Unknown condition type " + condition.getClass().getSimpleName());
+		}
+		
+		return ret;
+	}
+
+	private boolean evaluateJoinConditionOneToMany(CompiledJoinConditionOneToMany condition, Object instance1, Object instance2, OneToManyJoinConditionResolver oneToManyResolver) {
+		
+		final boolean ret;
+		
+		if (oneToManyResolver != null) {
+
+			final Class<?> fromType   = condition.getLeft().getType();
+			final Class<?> toType     = condition.getRight().getType();
+			final Method getterMethod = condition.getCollectionGetter().getGetterMethod();
+			
+			final Relation resolved = oneToManyResolver.resolveOneToMany(
+					fromType,
+					toType,
+					getterMethod);
+			
+			if (resolved == null) {
+				throw new IllegalStateException("Failed to resolved getter " + getterMethod + " to " + toType + " from " + fromType);
+			}
+
+			// Look at resolved to evaluate
+			final Object toVal = getValue(instance2, resolved.getTo().getAttribute());
+
+			// True if points back to same instance
+			// TODO: Check for equality instead of identity? But we do not have ID field
+			ret = toVal == instance1;
+		}
+		else {
+			throw new UnsupportedOperationException("TODO - resolve directly on lists, ie. without using resolving");
+		}
+
+		return ret;
+	}
+
+	private Object getValue(Object instance, IEntityAttribute attribute) {
+
+		final Member member = attribute.getJavaMember();
+		
+		final Object ret;
+		
+		if (member instanceof Method) {
+			try {
+				ret = ((Method)member).invoke(instance);
+			} catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException ex) {
+				throw new IllegalStateException("Failed to invoke getter", ex);
+			}
+		}
+		else {
+			throw new UnsupportedOperationException("Only methods supported for now");
+		}
+		
+		return ret;
+	}
+	
+	
+	private static boolean evaluateJoinConditionComparison(CompiledJoinConditionComparison comparison, Object instance1, Object instance2) {
+
+		final Object lhs = comparison.getLhs().getValue(instance1);
+		final Object rhs = comparison.getRhs().getValue(instance2);
+
+		return evaluateComparables(lhs, rhs);
+	}
+	
+	@SuppressWarnings("unchecked")
+	private static boolean evaluateComparables(Object lhs, Object rhs) {
+		final boolean ret;
+		
+		if (lhs == null) {
+			ret = rhs == null;
+		}
+		else if (rhs == null) {
+			ret = true;
+		}
+		else {
+			ret = ((Comparable<Object>)lhs).compareTo((Comparable<Object>)rhs) == 0;
+		}
+		
+		return ret;
 	}
 
 	@Override

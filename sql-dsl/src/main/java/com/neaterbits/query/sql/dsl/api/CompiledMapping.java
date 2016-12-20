@@ -5,7 +5,6 @@ final class CompiledMapping {
 	private final CompiledFieldReference field;
 	private final CompiledSetter setter;
 	
-	
 	CompiledMapping(CompiledFieldReference field, CompiledSetter setter) {
 		
 		if (field == null) {

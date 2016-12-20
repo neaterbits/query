@@ -55,5 +55,11 @@ final class CountMap<T> {
 			return false;
 		return true;
 	}
+
+
+	@Override
+	public String toString() {
+		return map.toString();
+	}
 }
 

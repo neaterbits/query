@@ -1,5 +1,7 @@
 package com.neaterbits.query.sql.dsl.api;
 
+import com.neaterbits.query.sql.dsl.api.entity.OneToManyJoinConditionResolver;
+
 /**
  * Interface access to query, so that can run in an abstracted way
  * and only operating on one interface, completely hiding
@@ -62,6 +64,9 @@ interface ExecutableQuery<QUERY> {
 	 */
 	
 	int getMappingCount(QUERY query);
+	
+	int getMappingSourceIdx(QUERY query, int mappingIdx);
+	
 
 	Object createMappedInstance(QUERY query);
 
@@ -123,7 +128,7 @@ interface ExecutableQuery<QUERY> {
 	int getJoinConditionLeftSourceIdx(QUERY query, int joinIdx, int conditionIdx);
 	int getJoinConditionRightSourceIdx(QUERY query, int joinIdx, int conditionIdx);
 	
-	boolean evaluateJoinCondition(QUERY query, int joinIdx, Object instance1, Object instance2, int conditionIdx);
+	boolean evaluateJoinCondition(QUERY query, int joinIdx, Object instance1, Object instance2, int conditionIdx, OneToManyJoinConditionResolver oneToManyResolver);
 	
 	
 	/**

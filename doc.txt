@@ -472,3 +472,34 @@ Siden vi ikke joiner på felter. Men burde kunne custom-joine også som vi uttry
 		}
 
 
+
+----
+
+
+Input API for resolve ?
+
+ * Må scanne etter IDer for join-en basert på meta-modell.
+ * hvis ikke finnes meta-modell så må vi se på innhold i selve listene og joine mot de? Dvs alle som har liste-element som inneholder slik-og-slik.
+
+Hvordan oppgi meta-modell? Bør være noe i data-sourcen til POJOen i prepare?
+
+Må ha et sette med metadata-scannes som legges inn.
+Dette burde egentlig være i query-contexten som opprettes et annet sted.
+
+select.first()
+
+select = Query.pojo();
+
+select = Query.universal();
+
+
+
+
+
+
+
+Hvordan joine tilbake på innholdet? Må se på kolonna som har et gitt innhold.
+Men gir dette egentlig mening? Er bare join tilbake på instansen. Så må finne den som inneholder link til instansen
+		og sammenligne identity eller bare IDen.
+		Om ikke er hverken i liste eller reverse så kan vi ikke joine.
+

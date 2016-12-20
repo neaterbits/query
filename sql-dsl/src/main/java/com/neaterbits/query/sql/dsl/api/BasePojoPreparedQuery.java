@@ -1,12 +1,16 @@
 package com.neaterbits.query.sql.dsl.api;
 
+import com.neaterbits.query.sql.dsl.api.entity.QueryMetaModel;
+
 abstract class BasePojoPreparedQuery<QUERY> implements DSPreparedQuery {
 
 	private final QUERY query;
 	private final ExecuteQueryPOJOs<QUERY> executor;
 	private final ExecuteQueryPOJOsInput input;
+	private final QueryMetaModel queryMetaModel;
 	
-	BasePojoPreparedQuery(QUERY query, ExecuteQueryPOJOs<QUERY> executor, ExecuteQueryPOJOsInput input) {
+	
+	BasePojoPreparedQuery(QUERY query, ExecuteQueryPOJOs<QUERY> executor, ExecuteQueryPOJOsInput input, QueryMetaModel queryMetaModel) {
 		
 		if (query == null) {
 			throw new IllegalArgumentException("query == null");
@@ -23,10 +27,11 @@ abstract class BasePojoPreparedQuery<QUERY> implements DSPreparedQuery {
 		this.query = query;
 		this.executor = executor;
 		this.input = input;
+		this.queryMetaModel = queryMetaModel;
 	}
 
 	@Override
 	public Object execute(ParamValueResolver collectedParams) {
-		return executor.execute(query, input, collectedParams);
+		return executor.execute(query, input, collectedParams, queryMetaModel);
 	}
 }

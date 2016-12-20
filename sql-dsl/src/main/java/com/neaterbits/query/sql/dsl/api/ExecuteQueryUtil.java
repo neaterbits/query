@@ -3,18 +3,16 @@ package com.neaterbits.query.sql.dsl.api;
 
 final class ExecuteQueryUtil {
 
-
 	static <QUERY> Object mapToOneMappedInstance(ExecutableQuery<QUERY> q, QUERY query, ExecuteQueryScratch scratch) {
 		
 		final int mappingCount = q.getMappingCount(query);
-		
-		if (scratch.length() != mappingCount) {
+
+		if (!scratch.numResultPartsIs(mappingCount)) {
 			throw new IllegalStateException("Mismatch between sratch bug and mapping count");
 		}
-		
+
 		final Object result = q.createMappedInstance(query);
-		
-		
+
 		switch (mappingCount) {
 			case 0:
 				throw new IllegalStateException("empty mappings");
@@ -23,24 +21,27 @@ final class ExecuteQueryUtil {
 				// Just one field
 				// Get value
 				final Object singleValue = q.executeMappingGetter(query, 0, scratch.get(0));
-				
+
 				// Set value into result
 				q.executeMappingSetter(query, 0, result, singleValue);
 				break;
 				
 			default:
 				// More than one
-				for (int i = 0; i < scratch.length(); ++ i) {
+				for (int mappingIdx = 0; mappingIdx < mappingCount; ++ mappingIdx) {
 					
-					final Object instance = scratch.get(i);
+					final int sourceIdx = q.getMappingSourceIdx(query, mappingIdx);
+					
+					// Must look up from scratch-buffer on source idx
+					final Object instance = scratch.get(sourceIdx);
 					
 					try {
-					final Object value = q.executeMappingGetter(query, i, instance);
+						final Object value = q.executeMappingGetter(query, mappingIdx, instance);
 
-					q.executeMappingSetter(query, i, result, value);
+						q.executeMappingSetter(query, mappingIdx, result, value);
 					}
 					catch (RuntimeException ex) {
-						throw new IllegalStateException("Expection while mapping scratch  " + i + " of class " + instance.getClass().getSimpleName(), ex);
+						throw new IllegalStateException("Expection while mapping scratch  " + mappingIdx + " of class " + instance.getClass().getSimpleName(), ex);
 					}
 				}
 				break;
