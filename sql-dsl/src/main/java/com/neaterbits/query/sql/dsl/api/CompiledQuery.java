@@ -67,7 +67,22 @@ final class CompiledQuery {
 	CompiledSelectSources<CompiledSelectSource> getSelectSources() {
 		return (CompiledSelectSources<CompiledSelectSource>)selectSources;
 	}
+	
+	Class<?> [] getSelectSourceClasses() {
+		
+		@SuppressWarnings("unchecked")
+		final List<CompiledSelectSource> sources = (List<CompiledSelectSource>)selectSources.getSources();
+		
+		final int num = sources.size();
+		final Class<?> [] ret = new Class<?>[num];
 
+		for (int i = 0; i < num; ++ i) {
+			ret[i] = sources.get(i).getType();
+		}
+		
+		return ret;
+	}
+	
 	public CompiledJoins getJoins() {
 		return joins;
 	}

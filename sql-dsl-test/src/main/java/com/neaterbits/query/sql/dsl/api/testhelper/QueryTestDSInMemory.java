@@ -1,12 +1,10 @@
 package com.neaterbits.query.sql.dsl.api.testhelper;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
-import java.util.function.Function;
 
 import com.neaterbits.query.sql.dsl.api.QueryDataSource;
-import com.neaterbits.query.sql.dsl.api.QueryDataSourcePojo;
+import com.neaterbits.query.sql.dsl.api.QueryDataSourcePojoWithList;
 
 public final class QueryTestDSInMemory extends QueryTestDS {
 
@@ -14,44 +12,26 @@ public final class QueryTestDSInMemory extends QueryTestDS {
 	@Override
 	public QueryTestDSCheck store(Consumer<QueryTestDSBuilder> dsBuilder) {
 
-		final QueryTestDSBuilderImpl<Void> b = new QueryTestDSBuilderImpl<Void>(null, null);
+		final QueryTestDSBuilderInMemoryImpl b = new QueryTestDSBuilderInMemoryImpl();
 
 		dsBuilder.accept(b);
-		
-		return new Checker(b.getInstances());
-	}
-	
-	private static <T, O> List<O> remap(List<T> list, Function<T, O> map) {
-		final List<O> ret = new ArrayList<>(list.size());
-		
-		for (T t : list) {
-			ret.add(map.apply(t));
-		}
 
-		return ret;
+		return new Checker(b.getInstances());
 	}
 
 	private class Checker implements QueryTestDSCheck {
-		private final List<TestInstance> instances;
+		private final List<Object> instances;
 
-		Checker(List<TestInstance> instances) {
+		Checker(List<Object> instances) {
 			this.instances = instances;
 		}
 
 		@Override
 		public void check(Consumer<QueryDataSource> testBuilder) {
 
-			final QueryDataSource dataSource = new QueryDataSourcePojo(remap(instances, i -> i.getInstance()));
+			final QueryDataSource dataSource = new QueryDataSourcePojoWithList(instances);
 
-			try {
-				testBuilder.accept(dataSource);
-			}
-			catch (RuntimeException ex) {
-				System.err.println("Got runtime exception in check: " + ex);
-				ex.printStackTrace(System.err);
-			}
-			finally {
-			}
+			testBuilder.accept(dataSource);
 		}
 	}
 }

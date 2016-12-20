@@ -28,6 +28,7 @@ import com.neaterbits.query.sql.dsl.api.testhelper.BaseSQLAPITest;
 import com.neaterbits.query.sql.dsl.api.testhelper.QueryTestDSBuilder;
 import com.neaterbits.query.sql.dsl.api.testhelper.QueryTestDSCheck;
 import com.neaterbits.query.sql.dsl.api.testhelper.QueryTestDSCombined;
+import com.neaterbits.query.sql.dsl.api.testhelper.QueryTestDSInMemory;
 
 public class SQLAPITest extends BaseSQLAPITest {
 
@@ -36,7 +37,7 @@ public class SQLAPITest extends BaseSQLAPITest {
 	private static QueryTestDSCheck store(Consumer<QueryTestDSBuilder> b) {
 		
 		return new QueryTestDSCombined(
-				//() -> new QueryTestDSCombined(),
+				() -> new QueryTestDSInMemory(),
 				() -> new QueryTestDSJPA("query-jpa-test"))
 				
 				.store(b);

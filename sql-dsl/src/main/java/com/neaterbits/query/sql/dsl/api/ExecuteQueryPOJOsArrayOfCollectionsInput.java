@@ -2,11 +2,11 @@ package com.neaterbits.query.sql.dsl.api;
 
 import java.util.Collection;
 
-final class ExecuteQueryPOJOsArrayInput extends ExecuteQueryPOJOsInput {
+final class ExecuteQueryPOJOsArrayOfCollectionsInput extends ExecuteQueryPOJOsInput {
 	private final Collection<?> [] dataCollections;
 
 	
-	ExecuteQueryPOJOsArrayInput(Collection<?> ... dataCollections) {
+	ExecuteQueryPOJOsArrayOfCollectionsInput(Collection<?> ... dataCollections) {
 		
 		if (dataCollections == null) {
 			throw new IllegalArgumentException("dataCollections == null");

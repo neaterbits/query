@@ -13,11 +13,6 @@ import java.util.List;
 
 final class ExecuteQueryPOJOs<QUERY> extends ExecutableQueryAggregateComputations<QUERY> {
 	
-	interface ResultEmitter<RESULT> {
-		<QRY> void emit(RESULT result, Object [] vals);
-	}
-	
-	
 	
 	ExecuteQueryPOJOs(ExecutableQuery<QUERY> q) {
 		super(q);
@@ -37,29 +32,36 @@ final class ExecuteQueryPOJOs<QUERY> extends ExecutableQueryAggregateComputation
 	*/
 
 	
-	void execute(QUERY query, ExecuteQueryPOJOsInput input) {
-
+	Object execute(QUERY query, ExecuteQueryPOJOsInput input) {
 		
 		final int joinCount = q.getJoinCount(query);
+		
+		final Object ret;
+
+		final int numConditions = q.getConditionCount(query);
+		final int numResultParts = q.getNumResultParts(query);
 		
 		if (joinCount > 0) {
 			// We shall perform joins over tables
 			// figure out which tables to join etc
 			// we may be joining on multiple keys
 			
+			/*
 			for (int joinIdx = 0; joinIdx < joinCount; ++ joinIdx) {
 				q.getJoinLeftSourceIdx(query, joinIdx);
 				q.getJoinRightSourceIdx(query, joinIdx);
+				
 			}
+			*/
+			ret = loopJoinedNoSets(query, numResultParts, input, numConditions);
 		}
 		else {
 			// Loop over all clauses to test
-			final int numConditions = q.getConditionCount(query);
-
-			final int numResultParts = q.getNumResultParts(query);
 			
-			loopNonJoined(query, numResultParts, input, numConditions);
+			ret = loopNonJoined(query, numResultParts, input, numConditions);
 		}
+
+		return ret;
 	}
 	
 	private Object computeInitialResult(QUERY query) {

@@ -38,7 +38,7 @@ public abstract class QueryTestDSBasePersistent<CTX, ENTITIES, TRANSACTION> exte
 	@Override
 	public final QueryTestDSCheck store(Consumer<QueryTestDSBuilder> dsBuilder) {
 
-		final QueryTestDSBuilderImpl<CTX> b = new QueryTestDSBuilderImpl<CTX>(ctx, getPK);
+		final QueryTestDSBuilderPersistentImpl<CTX> b = new QueryTestDSBuilderPersistentImpl<CTX>(ctx, getPK);
 
 		final ENTITIES em = openEntities(ctx);
 
@@ -94,10 +94,6 @@ public abstract class QueryTestDSBasePersistent<CTX, ENTITIES, TRANSACTION> exte
 
 			try {
 				testBuilder.accept(dataSource);
-			}
-			catch (RuntimeException ex) {
-				System.err.println("Got runtime exception in check: " + ex);
-				ex.printStackTrace(System.err);
 			}
 			finally {
 				safelyDeleteInstances(em);

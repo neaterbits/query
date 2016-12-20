@@ -4,12 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.BiFunction;
 
-final class QueryTestDSBuilderImpl<CTX> implements QueryTestDSBuilder {
+final class QueryTestDSBuilderPersistentImpl<CTX> implements QueryTestDSBuilder {
 	private final CTX ctx;
 	private final BiFunction<CTX, Object, Object> getPK;
 	private final List<TestInstance> instances;
 
-	QueryTestDSBuilderImpl(CTX ctx, BiFunction<CTX, Object, Object> getPK) {
+	QueryTestDSBuilderPersistentImpl(CTX ctx, BiFunction<CTX, Object, Object> getPK) {
 		this.ctx = ctx;
 		this.instances = new ArrayList<>();
 		this.getPK = getPK;
