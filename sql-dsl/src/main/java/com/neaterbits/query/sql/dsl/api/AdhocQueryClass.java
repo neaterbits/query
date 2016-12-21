@@ -21,6 +21,7 @@ final class AdhocQueryClass<MODEL> extends AdhocQueryBase<MODEL, AdhocQueryClass
 	@SuppressWarnings("rawtypes")
 	private Function [] conditions;
 	private EClauseOperator [] operators;
+	private Object [] values;
 
 	private int numConditions;
 	
@@ -47,6 +48,10 @@ final class AdhocQueryClass<MODEL> extends AdhocQueryBase<MODEL, AdhocQueryClass
 
 	private void addCondition(Function<?, ?> function) {
 		
+		if (function == null) {
+			throw new IllegalArgumentException("function == null");
+		}
+
 		if (numConditions == 0) {
 			this.conditions = new Function[INITIAL_CONDITIONS]; 
 		}
@@ -57,15 +62,18 @@ final class AdhocQueryClass<MODEL> extends AdhocQueryBase<MODEL, AdhocQueryClass
 		this.conditions[numConditions] = function;
 	}
 	
-	private ISharedLogicalClauses<MODEL, Object> addOperator(EClauseOperator operator) {
+	private ISharedLogicalClauses<MODEL, Object> addOperator(EClauseOperator operator, Object value) {
 		if (numConditions == 0) {
-			this.operators =  new EClauseOperator[INITIAL_CONDITIONS]; 
+			this.operators = new EClauseOperator[INITIAL_CONDITIONS];
+			this.values = new Object[INITIAL_CONDITIONS];
 		}
 		else if (numConditions == operators.length) {
 			this.operators = Arrays.copyOf(operators, operators.length * 2);
+			this.values = Arrays.copyOf(values, values.length * 2);
 		}
 		
-		this.operators[numConditions ++] = operator;
+		this.operators[numConditions] = operator;
+		this.values[numConditions ++] = value;
 		
 		return this;
 	}
@@ -118,17 +126,17 @@ final class AdhocQueryClass<MODEL> extends AdhocQueryBase<MODEL, AdhocQueryClass
 	
 	@Override
 	public ISharedLogicalClauses<MODEL, Object> isEqualTo(Comparable<Object> other) {
-		return addOperator(EClauseOperator.IS_EQUAL);
+		return addOperator(EClauseOperator.IS_EQUAL, other);
 	}
 
 	@Override
 	public ISharedLogicalClauses<MODEL, Object> isNotEqualTo(Comparable<Object> other) {
-		return addOperator(EClauseOperator.NOT_EQUAL);
+		return addOperator(EClauseOperator.NOT_EQUAL, other);
 	}
 
 	@Override
 	public ISharedLogicalClauses<MODEL, Object> in(Comparable<Object>... values) {
-		return addOperator(EClauseOperator.IN);
+		return addOperator(EClauseOperator.IN, values);
 	}
 	
 	/**************************************************************************
@@ -137,22 +145,22 @@ final class AdhocQueryClass<MODEL> extends AdhocQueryBase<MODEL, AdhocQueryClass
 
 	@Override
 	public ISharedLogicalClauses<MODEL, Object> isGreaterThan(Comparable<Object> value) {
-		return addOperator(EClauseOperator.GREATER_THAN);
+		return addOperator(EClauseOperator.GREATER_THAN, value);
 	}
 
 	@Override
 	public ISharedLogicalClauses<MODEL, Object> isGreaterOrEqualTo(Comparable<Object> value) {
-		return addOperator(EClauseOperator.GREATER_OR_EQUAL);
+		return addOperator(EClauseOperator.GREATER_OR_EQUAL, value);
 	}
 
 	@Override
 	public ISharedLogicalClauses<MODEL, Object> isLesserThan(Comparable<Object> value) {
-		return addOperator(EClauseOperator.LESS_THAN);
+		return addOperator(EClauseOperator.LESS_THAN, value);
 	}
 
 	@Override
 	public ISharedLogicalClauses<MODEL, Object> isLesserOrEqualTo(Comparable<Object> value) {
-		return addOperator(EClauseOperator.LESS_OR_EQUAL);
+		return addOperator(EClauseOperator.LESS_OR_EQUAL, value);
 	}
 
 	/**************************************************************************
@@ -161,22 +169,22 @@ final class AdhocQueryClass<MODEL> extends AdhocQueryBase<MODEL, AdhocQueryClass
 
 	@Override
 	public ISharedLogicalClauses<MODEL, Object> startsWith(String s) {
-		return addOperator(EClauseOperator.STARTS_WITH);
+		return addOperator(EClauseOperator.STARTS_WITH, s);
 	}
 
 	@Override
 	public ISharedLogicalClauses<MODEL, Object> endsWith(String s) {
-		return addOperator(EClauseOperator.ENDS_WITH);
+		return addOperator(EClauseOperator.ENDS_WITH, s);
 	}
 
 	@Override
 	public ISharedLogicalClauses<MODEL, Object> contains(String s) {
-		return addOperator(EClauseOperator.CONTAINS);
+		return addOperator(EClauseOperator.CONTAINS, s);
 	}
 
 	@Override
 	public ISharedLogicalClauses<MODEL, Object> matches(String regex) {
-		return addOperator(EClauseOperator.MATCHES);
+		return addOperator(EClauseOperator.MATCHES, regex);
 	}
 
 	@Override
