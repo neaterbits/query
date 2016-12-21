@@ -102,18 +102,18 @@ final class AdhocQueryClass<MODEL> extends AdhocQueryBase<MODEL, AdhocQueryClass
 	}
 
 	@Override
-	public <T, E extends Enum<E>> ISharedClauseConditionValue<MODEL, Object, E, IAdhocAndOrLogicalClauses<MODEL, Object>> where(IFunctionEnum<T, E> func) {
+	public <E extends Enum<E>> ISharedClauseConditionValue<MODEL, Object, E, IAdhocAndOrLogicalClauses<MODEL, Object>> where(IFunctionEnum<Object, E> func) {
 		return addConditionWhere(func);
-	}
-
+	}	
+	
 	@Override
-	public <T> ISharedClauseComparableCommonValue<MODEL, Object, Integer, IAdhocAndOrLogicalClauses<MODEL, Object>> where(IFunctionInteger<T> func) {
+	public ISharedClauseComparableCommonValue<MODEL, Object, Integer, IAdhocAndOrLogicalClauses<MODEL, Object>> where(IFunctionInteger<Object> func) {
 		return addComparativeWhere(func);
 	}
 
 	@Override
 	@SuppressWarnings({"unchecked", "rawtypes"})
-	public <T> ISharedClauseComparableStringValue<MODEL, Object, IAdhocAndOrLogicalClauses<MODEL, Object>> where(StringFunction<T> func) {
+	public ISharedClauseComparableStringValue<MODEL, Object, IAdhocAndOrLogicalClauses<MODEL, Object>> where(StringFunction<Object> func) {
 		addCondition(func);
 		
 		return (ISharedClauseComparableStringValue)this;

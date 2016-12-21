@@ -1,5 +1,6 @@
 package com.neaterbits.query.sql.dsl.api;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,6 +10,8 @@ public class SQLAdhocAPITest {
 
 	private static class Foo {
 		private int value;
+		private int value2;
+		private BigDecimal decimal;
 
 		public int getValue() {
 			return value;
@@ -16,6 +19,22 @@ public class SQLAdhocAPITest {
 
 		public void setValue(int value) {
 			this.value = value;
+		}
+
+		public int getValue2() {
+			return value2;
+		}
+
+		public void setValue2(int value2) {
+			this.value2 = value2;
+		}
+
+		public BigDecimal getDecimal() {
+			return decimal;
+		}
+
+		public void setDecimal(BigDecimal decimal) {
+			this.decimal = decimal;
 		}
 	}
 
@@ -39,7 +58,7 @@ public class SQLAdhocAPITest {
 		
 		Adhoc.sum(Foo::getValue)
 			.from(fooList)
-			.where(Bar::getBaz).isEqualTo(1);
+			.where(Foo::getDecimal).isEqualTo(BigDecimal.ONE);
 		
 	}
 	
