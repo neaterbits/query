@@ -7,15 +7,15 @@ import java.util.function.Function;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import com.neaterbits.query.sql.dsl.api.MultiQuery;
-import com.neaterbits.query.sql.dsl.api.PreparedQueryOps;
+import com.neaterbits.query.sql.dsl.api.ISharedPreparedQueryOps;
 import com.neaterbits.query.sql.dsl.api.QueryDataSource;
 import com.neaterbits.query.sql.dsl.api.SingleQuery;
 
 public abstract class BaseSQLAPITest {
 
-	protected final <T> void checkSelectOneOrNull(QueryDataSource ds, T expected, SingleQuery<T> query, Function<PreparedQueryOps<T>, T> execute) {
+	protected final <T> void checkSelectOneOrNull(QueryDataSource ds, T expected, SingleQuery<T> query, Function<ISharedPreparedQueryOps<T>, T> execute) {
 		
-		PreparedQueryOps<T> ops = query.prepare(ds);
+		ISharedPreparedQueryOps<T> ops = query.prepare(ds);
 
 		final T result = execute.apply(ops);
     			
@@ -31,7 +31,7 @@ public abstract class BaseSQLAPITest {
 	}
 
 
-	protected final <T> void checkSelectListUnordered(QueryDataSource ds, MultiQuery<T> query, Function<PreparedQueryOps<List<T>>, List<T>> execute, @SuppressWarnings("unchecked") T ... expected) {
+	protected final <T> void checkSelectListUnordered(QueryDataSource ds, MultiQuery<T> query, Function<ISharedPreparedQueryOps<List<T>>, List<T>> execute, @SuppressWarnings("unchecked") T ... expected) {
 
 		final List<T> ret = checkSelectListCommon(ds, query, execute, expected);
 		
@@ -44,8 +44,8 @@ public abstract class BaseSQLAPITest {
 		assertThat(resultMap).isEqualTo(expectedMap);
 	}
 	
-	private <T> List<T> checkSelectListCommon(QueryDataSource ds, MultiQuery<T> query, Function<PreparedQueryOps<List<T>>, List<T>> execute, @SuppressWarnings("unchecked") T ... expected) {
-		PreparedQueryOps<List<T>> ops = query.prepare(ds);
+	private <T> List<T> checkSelectListCommon(QueryDataSource ds, MultiQuery<T> query, Function<ISharedPreparedQueryOps<List<T>>, List<T>> execute, @SuppressWarnings("unchecked") T ... expected) {
+		ISharedPreparedQueryOps<List<T>> ops = query.prepare(ds);
 
 		final List<T> result = execute.apply(ops);
 

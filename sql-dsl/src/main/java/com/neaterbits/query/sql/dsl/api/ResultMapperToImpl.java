@@ -6,7 +6,7 @@ import java.util.function.Supplier;
 
 final class ResultMapperToImpl<MODEL, RESULT, R, SOURCE extends SelectSourceBuilder<MODEL, RESULT>>
 		extends QueryBuilderItem
-		implements ResultMapperTo<MODEL, RESULT, R, SOURCE> {
+		implements ISharedResultMapperTo<MODEL, RESULT, R, SOURCE> {
 
 	private final Function<?, ?> fromGetter;
 	private final Supplier<?> fromSupplier;

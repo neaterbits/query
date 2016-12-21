@@ -5,7 +5,7 @@ import java.util.function.Function;
 final class SingleTableResultImpl<MODEL, RESULT>
 	extends ClausesImplInitial<MODEL, RESULT> 
 		implements
-			WhereClauseBuilderTableSingle<MODEL, RESULT>,
+			IClassicWhereClauseBuilderTableSingle<MODEL, RESULT>,
 			AndOrLogicalClausesTableSingle<MODEL, RESULT>
 				  {
 	SingleTableResultImpl(QueryResult result, ModelCompiler<MODEL> modelCompiler) {
@@ -29,14 +29,14 @@ final class SingleTableResultImpl<MODEL, RESULT>
 
 
 	@Override
-	public <RR> ConditionClause<MODEL, RESULT, RR, AndOrLogicalClausesTableSingle<MODEL, RESULT>>
+	public <RR> ISharedConditionClause<MODEL, RESULT, RR, AndOrLogicalClausesTableSingle<MODEL, RESULT>>
 			where(Function<RESULT, RR> func) {
 
 		return new ConditionClauseImpl<MODEL, RESULT, RR, AndOrLogicalClausesTableSingle<MODEL,RESULT>>(this, makeGetter(func));
 	}
 
 	@Override
-	public StringClause<MODEL, RESULT, AndOrLogicalClausesTableSingle<MODEL, RESULT>>
+	public ISharedStringClause<MODEL, RESULT, AndOrLogicalClausesTableSingle<MODEL, RESULT>>
 			where(StringFunction<RESULT> func) {
 
 		return new StringClauseImpl<MODEL, RESULT, AndOrLogicalClausesTableSingle<MODEL,RESULT>>(this, makeGetter(func));
@@ -44,7 +44,7 @@ final class SingleTableResultImpl<MODEL, RESULT>
 
 	// ------------------------  AND ------------------------
 	@Override
-	public ConditionClauseTable<MODEL, RESULT, Integer, AndClausesTableSingle<MODEL, RESULT>>
+	public ISharedConditionClauseTable<MODEL, RESULT, Integer, AndClausesTableSingle<MODEL, RESULT>>
 			and(IntegerFunction<RESULT> getter) {
 		
 		final AndClausesImplTableSingle<MODEL, RESULT> andClauses = new AndClausesImplTableSingle<>(this);
@@ -53,7 +53,7 @@ final class SingleTableResultImpl<MODEL, RESULT>
 	}
 
 	@Override
-	public StringClause<MODEL, RESULT, AndClausesTableSingle<MODEL, RESULT>>
+	public ISharedStringClause<MODEL, RESULT, AndClausesTableSingle<MODEL, RESULT>>
 			and(StringFunction<RESULT> getter) {
 
 		final AndClausesImplTableSingle<MODEL, RESULT> andClauses = new AndClausesImplTableSingle<>(this);
@@ -63,7 +63,7 @@ final class SingleTableResultImpl<MODEL, RESULT>
 	
 	// ------------------------  OR ------------------------
 	@Override
-	public ConditionClause<MODEL, RESULT, Integer, OrClausesTableSingle<MODEL, RESULT>>
+	public ISharedConditionClause<MODEL, RESULT, Integer, OrClausesTableSingle<MODEL, RESULT>>
 			or(IntegerFunction<RESULT> getter) {
 
 		final OrClausesImplTableSingle<MODEL, RESULT> orClauses = new OrClausesImplTableSingle<>(this);
@@ -72,7 +72,7 @@ final class SingleTableResultImpl<MODEL, RESULT>
 	}
 
 	@Override
-	public StringClause<MODEL, RESULT, OrClausesTableSingle<MODEL, RESULT>>
+	public ISharedStringClause<MODEL, RESULT, OrClausesTableSingle<MODEL, RESULT>>
 			or(StringFunction<RESULT> getter) {
 
 		final OrClausesImplTableSingle<MODEL, RESULT> orClauses = new OrClausesImplTableSingle<>(this);

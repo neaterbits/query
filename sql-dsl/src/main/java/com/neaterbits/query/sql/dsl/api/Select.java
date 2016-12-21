@@ -4,27 +4,27 @@ import java.math.BigDecimal;
 
 public interface Select {
 
-	public static <MAPPED_RESULT> SingleMapToResult<SingleQuery<MAPPED_RESULT>, MAPPED_RESULT> selectOneOrNull(Class<MAPPED_RESULT> cl) {
+	public static <MAPPED_RESULT> IClassicSingleMapToResult<SingleQuery<MAPPED_RESULT>, MAPPED_RESULT> selectOneOrNull(Class<MAPPED_RESULT> cl) {
 		return SelectImpl.selectImpl.selectOneOrNull(cl);
 	}
 
-	public static <MAPPED_RESULT> MultiMapToResult<MultiQuery<MAPPED_RESULT>, MAPPED_RESULT> selectList(Class<MAPPED_RESULT> cl) {
+	public static <MAPPED_RESULT> IClassicMultiMapToResult<MultiQuery<MAPPED_RESULT>, MAPPED_RESULT> selectList(Class<MAPPED_RESULT> cl) {
 		return SelectImpl.selectImpl.selectList(cl);
 	}
 
-	public static <TYPE_RESULT> SingleTypeResult<SingleQuery<TYPE_RESULT>, TYPE_RESULT> selectOneFrom(Class<TYPE_RESULT> cl) {
+	public static <TYPE_RESULT> IClassicSingleTypeResult<SingleQuery<TYPE_RESULT>, TYPE_RESULT> selectOneFrom(Class<TYPE_RESULT> cl) {
 		return SelectImpl.selectImpl.selectOneFrom(cl);
 	}
 
-	public static <TYPE_RESULT> MultiTypeResult<MultiQuery<TYPE_RESULT>, TYPE_RESULT> selectListFrom(Class<TYPE_RESULT> cl) {
+	public static <TYPE_RESULT> IClassicMultiTypeResult<MultiQuery<TYPE_RESULT>, TYPE_RESULT> selectListFrom(Class<TYPE_RESULT> cl) {
 		return SelectImpl.selectImpl.selectListFrom(cl);
 	}
 
-	public static <TYPE_RESULT> WhereClauseBuilderTableSingle<SingleQuery<TYPE_RESULT>, TYPE_RESULT> oneFrom(Class<TYPE_RESULT> cl) {
+	public static <TYPE_RESULT> IClassicWhereClauseBuilderTableSingle<SingleQuery<TYPE_RESULT>, TYPE_RESULT> oneFrom(Class<TYPE_RESULT> cl) {
 		return SelectImpl.selectImpl.oneFrom(cl);
 	}
 
-	public static <TYPE_RESULT> WhereClauseBuilderTableSingle<MultiQuery<TYPE_RESULT>, TYPE_RESULT> listFrom(Class<TYPE_RESULT> cl) {
+	public static <TYPE_RESULT> IClassicWhereClauseBuilderTableSingle<MultiQuery<TYPE_RESULT>, TYPE_RESULT> listFrom(Class<TYPE_RESULT> cl) {
 		return SelectImpl.selectImpl.listFrom(cl);
 	}
 	
@@ -36,19 +36,19 @@ public interface Select {
 		return SelectImpl.selectImpl.aliasAlias(aliasType);
     }
 
-    public static <T> NumericTableResult<Short> sum(ShortFunction<T> field) {
+    public static <T> IClassicNumericTableResult<Short> sum(ShortFunction<T> field) {
     	return SelectImpl.selectImpl.sum(field);
     }
 	
-    public static <T> NumericTableResult<Integer> sum(IntegerFunction<T> field) {
+    public static <T> IClassicNumericTableResult<Integer> sum(IntegerFunction<T> field) {
     	return SelectImpl.selectImpl.sum(field);
     }
 
-    public static <T> NumericTableResult<Long> sum(LongFunction<T> field) {
+    public static <T> IClassicNumericTableResult<Long> sum(LongFunction<T> field) {
     	return SelectImpl.selectImpl.sum(field);
     }
 
-    public static <T> NumericTableResult<BigDecimal> sum(BigDecimalFunction<T> field) {
+    public static <T> IClassicNumericTableResult<BigDecimal> sum(BigDecimalFunction<T> field) {
     	return SelectImpl.selectImpl.sum(field);
     }
     

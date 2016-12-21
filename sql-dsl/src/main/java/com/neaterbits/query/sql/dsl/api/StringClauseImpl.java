@@ -1,8 +1,8 @@
 package com.neaterbits.query.sql.dsl.api;
 
-final class StringClauseImpl<MODEL, RESULT, L extends LogicalClauses<MODEL, RESULT>>
+final class StringClauseImpl<MODEL, RESULT, L extends ISharedLogicalClauses<MODEL, RESULT>>
 		extends ComparativeClauseImpl<MODEL, RESULT, String, L>
-		implements StringClause<MODEL, RESULT, L> {
+		implements ISharedStringClause<MODEL, RESULT, L> {
 
 	StringClauseImpl(ClausesImpl<MODEL, RESULT> clause, Getter getter) {
 		super(clause, getter);

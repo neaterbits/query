@@ -5,24 +5,24 @@ import java.util.function.Supplier;
 
 public class SingleMapToResultImpl<MODEL, RESULT>
 	extends BaseMapToResultImpl<MODEL, RESULT>
-	implements SingleMapToResult<MODEL, RESULT>,
-			   SingleMapToResultTable<MODEL, RESULT>,
-			   SingleMapToResultAlias<MODEL, RESULT> {
+	implements IClassicSingleMapToResult<MODEL, RESULT>,
+			   IClassicSingleMapToResultTable<MODEL, RESULT>,
+			   IClassicSingleMapToResultAlias<MODEL, RESULT> {
 
 	SingleMapToResultImpl(Class<?> resultType, ModelCompiler<MODEL> modelCompiler) {
 		super(new QueryResultMappedSingle(resultType), modelCompiler);
 	}
 
 	@Override
-	public <T, R> ResultMapperTo<MODEL, RESULT, R, SingleMapToResultTable<MODEL, RESULT>>
+	public <T, R> ISharedResultMapperTo<MODEL, RESULT, R, IClassicSingleMapToResultTable<MODEL, RESULT>>
 				map(Function<T, R> getter) {
 
-		return new ResultMapperToImpl<MODEL, RESULT, R, SingleMapToResultTable<MODEL, RESULT>>(getter, this);
+		return new ResultMapperToImpl<MODEL, RESULT, R, IClassicSingleMapToResultTable<MODEL, RESULT>>(getter, this);
 	}
 
 	@Override
-	public <T, R> ResultMapperTo<MODEL, RESULT, R, SingleMapToResultAlias<MODEL, RESULT>> map(Supplier<R> getter) {
+	public <T, R> ISharedResultMapperTo<MODEL, RESULT, R, IClassicSingleMapToResultAlias<MODEL, RESULT>> map(Supplier<R> getter) {
 
-		return new ResultMapperToImpl<MODEL, RESULT, R, SingleMapToResultAlias<MODEL, RESULT>>(getter, this);
+		return new ResultMapperToImpl<MODEL, RESULT, R, IClassicSingleMapToResultAlias<MODEL, RESULT>>(getter, this);
 	}
 }

@@ -7,7 +7,7 @@ import java.util.function.Function;
 
 import com.neaterbits.query.util.java8.MethodFinder;
 
-final class SelectImpl implements ISelect {
+final class SelectImpl implements IClassic {
 
 	static final SelectImpl selectImpl = new SelectImpl();
 	
@@ -23,7 +23,7 @@ final class SelectImpl implements ISelect {
 	}
 	
 	@Override
-	public <MAPPED_RESULT> SingleMapToResult<SingleQuery<MAPPED_RESULT>, MAPPED_RESULT> selectOneOrNull(Class<MAPPED_RESULT> cl) {
+	public <MAPPED_RESULT> IClassicSingleMapToResult<SingleQuery<MAPPED_RESULT>, MAPPED_RESULT> selectOneOrNull(Class<MAPPED_RESULT> cl) {
 		if (cl == null) {
 			throw new IllegalArgumentException("cl == null");
 			}
@@ -32,7 +32,7 @@ final class SelectImpl implements ISelect {
 	}
 
 	@Override
-	public <MAPPED_RESULT> MultiMapToResult<MultiQuery<MAPPED_RESULT>, MAPPED_RESULT> selectList(Class<MAPPED_RESULT> cl) {
+	public <MAPPED_RESULT> IClassicMultiMapToResult<MultiQuery<MAPPED_RESULT>, MAPPED_RESULT> selectList(Class<MAPPED_RESULT> cl) {
 		if (cl == null) {
 			throw new IllegalArgumentException("cl == null");
 		}
@@ -41,7 +41,7 @@ final class SelectImpl implements ISelect {
 	}
 
 	@Override
-	public <TYPE_RESULT> SingleTypeResult<SingleQuery<TYPE_RESULT>, TYPE_RESULT> selectOneFrom(Class<TYPE_RESULT> cl) {
+	public <TYPE_RESULT> IClassicSingleTypeResult<SingleQuery<TYPE_RESULT>, TYPE_RESULT> selectOneFrom(Class<TYPE_RESULT> cl) {
 		if (cl == null) {
 			throw new IllegalArgumentException("cl == null");
 		}
@@ -50,7 +50,7 @@ final class SelectImpl implements ISelect {
 	}
 
 	@Override
-	public <TYPE_RESULT> MultiTypeResult<MultiQuery<TYPE_RESULT>, TYPE_RESULT> selectListFrom(Class<TYPE_RESULT> cl) {
+	public <TYPE_RESULT> IClassicMultiTypeResult<MultiQuery<TYPE_RESULT>, TYPE_RESULT> selectListFrom(Class<TYPE_RESULT> cl) {
 		if (cl == null) {
 			throw new IllegalArgumentException("cl == null");
 		}
@@ -59,7 +59,7 @@ final class SelectImpl implements ISelect {
 	}
 
 	@Override
-	public <TYPE_RESULT> WhereClauseBuilderTableSingle<SingleQuery<TYPE_RESULT>, TYPE_RESULT> oneFrom(Class<TYPE_RESULT> cl) {
+	public <TYPE_RESULT> IClassicWhereClauseBuilderTableSingle<SingleQuery<TYPE_RESULT>, TYPE_RESULT> oneFrom(Class<TYPE_RESULT> cl) {
 		if (cl == null) {
 			throw new IllegalArgumentException("cl == null");
 		}
@@ -68,7 +68,7 @@ final class SelectImpl implements ISelect {
 	}
 
 	@Override
-	public <TYPE_RESULT> WhereClauseBuilderTableSingle<MultiQuery<TYPE_RESULT>, TYPE_RESULT> listFrom(Class<TYPE_RESULT> cl) {
+	public <TYPE_RESULT> IClassicWhereClauseBuilderTableSingle<MultiQuery<TYPE_RESULT>, TYPE_RESULT> listFrom(Class<TYPE_RESULT> cl) {
 		if (cl == null) {
 			throw new IllegalArgumentException("cl == null");
 		}
@@ -180,27 +180,27 @@ final class SelectImpl implements ISelect {
 	// ------------------------ Sum ------------------------
 	
 
-	private <T, NUM> NumericTableResult<NUM> sum(Function<T, NUM> field, Class<NUM> cl) {
+	private <T, NUM> IClassicNumericTableResult<NUM> sum(Function<T, NUM> field, Class<NUM> cl) {
 		return new AggregateTableResultImpl<>(new QueryResultSum(cl, new FunctionGetter(field)), singleQueryCompiler());
 	}
 	
 	@Override
-	public <T> NumericTableResult<Short> sum(ShortFunction<T> field) {
+	public <T> IClassicNumericTableResult<Short> sum(ShortFunction<T> field) {
 		return sum(field, Short.class);
 	}
 
 	@Override
-	public <T> NumericTableResult<Integer> sum(IntegerFunction<T> field) {
+	public <T> IClassicNumericTableResult<Integer> sum(IntegerFunction<T> field) {
 		return sum(field, Integer.class);
 	}
 
 	@Override
-	public <T> NumericTableResult<Long> sum(LongFunction<T> field) {
+	public <T> IClassicNumericTableResult<Long> sum(LongFunction<T> field) {
 		return sum(field, Long.class);
 	}
 
 	@Override
-	public <T> NumericTableResult<BigDecimal> sum(BigDecimalFunction<T> field) {
+	public <T> IClassicNumericTableResult<BigDecimal> sum(BigDecimalFunction<T> field) {
 		return sum(field, BigDecimal.class);
 	}
 }

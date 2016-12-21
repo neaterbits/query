@@ -3,7 +3,7 @@ package com.neaterbits.query.sql.dsl.api;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
-class ComparativeClauseImpl<MODEL, RESULT, R extends Comparable<R>, L extends LogicalClauses<MODEL, RESULT>> 
+class ComparativeClauseImpl<MODEL, RESULT, R extends Comparable<R>, L extends ISharedLogicalClauses<MODEL, RESULT>> 
 	extends ConditionClauseImpl<MODEL, RESULT, R, L>
 	implements ComparativeClauseTable<MODEL, RESULT, R, L>,
 			   ComparativeClauseAlias<MODEL, RESULT, R, L> {
@@ -13,7 +13,7 @@ class ComparativeClauseImpl<MODEL, RESULT, R extends Comparable<R>, L extends Lo
 	}
 
 	@Override
-	public final LogicalClauses<MODEL, RESULT> isGreaterThan(R value) {
+	public final ISharedLogicalClauses<MODEL, RESULT> isGreaterThan(R value) {
 		if (value == null) {
 			throw new IllegalArgumentException("value == null");
 		}
@@ -23,7 +23,7 @@ class ComparativeClauseImpl<MODEL, RESULT, R extends Comparable<R>, L extends Lo
 
 	
 	@Override
-	public final LogicalClauses<MODEL, RESULT> isGreaterThan(Param<R> value) {
+	public final ISharedLogicalClauses<MODEL, RESULT> isGreaterThan(Param<R> value) {
 		if (value == null) {
 			throw new IllegalArgumentException("value == null");
 		}
@@ -33,7 +33,7 @@ class ComparativeClauseImpl<MODEL, RESULT, R extends Comparable<R>, L extends Lo
 
 	
 	@Override
-	public final <T> LogicalClauses<MODEL, RESULT> isGreaterThan(Function<T, R> getter) {
+	public final <T> ISharedLogicalClauses<MODEL, RESULT> isGreaterThan(Function<T, R> getter) {
 		if (getter == null) {
 			throw new IllegalArgumentException("getter == null");
 		}
@@ -42,7 +42,7 @@ class ComparativeClauseImpl<MODEL, RESULT, R extends Comparable<R>, L extends Lo
 	}
 
 	@Override
-	public final LogicalClauses<MODEL, RESULT> isGreaterOrEqualTo(R value) {
+	public final ISharedLogicalClauses<MODEL, RESULT> isGreaterOrEqualTo(R value) {
 		if (value == null) {
 			throw new IllegalArgumentException("value == null");
 		}
@@ -51,7 +51,7 @@ class ComparativeClauseImpl<MODEL, RESULT, R extends Comparable<R>, L extends Lo
 	}
 
 	@Override
-	public final LogicalClauses<MODEL, RESULT> isGreaterOrEqualTo(Param<R> value) {
+	public final ISharedLogicalClauses<MODEL, RESULT> isGreaterOrEqualTo(Param<R> value) {
 		if (value == null) {
 			throw new IllegalArgumentException("value == null");
 		}
@@ -60,7 +60,7 @@ class ComparativeClauseImpl<MODEL, RESULT, R extends Comparable<R>, L extends Lo
 	}
 
 	@Override
-	public final <T> LogicalClauses<MODEL, RESULT> isGreaterOrEqualTo(Function<T, R> getter) {
+	public final <T> ISharedLogicalClauses<MODEL, RESULT> isGreaterOrEqualTo(Function<T, R> getter) {
 		if (getter == null) {
 			throw new IllegalArgumentException("getter == null");
 		}
@@ -69,7 +69,7 @@ class ComparativeClauseImpl<MODEL, RESULT, R extends Comparable<R>, L extends Lo
 	}
 
 	@Override
-	public final LogicalClauses<MODEL, RESULT> isLesserThan(R value) {
+	public final ISharedLogicalClauses<MODEL, RESULT> isLesserThan(R value) {
 		if (value == null) {
 			throw new IllegalArgumentException("value == null");
 		}
@@ -78,7 +78,7 @@ class ComparativeClauseImpl<MODEL, RESULT, R extends Comparable<R>, L extends Lo
 	}
 
 	@Override
-	public final LogicalClauses<MODEL, RESULT> isLesserThan(Param<R> value) {
+	public final ISharedLogicalClauses<MODEL, RESULT> isLesserThan(Param<R> value) {
 		if (value == null) {
 			throw new IllegalArgumentException("value == null");
 		}
@@ -87,7 +87,7 @@ class ComparativeClauseImpl<MODEL, RESULT, R extends Comparable<R>, L extends Lo
 	}
 
 	@Override
-	public final <T> LogicalClauses<MODEL, RESULT> isLesserThan(Function<T, R> getter) {
+	public final <T> ISharedLogicalClauses<MODEL, RESULT> isLesserThan(Function<T, R> getter) {
 		if (getter == null) {
 			throw new IllegalArgumentException("getter == null");
 		}
@@ -96,7 +96,7 @@ class ComparativeClauseImpl<MODEL, RESULT, R extends Comparable<R>, L extends Lo
 	}
 
 	@Override
-	public final LogicalClauses<MODEL, RESULT> isLesserOrEqualTo(R value) {
+	public final ISharedLogicalClauses<MODEL, RESULT> isLesserOrEqualTo(R value) {
 		if (value == null) {
 			throw new IllegalArgumentException("value == null");
 		}
@@ -105,7 +105,7 @@ class ComparativeClauseImpl<MODEL, RESULT, R extends Comparable<R>, L extends Lo
 	}
 
 	@Override
-	public final LogicalClauses<MODEL, RESULT> isLesserOrEqualTo(Param<R> value) {
+	public final ISharedLogicalClauses<MODEL, RESULT> isLesserOrEqualTo(Param<R> value) {
 		if (value == null) {
 			throw new IllegalArgumentException("value == null");
 		}
@@ -114,7 +114,7 @@ class ComparativeClauseImpl<MODEL, RESULT, R extends Comparable<R>, L extends Lo
 	}
 
 	@Override
-	public final <T> LogicalClauses<MODEL, RESULT> isLesserOrEqualTo(Function<T, R> getter) {
+	public final <T> ISharedLogicalClauses<MODEL, RESULT> isLesserOrEqualTo(Function<T, R> getter) {
 		if (getter == null) {
 			throw new IllegalArgumentException("getter == null");
 		}
@@ -126,7 +126,7 @@ class ComparativeClauseImpl<MODEL, RESULT, R extends Comparable<R>, L extends Lo
 	// -------------------- Alias specific --------------------
 
 	@Override
-	public final LogicalClauses<MODEL, RESULT> isGreaterThan(Supplier<R> getter) {
+	public final ISharedLogicalClauses<MODEL, RESULT> isGreaterThan(Supplier<R> getter) {
 		if (getter == null) {
 			throw new IllegalArgumentException("getter == null");
 		}
@@ -135,7 +135,7 @@ class ComparativeClauseImpl<MODEL, RESULT, R extends Comparable<R>, L extends Lo
 	}
 
 	@Override
-	public LogicalClauses<MODEL, RESULT> isGreaterOrEqualTo(Supplier<R> getter) {
+	public ISharedLogicalClauses<MODEL, RESULT> isGreaterOrEqualTo(Supplier<R> getter) {
 		if (getter == null) {
 			throw new IllegalArgumentException("getter == null");
 		}
@@ -144,7 +144,7 @@ class ComparativeClauseImpl<MODEL, RESULT, R extends Comparable<R>, L extends Lo
 	}
 
 	@Override
-	public LogicalClauses<MODEL, RESULT> isLesserThan(Supplier<R> getter) {
+	public ISharedLogicalClauses<MODEL, RESULT> isLesserThan(Supplier<R> getter) {
 		if (getter == null) {
 			throw new IllegalArgumentException("getter == null");
 		}
@@ -153,7 +153,7 @@ class ComparativeClauseImpl<MODEL, RESULT, R extends Comparable<R>, L extends Lo
 	}
 
 	@Override
-	public LogicalClauses<MODEL, RESULT> isLesserOrEqualTo(Supplier<R> getter) {
+	public ISharedLogicalClauses<MODEL, RESULT> isLesserOrEqualTo(Supplier<R> getter) {
 		if (getter == null) {
 			throw new IllegalArgumentException("getter == null");
 		}

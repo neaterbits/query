@@ -9,12 +9,12 @@ final class AndClausesImplTableSingle<MODEL, RESULT> extends ClausesImpl<MODEL, 
 	}
 
 	@Override
-	public ConditionClauseTable<MODEL, RESULT, Integer, AndClausesTableSingle<MODEL, RESULT>> and(IntegerFunction<RESULT> getter) {
+	public ISharedConditionClauseTable<MODEL, RESULT, Integer, AndClausesTableSingle<MODEL, RESULT>> and(IntegerFunction<RESULT> getter) {
 		return new ConditionClauseImpl<MODEL, RESULT, Integer, AndClausesTableSingle<MODEL,RESULT>>(this, makeGetter(getter));
 	}
 
 	@Override
-	public StringClause<MODEL, RESULT, AndClausesTableSingle<MODEL, RESULT>> and(StringFunction<RESULT> getter) {
+	public ISharedStringClause<MODEL, RESULT, AndClausesTableSingle<MODEL, RESULT>> and(StringFunction<RESULT> getter) {
 		return new StringClauseImpl<MODEL, RESULT, AndClausesTableSingle<MODEL,RESULT>>(this, makeGetter(getter));
 	}
 }

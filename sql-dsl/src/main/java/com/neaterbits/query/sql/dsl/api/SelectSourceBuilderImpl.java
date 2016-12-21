@@ -3,8 +3,8 @@ package com.neaterbits.query.sql.dsl.api;
 
 abstract class SelectSourceBuilderImpl<MODEL, RESULT> extends BaseQueryEntity<MODEL>
 		implements 
-				SelectSourceBuilderTable<MODEL, RESULT>,
-				SelectSourceBuilderAlias<MODEL, RESULT>,
+				IClassicSelectSourceBuilderTable<MODEL, RESULT>,
+				IClassicSelectSourceBuilderAlias<MODEL, RESULT>,
 				SelectSourceBuilderAliasAlias<MODEL, RESULT> {
 
 //	private Class<?> [] classes;
@@ -34,7 +34,7 @@ abstract class SelectSourceBuilderImpl<MODEL, RESULT> extends BaseQueryEntity<MO
 	}
 
 	@Override
-	public final WhereClauseBuilder<MODEL, RESULT> from(Alias<?> ... aliases) {
+	public final ISharedWhereClauseBuilder<MODEL, RESULT> from(Alias<?> ... aliases) {
 //		if (classes.length == 0) {
 //			throw new IllegalArgumentException("no classes");
 //		}
@@ -52,7 +52,7 @@ abstract class SelectSourceBuilderImpl<MODEL, RESULT> extends BaseQueryEntity<MO
 	}
 
 	@Override
-	public final WhereOrJoinBuilderAlias<MODEL, RESULT> from(Object... aliases) {
+	public final IClassicWhereOrJoinBuilderAlias<MODEL, RESULT> from(Object... aliases) {
 		
 		if (aliases.length == 0) {
 			throw new IllegalArgumentException("no aliases");

@@ -3,9 +3,9 @@ package com.neaterbits.query.sql.dsl.api;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
-class ConditionClauseImpl<MODEL, RESULT, R, L extends LogicalClauses<MODEL, RESULT>>
-	implements ConditionClauseTable<MODEL, RESULT, R, L>,
-			   ConditionClauseAlias<MODEL, RESULT, R, L>{
+class ConditionClauseImpl<MODEL, RESULT, R, L extends ISharedLogicalClauses<MODEL, RESULT>>
+	implements ISharedConditionClauseTable<MODEL, RESULT, R, L>,
+			   ISharedConditionClauseAlias<MODEL, RESULT, R, L>{
 
 	private final ClausesImpl<MODEL, RESULT> clause;
 	final Getter getter;

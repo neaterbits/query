@@ -10,7 +10,7 @@ final class MultiQueryImpl<RESULT> extends BaseQueryImpl<List<RESULT>, RESULT>
 	}
 
 	@Override
-	public MultiPreparedQuery<RESULT> prepare(QueryDataSource dataSource) {
+	public ISharedMultiPreparedQuery<RESULT> prepare(QueryDataSource dataSource) {
 
 		final QueryDataSourceBase dataSourceBase = (QueryDataSourceBase)dataSource;
 		

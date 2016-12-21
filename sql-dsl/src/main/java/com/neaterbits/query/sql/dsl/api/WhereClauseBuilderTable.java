@@ -11,10 +11,10 @@ import java.util.function.Function;
  * @param <RESULT> query result type
  */
 
-public interface WhereClauseBuilderTable<MODEL, RESULT> extends WhereClauseBuilder<MODEL, RESULT> {
+public interface WhereClauseBuilderTable<MODEL, RESULT> extends ISharedWhereClauseBuilder<MODEL, RESULT> {
 
-	<T, R> ConditionClause<MODEL, RESULT, R, AndOrLogicalClausesTable<MODEL, RESULT>> where(Function<T, R> func);
+	<T, R> ISharedConditionClause<MODEL, RESULT, R, AndOrLogicalClausesTable<MODEL, RESULT>> where(Function<T, R> func);
 
-    <T> StringClause<MODEL, RESULT, AndOrLogicalClausesTable<MODEL, RESULT>> where(StringFunction<T> func);
+    <T> ISharedStringClause<MODEL, RESULT, AndOrLogicalClausesTable<MODEL, RESULT>> where(StringFunction<T> func);
 
 }

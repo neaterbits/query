@@ -1,6 +1,6 @@
 package com.neaterbits.query.sql.dsl.api;
 
 public interface AndOrLogicalClausesAlias<MODEL, RESULT>
-		extends AndClausesAlias<MODEL, RESULT>, OrClausesAlias<MODEL, RESULT>, LogicalClauses<MODEL, RESULT> {
+		extends IClassicAndClausesAlias<MODEL, RESULT>, OrClausesAlias<MODEL, RESULT>, ISharedLogicalClauses<MODEL, RESULT> {
 
 }

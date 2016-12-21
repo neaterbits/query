@@ -6,12 +6,12 @@ import java.util.function.Supplier;
 final class WhereOrJoinClauseBuilderImpl<MODEL, RESULT>
 	extends ClausesImplInitial<MODEL, RESULT>
 	implements WhereOrJoinBuilderTable<MODEL, RESULT>,
-			   WhereOrJoinBuilderAlias<MODEL, RESULT>,
+			   IClassicWhereOrJoinBuilderAlias<MODEL, RESULT>,
 			   AndOrLogicalClausesTable<MODEL, RESULT>,
 			   AndOrLogicalClausesAlias<MODEL, RESULT>,
 			   
 			   JoinConditionTable<MODEL, RESULT, Object, Object>,
-			   JoinConditionAlias<MODEL, RESULT> {
+			   IClassicJoinConditionAlias<MODEL, RESULT> {
 
 	WhereOrJoinClauseBuilderImpl(BaseQueryEntity<MODEL> last) {
 		super(last, new ClauseCollectorImpl());
@@ -92,13 +92,13 @@ final class WhereOrJoinClauseBuilderImpl<MODEL, RESULT>
 	
 	// -- Alias  --
 	
-	private <LEFT, RIGHT> JoinConditionAlias<MODEL, RESULT> getJoinConditionAlias() {
-		return (JoinConditionAlias<MODEL, RESULT>)this;
+	private <LEFT, RIGHT> IClassicJoinConditionAlias<MODEL, RESULT> getJoinConditionAlias() {
+		return (IClassicJoinConditionAlias<MODEL, RESULT>)this;
 	}
 	
 
 	@Override
-	public JoinConditionAlias<MODEL, RESULT> innerJoin(Object left, Object right) {
+	public IClassicJoinConditionAlias<MODEL, RESULT> innerJoin(Object left, Object right) {
 
 		final CollectedJoinAliases collectedJoin = new CollectedJoinAliases(JoinType.INNER, (IAlias)left, (IAlias)right);
 		
@@ -108,7 +108,7 @@ final class WhereOrJoinClauseBuilderImpl<MODEL, RESULT>
 	}
 
 	@Override
-	public JoinConditionAlias<MODEL, RESULT> leftJoin(Object left, Object right) {
+	public IClassicJoinConditionAlias<MODEL, RESULT> leftJoin(Object left, Object right) {
 
 		final CollectedJoinAliases collectedJoin = new CollectedJoinAliases(JoinType.LEFT, (IAlias)left, (IAlias)right);
 		
@@ -117,7 +117,7 @@ final class WhereOrJoinClauseBuilderImpl<MODEL, RESULT>
 		return getJoinConditionAlias();
 	}
 
-	private <R> JoinConditionAlias<MODEL, RESULT> compareAlias(Supplier<R> left, Supplier<R> right) {
+	private <R> IClassicJoinConditionAlias<MODEL, RESULT> compareAlias(Supplier<R> left, Supplier<R> right) {
 		
 		final SupplierGetter leftGetter = new SupplierGetter(left); 
 		final SupplierGetter rightGetter = new SupplierGetter(right); 
@@ -132,7 +132,7 @@ final class WhereOrJoinClauseBuilderImpl<MODEL, RESULT>
 	}
 
 	@Override
-	public JoinConditionAlias<MODEL, RESULT> on(CollectionSupplier joinCollection) {
+	public IClassicJoinConditionAlias<MODEL, RESULT> on(CollectionSupplier joinCollection) {
 		final SupplierGetter collectionGetter = new SupplierGetter(joinCollection); 
 		
 		final CollectedJoin curJoin = getQueryCollector().getJoins().getLast();
@@ -145,36 +145,36 @@ final class WhereOrJoinClauseBuilderImpl<MODEL, RESULT>
 	}
 
 	@Override
-	public JoinConditionAlias<MODEL, RESULT> compare(IntegerSupplier left, IntegerSupplier right) {
+	public IClassicJoinConditionAlias<MODEL, RESULT> compare(IntegerSupplier left, IntegerSupplier right) {
 		return compareAlias(left, right);
 	}
 	
 	@Override
-	public JoinConditionAlias<MODEL, RESULT> compare(LongSupplier left, LongSupplier right) {
+	public IClassicJoinConditionAlias<MODEL, RESULT> compare(LongSupplier left, LongSupplier right) {
 		return compareAlias(left, right);
 	}
 
 	// ------------------------  WHERE ------------------------
 	@Override
-	public <T, RR> ConditionClause<MODEL, RESULT, RR, AndOrLogicalClausesTable<MODEL, RESULT>> where(Function<T, RR> getter) {
+	public <T, RR> ISharedConditionClause<MODEL, RESULT, RR, AndOrLogicalClausesTable<MODEL, RESULT>> where(Function<T, RR> getter) {
 
 		return new ConditionClauseImpl<MODEL, RESULT, RR, AndOrLogicalClausesTable<MODEL,RESULT>>(this, makeGetter(getter));
 	}
 
 	@Override
-	public <T> StringClause<MODEL, RESULT, AndOrLogicalClausesTable<MODEL, RESULT>> where(StringFunction<T> getter) {
+	public <T> ISharedStringClause<MODEL, RESULT, AndOrLogicalClausesTable<MODEL, RESULT>> where(StringFunction<T> getter) {
 		
 		return new StringClauseImpl<MODEL, RESULT, AndOrLogicalClausesTable<MODEL,RESULT>>(this, makeGetter(getter));
 	}
 	
 	@Override
-	public <R> ConditionClause<MODEL, RESULT, R, AndOrLogicalClausesAlias<MODEL, RESULT>> where(Supplier<R> func) {
+	public <R> ISharedConditionClause<MODEL, RESULT, R, AndOrLogicalClausesAlias<MODEL, RESULT>> where(Supplier<R> func) {
 
 		return new ConditionClauseImpl<MODEL, RESULT, R, AndOrLogicalClausesAlias<MODEL,RESULT>>(this, makeGetter(func));
 	}
 
 	@Override
-	public StringClause<MODEL, RESULT, AndOrLogicalClausesAlias<MODEL, RESULT>> where(StringSupplier supplier) {
+	public ISharedStringClause<MODEL, RESULT, AndOrLogicalClausesAlias<MODEL, RESULT>> where(StringSupplier supplier) {
 
 		return new StringClauseImpl<MODEL, RESULT, AndOrLogicalClausesAlias<MODEL,RESULT>>(this, makeGetter(supplier));
 	}
@@ -183,17 +183,17 @@ final class WhereOrJoinClauseBuilderImpl<MODEL, RESULT>
 
 	
 	@Override
-	public <T> ConditionClauseTable<MODEL, RESULT, Integer, AndClausesTable<MODEL, RESULT>> and(IntegerFunction<T> getter) {
+	public <T> ISharedConditionClauseTable<MODEL, RESULT, Integer, AndClausesTable<MODEL, RESULT>> and(IntegerFunction<T> getter) {
 		return andClassImpl(getter);
 	}
 
 	@Override
-	public <T> ConditionClauseTable<MODEL, RESULT, Long, AndClausesTable<MODEL, RESULT>> and(LongFunction<T> getter) {
+	public <T> ISharedConditionClauseTable<MODEL, RESULT, Long, AndClausesTable<MODEL, RESULT>> and(LongFunction<T> getter) {
 		return andClassImpl(getter);
 	}
 
 	@Override
-	public <T> StringClause<MODEL, RESULT, AndClausesTable<MODEL, RESULT>> and(StringFunction<T> getter) {
+	public <T> ISharedStringClause<MODEL, RESULT, AndClausesTable<MODEL, RESULT>> and(StringFunction<T> getter) {
 		
 		final AndClausesImpl<MODEL, RESULT> andClauses = new AndClausesImpl<>(this);
 		
@@ -201,57 +201,57 @@ final class WhereOrJoinClauseBuilderImpl<MODEL, RESULT>
 	}
 	
 	@Override
-	public ConditionClauseAlias<MODEL, RESULT, Integer, AndClausesAlias<MODEL, RESULT>> and(IntegerSupplier getter) {
+	public ISharedConditionClauseAlias<MODEL, RESULT, Integer, IClassicAndClausesAlias<MODEL, RESULT>> and(IntegerSupplier getter) {
 		return andAliasImpl(getter);
 	}
 
 	@Override
-	public ConditionClauseAlias<MODEL, RESULT, Long, AndClausesAlias<MODEL, RESULT>> and(LongSupplier getter) {
+	public ISharedConditionClauseAlias<MODEL, RESULT, Long, IClassicAndClausesAlias<MODEL, RESULT>> and(LongSupplier getter) {
 		return andAliasImpl(getter);
 	}
 
 	@Override
-	public StringClause<MODEL, RESULT, AndClausesAlias<MODEL, RESULT>> and(StringSupplier getter) {
+	public ISharedStringClause<MODEL, RESULT, IClassicAndClausesAlias<MODEL, RESULT>> and(StringSupplier getter) {
 
 		final AndClausesImpl<MODEL, RESULT> andClauses = new AndClausesImpl<>(this);
 		
-		return new StringClauseImpl<MODEL, RESULT, AndClausesAlias<MODEL,RESULT>>(andClauses, makeGetter(getter));
+		return new StringClauseImpl<MODEL, RESULT, IClassicAndClausesAlias<MODEL,RESULT>>(andClauses, makeGetter(getter));
 	}
 	
 
 	// ------------------------  OR ------------------------
 
 	@Override
-	public <T> ConditionClause<MODEL, RESULT, Integer, OrClausesTable<MODEL, RESULT>> or(IntegerFunction<T> getter) {
+	public <T> ISharedConditionClause<MODEL, RESULT, Integer, OrClausesTable<MODEL, RESULT>> or(IntegerFunction<T> getter) {
 		return orClassImpl(getter);
 	}
 
 	
 	@Override
-	public <T> ConditionClause<MODEL, RESULT, Long, OrClausesTable<MODEL, RESULT>> or(LongFunction<T> getter) {
+	public <T> ISharedConditionClause<MODEL, RESULT, Long, OrClausesTable<MODEL, RESULT>> or(LongFunction<T> getter) {
 		return orClassImpl(getter);
 	}
 
 
 	@Override
-	public <T> StringClause<MODEL, RESULT, OrClausesTable<MODEL, RESULT>> or(StringFunction<T> getter) {
+	public <T> ISharedStringClause<MODEL, RESULT, OrClausesTable<MODEL, RESULT>> or(StringFunction<T> getter) {
 		final OrClausesImpl<MODEL, RESULT> orClauses = new OrClausesImpl<>(this);
 
 		return new StringClauseImpl<MODEL, RESULT, OrClausesTable<MODEL,RESULT>>(orClauses, makeGetter(getter));
 	}
 	
 	@Override
-	public ConditionClause<MODEL, RESULT, Integer, OrClausesAlias<MODEL, RESULT>> or(IntegerSupplier getter) {
+	public ISharedConditionClause<MODEL, RESULT, Integer, OrClausesAlias<MODEL, RESULT>> or(IntegerSupplier getter) {
 		return orAliasImpl(this, getter);
 	}
 	
 	@Override
-	public ConditionClause<MODEL, RESULT, Long, OrClausesAlias<MODEL, RESULT>> or(LongSupplier getter) {
+	public ISharedConditionClause<MODEL, RESULT, Long, OrClausesAlias<MODEL, RESULT>> or(LongSupplier getter) {
 		return orAliasImpl(this, getter);
 	}
 
 	@Override
-	public StringClause<MODEL, RESULT, OrClausesAlias<MODEL, RESULT>> or(StringSupplier getter) {
+	public ISharedStringClause<MODEL, RESULT, OrClausesAlias<MODEL, RESULT>> or(StringSupplier getter) {
 
 		final OrClausesImpl<MODEL, RESULT> orClauses = new OrClausesImpl<>(this);
 
@@ -260,28 +260,28 @@ final class WhereOrJoinClauseBuilderImpl<MODEL, RESULT>
 
 	// ------------------------  AND helpers ------------------------
 
-	private <T, RR> ConditionClauseTable<MODEL, RESULT, RR, AndClausesTable<MODEL, RESULT>> andClassImpl(Function<T, RR> getter) {
+	private <T, RR> ISharedConditionClauseTable<MODEL, RESULT, RR, AndClausesTable<MODEL, RESULT>> andClassImpl(Function<T, RR> getter) {
 		
 		final AndClausesImpl<MODEL, RESULT> andClauses = new AndClausesImpl<>(this);
 		
 		return new ConditionClauseImpl<MODEL, RESULT, RR, AndClausesTable<MODEL,RESULT>>(andClauses, makeGetter(getter));
 	}
 
-	private <RR> ConditionClauseAlias<MODEL, RESULT, RR, AndClausesAlias<MODEL, RESULT>> andAliasImpl(Supplier<RR> getter) {
+	private <RR> ISharedConditionClauseAlias<MODEL, RESULT, RR, IClassicAndClausesAlias<MODEL, RESULT>> andAliasImpl(Supplier<RR> getter) {
 
 		final AndClausesImpl<MODEL, RESULT> andClauses = new AndClausesImpl<>(this);
 		
-		return new ConditionClauseImpl<MODEL, RESULT, RR, AndClausesAlias<MODEL,RESULT>>(andClauses, makeGetter(getter));
+		return new ConditionClauseImpl<MODEL, RESULT, RR, IClassicAndClausesAlias<MODEL,RESULT>>(andClauses, makeGetter(getter));
 	}
 
 	// ------------------------  OR helpers ------------------------
-	final <T, RR> ConditionClause<MODEL, RESULT, RR, OrClausesTable<MODEL, RESULT>> orClassImpl(Function<T, RR> getter) {
+	final <T, RR> ISharedConditionClause<MODEL, RESULT, RR, OrClausesTable<MODEL, RESULT>> orClassImpl(Function<T, RR> getter) {
 		final OrClausesImpl<MODEL, RESULT> orClauses = new OrClausesImpl<>(this);
 
 		return new ConditionClauseImpl<MODEL, RESULT, RR, OrClausesTable<MODEL,RESULT>>(orClauses, makeGetter(getter));
 	}
 
-	final <RR> ConditionClause<MODEL, RESULT, RR, OrClausesAlias<MODEL, RESULT>> orAliasImpl(ClausesImplInitial<MODEL, RESULT> last, Supplier<RR> getter) {
+	final <RR> ISharedConditionClause<MODEL, RESULT, RR, OrClausesAlias<MODEL, RESULT>> orAliasImpl(ClausesImplInitial<MODEL, RESULT> last, Supplier<RR> getter) {
 
 		final OrClausesImpl<MODEL, RESULT> orClauses = new OrClausesImpl<>(last);
 

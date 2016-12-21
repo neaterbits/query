@@ -10,41 +10,41 @@ final class OrClausesImpl<MODEL, RESULT> extends ClausesImpl<MODEL, RESULT>
 		super(last);
 	}
 
-	private <T, RR> ConditionClause<MODEL, RESULT, RR, OrClausesTable<MODEL, RESULT>> orClassImpl(Function<T, RR> getter) {
+	private <T, RR> ISharedConditionClause<MODEL, RESULT, RR, OrClausesTable<MODEL, RESULT>> orClassImpl(Function<T, RR> getter) {
 		return new ConditionClauseImpl<MODEL, RESULT, RR, OrClausesTable<MODEL,RESULT>>(this, makeGetter(getter));
 	}
 	
-	private <RR> ConditionClause<MODEL, RESULT, RR, OrClausesAlias<MODEL, RESULT>> orAliasImpl(Supplier<RR> getter) {
+	private <RR> ISharedConditionClause<MODEL, RESULT, RR, OrClausesAlias<MODEL, RESULT>> orAliasImpl(Supplier<RR> getter) {
 		return new ConditionClauseImpl<MODEL, RESULT, RR, OrClausesAlias<MODEL,RESULT>>(this, makeGetter(getter));
 	}
 
 	@Override
-	public <T> ConditionClause<MODEL, RESULT, Integer, OrClausesTable<MODEL, RESULT>> or(IntegerFunction<T> getter) {
+	public <T> ISharedConditionClause<MODEL, RESULT, Integer, OrClausesTable<MODEL, RESULT>> or(IntegerFunction<T> getter) {
 		return orClassImpl(getter);
 	}
 
 	@Override
-	public <T> ConditionClause<MODEL, RESULT, Long, OrClausesTable<MODEL, RESULT>> or(LongFunction<T> getter) {
+	public <T> ISharedConditionClause<MODEL, RESULT, Long, OrClausesTable<MODEL, RESULT>> or(LongFunction<T> getter) {
 		return orClassImpl(getter);
 	}
 
 	@Override
-	public <T> StringClause<MODEL, RESULT, OrClausesTable<MODEL, RESULT>> or(StringFunction<T> getter) {
+	public <T> ISharedStringClause<MODEL, RESULT, OrClausesTable<MODEL, RESULT>> or(StringFunction<T> getter) {
 		return new StringClauseImpl<MODEL, RESULT, OrClausesTable<MODEL,RESULT>>(this, makeGetter(getter));
 	}
 
 	@Override
-	public ConditionClause<MODEL, RESULT, Integer, OrClausesAlias<MODEL, RESULT>> or(IntegerSupplier getter) {
+	public ISharedConditionClause<MODEL, RESULT, Integer, OrClausesAlias<MODEL, RESULT>> or(IntegerSupplier getter) {
 		return orAliasImpl(getter);
 	}
 
 	@Override
-	public ConditionClause<MODEL, RESULT, Long, OrClausesAlias<MODEL, RESULT>> or(LongSupplier getter) {
+	public ISharedConditionClause<MODEL, RESULT, Long, OrClausesAlias<MODEL, RESULT>> or(LongSupplier getter) {
 		return orAliasImpl(getter);
 	}
 
 	@Override
-	public StringClause<MODEL, RESULT, OrClausesAlias<MODEL, RESULT>> or(StringSupplier getter) {
+	public ISharedStringClause<MODEL, RESULT, OrClausesAlias<MODEL, RESULT>> or(StringSupplier getter) {
 		return new StringClauseImpl<MODEL, RESULT, OrClausesAlias<MODEL,RESULT>>(this, makeGetter(getter));
 	}
 }

@@ -1,10 +1,10 @@
 package com.neaterbits.query.sql.dsl.api;
 
 
-public interface AndClausesTableSingle<MODEL, RESULT> extends LogicalClauses<MODEL, RESULT> {
+public interface AndClausesTableSingle<MODEL, RESULT> extends ISharedLogicalClauses<MODEL, RESULT> {
 
-    ConditionClauseTable<MODEL, RESULT, Integer, AndClausesTableSingle<MODEL, RESULT>> and(IntegerFunction<RESULT> getter);
+    ISharedConditionClauseTable<MODEL, RESULT, Integer, AndClausesTableSingle<MODEL, RESULT>> and(IntegerFunction<RESULT> getter);
 
-    StringClause<MODEL, RESULT, AndClausesTableSingle<MODEL, RESULT>> and(StringFunction<RESULT> getter);
+    ISharedStringClause<MODEL, RESULT, AndClausesTableSingle<MODEL, RESULT>> and(StringFunction<RESULT> getter);
 	
 }

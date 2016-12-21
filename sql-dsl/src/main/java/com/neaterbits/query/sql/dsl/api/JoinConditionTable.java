@@ -1,7 +1,7 @@
 package com.neaterbits.query.sql.dsl.api;
 
 public interface JoinConditionTable<MODEL, RESULT, LEFT, RIGHT>
-		extends JoinCondition,
+		extends IClassicJoinCondition,
 				WhereClauseBuilderTable<MODEL, RESULT> {
 
 	JoinConditionTable<MODEL, RESULT, LEFT, RIGHT>

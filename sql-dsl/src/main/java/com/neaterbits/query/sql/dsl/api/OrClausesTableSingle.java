@@ -1,10 +1,10 @@
 package com.neaterbits.query.sql.dsl.api;
 
 
-public interface OrClausesTableSingle<MODEL, RESULT> extends LogicalClauses<MODEL, RESULT> {
+public interface OrClausesTableSingle<MODEL, RESULT> extends ISharedLogicalClauses<MODEL, RESULT> {
 
-    ConditionClause<MODEL, RESULT, Integer, OrClausesTableSingle<MODEL, RESULT>> or(IntegerFunction<RESULT> getter);
+    ISharedConditionClause<MODEL, RESULT, Integer, OrClausesTableSingle<MODEL, RESULT>> or(IntegerFunction<RESULT> getter);
     
-    StringClause<MODEL, RESULT, OrClausesTableSingle<MODEL, RESULT>> or(StringFunction<RESULT> getter);
+    ISharedStringClause<MODEL, RESULT, OrClausesTableSingle<MODEL, RESULT>> or(StringFunction<RESULT> getter);
 	
 }

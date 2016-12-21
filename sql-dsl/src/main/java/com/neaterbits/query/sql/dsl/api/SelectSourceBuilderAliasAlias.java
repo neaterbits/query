@@ -7,6 +7,6 @@ public interface SelectSourceBuilderAliasAlias<MODEL, RESULT> extends SelectSour
      * @param aliases
      */
     
-    WhereClauseBuilder<MODEL, RESULT> from(Alias<?> ... aliases);
+    ISharedWhereClauseBuilder<MODEL, RESULT> from(Alias<?> ... aliases);
 	
 }
