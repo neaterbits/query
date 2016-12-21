@@ -6,7 +6,7 @@ final class SingleTableResultImpl<MODEL, RESULT>
 	extends ClausesImplInitial<MODEL, RESULT> 
 		implements
 			IClassicSingleWhereClauseBuilderTable<MODEL, RESULT>,
-			AndOrLogicalClausesTableSingle<MODEL, RESULT>
+			IClassicSingleAndOrLogicalClausesTable<MODEL, RESULT>
 				  {
 	SingleTableResultImpl(QueryResult result, ModelCompiler<MODEL> modelCompiler) {
 		super(
@@ -29,17 +29,17 @@ final class SingleTableResultImpl<MODEL, RESULT>
 
 
 	@Override
-	public <RR> ISharedConditionClause<MODEL, RESULT, RR, AndOrLogicalClausesTableSingle<MODEL, RESULT>>
+	public <RR> ISharedConditionClause<MODEL, RESULT, RR, IClassicSingleAndOrLogicalClausesTable<MODEL, RESULT>>
 			where(Function<RESULT, RR> func) {
 
-		return new ConditionClauseImpl<MODEL, RESULT, RR, AndOrLogicalClausesTableSingle<MODEL,RESULT>>(this, makeGetter(func));
+		return new ConditionClauseImpl<MODEL, RESULT, RR, IClassicSingleAndOrLogicalClausesTable<MODEL,RESULT>>(this, makeGetter(func));
 	}
 
 	@Override
-	public ISharedStringClause<MODEL, RESULT, AndOrLogicalClausesTableSingle<MODEL, RESULT>>
+	public ISharedStringClause<MODEL, RESULT, IClassicSingleAndOrLogicalClausesTable<MODEL, RESULT>>
 			where(StringFunction<RESULT> func) {
 
-		return new StringClauseImpl<MODEL, RESULT, AndOrLogicalClausesTableSingle<MODEL,RESULT>>(this, makeGetter(func));
+		return new StringClauseImpl<MODEL, RESULT, IClassicSingleAndOrLogicalClausesTable<MODEL,RESULT>>(this, makeGetter(func));
 	}
 
 	// ------------------------  AND ------------------------

@@ -2,7 +2,7 @@ package com.neaterbits.query.sql.dsl.api;
 
 public interface JoinClauseTable<MODEL, RESULT>
 		
-		extends	WhereClauseBuilderTable<MODEL, RESULT> {
+		extends	IClassicWhereClauseBuilderTable<MODEL, RESULT> {
 
 
 	<LEFT, RIGHT> JoinConditionTable<MODEL, RESULT, LEFT, RIGHT> innerJoin(Class<LEFT> leftType, Class<RIGHT> rightType);

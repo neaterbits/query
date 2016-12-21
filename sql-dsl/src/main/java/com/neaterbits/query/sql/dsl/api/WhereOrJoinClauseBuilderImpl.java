@@ -178,7 +178,7 @@ final class WhereOrJoinClauseBuilderImpl<MODEL, RESULT>
 	public ISharedConditionClause<MODEL, RESULT, Integer, IClassicAndOrLogicalClausesAlias<MODEL, RESULT>> where(IntegerSupplier func) {
 
 		return new ConditionClauseImpl<MODEL, RESULT, Integer, IClassicAndOrLogicalClausesAlias<MODEL,RESULT>>(this, makeGetter(func));
-	}
+	}	
 
 	@Override
 	public ISharedStringClause<MODEL, RESULT, IClassicAndOrLogicalClausesAlias<MODEL, RESULT>> where(StringSupplier supplier) {

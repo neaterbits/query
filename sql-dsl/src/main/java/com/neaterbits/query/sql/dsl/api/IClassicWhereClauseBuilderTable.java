@@ -10,6 +10,6 @@ package com.neaterbits.query.sql.dsl.api;
  * @param <RESULT> query result type
  */
 
-public interface WhereClauseBuilderTable<MODEL, RESULT> extends ISharedWhereClauseBuilderTable<MODEL, RESULT, IClassicAndOrLogicalClausesTable<MODEL, RESULT>> {
+public interface IClassicWhereClauseBuilderTable<MODEL, RESULT> extends ISharedWhereClauseBuilderTable<MODEL, RESULT, IClassicAndOrLogicalClausesTable<MODEL, RESULT>> {
 
 }
