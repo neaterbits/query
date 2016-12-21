@@ -5,7 +5,7 @@ import java.util.function.Function;
 final class SingleTableResultImpl<MODEL, RESULT>
 	extends ClausesImplInitial<MODEL, RESULT> 
 		implements
-			IClassicWhereClauseBuilderTableSingle<MODEL, RESULT>,
+			IClassicSingleWhereClauseBuilderTable<MODEL, RESULT>,
 			AndOrLogicalClausesTableSingle<MODEL, RESULT>
 				  {
 	SingleTableResultImpl(QueryResult result, ModelCompiler<MODEL> modelCompiler) {
@@ -44,39 +44,39 @@ final class SingleTableResultImpl<MODEL, RESULT>
 
 	// ------------------------  AND ------------------------
 	@Override
-	public ISharedConditionClauseTable<MODEL, RESULT, Integer, AndClausesTableSingle<MODEL, RESULT>>
+	public ISharedConditionClauseTable<MODEL, RESULT, Integer, IClassicSingleAndClausesTable<MODEL, RESULT>>
 			and(IntegerFunction<RESULT> getter) {
 		
 		final AndClausesImplTableSingle<MODEL, RESULT> andClauses = new AndClausesImplTableSingle<>(this);
 		
-		return new ConditionClauseImpl<MODEL, RESULT, Integer, AndClausesTableSingle<MODEL,RESULT>>(andClauses, makeGetter(getter));
+		return new ConditionClauseImpl<MODEL, RESULT, Integer, IClassicSingleAndClausesTable<MODEL,RESULT>>(andClauses, makeGetter(getter));
 	}
 
 	@Override
-	public ISharedStringClause<MODEL, RESULT, AndClausesTableSingle<MODEL, RESULT>>
+	public ISharedStringClause<MODEL, RESULT, IClassicSingleAndClausesTable<MODEL, RESULT>>
 			and(StringFunction<RESULT> getter) {
 
 		final AndClausesImplTableSingle<MODEL, RESULT> andClauses = new AndClausesImplTableSingle<>(this);
 		
-		return new StringClauseImpl<MODEL, RESULT, AndClausesTableSingle<MODEL,RESULT>>(andClauses, makeGetter(getter));
+		return new StringClauseImpl<MODEL, RESULT, IClassicSingleAndClausesTable<MODEL,RESULT>>(andClauses, makeGetter(getter));
 	}
 	
 	// ------------------------  OR ------------------------
 	@Override
-	public ISharedConditionClause<MODEL, RESULT, Integer, OrClausesTableSingle<MODEL, RESULT>>
+	public ISharedConditionClause<MODEL, RESULT, Integer, IClassicSingleOrClausesTable<MODEL, RESULT>>
 			or(IntegerFunction<RESULT> getter) {
 
 		final OrClausesImplTableSingle<MODEL, RESULT> orClauses = new OrClausesImplTableSingle<>(this);
 		
-		return new ConditionClauseImpl<MODEL, RESULT, Integer, OrClausesTableSingle<MODEL,RESULT>>(orClauses, makeGetter(getter));
+		return new ConditionClauseImpl<MODEL, RESULT, Integer, IClassicSingleOrClausesTable<MODEL,RESULT>>(orClauses, makeGetter(getter));
 	}
 
 	@Override
-	public ISharedStringClause<MODEL, RESULT, OrClausesTableSingle<MODEL, RESULT>>
+	public ISharedStringClause<MODEL, RESULT, IClassicSingleOrClausesTable<MODEL, RESULT>>
 			or(StringFunction<RESULT> getter) {
 
 		final OrClausesImplTableSingle<MODEL, RESULT> orClauses = new OrClausesImplTableSingle<>(this);
 
-		return new StringClauseImpl<MODEL, RESULT, OrClausesTableSingle<MODEL,RESULT>>(orClauses, makeGetter(getter));
+		return new StringClauseImpl<MODEL, RESULT, IClassicSingleOrClausesTable<MODEL,RESULT>>(orClauses, makeGetter(getter));
 	}
 }
