@@ -45,7 +45,7 @@ final class SingleTableResultImpl<MODEL, RESULT>
 	// ------------------------  AND ------------------------
 	@Override
 	public ISharedConditionClauseTable<MODEL, RESULT, Integer, IClassicSingleAndClausesTable<MODEL, RESULT>>
-			and(IntegerFunction<RESULT> getter) {
+			and(IFunctionInteger<RESULT> getter) {
 		
 		final AndClausesImplTableSingle<MODEL, RESULT> andClauses = new AndClausesImplTableSingle<>(this);
 		
@@ -64,7 +64,7 @@ final class SingleTableResultImpl<MODEL, RESULT>
 	// ------------------------  OR ------------------------
 	@Override
 	public ISharedConditionClause<MODEL, RESULT, Integer, IClassicSingleOrClausesTable<MODEL, RESULT>>
-			or(IntegerFunction<RESULT> getter) {
+			or(IFunctionInteger<RESULT> getter) {
 
 		final OrClausesImplTableSingle<MODEL, RESULT> orClauses = new OrClausesImplTableSingle<>(this);
 		

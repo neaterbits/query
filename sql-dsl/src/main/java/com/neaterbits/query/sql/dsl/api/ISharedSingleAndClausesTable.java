@@ -8,7 +8,7 @@ public interface ISharedSingleAndClausesTable<
 
 	extends ISharedLogicalClauses<MODEL, RESULT> {
 
-    ISharedConditionClauseTable<MODEL, RESULT, Integer, AND_CLAUSES> and(IntegerFunction<RESULT> getter);
+    ISharedConditionClauseTable<MODEL, RESULT, Integer, AND_CLAUSES> and(IFunctionInteger<RESULT> getter);
 
     ISharedStringClause<MODEL, RESULT, AND_CLAUSES> and(StringFunction<RESULT> getter);
 	

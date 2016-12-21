@@ -9,7 +9,7 @@ final class AndClausesImplTableSingle<MODEL, RESULT> extends ClausesImpl<MODEL, 
 	}
 
 	@Override
-	public ISharedConditionClauseTable<MODEL, RESULT, Integer, IClassicSingleAndClausesTable<MODEL, RESULT>> and(IntegerFunction<RESULT> getter) {
+	public ISharedConditionClauseTable<MODEL, RESULT, Integer, IClassicSingleAndClausesTable<MODEL, RESULT>> and(IFunctionInteger<RESULT> getter) {
 		return new ConditionClauseImpl<MODEL, RESULT, Integer, IClassicSingleAndClausesTable<MODEL,RESULT>>(this, makeGetter(getter));
 	}
 

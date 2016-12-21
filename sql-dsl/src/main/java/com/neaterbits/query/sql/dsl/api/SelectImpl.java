@@ -185,17 +185,17 @@ final class SelectImpl implements IClassic {
 	}
 	
 	@Override
-	public <T> IClassicNumericTableResult<Short> sum(ShortFunction<T> field) {
+	public <T> IClassicNumericTableResult<Short> sum(IFunctionShort<T> field) {
 		return sum(field, Short.class);
 	}
 
 	@Override
-	public <T> IClassicNumericTableResult<Integer> sum(IntegerFunction<T> field) {
+	public <T> IClassicNumericTableResult<Integer> sum(IFunctionInteger<T> field) {
 		return sum(field, Integer.class);
 	}
 
 	@Override
-	public <T> IClassicNumericTableResult<Long> sum(LongFunction<T> field) {
+	public <T> IClassicNumericTableResult<Long> sum(IFunctionLong<T> field) {
 		return sum(field, Long.class);
 	}
 

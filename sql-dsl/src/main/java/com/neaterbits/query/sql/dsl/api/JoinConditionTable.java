@@ -9,6 +9,6 @@ public interface JoinConditionTable<MODEL, RESULT, LEFT, RIGHT>
 
 	
 	JoinConditionTable<MODEL, RESULT, LEFT, RIGHT>
-			compare(IntegerFunction<LEFT>  left, IntegerFunction<RIGHT> right);
+			compare(IFunctionInteger<LEFT>  left, IFunctionInteger<RIGHT> right);
 	
 }

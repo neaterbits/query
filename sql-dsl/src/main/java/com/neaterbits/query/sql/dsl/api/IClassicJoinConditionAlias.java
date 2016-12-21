@@ -6,9 +6,9 @@ public interface IClassicJoinConditionAlias<MODEL, RESULT>
 				IClassicWhereClauseBuilderAlias<MODEL, RESULT> {
 	
 	
-	IClassicJoinConditionAlias<MODEL, RESULT> on(CollectionSupplier joinCollection);
+	IClassicJoinConditionAlias<MODEL, RESULT> on(ISupplierCollection joinCollection);
 	
-	IClassicJoinConditionAlias<MODEL, RESULT> compare(IntegerSupplier left, IntegerSupplier right);
+	IClassicJoinConditionAlias<MODEL, RESULT> compare(ISupplierInteger left, ISupplierInteger right);
 
-	IClassicJoinConditionAlias<MODEL, RESULT> compare(LongSupplier left, LongSupplier right);
+	IClassicJoinConditionAlias<MODEL, RESULT> compare(ISupplierLong left, ISupplierLong right);
 }

@@ -2,6 +2,6 @@ package com.neaterbits.query.sql.dsl.api;
 
 import java.util.function.Function;
 
-public interface IntegerFunction<T> extends Function<T, Integer> {
+public interface IFunctionEnum<T, E extends Enum<E>> extends Function<T, E> {
 
 }

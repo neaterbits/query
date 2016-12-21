@@ -36,15 +36,15 @@ public interface Select {
 		return SelectImpl.selectImpl.aliasAlias(aliasType);
     }
 
-    public static <T> IClassicNumericTableResult<Short> sum(ShortFunction<T> field) {
+    public static <T> IClassicNumericTableResult<Short> sum(IFunctionShort<T> field) {
     	return SelectImpl.selectImpl.sum(field);
     }
 	
-    public static <T> IClassicNumericTableResult<Integer> sum(IntegerFunction<T> field) {
+    public static <T> IClassicNumericTableResult<Integer> sum(IFunctionInteger<T> field) {
     	return SelectImpl.selectImpl.sum(field);
     }
 
-    public static <T> IClassicNumericTableResult<Long> sum(LongFunction<T> field) {
+    public static <T> IClassicNumericTableResult<Long> sum(IFunctionLong<T> field) {
     	return SelectImpl.selectImpl.sum(field);
     }
 

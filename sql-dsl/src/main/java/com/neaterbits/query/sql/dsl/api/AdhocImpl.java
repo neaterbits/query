@@ -13,17 +13,17 @@ final class AdhocImpl implements IAdhoc {
 	}
 	
 	@Override
-	public <T> IAdhocNumericTableResult<Short> sum(ShortFunction<T> field) {
+	public <T> IAdhocNumericTableResult<Short> sum(IFunctionShort<T> field) {
 		return createNumeric(field, AggregateFunction.SUM, NumericType.SHORT);
 	}
 
 	@Override
-	public <T> IAdhocNumericTableResult<Integer> sum(IntegerFunction<T> field) {
+	public <T> IAdhocNumericTableResult<Integer> sum(IFunctionInteger<T> field) {
 		return createNumeric(field, AggregateFunction.SUM, NumericType.INTEGER);
 	}
 
 	@Override
-	public <T> IAdhocNumericTableResult<Long> sum(LongFunction<T> field) {
+	public <T> IAdhocNumericTableResult<Long> sum(IFunctionLong<T> field) {
 		return createNumeric(field, AggregateFunction.SUM, NumericType.LONG);
 	}
 

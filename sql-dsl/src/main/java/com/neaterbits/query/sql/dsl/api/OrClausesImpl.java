@@ -19,12 +19,12 @@ final class OrClausesImpl<MODEL, RESULT> extends ClausesImpl<MODEL, RESULT>
 	}
 
 	@Override
-	public <T> ISharedConditionClause<MODEL, RESULT, Integer, IClassicOrClausesTable<MODEL, RESULT>> or(IntegerFunction<T> getter) {
+	public <T> ISharedConditionClause<MODEL, RESULT, Integer, IClassicOrClausesTable<MODEL, RESULT>> or(IFunctionInteger<T> getter) {
 		return orClassImpl(getter);
 	}
 
 	@Override
-	public <T> ISharedConditionClause<MODEL, RESULT, Long, IClassicOrClausesTable<MODEL, RESULT>> or(LongFunction<T> getter) {
+	public <T> ISharedConditionClause<MODEL, RESULT, Long, IClassicOrClausesTable<MODEL, RESULT>> or(IFunctionLong<T> getter) {
 		return orClassImpl(getter);
 	}
 
@@ -34,17 +34,17 @@ final class OrClausesImpl<MODEL, RESULT> extends ClausesImpl<MODEL, RESULT>
 	}
 
 	@Override
-	public ISharedConditionClause<MODEL, RESULT, Integer, IClassicOrClausesAlias<MODEL, RESULT>> or(IntegerSupplier getter) {
+	public ISharedConditionClause<MODEL, RESULT, Integer, IClassicOrClausesAlias<MODEL, RESULT>> or(ISupplierInteger getter) {
 		return orAliasImpl(getter);
 	}
 
 	@Override
-	public ISharedConditionClause<MODEL, RESULT, Long, IClassicOrClausesAlias<MODEL, RESULT>> or(LongSupplier getter) {
+	public ISharedConditionClause<MODEL, RESULT, Long, IClassicOrClausesAlias<MODEL, RESULT>> or(ISupplierLong getter) {
 		return orAliasImpl(getter);
 	}
 
 	@Override
-	public ISharedStringClause<MODEL, RESULT, IClassicOrClausesAlias<MODEL, RESULT>> or(StringSupplier getter) {
+	public ISharedStringClause<MODEL, RESULT, IClassicOrClausesAlias<MODEL, RESULT>> or(ISupplierString getter) {
 		return new StringClauseImpl<MODEL, RESULT, IClassicOrClausesAlias<MODEL,RESULT>>(this, makeGetter(getter));
 	}
 }
