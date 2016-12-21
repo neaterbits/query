@@ -9,5 +9,5 @@ public interface SumFunction<SHORT_RET, INT_RET, LONG_RET, BIGDECIMAL_RET> {
 
     <T> LONG_RET sum(IFunctionLong<T> field);
 
-    <T> BIGDECIMAL_RET sum(BigDecimalFunction<T> field);
+    <T> BIGDECIMAL_RET sum(IFunctionBigDecimal<T> field);
 }

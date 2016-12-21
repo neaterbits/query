@@ -7,7 +7,7 @@ abstract class QueryResultEntity extends QueryResult {
 	}
 
 	@Override
-	final QueryResultGathering getGathering() {
-		return QueryResultGathering.ENTITY;
+	final EQueryResultGathering getGathering() {
+		return EQueryResultGathering.ENTITY;
 	}
 }

@@ -6,7 +6,7 @@ abstract class QueryResultMapped extends QueryResult {
 	}
 
 	@Override
-	final QueryResultGathering getGathering() {
-		return QueryResultGathering.MAPPED;
+	final EQueryResultGathering getGathering() {
+		return EQueryResultGathering.MAPPED;
 	}
 }

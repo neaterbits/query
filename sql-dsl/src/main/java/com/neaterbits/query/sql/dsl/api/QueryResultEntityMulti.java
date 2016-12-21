@@ -7,8 +7,8 @@ final class QueryResultEntityMulti extends QueryResultEntity {
 	}
 
 	@Override
-	QueryResultDimension getDimension() {
-		return QueryResultDimension.MULTI;
+	EQueryResultDimension getDimension() {
+		return EQueryResultDimension.MULTI;
 	}
 	
 }

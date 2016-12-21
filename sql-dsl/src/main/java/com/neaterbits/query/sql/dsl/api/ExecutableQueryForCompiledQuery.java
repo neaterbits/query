@@ -23,22 +23,22 @@ final class ExecutableQueryForCompiledQuery implements ExecutableQuery<CompiledQ
 	}
 
 	@Override
-	public QueryResultDimension getDimension(CompiledQuery query) {
+	public EQueryResultDimension getDimension(CompiledQuery query) {
 		return query.getResultMode();
 	}
 	
 	@Override
-	public QueryResultGathering getGathering(CompiledQuery query) {
+	public EQueryResultGathering getGathering(CompiledQuery query) {
 		return query.getGathering();
 	}
 
 	@Override
-	public AggregateFunction getAggregateResultFunction(CompiledQuery query) {
+	public EAggregateFunction getAggregateResultFunction(CompiledQuery query) {
 		return ((QueryResultAggregate)query.getResult().getOriginal()).getAggregateFunction();
 	}
 	
 	@Override
-	public NumericType getAggregateNumericType(CompiledQuery query) {
+	public ENumericType getAggregateNumericType(CompiledQuery query) {
 		return ((QueryResultAggregate)query.getResult().getOriginal()).getNumericType();
 	}
 

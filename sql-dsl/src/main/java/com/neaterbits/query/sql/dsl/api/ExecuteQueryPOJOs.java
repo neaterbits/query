@@ -69,7 +69,7 @@ final class ExecuteQueryPOJOs<QUERY> extends ExecutableQueryAggregateComputation
 	
 	private Object computeInitialResult(QUERY query) {
 
-		final QueryResultGathering gathering = q.getGathering(query);
+		final EQueryResultGathering gathering = q.getGathering(query);
 		final Object ret;
 
 		switch (gathering) {
@@ -79,7 +79,7 @@ final class ExecuteQueryPOJOs<QUERY> extends ExecutableQueryAggregateComputation
 
 		case ENTITY:
 		case MAPPED:
-			final QueryResultDimension dimension = q.getDimension(query);
+			final EQueryResultDimension dimension = q.getDimension(query);
 			switch (dimension) {
 			case SINGLE:
 				ret = null; // Result is just the single result instance
@@ -109,7 +109,7 @@ final class ExecuteQueryPOJOs<QUERY> extends ExecutableQueryAggregateComputation
 	
 	private Object computeResult(QUERY query, Object last, ExecuteQueryScratch scratch) {
 		
-		final QueryResultGathering gathering = q.getGathering(query);
+		final EQueryResultGathering gathering = q.getGathering(query);
 		
 		final Object ret;
 		
@@ -135,7 +135,7 @@ final class ExecuteQueryPOJOs<QUERY> extends ExecutableQueryAggregateComputation
 	
 	private Object addToEntity(QUERY query, Object last, ExecuteQueryScratch scratch) {
 		
-		final QueryResultDimension dimension = q.getDimension(query);
+		final EQueryResultDimension dimension = q.getDimension(query);
 
 		final Object ret;
 
@@ -184,7 +184,7 @@ final class ExecuteQueryPOJOs<QUERY> extends ExecutableQueryAggregateComputation
 
 	private Object addToMapped(QUERY query, Object last, ExecuteQueryScratch scratch) {
 		
-		final QueryResultDimension dimension = q.getDimension(query);
+		final EQueryResultDimension dimension = q.getDimension(query);
 
 		final Object ret;
 		

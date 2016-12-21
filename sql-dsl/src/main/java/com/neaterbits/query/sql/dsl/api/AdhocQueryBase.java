@@ -14,17 +14,17 @@ abstract class AdhocQueryBase<QUERY extends AdhocQueryBase<QUERY>>
 			implements IAdhocNumericTableResult<Object>, ExecutableQuery<QUERY> {
 
 
-	private final QueryResultDimension dimension;
-	private final QueryResultGathering gathering;
+	private final EQueryResultDimension dimension;
+	private final EQueryResultGathering gathering;
 	
 	// For aggregate result
-	private AggregateFunction aggregateFunction;
-	private NumericType aggregateNumericType; 
+	private EAggregateFunction aggregateFunction;
+	private ENumericType aggregateNumericType; 
 	
 	private ConditionsType conditionsType;
 	
 	
-	AdhocQueryBase(AggregateFunction aggregateFunction, NumericType aggregateNumericType) {
+	AdhocQueryBase(EAggregateFunction aggregateFunction, ENumericType aggregateNumericType) {
 		
 		if (aggregateFunction == null) {
 			throw new IllegalArgumentException("aggregateFunction == null");
@@ -34,8 +34,8 @@ abstract class AdhocQueryBase<QUERY extends AdhocQueryBase<QUERY>>
 			throw new IllegalArgumentException("aggregateNumericType == null");
 		}
 		
-		this.dimension = QueryResultDimension.SINGLE;
-		this.gathering = QueryResultGathering.AGGREGATE;
+		this.dimension = EQueryResultDimension.SINGLE;
+		this.gathering = EQueryResultGathering.AGGREGATE;
 		
 		this.aggregateFunction = aggregateFunction;
 		this.aggregateNumericType = aggregateNumericType;
@@ -43,24 +43,24 @@ abstract class AdhocQueryBase<QUERY extends AdhocQueryBase<QUERY>>
 
 
 	@Override
-	public final QueryResultDimension getDimension(QUERY query) {
+	public final EQueryResultDimension getDimension(QUERY query) {
 		return dimension;
 	}
 
 
 	@Override
-	public final QueryResultGathering getGathering(QUERY query) {
+	public final EQueryResultGathering getGathering(QUERY query) {
 		return gathering;
 	}
 
 	@Override
-	public final AggregateFunction getAggregateResultFunction(QUERY query) {
+	public final EAggregateFunction getAggregateResultFunction(QUERY query) {
 		return aggregateFunction;
 	}
 
 
 	@Override
-	public final NumericType getAggregateNumericType(QUERY query) {
+	public final ENumericType getAggregateNumericType(QUERY query) {
 		return aggregateNumericType;
 	}
 

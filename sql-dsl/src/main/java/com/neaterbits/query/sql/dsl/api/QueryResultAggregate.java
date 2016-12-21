@@ -5,9 +5,9 @@ import java.math.BigDecimal;
 abstract class QueryResultAggregate extends QueryResult {
 
 	private final Getter getter;
-	private final NumericType numericType;
+	private final ENumericType numericType;
 	
-	abstract AggregateFunction getAggregateFunction();
+	abstract EAggregateFunction getAggregateFunction();
 	
 	QueryResultAggregate(Class<?> type, Getter getter) {
 		super(type);
@@ -20,20 +20,20 @@ abstract class QueryResultAggregate extends QueryResult {
 		this.numericType = getNumericType(type);
 	}
 	
-	private static NumericType getNumericType(Class<?> type) {
-		final NumericType ret;
+	private static ENumericType getNumericType(Class<?> type) {
+		final ENumericType ret;
 		
 		if (type.equals(Short.class)) {
-			ret = NumericType.SHORT;	
+			ret = ENumericType.SHORT;	
 		}
 		else if (type.equals(Integer.class)) {
-			ret = NumericType.INTEGER;
+			ret = ENumericType.INTEGER;
 		}
 		else if (type.equals(Long.class)) {
-			ret = NumericType.LONG;
+			ret = ENumericType.LONG;
 		}
 		else if (type.equals(BigDecimal.class)) {
-			ret = NumericType.DECIMAL;
+			ret = ENumericType.DECIMAL;
 		}
 		else {
 			throw new IllegalArgumentException("Not a numeric type: " + type);
@@ -47,17 +47,17 @@ abstract class QueryResultAggregate extends QueryResult {
 		return getter;
 	}
 
-	final NumericType getNumericType() {
+	final ENumericType getNumericType() {
 		return numericType;
 	}
 
 	@Override
-	final QueryResultDimension getDimension() {
-		return QueryResultDimension.SINGLE;
+	final EQueryResultDimension getDimension() {
+		return EQueryResultDimension.SINGLE;
 	}
 
 	@Override
-	final QueryResultGathering getGathering() {
-		return QueryResultGathering.AGGREGATE;
+	final EQueryResultGathering getGathering() {
+		return EQueryResultGathering.AGGREGATE;
 	}
 }

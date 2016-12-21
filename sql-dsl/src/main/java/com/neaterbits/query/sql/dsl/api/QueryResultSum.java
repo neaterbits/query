@@ -7,7 +7,7 @@ final class QueryResultSum extends QueryResultAggregate {
 	}
 
 	@Override
-	AggregateFunction getAggregateFunction() {
-		return AggregateFunction.SUM;
+	EAggregateFunction getAggregateFunction() {
+		return EAggregateFunction.SUM;
 	}
 }

@@ -3,9 +3,9 @@ package com.neaterbits.query.sql.dsl.api;
 abstract class QueryResult extends QueryBuilderItem {
 	private final Class<?> type;
 	
-	abstract QueryResultDimension getDimension();
+	abstract EQueryResultDimension getDimension();
 
-	abstract QueryResultGathering getGathering();
+	abstract EQueryResultGathering getGathering();
 
 	QueryResult(Class<?> type) {
 		

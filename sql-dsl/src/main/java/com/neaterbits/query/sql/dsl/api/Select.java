@@ -48,7 +48,7 @@ public interface Select {
     	return SelectImpl.selectImpl.sum(field);
     }
 
-    public static <T> IClassicNumericTableResult<BigDecimal> sum(BigDecimalFunction<T> field) {
+    public static <T> IClassicNumericTableResult<BigDecimal> sum(IFunctionBigDecimal<T> field) {
     	return SelectImpl.selectImpl.sum(field);
     }
     

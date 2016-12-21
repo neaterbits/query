@@ -17,7 +17,7 @@ interface ExecutableQuery<QUERY> {
 	public default int getNumResultParts(QUERY query) {
 		
 		final int numResultParts;
-		final QueryResultGathering gathering = getGathering(query);
+		final EQueryResultGathering gathering = getGathering(query);
 
 		switch (gathering) {
 		case AGGREGATE:
@@ -47,13 +47,13 @@ interface ExecutableQuery<QUERY> {
 	 * @return mode - single or multi response
 	 */
 	
-	QueryResultDimension getDimension(QUERY query);
+	EQueryResultDimension getDimension(QUERY query);
 
-	QueryResultGathering getGathering(QUERY query);
+	EQueryResultGathering getGathering(QUERY query);
 	
-	AggregateFunction getAggregateResultFunction(QUERY query);
+	EAggregateFunction getAggregateResultFunction(QUERY query);
 
-	NumericType getAggregateNumericType(QUERY query);
+	ENumericType getAggregateNumericType(QUERY query);
 	
 	Object getAggregateResultValue(QUERY query, Object instance);
 	

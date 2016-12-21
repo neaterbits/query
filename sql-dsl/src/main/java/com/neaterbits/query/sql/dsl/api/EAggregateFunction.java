@@ -1,6 +1,6 @@
 package com.neaterbits.query.sql.dsl.api;
 
-enum AggregateFunction {
+enum EAggregateFunction {
 
 	SUM,
 	AVG,

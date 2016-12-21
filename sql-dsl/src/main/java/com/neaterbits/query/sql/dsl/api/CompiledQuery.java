@@ -43,11 +43,11 @@ final class CompiledQuery {
 		this.joins = joins;
 	}
 
-	QueryResultDimension getResultMode() {
+	EQueryResultDimension getResultMode() {
 		return result.getOriginal().getDimension();
 	}
 	
-	QueryResultGathering getGathering() {
+	EQueryResultGathering getGathering() {
 		return result.getOriginal().getGathering();
 	}
 

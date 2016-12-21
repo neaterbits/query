@@ -7,7 +7,7 @@ final class QueryResultEntitySingle extends QueryResultEntity {
 	}
 
 	@Override
-	QueryResultDimension getDimension() {
-		return QueryResultDimension.SINGLE;
+	EQueryResultDimension getDimension() {
+		return EQueryResultDimension.SINGLE;
 	}
 }

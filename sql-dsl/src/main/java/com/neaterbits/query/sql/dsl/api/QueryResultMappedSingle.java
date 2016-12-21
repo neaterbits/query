@@ -7,7 +7,7 @@ final class QueryResultMappedSingle extends QueryResultMapped {
 	}
 
 	@Override
-	QueryResultDimension getDimension() {
-		return QueryResultDimension.SINGLE;
+	EQueryResultDimension getDimension() {
+		return EQueryResultDimension.SINGLE;
 	}
 }

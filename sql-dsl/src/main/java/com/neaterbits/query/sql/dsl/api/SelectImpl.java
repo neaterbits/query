@@ -200,7 +200,7 @@ final class SelectImpl implements IClassic {
 	}
 
 	@Override
-	public <T> IClassicNumericTableResult<BigDecimal> sum(BigDecimalFunction<T> field) {
+	public <T> IClassicNumericTableResult<BigDecimal> sum(IFunctionBigDecimal<T> field) {
 		return sum(field, BigDecimal.class);
 	}
 }

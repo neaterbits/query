@@ -84,7 +84,7 @@ abstract class ExecutableQueryAggregateComputations<QUERY> extends ExecuteQueryB
 		
 		final Object ret;
 		
-		final AggregateFunction aggregateFunction = q.getAggregateResultFunction(query);
+		final EAggregateFunction aggregateFunction = q.getAggregateResultFunction(query);
 
 		switch (aggregateFunction) {
 
@@ -109,7 +109,7 @@ abstract class ExecutableQueryAggregateComputations<QUERY> extends ExecuteQueryB
 	}
 	
 	final Object addToAggregateResult(QUERY query, Object last, ExecuteQueryScratch scratch) {
-		final AggregateFunction aggregateFunction = q.getAggregateResultFunction(query);
+		final EAggregateFunction aggregateFunction = q.getAggregateResultFunction(query);
 		
 		if (!scratch.numResultPartsIs(1)) {
 			throw new IllegalArgumentException("Expected exactly one scratch field");
@@ -150,7 +150,7 @@ abstract class ExecutableQueryAggregateComputations<QUERY> extends ExecuteQueryB
 	
 	
 	final Object computeAggregateFinalResult(QUERY query, Object value) {
-		final AggregateFunction aggregateFunction = q.getAggregateResultFunction(query);
+		final EAggregateFunction aggregateFunction = q.getAggregateResultFunction(query);
 
 		final Object ret;
 		
@@ -179,7 +179,7 @@ abstract class ExecutableQueryAggregateComputations<QUERY> extends ExecuteQueryB
 	
 	private final Object computeSum(QUERY query, Object last, Object value) {
 		
-		final NumericType numericType = q.getAggregateNumericType(query);
+		final ENumericType numericType = q.getAggregateNumericType(query);
 		
 		final Object ret;
 		
@@ -247,7 +247,7 @@ abstract class ExecutableQueryAggregateComputations<QUERY> extends ExecuteQueryB
 	
 	private final Object computeMin(QUERY query, Object last, Object value) {
 		
-		final NumericType numericType = q.getAggregateNumericType(query);
+		final ENumericType numericType = q.getAggregateNumericType(query);
 		
 		final Object ret;
 		
@@ -330,7 +330,7 @@ abstract class ExecutableQueryAggregateComputations<QUERY> extends ExecuteQueryB
 	
 	private final Object computeMax(QUERY query, Object last, Object value) {
 		
-		final NumericType numericType = q.getAggregateNumericType(query);
+		final ENumericType numericType = q.getAggregateNumericType(query);
 		
 		final Object ret;
 		
@@ -446,7 +446,7 @@ abstract class ExecutableQueryAggregateComputations<QUERY> extends ExecuteQueryB
 	
 	private final Object computeAvg(QUERY query, Object last, Object value) {
 		
-		final NumericType numericType = q.getAggregateNumericType(query);
+		final ENumericType numericType = q.getAggregateNumericType(query);
 		
 		final AvgCollector ret;
 		

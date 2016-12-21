@@ -8,7 +8,7 @@ final class QueryResultMappedMulti extends QueryResultMapped {
 	}
 
 	@Override
-	QueryResultDimension getDimension() {
-		return QueryResultDimension.MULTI;
+	EQueryResultDimension getDimension() {
+		return EQueryResultDimension.MULTI;
 	}
 }

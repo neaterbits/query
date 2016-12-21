@@ -16,7 +16,7 @@ public interface Adhoc {
     	return AdhocImpl.adhocImpl.sum(field);
     }
 
-    public static <T> IAdhocNumericTableResult<BigDecimal> sum(BigDecimalFunction<T> field) {
+    public static <T> IAdhocNumericTableResult<BigDecimal> sum(IFunctionBigDecimal<T> field) {
     	return AdhocImpl.adhocImpl.sum(field);
     }
 	

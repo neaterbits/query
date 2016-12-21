@@ -1,6 +1,6 @@
 package com.neaterbits.query.sql.dsl.api;
 
-enum NumericType {
+enum ENumericType {
 
 	SHORT,
 	INTEGER,

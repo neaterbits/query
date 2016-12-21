@@ -10,7 +10,7 @@ final class AdhocQueryClass extends AdhocQueryBase<AdhocQueryClass>  implements 
 	private Function aggregateGetter;
 
 	
-	AdhocQueryClass(Function<?, ?> aggregateGetter, AggregateFunction aggregateFunction, NumericType aggregateNumericType) {
+	AdhocQueryClass(Function<?, ?> aggregateGetter, EAggregateFunction aggregateFunction, ENumericType aggregateNumericType) {
 		super(aggregateFunction, aggregateNumericType);
 
 		if (aggregateGetter == null) {
