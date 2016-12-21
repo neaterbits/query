@@ -156,9 +156,16 @@ final class WhereOrJoinClauseBuilderImpl<MODEL, RESULT>
 
 	// ------------------------  WHERE ------------------------
 	@Override
-	public <T, RR> ISharedConditionClause<MODEL, RESULT, RR, IClassicAndOrLogicalClausesTable<MODEL, RESULT>> where(Function<T, RR> getter) {
+	public <T> ISharedConditionClause<MODEL, RESULT, Integer, IClassicAndOrLogicalClausesTable<MODEL, RESULT>> where(IntegerFunction<T> getter) {
 
-		return new ConditionClauseImpl<MODEL, RESULT, RR, IClassicAndOrLogicalClausesTable<MODEL,RESULT>>(this, makeGetter(getter));
+		return new ConditionClauseImpl<MODEL, RESULT, Integer, IClassicAndOrLogicalClausesTable<MODEL,RESULT>>(this, makeGetter(getter));
+	}
+	
+
+	@Override
+	public <T, E extends Enum<E>> ISharedConditionClause<MODEL, RESULT, E, IClassicAndOrLogicalClausesTable<MODEL, RESULT>> where(EnumFunction<T, E> getter) {
+
+		return new ConditionClauseImpl<MODEL, RESULT, E, IClassicAndOrLogicalClausesTable<MODEL,RESULT>>(this, makeGetter(getter));
 	}
 
 	@Override
