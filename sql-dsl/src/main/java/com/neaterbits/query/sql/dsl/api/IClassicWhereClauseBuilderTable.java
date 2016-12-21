@@ -11,6 +11,9 @@ package com.neaterbits.query.sql.dsl.api;
  */
 
 public interface IClassicWhereClauseBuilderTable<MODEL, RESULT>
-		extends ISharedWhereClauseBuilderTable<MODEL, RESULT, IClassicAndOrLogicalClausesTable<MODEL, RESULT>> {
+		extends ISharedWhereClauseBuilderTableAll<
+			MODEL,
+			RESULT,
+			IClassicAndOrLogicalClausesTable<MODEL, RESULT>> {
 
 }

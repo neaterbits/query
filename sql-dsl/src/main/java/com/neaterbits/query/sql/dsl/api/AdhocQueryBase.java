@@ -1,6 +1,8 @@
 package com.neaterbits.query.sql.dsl.api;
 
 
+import java.util.Collection;
+
 import com.neaterbits.query.sql.dsl.api.entity.OneToManyJoinConditionResolver;
 
 /**
@@ -9,9 +11,13 @@ import com.neaterbits.query.sql.dsl.api.entity.OneToManyJoinConditionResolver;
  *
  */
 
-abstract class AdhocQueryBase<QUERY extends AdhocQueryBase<QUERY>>
+abstract class AdhocQueryBase<MODEL, QUERY extends AdhocQueryBase<MODEL, QUERY>>
 			extends ExecuteQueryScratch
-			implements IAdhocNumericTableResult<Object>, ExecutableQuery<QUERY> {
+			implements 
+				IAdhocNumericTableResult<MODEL, Object>,
+				IAdhocWhereOrJoin<MODEL, Object, Object>,
+				
+				ExecutableQuery<QUERY> {
 
 
 	private final EQueryResultDimension dimension;
@@ -22,6 +28,8 @@ abstract class AdhocQueryBase<QUERY extends AdhocQueryBase<QUERY>>
 	private ENumericType aggregateNumericType; 
 	
 	private ConditionsType conditionsType;
+	
+	private Collection<?> from;
 	
 	
 	AdhocQueryBase(EAggregateFunction aggregateFunction, ENumericType aggregateNumericType) {
@@ -41,12 +49,37 @@ abstract class AdhocQueryBase<QUERY extends AdhocQueryBase<QUERY>>
 		this.aggregateNumericType = aggregateNumericType;
 	}
 
+	
+	/**************************************************************************
+	** IAdhocSelectSource
+	**************************************************************************/
+	
+	@SuppressWarnings({"unchecked", "rawtypes"})
+	@Override
+	public final <T> IAdhocWhereOrJoin<MODEL, Object, T> from(Collection<T> collection) {
+		
+		if (collection == null) {
+			throw new IllegalArgumentException("collection == null");
+		}
+		
+		if (this.from != null) {
+			throw new IllegalStateException("from already set");
+		}
+
+		this.from = collection;
+
+		return (IAdhocWhereOrJoin)this;
+	}
+	
+	
+	/**************************************************************************
+	** ExeutableQuery⋅
+	**************************************************************************/
 
 	@Override
 	public final EQueryResultDimension getDimension(QUERY query) {
 		return dimension;
 	}
-
 
 	@Override
 	public final EQueryResultGathering getGathering(QUERY query) {

@@ -3,8 +3,8 @@ package com.neaterbits.query.sql.dsl.api;
 import java.util.function.Function;
 
 public interface ComparativeClauseTable<MODEL, RESULT, R extends Comparable<R>, L extends ISharedLogicalClauses<MODEL, RESULT>>
-	extends ISharedComparativeClause<MODEL, RESULT, R, L>,
-	        ISharedConditionClauseTable<MODEL, RESULT, R, L> {
+	extends ISharedClauseComparativeBaseAll<MODEL, RESULT, R, L>,
+	        ISharedClauseConditionTable<MODEL, RESULT, R, L> {
 	
 	<T> ISharedLogicalClauses<MODEL, RESULT> isGreaterThan(Function<T, R> getter);
 	

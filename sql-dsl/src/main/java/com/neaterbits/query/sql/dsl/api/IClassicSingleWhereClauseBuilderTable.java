@@ -4,8 +4,8 @@ import java.util.function.Function;
 
 public interface IClassicSingleWhereClauseBuilderTable<MODEL, RESULT> extends ISharedWhereClauseBuilder<MODEL, RESULT> {
 
-	<R> ISharedConditionClause<MODEL, RESULT, R, IClassicSingleAndOrLogicalClausesTable<MODEL, RESULT>> where(Function<RESULT, R> func);
+	<R> ISharedClauseConditionAll<MODEL, RESULT, R, IClassicSingleAndOrLogicalClausesTable<MODEL, RESULT>> where(Function<RESULT, R> func);
 	
-    ISharedStringClause<MODEL, RESULT, IClassicSingleAndOrLogicalClausesTable<MODEL, RESULT>> where(StringFunction<RESULT> func);
+    ISharedClauseComparativeStringAll<MODEL, RESULT, IClassicSingleAndOrLogicalClausesTable<MODEL, RESULT>> where(StringFunction<RESULT> func);
 	
 }

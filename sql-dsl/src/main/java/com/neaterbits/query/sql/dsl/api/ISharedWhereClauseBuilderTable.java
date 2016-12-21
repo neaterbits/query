@@ -1,12 +1,17 @@
 package com.neaterbits.query.sql.dsl.api;
 
-public interface ISharedWhereClauseBuilderTable<MODEL, RESULT, CONDITION_CLAUSE extends ISharedLogicalClauses<MODEL, RESULT>>
+public interface ISharedWhereClauseBuilderTable<
+					MODEL,
+					RESULT,
+					CONDITION_CLAUSE extends ISharedLogicalClauses<MODEL, RESULT>,
+					
+					INTEGER_CLAUSE extends ISharedClauseComparativeBaseBase<MODEL, RESULT, Integer, CONDITION_CLAUSE>,
+					STRING_CLAUSE  extends ISharedClauseComparativeBaseBase<MODEL, RESULT, String, CONDITION_CLAUSE>>
+
 	extends ISharedWhereClauseBuilder<MODEL, RESULT> {
 
-	<T, E extends Enum<E>> ISharedConditionClause<MODEL, RESULT, E, CONDITION_CLAUSE> where(IFunctionEnum<T, E> func);
+	<T> INTEGER_CLAUSE where(IFunctionInteger<T> func);
 
-	<T> ISharedConditionClause<MODEL, RESULT, Integer, CONDITION_CLAUSE> where(IFunctionInteger<T> func);
-
-    <T> ISharedStringClause<MODEL, RESULT, CONDITION_CLAUSE> where(StringFunction<T> func);
+    <T> STRING_CLAUSE where(StringFunction<T> func);
 
 }

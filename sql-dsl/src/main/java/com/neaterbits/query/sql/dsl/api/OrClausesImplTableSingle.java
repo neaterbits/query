@@ -8,12 +8,12 @@ final class OrClausesImplTableSingle<MODEL, RESULT> extends ClausesImpl<MODEL, R
 	}
 
 	@Override
-	public ISharedConditionClause<MODEL, RESULT, Integer, IClassicSingleOrClausesTable<MODEL, RESULT>> or(IFunctionInteger<RESULT> getter) {
+	public ISharedClauseConditionAll<MODEL, RESULT, Integer, IClassicSingleOrClausesTable<MODEL, RESULT>> or(IFunctionInteger<RESULT> getter) {
 		return new ConditionClauseImpl<MODEL, RESULT, Integer, IClassicSingleOrClausesTable<MODEL,RESULT>>(this, makeGetter(getter));
 	}
 
 	@Override
-	public ISharedStringClause<MODEL, RESULT, IClassicSingleOrClausesTable<MODEL, RESULT>> or(StringFunction<RESULT> getter) {
+	public ISharedClauseComparativeStringAll<MODEL, RESULT, IClassicSingleOrClausesTable<MODEL, RESULT>> or(StringFunction<RESULT> getter) {
 		return new StringClauseImpl<MODEL, RESULT, IClassicSingleOrClausesTable<MODEL,RESULT>>(this, makeGetter(getter));
 	}
 }

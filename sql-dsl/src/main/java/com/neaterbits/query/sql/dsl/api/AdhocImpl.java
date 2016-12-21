@@ -3,32 +3,32 @@ package com.neaterbits.query.sql.dsl.api;
 import java.math.BigDecimal;
 import java.util.function.Function;
 
-final class AdhocImpl implements IAdhoc {
+final class AdhocImpl<MODEL> implements IAdhoc<MODEL> {
 	
-	static final AdhocImpl adhocImpl = new AdhocImpl();
+	static final AdhocImpl<Void> adhocImpl = new AdhocImpl<Void>();
 
 	@SuppressWarnings({"unchecked", "rawtypes"})
-	private <T, TYPE> IAdhocNumericTableResult<TYPE> createNumeric(Function<T, TYPE> field, EAggregateFunction aggregateFunction, ENumericType numericType) {
+	private <T, TYPE> IAdhocNumericTableResult<MODEL, TYPE> createNumeric(Function<T, TYPE> field, EAggregateFunction aggregateFunction, ENumericType numericType) {
 		return (IAdhocNumericTableResult)new AdhocQueryClass(field, aggregateFunction, numericType);
 	}
 	
 	@Override
-	public <T> IAdhocNumericTableResult<Short> sum(IFunctionShort<T> field) {
+	public <T> IAdhocNumericTableResult<MODEL, Short> sum(IFunctionShort<T> field) {
 		return createNumeric(field, EAggregateFunction.SUM, ENumericType.SHORT);
 	}
 
 	@Override
-	public <T> IAdhocNumericTableResult<Integer> sum(IFunctionInteger<T> field) {
+	public <T> IAdhocNumericTableResult<MODEL, Integer> sum(IFunctionInteger<T> field) {
 		return createNumeric(field, EAggregateFunction.SUM, ENumericType.INTEGER);
 	}
 
 	@Override
-	public <T> IAdhocNumericTableResult<Long> sum(IFunctionLong<T> field) {
+	public <T> IAdhocNumericTableResult<MODEL, Long> sum(IFunctionLong<T> field) {
 		return createNumeric(field, EAggregateFunction.SUM, ENumericType.LONG);
 	}
 
 	@Override
-	public <T> IAdhocNumericTableResult<BigDecimal> sum(IFunctionBigDecimal<T> field) {
+	public <T> IAdhocNumericTableResult<MODEL, BigDecimal> sum(IFunctionBigDecimal<T> field) {
 		return createNumeric(field, EAggregateFunction.SUM, ENumericType.DECIMAL);
 	}
 }

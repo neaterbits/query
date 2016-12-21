@@ -7,8 +7,8 @@ public interface ISharedSingleOrClausesTable<
 
 		extends ISharedLogicalClauses<MODEL, RESULT> {
 
-	    ISharedConditionClause<MODEL, RESULT, Integer, OR_CLAUSES> or(IFunctionInteger<RESULT> getter);
+	    ISharedClauseConditionAll<MODEL, RESULT, Integer, OR_CLAUSES> or(IFunctionInteger<RESULT> getter);
 	    
-	    ISharedStringClause<MODEL, RESULT, OR_CLAUSES> or(StringFunction<RESULT> getter);
+	    ISharedClauseComparativeStringAll<MODEL, RESULT, OR_CLAUSES> or(StringFunction<RESULT> getter);
 
 }

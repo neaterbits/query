@@ -10,41 +10,41 @@ final class OrClausesImpl<MODEL, RESULT> extends ClausesImpl<MODEL, RESULT>
 		super(last);
 	}
 
-	private <T, RR> ISharedConditionClause<MODEL, RESULT, RR, IClassicOrClausesTable<MODEL, RESULT>> orClassImpl(Function<T, RR> getter) {
+	private <T, RR> ISharedClauseConditionAll<MODEL, RESULT, RR, IClassicOrClausesTable<MODEL, RESULT>> orClassImpl(Function<T, RR> getter) {
 		return new ConditionClauseImpl<MODEL, RESULT, RR, IClassicOrClausesTable<MODEL,RESULT>>(this, makeGetter(getter));
 	}
 	
-	private <RR> ISharedConditionClause<MODEL, RESULT, RR, IClassicOrClausesAlias<MODEL, RESULT>> orAliasImpl(Supplier<RR> getter) {
+	private <RR> ISharedClauseConditionAll<MODEL, RESULT, RR, IClassicOrClausesAlias<MODEL, RESULT>> orAliasImpl(Supplier<RR> getter) {
 		return new ConditionClauseImpl<MODEL, RESULT, RR, IClassicOrClausesAlias<MODEL,RESULT>>(this, makeGetter(getter));
 	}
 
 	@Override
-	public <T> ISharedConditionClause<MODEL, RESULT, Integer, IClassicOrClausesTable<MODEL, RESULT>> or(IFunctionInteger<T> getter) {
+	public <T> ISharedClauseConditionAll<MODEL, RESULT, Integer, IClassicOrClausesTable<MODEL, RESULT>> or(IFunctionInteger<T> getter) {
 		return orClassImpl(getter);
 	}
 
 	@Override
-	public <T> ISharedConditionClause<MODEL, RESULT, Long, IClassicOrClausesTable<MODEL, RESULT>> or(IFunctionLong<T> getter) {
+	public <T> ISharedClauseConditionAll<MODEL, RESULT, Long, IClassicOrClausesTable<MODEL, RESULT>> or(IFunctionLong<T> getter) {
 		return orClassImpl(getter);
 	}
 
 	@Override
-	public <T> ISharedStringClause<MODEL, RESULT, IClassicOrClausesTable<MODEL, RESULT>> or(StringFunction<T> getter) {
+	public <T> ISharedClauseComparativeStringAll<MODEL, RESULT, IClassicOrClausesTable<MODEL, RESULT>> or(StringFunction<T> getter) {
 		return new StringClauseImpl<MODEL, RESULT, IClassicOrClausesTable<MODEL,RESULT>>(this, makeGetter(getter));
 	}
 
 	@Override
-	public ISharedConditionClause<MODEL, RESULT, Integer, IClassicOrClausesAlias<MODEL, RESULT>> or(ISupplierInteger getter) {
+	public ISharedClauseConditionAll<MODEL, RESULT, Integer, IClassicOrClausesAlias<MODEL, RESULT>> or(ISupplierInteger getter) {
 		return orAliasImpl(getter);
 	}
 
 	@Override
-	public ISharedConditionClause<MODEL, RESULT, Long, IClassicOrClausesAlias<MODEL, RESULT>> or(ISupplierLong getter) {
+	public ISharedClauseConditionAll<MODEL, RESULT, Long, IClassicOrClausesAlias<MODEL, RESULT>> or(ISupplierLong getter) {
 		return orAliasImpl(getter);
 	}
 
 	@Override
-	public ISharedStringClause<MODEL, RESULT, IClassicOrClausesAlias<MODEL, RESULT>> or(ISupplierString getter) {
+	public ISharedClauseComparativeStringAll<MODEL, RESULT, IClassicOrClausesAlias<MODEL, RESULT>> or(ISupplierString getter) {
 		return new StringClauseImpl<MODEL, RESULT, IClassicOrClausesAlias<MODEL,RESULT>>(this, makeGetter(getter));
 	}
 }
