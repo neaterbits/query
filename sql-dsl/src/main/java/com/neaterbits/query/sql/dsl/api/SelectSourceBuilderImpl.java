@@ -15,7 +15,7 @@ abstract class SelectSourceBuilderImpl<MODEL, RESULT> extends BaseQueryEntity<MO
 	}
 	
 	@Override
-	public final WhereOrJoinBuilderTable<MODEL, RESULT> from(Class<?> ... classes) {
+	public final IClassicWhereOrJoinBuilderTable<MODEL, RESULT> from(Class<?> ... classes) {
 		
 		if (classes.length == 0) {
 			throw new IllegalArgumentException("no classes");

@@ -7,7 +7,7 @@ public interface IClassicSelectSourceBuilderTable<MODEL, RESULT> extends SelectS
 	 * @param tables
 	 */
 	
-	WhereOrJoinBuilderTable<MODEL, RESULT> from(Class<?> ... tables);
+	IClassicWhereOrJoinBuilderTable<MODEL, RESULT> from(Class<?> ... tables);
 	
 	
 }

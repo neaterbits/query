@@ -5,7 +5,7 @@ import java.util.function.Supplier;
 
 final class WhereOrJoinClauseBuilderImpl<MODEL, RESULT>
 	extends ClausesImplInitial<MODEL, RESULT>
-	implements WhereOrJoinBuilderTable<MODEL, RESULT>,
+	implements IClassicWhereOrJoinBuilderTable<MODEL, RESULT>,
 			   IClassicWhereOrJoinBuilderAlias<MODEL, RESULT>,
 			   IClassicAndOrLogicalClausesTable<MODEL, RESULT>,
 			   IClassicAndOrLogicalClausesAlias<MODEL, RESULT>,
