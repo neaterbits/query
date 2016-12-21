@@ -7,10 +7,20 @@ import java.lang.reflect.Method;
 
 import com.neaterbits.query.sql.dsl.api.entity.IEntityAttribute;
 import com.neaterbits.query.sql.dsl.api.entity.OneToManyJoinConditionResolver;
+import com.neaterbits.query.sql.dsl.api.entity.QueryMetaModel;
 import com.neaterbits.query.sql.dsl.api.entity.Relation;
 import com.neaterbits.query.sql.dsl.api.entity.ScalarType;
 
 final class ExecutableQueryForCompiledQuery implements ExecutableQuery<CompiledQuery> {
+
+	@Override
+	public ExecuteQueryScratch createScratchArea(CompiledQuery query, QueryMetaModel queryMetaModel) {
+		final int numResultParts 	= getNumResultParts(query);
+		final int numSelectSources 	= getSourceCount(query);
+		final int numConditions	 	= getConditionCount(query);
+		
+		return new ExecuteQueryScratch(numResultParts, numSelectSources, numConditions, queryMetaModel);
+	}
 
 	@Override
 	public QueryResultDimension getDimension(CompiledQuery query) {
@@ -259,7 +269,7 @@ final class ExecutableQueryForCompiledQuery implements ExecutableQuery<CompiledQ
 	}
 
 	@Override
-	public ConditionsType getConditionType(CompiledQuery query) {
+	public ConditionsType getConditionsType(CompiledQuery query) {
 		
 		final CompiledConditions conditions = query.getConditions();
 		

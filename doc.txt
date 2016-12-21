@@ -503,3 +503,59 @@ Men gir dette egentlig mening? Er bare join tilbake på instansen. Så må finne
 		og sammenligne identity eller bare IDen.
 		Om ikke er hverken i liste eller reverse så kan vi ikke joine.
 
+
+
+
+----
+
+
+Neste:
+
+ - adhoc queries med mininmalt overhead
+ - JS / annen kode generering ut fra POJO joins
+ - parametere
+ 
+ - dialekter, dvs statisk begrense muligheter
+ - query ut fra context
+   * forenklede queries uten from eller join sources.
+ - optionals
+ - subselects
+ - mere tester
+ - transformasjons-API
+ - lagre/slette API som er uavhengig av JPA
+   * batch insert update
+ - hibernate direkte støtte? Mulig kan gjenbruke fra JPA
+
+
+
+----
+
+
+
+adhoc query
+
+list()   .from(fooList) . where(Foo::getBar) . isEqualTo("baz");
+one()    .from(fooList) . where(Foo::getBar) . isEqualTo("baz");
+first(10).from(fooList) . where(foo::getBar) . isEqualTo("baz");
+
+list(Foo::getBar).from(fooList).where(Foo::getBar).startsWith("baz")
+
+sum(Foo::getBaz).from(fooList).where(Foo::getBar).startsWith("baz")
+
+sum().from(intList).where().greaterThan(1);
+
+sum(intList).greaterThan(1);
+
+
+flatten(Foo::getSubs)
+	.from(fooList)
+	.where(Foo::getBar).startsWith("baz")
+	.  and(Sub::getFoo).isEqualTo(1);
+
+
+
+
+
+
+
+

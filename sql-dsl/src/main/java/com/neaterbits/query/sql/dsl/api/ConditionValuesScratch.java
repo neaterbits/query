@@ -6,15 +6,15 @@ class ConditionValuesScratch {
 	private Object lhs;
 	private Object rhs;
 	
-	ParamValueResolver getCollectedParams() {
+	final ParamValueResolver getCollectedParams() {
 		return collectedParams;
 	}
 	
-	void setCollectedParams(ParamValueResolver collectedParams) {
+	final void setCollectedParams(ParamValueResolver collectedParams) {
 		this.collectedParams = collectedParams;
 	}
 
-	void init(Object lhs, Object rhs) {
+	final void init(Object lhs, Object rhs) {
 		
 		// rhs should never be null
 		if (rhs == null) {

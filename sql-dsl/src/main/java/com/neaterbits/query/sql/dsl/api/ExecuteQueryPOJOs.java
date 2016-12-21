@@ -40,12 +40,9 @@ final class ExecuteQueryPOJOs<QUERY> extends ExecutableQueryAggregateComputation
 		
 		final Object ret;
 
-		final int numResultParts = q.getNumResultParts(query);
-		final int numSelectSources = q.getSourceCount(query);
-		final int numConditions = q.getConditionCount(query);
-		
 		// TODO: Handle 1 result part case? no need for array
-		final ExecuteQueryScratch scratch = new ExecuteQueryScratch(numResultParts, numSelectSources, numConditions, queryMetaModel);
+		final ExecuteQueryScratch scratch =  q.createScratchArea(query, queryMetaModel);
+				
 		
 		if (joinCount > 0) {
 			// We shall perform joins over tables
@@ -436,7 +433,7 @@ final class ExecuteQueryPOJOs<QUERY> extends ExecutableQueryAggregateComputation
 	
 	private boolean matches(QUERY query, int sourceIdx, Object instance, ExecuteQueryScratch scratch) {
 		// Loop over conditions
-		final ConditionsType type = q.getConditionType(query);
+		final ConditionsType type = q.getConditionsType(query);
 		
 		final boolean ret;
 		

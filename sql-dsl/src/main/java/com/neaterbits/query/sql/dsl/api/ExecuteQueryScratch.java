@@ -2,39 +2,47 @@ package com.neaterbits.query.sql.dsl.api;
 
 import com.neaterbits.query.sql.dsl.api.entity.QueryMetaModel;
 
-final class ExecuteQueryScratch extends ConditionValuesScratch {
-	private final Object [] scratch;
-	private final int numResultParts;
-	private final int numConditions;
+class ExecuteQueryScratch extends ConditionValuesScratch {
+	private Object [] scratch;
+	private int numResultParts;
+	private int numConditions;
 	private final QueryMetaModel queryMetaModel;
 	
+	ExecuteQueryScratch() {
+		this(0, 0, 0, null);
+	}
 	
 	ExecuteQueryScratch(int numResultParts, int numSelectSources, int numConditions, QueryMetaModel queryMetaModel) {
 		
 		// TODO: Handle 1 result part case? no need for array
+		this.queryMetaModel = queryMetaModel;
+		
+		init(numResultParts, numSelectSources, numConditions);
+	}
+		
+	private void init(int numResultParts, int numSelectSources, int numConditions) {
 		this.scratch = new Object[numSelectSources];
 		this.numResultParts = numResultParts;
 		this.numConditions = numConditions;
-		this.queryMetaModel = queryMetaModel;
 	}
 	
-	Object get(int idx) {
+	final Object get(int idx) {
 		return scratch[idx];
 	}
 	
-	void set(int idx, Object instance) {
+	final void set(int idx, Object instance) {
 		scratch[idx] = instance;
 	}
 	
-	boolean numResultPartsIs(int num) {
+	final boolean numResultPartsIs(int num) {
 		return numResultParts == num;
 	}
 	
-	int getNumConditions() {
+	final int getNumConditions() {
 		return numConditions;
 	}
 
-	QueryMetaModel getQueryMetaModel() {
+	final QueryMetaModel getQueryMetaModel() {
 		return queryMetaModel;
 	}
 }

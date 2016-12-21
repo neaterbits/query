@@ -1,6 +1,7 @@
 package com.neaterbits.query.sql.dsl.api;
 
 import com.neaterbits.query.sql.dsl.api.entity.OneToManyJoinConditionResolver;
+import com.neaterbits.query.sql.dsl.api.entity.QueryMetaModel;
 
 /**
  * Interface access to query, so that can run in an abstracted way
@@ -35,8 +36,8 @@ interface ExecutableQuery<QUERY> {
 		return numResultParts;
 	}
 	
+	ExecuteQueryScratch createScratchArea(QUERY query, QueryMetaModel queryMetaModel);
 	
-
 	
 	/**
 	 * Result mode, whether produces a single or multiple results
@@ -143,7 +144,7 @@ interface ExecutableQuery<QUERY> {
 	 * @return
 	 */
 	
-	ConditionsType getConditionType(QUERY query);
+	ConditionsType getConditionsType(QUERY query);
 	
 	int getConditionSourceIdx(QUERY query, int conditionIdx);
 
