@@ -6,12 +6,12 @@ import java.util.function.Function;
 import com.neaterbits.query.sql.dsl.api.entity.QueryMetaModel;
 
 final class AdhocQueryClass<MODEL> extends AdhocQueryBase<MODEL, AdhocQueryClass<MODEL>> 
-		implements IAdhocNumericTableResult<MODEL, Object>,
+		implements IAdhocNumericTableResult<MODEL, Object, Object>,
 		
 			ISharedClauseComparableCommonValue<MODEL, Object, Comparable<Object>, ISharedLogicalClauses<MODEL, Object>>,
 			ISharedClauseComparableStringValue<MODEL, Object, ISharedLogicalClauses<MODEL, Object>>,
 			
-			ISharedLogicalClauses<MODEL, Object> {
+			IAdhocAndOrLogicalClauses<MODEL, Object> {
 
 	private static final int INITIAL_CONDITIONS = 10;
 	
@@ -191,5 +191,51 @@ final class AdhocQueryClass<MODEL> extends AdhocQueryBase<MODEL, AdhocQueryClass
 	public MODEL compile() {
 		throw new UnsupportedOperationException("TODO");
 	}
+
+	/**************************************************************************
+	** IAdhocAndClauses
+	**************************************************************************/
+	
+	@Override
+	public <T> ISharedClauseConditionTable<MODEL, Object, Integer, IAdhocAndClauses<MODEL, Object>> and(IFunctionInteger<T> getter) {
+		return null;
+	}
+
+	@Override
+	public <T> ISharedClauseConditionTable<MODEL, Object, Long, IAdhocAndClauses<MODEL, Object>> and(
+			IFunctionLong<T> getter) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public <T> ISharedClauseComparableStringAll<MODEL, Object, IAdhocAndClauses<MODEL, Object>> and(
+			StringFunction<T> getter) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public <T> ISharedClauseConditionAll<MODEL, Object, Integer, IAdhocOrClauses<MODEL, Object>> or(
+			IFunctionInteger<T> getter) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public <T> ISharedClauseConditionAll<MODEL, Object, Long, IAdhocOrClauses<MODEL, Object>> or(
+			IFunctionLong<T> getter) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public <T> ISharedClauseComparableStringAll<MODEL, Object, IAdhocOrClauses<MODEL, Object>> or(
+			StringFunction<T> getter) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	
 }
 

@@ -2,8 +2,8 @@ package com.neaterbits.query.sql.dsl.api;
 
 import java.util.Collection;
 
-public interface IAdhocSelectSource<MODEL, RESULT> {
+public interface IAdhocSelectSource<MODEL, RESULT, T> {
 
-	<T> IAdhocWhereOrJoin<MODEL, RESULT, T> from(Collection<T> collection);
+	IAdhocWhereOrJoin<MODEL, RESULT, T> from(Collection<T> collection);
 	
 }

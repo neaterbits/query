@@ -14,7 +14,7 @@ import com.neaterbits.query.sql.dsl.api.entity.OneToManyJoinConditionResolver;
 abstract class AdhocQueryBase<MODEL, QUERY extends AdhocQueryBase<MODEL, QUERY>>
 			extends ExecuteQueryScratch
 			implements 
-				IAdhocNumericTableResult<MODEL, Object>,
+				IAdhocNumericTableResult<MODEL, Object, Object>,
 				IAdhocWhereOrJoin<MODEL, Object, Object>,
 				
 				ExecutableQuery<QUERY> {
@@ -56,7 +56,7 @@ abstract class AdhocQueryBase<MODEL, QUERY extends AdhocQueryBase<MODEL, QUERY>>
 	
 	@SuppressWarnings({"unchecked", "rawtypes"})
 	@Override
-	public final <T> IAdhocWhereOrJoin<MODEL, Object, T> from(Collection<T> collection) {
+	public final IAdhocWhereOrJoin<MODEL, Object, Object> from(Collection<Object> collection) {
 		
 		if (collection == null) {
 			throw new IllegalArgumentException("collection == null");
