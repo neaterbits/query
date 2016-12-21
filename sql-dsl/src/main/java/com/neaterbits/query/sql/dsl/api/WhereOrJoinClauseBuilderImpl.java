@@ -175,9 +175,9 @@ final class WhereOrJoinClauseBuilderImpl<MODEL, RESULT>
 	}
 	
 	@Override
-	public <R> ISharedConditionClause<MODEL, RESULT, R, IClassicAndOrLogicalClausesAlias<MODEL, RESULT>> where(Supplier<R> func) {
+	public ISharedConditionClause<MODEL, RESULT, Integer, IClassicAndOrLogicalClausesAlias<MODEL, RESULT>> where(IntegerSupplier func) {
 
-		return new ConditionClauseImpl<MODEL, RESULT, R, IClassicAndOrLogicalClausesAlias<MODEL,RESULT>>(this, makeGetter(func));
+		return new ConditionClauseImpl<MODEL, RESULT, Integer, IClassicAndOrLogicalClausesAlias<MODEL,RESULT>>(this, makeGetter(func));
 	}
 
 	@Override
