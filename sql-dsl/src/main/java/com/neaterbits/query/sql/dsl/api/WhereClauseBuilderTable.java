@@ -13,8 +13,8 @@ import java.util.function.Function;
 
 public interface WhereClauseBuilderTable<MODEL, RESULT> extends ISharedWhereClauseBuilder<MODEL, RESULT> {
 
-	<T, R> ISharedConditionClause<MODEL, RESULT, R, AndOrLogicalClausesTable<MODEL, RESULT>> where(Function<T, R> func);
+	<T, R> ISharedConditionClause<MODEL, RESULT, R, IClassicAndOrLogicalClausesTable<MODEL, RESULT>> where(Function<T, R> func);
 
-    <T> ISharedStringClause<MODEL, RESULT, AndOrLogicalClausesTable<MODEL, RESULT>> where(StringFunction<T> func);
+    <T> ISharedStringClause<MODEL, RESULT, IClassicAndOrLogicalClausesTable<MODEL, RESULT>> where(StringFunction<T> func);
 
 }

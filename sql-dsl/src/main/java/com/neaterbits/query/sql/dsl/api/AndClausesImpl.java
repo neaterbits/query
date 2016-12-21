@@ -4,35 +4,38 @@ import java.util.function.Function;
 import java.util.function.Supplier;
 
 final class AndClausesImpl<MODEL, RESULT> extends ClausesImpl<MODEL, RESULT>
-			implements AndClausesTable<MODEL, RESULT>,
+			implements IClassicAndClausesTable<MODEL, RESULT>,
 					   IClassicAndClausesAlias<MODEL, RESULT> {
 
 	AndClausesImpl(ClausesImplInitial<MODEL, RESULT> last) {
 		super(last);
 	}
 	
-	private <T, RR> ISharedConditionClauseTable<MODEL, RESULT, RR, AndClausesTable<MODEL, RESULT>> andClassImpl(Function<T, RR> getter) {
-		return new ConditionClauseImpl<MODEL, RESULT, RR, AndClausesTable<MODEL,RESULT>>(this, makeGetter(getter));
+	private <T, RR, AND_CLAUSES extends ISharedAndClausesTable<MODEL, RESULT, AND_CLAUSES>>
+		ISharedConditionClauseTable<MODEL, RESULT, RR, AND_CLAUSES> andClassImpl(Function<T, RR> getter) {
+		
+		return new ConditionClauseImpl<MODEL, RESULT, RR, AND_CLAUSES>(this, makeGetter(getter));
 	}
 
-	private <RR> ISharedConditionClauseAlias<MODEL, RESULT, RR, IClassicAndClausesAlias<MODEL, RESULT>> andAliasImpl(Supplier<RR> getter) {
-		return new ConditionClauseImpl<MODEL, RESULT, RR, IClassicAndClausesAlias<MODEL,RESULT>>(this, makeGetter(getter));
+	private <RR, AND_CLAUSES extends ISharedAndClausesAlias<MODEL, RESULT, AND_CLAUSES>>
+		ISharedConditionClauseAlias<MODEL, RESULT, RR, AND_CLAUSES> andAliasImpl(Supplier<RR> getter) {
+		
+		return new ConditionClauseImpl<MODEL, RESULT, RR, AND_CLAUSES>(this, makeGetter(getter));
 	}
 	
-	
 	@Override
-	public <T> ISharedConditionClauseTable<MODEL, RESULT, Integer, AndClausesTable<MODEL, RESULT>> and(IntegerFunction<T> getter) {
+	public <T> ISharedConditionClauseTable<MODEL, RESULT, Integer, IClassicAndClausesTable<MODEL, RESULT>> and(IntegerFunction<T> getter) {
 		return andClassImpl(getter);
 	}
 
 	@Override
-	public <T> ISharedConditionClauseTable<MODEL, RESULT, Long, AndClausesTable<MODEL, RESULT>> and(LongFunction<T> getter) {
+	public <T> ISharedConditionClauseTable<MODEL, RESULT, Long, IClassicAndClausesTable<MODEL, RESULT>> and(LongFunction<T> getter) {
 		return andClassImpl(getter);
 	}
 
 	@Override
-	public <T> ISharedStringClause<MODEL, RESULT, AndClausesTable<MODEL, RESULT>> and(StringFunction<T> getter) {
-		return new StringClauseImpl<MODEL, RESULT, AndClausesTable<MODEL,RESULT>>(this, makeGetter(getter));
+	public <T> ISharedStringClause<MODEL, RESULT, IClassicAndClausesTable<MODEL, RESULT>> and(StringFunction<T> getter) {
+		return new StringClauseImpl<MODEL, RESULT, IClassicAndClausesTable<MODEL,RESULT>>(this, makeGetter(getter));
 	}
 
 	@Override
