@@ -6,6 +6,6 @@ public interface IClassicSingleWhereClauseBuilderTable<MODEL, RESULT> extends IS
 
 	<R> ISharedClauseConditionAll<MODEL, RESULT, R, IClassicSingleAndOrLogicalClausesTable<MODEL, RESULT>> where(Function<RESULT, R> func);
 	
-    ISharedClauseComparativeStringAll<MODEL, RESULT, IClassicSingleAndOrLogicalClausesTable<MODEL, RESULT>> where(StringFunction<RESULT> func);
+    ISharedClauseComparableStringAll<MODEL, RESULT, IClassicSingleAndOrLogicalClausesTable<MODEL, RESULT>> where(StringFunction<RESULT> func);
 	
 }

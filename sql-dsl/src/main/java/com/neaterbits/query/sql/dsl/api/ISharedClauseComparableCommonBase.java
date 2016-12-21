@@ -1,6 +1,6 @@
 package com.neaterbits.query.sql.dsl.api;
 
-public interface ISharedClauseComparativeBaseBase<
+public interface ISharedClauseComparableCommonBase<
 			MODEL,
 			RESULT,
 			R extends Comparable<?>, // TODO : Comparable<R>

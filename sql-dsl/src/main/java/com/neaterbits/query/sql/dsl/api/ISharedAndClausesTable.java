@@ -7,6 +7,6 @@ public interface ISharedAndClausesTable<MODEL, RESULT, AND_CLAUSES extends IShar
 
     <T> ISharedClauseConditionTable<MODEL, RESULT, Long, AND_CLAUSES> and(IFunctionLong<T> getter);
 
-    <T> ISharedClauseComparativeStringAll<MODEL, RESULT, AND_CLAUSES> and(StringFunction<T> getter);
+    <T> ISharedClauseComparableStringAll<MODEL, RESULT, AND_CLAUSES> and(StringFunction<T> getter);
 
 }

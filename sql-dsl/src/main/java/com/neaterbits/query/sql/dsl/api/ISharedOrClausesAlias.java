@@ -7,6 +7,6 @@ public interface ISharedOrClausesAlias<MODEL, RESULT, OR_CLAUSES extends IShared
 
     ISharedClauseConditionAll<MODEL, RESULT, Long, OR_CLAUSES> or(ISupplierLong getter);
     
-    ISharedClauseComparativeStringAll<MODEL, RESULT, OR_CLAUSES> or(ISupplierString getter);
+    ISharedClauseComparableStringAll<MODEL, RESULT, OR_CLAUSES> or(ISupplierString getter);
 
 }

@@ -14,7 +14,7 @@ final class AndClausesImplTableSingle<MODEL, RESULT> extends ClausesImpl<MODEL, 
 	}
 
 	@Override
-	public ISharedClauseComparativeStringAll<MODEL, RESULT, IClassicSingleAndClausesTable<MODEL, RESULT>> and(StringFunction<RESULT> getter) {
+	public ISharedClauseComparableStringAll<MODEL, RESULT, IClassicSingleAndClausesTable<MODEL, RESULT>> and(StringFunction<RESULT> getter) {
 		return new StringClauseImpl<MODEL, RESULT, IClassicSingleAndClausesTable<MODEL,RESULT>>(this, makeGetter(getter));
 	}
 }

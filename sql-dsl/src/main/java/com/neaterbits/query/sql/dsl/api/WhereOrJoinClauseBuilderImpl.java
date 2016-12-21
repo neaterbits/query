@@ -156,7 +156,7 @@ final class WhereOrJoinClauseBuilderImpl<MODEL, RESULT>
 
 	// ------------------------  WHERE ------------------------
 	@Override
-	public <T> ISharedClauseComparativeBaseAll<MODEL, RESULT, Integer, IClassicAndOrLogicalClausesTable<MODEL, RESULT>> where(IFunctionInteger<T> getter) {
+	public <T> ISharedClauseComparableCommonAll<MODEL, RESULT, Integer, IClassicAndOrLogicalClausesTable<MODEL, RESULT>> where(IFunctionInteger<T> getter) {
 
 		return new ComparativeClauseImpl<MODEL, RESULT, Integer, IClassicAndOrLogicalClausesTable<MODEL,RESULT>>(this, makeGetter(getter));
 	}
@@ -169,7 +169,7 @@ final class WhereOrJoinClauseBuilderImpl<MODEL, RESULT>
 	}
 
 	@Override
-	public <T> ISharedClauseComparativeStringAll<MODEL, RESULT, IClassicAndOrLogicalClausesTable<MODEL, RESULT>> where(StringFunction<T> getter) {
+	public <T> ISharedClauseComparableStringAll<MODEL, RESULT, IClassicAndOrLogicalClausesTable<MODEL, RESULT>> where(StringFunction<T> getter) {
 		
 		return new StringClauseImpl<MODEL, RESULT, IClassicAndOrLogicalClausesTable<MODEL,RESULT>>(this, makeGetter(getter));
 	}
@@ -181,7 +181,7 @@ final class WhereOrJoinClauseBuilderImpl<MODEL, RESULT>
 	}	
 
 	@Override
-	public ISharedClauseComparativeStringAll<MODEL, RESULT, IClassicAndOrLogicalClausesAlias<MODEL, RESULT>> where(ISupplierString supplier) {
+	public ISharedClauseComparableStringAll<MODEL, RESULT, IClassicAndOrLogicalClausesAlias<MODEL, RESULT>> where(ISupplierString supplier) {
 
 		return new StringClauseImpl<MODEL, RESULT, IClassicAndOrLogicalClausesAlias<MODEL,RESULT>>(this, makeGetter(supplier));
 	}
@@ -200,7 +200,7 @@ final class WhereOrJoinClauseBuilderImpl<MODEL, RESULT>
 	}
 
 	@Override
-	public <T> ISharedClauseComparativeStringAll<MODEL, RESULT, IClassicAndClausesTable<MODEL, RESULT>> and(StringFunction<T> getter) {
+	public <T> ISharedClauseComparableStringAll<MODEL, RESULT, IClassicAndClausesTable<MODEL, RESULT>> and(StringFunction<T> getter) {
 		
 		final AndClausesImpl<MODEL, RESULT> andClauses = new AndClausesImpl<>(this);
 		
@@ -218,7 +218,7 @@ final class WhereOrJoinClauseBuilderImpl<MODEL, RESULT>
 	}
 
 	@Override
-	public ISharedClauseComparativeStringAll<MODEL, RESULT, IClassicAndClausesAlias<MODEL, RESULT>> and(ISupplierString getter) {
+	public ISharedClauseComparableStringAll<MODEL, RESULT, IClassicAndClausesAlias<MODEL, RESULT>> and(ISupplierString getter) {
 
 		final AndClausesImpl<MODEL, RESULT> andClauses = new AndClausesImpl<>(this);
 		
@@ -241,7 +241,7 @@ final class WhereOrJoinClauseBuilderImpl<MODEL, RESULT>
 
 
 	@Override
-	public <T> ISharedClauseComparativeStringAll<MODEL, RESULT, IClassicOrClausesTable<MODEL, RESULT>> or(StringFunction<T> getter) {
+	public <T> ISharedClauseComparableStringAll<MODEL, RESULT, IClassicOrClausesTable<MODEL, RESULT>> or(StringFunction<T> getter) {
 		final OrClausesImpl<MODEL, RESULT> orClauses = new OrClausesImpl<>(this);
 
 		return new StringClauseImpl<MODEL, RESULT, IClassicOrClausesTable<MODEL,RESULT>>(orClauses, makeGetter(getter));
@@ -258,7 +258,7 @@ final class WhereOrJoinClauseBuilderImpl<MODEL, RESULT>
 	}
 
 	@Override
-	public ISharedClauseComparativeStringAll<MODEL, RESULT, IClassicOrClausesAlias<MODEL, RESULT>> or(ISupplierString getter) {
+	public ISharedClauseComparableStringAll<MODEL, RESULT, IClassicOrClausesAlias<MODEL, RESULT>> or(ISupplierString getter) {
 
 		final OrClausesImpl<MODEL, RESULT> orClauses = new OrClausesImpl<>(this);
 

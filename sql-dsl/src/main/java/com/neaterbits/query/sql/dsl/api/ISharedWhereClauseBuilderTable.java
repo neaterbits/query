@@ -5,8 +5,8 @@ public interface ISharedWhereClauseBuilderTable<
 					RESULT,
 					CONDITION_CLAUSE extends ISharedLogicalClauses<MODEL, RESULT>,
 					
-					INTEGER_CLAUSE extends ISharedClauseComparativeBaseBase<MODEL, RESULT, Integer, CONDITION_CLAUSE>,
-					STRING_CLAUSE  extends ISharedClauseComparativeBaseBase<MODEL, RESULT, String, CONDITION_CLAUSE>>
+					INTEGER_CLAUSE extends ISharedClauseComparableCommonBase<MODEL, RESULT, Integer, CONDITION_CLAUSE>,
+					STRING_CLAUSE  extends ISharedClauseComparableStringBase<MODEL, RESULT, CONDITION_CLAUSE>>
 
 	extends ISharedWhereClauseBuilder<MODEL, RESULT> {
 

@@ -36,7 +36,7 @@ final class SingleTableResultImpl<MODEL, RESULT>
 	}
 
 	@Override
-	public ISharedClauseComparativeStringAll<MODEL, RESULT, IClassicSingleAndOrLogicalClausesTable<MODEL, RESULT>>
+	public ISharedClauseComparableStringAll<MODEL, RESULT, IClassicSingleAndOrLogicalClausesTable<MODEL, RESULT>>
 			where(StringFunction<RESULT> func) {
 
 		return new StringClauseImpl<MODEL, RESULT, IClassicSingleAndOrLogicalClausesTable<MODEL,RESULT>>(this, makeGetter(func));
@@ -53,7 +53,7 @@ final class SingleTableResultImpl<MODEL, RESULT>
 	}
 
 	@Override
-	public ISharedClauseComparativeStringAll<MODEL, RESULT, IClassicSingleAndClausesTable<MODEL, RESULT>>
+	public ISharedClauseComparableStringAll<MODEL, RESULT, IClassicSingleAndClausesTable<MODEL, RESULT>>
 			and(StringFunction<RESULT> getter) {
 
 		final AndClausesImplTableSingle<MODEL, RESULT> andClauses = new AndClausesImplTableSingle<>(this);
@@ -72,7 +72,7 @@ final class SingleTableResultImpl<MODEL, RESULT>
 	}
 
 	@Override
-	public ISharedClauseComparativeStringAll<MODEL, RESULT, IClassicSingleOrClausesTable<MODEL, RESULT>>
+	public ISharedClauseComparableStringAll<MODEL, RESULT, IClassicSingleOrClausesTable<MODEL, RESULT>>
 			or(StringFunction<RESULT> getter) {
 
 		final OrClausesImplTableSingle<MODEL, RESULT> orClauses = new OrClausesImplTableSingle<>(this);

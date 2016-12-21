@@ -7,8 +7,8 @@ public interface ISharedWhereClauseBuilderTableAll<
 
 		extends ISharedWhereClauseBuilderTable<MODEL, RESULT, CONDITION_CLAUSE,
 		
-			ISharedClauseComparativeBaseAll<MODEL,RESULT,Integer,CONDITION_CLAUSE>,
-			ISharedClauseComparativeStringAll<MODEL,RESULT,CONDITION_CLAUSE>>{
+			ISharedClauseComparableCommonAll<MODEL,RESULT,Integer,CONDITION_CLAUSE>,
+			ISharedClauseComparableStringAll<MODEL,RESULT,CONDITION_CLAUSE>>{
 
 	<T, E extends Enum<E>> ISharedClauseConditionAll<MODEL, RESULT, E, CONDITION_CLAUSE> where(IFunctionEnum<T, E> func);
 

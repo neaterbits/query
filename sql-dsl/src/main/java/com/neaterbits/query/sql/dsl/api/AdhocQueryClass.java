@@ -8,8 +8,8 @@ import com.neaterbits.query.sql.dsl.api.entity.QueryMetaModel;
 final class AdhocQueryClass<MODEL> extends AdhocQueryBase<MODEL, AdhocQueryClass<MODEL>> 
 		implements IAdhocNumericTableResult<MODEL, Object>,
 		
-			ISharedClauseComparativeBaseValue<MODEL, Object, Comparable<Object>, ISharedLogicalClauses<MODEL, Object>>,
-			ISharedClauseComparativeStringValue<MODEL, Object, ISharedLogicalClauses<MODEL, Object>>,
+			ISharedClauseComparableCommonValue<MODEL, Object, Comparable<Object>, ISharedLogicalClauses<MODEL, Object>>,
+			ISharedClauseComparableStringValue<MODEL, Object, ISharedLogicalClauses<MODEL, Object>>,
 			
 			ISharedLogicalClauses<MODEL, Object> {
 
@@ -84,12 +84,12 @@ final class AdhocQueryClass<MODEL> extends AdhocQueryBase<MODEL, AdhocQueryClass
 	**************************************************************************/
 	
 	@SuppressWarnings({"unchecked", "rawtypes"})
-	private <R extends Comparable<R>> ISharedClauseComparativeBaseValue<MODEL, Object, R, IAdhocAndOrLogicalClauses<MODEL, Object>>
+	private <R extends Comparable<R>> ISharedClauseComparableCommonValue<MODEL, Object, R, IAdhocAndOrLogicalClauses<MODEL, Object>>
 				addComparativeWhere(Function<?, ?> function) {
 		
 		addCondition(function);
 		
-		return (ISharedClauseComparativeBaseValue)this;
+		return (ISharedClauseComparableCommonValue)this;
 	}
 	
 	@SuppressWarnings({"unchecked", "rawtypes"})
@@ -107,16 +107,16 @@ final class AdhocQueryClass<MODEL> extends AdhocQueryBase<MODEL, AdhocQueryClass
 	}
 
 	@Override
-	public <T> ISharedClauseComparativeBaseValue<MODEL, Object, Integer, IAdhocAndOrLogicalClauses<MODEL, Object>> where(IFunctionInteger<T> func) {
+	public <T> ISharedClauseComparableCommonValue<MODEL, Object, Integer, IAdhocAndOrLogicalClauses<MODEL, Object>> where(IFunctionInteger<T> func) {
 		return addComparativeWhere(func);
 	}
 
 	@Override
 	@SuppressWarnings({"unchecked", "rawtypes"})
-	public <T> ISharedClauseComparativeStringValue<MODEL, Object, IAdhocAndOrLogicalClauses<MODEL, Object>> where(StringFunction<T> func) {
+	public <T> ISharedClauseComparableStringValue<MODEL, Object, IAdhocAndOrLogicalClauses<MODEL, Object>> where(StringFunction<T> func) {
 		addCondition(func);
 		
-		return (ISharedClauseComparativeStringValue)this;
+		return (ISharedClauseComparableStringValue)this;
 	}
 
 	
@@ -191,6 +191,5 @@ final class AdhocQueryClass<MODEL> extends AdhocQueryBase<MODEL, AdhocQueryClass
 	public MODEL compile() {
 		throw new UnsupportedOperationException("TODO");
 	}
-	
 }
 

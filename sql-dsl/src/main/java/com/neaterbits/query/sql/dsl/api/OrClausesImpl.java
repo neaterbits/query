@@ -29,7 +29,7 @@ final class OrClausesImpl<MODEL, RESULT> extends ClausesImpl<MODEL, RESULT>
 	}
 
 	@Override
-	public <T> ISharedClauseComparativeStringAll<MODEL, RESULT, IClassicOrClausesTable<MODEL, RESULT>> or(StringFunction<T> getter) {
+	public <T> ISharedClauseComparableStringAll<MODEL, RESULT, IClassicOrClausesTable<MODEL, RESULT>> or(StringFunction<T> getter) {
 		return new StringClauseImpl<MODEL, RESULT, IClassicOrClausesTable<MODEL,RESULT>>(this, makeGetter(getter));
 	}
 
@@ -44,7 +44,7 @@ final class OrClausesImpl<MODEL, RESULT> extends ClausesImpl<MODEL, RESULT>
 	}
 
 	@Override
-	public ISharedClauseComparativeStringAll<MODEL, RESULT, IClassicOrClausesAlias<MODEL, RESULT>> or(ISupplierString getter) {
+	public ISharedClauseComparableStringAll<MODEL, RESULT, IClassicOrClausesAlias<MODEL, RESULT>> or(ISupplierString getter) {
 		return new StringClauseImpl<MODEL, RESULT, IClassicOrClausesAlias<MODEL,RESULT>>(this, makeGetter(getter));
 	}
 }

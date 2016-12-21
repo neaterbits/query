@@ -10,6 +10,6 @@ public interface ISharedSingleAndClausesTable<
 
     ISharedClauseConditionTable<MODEL, RESULT, Integer, AND_CLAUSES> and(IFunctionInteger<RESULT> getter);
 
-    ISharedClauseComparativeStringAll<MODEL, RESULT, AND_CLAUSES> and(StringFunction<RESULT> getter);
+    ISharedClauseComparableStringAll<MODEL, RESULT, AND_CLAUSES> and(StringFunction<RESULT> getter);
 	
 }

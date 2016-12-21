@@ -34,7 +34,7 @@ final class AndClausesImpl<MODEL, RESULT> extends ClausesImpl<MODEL, RESULT>
 	}
 
 	@Override
-	public <T> ISharedClauseComparativeStringAll<MODEL, RESULT, IClassicAndClausesTable<MODEL, RESULT>> and(StringFunction<T> getter) {
+	public <T> ISharedClauseComparableStringAll<MODEL, RESULT, IClassicAndClausesTable<MODEL, RESULT>> and(StringFunction<T> getter) {
 		return new StringClauseImpl<MODEL, RESULT, IClassicAndClausesTable<MODEL,RESULT>>(this, makeGetter(getter));
 	}
 
@@ -49,7 +49,7 @@ final class AndClausesImpl<MODEL, RESULT> extends ClausesImpl<MODEL, RESULT>
 	}
 
 	@Override
-	public ISharedClauseComparativeStringAll<MODEL, RESULT, IClassicAndClausesAlias<MODEL, RESULT>> and(ISupplierString getter) {
+	public ISharedClauseComparableStringAll<MODEL, RESULT, IClassicAndClausesAlias<MODEL, RESULT>> and(ISupplierString getter) {
 		return new StringClauseImpl<MODEL, RESULT, IClassicAndClausesAlias<MODEL,RESULT>>(this, makeGetter(getter));
 	}
 }

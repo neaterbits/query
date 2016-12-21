@@ -1,6 +1,6 @@
 package com.neaterbits.query.sql.dsl.api;
 
-public interface ISharedClauseComparativeStringParam<MODEL, RESULT, L extends ISharedLogicalClauses<MODEL, RESULT>> {
+public interface ISharedClauseComparableStringParam<MODEL, RESULT, L extends ISharedLogicalClauses<MODEL, RESULT>> {
 
 	L startsWith(Param<String> s);
     

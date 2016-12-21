@@ -6,5 +6,5 @@ public interface ISharedOrClausesTable<MODEL, RESULT, OR_CLAUSES extends IShared
     
     <T> ISharedClauseConditionAll<MODEL, RESULT, Long, OR_CLAUSES> or(IFunctionLong<T> getter);
 
-    <T> ISharedClauseComparativeStringAll<MODEL, RESULT, OR_CLAUSES> or(StringFunction<T> getter);
+    <T> ISharedClauseComparableStringAll<MODEL, RESULT, OR_CLAUSES> or(StringFunction<T> getter);
 }

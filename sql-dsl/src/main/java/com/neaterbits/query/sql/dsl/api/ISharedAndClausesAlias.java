@@ -7,6 +7,6 @@ public interface ISharedAndClausesAlias<MODEL, RESULT, AND_CLAUSES extends IShar
 
 	ISharedConditionClauseAlias<MODEL, RESULT, Long, AND_CLAUSES> and(ISupplierLong getter);
 
-    ISharedClauseComparativeStringAll<MODEL, RESULT, AND_CLAUSES> and(ISupplierString getter);
+    ISharedClauseComparableStringAll<MODEL, RESULT, AND_CLAUSES> and(ISupplierString getter);
 
 }

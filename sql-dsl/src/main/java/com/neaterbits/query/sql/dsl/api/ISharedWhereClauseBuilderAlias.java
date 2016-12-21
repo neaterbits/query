@@ -7,5 +7,5 @@ public interface ISharedWhereClauseBuilderAlias<MODEL, RESULT, CONDITION_CLAUSE 
 	
 	ISharedClauseConditionAll<MODEL, RESULT, Integer, CONDITION_CLAUSE> where(ISupplierInteger func);
 	
-    ISharedClauseComparativeStringAll<MODEL, RESULT, CONDITION_CLAUSE> where(ISupplierString supplier);
+    ISharedClauseComparableStringAll<MODEL, RESULT, CONDITION_CLAUSE> where(ISupplierString supplier);
 }

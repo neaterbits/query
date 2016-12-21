@@ -9,6 +9,6 @@ public interface ISharedSingleOrClausesTable<
 
 	    ISharedClauseConditionAll<MODEL, RESULT, Integer, OR_CLAUSES> or(IFunctionInteger<RESULT> getter);
 	    
-	    ISharedClauseComparativeStringAll<MODEL, RESULT, OR_CLAUSES> or(StringFunction<RESULT> getter);
+	    ISharedClauseComparableStringAll<MODEL, RESULT, OR_CLAUSES> or(StringFunction<RESULT> getter);
 
 }
