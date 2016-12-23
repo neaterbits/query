@@ -1,6 +1,7 @@
 package com.neaterbits.query.sql.dsl.api;
 
 import java.math.BigDecimal;
+import java.math.BigInteger;
 
 import com.neaterbits.query.sql.dsl.api.entity.OneToManyJoinConditionResolver;
 import com.neaterbits.query.sql.dsl.api.entity.QueryMetaModel;
@@ -47,15 +48,19 @@ interface ExecutableQuery<QUERY> {
 		case SHORT:
 			ret = (short)0;
 			break;
-			
+
 		case INTEGER:
 			ret = 0;
 			break;
-			
+
 		case LONG:
 			ret = 0L;
 			break;
-			
+
+		case BIGINT:
+			ret = BigInteger.ZERO;
+			break;
+
 		case DECIMAL:
 			ret = BigDecimal.ZERO;
 			break;
@@ -71,7 +76,7 @@ interface ExecutableQuery<QUERY> {
 	public default Object getAggregateDefault(QUERY query) {
 
 		final  EAggregateFunction function = getAggregateResultFunction(query);
-		final  ENumericType numericType = getAggregateNumericType(query);
+		final  ENumericType numericOutputType = getAggregateNumericInputType(query);
 
 		final Object ret;
 
@@ -79,7 +84,7 @@ interface ExecutableQuery<QUERY> {
 		case AVG:
 		case COUNT:
 		case SUM:
-			ret = getZeroValue(numericType);
+			ret = getZeroValue(numericOutputType);
 			break;
 			
 		case MIN:
@@ -112,7 +117,9 @@ interface ExecutableQuery<QUERY> {
 	
 	EAggregateFunction getAggregateResultFunction(QUERY query);
 
-	ENumericType getAggregateNumericType(QUERY query);
+	ENumericType getAggregateNumericInputType(QUERY query);
+
+	ENumericType getAggregateNumericOutputType(QUERY query);
 	
 	Object getAggregateResultValue(QUERY query, Object instance);
 	

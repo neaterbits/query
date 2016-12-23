@@ -17,10 +17,10 @@ class ExecuteQueryScratch extends ConditionValuesScratch {
 		// TODO: Handle 1 result part case? no need for array
 		this.queryMetaModel = queryMetaModel;
 		
-		init(numResultParts, numSelectSources, numConditions);
+		initScratchArea(numResultParts, numSelectSources, numConditions);
 	}
 		
-	private void init(int numResultParts, int numSelectSources, int numConditions) {
+	protected void initScratchArea(int numResultParts, int numSelectSources, int numConditions) {
 		this.scratch = new Object[numSelectSources];
 		this.numResultParts = numResultParts;
 		this.numConditions = numConditions;

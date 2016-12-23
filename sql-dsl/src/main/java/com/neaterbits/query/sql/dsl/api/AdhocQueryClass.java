@@ -27,16 +27,19 @@ final class AdhocQueryClass<MODEL> extends AdhocQueryBase<MODEL, AdhocQueryClass
 	@SuppressWarnings("rawtypes")
 	private Function [] conditions;
 	private EClauseOperator [] operators;
+	private int [] conditionToSourceIdx;
 	private Object [] values;
 
 	private int numConditions;
+	private ConditionsType conditionsType;
 	
 	private Collection<?> [] sources;
 	private int numSources;
 	
 	
-	AdhocQueryClass(Function<?, ?> aggregateGetter, EAggregateFunction aggregateFunction, ENumericType aggregateNumericType) {
-		super(aggregateFunction, aggregateNumericType);
+	
+	AdhocQueryClass(Function<?, ?> aggregateGetter, EAggregateFunction aggregateFunction, ENumericType aggregateNumericInputType, ENumericType aggregateNumericOutputType) {
+		super(aggregateFunction, aggregateNumericInputType, aggregateNumericOutputType);
 
 		if (aggregateGetter == null) {
 			throw new IllegalArgumentException("aggregateGetter == null");
@@ -53,10 +56,32 @@ final class AdhocQueryClass<MODEL> extends AdhocQueryBase<MODEL, AdhocQueryClass
 
 	@Override
 	public ExecuteQueryScratch createScratchArea(AdhocQueryClass<MODEL> query, QueryMetaModel queryMetaModel) {
+
+		initScratchArea(getNumResultParts(this), getSourceCount(this), numConditions);
+		
 		return this;
 	}
 
-	private void addCondition(Function<?, ?> function) {
+	private void addCondition(ConditionsType conditionsType, Function<?, ?> function) {
+		
+		if (conditionsType == null) {
+			throw new IllegalArgumentException("conditionsType == null");
+		}
+		
+		if (this.conditionsType == null) {
+			if (conditionsType != ConditionsType.SINGLE) {
+				throw new IllegalArgumentException("Expected single-condition");
+			}
+			this.conditionsType = conditionsType;
+		}
+		else {
+			if (conditionsType == ConditionsType.SINGLE) {
+				this.conditionsType = conditionsType;
+			}
+			else if (conditionsType != this.conditionsType) {
+				throw new IllegalStateException("Mismatch in condition from " + conditionsType + " to " + this.conditionsType);
+			}
+		}
 		
 		if (function == null) {
 			throw new IllegalArgumentException("function == null");
@@ -76,13 +101,18 @@ final class AdhocQueryClass<MODEL> extends AdhocQueryBase<MODEL, AdhocQueryClass
 		if (numConditions == 0) {
 			this.operators = new EClauseOperator[INITIAL_CONDITIONS];
 			this.values = new Object[INITIAL_CONDITIONS];
+			this.conditionToSourceIdx = new int[INITIAL_CONDITIONS];
+			
 		}
 		else if (numConditions == operators.length) {
+			
 			this.operators = Arrays.copyOf(operators, operators.length * 2);
 			this.values = Arrays.copyOf(values, values.length * 2);
+			this.conditionToSourceIdx = Arrays.copyOf(conditionToSourceIdx, conditionToSourceIdx.length * 2);
 		}
-		
+
 		this.operators[numConditions] = operator;
+		this.conditionToSourceIdx[numConditions] = numSources - 1;
 		this.values[numConditions ++] = value;
 		
 		return this;
@@ -102,6 +132,88 @@ final class AdhocQueryClass<MODEL> extends AdhocQueryBase<MODEL, AdhocQueryClass
 	@Override
 	public final int getSourceCount(AdhocQueryClass<MODEL> query) {
 		return numSources;
+	}
+
+	@Override
+	public final ConditionsType getConditionsType(AdhocQueryClass<MODEL> query) {
+		return conditionsType;
+	}
+
+	@Override
+	public final int getConditionCount(AdhocQueryClass<MODEL> query) {
+		return numConditions;
+	}
+
+	@Override
+	public final int getConditionSourceIdx(AdhocQueryClass<MODEL> query, int conditionIdx) {
+		return conditionToSourceIdx[conditionIdx];
+	}
+
+	private static final ConditionEvaluatorComparable conditionValueComparable = new ConditionEvaluatorComparable();
+
+	@Override
+	public final boolean evaluateCondition(AdhocQueryClass<MODEL> query, Object instance, int conditionIdx, ConditionValuesScratch scratch) {
+
+		final EClauseOperator operator = operators[conditionIdx];
+		
+		final boolean ret;
+
+		@SuppressWarnings("unchecked")
+		final Object instanceValue = conditions[conditionIdx].apply(instance);
+		final Object compareValue = values[conditionIdx];
+
+		initConditionScratchValues(instanceValue, compareValue);
+
+		switch (operator) {
+		case IS_EQUAL:
+			ret = conditionValueComparable.onEqualTo(null, this);
+			break;
+			
+		case NOT_EQUAL:
+			ret = conditionValueComparable.onNotEqualTo(null, this);
+			break;
+
+		case LESS_THAN:
+			ret = conditionValueComparable.onLessThan(null, this);
+			break;
+
+		case LESS_OR_EQUAL:
+			ret = conditionValueComparable.onLessThanOrEqual(null, this);
+			break;
+
+		case GREATER_THAN:
+			ret = conditionValueComparable.onGreaterThan(null, this);
+			break;
+
+		case GREATER_OR_EQUAL:
+			ret = conditionValueComparable.onGreaterThanOrEqual(null, this);
+			break;
+
+		case IN:
+			ret = conditionValueComparable.onIn(null, this);
+			break;
+
+		case STARTS_WITH:
+			ret = conditionValueComparable.onStartsWith(null, this);
+			break;
+			
+		case ENDS_WITH:
+			ret = conditionValueComparable.onEndsWith(null, this);
+			break;
+
+		case CONTAINS:
+			ret = conditionValueComparable.onContains(null, this);
+			break;
+
+		case MATCHES:
+			ret = conditionValueComparable.onMatches(null, this);
+			break;			
+			
+		default:
+			throw new UnsupportedOperationException("Unknown condition operator " + operator);
+		}
+
+		return ret;
 	}
 	
 
@@ -153,7 +265,7 @@ final class AdhocQueryClass<MODEL> extends AdhocQueryBase<MODEL, AdhocQueryClass
 	private <R extends Comparable<R>> ISharedClauseComparableCommonValue<MODEL, Object, R, IAdhocAndOrLogicalClauses<MODEL, Object>>
 				addComparativeWhere(Function<?, ?> function) {
 		
-		addCondition(function);
+		addCondition(ConditionsType.SINGLE, function);
 		
 		return (ISharedClauseComparableCommonValue)this;
 	}
@@ -163,7 +275,7 @@ final class AdhocQueryClass<MODEL> extends AdhocQueryBase<MODEL, AdhocQueryClass
 	private <R extends Comparable<R>> ISharedClauseConditionValue<MODEL, Object, R, IAdhocAndOrLogicalClauses<MODEL, Object>>
 			addConditionWhere(Function<?, ?> function) {
 
-			addCondition(function);
+			addCondition(ConditionsType.SINGLE, function);
 
 			return (ISharedClauseConditionValue)this;
 	}
@@ -186,7 +298,7 @@ final class AdhocQueryClass<MODEL> extends AdhocQueryBase<MODEL, AdhocQueryClass
 	@Override
 	@SuppressWarnings({"unchecked", "rawtypes"})
 	public ISharedClauseComparableStringValue<MODEL, Object, IAdhocAndOrLogicalClauses<MODEL, Object>> where(StringFunction<Object> func) {
-		addCondition(func);
+		addCondition(null, func);
 		
 		return (ISharedClauseComparableStringValue)this;
 	}

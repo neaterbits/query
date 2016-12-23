@@ -8,27 +8,28 @@ final class AdhocImpl<MODEL> implements IAdhoc<MODEL> {
 	static final AdhocImpl<Void> adhocImpl = new AdhocImpl<Void>();
 
 	@SuppressWarnings({"unchecked", "rawtypes"})
-	private <T, TYPE> IAdhocNumericTableResult<MODEL, TYPE, T> createNumeric(Function<T, TYPE> field, EAggregateFunction aggregateFunction, ENumericType numericType) {
-		return (IAdhocNumericTableResult)new AdhocQueryClass(field, aggregateFunction, numericType);
+	private <T, INPUT_TYPE, OUTPUT_TYPE>
+				IAdhocNumericTableResult<MODEL, OUTPUT_TYPE, T> createNumeric(Function<T, INPUT_TYPE> field, EAggregateFunction aggregateFunction, ENumericType inputNnumericType, ENumericType outputNnumericType) {
+		return (IAdhocNumericTableResult)new AdhocQueryClass(field, aggregateFunction, inputNnumericType, outputNnumericType);
 	}
 	
 	@Override
-	public <T> IAdhocNumericTableResult<MODEL, Short, T> sum(IFunctionShort<T> field) {
-		return createNumeric(field, EAggregateFunction.SUM, ENumericType.SHORT);
+	public <T> IAdhocNumericTableResult<MODEL, Integer, T> sum(IFunctionShort<T> field) {
+		return createNumeric(field, EAggregateFunction.SUM, ENumericType.SHORT, ENumericType.INTEGER);
 	}
 
 	@Override
 	public <T> IAdhocNumericTableResult<MODEL, Integer, T> sum(IFunctionInteger<T> field) {
-		return createNumeric(field, EAggregateFunction.SUM, ENumericType.INTEGER);
+		return createNumeric(field, EAggregateFunction.SUM, ENumericType.INTEGER, ENumericType.INTEGER);
 	}
 
 	@Override
 	public <T> IAdhocNumericTableResult<MODEL, Long, T> sum(IFunctionLong<T> field) {
-		return createNumeric(field, EAggregateFunction.SUM, ENumericType.LONG);
+		return createNumeric(field, EAggregateFunction.SUM, ENumericType.LONG, ENumericType.LONG);
 	}
 
 	@Override
 	public <T> IAdhocNumericTableResult<MODEL, BigDecimal, T> sum(IFunctionBigDecimal<T> field) {
-		return createNumeric(field, EAggregateFunction.SUM, ENumericType.DECIMAL);
+		return createNumeric(field, EAggregateFunction.SUM, ENumericType.DECIMAL, ENumericType.DECIMAL);
 	}
 }

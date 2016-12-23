@@ -1,6 +1,5 @@
 package com.neaterbits.query.sql.dsl.api;
 
-import java.nio.channels.GatheringByteChannel;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;

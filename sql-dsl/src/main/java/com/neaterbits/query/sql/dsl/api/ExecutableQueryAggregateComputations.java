@@ -179,19 +179,20 @@ abstract class ExecutableQueryAggregateComputations<QUERY> extends ExecuteQueryB
 	
 	private final Object computeSum(QUERY query, Object last, Object value) {
 		
-		final ENumericType numericType = q.getAggregateNumericType(query);
+		final ENumericType numericType = q.getAggregateNumericInputType(query);
 		
 		final Object ret;
 		
+		// TODO: Overflow check
 		
 		switch (numericType) {
 		case SHORT: {
 			final Short v = (Short)value;
 			if (last == null) {
-				ret = (long)v;
+				ret = (int)v;
 			}
 			else {
-				final Long l = (Long)last;
+				final Integer l = (Integer)last;
 				ret = l + v; 
 			}
 			break;
@@ -200,10 +201,10 @@ abstract class ExecutableQueryAggregateComputations<QUERY> extends ExecuteQueryB
 		case INTEGER: {
 			final Integer v = (Integer)value;
 			if (last == null) {
-				ret = (long)v;
+				ret = (int)v;
 			}
 			else {
-				final Long l = (Long)last;
+				final Integer l = (Integer)last;
 				
 				ret = l + v; 
 			}
@@ -247,7 +248,7 @@ abstract class ExecutableQueryAggregateComputations<QUERY> extends ExecuteQueryB
 	
 	private final Object computeMin(QUERY query, Object last, Object value) {
 		
-		final ENumericType numericType = q.getAggregateNumericType(query);
+		final ENumericType numericType = q.getAggregateNumericInputType(query);
 		
 		final Object ret;
 		
@@ -330,7 +331,7 @@ abstract class ExecutableQueryAggregateComputations<QUERY> extends ExecuteQueryB
 	
 	private final Object computeMax(QUERY query, Object last, Object value) {
 		
-		final ENumericType numericType = q.getAggregateNumericType(query);
+		final ENumericType numericType = q.getAggregateNumericInputType(query);
 		
 		final Object ret;
 		
@@ -446,7 +447,7 @@ abstract class ExecutableQueryAggregateComputations<QUERY> extends ExecuteQueryB
 	
 	private final Object computeAvg(QUERY query, Object last, Object value) {
 		
-		final ENumericType numericType = q.getAggregateNumericType(query);
+		final ENumericType numericType = q.getAggregateNumericInputType(query);
 		
 		final AvgCollector ret;
 		

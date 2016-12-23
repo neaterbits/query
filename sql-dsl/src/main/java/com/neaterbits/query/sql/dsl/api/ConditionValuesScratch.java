@@ -14,7 +14,7 @@ class ConditionValuesScratch {
 		this.collectedParams = collectedParams;
 	}
 
-	final void init(Object lhs, Object rhs) {
+	final void initConditionScratchValues(Object lhs, Object rhs) {
 		
 		// rhs should never be null
 		if (rhs == null) {

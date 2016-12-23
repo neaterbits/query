@@ -5,7 +5,8 @@ import java.math.BigDecimal;
 abstract class QueryResultAggregate extends QueryResult {
 
 	private final Getter getter;
-	private final ENumericType numericType;
+	private final ENumericType inputNumericType;
+	private final ENumericType outputNumericType;
 	
 	abstract EAggregateFunction getAggregateFunction();
 	
@@ -17,7 +18,10 @@ abstract class QueryResultAggregate extends QueryResult {
 		}
 
 		this.getter = getter;
-		this.numericType = getNumericType(type);
+		this.inputNumericType = getNumericType(type);
+		
+		// TODO: map Short => Integer result type, similar to IAdhoc 
+		this.outputNumericType = getNumericType(type);
 	}
 	
 	private static ENumericType getNumericType(Class<?> type) {
@@ -47,8 +51,12 @@ abstract class QueryResultAggregate extends QueryResult {
 		return getter;
 	}
 
-	final ENumericType getNumericType() {
-		return numericType;
+	final ENumericType getInputNumericType() {
+		return inputNumericType;
+	}
+
+	final ENumericType getOutputNumericType() {
+		return outputNumericType;
 	}
 
 	@Override

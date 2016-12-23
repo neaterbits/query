@@ -38,8 +38,13 @@ final class ExecutableQueryForCompiledQuery implements ExecutableQuery<CompiledQ
 	}
 	
 	@Override
-	public ENumericType getAggregateNumericType(CompiledQuery query) {
-		return ((QueryResultAggregate)query.getResult().getOriginal()).getNumericType();
+	public ENumericType getAggregateNumericInputType(CompiledQuery query) {
+		return ((QueryResultAggregate)query.getResult().getOriginal()).getInputNumericType();
+	}
+	
+	@Override
+	public ENumericType getAggregateNumericOutputType(CompiledQuery query) {
+		return ((QueryResultAggregate)query.getResult().getOriginal()).getOutputNumericType();
 	}
 
 	@Override
@@ -313,7 +318,7 @@ final class ExecutableQueryForCompiledQuery implements ExecutableQuery<CompiledQ
 		final Object rhs = condition.getValue().visit(valueVisitor, scratch.getCollectedParams());
 		
 		// At last, evaluate
-		scratch.init(lhs, rhs);
+		scratch.initConditionScratchValues(lhs, rhs);
 		
 		final ScalarType scalarType = condition.getScalarType();
 		

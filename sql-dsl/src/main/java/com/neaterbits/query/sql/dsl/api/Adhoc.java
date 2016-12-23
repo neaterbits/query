@@ -4,7 +4,7 @@ import java.math.BigDecimal;
 
 public interface Adhoc {
 
-    public static <T> IAdhocNumericTableResult<Void, Short, T> sum(IFunctionShort<T> field) {
+    public static <T> IAdhocNumericTableResult<Void, Integer, T> sum(IFunctionShort<T> field) {
     	return AdhocImpl.adhocImpl.sum(field);
     }
 	

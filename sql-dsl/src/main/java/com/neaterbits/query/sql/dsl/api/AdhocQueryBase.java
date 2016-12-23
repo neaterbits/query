@@ -23,26 +23,30 @@ abstract class AdhocQueryBase<MODEL, QUERY extends AdhocQueryBase<MODEL, QUERY>>
 	
 	// For aggregate result
 	private EAggregateFunction aggregateFunction;
-	private ENumericType aggregateNumericType; 
+	private ENumericType aggregateNumericInputType;
+	private ENumericType aggregateNumericOutputType;
 	
-	private ConditionsType conditionsType;
-	
-	
-	AdhocQueryBase(EAggregateFunction aggregateFunction, ENumericType aggregateNumericType) {
+	AdhocQueryBase(EAggregateFunction aggregateFunction, ENumericType aggregateNumericInputType, ENumericType aggregateNumericOutputType) {
 		
 		if (aggregateFunction == null) {
 			throw new IllegalArgumentException("aggregateFunction == null");
 		}
 		
-		if (aggregateNumericType == null) {
-			throw new IllegalArgumentException("aggregateNumericType == null");
+		if (aggregateNumericInputType == null) {
+			throw new IllegalArgumentException("aggregateNumericInputType == null");
 		}
+
+		if (aggregateNumericOutputType == null) {
+			throw new IllegalArgumentException("aggregateNumericOutputType == null");
+		}
+			
 		
 		this.dimension = EQueryResultDimension.SINGLE;
 		this.gathering = EQueryResultGathering.AGGREGATE;
 		
 		this.aggregateFunction = aggregateFunction;
-		this.aggregateNumericType = aggregateNumericType;
+		this.aggregateNumericInputType = aggregateNumericInputType;
+		this.aggregateNumericOutputType = aggregateNumericOutputType;
 	}
 	
 	
@@ -68,10 +72,14 @@ abstract class AdhocQueryBase<MODEL, QUERY extends AdhocQueryBase<MODEL, QUERY>>
 
 
 	@Override
-	public final ENumericType getAggregateNumericType(QUERY query) {
-		return aggregateNumericType;
+	public final ENumericType getAggregateNumericInputType(QUERY query) {
+		return aggregateNumericInputType;
 	}
 
+	@Override
+	public final ENumericType getAggregateNumericOutputType(QUERY query) {
+		return aggregateNumericOutputType;
+	}
 
 	@Override
 	public final int getMappingCount(QUERY query) {
@@ -143,30 +151,9 @@ abstract class AdhocQueryBase<MODEL, QUERY extends AdhocQueryBase<MODEL, QUERY>>
 		throw new UnsupportedOperationException("Joins not supported for Adhoc queries");
 	}
 
-	@Override
-	public final ConditionsType getConditionsType(QUERY query) {
-		return conditionsType;
-	}
 
 	@Override
 	public final Object createMappedInstance(QUERY query) {
 		throw new UnsupportedOperationException("TODO: support mapping");
-	}
-
-	@Override
-	public final int getConditionCount(QUERY query) {
-		return 0;
-	}
-
-
-	@Override
-	public final int getConditionSourceIdx(QUERY query, int conditionIdx) {
-		throw new UnsupportedOperationException("TODO: support conditions");
-	}
-
-
-	@Override
-	public final boolean evaluateCondition(QUERY query, Object instance, int conditionIdx, ConditionValuesScratch scratch) {
-		throw new UnsupportedOperationException("TODO: support conditions");
 	}
 }
