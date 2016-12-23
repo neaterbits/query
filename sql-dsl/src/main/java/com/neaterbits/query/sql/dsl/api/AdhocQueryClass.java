@@ -79,6 +79,14 @@ final class AdhocQueryClass<MODEL> extends AdhocQueryBase<MODEL, AdhocQueryClass
 		return this;
 	}
 	
+	/**************************************************************************
+	** IAdhocGetEndClause
+	**************************************************************************/
+	
+	@Override
+	public Object get() {
+		throw new UnsupportedOperationException("TODO");
+	}
 	
 	/**************************************************************************
 	** IAdhocWhere
@@ -93,6 +101,7 @@ final class AdhocQueryClass<MODEL> extends AdhocQueryBase<MODEL, AdhocQueryClass
 		return (ISharedClauseComparableCommonValue)this;
 	}
 	
+
 	@SuppressWarnings({"unchecked", "rawtypes"})
 	private <R extends Comparable<R>> ISharedClauseConditionValue<MODEL, Object, R, IAdhocAndOrLogicalClauses<MODEL, Object>>
 			addConditionWhere(Function<?, ?> function) {
@@ -141,7 +150,7 @@ final class AdhocQueryClass<MODEL> extends AdhocQueryBase<MODEL, AdhocQueryClass
 	}
 
 	@Override
-	public ISharedLogicalClauses<MODEL, Object> in(Comparable<Object>... values) {
+	public ISharedLogicalClauses<MODEL, Object> in(@SuppressWarnings("unchecked") Comparable<Object>... values) {
 		return addOperator(EClauseOperator.IN, values);
 	}
 	

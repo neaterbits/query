@@ -56,9 +56,13 @@ public class SQLAdhocAPITest {
 		final List<Integer> intList = new ArrayList<>();
 		final List<Foo> fooList = new ArrayList<>();
 		
-		Adhoc.sum(Foo::getValue)
+		final int sum = Adhoc.sum(Foo::getValue)
 			.from(fooList)
-			.where(Foo::getDecimal).isEqualTo(BigDecimal.ONE);
+			.where(Foo::getDecimal).isEqualTo(BigDecimal.ONE)
+			.get();
+		
+		
+		final int sumOfAll = Adhoc.sum(Foo::getValue).from(fooList).get();
 		
 	}
 	
