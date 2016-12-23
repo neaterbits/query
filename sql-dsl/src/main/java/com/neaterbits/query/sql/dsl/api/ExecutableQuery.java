@@ -1,5 +1,7 @@
 package com.neaterbits.query.sql.dsl.api;
 
+import java.math.BigDecimal;
+
 import com.neaterbits.query.sql.dsl.api.entity.OneToManyJoinConditionResolver;
 import com.neaterbits.query.sql.dsl.api.entity.QueryMetaModel;
 
@@ -35,6 +37,63 @@ interface ExecutableQuery<QUERY> {
 
 		return numResultParts;
 	}
+
+
+	public static Object getZeroValue(ENumericType numericType) {
+		
+		final Object ret;
+		
+		switch (numericType) {
+		case SHORT:
+			ret = (short)0;
+			break;
+			
+		case INTEGER:
+			ret = 0;
+			break;
+			
+		case LONG:
+			ret = 0L;
+			break;
+			
+		case DECIMAL:
+			ret = BigDecimal.ZERO;
+			break;
+			
+		default:
+			throw new UnsupportedOperationException("Unknown numeric type " + numericType);
+		}
+
+		return ret;
+	}
+	
+	
+	public default Object getAggregateDefault(QUERY query) {
+
+		final  EAggregateFunction function = getAggregateResultFunction(query);
+		final  ENumericType numericType = getAggregateNumericType(query);
+
+		final Object ret;
+
+		switch (function) {
+		case AVG:
+		case COUNT:
+		case SUM:
+			ret = getZeroValue(numericType);
+			break;
+			
+		case MIN:
+		case MAX:
+			ret = null;
+			break;
+			
+		default:
+			throw new UnsupportedOperationException("Unknown functionn " + function);
+		}
+		
+		return ret;
+	}
+	
 	
 	ExecuteQueryScratch createScratchArea(QUERY query, QueryMetaModel queryMetaModel);
 	
@@ -56,6 +115,7 @@ interface ExecutableQuery<QUERY> {
 	ENumericType getAggregateNumericType(QUERY query);
 	
 	Object getAggregateResultValue(QUERY query, Object instance);
+	
 	
 	/**
 	 * Get count of mappings from result

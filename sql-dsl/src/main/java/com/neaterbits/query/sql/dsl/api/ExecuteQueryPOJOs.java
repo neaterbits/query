@@ -1,5 +1,6 @@
 package com.neaterbits.query.sql.dsl.api;
 
+import java.nio.channels.GatheringByteChannel;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -38,7 +39,7 @@ final class ExecuteQueryPOJOs<QUERY> extends ExecutableQueryAggregateComputation
 		
 		final int joinCount = q.getJoinCount(query);
 		
-		final Object ret;
+		Object ret;
 
 		// TODO: Handle 1 result part case? no need for array
 		final ExecuteQueryScratch scratch =  q.createScratchArea(query, queryMetaModel);
@@ -62,6 +63,14 @@ final class ExecuteQueryPOJOs<QUERY> extends ExecutableQueryAggregateComputation
 			// Loop over all clauses to test
 			
 			ret = loopNonJoined(query, input, scratch);
+		}
+		
+		final EQueryResultGathering gathering = q.getGathering(query);
+		
+		if (ret == null && gathering == EQueryResultGathering.AGGREGATE) {
+
+			// return aggregate default
+			ret = q.getAggregateDefault(query);
 		}
 
 		return ret;

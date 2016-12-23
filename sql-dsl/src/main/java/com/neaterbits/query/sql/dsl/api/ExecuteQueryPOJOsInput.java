@@ -2,8 +2,8 @@ package com.neaterbits.query.sql.dsl.api;
 
 import java.util.Collection;
 
-abstract class ExecuteQueryPOJOsInput {
+interface ExecuteQueryPOJOsInput {
 
-	abstract Collection<?> getPOJOs(int idx);
+	Collection<?> getPOJOs(int idx);
 	
 }

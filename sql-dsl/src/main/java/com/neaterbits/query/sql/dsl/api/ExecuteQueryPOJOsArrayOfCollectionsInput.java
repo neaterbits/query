@@ -2,7 +2,7 @@ package com.neaterbits.query.sql.dsl.api;
 
 import java.util.Collection;
 
-final class ExecuteQueryPOJOsArrayOfCollectionsInput extends ExecuteQueryPOJOsInput {
+final class ExecuteQueryPOJOsArrayOfCollectionsInput implements ExecuteQueryPOJOsInput {
 	private final Collection<?> [] dataCollections;
 
 	
@@ -16,7 +16,7 @@ final class ExecuteQueryPOJOsArrayOfCollectionsInput extends ExecuteQueryPOJOsIn
 	}
 
 	@Override
-	Collection<?> getPOJOs(int idx) {
+	public Collection<?> getPOJOs(int idx) {
 		return dataCollections[idx];
 	}
 }

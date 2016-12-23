@@ -1,8 +1,6 @@
 package com.neaterbits.query.sql.dsl.api;
 
 
-import java.util.Collection;
-
 import com.neaterbits.query.sql.dsl.api.entity.OneToManyJoinConditionResolver;
 
 /**
@@ -29,8 +27,6 @@ abstract class AdhocQueryBase<MODEL, QUERY extends AdhocQueryBase<MODEL, QUERY>>
 	
 	private ConditionsType conditionsType;
 	
-	private Collection<?> from;
-	
 	
 	AdhocQueryBase(EAggregateFunction aggregateFunction, ENumericType aggregateNumericType) {
 		
@@ -48,34 +44,13 @@ abstract class AdhocQueryBase<MODEL, QUERY extends AdhocQueryBase<MODEL, QUERY>>
 		this.aggregateFunction = aggregateFunction;
 		this.aggregateNumericType = aggregateNumericType;
 	}
-
-	
-	/**************************************************************************
-	** IAdhocSelectSource
-	**************************************************************************/
-	
-	@SuppressWarnings({"unchecked", "rawtypes"})
-	@Override
-	public final IAdhocWhereOrJoin<MODEL, Object, Object> from(Collection<Object> collection) {
-		
-		if (collection == null) {
-			throw new IllegalArgumentException("collection == null");
-		}
-		
-		if (this.from != null) {
-			throw new IllegalStateException("from already set");
-		}
-
-		this.from = collection;
-
-		return (IAdhocWhereOrJoin)this;
-	}
 	
 	
 	/**************************************************************************
 	** ExeutableQuery⋅
 	**************************************************************************/
 
+	
 	@Override
 	public final EQueryResultDimension getDimension(QUERY query) {
 		return dimension;
@@ -120,15 +95,6 @@ abstract class AdhocQueryBase<MODEL, QUERY extends AdhocQueryBase<MODEL, QUERY>>
 	public final void executeMappingSetter(QUERY query, int mappingIdx, Object instance, Object value) {
 		throw new UnsupportedOperationException("Mapping not supported for Adhoc queries");
 	}
-
-
-	
-	
-	@Override
-	public final int getSourceCount(QUERY query) {
-		throw new UnsupportedOperationException("TODO");
-	}
-
 
 	@Override
 	public final int getJoinCount(QUERY query) {

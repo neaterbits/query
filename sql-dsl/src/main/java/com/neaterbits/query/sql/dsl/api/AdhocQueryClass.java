@@ -2,6 +2,7 @@ package com.neaterbits.query.sql.dsl.api;
 
 import java.math.BigDecimal;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.function.Function;
 
 import com.neaterbits.query.sql.dsl.api.entity.QueryMetaModel;
@@ -12,9 +13,13 @@ final class AdhocQueryClass<MODEL> extends AdhocQueryBase<MODEL, AdhocQueryClass
 			ISharedClauseComparableCommonValue<MODEL, Object, Comparable<Object>, ISharedLogicalClauses<MODEL, Object>>,
 			ISharedClauseComparableStringValue<MODEL, Object, ISharedLogicalClauses<MODEL, Object>>,
 			
-			IAdhocAndOrLogicalClauses<MODEL, Object> {
+			IAdhocAndOrLogicalClauses<MODEL, Object>,
+			
+			ExecuteQueryPOJOsInput {
 
+	
 	private static final int INITIAL_CONDITIONS = 10;
+	private static final int INITIAL_SOURCES = 10;
 	
 	@SuppressWarnings("rawtypes")
 	private Function aggregateGetter;
@@ -25,6 +30,10 @@ final class AdhocQueryClass<MODEL> extends AdhocQueryBase<MODEL, AdhocQueryClass
 	private Object [] values;
 
 	private int numConditions;
+	
+	private Collection<?> [] sources;
+	private int numSources;
+	
 	
 	AdhocQueryClass(Function<?, ?> aggregateGetter, EAggregateFunction aggregateFunction, ENumericType aggregateNumericType) {
 		super(aggregateFunction, aggregateNumericType);
@@ -80,12 +89,60 @@ final class AdhocQueryClass<MODEL> extends AdhocQueryBase<MODEL, AdhocQueryClass
 	}
 	
 	/**************************************************************************
+	** ExecuteQueryPOJOsInput
+	**************************************************************************/
+	@Override
+	public Collection<?> getPOJOs(int idx) {
+		return sources[idx];
+	}
+	
+	/**************************************************************************
+	** ExeutableQuery⋅
+	**************************************************************************/
+	@Override
+	public final int getSourceCount(AdhocQueryClass<MODEL> query) {
+		return numSources;
+	}
+	
+
+	/**************************************************************************
+	** IAdhocSelectSource
+	**************************************************************************/
+	
+	@SuppressWarnings({"unchecked", "rawtypes"})
+	@Override
+	public final IAdhocWhereOrJoin<MODEL, Object, Object> from(Collection<Object> collection) {
+		
+		if (collection == null) {
+			throw new IllegalArgumentException("collection == null");
+		}
+
+		if (this.sources != null) {
+			throw new IllegalStateException("Already has sources");
+		}
+		
+		this.sources = new Collection<?>[INITIAL_SOURCES];
+		this.numSources = 1;
+		
+		this.sources[0] = collection;
+		
+		
+
+		return (IAdhocWhereOrJoin)this;
+	}
+	
+
+	/**************************************************************************
 	** IAdhocGetEndClause
 	**************************************************************************/
 	
 	@Override
 	public Object get() {
-		throw new UnsupportedOperationException("TODO");
+		final ExecuteQueryPOJOs<AdhocQueryClass<MODEL>> executor = new ExecuteQueryPOJOs<>(this);
+		
+		final Object ret = executor.execute(this, this, null, null);
+		
+		return ret;
 	}
 	
 	/**************************************************************************
@@ -208,44 +265,33 @@ final class AdhocQueryClass<MODEL> extends AdhocQueryBase<MODEL, AdhocQueryClass
 	
 	@Override
 	public <T> ISharedClauseConditionTable<MODEL, Object, Integer, IAdhocAndClauses<MODEL, Object>> and(IFunctionInteger<T> getter) {
-		return null;
+		throw new UnsupportedOperationException("TODO");
 	}
 
 	@Override
-	public <T> ISharedClauseConditionTable<MODEL, Object, Long, IAdhocAndClauses<MODEL, Object>> and(
-			IFunctionLong<T> getter) {
-		// TODO Auto-generated method stub
-		return null;
+	public <T> ISharedClauseConditionTable<MODEL, Object, Long, IAdhocAndClauses<MODEL, Object>> and(IFunctionLong<T> getter) {
+		throw new UnsupportedOperationException("TODO");
 	}
 
 	@Override
-	public <T> ISharedClauseComparableStringAll<MODEL, Object, IAdhocAndClauses<MODEL, Object>> and(
-			StringFunction<T> getter) {
-		// TODO Auto-generated method stub
-		return null;
+	public <T> ISharedClauseComparableStringAll<MODEL, Object, IAdhocAndClauses<MODEL, Object>> and(StringFunction<T> getter) {
+		throw new UnsupportedOperationException("TODO");
 	}
 
 	@Override
 	public <T> ISharedClauseConditionAll<MODEL, Object, Integer, IAdhocOrClauses<MODEL, Object>> or(
 			IFunctionInteger<T> getter) {
-		// TODO Auto-generated method stub
-		return null;
+		throw new UnsupportedOperationException("TODO");
 	}
 
 	@Override
-	public <T> ISharedClauseConditionAll<MODEL, Object, Long, IAdhocOrClauses<MODEL, Object>> or(
-			IFunctionLong<T> getter) {
-		// TODO Auto-generated method stub
-		return null;
+	public <T> ISharedClauseConditionAll<MODEL, Object, Long, IAdhocOrClauses<MODEL, Object>> or(IFunctionLong<T> getter) {
+		throw new UnsupportedOperationException("TODO");
 	}
 
 	@Override
-	public <T> ISharedClauseComparableStringAll<MODEL, Object, IAdhocOrClauses<MODEL, Object>> or(
-			StringFunction<T> getter) {
-		// TODO Auto-generated method stub
-		return null;
+	public <T> ISharedClauseComparableStringAll<MODEL, Object, IAdhocOrClauses<MODEL, Object>> or(StringFunction<T> getter) {
+		throw new UnsupportedOperationException("TODO");
 	}
-
-	
 }
 

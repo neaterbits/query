@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 
-public class ExecuteQueryPOJOsFromListInput extends ExecuteQueryPOJOsInput {
+public class ExecuteQueryPOJOsFromListInput implements ExecuteQueryPOJOsInput {
 
 	private final ExecuteQueryPOJOsArrayOfCollectionsInput delegate;
 	
@@ -73,7 +73,7 @@ public class ExecuteQueryPOJOsFromListInput extends ExecuteQueryPOJOsInput {
 	
 	
 	@Override
-	Collection<?> getPOJOs(int idx) {
+	public Collection<?> getPOJOs(int idx) {
 		return delegate.getPOJOs(idx);
 	}
 }

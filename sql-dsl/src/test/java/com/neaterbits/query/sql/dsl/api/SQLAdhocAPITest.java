@@ -6,6 +6,8 @@ import java.util.List;
 
 import org.junit.Test;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 public class SQLAdhocAPITest {
 
 	private static class Foo {
@@ -55,14 +57,17 @@ public class SQLAdhocAPITest {
 		
 		final List<Integer> intList = new ArrayList<>();
 		final List<Foo> fooList = new ArrayList<>();
-		
+
 		final int sum = Adhoc.sum(Foo::getValue)
 			.from(fooList)
 			.where(Foo::getDecimal).isEqualTo(BigDecimal.ONE)
 			.get();
 		
+		assertThat(sum).isEqualTo(0);
 		
 		final int sumOfAll = Adhoc.sum(Foo::getValue).from(fooList).get();
+
+		assertThat(sumOfAll).isEqualTo(0);
 		
 	}
 	
