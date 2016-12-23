@@ -14,6 +14,9 @@ public interface IClassicWhereClauseBuilderTable<MODEL, RESULT>
 		extends ISharedWhereClauseBuilderTableAll<
 			MODEL,
 			RESULT,
-			IClassicAndOrLogicalClausesTable<MODEL, RESULT>> {
+			IClassicAndOrLogicalClausesTable<MODEL, RESULT>,
+			
+			ISharedClauseComparableCommonAll_Compilable<MODEL, RESULT, ? extends Comparable<?>, IClassicAndOrLogicalClausesTable<MODEL, RESULT>>,
+			ISharedClauseComparableStringAll_Compilable<MODEL, RESULT, IClassicAndOrLogicalClausesTable<MODEL, RESULT>>> {
 
 }

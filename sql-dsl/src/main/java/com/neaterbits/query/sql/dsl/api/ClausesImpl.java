@@ -5,7 +5,7 @@ import java.util.function.Supplier;
 
 abstract class ClausesImpl<MODEL, RESULT>
 	extends BaseQueryEntity<MODEL>
-	implements ISharedLogicalClauses<MODEL, RESULT> {
+	implements ISharedLogicalClauses<MODEL, RESULT>, ISharedCompileEndClause<MODEL> {
 
 	final ClauseCollectorImpl clauseCollector;
 

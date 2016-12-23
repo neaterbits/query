@@ -156,7 +156,7 @@ final class WhereOrJoinClauseBuilderImpl<MODEL, RESULT>
 
 	// ------------------------  WHERE ------------------------
 	@Override
-	public <T> ISharedClauseComparableCommonAll<MODEL, RESULT, Integer, IClassicAndOrLogicalClausesTable<MODEL, RESULT>> where(IFunctionInteger<T> getter) {
+	public <T> ISharedClauseComparableCommonAll_Compilable<MODEL, RESULT, Integer, IClassicAndOrLogicalClausesTable<MODEL, RESULT>> where(IFunctionInteger<T> getter) {
 
 		return new ComparativeClauseImpl<MODEL, RESULT, Integer, IClassicAndOrLogicalClausesTable<MODEL,RESULT>>(this, makeGetter(getter));
 	}
@@ -169,7 +169,7 @@ final class WhereOrJoinClauseBuilderImpl<MODEL, RESULT>
 	}
 
 	@Override
-	public <T> ISharedClauseComparableStringAll<MODEL, RESULT, IClassicAndOrLogicalClausesTable<MODEL, RESULT>> where(StringFunction<T> getter) {
+	public <T> ISharedClauseComparableStringAll_Compilable<MODEL, RESULT, IClassicAndOrLogicalClausesTable<MODEL, RESULT>> where(StringFunction<T> getter) {
 		
 		return new StringClauseImpl<MODEL, RESULT, IClassicAndOrLogicalClausesTable<MODEL,RESULT>>(this, makeGetter(getter));
 	}

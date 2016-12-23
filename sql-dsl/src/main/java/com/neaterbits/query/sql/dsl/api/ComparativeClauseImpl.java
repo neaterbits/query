@@ -1,12 +1,8 @@
 package com.neaterbits.query.sql.dsl.api;
 
-import java.util.function.Function;
-import java.util.function.Supplier;
-
 class ComparativeClauseImpl<MODEL, RESULT, R extends Comparable<R>, L extends ISharedLogicalClauses<MODEL, RESULT>> 
 	extends ConditionClauseImpl<MODEL, RESULT, R, L>
-	implements ComparativeClauseTable<MODEL, RESULT, R, L>,
-			   ComparativeClauseAlias<MODEL, RESULT, R, L> {
+	implements ISharedClauseComparableCommonAll_Compilable<MODEL, RESULT, R, L> {
 
 	ComparativeClauseImpl(ClausesImpl<MODEL, RESULT> clause, Getter getter) {
 		super(clause, getter);
@@ -31,7 +27,7 @@ class ComparativeClauseImpl<MODEL, RESULT, R extends Comparable<R>, L extends IS
 		return addCondition(new ConditionGreaterThanImpl(getter, makeParamValue(value)));
 	}
 
-	
+	/* ONLY in Joins
 	@Override
 	public final <T> L isGreaterThan(Function<T, R> getter) {
 		if (getter == null) {
@@ -40,6 +36,7 @@ class ComparativeClauseImpl<MODEL, RESULT, R extends Comparable<R>, L extends IS
 		
 		return addCondition(new ConditionGreaterThanImpl(this.getter, makeGetterValue(getter)));
 	}
+	*/
 
 	@Override
 	public final L isGreaterOrEqualTo(R value) {
@@ -59,6 +56,7 @@ class ComparativeClauseImpl<MODEL, RESULT, R extends Comparable<R>, L extends IS
 		return addCondition(new ConditionGreaterThanOrEqualImpl(getter, makeParamValue(value)));
 	}
 
+	/* ONLY in Joins
 	@Override
 	public final <T> L isGreaterOrEqualTo(Function<T, R> getter) {
 		if (getter == null) {
@@ -67,6 +65,7 @@ class ComparativeClauseImpl<MODEL, RESULT, R extends Comparable<R>, L extends IS
 		
 		return addCondition(new ConditionGreaterThanOrEqualImpl(this.getter, makeGetterValue(getter)));
 	}
+	*/
 
 	@Override
 	public final L isLesserThan(R value) {
@@ -86,6 +85,7 @@ class ComparativeClauseImpl<MODEL, RESULT, R extends Comparable<R>, L extends IS
 		return addCondition(new ConditionLessThanImpl(getter, makeParamValue(value)));
 	}
 
+	/* ONLY in Joins
 	@Override
 	public final <T> L isLesserThan(Function<T, R> getter) {
 		if (getter == null) {
@@ -94,6 +94,7 @@ class ComparativeClauseImpl<MODEL, RESULT, R extends Comparable<R>, L extends IS
 		
 		return addCondition(new ConditionLessThanImpl(this.getter, makeGetterValue(getter)));
 	}
+	*/
 
 	@Override
 	public final L isLesserOrEqualTo(R value) {
@@ -113,6 +114,7 @@ class ComparativeClauseImpl<MODEL, RESULT, R extends Comparable<R>, L extends IS
 		return addCondition(new ConditionLessThanOrEqualImpl(getter, makeParamValue(value)));
 	}
 
+	/* ONLY in Joins
 	@Override
 	public final <T> L isLesserOrEqualTo(Function<T, R> getter) {
 		if (getter == null) {
@@ -121,10 +123,12 @@ class ComparativeClauseImpl<MODEL, RESULT, R extends Comparable<R>, L extends IS
 		
 		return addCondition(new ConditionLessThanOrEqualImpl(this.getter, makeGetterValue(getter)));
 	}
+	*/
 
 	
 	// -------------------- Alias specific --------------------
 
+	/* ONLY in Joins
 	@Override
 	public final L isGreaterThan(Supplier<R> getter) {
 		if (getter == null) {
@@ -160,4 +164,5 @@ class ComparativeClauseImpl<MODEL, RESULT, R extends Comparable<R>, L extends IS
 		
 		return addCondition(new ConditionLessThanOrEqualImpl(this.getter, makeGetterValue(getter)));
 	}
+	*/
 }

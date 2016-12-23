@@ -193,11 +193,6 @@ final class AdhocQueryClass<MODEL> extends AdhocQueryBase<MODEL, AdhocQueryClass
 		return addOperator(EClauseOperator.MATCHES, regex);
 	}
 
-	@Override
-	public MODEL compile() {
-		throw new UnsupportedOperationException("TODO");
-	}
-
 	/**************************************************************************
 	** IAdhocAndClauses
 	**************************************************************************/

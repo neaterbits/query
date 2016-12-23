@@ -3,12 +3,15 @@ package com.neaterbits.query.sql.dsl.api;
 public interface ISharedWhereClauseBuilderTableAll<
 			MODEL,
 			RESULT,
-			CONDITION_CLAUSE extends ISharedLogicalClauses<MODEL, RESULT>>
+			CONDITION_CLAUSE extends ISharedLogicalClauses<MODEL, RESULT>,
+			
+			COMPARABLE_CLAUSE extends ISharedClauseComparableCommonAll<MODEL,RESULT,? extends Comparable<?>,CONDITION_CLAUSE>,
+		    STRING_CLAUSE extends ISharedClauseComparableStringAll<MODEL,RESULT,CONDITION_CLAUSE>>
 
-		extends ISharedWhereClauseBuilderTable<MODEL, RESULT, CONDITION_CLAUSE,
+		extends ISharedWhereClauseBuilderTableBase<MODEL, RESULT, CONDITION_CLAUSE,
 		
-			ISharedClauseComparableCommonAll<MODEL,RESULT,Integer,CONDITION_CLAUSE>,
-			ISharedClauseComparableStringAll<MODEL,RESULT,CONDITION_CLAUSE>>{
+			COMPARABLE_CLAUSE,
+			STRING_CLAUSE>{
 
 	<T, E extends Enum<E>> ISharedClauseConditionAll<MODEL, RESULT, E, CONDITION_CLAUSE> where(IFunctionEnum<T, E> func);
 

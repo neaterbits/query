@@ -1,5 +1,7 @@
 package com.neaterbits.query.sql.dsl.api;
 
-public interface IClassicAndClausesAlias<MODEL, RESULT> extends ISharedAndClausesAlias<MODEL, RESULT, IClassicAndClausesAlias<MODEL, RESULT>> {
+public interface IClassicAndClausesAlias<MODEL, RESULT>
+			extends ISharedAndClausesAlias<MODEL, RESULT, IClassicAndClausesAlias<MODEL, RESULT>>,
+					ISharedCompileEndClause<MODEL>{
 
 }

@@ -5,7 +5,7 @@ public interface ISharedWhereClausesTableValue<
 			RESULT,
 			CONDITION_CLAUSE extends ISharedLogicalClauses<MODEL, RESULT>>
 
-		extends ISharedWhereClauseBuilderTable<MODEL, RESULT, CONDITION_CLAUSE,
+		extends ISharedWhereClauseBuilderTableBase<MODEL, RESULT, CONDITION_CLAUSE,
 
 		ISharedClauseComparableCommonValue<MODEL,RESULT,Integer,CONDITION_CLAUSE>,
 		ISharedClauseComparableStringValue<MODEL,RESULT,CONDITION_CLAUSE>>{

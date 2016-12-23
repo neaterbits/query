@@ -6,6 +6,9 @@ public interface IClassicAndOrLogicalClausesTable<MODEL, RESULT>
 							MODEL,
 							RESULT,
 							IClassicAndClausesTable<MODEL, RESULT>,
-							IClassicOrClausesTable<MODEL, RESULT>> {
+							IClassicOrClausesTable<MODEL, RESULT>>,
+						
+							
+						ISharedCompileEndClause<MODEL> {
 
 }

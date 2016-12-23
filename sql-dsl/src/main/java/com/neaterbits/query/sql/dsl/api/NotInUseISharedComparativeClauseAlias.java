@@ -2,7 +2,7 @@ package com.neaterbits.query.sql.dsl.api;
 
 import java.util.function.Supplier;
 
-public interface ComparativeClauseAlias<MODEL, RESULT, R extends Comparable<R>, L extends ISharedLogicalClauses<MODEL, RESULT>>
+public interface NotInUseISharedComparativeClauseAlias<MODEL, RESULT, R extends Comparable<R>, L extends ISharedLogicalClauses<MODEL, RESULT>>
 	extends ISharedClauseComparableCommonAll<MODEL, RESULT, R, L>,
         ISharedConditionClauseAlias<MODEL, RESULT, R, L> {
 
