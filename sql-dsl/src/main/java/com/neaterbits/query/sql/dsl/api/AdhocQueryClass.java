@@ -1,5 +1,6 @@
 package com.neaterbits.query.sql.dsl.api;
 
+import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.function.Function;
 
@@ -108,6 +109,11 @@ final class AdhocQueryClass<MODEL> extends AdhocQueryBase<MODEL, AdhocQueryClass
 	
 	@Override
 	public ISharedClauseComparableCommonValue<MODEL, Object, Integer, IAdhocAndOrLogicalClauses<MODEL, Object>> where(IFunctionInteger<Object> func) {
+		return addComparativeWhere(func);
+	}
+
+	@Override
+	public ISharedClauseComparableCommonValue<MODEL, Object, BigDecimal, IAdhocAndOrLogicalClauses<MODEL, Object>> where(IFunctionBigDecimal<Object> func) {
 		return addComparativeWhere(func);
 	}
 
