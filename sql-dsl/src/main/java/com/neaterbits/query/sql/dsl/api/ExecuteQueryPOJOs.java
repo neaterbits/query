@@ -42,13 +42,12 @@ final class ExecuteQueryPOJOs<QUERY> extends ExecutableQueryAggregateComputation
 
 		// TODO: Handle 1 result part case? no need for array
 		final ExecuteQueryScratch scratch =  q.createScratchArea(query, queryMetaModel);
-				
 		
 		if (joinCount > 0) {
 			// We shall perform joins over tables
 			// figure out which tables to join etc
 			// we may be joining on multiple keys
-			
+
 			/*
 			for (int joinIdx = 0; joinIdx < joinCount; ++ joinIdx) {
 				q.getJoinLeftSourceIdx(query, joinIdx);
@@ -60,10 +59,9 @@ final class ExecuteQueryPOJOs<QUERY> extends ExecutableQueryAggregateComputation
 		}
 		else {
 			// Loop over all clauses to test
-			
 			ret = loopNonJoined(query, input, scratch);
 		}
-		
+
 		final EQueryResultGathering gathering = q.getGathering(query);
 		
 		if (ret == null && gathering == EQueryResultGathering.AGGREGATE) {

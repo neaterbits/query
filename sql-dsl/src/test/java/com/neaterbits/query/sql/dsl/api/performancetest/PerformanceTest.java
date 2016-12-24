@@ -28,6 +28,8 @@ public class PerformanceTest {
 				.getValue()
 		);
 		
+		// TODO: Max test with instance
+		
 		System.out.println("Sum test");
 
 		checkPerformance(
@@ -38,12 +40,31 @@ public class PerformanceTest {
 				.reduce((int1, int2) -> int1 + int2)
 				.getAsInt()
 		);
-	}
 
-	public <T> void checkPerformance(
+		System.out.println("Sum test with filter ");
+	
+		checkPerformance(
+				testData -> sum(Foo::getValue)
+					.from(testData)
+					.where(Foo::getValue).isLesserThan(50)
+					.get(),
+
+				testData -> testData.stream()
+				.mapToInt(Foo::getValue)
+				.filter(i -> i < 50)
+				.reduce((int1, int2) -> int1 + int2)
+				.getAsInt()
+		);
+	}
+	
+	private <T> void checkPerformance(
 			Function<List<Foo>, T> selectBased,
 			Function<List<Foo>, T> streamBased) {
 
+		//final int num = 10000;
+		final int innerLoopIterations = 10 * 10 * 1000 * 1000;
+		
+		
 		for (int i = 4; i > 0; -- i) {
 			int numElements = 1;
 			
@@ -53,7 +74,9 @@ public class PerformanceTest {
 			
 			System.out.println("i " + i + " num " + numElements);
 
-			checkPerformance(numElements, 10000, selectBased, streamBased);
+			final int iterations = innerLoopIterations / numElements;
+			
+			checkPerformance(numElements, iterations, selectBased, streamBased);
 		}
 	}
 	
@@ -123,7 +146,6 @@ public class PerformanceTest {
 			
 			ret.add(foo);
 		}
-		
 
 		return ret;
 	}
