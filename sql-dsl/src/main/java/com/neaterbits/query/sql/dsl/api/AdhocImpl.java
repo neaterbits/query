@@ -32,4 +32,25 @@ final class AdhocImpl<MODEL> implements IAdhoc<MODEL> {
 	public <T> IAdhocNumericTableResult<MODEL, BigDecimal, T> sum(IFunctionBigDecimal<T> field) {
 		return createNumeric(field, EAggregateFunction.SUM, ENumericType.DECIMAL, ENumericType.DECIMAL);
 	}
+
+	/* Max */
+	@Override
+	public <T> IAdhocNumericTableResult<MODEL, Short, T> max(IFunctionShort<T> field) {
+		return createNumeric(field, EAggregateFunction.MAX, ENumericType.SHORT, ENumericType.SHORT);
+	}
+
+	@Override
+	public <T> IAdhocNumericTableResult<MODEL, Integer, T> max(IFunctionInteger<T> field) {
+		return createNumeric(field, EAggregateFunction.MAX, ENumericType.INTEGER, ENumericType.INTEGER);
+	}
+
+	@Override
+	public <T> IAdhocNumericTableResult<MODEL, Long, T> max(IFunctionLong<T> field) {
+		return createNumeric(field, EAggregateFunction.MAX, ENumericType.LONG, ENumericType.LONG);
+	}
+
+	@Override
+	public <T> IAdhocNumericTableResult<MODEL, BigDecimal, T> max(IFunctionBigDecimal<T> field) {
+		return createNumeric(field, EAggregateFunction.MAX, ENumericType.DECIMAL, ENumericType.DECIMAL);
+	}
 }
