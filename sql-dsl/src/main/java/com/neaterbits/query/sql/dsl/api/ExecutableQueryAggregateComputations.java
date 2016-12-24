@@ -257,10 +257,10 @@ abstract class ExecutableQueryAggregateComputations<QUERY> extends ExecuteQueryB
 		case SHORT: {
 			final Short v = (Short)value;
 			if (last == null) {
-				ret = (long)v;
+				ret = v;
 			}
 			else {
-				final Long l = (Long)last;
+				final Short l = (Short)last;
 				ret = Math.min(l, v); 
 			}
 			break;
@@ -269,10 +269,10 @@ abstract class ExecutableQueryAggregateComputations<QUERY> extends ExecuteQueryB
 		case INTEGER: {
 			final Integer v = (Integer)value;
 			if (last == null) {
-				ret = (long)v;
+				ret = v;
 			}
 			else {
-				final Long l = (Long)last;
+				final Integer l = (Integer)last;
 				
 				ret = Math.min(l, v); 
 			}
@@ -340,10 +340,10 @@ abstract class ExecutableQueryAggregateComputations<QUERY> extends ExecuteQueryB
 		case SHORT: {
 			final Short v = (Short)value;
 			if (last == null) {
-				ret = (long)v;
+				ret = v;
 			}
 			else {
-				final Long l = (Long)last;
+				final Short l = (Short)last;
 				ret = Math.max(l, v); 
 			}
 			break;
@@ -352,10 +352,10 @@ abstract class ExecutableQueryAggregateComputations<QUERY> extends ExecuteQueryB
 		case INTEGER: {
 			final Integer v = (Integer)value;
 			if (last == null) {
-				ret = (long)v;
+				ret = v;
 			}
 			else {
-				final Long l = (Long)last;
+				final Integer l = (Integer)last;
 				
 				ret = Math.max(l, v); 
 			}

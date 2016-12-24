@@ -21,19 +21,19 @@ public interface Adhoc {
     }
 
     /* Max */
-    public static <T> IAdhocNumericTableResult<Void, Integer, T> max(IFunctionShort<T> field) {
-    	return AdhocImpl.adhocImpl.sum(field);
+    public static <T> IAdhocNumericTableResult<Void, Short, T> max(IFunctionShort<T> field) {
+    	return AdhocImpl.adhocImpl.max(field);
     }
 	
     public static <T> IAdhocNumericTableResult<Void, Integer, T> max(IFunctionInteger<T> field) {
-    	return AdhocImpl.adhocImpl.sum(field);
+    	return AdhocImpl.adhocImpl.max(field);
     }
 
     public static <T> IAdhocNumericTableResult<Void, Long, T> max(IFunctionLong<T> field) {
-    	return AdhocImpl.adhocImpl.sum(field);
+    	return AdhocImpl.adhocImpl.max(field);
     }
 
     public static <T> IAdhocNumericTableResult<Void, BigDecimal, T> max(IFunctionBigDecimal<T> field) {
-    	return AdhocImpl.adhocImpl.sum(field);
+    	return AdhocImpl.adhocImpl.max(field);
     }
 }

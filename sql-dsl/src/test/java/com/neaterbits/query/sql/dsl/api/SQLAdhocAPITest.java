@@ -86,7 +86,7 @@ public class SQLAdhocAPITest {
 	@Test
 	public void testPerformance() {
 
-		for (int i = 5; i > 0; -- i) {
+		for (int i = 4; i > 0; -- i) {
 			int numElements = 1;
 			
 			for (int j = 0; j < i; ++ j) {
@@ -116,21 +116,26 @@ public class SQLAdhocAPITest {
 			}
 			r = result1;
 		}
-		
+
 		System.out.println("Select based on length " + listLength + ", iterations " + iterations + ": " + (System.currentTimeMillis() - millis));
 
 		Object result2 = null;
+
 		for (int iteration = 0; iteration < iterations; ++ iteration) {
 			result2 = testData.stream()
 					.max((f1, f2) -> Integer.compare(f1.getValue(), f2.getValue()))
-					.get();
+					.get()
+					.getValue();
 		}
-		
-		System.out.println("Stream based on length " + listLength + ", iterations " + iterations + ": " + (System.currentTimeMillis() - millis));
 
-		assertThat(r).isEqualTo(result2);
+		System.out.println("Stream based on length " + listLength
+						+ ", iterations " + iterations + ": "
+						+ (System.currentTimeMillis() - millis));
 
-		
+		if (!r.equals(result2)) {
+			throw new IllegalStateException("result mismatch: " + r + "/" + result2 + "(" + r.getClass().getName() + "/" + result2.getClass().getName());
+		}
+
 		System.out.println(" ");
 	}
 	
