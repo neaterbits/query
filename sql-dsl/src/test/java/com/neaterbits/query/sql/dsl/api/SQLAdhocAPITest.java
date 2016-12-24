@@ -4,6 +4,8 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.function.Consumer;
+import java.util.function.Function;
 
 import org.junit.Test;
 
@@ -85,6 +87,21 @@ public class SQLAdhocAPITest {
 	
 	@Test
 	public void testPerformance() {
+		
+		checkPerformance(
+				
+				testData -> Adhoc.max(Foo::getValue).from(testData).get(),
+				
+				testData -> testData.stream()
+				.max((f1, f2) -> Integer.compare(f1.getValue(), f2.getValue()))
+				.get()
+				.getValue()
+		);
+		
+	}
+	public <T> void checkPerformance(
+			Function<List<Foo>, T> selectBased,
+			Function<List<Foo>, T> streamBased) {
 
 		for (int i = 4; i > 0; -- i) {
 			int numElements = 1;
@@ -95,13 +112,15 @@ public class SQLAdhocAPITest {
 			
 			System.out.println("i " + i + " num " + numElements);
 
-			testPerformance(numElements, 10000);
+			checkPerformance(numElements, 10000, selectBased, streamBased);
 		}
 	}
 	
 	
 
-	private void testPerformance(int listLength, int iterations) {
+	private <T> void checkPerformance(int listLength, int iterations,
+				Function<List<Foo>, T> selectBased,
+				Function<List<Foo>, T> streamBased) {
 		
 		final long millis = System.currentTimeMillis();
 		
@@ -116,12 +135,13 @@ public class SQLAdhocAPITest {
 			}
 			r = result1;
 		}
-
+		
 		System.out.println("Select based on length " + listLength + ", iterations " + iterations + ": " + (System.currentTimeMillis() - millis));
 
 		Object result2 = null;
 
 		for (int iteration = 0; iteration < iterations; ++ iteration) {
+			
 			result2 = testData.stream()
 					.max((f1, f2) -> Integer.compare(f1.getValue(), f2.getValue()))
 					.get()
