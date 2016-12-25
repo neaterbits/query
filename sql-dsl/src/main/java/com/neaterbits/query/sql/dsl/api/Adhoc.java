@@ -1,6 +1,8 @@
 package com.neaterbits.query.sql.dsl.api;
 
 import java.math.BigDecimal;
+import java.util.Collection;
+import java.util.List;
 
 public interface Adhoc {
 
@@ -53,4 +55,9 @@ public interface Adhoc {
     public static <T> IAdhocNumericInstanceResult<Void, T> maxInstance(IFunctionBigDecimal<T> field) {
     	return AdhocImpl.adhocImpl.maxInstance(field);
     }
+
+    /* List */
+	public static <T> IAdhocListCollResult<Void, T, List<T>> list(Collection<T> collection) {
+    	return AdhocImpl.adhocImpl.list(collection);
+	}
 }

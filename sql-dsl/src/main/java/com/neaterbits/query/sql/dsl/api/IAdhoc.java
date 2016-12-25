@@ -1,6 +1,8 @@
 package com.neaterbits.query.sql.dsl.api;
 
 import java.math.BigDecimal;
+import java.util.Collection;
+import java.util.List;
 
 interface IAdhoc<MODEL>
  /*extends SumFunction<
@@ -34,4 +36,7 @@ interface IAdhoc<MODEL>
     <T> IAdhocNumericInstanceResult<MODEL, T> 	maxInstance(IFunctionLong<T> field);			
 
     <T> IAdhocNumericInstanceResult<MODEL, T> 	maxInstance(IFunctionBigDecimal<T> field);
+    
+    /* Collection results */
+    <T> IAdhocListCollResult<MODEL, T, List<T>> list(Collection<T> coll);
 }

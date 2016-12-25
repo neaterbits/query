@@ -1,6 +1,6 @@
 package com.neaterbits.query.sql.dsl.api.entity;
 
-public enum CollectionType {
+enum EntityCollectionType {
 
 	LIST,
 	SET;

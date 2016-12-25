@@ -8,13 +8,18 @@ import java.util.function.Function;
 import com.neaterbits.query.sql.dsl.api.entity.QueryMetaModel;
 
 final class AdhocQueryClass<MODEL> extends AdhocQueryBase<MODEL, AdhocQueryClass<MODEL>> 
-		implements IAdhocNumericTableResult<MODEL, Object, Object>, IAdhocNumericInstanceResult<MODEL, Object>,
-		
+		implements
+
+			IAdhocNumericTableResult<MODEL, Object, Object>,
+			IAdhocNumericInstanceResult<MODEL, Object>,
+
+			IAdhocListCollResult<MODEL, Object ,Object>,
+
 			ISharedClauseComparableCommonValue<MODEL, Object, Comparable<Object>, ISharedLogicalClauses<MODEL, Object>>,
 			ISharedClauseComparableStringValue<MODEL, Object, ISharedLogicalClauses<MODEL, Object>>,
-			
+
 			IAdhocAndOrLogicalClauses<MODEL, Object>,
-			
+
 			ExecuteQueryPOJOsInput {
 
 	
@@ -32,10 +37,9 @@ final class AdhocQueryClass<MODEL> extends AdhocQueryBase<MODEL, AdhocQueryClass
 
 	private int numConditions;
 	private ConditionsType conditionsType;
-	
+
 	private Collection<?> [] sources;
 	private int numSources;
-	
 	
 	
 	AdhocQueryClass(Function<?, ?> aggregateGetter, EAggregateFunction aggregateFunction, ENumericType aggregateNumericInputType, ENumericType aggregateNumericOutputType) {
@@ -48,6 +52,34 @@ final class AdhocQueryClass<MODEL> extends AdhocQueryBase<MODEL, AdhocQueryClass
 		this.aggregateGetter = aggregateGetter;
 	}
 
+
+	AdhocQueryClass(ECollectionType collectionType, Collection<?> coll) {
+
+		super(collectionType);
+		
+		if (coll == null) {
+			throw new IllegalArgumentException("coll == null");
+		}
+
+		addSource(coll);
+	}
+
+	
+	private void addSource(Collection<?> collection) {
+		if (collection == null) {
+			throw new IllegalArgumentException("collection == null");
+		}
+
+		if (this.sources != null) {
+			throw new IllegalStateException("Already has sources");
+		}
+		
+		this.sources = new Collection<?>[INITIAL_SOURCES];
+		this.numSources = 1;
+		
+		this.sources[0] = collection;
+	}
+	
 	@Override
 	@SuppressWarnings("unchecked")
 	public final Object getAggregateResultValue(AdhocQueryClass<MODEL> query, Object instance) {
@@ -225,21 +257,8 @@ final class AdhocQueryClass<MODEL> extends AdhocQueryBase<MODEL, AdhocQueryClass
 	@Override
 	public final IAdhocWhereOrJoin<MODEL, Object, Object> from(Collection<Object> collection) {
 		
-		if (collection == null) {
-			throw new IllegalArgumentException("collection == null");
-		}
-
-		if (this.sources != null) {
-			throw new IllegalStateException("Already has sources");
-		}
+		addSource(collection);
 		
-		this.sources = new Collection<?>[INITIAL_SOURCES];
-		this.numSources = 1;
-		
-		this.sources[0] = collection;
-		
-		
-
 		return (IAdhocWhereOrJoin)this;
 	}
 	

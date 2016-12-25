@@ -26,6 +26,11 @@ abstract class AdhocQueryBase<MODEL, QUERY extends AdhocQueryBase<MODEL, QUERY>>
 	private ENumericType aggregateNumericInputType;
 	private ENumericType aggregateNumericOutputType;
 	
+	
+	// For collection result
+	private ECollectionType collectionType;
+
+	
 	AdhocQueryBase(EAggregateFunction aggregateFunction, ENumericType aggregateNumericInputType, ENumericType aggregateNumericOutputType) {
 		
 		if (aggregateFunction == null) {
@@ -47,6 +52,18 @@ abstract class AdhocQueryBase<MODEL, QUERY extends AdhocQueryBase<MODEL, QUERY>>
 		this.aggregateFunction = aggregateFunction;
 		this.aggregateNumericInputType = aggregateNumericInputType;
 		this.aggregateNumericOutputType = aggregateNumericOutputType;
+	}
+	
+	
+	AdhocQueryBase(ECollectionType collectionType) {
+		
+		if (collectionType == null) {
+			throw new IllegalArgumentException("collectionType == null");	
+		}
+		
+		this.dimension = EQueryResultDimension.MULTI;
+		this.gathering = EQueryResultGathering.ENTITY;
+		this.collectionType = collectionType;
 	}
 	
 	

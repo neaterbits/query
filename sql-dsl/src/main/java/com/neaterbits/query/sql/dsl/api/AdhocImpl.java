@@ -1,6 +1,8 @@
 package com.neaterbits.query.sql.dsl.api;
 
 import java.math.BigDecimal;
+import java.util.Collection;
+import java.util.List;
 import java.util.function.Function;
 
 final class AdhocImpl<MODEL> implements IAdhoc<MODEL> {
@@ -19,6 +21,7 @@ final class AdhocImpl<MODEL> implements IAdhoc<MODEL> {
 		return (IAdhocNumericTableResult)new AdhocQueryClass(field, aggregateFunction, hinputNnumericType, outputNnumericType);
 	}
 
+	@SuppressWarnings({"unchecked", "rawtypes"})
 	private <T, INPUT_TYPE, OUTPUT_TYPE>
 				IAdhocNumericInstanceResult<MODEL, T> createNumericInstance(
 
@@ -28,6 +31,13 @@ final class AdhocImpl<MODEL> implements IAdhoc<MODEL> {
 						ENumericType outputNnumericType) {
 
 		return (IAdhocNumericInstanceResult)new AdhocQueryClass(field, aggregateFunction, inputNnumericType, outputNnumericType);
+	}
+
+	@SuppressWarnings({"unchecked", "rawtypes"})
+	private <T, COLL, INPUT_TYPE, OUTPUT_TYPE>
+				IAdhocListCollResult<MODEL, COLL, T> createCollectionInstance(ECollectionType collectionType, Collection<?> coll) {
+
+		return (IAdhocListCollResult)new AdhocQueryClass(collectionType, coll);
 	}
 				
 	@Override
@@ -90,5 +100,11 @@ final class AdhocImpl<MODEL> implements IAdhoc<MODEL> {
 	@Override
 	public <T> IAdhocNumericInstanceResult<MODEL, T> maxInstance(IFunctionBigDecimal<T> field) {
 		return createNumericInstance(field, EAggregateFunction.MAX_INSTANCE, ENumericType.DECIMAL, ENumericType.INSTANCE);
+	}
+	
+	/* List */
+	@Override
+	public <T> IAdhocListCollResult<MODEL, T, List<T>> list(Collection<T> coll) {
+		return createCollectionInstance(ECollectionType.LIST, coll);
 	}
 }

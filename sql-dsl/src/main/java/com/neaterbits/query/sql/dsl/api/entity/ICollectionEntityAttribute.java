@@ -5,6 +5,6 @@ public interface ICollectionEntityAttribute extends IEntityAttribute {
 	
 	Class<?> getJavaMemberType();
 	
-	CollectionType getCollectionType();
+	EntityCollectionType getCollectionType();
 	
 }

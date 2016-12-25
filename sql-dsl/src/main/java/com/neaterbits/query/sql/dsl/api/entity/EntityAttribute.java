@@ -14,7 +14,7 @@ class EntityAttribute implements IEntityAttribute {
 	
 	// For collections
 	private final Class<?> collectionMemberType;
-	private final CollectionType collectionType;
+	private final EntityCollectionType collectionType;
 
 	EntityAttribute(String name, String [] columns, AttributeType type, Class<?> javaType, Member member, Class<?> memberType) {
 		this.name = name;
@@ -28,10 +28,10 @@ class EntityAttribute implements IEntityAttribute {
 			this.collectionType = null;
 		}
 		else if (javaType.equals(Set.class)) {
-			this.collectionType = CollectionType.SET;
+			this.collectionType = EntityCollectionType.SET;
 		}
 		else if (javaType.equals(List.class)) {
-			this.collectionType = CollectionType.LIST;
+			this.collectionType = EntityCollectionType.LIST;
 		}
 		else {
 			throw new UnsupportedOperationException("Unsupported member type " + javaType.getClass().getName());
@@ -43,7 +43,7 @@ class EntityAttribute implements IEntityAttribute {
 	}
 	
 
-	public final CollectionType getCollectionType() {
+	public final EntityCollectionType getCollectionType() {
 		return collectionType;
 	}
 
