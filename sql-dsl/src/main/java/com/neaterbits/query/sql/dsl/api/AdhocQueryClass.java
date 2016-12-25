@@ -337,12 +337,12 @@ abstract class AdhocQueryClass<MODEL, RESULT> extends AdhocQueryBase<MODEL, Adho
 	}
 
 	@Override
-	public final ISharedLogicalClauses<MODEL, RESULT> isLesserThan(Comparable<Object> value) {
+	public final ISharedLogicalClauses<MODEL, RESULT> isLessThan(Comparable<Object> value) {
 		return addOperator(EClauseOperator.LESS_THAN, value);
 	}
 
 	@Override
-	public final ISharedLogicalClauses<MODEL, RESULT> isLesserOrEqualTo(Comparable<Object> value) {
+	public final ISharedLogicalClauses<MODEL, RESULT> isLessOrEqualTo(Comparable<Object> value) {
 		return addOperator(EClauseOperator.LESS_OR_EQUAL, value);
 	}
 

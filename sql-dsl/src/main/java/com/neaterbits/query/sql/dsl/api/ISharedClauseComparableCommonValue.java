@@ -13,8 +13,8 @@ public interface ISharedClauseComparableCommonValue<
 
 	L isGreaterOrEqualTo(R value);
 	
-	L isLesserThan(R value);
+	L isLessThan(R value);
 	
-	L isLesserOrEqualTo(R value);
+	L isLessOrEqualTo(R value);
 	
 }

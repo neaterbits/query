@@ -68,7 +68,7 @@ class ComparativeClauseImpl<MODEL, RESULT, R extends Comparable<R>, L extends IS
 	*/
 
 	@Override
-	public final L isLesserThan(R value) {
+	public final L isLessThan(R value) {
 		if (value == null) {
 			throw new IllegalArgumentException("value == null");
 		}
@@ -97,7 +97,7 @@ class ComparativeClauseImpl<MODEL, RESULT, R extends Comparable<R>, L extends IS
 	*/
 
 	@Override
-	public final L isLesserOrEqualTo(R value) {
+	public final L isLessOrEqualTo(R value) {
 		if (value == null) {
 			throw new IllegalArgumentException("value == null");
 		}

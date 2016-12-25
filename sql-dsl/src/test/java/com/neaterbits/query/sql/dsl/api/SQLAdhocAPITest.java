@@ -116,7 +116,7 @@ public class SQLAdhocAPITest {
 		fooList.add(foo4);
 
 		final Set<Foo> foos = Adhoc.set(fooList)
-							.where(Foo::getDecimal).isLesserThan(new BigDecimal("2.0"))
+							.where(Foo::getDecimal).isLessThan(new BigDecimal("2.0"))
 							.get();
 
 		checkFoos(foo3, foo4, foos, HashSet.class);
@@ -125,7 +125,7 @@ public class SQLAdhocAPITest {
 		final Comparator<Foo> fooComparator = (f1, f2) -> Integer.compare(f1.getValue(), f2.getValue());
 		
 		final TreeSet<Foo> foos2 = Adhoc.set(fooList)
-				.where(Foo::getDecimal).isLesserThan(new BigDecimal("2.0"))
+				.where(Foo::getDecimal).isLessThan(new BigDecimal("2.0"))
 				.as(coll ->  {
 					final TreeSet<Foo> set = new TreeSet<Foo>(fooComparator);
 					

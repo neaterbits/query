@@ -55,7 +55,7 @@ public class PerformanceTest {
 		checkPerformance(
 				testData -> sum(Foo::getValue)
 					.from(testData)
-					.where(Foo::getValue).isLesserThan(50)
+					.where(Foo::getValue).isLessThan(50)
 					.get(),
 
 				testData -> testData.stream()
@@ -68,7 +68,7 @@ public class PerformanceTest {
 		System.out.println("Collection test ");
 		
 		checkPerformance(
-				testData ->list(testData).where(Foo::getValue).isLesserThan(50).get(),
+				testData ->list(testData).where(Foo::getValue).isLessThan(50).get(),
 
 				testData -> testData.stream().filter(f -> f.getValue() < 50).collect(Collectors.toList())
 		);
