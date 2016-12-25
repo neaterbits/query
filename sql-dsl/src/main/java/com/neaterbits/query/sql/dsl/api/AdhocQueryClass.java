@@ -8,7 +8,7 @@ import java.util.function.Function;
 import com.neaterbits.query.sql.dsl.api.entity.QueryMetaModel;
 
 final class AdhocQueryClass<MODEL> extends AdhocQueryBase<MODEL, AdhocQueryClass<MODEL>> 
-		implements IAdhocNumericTableResult<MODEL, Object, Object>,
+		implements IAdhocNumericTableResult<MODEL, Object, Object>, IAdhocNumericInstanceResult<MODEL, Object>,
 		
 			ISharedClauseComparableCommonValue<MODEL, Object, Comparable<Object>, ISharedLogicalClauses<MODEL, Object>>,
 			ISharedClauseComparableStringValue<MODEL, Object, ISharedLogicalClauses<MODEL, Object>>,

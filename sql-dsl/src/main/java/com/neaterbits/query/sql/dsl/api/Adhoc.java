@@ -36,4 +36,21 @@ public interface Adhoc {
     public static <T> IAdhocNumericTableResult<Void, BigDecimal, T> max(IFunctionBigDecimal<T> field) {
     	return AdhocImpl.adhocImpl.max(field);
     }
+
+    /* MaxInstance */
+    public static <T> IAdhocNumericInstanceResult<Void, T> maxInstance(IFunctionShort<T> field) {
+    	return AdhocImpl.adhocImpl.maxInstance(field);
+    }
+	
+    public static <T> IAdhocNumericInstanceResult<Void, T> maxInstance(IFunctionInteger<T> field) {
+    	return AdhocImpl.adhocImpl.maxInstance(field);
+    }
+
+    public static <T> IAdhocNumericInstanceResult<Void, T> maxInstance(IFunctionLong<T> field) {
+    	return AdhocImpl.adhocImpl.maxInstance(field);
+    }
+
+    public static <T> IAdhocNumericInstanceResult<Void, T> maxInstance(IFunctionBigDecimal<T> field) {
+    	return AdhocImpl.adhocImpl.maxInstance(field);
+    }
 }

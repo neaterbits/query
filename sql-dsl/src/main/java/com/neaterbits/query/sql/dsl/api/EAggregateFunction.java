@@ -6,6 +6,8 @@ enum EAggregateFunction {
 	AVG,
 	MIN,
 	MAX,
+	MIN_INSTANCE,
+	MAX_INSTANCE,
 	COUNT;
 	
 }

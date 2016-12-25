@@ -6,6 +6,9 @@ enum ENumericType {
 	INTEGER,
 	LONG,
 	BIGINT,
-	DECIMAL;
+	DECIMAL,
+	
+	// TODO: Psesudo-type for returning instance instead of value, bad design? 
+	INSTANCE;
 	
 }

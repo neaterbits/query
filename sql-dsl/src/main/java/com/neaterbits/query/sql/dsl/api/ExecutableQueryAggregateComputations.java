@@ -81,9 +81,8 @@ abstract class ExecutableQueryAggregateComputations<QUERY> extends ExecuteQueryB
 	}
 	
 	final Object computeAggregateInitialResult(QUERY query) {
-		
+
 		final Object ret;
-		
 		final EAggregateFunction aggregateFunction = q.getAggregateResultFunction(query);
 
 		switch (aggregateFunction) {
@@ -93,22 +92,28 @@ abstract class ExecutableQueryAggregateComputations<QUERY> extends ExecuteQueryB
 		case MAX:
 			ret = null;
 			break;
-			
+
+		case MIN_INSTANCE:
+		case MAX_INSTANCE:
+			ret = null;
+			break;
+
 		case COUNT:
 			ret = 0;
 			break;
-			
+
 		case AVG:
 			ret = null;
 			break;
+
 		default:
 			throw new UnsupportedOperationException("Unknown aggregate function " + aggregateFunction);
 		}
 
 		return ret;
 	}
-	
-	final Object addToAggregateResult(QUERY query, Object last, ExecuteQueryScratch scratch) {
+
+	final Object addToAggregateResult(QUERY query, Object instance, Object last, ExecuteQueryScratch scratch) {
 		final EAggregateFunction aggregateFunction = q.getAggregateResultFunction(query);
 		
 		if (!scratch.numResultPartsIs(1)) {
@@ -131,6 +136,14 @@ abstract class ExecutableQueryAggregateComputations<QUERY> extends ExecuteQueryB
 			
 		case MAX:
 			ret = computeMax(query, last, value);
+			break;
+
+		case MIN_INSTANCE:
+			ret = computeMinInstance(query, instance, last, value);
+			break;
+			
+		case MAX_INSTANCE:
+			ret = computeMaxInstance(query, instance, last, value);
 			break;
 			
 		case COUNT:
@@ -159,6 +172,22 @@ abstract class ExecutableQueryAggregateComputations<QUERY> extends ExecuteQueryB
 			case MIN:
 			case MAX:
 				ret = value;
+				break;
+				
+			case MIN_INSTANCE:
+			case MAX_INSTANCE:
+				if (value == null) {
+					ret = null;
+				}
+				else {
+					final MinMaxValueBase l = (MinMaxValueBase)value;
+
+					if (l.instance == null) {
+						throw new IllegalStateException("instance is null");
+					}
+					
+					ret = l.instance;
+				}
 				break;
 				
 			case COUNT:
@@ -312,6 +341,7 @@ abstract class ExecutableQueryAggregateComputations<QUERY> extends ExecuteQueryB
 					
 				case 1:
 					ret = v;
+					break;
 					
 				default:
 					throw new IllegalStateException("Unknown compare to val");
@@ -395,6 +425,7 @@ abstract class ExecutableQueryAggregateComputations<QUERY> extends ExecuteQueryB
 					
 				case 1:
 					ret = b;
+					break;
 					
 				default:
 					throw new IllegalStateException("Unknown compare to val");
@@ -412,6 +443,201 @@ abstract class ExecutableQueryAggregateComputations<QUERY> extends ExecuteQueryB
 		return ret;
 	}
 
+
+	private final Object computeMinInstance(QUERY query, Object instance, Object last, Object value) {
+		
+		final ENumericType numericType = q.getAggregateNumericInputType(query);
+		
+		final MinMaxValueBase ret;
+		
+		switch (numericType) {
+		case SHORT: {
+			final Short v = (Short)value;
+			if (last == null) {
+				ret = new MinMaxValueShort(instance, v);
+			}
+			else {
+				final MinMaxValueShort l = (MinMaxValueShort)last;
+
+				ret = l;
+				
+				if (v < l.value) {
+					l.instance = instance;
+					l.value = v;
+				}
+			}
+			break;
+		}
+
+		case INTEGER: {
+			final Integer v = (Integer)value;
+			if (last == null) {
+				ret = new MinMaxValueInt(instance, v);
+			}
+			else {
+				final MinMaxValueInt l = (MinMaxValueInt)last;
+
+				ret = l;
+				
+				if (v < l.value) {
+					l.instance = instance;
+					l.value = v;
+				}
+			}
+			break;
+		}
+			
+			
+		case LONG: {
+			final Long v = (Long)value;
+			if (last == null) {
+				ret = new MinMaxValueLong(instance, v);
+			}
+			else {
+				final MinMaxValueLong l = (MinMaxValueLong)last;
+				
+				ret = l;
+				
+				if (v < l.value) {
+					l.instance = instance;
+					l.value = v;
+				}
+			}
+			break;
+		}
+
+		case DECIMAL: {
+			final BigDecimal v = (BigDecimal)value;
+			if (last == null) {
+				ret = new MinMaxValueBigDecimal(instance, v);
+			}
+			else {
+				final MinMaxValueBigDecimal b = (MinMaxValueBigDecimal)last;
+
+				ret = b;
+				
+				switch (b.value.compareTo(v)) {
+				case -1:
+				case 0:
+					break;
+					
+				case 1:
+					b.instance = instance;
+					b.value = v;
+					break;
+					
+				default:
+					throw new IllegalStateException("Unknown compare to val");
+				}
+				
+			}
+			break;
+		}
+
+		default:
+			throw new UnsupportedOperationException("Unknown numeric type " + numericType);
+		
+		}
+		
+		return ret;
+	}
+	
+	private final Object computeMaxInstance(QUERY query, Object instance, Object last, Object value) {
+		
+		final ENumericType numericType = q.getAggregateNumericInputType(query);
+
+		final MinMaxValueBase ret;
+
+		switch (numericType) {
+		case SHORT: {
+			final Short v = (Short)value;
+			if (last == null) {
+				ret = new MinMaxValueShort(instance, v);
+			}
+			else {
+				final MinMaxValueShort l = (MinMaxValueShort)last;
+				
+				ret = l;
+
+				if (v > l.value) {
+					l.instance = instance;
+					l.value = v;
+				}
+			}
+			break;
+		}
+
+		case INTEGER: {
+			final Integer v = (Integer)value;
+			if (last == null) {
+				ret = new MinMaxValueInt(instance, v);
+			}
+			else {
+				final MinMaxValueInt l = (MinMaxValueInt)last;
+				
+				ret = l;
+					
+				if (v > l.value) {
+					l.instance = instance;
+					l.value = v;
+				}
+			}
+			break;
+		}
+			
+			
+		case LONG: {
+			final Long v = (Long)value;
+			if (last == null) {
+				ret = new MinMaxValueLong(instance, v);
+			}
+			else {
+				final MinMaxValueLong l = (MinMaxValueLong)last;
+
+				ret = l;
+
+				if (v > l.value) {
+					l.instance = instance;
+					l.value = v;
+				}
+			}
+			break;
+		}
+
+		case DECIMAL: {
+			final BigDecimal v = (BigDecimal)value;
+			if (last == null) {
+				ret = new MinMaxValueBigDecimal(instance, v);
+			}
+			else {
+				final BigDecimal b = (BigDecimal)last;
+				final MinMaxValueBigDecimal l = (MinMaxValueBigDecimal)last;
+				
+				ret = l;
+				
+				switch (b.compareTo(v)) {
+				case -1:
+					l.instance = instance;
+					l.value = v;
+					break;
+					
+				case 0:
+				case 1:
+					
+				default:
+					throw new IllegalStateException("Unknown compare to val");
+				}
+			}
+			break;
+		}
+
+		default:
+			throw new UnsupportedOperationException("Unknown numeric type " + numericType);
+		}
+		
+		return ret;
+	}
+	
 	private final Object computeCount(QUERY query, Object last, Object value) {
 
 		final long l = (Long)last;
@@ -493,4 +719,62 @@ abstract class ExecutableQueryAggregateComputations<QUERY> extends ExecuteQueryB
 		return ret;
 	}
 
+	
+	private static class MinMaxValueBase {
+		Object instance;
+
+		MinMaxValueBase(Object instance) {
+			
+			if (instance == null) {
+				throw new IllegalArgumentException("instance == null");
+			}
+
+			this.instance = instance;
+		}
+	}
+
+	private static final class MinMaxValueShort extends MinMaxValueBase {
+		short value;
+
+		MinMaxValueShort(Object instance, short value) {
+			super(instance);
+
+			this.value = value;
+		}
+	}
+	
+	private static final class MinMaxValueInt extends MinMaxValueBase {
+		private int value;
+
+		MinMaxValueInt(Object instance, int value) {
+			super(instance);
+
+			this.value = value;
+		}
+	}
+	
+	private static final class MinMaxValueLong extends MinMaxValueBase {
+		private long value;
+
+		MinMaxValueLong(Object instance, long value) {
+			super(instance);
+
+			this.value = value;
+		}
+	}
+	
+	
+	private static final class MinMaxValueBigDecimal extends MinMaxValueBase {
+		private BigDecimal value;
+
+		MinMaxValueBigDecimal(Object instance, BigDecimal value) {
+			super(instance);
+			
+			if (value == null) {
+				throw new IllegalArgumentException("value == null");
+			}
+
+			this.value = value;
+		}
+	}
 }

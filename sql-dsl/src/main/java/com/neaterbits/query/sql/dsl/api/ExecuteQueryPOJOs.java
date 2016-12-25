@@ -64,10 +64,15 @@ final class ExecuteQueryPOJOs<QUERY> extends ExecutableQueryAggregateComputation
 
 		final EQueryResultGathering gathering = q.getGathering(query);
 		
-		if (ret == null && gathering == EQueryResultGathering.AGGREGATE) {
+		if (gathering == EQueryResultGathering.AGGREGATE) {
+		
+			ret = computeAggregateFinalResult(query, ret);
+			
+			if (ret == null) {
 
-			// return aggregate default
-			ret = q.getAggregateDefault(query);
+				// return aggregate default
+				ret = q.getAggregateDefault(query);
+			}
 		}
 
 		return ret;
@@ -113,7 +118,7 @@ final class ExecuteQueryPOJOs<QUERY> extends ExecutableQueryAggregateComputation
 		return new ArrayList<>();
 	}
 	
-	private Object computeResult(QUERY query, Object last, ExecuteQueryScratch scratch) {
+	private Object computeResult(QUERY query, Object instance, Object last, ExecuteQueryScratch scratch) {
 		
 		final EQueryResultGathering gathering = q.getGathering(query);
 		
@@ -121,7 +126,7 @@ final class ExecuteQueryPOJOs<QUERY> extends ExecutableQueryAggregateComputation
 		
 		switch (gathering) {
 		case AGGREGATE:
-			ret = addToAggregateResult(query, last, scratch);
+			ret = addToAggregateResult(query, instance, last, scratch);
 			break;
 			
 		case ENTITY:
@@ -271,7 +276,7 @@ final class ExecuteQueryPOJOs<QUERY> extends ExecutableQueryAggregateComputation
 				scratch.set(sourceIdx, o);
 
 				if (sourceIdx == numSources - 1) {
-					result = computeResult(query, result, scratch);
+					result = computeResult(query, o, result, scratch);
 				}
 				else {
 					// Recurse to next source idx
@@ -423,7 +428,7 @@ final class ExecuteQueryPOJOs<QUERY> extends ExecutableQueryAggregateComputation
 				if (sourceIdx == numSources - 1) {
 					// emit scratch area
 					
-					result = computeResult(query, result, scratch);
+					result = computeResult(query, o, result, scratch);
 				}
 				else {
 					// Recurse to next source idx

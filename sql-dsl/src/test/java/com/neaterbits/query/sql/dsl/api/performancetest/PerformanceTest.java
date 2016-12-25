@@ -9,6 +9,7 @@ import java.util.function.Function;
 import org.junit.Test;
 
 import static com.neaterbits.query.sql.dsl.api.Adhoc.max;
+import static com.neaterbits.query.sql.dsl.api.Adhoc.maxInstance;
 import static com.neaterbits.query.sql.dsl.api.Adhoc.sum;
 
 import com.neaterbits.query.sql.dsl.api.Foo;
@@ -26,6 +27,15 @@ public class PerformanceTest {
 				.max((f1, f2) -> Integer.compare(f1.getValue(), f2.getValue()))
 				.get()
 				.getValue()
+		);
+		
+
+		System.out.println("Max instance test");
+		checkPerformance(
+				testData -> maxInstance(Foo::getValue).from(testData).get(),
+				testData -> testData.stream()
+				.max((f1, f2) -> Integer.compare(f1.getValue(), f2.getValue()))
+				.get()
 		);
 		
 		// TODO: Max test with instance
@@ -50,10 +60,10 @@ public class PerformanceTest {
 					.get(),
 
 				testData -> testData.stream()
-				.mapToInt(Foo::getValue)
-				.filter(i -> i < 50)
-				.reduce((int1, int2) -> int1 + int2)
-				.getAsInt()
+					.mapToInt(Foo::getValue)
+					.filter(i -> i < 50)
+					.reduce((int1, int2) -> int1 + int2)
+					.getAsInt()
 		);
 	}
 	
@@ -63,6 +73,7 @@ public class PerformanceTest {
 
 		//final int num = 10000;
 		final int innerLoopIterations = 10 * 10 * 1000 * 1000;
+		//final int innerLoopIterations = 10000;
 		
 		
 		for (int i = 4; i > 0; -- i) {
