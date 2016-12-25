@@ -18,7 +18,7 @@ final class AdhocImpl<MODEL> implements IAdhoc<MODEL> {
 						ENumericType hinputNnumericType,
 						ENumericType outputNnumericType) {
 
-		return (IAdhocNumericTableResult)new AdhocQueryClass(field, aggregateFunction, hinputNnumericType, outputNnumericType);
+		return (IAdhocNumericTableResult)new AdhocQueryClassAggregate(field, aggregateFunction, hinputNnumericType, outputNnumericType);
 	}
 
 	@SuppressWarnings({"unchecked", "rawtypes"})
@@ -30,14 +30,14 @@ final class AdhocImpl<MODEL> implements IAdhoc<MODEL> {
 						ENumericType inputNnumericType,
 						ENumericType outputNnumericType) {
 
-		return (IAdhocNumericInstanceResult)new AdhocQueryClass(field, aggregateFunction, inputNnumericType, outputNnumericType);
+		return (IAdhocNumericInstanceResult)new AdhocQueryClassAggregate(field, aggregateFunction, inputNnumericType, outputNnumericType);
 	}
 
 	@SuppressWarnings({"unchecked", "rawtypes"})
-	private <T, COLL, INPUT_TYPE, OUTPUT_TYPE>
-				IAdhocListCollResult<MODEL, COLL, T> createCollectionInstance(ECollectionType collectionType, Collection<?> coll) {
+	private <T, COLL extends List<T>, INPUT_TYPE, OUTPUT_TYPE>
+				IAdhocWhereOrJoinList<MODEL, T, COLL> createCollectionInstance(ECollectionType collectionType, Collection<?> coll) {
 
-		return (IAdhocListCollResult)new AdhocQueryClass(collectionType, coll);
+		return (IAdhocWhereOrJoinList)new AdhocQueryClassList(collectionType, coll);
 	}
 				
 	@Override
@@ -104,7 +104,7 @@ final class AdhocImpl<MODEL> implements IAdhoc<MODEL> {
 	
 	/* List */
 	@Override
-	public <T> IAdhocListCollResult<MODEL, T, List<T>> list(Collection<T> coll) {
+	public <T> IAdhocWhereOrJoinList<MODEL, T, List<T>> list(Collection<T> coll) {
 		return createCollectionInstance(ECollectionType.LIST, coll);
 	}
 }

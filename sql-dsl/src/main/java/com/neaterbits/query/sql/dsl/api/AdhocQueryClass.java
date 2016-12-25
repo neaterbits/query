@@ -1,24 +1,20 @@
 package com.neaterbits.query.sql.dsl.api;
 
-import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.function.Function;
 
 import com.neaterbits.query.sql.dsl.api.entity.QueryMetaModel;
 
-final class AdhocQueryClass<MODEL> extends AdhocQueryBase<MODEL, AdhocQueryClass<MODEL>> 
+abstract class AdhocQueryClass<MODEL, RESULT> extends AdhocQueryBase<MODEL, AdhocQueryClass<MODEL, RESULT>> 
 		implements
 
-			IAdhocNumericTableResult<MODEL, Object, Object>,
-			IAdhocNumericInstanceResult<MODEL, Object>,
+			ISharedClauseComparableCommonValue<MODEL, RESULT, Comparable<Object>, ISharedLogicalClauses<MODEL, RESULT>>,
+			ISharedClauseComparableStringValue<MODEL, RESULT, ISharedLogicalClauses<MODEL, RESULT>>,
 
-			IAdhocListCollResult<MODEL, Object ,Object>,
-
-			ISharedClauseComparableCommonValue<MODEL, Object, Comparable<Object>, ISharedLogicalClauses<MODEL, Object>>,
-			ISharedClauseComparableStringValue<MODEL, Object, ISharedLogicalClauses<MODEL, Object>>,
-
-			IAdhocAndOrLogicalClauses<MODEL, Object>,
+			IAdhocEndClauseBase<MODEL, RESULT>,
+			
+			ISharedLogicalClauses<MODEL, RESULT>,
 
 			ExecuteQueryPOJOsInput {
 
@@ -82,19 +78,19 @@ final class AdhocQueryClass<MODEL> extends AdhocQueryBase<MODEL, AdhocQueryClass
 	
 	@Override
 	@SuppressWarnings("unchecked")
-	public final Object getAggregateResultValue(AdhocQueryClass<MODEL> query, Object instance) {
+	public final Object getAggregateResultValue(AdhocQueryClass<MODEL, RESULT> query, Object instance) {
 		return aggregateGetter.apply(instance);
 	}
 
 	@Override
-	public ExecuteQueryScratch createScratchArea(AdhocQueryClass<MODEL> query, QueryMetaModel queryMetaModel) {
+	public final ExecuteQueryScratch createScratchArea(AdhocQueryClass<MODEL, RESULT> query, QueryMetaModel queryMetaModel) {
 
 		initScratchArea(getNumResultParts(this), getSourceCount(this), numConditions);
 		
 		return this;
 	}
 
-	private void addCondition(ConditionsType conditionsType, Function<?, ?> function) {
+	final void addCondition(ConditionsType conditionsType, Function<?, ?> function) {
 		
 		if (conditionsType == null) {
 			throw new IllegalArgumentException("conditionsType == null");
@@ -129,7 +125,7 @@ final class AdhocQueryClass<MODEL> extends AdhocQueryBase<MODEL, AdhocQueryClass
 		this.conditions[numConditions] = function;
 	}
 	
-	private ISharedLogicalClauses<MODEL, Object> addOperator(EClauseOperator operator, Object value) {
+	private ISharedLogicalClauses<MODEL, RESULT> addOperator(EClauseOperator operator, Object value) {
 		if (numConditions == 0) {
 			this.operators = new EClauseOperator[INITIAL_CONDITIONS];
 			this.values = new Object[INITIAL_CONDITIONS];
@@ -154,40 +150,41 @@ final class AdhocQueryClass<MODEL> extends AdhocQueryBase<MODEL, AdhocQueryClass
 	** ExecuteQueryPOJOsInput
 	**************************************************************************/
 	@Override
-	public Collection<?> getPOJOs(int idx) {
+	public final Collection<?> getPOJOs(int idx) {
 		return sources[idx];
 	}
-	
+
 	/**************************************************************************
 	** ExeutableQuery⋅
 	**************************************************************************/
 	@Override
-	public final int getSourceCount(AdhocQueryClass<MODEL> query) {
+	public final int getSourceCount(AdhocQueryClass<MODEL, RESULT> query) {
 		return numSources;
 	}
 
 	@Override
-	public final ConditionsType getConditionsType(AdhocQueryClass<MODEL> query) {
+	public final ConditionsType getConditionsType(AdhocQueryClass<MODEL, RESULT> query) {
 		return conditionsType;
 	}
 
 	@Override
-	public final int getConditionCount(AdhocQueryClass<MODEL> query) {
+	public final int getConditionCount(AdhocQueryClass<MODEL, RESULT> query) {
 		return numConditions;
 	}
 
 	@Override
-	public final int getConditionSourceIdx(AdhocQueryClass<MODEL> query, int conditionIdx) {
+	public final int getConditionSourceIdx(AdhocQueryClass<MODEL, RESULT> query, int conditionIdx) {
 		return conditionToSourceIdx[conditionIdx];
 	}
 
 	private static final ConditionEvaluatorComparable conditionValueComparable = new ConditionEvaluatorComparable();
 
 	@Override
-	public final boolean evaluateCondition(AdhocQueryClass<MODEL> query, Object instance, int conditionIdx, ConditionValuesScratch scratch) {
+	public final boolean evaluateCondition(AdhocQueryClass<MODEL, RESULT> query, Object instance, int conditionIdx, ConditionValuesScratch scratch) {
 
 		final EClauseOperator operator = operators[conditionIdx];
-		
+
+
 		final boolean ret;
 
 		@SuppressWarnings("unchecked")
@@ -255,11 +252,11 @@ final class AdhocQueryClass<MODEL> extends AdhocQueryBase<MODEL, AdhocQueryClass
 	
 	@SuppressWarnings({"unchecked", "rawtypes"})
 	@Override
-	public final IAdhocWhereOrJoin<MODEL, Object, Object> from(Collection<Object> collection) {
+	public final IAdhocWhereOrJoinSingular<MODEL, Object, Object> from(Collection<Object> collection) {
 		
 		addSource(collection);
 		
-		return (IAdhocWhereOrJoin)this;
+		return (IAdhocWhereOrJoinSingular)this;
 	}
 	
 
@@ -268,12 +265,13 @@ final class AdhocQueryClass<MODEL> extends AdhocQueryBase<MODEL, AdhocQueryClass
 	**************************************************************************/
 	
 	@Override
-	public Object get() {
-		final ExecuteQueryPOJOs<AdhocQueryClass<MODEL>> executor = new ExecuteQueryPOJOs<>(this);
+	@SuppressWarnings("unchecked")
+	public final RESULT get() {
+		final ExecuteQueryPOJOs<AdhocQueryClass<MODEL, RESULT>> executor = new ExecuteQueryPOJOs<>(this);
 		
 		final Object ret = executor.execute(this, this, null, null);
 		
-		return ret;
+		return (RESULT)ret;
 	}
 	
 	/**************************************************************************
@@ -281,7 +279,9 @@ final class AdhocQueryClass<MODEL> extends AdhocQueryBase<MODEL, AdhocQueryClass
 	**************************************************************************/
 	
 	@SuppressWarnings({"unchecked", "rawtypes"})
-	private <R extends Comparable<R>> ISharedClauseComparableCommonValue<MODEL, Object, R, IAdhocAndOrLogicalClauses<MODEL, Object>>
+	final <R extends Comparable<R>, AND_OR extends IAdhocAndOrLogicalClauses<MODEL, Object>>
+	
+		ISharedClauseComparableCommonValue // <MODEL, Object, R, AND_OR>
 				addComparativeWhere(Function<?, ?> function) {
 		
 		addCondition(ConditionsType.SINGLE, function);
@@ -291,35 +291,15 @@ final class AdhocQueryClass<MODEL> extends AdhocQueryBase<MODEL, AdhocQueryClass
 	
 
 	@SuppressWarnings({"unchecked", "rawtypes"})
-	private <R extends Comparable<R>> ISharedClauseConditionValue<MODEL, Object, R, IAdhocAndOrLogicalClauses<MODEL, Object>>
+	final <R extends Comparable<R>, AND_OR extends IAdhocAndOrLogicalClauses<MODEL, Object>>
+	
+		ISharedClauseConditionValue // <MODEL, Object, R, AND_OR>
+	
 			addConditionWhere(Function<?, ?> function) {
 
-			addCondition(ConditionsType.SINGLE, function);
+		addCondition(ConditionsType.SINGLE, function);
 
-			return (ISharedClauseConditionValue)this;
-	}
-
-	@Override
-	public <E extends Enum<E>> ISharedClauseConditionValue<MODEL, Object, E, IAdhocAndOrLogicalClauses<MODEL, Object>> where(IFunctionEnum<Object, E> func) {
-		return addConditionWhere(func);
-	}	
-	
-	@Override
-	public ISharedClauseComparableCommonValue<MODEL, Object, Integer, IAdhocAndOrLogicalClauses<MODEL, Object>> where(IFunctionInteger<Object> func) {
-		return addComparativeWhere(func);
-	}
-
-	@Override
-	public ISharedClauseComparableCommonValue<MODEL, Object, BigDecimal, IAdhocAndOrLogicalClauses<MODEL, Object>> where(IFunctionBigDecimal<Object> func) {
-		return addComparativeWhere(func);
-	}
-
-	@Override
-	@SuppressWarnings({"unchecked", "rawtypes"})
-	public ISharedClauseComparableStringValue<MODEL, Object, IAdhocAndOrLogicalClauses<MODEL, Object>> where(StringFunction<Object> func) {
-		addCondition(null, func);
-		
-		return (ISharedClauseComparableStringValue)this;
+		return (ISharedClauseConditionValue)this;
 	}
 
 	
@@ -328,17 +308,17 @@ final class AdhocQueryClass<MODEL> extends AdhocQueryBase<MODEL, AdhocQueryClass
 	**************************************************************************/
 	
 	@Override
-	public ISharedLogicalClauses<MODEL, Object> isEqualTo(Comparable<Object> other) {
+	public final ISharedLogicalClauses<MODEL, RESULT> isEqualTo(Comparable<Object> other) {
 		return addOperator(EClauseOperator.IS_EQUAL, other);
 	}
 
 	@Override
-	public ISharedLogicalClauses<MODEL, Object> isNotEqualTo(Comparable<Object> other) {
+	public final ISharedLogicalClauses<MODEL, RESULT> isNotEqualTo(Comparable<Object> other) {
 		return addOperator(EClauseOperator.NOT_EQUAL, other);
 	}
 
 	@Override
-	public ISharedLogicalClauses<MODEL, Object> in(@SuppressWarnings("unchecked") Comparable<Object>... values) {
+	public final ISharedLogicalClauses<MODEL, RESULT> in(@SuppressWarnings("unchecked") Comparable<Object>... values) {
 		return addOperator(EClauseOperator.IN, values);
 	}
 	
@@ -347,22 +327,22 @@ final class AdhocQueryClass<MODEL> extends AdhocQueryBase<MODEL, AdhocQueryClass
 	**************************************************************************/
 
 	@Override
-	public ISharedLogicalClauses<MODEL, Object> isGreaterThan(Comparable<Object> value) {
+	public final ISharedLogicalClauses<MODEL, RESULT> isGreaterThan(Comparable<Object> value) {
 		return addOperator(EClauseOperator.GREATER_THAN, value);
 	}
 
 	@Override
-	public ISharedLogicalClauses<MODEL, Object> isGreaterOrEqualTo(Comparable<Object> value) {
+	public final ISharedLogicalClauses<MODEL, RESULT> isGreaterOrEqualTo(Comparable<Object> value) {
 		return addOperator(EClauseOperator.GREATER_OR_EQUAL, value);
 	}
 
 	@Override
-	public ISharedLogicalClauses<MODEL, Object> isLesserThan(Comparable<Object> value) {
+	public final ISharedLogicalClauses<MODEL, RESULT> isLesserThan(Comparable<Object> value) {
 		return addOperator(EClauseOperator.LESS_THAN, value);
 	}
 
 	@Override
-	public ISharedLogicalClauses<MODEL, Object> isLesserOrEqualTo(Comparable<Object> value) {
+	public final ISharedLogicalClauses<MODEL, RESULT> isLesserOrEqualTo(Comparable<Object> value) {
 		return addOperator(EClauseOperator.LESS_OR_EQUAL, value);
 	}
 
@@ -371,58 +351,22 @@ final class AdhocQueryClass<MODEL> extends AdhocQueryBase<MODEL, AdhocQueryClass
 	**************************************************************************/
 
 	@Override
-	public ISharedLogicalClauses<MODEL, Object> startsWith(String s) {
+	public final ISharedLogicalClauses<MODEL, RESULT> startsWith(String s) {
 		return addOperator(EClauseOperator.STARTS_WITH, s);
 	}
 
 	@Override
-	public ISharedLogicalClauses<MODEL, Object> endsWith(String s) {
+	public final ISharedLogicalClauses<MODEL, RESULT> endsWith(String s) {
 		return addOperator(EClauseOperator.ENDS_WITH, s);
 	}
 
 	@Override
-	public ISharedLogicalClauses<MODEL, Object> contains(String s) {
+	public final ISharedLogicalClauses<MODEL, RESULT> contains(String s) {
 		return addOperator(EClauseOperator.CONTAINS, s);
 	}
 
 	@Override
-	public ISharedLogicalClauses<MODEL, Object> matches(String regex) {
+	public final ISharedLogicalClauses<MODEL, RESULT> matches(String regex) {
 		return addOperator(EClauseOperator.MATCHES, regex);
 	}
-
-	/**************************************************************************
-	** IAdhocAndClauses
-	**************************************************************************/
-	
-	@Override
-	public <T> ISharedClauseConditionTable<MODEL, Object, Integer, IAdhocAndClauses<MODEL, Object>> and(IFunctionInteger<T> getter) {
-		throw new UnsupportedOperationException("TODO");
-	}
-
-	@Override
-	public <T> ISharedClauseConditionTable<MODEL, Object, Long, IAdhocAndClauses<MODEL, Object>> and(IFunctionLong<T> getter) {
-		throw new UnsupportedOperationException("TODO");
-	}
-
-	@Override
-	public <T> ISharedClauseComparableStringAll<MODEL, Object, IAdhocAndClauses<MODEL, Object>> and(StringFunction<T> getter) {
-		throw new UnsupportedOperationException("TODO");
-	}
-
-	@Override
-	public <T> ISharedClauseConditionAll<MODEL, Object, Integer, IAdhocOrClauses<MODEL, Object>> or(
-			IFunctionInteger<T> getter) {
-		throw new UnsupportedOperationException("TODO");
-	}
-
-	@Override
-	public <T> ISharedClauseConditionAll<MODEL, Object, Long, IAdhocOrClauses<MODEL, Object>> or(IFunctionLong<T> getter) {
-		throw new UnsupportedOperationException("TODO");
-	}
-
-	@Override
-	public <T> ISharedClauseComparableStringAll<MODEL, Object, IAdhocOrClauses<MODEL, Object>> or(StringFunction<T> getter) {
-		throw new UnsupportedOperationException("TODO");
-	}
 }
-

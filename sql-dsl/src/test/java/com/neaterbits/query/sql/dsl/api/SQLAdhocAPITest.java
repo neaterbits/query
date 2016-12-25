@@ -2,6 +2,7 @@ package com.neaterbits.query.sql.dsl.api;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 import org.junit.Test;
@@ -42,7 +43,6 @@ public class SQLAdhocAPITest {
 		
 		final BigDecimal sumOfDecimal = Adhoc.sum(Foo::getDecimal).from(fooList).get();
 		assertThat(sumOfDecimal.compareTo(new BigDecimal("7.9"))).isEqualTo(0);
-		
 	}
 
 	@Test
@@ -63,10 +63,38 @@ public class SQLAdhocAPITest {
 							.get();
 
 		assertThat(foos.size()).isEqualTo(2);
-		
+
 		assertThat(foos.contains(foo1)).isTrue();
 		assertThat(foos.contains(foo2)).isTrue();
-		
+
 		assertThat(foos.getClass()).isEqualTo(ArrayList.class);
+
+		
+	}
+
+	@Test
+	public void testAdhocListAs() {
+
+		final List<Foo> fooList = new ArrayList<>();
+
+		final Foo foo1 = new Foo(1, 2, new BigDecimal("3.1"));
+		final Foo foo2 = new Foo(3, 1, new BigDecimal("4.8"));
+		final Foo foo3 = new Foo(2, 7, new BigDecimal("1.8"));
+
+		fooList.add(foo1);
+		fooList.add(foo2);
+		fooList.add(foo3);
+
+		final LinkedList<Foo> foos = Adhoc.list(fooList)
+							.where(Foo::getDecimal).isGreaterThan(new BigDecimal("2.0"))
+							.as(LinkedList<Foo>::new);
+
+		assertThat(foos.size()).isEqualTo(2);
+
+		assertThat(foos.contains(foo1)).isTrue();
+		assertThat(foos.contains(foo2)).isTrue();
+
+		assertThat(foos.getClass()).isEqualTo(LinkedList.class);
 	}
 }
+

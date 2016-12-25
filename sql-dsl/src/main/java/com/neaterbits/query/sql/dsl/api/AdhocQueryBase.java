@@ -13,10 +13,8 @@ abstract class AdhocQueryBase<MODEL, QUERY extends AdhocQueryBase<MODEL, QUERY>>
 			extends ExecuteQueryScratch
 			implements 
 				IAdhocNumericTableResult<MODEL, Object, Object>,
-				IAdhocWhereOrJoin<MODEL, Object, Object>,
-				
-				ExecutableQuery<QUERY> {
 
+				ExecutableQuery<QUERY> {
 
 	private final EQueryResultDimension dimension;
 	private final EQueryResultGathering gathering;

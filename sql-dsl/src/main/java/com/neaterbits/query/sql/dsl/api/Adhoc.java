@@ -57,7 +57,7 @@ public interface Adhoc {
     }
 
     /* List */
-	public static <T> IAdhocListCollResult<Void, T, List<T>> list(Collection<T> collection) {
+	public static <T> IAdhocWhereOrJoinList<Void, T, List<T>> list(Collection<T> collection) {
     	return AdhocImpl.adhocImpl.list(collection);
 	}
 }

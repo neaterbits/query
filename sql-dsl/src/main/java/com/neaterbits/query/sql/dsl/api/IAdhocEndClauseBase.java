@@ -1,6 +1,6 @@
 package com.neaterbits.query.sql.dsl.api;
 
-public interface IAdhocGetEndClause<MODEL, RESULT> {
+public interface IAdhocEndClauseBase<MODEL, RESULT> {
 
 	RESULT get();
 	

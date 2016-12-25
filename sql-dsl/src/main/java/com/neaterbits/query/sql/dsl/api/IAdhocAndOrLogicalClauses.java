@@ -5,8 +5,6 @@ public interface IAdhocAndOrLogicalClauses<MODEL, RESULT>
 						MODEL, 
 						RESULT,
 						IAdhocAndClauses<MODEL, RESULT>,
-						IAdhocOrClauses<MODEL, RESULT>>,
-						
-			IAdhocGetEndClause<MODEL, RESULT> {
+						IAdhocOrClauses<MODEL, RESULT>> {
 
 }

@@ -38,5 +38,5 @@ interface IAdhoc<MODEL>
     <T> IAdhocNumericInstanceResult<MODEL, T> 	maxInstance(IFunctionBigDecimal<T> field);
     
     /* Collection results */
-    <T> IAdhocListCollResult<MODEL, T, List<T>> list(Collection<T> coll);
+    <T> IAdhocWhereOrJoinList<MODEL, T, List<T>> list(Collection<T> coll);
 }

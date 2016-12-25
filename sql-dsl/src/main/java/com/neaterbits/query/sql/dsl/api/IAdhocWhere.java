@@ -2,14 +2,16 @@ package com.neaterbits.query.sql.dsl.api;
 
 import java.math.BigDecimal;
 
-public interface IAdhocWhere<MODEL, RESULT, T> {
+public interface IAdhocWhere<MODEL, RESULT, T, AND_OR_CLAUSES extends IAdhocAndOrLogicalClauses<MODEL,RESULT>
+		
+		> {
 
-	<E extends Enum<E>> ISharedClauseConditionValue<MODEL, Object, E, IAdhocAndOrLogicalClauses<MODEL, Object>> where(IFunctionEnum<T, E> func);
-	
-	ISharedClauseComparableCommonValue<MODEL, RESULT, Integer, IAdhocAndOrLogicalClauses<MODEL,RESULT>> where(IFunctionInteger<T> func);
+	<E extends Enum<E>> ISharedClauseConditionValue<MODEL, RESULT, E, AND_OR_CLAUSES> where(IFunctionEnum<T, E> func);
 
-	ISharedClauseComparableCommonValue<MODEL, RESULT, BigDecimal, IAdhocAndOrLogicalClauses<MODEL,RESULT>> where(IFunctionBigDecimal<T> func);
+	ISharedClauseComparableCommonValue<MODEL, RESULT, Integer, AND_OR_CLAUSES> where(IFunctionInteger<T> func);
 
-	ISharedClauseComparableStringValue<MODEL, RESULT, IAdhocAndOrLogicalClauses<MODEL,RESULT>> where(StringFunction<T> func);
+	ISharedClauseComparableCommonValue<MODEL, RESULT, BigDecimal, AND_OR_CLAUSES> where(IFunctionBigDecimal<T> func);
+
+	ISharedClauseComparableStringValue<MODEL, RESULT, AND_OR_CLAUSES> where(StringFunction<T> func);
 	
 }

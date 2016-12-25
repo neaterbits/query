@@ -30,7 +30,6 @@ public class PerformanceTest {
 				.get()
 				.getValue()
 		);
-		
 
 		System.out.println("Max instance test");
 		checkPerformance(
@@ -43,7 +42,6 @@ public class PerformanceTest {
 		// TODO: Max test with instance
 		
 		System.out.println("Sum test");
-
 		checkPerformance(
 				testData -> sum(Foo::getValue).from(testData).get(),
 				
@@ -54,7 +52,6 @@ public class PerformanceTest {
 		);
 
 		System.out.println("Sum test with filter ");
-	
 		checkPerformance(
 				testData -> sum(Foo::getValue)
 					.from(testData)
@@ -72,37 +69,37 @@ public class PerformanceTest {
 		
 		checkPerformance(
 				testData ->list(testData).where(Foo::getValue).isLesserThan(50).get(),
-				
+
 				testData -> testData.stream().filter(f -> f.getValue() < 50).collect(Collectors.toList())
-				
 		);
+
+		
 	}
 	
 	private <T> void checkPerformance(
 			Function<List<Foo>, T> selectBased,
-			Function<List<Foo>, T> streamBased) {
+			Function<List<Foo>, T> streamBased
+	) {
 
 		//final int num = 10000;
 		final int innerLoopIterations = 10 * 10 * 1000 * 1000;
 		//final int innerLoopIterations = 10000;
-		
-		
+
 		for (int i = 4; i > 0; -- i) {
+
 			int numElements = 1;
-			
+
 			for (int j = 0; j < i; ++ j) {
 				numElements *= 10;
 			}
-			
+
 			System.out.println("i " + i + " num " + numElements);
 
 			final int iterations = innerLoopIterations / numElements;
-			
+
 			checkPerformance(numElements, iterations, selectBased, streamBased);
 		}
 	}
-	
-	
 
 	private <T> void checkPerformance(int listLength, int iterations,
 				Function<List<Foo>, T> selectBased,
