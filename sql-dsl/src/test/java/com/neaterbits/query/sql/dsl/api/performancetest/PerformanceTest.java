@@ -5,12 +5,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 
 import org.junit.Test;
 
 import static com.neaterbits.query.sql.dsl.api.Adhoc.max;
 import static com.neaterbits.query.sql.dsl.api.Adhoc.maxInstance;
 import static com.neaterbits.query.sql.dsl.api.Adhoc.sum;
+import static com.neaterbits.query.sql.dsl.api.Adhoc.list;
 
 import com.neaterbits.query.sql.dsl.api.Foo;
 
@@ -64,6 +66,15 @@ public class PerformanceTest {
 					.filter(i -> i < 50)
 					.reduce((int1, int2) -> int1 + int2)
 					.getAsInt()
+		);
+
+		System.out.println("Collection test ");
+		
+		checkPerformance(
+				testData ->list(testData).where(Foo::getValue).isLesserThan(50).get(),
+				
+				testData -> testData.stream().filter(f -> f.getValue() < 50).collect(Collectors.toList())
+				
 		);
 	}
 	

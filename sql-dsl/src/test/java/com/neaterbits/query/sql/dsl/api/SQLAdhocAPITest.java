@@ -66,5 +66,7 @@ public class SQLAdhocAPITest {
 		
 		assertThat(foos.contains(foo1)).isTrue();
 		assertThat(foos.contains(foo2)).isTrue();
+		
+		assertThat(foos.getClass()).isEqualTo(ArrayList.class);
 	}
 }
