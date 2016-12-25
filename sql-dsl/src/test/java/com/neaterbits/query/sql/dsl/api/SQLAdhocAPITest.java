@@ -2,8 +2,12 @@ package com.neaterbits.query.sql.dsl.api;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
 
 import org.junit.Test;
 
@@ -68,9 +72,8 @@ public class SQLAdhocAPITest {
 		assertThat(foos.contains(foo2)).isTrue();
 
 		assertThat(foos.getClass()).isEqualTo(ArrayList.class);
-
-		
 	}
+
 
 	@Test
 	public void testAdhocListAs() {
@@ -95,6 +98,55 @@ public class SQLAdhocAPITest {
 		assertThat(foos.contains(foo2)).isTrue();
 
 		assertThat(foos.getClass()).isEqualTo(LinkedList.class);
+	}
+
+	@Test
+	public void testAdhocSet() {
+
+		final List<Foo> fooList = new ArrayList<>();
+
+		final Foo foo1 = new Foo(1, 2, new BigDecimal("3.1"));
+		final Foo foo2 = new Foo(3, 1, new BigDecimal("4.8"));
+		final Foo foo3 = new Foo(2, 7, new BigDecimal("1.8"));
+		final Foo foo4 = new Foo(2, 7, new BigDecimal("1.8"));
+
+		fooList.add(foo1);
+		fooList.add(foo2);
+		fooList.add(foo3);
+		fooList.add(foo4);
+
+		final Set<Foo> foos = Adhoc.set(fooList)
+							.where(Foo::getDecimal).isLesserThan(new BigDecimal("2.0"))
+							.get();
+
+		checkFoos(foo3, foo4, foos, HashSet.class);
+
+
+		final Comparator<Foo> fooComparator = (f1, f2) -> Integer.compare(f1.getValue(), f2.getValue());
+		
+		final TreeSet<Foo> foos2 = Adhoc.set(fooList)
+				.where(Foo::getDecimal).isLesserThan(new BigDecimal("2.0"))
+				.as(coll ->  {
+					final TreeSet<Foo> set = new TreeSet<Foo>(fooComparator);
+					
+					set.addAll(coll);
+					
+					return set;
+				});
+
+		checkFoos(foo3, foo4, foos2, TreeSet.class);
+	}
+	
+	private void checkFoos(Foo foo3, Foo foo4, Set<Foo> foos, Class<?> expectedClass) {
+		assertThat(foo3.hashCode()).isEqualTo(foo4.hashCode());
+		assertThat(foo3).isEqualTo(foo4);
+		
+		assertThat(foos.getClass()).isEqualTo(expectedClass);
+		
+		assertThat(foos.size()).isEqualTo(1);
+
+		assertThat(foos.contains(foo3)).isTrue();
+		assertThat(foos.contains(foo4)).isTrue();
 	}
 }
 

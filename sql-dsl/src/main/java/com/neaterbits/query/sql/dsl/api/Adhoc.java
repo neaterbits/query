@@ -3,6 +3,7 @@ package com.neaterbits.query.sql.dsl.api;
 import java.math.BigDecimal;
 import java.util.Collection;
 import java.util.List;
+import java.util.Set;
 
 public interface Adhoc {
 
@@ -59,5 +60,10 @@ public interface Adhoc {
     /* List */
 	public static <T> IAdhocWhereOrJoinList<Void, T, List<T>> list(Collection<T> collection) {
     	return AdhocImpl.adhocImpl.list(collection);
+	}
+
+    /* Set */
+	public static <T> IAdhocWhereOrJoinSet<Void, T, Set<T>> set(Collection<T> collection) {
+    	return AdhocImpl.adhocImpl.set(collection);
 	}
 }

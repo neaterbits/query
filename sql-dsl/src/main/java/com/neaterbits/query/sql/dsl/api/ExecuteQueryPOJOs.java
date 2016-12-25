@@ -2,6 +2,7 @@ package com.neaterbits.query.sql.dsl.api;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
 
 import com.neaterbits.query.sql.dsl.api.entity.QueryMetaModel;
@@ -97,7 +98,7 @@ final class ExecuteQueryPOJOs<QUERY> extends ExecutableQueryAggregateComputation
 				break;
 				
 			case MULTI:
-				ret = makeResultList(); 
+				ret = makeResultColl(query);
 				break;
 			
 			default:
@@ -113,9 +114,27 @@ final class ExecuteQueryPOJOs<QUERY> extends ExecutableQueryAggregateComputation
 		return ret;
 	}
 	
-	private List<?> makeResultList() {
+	private Collection<?> makeResultColl(QUERY query) {
 		// TODO:  Perhaps nested list of some sort for large result sets
-		return new ArrayList<>();
+		
+		final Collection<?> ret;
+		final ECollectionType resultType = q.getResultCollectionType(query);
+
+		switch (resultType) {
+
+		case LIST:
+			ret = new ArrayList<>();
+			break;
+
+		case SET:
+			ret = new HashSet<>();
+			break;
+
+		default:
+			throw new IllegalArgumentException("Unknown result type " + resultType);
+		}
+		
+		return ret;
 	}
 	
 	private Object computeResult(QUERY query, Object instance, Object last, ExecuteQueryScratch scratch) {
@@ -171,7 +190,7 @@ final class ExecuteQueryPOJOs<QUERY> extends ExecutableQueryAggregateComputation
 				break;
 				
 			case MULTI:
-				ret = addToList(last, instance);
+				ret = addToColl(last, instance);
 				break;
 				
 			default:
@@ -182,13 +201,13 @@ final class ExecuteQueryPOJOs<QUERY> extends ExecutableQueryAggregateComputation
 	}
 	
 	@SuppressWarnings({ "unchecked", "rawtypes" })
-	private Object addToList(Object last, Object value) {
+	private Object addToColl(Object last, Object value) {
 		
 		if (value == null) {
 			throw new IllegalArgumentException("value == null");
 		}
 		
-		((List)last).add(value);
+		((Collection)last).add(value);
 		
 		return last;
 	}
@@ -208,7 +227,7 @@ final class ExecuteQueryPOJOs<QUERY> extends ExecutableQueryAggregateComputation
 				break;
 				
 			case MULTI:
-				ret = addToList(last, map(query, scratch));
+				ret = addToColl(last, map(query, scratch));
 				break;
 				
 			default:

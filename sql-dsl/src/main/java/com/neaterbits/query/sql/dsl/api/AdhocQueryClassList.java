@@ -12,13 +12,10 @@ final class AdhocQueryClassList<MODEL>
 		implements IAdhocWhereOrJoinList<MODEL, Object, List<Object>>,
 				   IAdhocAndOrLogicalClausesList<MODEL, Object, List<Object>> {
 
-	AdhocQueryClassList(ECollectionType collectionType, Collection<?> coll) {
-		super(collectionType, coll);
+	AdhocQueryClassList(Collection<?> coll) {
+		super(ECollectionType.LIST, coll);
 	}
-
 	
-	
-	@SuppressWarnings("unchecked")
 	@Override
 	public final <L extends List<Object>> L as(Function<List<Object>, L> function) {
 		final List<Object> ret = (List<Object>)get();

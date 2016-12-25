@@ -3,6 +3,7 @@ package com.neaterbits.query.sql.dsl.api;
 import java.math.BigDecimal;
 import java.util.Collection;
 import java.util.List;
+import java.util.Set;
 import java.util.function.Function;
 
 final class AdhocImpl<MODEL> implements IAdhoc<MODEL> {
@@ -35,9 +36,16 @@ final class AdhocImpl<MODEL> implements IAdhoc<MODEL> {
 
 	@SuppressWarnings({"unchecked", "rawtypes"})
 	private <T, COLL extends List<T>, INPUT_TYPE, OUTPUT_TYPE>
-				IAdhocWhereOrJoinList<MODEL, T, COLL> createCollectionInstance(ECollectionType collectionType, Collection<?> coll) {
+				IAdhocWhereOrJoinList<MODEL, T, COLL> createCollectionInstanceList(Collection<?> coll) {
 
-		return (IAdhocWhereOrJoinList)new AdhocQueryClassList(collectionType, coll);
+		return (IAdhocWhereOrJoinList)new AdhocQueryClassList(coll);
+	}
+
+	@SuppressWarnings({"unchecked", "rawtypes"})
+	private <T, COLL extends Set<T>, INPUT_TYPE, OUTPUT_TYPE>
+				IAdhocWhereOrJoinSet<MODEL, T, COLL> createCollectionInstanceSet(Collection<?> coll) {
+
+		return (IAdhocWhereOrJoinSet)new AdhocQueryClassSet(coll);
 	}
 				
 	@Override
@@ -105,6 +113,12 @@ final class AdhocImpl<MODEL> implements IAdhoc<MODEL> {
 	/* List */
 	@Override
 	public <T> IAdhocWhereOrJoinList<MODEL, T, List<T>> list(Collection<T> coll) {
-		return createCollectionInstance(ECollectionType.LIST, coll);
+		return createCollectionInstanceList(coll);
+	}
+
+	/* Set */
+	@Override
+	public <T> IAdhocWhereOrJoinSet<MODEL, T, Set<T>> set(Collection<T> coll) {
+		return createCollectionInstanceSet(coll);
 	}
 }

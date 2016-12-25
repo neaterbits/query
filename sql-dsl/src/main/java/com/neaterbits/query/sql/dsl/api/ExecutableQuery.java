@@ -102,6 +102,8 @@ interface ExecutableQuery<QUERY> {
 	
 	ExecuteQueryScratch createScratchArea(QUERY query, QueryMetaModel queryMetaModel);
 	
+	ECollectionType getResultCollectionType(QUERY query);
+	
 	
 	/**
 	 * Result mode, whether produces a single or multiple results

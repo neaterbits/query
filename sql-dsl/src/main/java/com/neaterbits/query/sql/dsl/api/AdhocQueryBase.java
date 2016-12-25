@@ -23,11 +23,9 @@ abstract class AdhocQueryBase<MODEL, QUERY extends AdhocQueryBase<MODEL, QUERY>>
 	private EAggregateFunction aggregateFunction;
 	private ENumericType aggregateNumericInputType;
 	private ENumericType aggregateNumericOutputType;
-	
-	
+
 	// For collection result
 	private ECollectionType collectionType;
-
 	
 	AdhocQueryBase(EAggregateFunction aggregateFunction, ENumericType aggregateNumericInputType, ENumericType aggregateNumericOutputType) {
 		
@@ -78,6 +76,11 @@ abstract class AdhocQueryBase<MODEL, QUERY extends AdhocQueryBase<MODEL, QUERY>>
 	@Override
 	public final EQueryResultGathering getGathering(QUERY query) {
 		return gathering;
+	}
+
+	@Override
+	public final ECollectionType getResultCollectionType(QUERY query) {
+		return collectionType;
 	}
 
 	@Override

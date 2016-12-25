@@ -3,6 +3,7 @@ package com.neaterbits.query.sql.dsl.api;
 import java.math.BigDecimal;
 import java.util.Collection;
 import java.util.List;
+import java.util.Set;
 
 interface IAdhoc<MODEL>
  /*extends SumFunction<
@@ -39,4 +40,6 @@ interface IAdhoc<MODEL>
     
     /* Collection results */
     <T> IAdhocWhereOrJoinList<MODEL, T, List<T>> list(Collection<T> coll);
+
+    <T> IAdhocWhereOrJoinSet<MODEL, T, Set<T>> set(Collection<T> coll);
 }

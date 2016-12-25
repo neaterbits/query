@@ -31,6 +31,11 @@ final class ExecutableQueryForCompiledQuery implements ExecutableQuery<CompiledQ
 	public EQueryResultGathering getGathering(CompiledQuery query) {
 		return query.getGathering();
 	}
+	
+	@Override
+	public ECollectionType getResultCollectionType(CompiledQuery query) {
+		throw new UnsupportedOperationException("TODO");
+	}
 
 	@Override
 	public EAggregateFunction getAggregateResultFunction(CompiledQuery query) {
