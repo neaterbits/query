@@ -15,18 +15,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class SQLAdhocAPITest {
 
-	private static class Bar {
-		private int baz;
-
-		public int getBaz() {
-			return baz;
-		}
-
-		public void setBaz(int value) {
-			this.baz = value;
-		}
-	}
-	
 	@Test
 	public void testAdhocAggregate() {
 		
