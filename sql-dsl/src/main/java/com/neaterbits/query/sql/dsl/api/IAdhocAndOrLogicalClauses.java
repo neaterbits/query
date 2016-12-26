@@ -1,7 +1,7 @@
 package com.neaterbits.query.sql.dsl.api;
 
 public interface IAdhocAndOrLogicalClauses<MODEL, RESULT> 
-		extends ISharedAndOrLogicalClausesTable<
+		extends ISharedAndOrLogicalClausesTableValues<
 						MODEL, 
 						RESULT,
 						IAdhocAndClauses<MODEL, RESULT>,

@@ -13,3 +13,5 @@ public interface ISharedWhereClausesTableValue<
 		<T, E extends Enum<E>> ISharedClauseConditionValue<MODEL, RESULT, E, CONDITION_CLAUSE> where(IFunctionEnum<T, E> func);
 
 }
+
+		

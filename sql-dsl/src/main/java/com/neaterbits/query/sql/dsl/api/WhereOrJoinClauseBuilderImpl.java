@@ -190,12 +190,12 @@ final class WhereOrJoinClauseBuilderImpl<MODEL, RESULT>
 
 	
 	@Override
-	public <T> ISharedClauseConditionTable<MODEL, RESULT, Integer, IClassicAndClausesTable<MODEL, RESULT>> and(IFunctionInteger<T> getter) {
+	public <T> ISharedClauseComparableCommonAll<MODEL, RESULT, Integer, IClassicAndClausesTable<MODEL, RESULT>> and(IFunctionInteger<T> getter) {
 		return andClassImpl(getter);
 	}
 
 	@Override
-	public <T> ISharedClauseConditionTable<MODEL, RESULT, Long, IClassicAndClausesTable<MODEL, RESULT>> and(IFunctionLong<T> getter) {
+	public <T> ISharedClauseComparableCommonAll<MODEL, RESULT, Long, IClassicAndClausesTable<MODEL, RESULT>> and(IFunctionLong<T> getter) {
 		return andClassImpl(getter);
 	}
 
@@ -229,13 +229,13 @@ final class WhereOrJoinClauseBuilderImpl<MODEL, RESULT>
 	// ------------------------  OR ------------------------
 
 	@Override
-	public <T> ISharedClauseConditionAll<MODEL, RESULT, Integer, IClassicOrClausesTable<MODEL, RESULT>> or(IFunctionInteger<T> getter) {
+	public <T> ISharedClauseComparableCommonAll<MODEL, RESULT, Integer, IClassicOrClausesTable<MODEL, RESULT>> or(IFunctionInteger<T> getter) {
 		return orClassImpl(getter);
 	}
 
 	
 	@Override
-	public <T> ISharedClauseConditionAll<MODEL, RESULT, Long, IClassicOrClausesTable<MODEL, RESULT>> or(IFunctionLong<T> getter) {
+	public <T> ISharedClauseComparableCommonAll<MODEL, RESULT, Long, IClassicOrClausesTable<MODEL, RESULT>> or(IFunctionLong<T> getter) {
 		return orClassImpl(getter);
 	}
 
@@ -267,12 +267,12 @@ final class WhereOrJoinClauseBuilderImpl<MODEL, RESULT>
 
 	// ------------------------  AND helpers ------------------------
 
-	private <T, RR, AND_CLAUSES extends ISharedAndClausesTable<MODEL, RESULT, AND_CLAUSES>>
-		ISharedClauseConditionTable<MODEL, RESULT, RR, AND_CLAUSES> andClassImpl(Function<T, RR> getter) {
+	private <T, RR extends Comparable<RR>, AND_CLAUSES extends ISharedAndClausesTableAll<MODEL, RESULT, AND_CLAUSES>>
+		ISharedClauseComparableCommonAll<MODEL, RESULT, RR, AND_CLAUSES> andClassImpl(Function<T, RR> getter) {
 		
 		final AndClausesImpl<MODEL, RESULT> andClauses = new AndClausesImpl<>(this);
 		
-		return new ConditionClauseImpl<MODEL, RESULT, RR, AND_CLAUSES>(andClauses, makeGetter(getter));
+		return new ComparativeClauseImpl<MODEL, RESULT, RR, AND_CLAUSES>(andClauses, makeGetter(getter));
 	}
 
 	private <RR, AND_CLAUSES extends ISharedAndClausesAlias<MODEL, RESULT, AND_CLAUSES>>
@@ -284,20 +284,20 @@ final class WhereOrJoinClauseBuilderImpl<MODEL, RESULT>
 	}
 
 	// ------------------------  OR helpers ------------------------
-	private <T, RR, OR_CLAUSES extends ISharedOrClausesTable<MODEL, RESULT, OR_CLAUSES>>
-		ISharedClauseConditionAll<MODEL, RESULT, RR, OR_CLAUSES> orClassImpl(Function<T, RR> getter) {
+	private <T, RR extends Comparable<RR>, OR_CLAUSES extends ISharedOrClausesTable<MODEL, RESULT, OR_CLAUSES>>
+		ISharedClauseComparableCommonAll<MODEL, RESULT, RR, OR_CLAUSES> orClassImpl(Function<T, RR> getter) {
 		
 		final OrClausesImpl<MODEL, RESULT> orClauses = new OrClausesImpl<>(this);
 
-		return new ConditionClauseImpl<MODEL, RESULT, RR, OR_CLAUSES>(orClauses, makeGetter(getter));
+		return new ComparativeClauseImpl<MODEL, RESULT, RR, OR_CLAUSES>(orClauses, makeGetter(getter));
 	}
 
-	private <RR, OR_CLAUSES extends ISharedOrClausesAlias<MODEL, RESULT, OR_CLAUSES>>
+	private <RR extends Comparable<RR>, OR_CLAUSES extends ISharedOrClausesAlias<MODEL, RESULT, OR_CLAUSES>>
 		ISharedClauseConditionAll<MODEL, RESULT, RR, OR_CLAUSES> orAliasImpl(ClausesImplInitial<MODEL, RESULT> last, Supplier<RR> getter) {
 
 		final OrClausesImpl<MODEL, RESULT> orClauses = new OrClausesImpl<>(last);
 
-		return new ConditionClauseImpl<MODEL, RESULT, RR, OR_CLAUSES>(orClauses, makeGetter(getter));
+		return new ComparativeClauseImpl<MODEL, RESULT, RR, OR_CLAUSES>(orClauses, makeGetter(getter));
 	}
 }
 

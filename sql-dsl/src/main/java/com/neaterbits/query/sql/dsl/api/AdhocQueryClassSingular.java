@@ -44,39 +44,5 @@ abstract class AdhocQueryClassSingular<MODEL> extends AdhocQueryClass<MODEL, Obj
 		
 		return (ISharedClauseComparableStringValue)this;
 	}
-
-	/**************************************************************************
-	** IAdhocAndClauses
-	**************************************************************************/
-	
-	@Override
-	public final <T> ISharedClauseConditionTable<MODEL, Object, Integer, IAdhocAndClauses<MODEL, Object>> and(IFunctionInteger<T> getter) {
-		throw new UnsupportedOperationException("TODO");
-	}
-
-	@Override
-	public final <T> ISharedClauseConditionTable<MODEL, Object, Long, IAdhocAndClauses<MODEL, Object>> and(IFunctionLong<T> getter) {
-		throw new UnsupportedOperationException("TODO");
-	}
-
-	@Override
-	public final <T> ISharedClauseComparableStringAll<MODEL, Object, IAdhocAndClauses<MODEL, Object>> and(StringFunction<T> getter) {
-		throw new UnsupportedOperationException("TODO");
-	}
-
-	@Override
-	public final <T> ISharedClauseConditionAll<MODEL, Object, Integer, IAdhocOrClauses<MODEL, Object>> or(IFunctionInteger<T> getter) {
-		throw new UnsupportedOperationException("TODO");
-	}
-
-	@Override
-	public final <T> ISharedClauseConditionAll<MODEL, Object, Long, IAdhocOrClauses<MODEL, Object>> or(IFunctionLong<T> getter) {
-		throw new UnsupportedOperationException("TODO");
-	}
-
-	@Override
-	public final <T> ISharedClauseComparableStringAll<MODEL, Object, IAdhocOrClauses<MODEL, Object>> or(StringFunction<T> getter) {
-		throw new UnsupportedOperationException("TODO");
-	}
 	
 }

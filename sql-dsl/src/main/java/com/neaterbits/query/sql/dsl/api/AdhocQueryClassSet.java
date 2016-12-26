@@ -5,7 +5,7 @@ import java.util.Collection;
 import java.util.Set;
 import java.util.function.Function;
 
-public class AdhocQueryClassSet<MODEL>
+final class AdhocQueryClassSet<MODEL>
 		extends AdhocQueryClassCollection<MODEL, Set<Object>>
 
 		implements IAdhocWhereOrJoinSet<MODEL, Object, Set<Object>>,
@@ -51,47 +51,5 @@ public class AdhocQueryClassSet<MODEL>
 		addCondition(null, func);
 
 		return (ISharedClauseComparableStringValue) this;
-	}
-
-	@Override
-	public <T> ISharedClauseConditionAll<MODEL, Set<Object>, Integer, IAdhocOrClauses<MODEL, Set<Object>>> or(
-			IFunctionInteger<T> getter) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public <T> ISharedClauseConditionAll<MODEL, Set<Object>, Long, IAdhocOrClauses<MODEL, Set<Object>>> or(
-			IFunctionLong<T> getter) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public <T> ISharedClauseComparableStringAll<MODEL, Set<Object>, IAdhocOrClauses<MODEL, Set<Object>>> or(
-			StringFunction<T> getter) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public <T> ISharedClauseConditionTable<MODEL, Set<Object>, Integer, IAdhocAndClauses<MODEL, Set<Object>>> and(
-			IFunctionInteger<T> getter) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public <T> ISharedClauseConditionTable<MODEL, Set<Object>, Long, IAdhocAndClauses<MODEL, Set<Object>>> and(
-			IFunctionLong<T> getter) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public <T> ISharedClauseComparableStringAll<MODEL, Set<Object>, IAdhocAndClauses<MODEL, Set<Object>>> and(
-			StringFunction<T> getter) {
-		// TODO Auto-generated method stub
-		return null;
 	}
 }

@@ -2,7 +2,7 @@ package com.neaterbits.query.sql.dsl.api;
 
 public interface IClassicAndOrLogicalClausesTable<MODEL, RESULT>
 
-		extends ISharedAndOrLogicalClausesTable<
+		extends ISharedAndOrLogicalClausesTableAll<
 							MODEL,
 							RESULT,
 							IClassicAndClausesTable<MODEL, RESULT>,

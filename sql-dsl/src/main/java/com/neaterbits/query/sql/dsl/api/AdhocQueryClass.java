@@ -14,7 +14,12 @@ abstract class AdhocQueryClass<MODEL, RESULT> extends AdhocQueryBase<MODEL, Adho
 
 			IAdhocEndClauseBase<MODEL, RESULT>,
 			
+			IAdhocAndClauses<MODEL, RESULT>,
+			IAdhocOrClauses<MODEL, RESULT>,
+			
 			ISharedLogicalClauses<MODEL, RESULT>,
+			
+			IAdhocAndOrLogicalClauses<MODEL, RESULT>,
 
 			ExecuteQueryPOJOsInput {
 
@@ -103,7 +108,7 @@ abstract class AdhocQueryClass<MODEL, RESULT> extends AdhocQueryBase<MODEL, Adho
 			this.conditionsType = conditionsType;
 		}
 		else {
-			if (conditionsType == ConditionsType.SINGLE) {
+			if (this.conditionsType == ConditionsType.SINGLE) {
 				this.conditionsType = conditionsType;
 			}
 			else if (conditionsType != this.conditionsType) {
@@ -278,7 +283,7 @@ abstract class AdhocQueryClass<MODEL, RESULT> extends AdhocQueryBase<MODEL, Adho
 	** IAdhocWhere
 	**************************************************************************/
 	
-	@SuppressWarnings({"unchecked", "rawtypes"})
+	@SuppressWarnings("rawtypes")
 	final <R extends Comparable<R>, AND_OR extends IAdhocAndOrLogicalClauses<MODEL, Object>>
 	
 		ISharedClauseComparableCommonValue // <MODEL, Object, R, AND_OR>
@@ -290,7 +295,7 @@ abstract class AdhocQueryClass<MODEL, RESULT> extends AdhocQueryBase<MODEL, Adho
 	}
 	
 
-	@SuppressWarnings({"unchecked", "rawtypes"})
+	@SuppressWarnings("rawtypes")
 	final <R extends Comparable<R>, AND_OR extends IAdhocAndOrLogicalClauses<MODEL, Object>>
 	
 		ISharedClauseConditionValue // <MODEL, Object, R, AND_OR>
@@ -368,5 +373,64 @@ abstract class AdhocQueryClass<MODEL, RESULT> extends AdhocQueryBase<MODEL, Adho
 	@Override
 	public final ISharedLogicalClauses<MODEL, RESULT> matches(String regex) {
 		return addOperator(EClauseOperator.MATCHES, regex);
+	}
+
+
+	/**************************************************************************
+	** IAdhocAndOrLogicalClauses
+	**************************************************************************/
+	
+	@SuppressWarnings({"unchecked", "rawtypes"})
+	private <T extends Comparable<?>> ISharedClauseComparableCommonValue<MODEL, RESULT, T, IAdhocAndClauses<MODEL, RESULT>>  addAndClause(Function<?, T> getter) {
+		addCondition(ConditionsType.AND, getter);
+		
+		return (ISharedClauseComparableCommonValue)this;
+	}
+
+	@SuppressWarnings({"unchecked", "rawtypes"})
+	private <T extends Comparable<?>> ISharedClauseComparableCommonValue<MODEL, RESULT, T, IAdhocOrClauses<MODEL, RESULT>>  addOrClause(Function<?, T> getter) {
+		addCondition(ConditionsType.OR, getter);
+		
+		return (ISharedClauseComparableCommonValue)this;
+	}
+	
+	@Override
+	public final <T> ISharedClauseComparableCommonValue<MODEL, RESULT, Integer, IAdhocOrClauses<MODEL, RESULT>> or(IFunctionInteger<T> getter) {
+		return addOrClause(getter);
+	}
+
+
+	@Override
+	public final <T> ISharedClauseComparableCommonValue<MODEL, RESULT, Long, IAdhocOrClauses<MODEL, RESULT>> or(IFunctionLong<T> getter) {
+		return addOrClause(getter);
+	}
+	
+	
+	@Override
+	@SuppressWarnings({"unchecked", "rawtypes"})
+	public final <T> ISharedClauseComparableStringValue<MODEL, RESULT, IAdhocOrClauses<MODEL, RESULT>> or(StringFunction<T> getter) {
+		addCondition(ConditionsType.OR, getter);
+
+		return (ISharedClauseComparableStringValue)this;
+	}
+
+
+	@Override
+	public final <T> ISharedClauseComparableCommonValue<MODEL, RESULT, Integer, IAdhocAndClauses<MODEL, RESULT>> and(IFunctionInteger<T> getter) {
+		return addAndClause(getter);
+	}
+
+
+	@Override
+	public final <T> ISharedClauseComparableCommonValue<MODEL, RESULT, Long, IAdhocAndClauses<MODEL, RESULT>> and(IFunctionLong<T> getter) {
+		return addAndClause(getter);
+	}
+
+	@Override
+	@SuppressWarnings({"unchecked", "rawtypes"})
+	public final <T> ISharedClauseComparableStringValue<MODEL, RESULT, IAdhocAndClauses<MODEL, RESULT>> and(StringFunction<T> getter) {
+		addCondition(ConditionsType.AND, getter);
+
+		return (ISharedClauseComparableStringValue)this;
 	}
 }

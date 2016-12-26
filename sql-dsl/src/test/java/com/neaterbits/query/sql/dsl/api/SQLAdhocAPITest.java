@@ -136,7 +136,7 @@ public class SQLAdhocAPITest {
 
 		checkFoos(foo3, foo4, foos2, TreeSet.class);
 	}
-	
+
 	private void checkFoos(Foo foo3, Foo foo4, Set<Foo> foos, Class<?> expectedClass) {
 		assertThat(foo3.hashCode()).isEqualTo(foo4.hashCode());
 		assertThat(foo3).isEqualTo(foo4);
@@ -147,6 +147,49 @@ public class SQLAdhocAPITest {
 
 		assertThat(foos.contains(foo3)).isTrue();
 		assertThat(foos.contains(foo4)).isTrue();
+	}
+
+	@Test
+	public void testAdhocListAnd() {
+		final List<Foo> fooList = new ArrayList<>();
+
+		final Foo foo1 = new Foo(1, 2, new BigDecimal("3.1"));
+		final Foo foo2 = new Foo(3, 1, new BigDecimal("4.8"));
+		final Foo foo3 = new Foo(2, 7, new BigDecimal("1.8"));
+
+		fooList.add(foo1);
+		fooList.add(foo2);
+		fooList.add(foo3);
+
+		final List<Foo> foos = Adhoc.list(fooList)
+							.where(Foo::getDecimal).isGreaterThan(new BigDecimal("2.0"))
+								.and(Foo::getValue).isLessOrEqualTo(1)
+								.get();
+
+		assertThat(foos.size()).isEqualTo(1);
+		assertThat(foos.contains(foo1)).isTrue();
+	}
+
+	@Test
+	public void testAdhocListOr() {
+		final List<Foo> fooList = new ArrayList<>();
+
+		final Foo foo1 = new Foo(1, 2, new BigDecimal("3.1"));
+		final Foo foo2 = new Foo(3, 1, new BigDecimal("4.8"));
+		final Foo foo3 = new Foo(2, 7, new BigDecimal("1.8"));
+
+		fooList.add(foo1);
+		fooList.add(foo2);
+		fooList.add(foo3);
+
+		final List<Foo> foos = Adhoc.list(fooList)
+							.where(Foo::getDecimal).isGreaterThan(new BigDecimal("2.0"))
+								.or(Foo::getValue).isLessOrEqualTo(1)
+								.get();
+
+		assertThat(foos.size()).isEqualTo(2);
+		assertThat(foos.contains(foo1)).isTrue();
+		assertThat(foos.contains(foo2)).isTrue();
 	}
 }
 

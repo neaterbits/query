@@ -11,10 +11,10 @@ final class AndClausesImpl<MODEL, RESULT> extends ClausesImpl<MODEL, RESULT>
 		super(last);
 	}
 	
-	private <T, RR, AND_CLAUSES extends ISharedAndClausesTable<MODEL, RESULT, AND_CLAUSES>>
-		ISharedClauseConditionTable<MODEL, RESULT, RR, AND_CLAUSES> andClassImpl(Function<T, RR> getter) {
+	private <T, RR extends Comparable<RR>, AND_CLAUSES extends ISharedAndClausesTableAll<MODEL, RESULT, AND_CLAUSES>>
+		ISharedClauseComparableCommonAll<MODEL, RESULT, RR, AND_CLAUSES> andClassImpl(Function<T, RR> getter) {
 		
-		return new ConditionClauseImpl<MODEL, RESULT, RR, AND_CLAUSES>(this, makeGetter(getter));
+		return new ComparativeClauseImpl<MODEL, RESULT, RR, AND_CLAUSES>(this, makeGetter(getter));
 	}
 
 	private <RR, AND_CLAUSES extends ISharedAndClausesAlias<MODEL, RESULT, AND_CLAUSES>>
@@ -24,12 +24,12 @@ final class AndClausesImpl<MODEL, RESULT> extends ClausesImpl<MODEL, RESULT>
 	}
 	
 	@Override
-	public <T> ISharedClauseConditionTable<MODEL, RESULT, Integer, IClassicAndClausesTable<MODEL, RESULT>> and(IFunctionInteger<T> getter) {
+	public <T> ISharedClauseComparableCommonAll<MODEL, RESULT, Integer, IClassicAndClausesTable<MODEL, RESULT>> and(IFunctionInteger<T> getter) {
 		return andClassImpl(getter);
 	}
 
 	@Override
-	public <T> ISharedClauseConditionTable<MODEL, RESULT, Long, IClassicAndClausesTable<MODEL, RESULT>> and(IFunctionLong<T> getter) {
+	public <T> ISharedClauseComparableCommonAll<MODEL, RESULT, Long, IClassicAndClausesTable<MODEL, RESULT>> and(IFunctionLong<T> getter) {
 		return andClassImpl(getter);
 	}
 

@@ -5,7 +5,7 @@ import java.util.function.Supplier;
 
 class ConditionClauseImpl<MODEL, RESULT, R, L extends ISharedLogicalClauses<MODEL, RESULT>>
 	implements ISharedClauseConditionTable<MODEL, RESULT, R, L>,
-			   ISharedConditionClauseAlias<MODEL, RESULT, R, L>{
+			   ISharedConditionClauseAlias<MODEL, RESULT, R, L> {
 
 	private final ClausesImpl<MODEL, RESULT> clause;
 	final Getter getter;
