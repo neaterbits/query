@@ -182,7 +182,7 @@ interface ExecutableQuery<QUERY> {
 	int getJoinCount(QUERY query);
 	
 	
-	JoinType getJoinType(QUERY query, int joinIdx);
+	EJoinType getJoinType(QUERY query, int joinIdx);
 	
 	
 	int getJoinLeftSourceIdx(QUERY query, int joinIdx);

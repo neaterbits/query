@@ -122,7 +122,7 @@ final class ExecutableQueryForCompiledQuery implements ExecutableQuery<CompiledQ
 	}
 
 	@Override
-	public JoinType getJoinType(CompiledQuery query, int joinIdx) {
+	public EJoinType getJoinType(CompiledQuery query, int joinIdx) {
 		return getJoin(query, joinIdx).getJoinType();
 	}
 
@@ -251,25 +251,9 @@ final class ExecutableQueryForCompiledQuery implements ExecutableQuery<CompiledQ
 		final Object lhs = comparison.getLhs().getValue(instance1);
 		final Object rhs = comparison.getRhs().getValue(instance2);
 
-		return evaluateComparables(lhs, rhs);
+		return EvaluateUtil.evaluateComparables(lhs, rhs);
 	}
 	
-	@SuppressWarnings("unchecked")
-	private static boolean evaluateComparables(Object lhs, Object rhs) {
-		final boolean ret;
-		
-		if (lhs == null) {
-			ret = rhs == null;
-		}
-		else if (rhs == null) {
-			ret = true;
-		}
-		else {
-			ret = ((Comparable<Object>)lhs).compareTo((Comparable<Object>)rhs) == 0;
-		}
-		
-		return ret;
-	}
 
 	@Override
 	public int getConditionCount(CompiledQuery query) {

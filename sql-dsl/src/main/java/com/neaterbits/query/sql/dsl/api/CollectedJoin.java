@@ -5,12 +5,12 @@ import java.util.List;
 
 abstract class CollectedJoin extends QueryBuilderItem {
 
-	private final JoinType joinType;
+	private final EJoinType joinType;
 	private final Class<?> leftType;
 	private final Class<?> rightType;
 	private final List<CollectedJoinCondition> conditions;
 
-	CollectedJoin(JoinType joinType, Class<?> leftType, Class<?> rightType) {
+	CollectedJoin(EJoinType joinType, Class<?> leftType, Class<?> rightType) {
 		
 		if (joinType == null) {
 			throw new IllegalArgumentException("joinType == null");
@@ -43,7 +43,7 @@ abstract class CollectedJoin extends QueryBuilderItem {
 		return conditions;
 	}
 
-	final JoinType getJoinType() {
+	final EJoinType getJoinType() {
 		return joinType;
 	}
 

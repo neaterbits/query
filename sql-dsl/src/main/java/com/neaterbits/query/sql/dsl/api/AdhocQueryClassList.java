@@ -3,11 +3,12 @@ package com.neaterbits.query.sql.dsl.api;
 import java.math.BigDecimal;
 import java.util.Collection;
 import java.util.List;
+import java.util.function.Consumer;
 import java.util.function.Function;
 
 final class AdhocQueryClassList<MODEL>
 
-		extends AdhocQueryClass<MODEL, List<Object>>
+		extends AdhocQueryClassCollection<MODEL, List<Object>>
 
 		implements IAdhocWhereOrJoinList<MODEL, Object, List<Object>>,
 				   IAdhocAndOrLogicalClausesList<MODEL, Object, List<Object>> {
@@ -50,10 +51,41 @@ final class AdhocQueryClassList<MODEL>
 
 	@Override
 	@SuppressWarnings({"unchecked", "rawtypes"})
-	public ISharedClauseComparableStringValue<MODEL, List<Object>, IAdhocAndOrLogicalClausesList<MODEL, Object, List<Object>>> where(StringFunction<Object> func) {
+	public ISharedClauseComparableStringValue<MODEL, List<Object>, IAdhocAndOrLogicalClausesList<MODEL, Object, List<Object>>>
+					where(StringFunction<Object> func) {
+
 		addCondition(null, func);
 		
 		return (ISharedClauseComparableStringValue)this;
 	}
 
+	/**************************************************************************
+	 ** IAdhocJoin
+	 **************************************************************************/
+	
+	
+	
+	@Override
+	public final <JOIN_TO> IAdhocWhereOrJoinList<MODEL, Object, List<Object>> innerJoin(
+					Collection<JOIN_TO> joinTo,
+					Consumer<IAdhocJoinSub<MODEL, List<Object>, Object, JOIN_TO>> consumer) {
+		
+		compileInnerJoin(joinTo, consumer);
+		
+		return this;
+	}
+
+	@Override
+	public final <JOIN_TO> IAdhocWhereOrJoinList<MODEL, Object, List<Object>> leftJoin(
+					Collection<JOIN_TO> joinTo,
+					Consumer<IAdhocJoinSub<MODEL, List<Object>, Object, JOIN_TO>> consumer) {
+
+		compileLeftJoin(joinTo, consumer);
+		
+		return this;
+	}
+
+	
 }
+
+

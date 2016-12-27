@@ -10,7 +10,7 @@ final class WhereOrJoinClauseBuilderImpl<MODEL, RESULT>
 			   IClassicAndOrLogicalClausesTable<MODEL, RESULT>,
 			   IClassicAndOrLogicalClausesAlias<MODEL, RESULT>,
 			   
-			   JoinConditionTable<MODEL, RESULT, Object, Object>,
+			   IClassicJoinConditionTable<MODEL, RESULT, Object, Object>,
 			   IClassicJoinConditionAlias<MODEL, RESULT> {
 
 	WhereOrJoinClauseBuilderImpl(BaseQueryEntity<MODEL> last) {
@@ -37,14 +37,14 @@ final class WhereOrJoinClauseBuilderImpl<MODEL, RESULT>
 	// -- Table -- 
 	
 	@SuppressWarnings("unchecked")
-	private <LEFT, RIGHT> JoinConditionTable<MODEL, RESULT, LEFT, RIGHT> getJoinConditionTable() {
-		return (JoinConditionTable<MODEL, RESULT, LEFT, RIGHT>)this;
+	private <LEFT, RIGHT> IClassicJoinConditionTable<MODEL, RESULT, LEFT, RIGHT> getJoinConditionTable() {
+		return (IClassicJoinConditionTable<MODEL, RESULT, LEFT, RIGHT>)this;
 	}
 	
 	@Override
-	public <LEFT, RIGHT> JoinConditionTable<MODEL, RESULT, LEFT, RIGHT> innerJoin(Class<LEFT> leftType, Class<RIGHT> rightType) {
+	public <LEFT, RIGHT> IClassicJoinConditionTable<MODEL, RESULT, LEFT, RIGHT> innerJoin(Class<LEFT> leftType, Class<RIGHT> rightType) {
 
-		final CollectedJoinClasses collectedJoin = new CollectedJoinClasses(JoinType.INNER, leftType, rightType);
+		final CollectedJoinClasses collectedJoin = new CollectedJoinClasses(EJoinType.INNER, leftType, rightType);
 		
 		addJoin(collectedJoin);
 		
@@ -52,9 +52,9 @@ final class WhereOrJoinClauseBuilderImpl<MODEL, RESULT>
 	}
 
 	@Override
-	public <LEFT, RIGHT> JoinConditionTable<MODEL, RESULT, LEFT, RIGHT> leftJoin(Class<LEFT> leftType, Class<RIGHT> rightType) {
+	public <LEFT, RIGHT> IClassicJoinConditionTable<MODEL, RESULT, LEFT, RIGHT> leftJoin(Class<LEFT> leftType, Class<RIGHT> rightType) {
 
-		final CollectedJoinClasses collectedJoin = new CollectedJoinClasses(JoinType.LEFT, leftType, rightType);
+		final CollectedJoinClasses collectedJoin = new CollectedJoinClasses(EJoinType.LEFT, leftType, rightType);
 		
 		addJoin(collectedJoin);
 		
@@ -63,7 +63,7 @@ final class WhereOrJoinClauseBuilderImpl<MODEL, RESULT>
 
 	
 	@Override
-	public JoinConditionTable<MODEL, RESULT, Object, Object> on(CollectionFunction<Object, Object> joinCollection) {
+	public IClassicJoinConditionTable<MODEL, RESULT, Object, Object> on(CollectionFunction<Object, Object> joinCollection) {
 		final FunctionGetter collectionGetter = new FunctionGetter(joinCollection); 
 
 		final CollectedJoin curJoin = getQueryCollector().getJoins().getLast();
@@ -76,7 +76,7 @@ final class WhereOrJoinClauseBuilderImpl<MODEL, RESULT>
 	}
 
 	@Override
-	public JoinConditionTable<MODEL, RESULT, Object, Object> compare(IFunctionInteger<Object> left, IFunctionInteger<Object> right) {
+	public IClassicJoinConditionTable<MODEL, RESULT, Object, Object> compare(IFunctionInteger<Object> left, IFunctionInteger<Object> right) {
 		
 		final FunctionGetter leftGetter = new FunctionGetter(left); 
 		final FunctionGetter rightGetter = new FunctionGetter(right); 
@@ -100,7 +100,7 @@ final class WhereOrJoinClauseBuilderImpl<MODEL, RESULT>
 	@Override
 	public IClassicJoinConditionAlias<MODEL, RESULT> innerJoin(Object left, Object right) {
 
-		final CollectedJoinAliases collectedJoin = new CollectedJoinAliases(JoinType.INNER, (IAlias)left, (IAlias)right);
+		final CollectedJoinAliases collectedJoin = new CollectedJoinAliases(EJoinType.INNER, (IAlias)left, (IAlias)right);
 		
 		addJoin(collectedJoin);
 		
@@ -110,7 +110,7 @@ final class WhereOrJoinClauseBuilderImpl<MODEL, RESULT>
 	@Override
 	public IClassicJoinConditionAlias<MODEL, RESULT> leftJoin(Object left, Object right) {
 
-		final CollectedJoinAliases collectedJoin = new CollectedJoinAliases(JoinType.LEFT, (IAlias)left, (IAlias)right);
+		final CollectedJoinAliases collectedJoin = new CollectedJoinAliases(EJoinType.LEFT, (IAlias)left, (IAlias)right);
 		
 		addJoin(collectedJoin);
 		

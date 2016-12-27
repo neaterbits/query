@@ -559,3 +559,101 @@ flatten(Foo::getSubs)
 
 
 
+
+
+
+
+
+---
+
+
+
+list(fooLis)
+   .join(sub).on(Main::foo).isEqualTo(Sub::bar)
+	.where(Sub::var).isLessThat(10)
+   .join() 
+
+
+list(fooLis)
+   .join(sub, j-> j.on(Main::foo).isEqualTo(Sub::bar). 
+		.join(subSub, j2 -> j2
+			.on(Sub::bar).isEqualTo(SubSub::baz)
+ 			.where(SubSub:baz).isEqualTo(19))
+
+		.where(Sub::var).isLessThan(10)
+   .where()
+
+
+
+
+---------
+
+
+Hvordan fikse conditions etter joins?
+Setter selectSourceIdx til siste kjente men denne har blitt inkrementert av join.
+Dette gjelder også nøstede joins, vi må lagre unna den opprinnelige noe sted.
+
+Kan benytte conditions idx direkte og sette denne tidlig, men hvordan finne tilbake?
+
+Er vi på ytterste nivå kan vi anta source 0, for joins så må vi instansiere uansett så da kan vi mellomlagre der.
+
+
+
+---
+
+
+where-joins på innerste nivå stemmer ikke med ConditionsType.
+Issue? Gjør det vanskelig med and-or kombinasjoner nedover i nøstinga.
+
+and foo.x = 1
+and bar.y > 2
+
+Her joiner vi så ikke like lett å løse, får conditions som tilhører join'en i stedet.
+
+Egentlig en nøsta and-or dette side vi joiner så er det AND mellom alle.
+Så er "or" i en join så må vi nøste med and.
+
+Og Join-API må støtte nøsting uansett.
+
+Så en condition kan være SUB eller COMPARE, her blir det sub som peker til et sett med andre conditions. Men de kan ligge i samme tabellene.
+
+
+Så hver join får sin egen sub, men bare om har joins. Men vi finner ut om har joins før conditions på topp-nivå.
+
+Eller skal vi legge inn conditions på join-nivå i stedet ?
+
+Skal uansett håndtere sub-conditions, hvordan? Kan ha en array av nøstede levels med indekser for sub-conditions som vi evaluerer nedover.
+
+evaluateCondition(int [] indices)
+
+Eller holde styr på en link? Men må vite når vi skal returnere tilbake
+
+Det er i så fall getConditionCount() lignende som må brukes til å navigere.
+
+E
+
+int getSubConditionCount(int conditionIdx);
+
+int getSubConditionStartIdx(int conditionIdx);
+
+
+Og så anta at conditions er i stigende rekkefølge? I stedet for at sender inn array med hele pathen.
+
+Hvis array så må vi sende inn en array av pathen som krever ekstra allokering.
+
+Lage egen helper-klasse for management av arrayen? Eller utility-funksjoner.
+Men er multiple arrays i ett tilfelle.
+
+Men er kun om har subs eller joins at trenger arrays for disse.
+
+
+--
+
+For vanlige joins blir dette et litt underlig API siden må bruke samme algoritme for å ekspandere.
+
+Så greit med en utility-klasse for management av arrayene ?
+
+
+
+
+

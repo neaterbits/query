@@ -1,6 +1,6 @@
 package com.neaterbits.query.sql.dsl.api;
 
-public enum JoinType {
+enum EJoinType {
 
 	INNER,
 	LEFT; // Same as left outer

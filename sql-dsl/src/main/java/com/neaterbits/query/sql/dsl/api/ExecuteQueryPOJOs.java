@@ -3,7 +3,6 @@ package com.neaterbits.query.sql.dsl.api;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
-import java.util.List;
 
 import com.neaterbits.query.sql.dsl.api.entity.QueryMetaModel;
 

@@ -122,53 +122,6 @@ abstract class AdhocQueryBase<MODEL, QUERY extends AdhocQueryBase<MODEL, QUERY>>
 		throw new UnsupportedOperationException("Mapping not supported for Adhoc queries");
 	}
 
-	@Override
-	public final int getJoinCount(QUERY query) {
-		return 0;
-	}
-
-	@Override
-	public final JoinType getJoinType(QUERY query, int joinIdx) {
-		throw new UnsupportedOperationException("Joins not supported for Adhoc queries");
-	}
-
-
-	@Override
-	public final int getJoinLeftSourceIdx(QUERY query, int joinIdx) {
-		throw new UnsupportedOperationException("Joins not supported for Adhoc queries");
-	}
-
-
-	@Override
-	public final int getJoinRightSourceIdx(QUERY query, int joinIdx) {
-		throw new UnsupportedOperationException("Joins not supported for Adhoc queries");
-	}
-
-
-	@Override
-	public final int getJoinConditionCount(QUERY query, int joinIdx) {
-		throw new UnsupportedOperationException("Joins not supported for Adhoc queries");
-	}
-
-
-	@Override
-	public final int getJoinConditionLeftSourceIdx(QUERY query, int joinIdx, int conditionIdx) {
-		throw new UnsupportedOperationException("Joins not supported for Adhoc queries");
-	}
-
-
-	@Override
-	public final int getJoinConditionRightSourceIdx(QUERY query, int joinIdx, int conditionIdx) {
-		throw new UnsupportedOperationException("Joins not supported for Adhoc queries");
-	}
-
-
-	@Override
-	public final boolean evaluateJoinCondition(QUERY query, int joinIdx, Object instance1, Object instance2, int conditionIdx,
-			OneToManyJoinConditionResolver oneToManyResolver) {
-		throw new UnsupportedOperationException("Joins not supported for Adhoc queries");
-	}
-
 
 	@Override
 	public final Object createMappedInstance(QUERY query) {

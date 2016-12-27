@@ -1,6 +1,8 @@
 package com.neaterbits.query.sql.dsl.api;
 
 import java.math.BigDecimal;
+import java.util.Collection;
+import java.util.function.Consumer;
 import java.util.function.Function;
 
 abstract class AdhocQueryClassSingular<MODEL> extends AdhocQueryClass<MODEL, Object> 
@@ -44,5 +46,26 @@ abstract class AdhocQueryClassSingular<MODEL> extends AdhocQueryClass<MODEL, Obj
 		
 		return (ISharedClauseComparableStringValue)this;
 	}
+
+
+	@Override
+	public final <JOIN_TO> IAdhocWhereOrJoinSingular<MODEL, Object, Object> innerJoin(Collection<JOIN_TO> joinTo,
+			Consumer<IAdhocJoinSub<MODEL, Object, Object, JOIN_TO>> consumer) {
+
+		compileInnerJoin(joinTo, consumer);
+
+		return this;
+	}
+
+
+	@Override
+	public final <JOIN_TO> IAdhocWhereOrJoinSingular<MODEL, Object, Object> leftJoin(Collection<JOIN_TO> joinTo,
+			Consumer<IAdhocJoinSub<MODEL, Object, Object, JOIN_TO>> consumer) {
+
+		compileLeftJoin(joinTo, consumer);
+		
+		return this;
+	}
+	
 	
 }

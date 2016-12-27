@@ -43,7 +43,7 @@ final class CompiledJoin {
 		this.conditions = conditions;
 	}
 
-	JoinType getJoinType() {
+	EJoinType getJoinType() {
 		return original.getJoinType();
 	}
 	

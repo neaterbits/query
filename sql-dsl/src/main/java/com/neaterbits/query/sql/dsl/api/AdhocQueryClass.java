@@ -2,11 +2,15 @@ package com.neaterbits.query.sql.dsl.api;
 
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.function.Consumer;
 import java.util.function.Function;
 
+import com.neaterbits.query.sql.dsl.api.entity.OneToManyJoinConditionResolver;
 import com.neaterbits.query.sql.dsl.api.entity.QueryMetaModel;
 
-abstract class AdhocQueryClass<MODEL, RESULT> extends AdhocQueryBase<MODEL, AdhocQueryClass<MODEL, RESULT>> 
+abstract class AdhocQueryClass<MODEL, RESULT>
+
+		extends AdhocQueryBase<MODEL, AdhocQueryClass<MODEL, RESULT>> 
 		implements
 
 			ISharedClauseComparableCommonValue<MODEL, RESULT, Comparable<Object>, ISharedLogicalClauses<MODEL, RESULT>>,
@@ -20,12 +24,14 @@ abstract class AdhocQueryClass<MODEL, RESULT> extends AdhocQueryBase<MODEL, Adho
 			ISharedLogicalClauses<MODEL, RESULT>,
 			
 			IAdhocAndOrLogicalClauses<MODEL, RESULT>,
-
+			
+			
 			ExecuteQueryPOJOsInput {
 
 	
 	private static final int INITIAL_CONDITIONS = 10;
 	private static final int INITIAL_SOURCES = 10;
+	private static final int INITIAL_JOINS = 10;
 	
 	@SuppressWarnings("rawtypes")
 	private Function aggregateGetter;
@@ -36,13 +42,20 @@ abstract class AdhocQueryClass<MODEL, RESULT> extends AdhocQueryBase<MODEL, Adho
 	private int [] conditionToSourceIdx;
 	private Object [] values;
 
+	// For sub indexes
+	private int [] subConditionsCount;	  // 
+	private int [] subConditionsStartIdx; // Start idx into conditions
+
+	
 	private int numConditions;
 	private ConditionsType conditionsType;
 
 	private Collection<?> [] sources;
 	private int numSources;
-	
-	
+
+	private AdhocJoin<?, ?> [] joins;
+	private int numJoins;
+
 	AdhocQueryClass(Function<?, ?> aggregateGetter, EAggregateFunction aggregateFunction, ENumericType aggregateNumericInputType, ENumericType aggregateNumericOutputType) {
 		super(aggregateFunction, aggregateNumericInputType, aggregateNumericOutputType);
 
@@ -66,19 +79,32 @@ abstract class AdhocQueryClass<MODEL, RESULT> extends AdhocQueryBase<MODEL, Adho
 	}
 
 	
-	private void addSource(Collection<?> collection) {
+	private int addSource(Collection<?> collection) {
 		if (collection == null) {
 			throw new IllegalArgumentException("collection == null");
 		}
 
-		if (this.sources != null) {
-			throw new IllegalStateException("Already has sources");
+		final int sourceIdx;
+		
+		if (this.numSources == 0) {
+		
+			this.sources = new Collection<?>[INITIAL_SOURCES];
+			sourceIdx = 0;
+			this.sources[0] = collection;
+			this.numSources = 1;
 		}
-		
-		this.sources = new Collection<?>[INITIAL_SOURCES];
-		this.numSources = 1;
-		
-		this.sources[0] = collection;
+		else {
+
+			if (this.numSources == sources.length) {
+				// Must copy over
+				this.sources = Arrays.copyOf(this.sources, sources.length * 2);
+			}
+			
+			sourceIdx = numSources;
+			this.sources[numSources ++] = collection;
+		}
+
+		return sourceIdx;
 	}
 	
 	@Override
@@ -145,7 +171,10 @@ abstract class AdhocQueryClass<MODEL, RESULT> extends AdhocQueryBase<MODEL, Adho
 		}
 
 		this.operators[numConditions] = operator;
-		this.conditionToSourceIdx[numConditions] = numSources - 1;
+		
+		// !! Always 0 here since this is the outer-loop.
+		// !! Joins will add more more select-sources before this is callsed so cannot go with numSources - 1
+		this.conditionToSourceIdx[numConditions] = 0; // numSources - 1;
 		this.values[numConditions ++] = value;
 		
 		return this;
@@ -157,6 +186,53 @@ abstract class AdhocQueryClass<MODEL, RESULT> extends AdhocQueryBase<MODEL, Adho
 	@Override
 	public final Collection<?> getPOJOs(int idx) {
 		return sources[idx];
+	}
+	
+	// Joins
+	@Override
+	public final int getJoinCount(AdhocQueryClass<MODEL, RESULT> query) {
+		return numJoins;
+	}
+
+	@Override
+	public final EJoinType getJoinType(AdhocQueryClass<MODEL, RESULT> query, int joinIdx) {
+		return joins[joinIdx].type;
+	}
+
+
+	@Override
+	public final int getJoinLeftSourceIdx(AdhocQueryClass<MODEL, RESULT> query, int joinIdx) {
+		return joins[joinIdx].leftSourceIdx;
+	}
+
+
+	@Override
+	public final int getJoinRightSourceIdx(AdhocQueryClass<MODEL, RESULT> query, int joinIdx) {
+		return joins[joinIdx].rightSourceIdx;
+	}
+
+
+	@Override
+	public final int getJoinConditionCount(AdhocQueryClass<MODEL, RESULT> query, int joinIdx) {
+		return joins[joinIdx].numConditions;
+	}
+
+
+	@Override
+	public final int getJoinConditionLeftSourceIdx(AdhocQueryClass<MODEL, RESULT> query, int joinIdx, int conditionIdx) {
+		return joins[joinIdx].leftSourceIdx;
+	}
+
+
+	@Override
+	public final int getJoinConditionRightSourceIdx(AdhocQueryClass<MODEL, RESULT> query, int joinIdx, int conditionIdx) {
+		return joins[joinIdx].rightSourceIdx;
+	}
+
+
+	@Override
+	public final boolean evaluateJoinCondition(AdhocQueryClass<MODEL, RESULT> query, int joinIdx, Object instance1, Object instance2, int conditionIdx, OneToManyJoinConditionResolver oneToManyResolver) {
+		return joins[joinIdx].conditions[conditionIdx].evaluate(instance1, instance2, oneToManyResolver);
 	}
 
 	/**************************************************************************
@@ -433,4 +509,54 @@ abstract class AdhocQueryClass<MODEL, RESULT> extends AdhocQueryBase<MODEL, Adho
 
 		return (ISharedClauseComparableStringValue)this;
 	}
+	
+	/**************************************************************************
+	** IAdhocJoin
+	**************************************************************************/
+
+	private static final int JOIN_INCR = 2;
+	
+	private <LEFT, RIGHT> AdhocJoin<MODEL, RESULT> compileJoin(EJoinType joinType, Collection<RIGHT> joinTo, Consumer<IAdhocJoinSub<MODEL, RESULT, LEFT, RIGHT>> consumer) {
+
+		if (joinTo == null) {
+			throw new IllegalArgumentException("joinTo == null");
+		}
+		
+		if (consumer == null) {
+			throw new IllegalArgumentException("consumer == null");
+		}
+		
+		// Left-side is the last sourceIdx added
+		final int leftSourceIdx = numSources - 1;
+		final int rightSourceIdx = addSource(joinTo);
+		
+		if (numJoins == 0) {
+			this.joins = new AdhocJoin<?, ?>[INITIAL_JOINS];
+			
+		}
+		else if (numJoins == joins.length) {
+			this.joins = Arrays.copyOf(joins,  joins.length  * JOIN_INCR);
+		}
+
+		final AdhocJoin<MODEL, RESULT> join = new AdhocJoin<>(this, joinType, leftSourceIdx, rightSourceIdx);
+
+		this.joins[numJoins ++] = join;
+
+		@SuppressWarnings({ "unchecked", "rawtypes" })
+		final Consumer<IAdhocJoinSub> c = (Consumer)consumer;
+
+		c.accept(join);
+
+		return join;
+	}
+
+
+	final <LEFT, RIGHT> void compileInnerJoin(Collection<RIGHT> joinTo, Consumer<IAdhocJoinSub<MODEL, RESULT, LEFT, RIGHT>> consumer) {
+		compileJoin(EJoinType.INNER, joinTo, consumer);
+	}
+
+	final <LEFT, RIGHT> void compileLeftJoin(Collection<RIGHT> joinTo, Consumer<IAdhocJoinSub<MODEL, RESULT, LEFT, RIGHT>> consumer) {
+		compileJoin(EJoinType.LEFT, joinTo, consumer);
+	}
 }
+

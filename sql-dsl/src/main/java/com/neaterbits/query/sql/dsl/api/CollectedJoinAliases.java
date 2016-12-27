@@ -5,7 +5,7 @@ final class CollectedJoinAliases extends CollectedJoin {
 	private final IAlias leftAlias;
 	private final IAlias rightAlias;
 	
-	CollectedJoinAliases(JoinType joinType, IAlias leftAlias, IAlias rightAlias) {
+	CollectedJoinAliases(EJoinType joinType, IAlias leftAlias, IAlias rightAlias) {
 		super(joinType, leftAlias.getType(), rightAlias.getType());
 
 		this.leftAlias = leftAlias;

@@ -203,7 +203,7 @@ public final class QueryDataSourceJPA extends QueryDataSourceBase {
 
 				if (condition instanceof CompiledJoinConditionComparison) {
 					
-					if (join.getJoinType() != JoinType.INNER) {
+					if (join.getJoinType() != EJoinType.INNER) {
 						throw new IllegalStateException("Can only do inner joins when performin field comparison");
 					}
 

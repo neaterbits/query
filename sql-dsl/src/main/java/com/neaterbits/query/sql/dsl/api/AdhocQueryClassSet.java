@@ -3,6 +3,7 @@ package com.neaterbits.query.sql.dsl.api;
 import java.math.BigDecimal;
 import java.util.Collection;
 import java.util.Set;
+import java.util.function.Consumer;
 import java.util.function.Function;
 
 final class AdhocQueryClassSet<MODEL>
@@ -52,4 +53,30 @@ final class AdhocQueryClassSet<MODEL>
 
 		return (ISharedClauseComparableStringValue) this;
 	}
+
+
+	/**************************************************************************
+	 ** IAdhocJoin
+	 **************************************************************************/
+	
+	@Override
+	public final <JOIN_TO> IAdhocWhereOrJoinSet<MODEL, Object, Set<Object>> innerJoin(
+			Collection<JOIN_TO> joinTo,
+			Consumer<IAdhocJoinSub<MODEL, Set<Object>, Object, JOIN_TO>> consumer) {
+		
+		compileInnerJoin(joinTo, consumer);
+		
+		return this;
+	}
+
+	@Override
+	public final <JOIN_TO> IAdhocWhereOrJoinSet<MODEL, Object, Set<Object>> leftJoin(Collection<JOIN_TO> joinTo,
+			Consumer<IAdhocJoinSub<MODEL, Set<Object>, Object, JOIN_TO>> consumer) {
+
+		compileLeftJoin(joinTo, consumer);
+
+		return null;
+	}
+
+	
 }
