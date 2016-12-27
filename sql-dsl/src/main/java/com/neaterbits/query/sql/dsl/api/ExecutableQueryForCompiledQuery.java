@@ -17,7 +17,7 @@ final class ExecutableQueryForCompiledQuery implements ExecutableQuery<CompiledQ
 	public ExecuteQueryScratch createScratchArea(CompiledQuery query, QueryMetaModel queryMetaModel) {
 		final int numResultParts 	= getNumResultParts(query);
 		final int numSelectSources 	= getSourceCount(query);
-		final int numConditions	 	= getConditionCount(query);
+		final int numConditions	 	= getRootConditionCount(query);
 		
 		return new ExecuteQueryScratch(numResultParts, numSelectSources, numConditions, queryMetaModel);
 	}
@@ -256,14 +256,14 @@ final class ExecutableQueryForCompiledQuery implements ExecutableQuery<CompiledQ
 	
 
 	@Override
-	public int getConditionCount(CompiledQuery query) {
+	public int getRootConditionCount(CompiledQuery query) {
 		final CompiledConditions conditions = query.getConditions();
 		
 		return conditions != null ? conditions.getConditions().size() : 0;
 	}
 
 	@Override
-	public ConditionsType getConditionsType(CompiledQuery query) {
+	public ConditionsType getRootConditionsType(CompiledQuery query) {
 		
 		final CompiledConditions conditions = query.getConditions();
 		
@@ -290,12 +290,12 @@ final class ExecutableQueryForCompiledQuery implements ExecutableQuery<CompiledQ
 	}
 
 	@Override
-	public int getConditionSourceIdx(CompiledQuery query, int conditionIdx) {
+	public int getRootConditionSourceIdx(CompiledQuery query, int conditionIdx) {
 		return query.getConditions().getConditions().get(conditionIdx).getLhsSource().getIdx();
 	}
 
 	@Override
-	public boolean evaluateCondition(CompiledQuery query, Object instance, int conditionIdx, ConditionValuesScratch scratch) {
+	public boolean evaluateRootCondition(CompiledQuery query, Object instance, int conditionIdx, ConditionValuesScratch scratch) {
 		
 		final CompiledCondition condition = query.getConditions().getConditions().get(conditionIdx);
 		
@@ -322,6 +322,29 @@ final class ExecutableQueryForCompiledQuery implements ExecutableQuery<CompiledQ
 
 		return ret;
 	}
+	
+	
+
+	@Override
+	public boolean isRootConditionOnly(CompiledQuery query) {
+		throw new UnsupportedOperationException("TODO");
+	}
+
+	@Override
+	public ConditionsType getConditionsType(CompiledQuery query, int[] conditionIndices, int levels) {
+		throw new UnsupportedOperationException("TODO");
+	}
+
+	@Override
+	public int getConditionSourceIdx(CompiledQuery query, int[] conditionIndices, int levels) {
+		throw new UnsupportedOperationException("TODO");
+	}
+
+	@Override
+	public boolean evaluateCondition(CompiledQuery query, int[] conditionIndices, int levels, Object instance, ConditionValuesScratch scratch) {
+		throw new UnsupportedOperationException("TODO");
+	}
+
 
 	private static final ConditionEvaluatorComparable comparableEvaluator = new ConditionEvaluatorComparable();
 	private static final ConditionEvaluatorComparableString stringEvaluator = new ConditionEvaluatorComparableString();

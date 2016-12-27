@@ -7,15 +7,17 @@ import java.util.function.Function;
 
 abstract class AdhocQueryClassSingular<MODEL> extends AdhocQueryClass<MODEL, Object> 
 
-	implements IAdhocWhereOrJoinSingular<MODEL, Object, Object>,
-			   IAdhocAndOrLogicalClausesSingular<MODEL, Object>
-{
+	implements IAdhocWhereOrJoinSingular<MODEL, Object, Object> {
 
 	
 	AdhocQueryClassSingular(Function<?, ?> aggregateGetter, EAggregateFunction aggregateFunction, ENumericType aggregateNumericInputType, ENumericType aggregateNumericOutputType) {
 		super(aggregateGetter, aggregateFunction, aggregateNumericInputType, aggregateNumericOutputType);
 	}
 	
+	@Override
+	final AdhocConditions<MODEL, Object, ?> createConditions(int level, Function<?, ?> function) {
+		return new AdhocConditionsSingular<>(this, level, function);
+	}
 
 	/**************************************************************************
 	** IAdhocWhereOrJoinSingular
@@ -42,7 +44,8 @@ abstract class AdhocQueryClassSingular<MODEL> extends AdhocQueryClass<MODEL, Obj
 	@Override
 	@SuppressWarnings({"unchecked", "rawtypes"})
 	public ISharedClauseComparableStringValue<MODEL, Object, IAdhocAndOrLogicalClausesSingular<MODEL, Object>> where(StringFunction<Object> func) {
-		addCondition(null, func);
+
+		addWhere(func);
 		
 		return (ISharedClauseComparableStringValue)this;
 	}

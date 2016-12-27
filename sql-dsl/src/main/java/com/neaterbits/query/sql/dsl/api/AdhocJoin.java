@@ -139,7 +139,7 @@ final class AdhocJoin<MODEL, RESULT>
 		boolean evaluate(Object instance1, Object instance2, OneToManyJoinConditionResolver oneToManyResolver) {
 			
 			final Object lhs = left.apply(instance1);
-			final Object rhs = left.apply(instance1);
+			final Object rhs = right.apply(instance2);
 			
 			return EvaluateUtil.evaluateComparables(lhs, rhs);
 		}

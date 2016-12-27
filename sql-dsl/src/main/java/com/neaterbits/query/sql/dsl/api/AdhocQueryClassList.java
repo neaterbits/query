@@ -11,7 +11,7 @@ final class AdhocQueryClassList<MODEL>
 		extends AdhocQueryClassCollection<MODEL, List<Object>>
 
 		implements IAdhocWhereOrJoinList<MODEL, Object, List<Object>>,
-				   IAdhocAndOrLogicalClausesList<MODEL, Object, List<Object>> {
+		IAdhocEndClauseList<MODEL, Object, List<Object>> {
 
 	AdhocQueryClassList(Collection<?> coll) {
 		super(ECollectionType.LIST, coll);
@@ -23,7 +23,12 @@ final class AdhocQueryClassList<MODEL>
 		
 		return function.apply(ret);
 	}
+	
 
+	@Override
+	AdhocConditions<MODEL, List<Object>, ?> createConditions(int level, Function<?, ?> function) {
+		return new AdhocConditionsList<>(this, level, function);
+	}
 
 	/**************************************************************************
 	** IAdhocWhereOrJoinList
@@ -54,16 +59,14 @@ final class AdhocQueryClassList<MODEL>
 	public ISharedClauseComparableStringValue<MODEL, List<Object>, IAdhocAndOrLogicalClausesList<MODEL, Object, List<Object>>>
 					where(StringFunction<Object> func) {
 
-		addCondition(null, func);
-		
-		return (ISharedClauseComparableStringValue)this;
+		return (ISharedClauseComparableStringValue)addWhere(func);
 	}
+	
+	
 
 	/**************************************************************************
 	 ** IAdhocJoin
 	 **************************************************************************/
-	
-	
 	
 	@Override
 	public final <JOIN_TO> IAdhocWhereOrJoinList<MODEL, Object, List<Object>> innerJoin(
@@ -84,8 +87,6 @@ final class AdhocQueryClassList<MODEL>
 		
 		return this;
 	}
-
-	
 }
 
 

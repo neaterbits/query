@@ -13,48 +13,30 @@ abstract class AdhocQueryClass<MODEL, RESULT>
 		extends AdhocQueryBase<MODEL, AdhocQueryClass<MODEL, RESULT>> 
 		implements
 
-			ISharedClauseComparableCommonValue<MODEL, RESULT, Comparable<Object>, ISharedLogicalClauses<MODEL, RESULT>>,
-			ISharedClauseComparableStringValue<MODEL, RESULT, ISharedLogicalClauses<MODEL, RESULT>>,
-
 			IAdhocEndClauseBase<MODEL, RESULT>,
 			
-			IAdhocAndClauses<MODEL, RESULT>,
-			IAdhocOrClauses<MODEL, RESULT>,
 			
 			ISharedLogicalClauses<MODEL, RESULT>,
-			
-			IAdhocAndOrLogicalClauses<MODEL, RESULT>,
 			
 			
 			ExecuteQueryPOJOsInput {
 
 	
-	private static final int INITIAL_CONDITIONS = 10;
 	private static final int INITIAL_SOURCES = 10;
 	private static final int INITIAL_JOINS = 10;
 	
 	@SuppressWarnings("rawtypes")
 	private Function aggregateGetter;
 
-	@SuppressWarnings("rawtypes")
-	private Function [] conditions;
-	private EClauseOperator [] operators;
-	private int [] conditionToSourceIdx;
-	private Object [] values;
-
-	// For sub indexes
-	private int [] subConditionsCount;	  // 
-	private int [] subConditionsStartIdx; // Start idx into conditions
-
-	
-	private int numConditions;
-	private ConditionsType conditionsType;
+	private AdhocConditions<MODEL, RESULT, ?> conditions;
 
 	private Collection<?> [] sources;
 	private int numSources;
 
 	private AdhocJoin<?, ?> [] joins;
 	private int numJoins;
+	
+	abstract AdhocConditions<MODEL, RESULT, ?> createConditions(int level, Function<?, ?> function);
 
 	AdhocQueryClass(Function<?, ?> aggregateGetter, EAggregateFunction aggregateFunction, ENumericType aggregateNumericInputType, ENumericType aggregateNumericOutputType) {
 		super(aggregateFunction, aggregateNumericInputType, aggregateNumericOutputType);
@@ -116,73 +98,22 @@ abstract class AdhocQueryClass<MODEL, RESULT>
 	@Override
 	public final ExecuteQueryScratch createScratchArea(AdhocQueryClass<MODEL, RESULT> query, QueryMetaModel queryMetaModel) {
 
-		initScratchArea(getNumResultParts(this), getSourceCount(this), numConditions);
+		initScratchArea(
+				getNumResultParts(this),
+				getSourceCount(this),
+				
+				getRootConditionCount(this));
 		
 		return this;
 	}
 
-	final void addCondition(ConditionsType conditionsType, Function<?, ?> function) {
-		
-		if (conditionsType == null) {
-			throw new IllegalArgumentException("conditionsType == null");
-		}
-		
-		if (this.conditionsType == null) {
-			if (conditionsType != ConditionsType.SINGLE) {
-				throw new IllegalArgumentException("Expected single-condition");
-			}
-			this.conditionsType = conditionsType;
-		}
-		else {
-			if (this.conditionsType == ConditionsType.SINGLE) {
-				this.conditionsType = conditionsType;
-			}
-			else if (conditionsType != this.conditionsType) {
-				throw new IllegalStateException("Mismatch in condition from " + conditionsType + " to " + this.conditionsType);
-			}
-		}
-		
-		if (function == null) {
-			throw new IllegalArgumentException("function == null");
-		}
-
-		if (numConditions == 0) {
-			this.conditions = new Function[INITIAL_CONDITIONS]; 
-		}
-		else if (numConditions == conditions.length) {
-			this.conditions = Arrays.copyOf(conditions, conditions.length * 2);
-		}
-		
-		this.conditions[numConditions] = function;
-	}
-	
-	private ISharedLogicalClauses<MODEL, RESULT> addOperator(EClauseOperator operator, Object value) {
-		if (numConditions == 0) {
-			this.operators = new EClauseOperator[INITIAL_CONDITIONS];
-			this.values = new Object[INITIAL_CONDITIONS];
-			this.conditionToSourceIdx = new int[INITIAL_CONDITIONS];
-			
-		}
-		else if (numConditions == operators.length) {
-			
-			this.operators = Arrays.copyOf(operators, operators.length * 2);
-			this.values = Arrays.copyOf(values, values.length * 2);
-			this.conditionToSourceIdx = Arrays.copyOf(conditionToSourceIdx, conditionToSourceIdx.length * 2);
-		}
-
-		this.operators[numConditions] = operator;
-		
-		// !! Always 0 here since this is the outer-loop.
-		// !! Joins will add more more select-sources before this is callsed so cannot go with numSources - 1
-		this.conditionToSourceIdx[numConditions] = 0; // numSources - 1;
-		this.values[numConditions ++] = value;
-		
-		return this;
-	}
 	
 	/**************************************************************************
 	** ExecuteQueryPOJOsInput
 	**************************************************************************/
+	
+	
+	
 	@Override
 	public final Collection<?> getPOJOs(int idx) {
 		return sources[idx];
@@ -234,6 +165,7 @@ abstract class AdhocQueryClass<MODEL, RESULT>
 	public final boolean evaluateJoinCondition(AdhocQueryClass<MODEL, RESULT> query, int joinIdx, Object instance1, Object instance2, int conditionIdx, OneToManyJoinConditionResolver oneToManyResolver) {
 		return joins[joinIdx].conditions[conditionIdx].evaluate(instance1, instance2, oneToManyResolver);
 	}
+	
 
 	/**************************************************************************
 	** ExeutableQuery⋅
@@ -244,88 +176,48 @@ abstract class AdhocQueryClass<MODEL, RESULT>
 	}
 
 	@Override
-	public final ConditionsType getConditionsType(AdhocQueryClass<MODEL, RESULT> query) {
-		return conditionsType;
+	public final ConditionsType getRootConditionsType(AdhocQueryClass<MODEL, RESULT> query) {
+		return conditions.conditionsType;
 	}
 
 	@Override
-	public final int getConditionCount(AdhocQueryClass<MODEL, RESULT> query) {
-		return numConditions;
+	public final int getRootConditionCount(AdhocQueryClass<MODEL, RESULT> query) {
+		return conditions == null ? 0 : conditions.numConditions;
 	}
 
 	@Override
-	public final int getConditionSourceIdx(AdhocQueryClass<MODEL, RESULT> query, int conditionIdx) {
-		return conditionToSourceIdx[conditionIdx];
+	public final int getRootConditionSourceIdx(AdhocQueryClass<MODEL, RESULT> query, int conditionIdx) {
+		return conditions.conditionToSourceIdx[conditionIdx];
 	}
 
-	private static final ConditionEvaluatorComparable conditionValueComparable = new ConditionEvaluatorComparable();
-
 	@Override
-	public final boolean evaluateCondition(AdhocQueryClass<MODEL, RESULT> query, Object instance, int conditionIdx, ConditionValuesScratch scratch) {
-
-		final EClauseOperator operator = operators[conditionIdx];
-
-
-		final boolean ret;
-
-		@SuppressWarnings("unchecked")
-		final Object instanceValue = conditions[conditionIdx].apply(instance);
-		final Object compareValue = values[conditionIdx];
-
-		initConditionScratchValues(instanceValue, compareValue);
-
-		switch (operator) {
-		case IS_EQUAL:
-			ret = conditionValueComparable.onEqualTo(null, this);
-			break;
-			
-		case NOT_EQUAL:
-			ret = conditionValueComparable.onNotEqualTo(null, this);
-			break;
-
-		case LESS_THAN:
-			ret = conditionValueComparable.onLessThan(null, this);
-			break;
-
-		case LESS_OR_EQUAL:
-			ret = conditionValueComparable.onLessThanOrEqual(null, this);
-			break;
-
-		case GREATER_THAN:
-			ret = conditionValueComparable.onGreaterThan(null, this);
-			break;
-
-		case GREATER_OR_EQUAL:
-			ret = conditionValueComparable.onGreaterThanOrEqual(null, this);
-			break;
-
-		case IN:
-			ret = conditionValueComparable.onIn(null, this);
-			break;
-
-		case STARTS_WITH:
-			ret = conditionValueComparable.onStartsWith(null, this);
-			break;
-			
-		case ENDS_WITH:
-			ret = conditionValueComparable.onEndsWith(null, this);
-			break;
-
-		case CONTAINS:
-			ret = conditionValueComparable.onContains(null, this);
-			break;
-
-		case MATCHES:
-			ret = conditionValueComparable.onMatches(null, this);
-			break;			
-			
-		default:
-			throw new UnsupportedOperationException("Unknown condition operator " + operator);
-		}
-
-		return ret;
+	public final boolean evaluateRootCondition(AdhocQueryClass<MODEL, RESULT> query, Object instance, int conditionIdx, ConditionValuesScratch scratch) {
+		return conditions.evaluate(instance, conditionIdx, this);
 	}
 	
+	
+	@Override
+	public boolean isRootConditionOnly(AdhocQueryClass<MODEL, RESULT> query) {
+		return !conditions.hasSubConditions();
+	}
+
+	@Override
+	public ConditionsType getConditionsType(AdhocQueryClass<MODEL, RESULT> query, int[] conditionIndices, int levels) {
+		return conditions.getConditionsType(conditionIndices, 0, levels);
+	}
+
+
+	@Override
+	public int getConditionSourceIdx(AdhocQueryClass<MODEL, RESULT> query, int[] conditionIndices, int levels) {
+		return conditions.getConditionSourceIdx(conditionIndices, 0, levels);
+	}
+
+
+	@Override
+	public boolean evaluateCondition(AdhocQueryClass<MODEL, RESULT> query, int[] conditionIndices, int levels, Object instance, ConditionValuesScratch scratch) {
+		return conditions.evaluateCondition(conditionIndices, 0, levels, instance, scratch);
+	}
+
 
 	/**************************************************************************
 	** IAdhocSelectSource
@@ -359,15 +251,23 @@ abstract class AdhocQueryClass<MODEL, RESULT>
 	** IAdhocWhere
 	**************************************************************************/
 	
+	final AdhocConditions<MODEL, RESULT, ?> addWhere(Function<?, ?> function) {
+		if (this.conditions != null) {
+			throw new IllegalStateException("conditions already set");
+		}
+
+		this.conditions = createConditions(0, function);
+		
+		return conditions;
+	}
+	
 	@SuppressWarnings("rawtypes")
 	final <R extends Comparable<R>, AND_OR extends IAdhocAndOrLogicalClauses<MODEL, Object>>
 	
 		ISharedClauseComparableCommonValue // <MODEL, Object, R, AND_OR>
 				addComparativeWhere(Function<?, ?> function) {
 		
-		addCondition(ConditionsType.SINGLE, function);
-		
-		return (ISharedClauseComparableCommonValue)this;
+		return (ISharedClauseComparableCommonValue)addWhere(function);
 	}
 	
 
@@ -378,137 +278,9 @@ abstract class AdhocQueryClass<MODEL, RESULT>
 	
 			addConditionWhere(Function<?, ?> function) {
 
-		addCondition(ConditionsType.SINGLE, function);
-
-		return (ISharedClauseConditionValue)this;
+		return (ISharedClauseConditionValue)addWhere(function);
 	}
 
-	
-	/**************************************************************************
-	** ISharedClauseConditionValue
-	**************************************************************************/
-	
-	@Override
-	public final ISharedLogicalClauses<MODEL, RESULT> isEqualTo(Comparable<Object> other) {
-		return addOperator(EClauseOperator.IS_EQUAL, other);
-	}
-
-	@Override
-	public final ISharedLogicalClauses<MODEL, RESULT> isNotEqualTo(Comparable<Object> other) {
-		return addOperator(EClauseOperator.NOT_EQUAL, other);
-	}
-
-	@Override
-	public final ISharedLogicalClauses<MODEL, RESULT> in(@SuppressWarnings("unchecked") Comparable<Object>... values) {
-		return addOperator(EClauseOperator.IN, values);
-	}
-	
-	/**************************************************************************
-	** ISharedClauseComparativeBaseValue
-	**************************************************************************/
-
-	@Override
-	public final ISharedLogicalClauses<MODEL, RESULT> isGreaterThan(Comparable<Object> value) {
-		return addOperator(EClauseOperator.GREATER_THAN, value);
-	}
-
-	@Override
-	public final ISharedLogicalClauses<MODEL, RESULT> isGreaterOrEqualTo(Comparable<Object> value) {
-		return addOperator(EClauseOperator.GREATER_OR_EQUAL, value);
-	}
-
-	@Override
-	public final ISharedLogicalClauses<MODEL, RESULT> isLessThan(Comparable<Object> value) {
-		return addOperator(EClauseOperator.LESS_THAN, value);
-	}
-
-	@Override
-	public final ISharedLogicalClauses<MODEL, RESULT> isLessOrEqualTo(Comparable<Object> value) {
-		return addOperator(EClauseOperator.LESS_OR_EQUAL, value);
-	}
-
-	/**************************************************************************
-	** ISharedClauseComparativeStringValue
-	**************************************************************************/
-
-	@Override
-	public final ISharedLogicalClauses<MODEL, RESULT> startsWith(String s) {
-		return addOperator(EClauseOperator.STARTS_WITH, s);
-	}
-
-	@Override
-	public final ISharedLogicalClauses<MODEL, RESULT> endsWith(String s) {
-		return addOperator(EClauseOperator.ENDS_WITH, s);
-	}
-
-	@Override
-	public final ISharedLogicalClauses<MODEL, RESULT> contains(String s) {
-		return addOperator(EClauseOperator.CONTAINS, s);
-	}
-
-	@Override
-	public final ISharedLogicalClauses<MODEL, RESULT> matches(String regex) {
-		return addOperator(EClauseOperator.MATCHES, regex);
-	}
-
-
-	/**************************************************************************
-	** IAdhocAndOrLogicalClauses
-	**************************************************************************/
-	
-	@SuppressWarnings({"unchecked", "rawtypes"})
-	private <T extends Comparable<?>> ISharedClauseComparableCommonValue<MODEL, RESULT, T, IAdhocAndClauses<MODEL, RESULT>>  addAndClause(Function<?, T> getter) {
-		addCondition(ConditionsType.AND, getter);
-		
-		return (ISharedClauseComparableCommonValue)this;
-	}
-
-	@SuppressWarnings({"unchecked", "rawtypes"})
-	private <T extends Comparable<?>> ISharedClauseComparableCommonValue<MODEL, RESULT, T, IAdhocOrClauses<MODEL, RESULT>>  addOrClause(Function<?, T> getter) {
-		addCondition(ConditionsType.OR, getter);
-		
-		return (ISharedClauseComparableCommonValue)this;
-	}
-	
-	@Override
-	public final <T> ISharedClauseComparableCommonValue<MODEL, RESULT, Integer, IAdhocOrClauses<MODEL, RESULT>> or(IFunctionInteger<T> getter) {
-		return addOrClause(getter);
-	}
-
-
-	@Override
-	public final <T> ISharedClauseComparableCommonValue<MODEL, RESULT, Long, IAdhocOrClauses<MODEL, RESULT>> or(IFunctionLong<T> getter) {
-		return addOrClause(getter);
-	}
-	
-	
-	@Override
-	@SuppressWarnings({"unchecked", "rawtypes"})
-	public final <T> ISharedClauseComparableStringValue<MODEL, RESULT, IAdhocOrClauses<MODEL, RESULT>> or(StringFunction<T> getter) {
-		addCondition(ConditionsType.OR, getter);
-
-		return (ISharedClauseComparableStringValue)this;
-	}
-
-
-	@Override
-	public final <T> ISharedClauseComparableCommonValue<MODEL, RESULT, Integer, IAdhocAndClauses<MODEL, RESULT>> and(IFunctionInteger<T> getter) {
-		return addAndClause(getter);
-	}
-
-
-	@Override
-	public final <T> ISharedClauseComparableCommonValue<MODEL, RESULT, Long, IAdhocAndClauses<MODEL, RESULT>> and(IFunctionLong<T> getter) {
-		return addAndClause(getter);
-	}
-
-	@Override
-	@SuppressWarnings({"unchecked", "rawtypes"})
-	public final <T> ISharedClauseComparableStringValue<MODEL, RESULT, IAdhocAndClauses<MODEL, RESULT>> and(StringFunction<T> getter) {
-		addCondition(ConditionsType.AND, getter);
-
-		return (ISharedClauseComparableStringValue)this;
-	}
 	
 	/**************************************************************************
 	** IAdhocJoin

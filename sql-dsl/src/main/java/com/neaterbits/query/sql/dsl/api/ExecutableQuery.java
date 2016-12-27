@@ -199,24 +199,40 @@ interface ExecutableQuery<QUERY> {
 	int getJoinConditionRightSourceIdx(QUERY query, int joinIdx, int conditionIdx);
 	
 	boolean evaluateJoinCondition(QUERY query, int joinIdx, Object instance1, Object instance2, int conditionIdx, OneToManyJoinConditionResolver oneToManyResolver);
+
+	
+	/**
+	 * Query has only root conditions
+	 * @param query
+	 * @return 
+	 */
+	
+	boolean isRootConditionOnly(QUERY query);
 	
 	
 	/**
 	 * 
 	 */
 	
-	int getConditionCount(QUERY query);
+	int getRootConditionCount(QUERY query);
 
 	/**
 	 * Get type of condition for this query
 	 * @param query
 	 * @return
 	 */
-	
-	ConditionsType getConditionsType(QUERY query);
-	
-	int getConditionSourceIdx(QUERY query, int conditionIdx);
 
-	boolean evaluateCondition(QUERY query, Object instance, int conditionIdx, ConditionValuesScratch scratch);
-	
+	ConditionsType getRootConditionsType(QUERY query);
+
+	int getRootConditionSourceIdx(QUERY query, int conditionIdx);
+
+	boolean evaluateRootCondition(QUERY query, Object instance, int conditionIdx, ConditionValuesScratch scratch);
+
+
+	// Generic nested-condition evaluation
+	ConditionsType getConditionsType(QUERY query, int [] conditionIndices, int levels);
+
+	int getConditionSourceIdx(QUERY query, int [] conditionIndices, int levels);
+
+	boolean evaluateCondition(QUERY query, int [] conditionIndices, int levels, Object instance, ConditionValuesScratch scratch);
 }

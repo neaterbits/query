@@ -10,10 +10,15 @@ final class AdhocQueryClassSet<MODEL>
 		extends AdhocQueryClassCollection<MODEL, Set<Object>>
 
 		implements IAdhocWhereOrJoinSet<MODEL, Object, Set<Object>>,
-				   IAdhocAndOrLogicalClausesSet<MODEL, Object, Set<Object>> {
+				   IAdhocEndClauseSet<MODEL, Object, Set<Object>> {
 
 	AdhocQueryClassSet(Collection<?> coll) {
 		super(ECollectionType.SET, coll);
+	}
+
+	@Override
+	AdhocConditions<MODEL, Set<Object>, ?> createConditions(int level, Function<?, ?> function) {
+		return new AdhocConditionsSet<>(this, level, function);
 	}
 
 	@Override
@@ -49,9 +54,8 @@ final class AdhocQueryClassSet<MODEL>
 	@Override
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public ISharedClauseComparableStringValue<MODEL, Set<Object>, IAdhocAndOrLogicalClausesSet<MODEL, Object, Set<Object>>> where(StringFunction<Object> func) {
-		addCondition(null, func);
 
-		return (ISharedClauseComparableStringValue) this;
+		return (ISharedClauseComparableStringValue)addWhere(func);
 	}
 
 
@@ -77,6 +81,4 @@ final class AdhocQueryClassSet<MODEL>
 
 		return null;
 	}
-
-	
 }

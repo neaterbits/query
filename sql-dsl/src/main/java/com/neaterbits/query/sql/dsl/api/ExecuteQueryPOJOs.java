@@ -462,7 +462,7 @@ final class ExecuteQueryPOJOs<QUERY> extends ExecutableQueryAggregateComputation
 	
 	private boolean matches(QUERY query, int sourceIdx, Object instance, ExecuteQueryScratch scratch) {
 		// Loop over conditions
-		final ConditionsType type = q.getConditionsType(query);
+		final ConditionsType type = q.getRootConditionsType(query);
 		
 		final boolean ret;
 		
@@ -490,8 +490,8 @@ final class ExecuteQueryPOJOs<QUERY> extends ExecutableQueryAggregateComputation
 		
 		final boolean ret;
 		
-		if (q.getConditionSourceIdx(query, conditionIdx) == sourceIdx) {
-			ret = q.evaluateCondition(query, instance, conditionIdx, scratch);
+		if (q.getRootConditionSourceIdx(query, conditionIdx) == sourceIdx) {
+			ret = q.evaluateRootCondition(query, instance, conditionIdx, scratch);
 		}
 		else {
 			ret = true; // for a different source, return true

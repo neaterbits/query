@@ -10,5 +10,4 @@ final class AdhocQueryClassAggregate<MODEL> extends AdhocQueryClassSingular<MODE
 			ENumericType aggregateNumericInputType, ENumericType aggregateNumericOutputType) {
 		super(aggregateGetter, aggregateFunction, aggregateNumericInputType, aggregateNumericOutputType);
 	}
-	
 }
