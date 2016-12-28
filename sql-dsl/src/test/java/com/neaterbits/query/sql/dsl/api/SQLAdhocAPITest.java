@@ -199,22 +199,21 @@ public class SQLAdhocAPITest {
 		
 		barList.add(bar1);
 		barList.add(bar2);
-		
 
 		final List<Foo> foos = Adhoc.list(fooList)
 				
 							.innerJoin(barList, j -> j
 										.compare(Foo::getValue, Bar::getFooId)
-										.where(Bar::getBaz).startsWith("Baz"))
-							
+										.where(Bar::getBaz).startsWith("Foo"))
+
 							.where(Foo::getDecimal).isGreaterThan(new BigDecimal("2.0"))
 							   .or(Foo::getValue).isLessOrEqualTo(1)
 							   .get();
 
 		// Inner-join but not distinct
-		assertThat(foos.size()).isEqualTo(4);
 		assertThat(foos.contains(foo1)).isTrue();
 		assertThat(foos.contains(foo2)).isTrue();
+		assertThat(foos.size()).isEqualTo(4);
 	}
 
 	@Test

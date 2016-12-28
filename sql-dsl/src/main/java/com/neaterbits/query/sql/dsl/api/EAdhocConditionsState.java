@@ -15,6 +15,8 @@ public enum EAdhocConditionsState {
 	
 	AND_IN_OUTER,
 	OR_IN_OUTER,
+
+	AND_FROM_JOIN_AND_OUTER,
 	
 	WHERE_FROM_JOIN_AND_WHERE_FROM_OUTER
 }

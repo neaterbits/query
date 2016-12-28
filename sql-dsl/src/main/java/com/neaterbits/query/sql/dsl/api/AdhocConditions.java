@@ -5,7 +5,7 @@ import java.util.function.Function;
 
 abstract class AdhocConditions<MODEL, RESULT, QUERY extends AdhocQueryClass<MODEL, RESULT>>
 
-	extends AdhocConditionsStateMachine<MODEL, RESULT>
+	extends AdhocConditionsStateMachine<MODEL, RESULT, AdhocConditions<MODEL, RESULT, QUERY>>
 	implements
 		ISharedClauseComparableCommonValue<MODEL, RESULT, Comparable<Object>, ISharedLogicalClauses<MODEL, RESULT>>,
 		ISharedClauseComparableStringValue<MODEL, RESULT, ISharedLogicalClauses<MODEL, RESULT>>,
@@ -181,7 +181,11 @@ abstract class AdhocConditions<MODEL, RESULT, QUERY extends AdhocQueryClass<MODE
 		return (ISharedClauseComparableStringValue)this;
 	}
 
-	
+	@Override
+	final int getLevel() {
+		return conditionsLevel;
+	}
+
 	@Override
 	final void intAddConditionToArray(Function<?, ?> function) {
 		checkSizes(numConditions);
@@ -205,7 +209,7 @@ abstract class AdhocConditions<MODEL, RESULT, QUERY extends AdhocQueryClass<MODE
 
 	@Override
 	@SuppressWarnings({"unchecked", "rawtypes"})
-	final void intAddSub(AdhocConditions<MODEL, RESULT, ?> sub) {
+	final void intAddSub(AdhocConditions<MODEL, RESULT, QUERY> sub) {
 
 		// Assure that space in existing
 		checkSizes(numConditions);
@@ -287,8 +291,13 @@ abstract class AdhocConditions<MODEL, RESULT, QUERY extends AdhocQueryClass<MODE
 	final boolean hasSubConditions() {
 		return subConditions != null;
 	}
-
 	
+	@SuppressWarnings({"unchecked", "rawtypes"})
+	@Override
+	AdhocConditions<MODEL, RESULT, QUERY> createConditions(int level) {
+		return (AdhocConditions)query.createConditions(level);
+	}
+
 	final ConditionsType getConditionsType(int [] conditionIndices, int level, int numLevels) {
 		return level == this.conditionsLevel
 				? getConditionsType()

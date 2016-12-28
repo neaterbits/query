@@ -366,58 +366,12 @@ abstract class AdhocQueryClass<MODEL, RESULT>
 			ConditionsType type, Function<?, ?> nextFunction) {
 		
 		final AdhocConditions<MODEL, RESULT, ?> ret;
-
-		switch (type) {
-	
-		case OR:
-			// Must add sub-condition to current
-			final AdhocConditions<MODEL, RESULT, ?> subConditions = createConditions(1);
-
-			subConditions.addWhereAndFunctionFromJoin(whereFunction, whereOperator, whereValue, sourceIdx, type, nextFunction);
-
-			// Add sub conditions to current
-			if (this.conditions == null) {
-				this.conditions = createConditions(0);
-			}
-
-			this.conditions.addSub(ConditionsType.AND, subConditions);
-
-			ret = subConditions;
-			break;
-	
-		case AND:
-			
-			if (this.conditions == null) {
-				this.conditions = createConditions(0);
-			}
-
-			// Add to existing conditions
-			conditions.addWhereAndFunctionFromJoin(whereFunction, whereOperator, whereValue, sourceIdx, type, nextFunction);
-
-			ret = conditions;
-			break;
-			
-		default:
-			throw new UnsupportedOperationException("Unexpected type " + type);
-		}
 		
-		
-		return ret;
-	}
-	/*
-	void addJoinWhereCondition() {
 		if (this.conditions == null) {
-			// Create conditions
+			this.conditions = createConditions(0);
 		}
-	}
-
-	void addJoinAndCondition() {
 		
+		return conditions.mergeJoinComparison(whereFunction, whereOperator, whereValue, sourceIdx, type, nextFunction);
 	}
-	
-	void addJoinOrCondition() {
-		
-	}
-	*/
 }
 

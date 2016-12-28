@@ -9,17 +9,21 @@ import java.util.function.Function;
  *
  */
 
-abstract class AdhocConditionsStateMachine<MODEL, RESULT> {
+abstract class AdhocConditionsStateMachine<MODEL, RESULT, CONDITIONS extends AdhocConditionsStateMachine<MODEL, RESULT, CONDITIONS>> {
 
 	private EAdhocConditionsState state;
 
 	abstract void intAddConditionToArray(Function<?, ?> function);
 
-	abstract void intAddSub(AdhocConditions<MODEL, RESULT, ?> sub);
+	abstract void intAddSub(CONDITIONS sub);
 	
 	abstract void intAddOperator(EClauseOperator operator, Object value, int sourceIdx);
 	
 	abstract boolean hasSubConditions();
+	
+	abstract CONDITIONS createConditions(int level);
+	
+	abstract int getLevel();
 
 	AdhocConditionsStateMachine() {
 		this.state = EAdhocConditionsState.NONE;
@@ -66,7 +70,9 @@ abstract class AdhocConditionsStateMachine<MODEL, RESULT> {
 		case AND_IN_OUTER:
 		case AND_MERGED_FROM_JOIN:
 			
-		case WHERE_FROM_JOIN_AND_WHERE_FROM_OUTER: // To where-clauses which become AND
+		case WHERE_FROM_JOIN_AND_WHERE_FROM_OUTER: // Two where-clauses which become AND
+			
+		case AND_FROM_JOIN_AND_OUTER: // AND from both joined and outer
 			ret = ConditionsType.AND;
 			break;
 			
@@ -128,7 +134,7 @@ abstract class AdhocConditionsStateMachine<MODEL, RESULT> {
 	*/
 	
 
-	final void intAddCondition(ConditionsType conditionsType, Function<?, ?> function) {
+	final CONDITIONS intAddCondition(ConditionsType conditionsType, Function<?, ?> function) {
 
 		if (function == null) {
 			throw new IllegalArgumentException("function == null");
@@ -138,6 +144,8 @@ abstract class AdhocConditionsStateMachine<MODEL, RESULT> {
 
 		final EAdhocConditionsState newState;
 
+		final CONDITIONS ret;
+		
 		switch (state) {
 		case AND_IN_JOIN:
 		case AND_IN_OUTER:
@@ -146,6 +154,7 @@ abstract class AdhocConditionsStateMachine<MODEL, RESULT> {
 		case OR_IN_OUTER:
 			// Keep current state
 			newState = state;
+			ret = getThis();
 			break;
 
 		case WHERE_FROM_OUTER:
@@ -161,16 +170,30 @@ abstract class AdhocConditionsStateMachine<MODEL, RESULT> {
 			default:
 				throw new IllegalStateException("Unknown condition type " + conditionsType);
 			}
+			ret = getThis();
 			break;
 
 		case WHERE_FROM_JOIN_AND_WHERE_FROM_OUTER:
 			switch (conditionsType) {
 			case AND:
-				newState = EAdhocConditionsState.AND_IN_OUTER;
+				newState = EAdhocConditionsState.AND_FROM_JOIN_AND_OUTER;
+				ret = getThis();
 				break;
 
 			case OR:
-				throw new UnsupportedOperationException("TODO: must create subquery of join and return that");
+				// Two where-clauses, must create a sub-join and add that
+				final int level = getLevel();
+				if (level != 0) {
+					throw new IllegalStateException("Not at root level");
+				}
+
+				final CONDITIONS sub = createConditions(level + 1);
+				
+				sub.intAddSplitOr(function);
+				ret = sub;
+				
+				newState = EAdhocConditionsState.AND_FROM_JOIN_AND_OUTER;
+				break;
 
 			default:
 				throw new IllegalStateException("Unknown condition type " + conditionsType);
@@ -184,6 +207,34 @@ abstract class AdhocConditionsStateMachine<MODEL, RESULT> {
 		setState(newState);
 
 		intAddConditionToArray(function);
+		
+		return ret;
+	}
+	
+	void intAddSplitOr(Function<?, ?> function) {
+
+		if (function == null) {
+			throw new IllegalArgumentException("function == null");
+		}
+			
+		
+		final EAdhocConditionsState newState;
+
+		switch (state) {
+		case NONE:
+			newState = EAdhocConditionsState.OR_IN_OUTER;
+			break;
+
+		default:
+			throw new IllegalStateException("Unknown conditions state "+ state);
+		}
+
+		setState(newState);
+	}
+
+	@SuppressWarnings({"unchecked"})
+	private CONDITIONS getThis() {
+		return (CONDITIONS)this;
 	}
 
 	/*
@@ -230,7 +281,44 @@ abstract class AdhocConditionsStateMachine<MODEL, RESULT> {
 		this.state = newState;
 	}
 	
-	final void addWhereAndFunctionFromJoin(Function<?, ?> whereFunction, EClauseOperator whereOperator, Object whereValue,
+	@SuppressWarnings("unchecked")
+	final CONDITIONS mergeJoinComparison(
+			Function<?, ?> whereFunction, EClauseOperator whereOperator, Object whereValue,
+			int sourceIdx,
+			ConditionsType type, Function<?, ?> nextFunction) {
+
+		final CONDITIONS ret;
+		
+		switch (type) {
+		
+		case OR:
+			// Must add sub-condition to current
+			final CONDITIONS subConditions = createConditions(1);
+
+			subConditions.addWhereAndFunctionFromJoin(whereFunction, whereOperator, whereValue, sourceIdx, type, nextFunction);
+
+			intAddSub(subConditions);
+
+			ret = subConditions;
+			break;
+	
+		case AND:
+			
+			// Add to existing conditions
+			addWhereAndFunctionFromJoin(whereFunction, whereOperator, whereValue, sourceIdx, type, nextFunction);
+
+			ret = (CONDITIONS)this;
+			break;
+
+		default:
+			throw new UnsupportedOperationException("Unexpected type " + type);
+		}
+
+		return ret;
+	}
+	
+	final void addWhereAndFunctionFromJoin(
+			Function<?, ?> whereFunction, EClauseOperator whereOperator, Object whereValue,
 			int sourceIdx,
 			ConditionsType type, Function<?, ?> nextFunction) {
 
@@ -318,6 +406,7 @@ abstract class AdhocConditionsStateMachine<MODEL, RESULT> {
 		intAddOperator(whereOperator, whereValue, sourceIdx);
 	}
 
+	/*
 	final void addSub(ConditionsType type, AdhocConditions<MODEL, RESULT, ?> sub) {
 		
 		if (type == null) {
@@ -338,6 +427,7 @@ abstract class AdhocConditionsStateMachine<MODEL, RESULT> {
 		
 		intAddSub(sub);
 	}
+	*/
 	
 	/*
 	
