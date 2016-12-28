@@ -14,7 +14,9 @@ import com.neaterbits.query.sql.dsl.api.entity.QueryMetaModel;
  */
 
 final class ExecuteQueryPOJOs<QUERY> extends ExecutableQueryAggregateComputations<QUERY> {
-	
+
+	private static final boolean DEBUG = Boolean.TRUE;
+
 	/**
 	 * Whether we have found a match within condition loop
 	 * 
@@ -244,7 +246,6 @@ final class ExecuteQueryPOJOs<QUERY> extends ExecutableQueryAggregateComputation
 	}
 
 	private Object addToMapped(QUERY query, Object last, ExecuteQueryScratch scratch) {
-		
 		final EQueryResultDimension dimension = q.getDimension(query);
 
 		final Object ret;
@@ -316,16 +317,28 @@ final class ExecuteQueryPOJOs<QUERY> extends ExecutableQueryAggregateComputation
 		
 		final Collection<?> source = input.getPOJOs(sourceIdx);
 		
+		if (DEBUG) {
+			debug(sourceIdx, "loopJoinedNoSets sourceIdx=" + sourceIdx +", count=" + source.size() + ",result=" + result);
+		}
+		
 
 		for (Object o : source) {
 			// Loop over conditions to see if should be added
-			
 			if (joinMatches(query, sourceIdx, scratch, o, numJoins)) {
+
+				if (DEBUG) {
+					debug(sourceIdx, "loopJoinedNoSets join match for " + o);
+				}
+				
 
 				if (scratch.hasConditions()) {
 					
 					final EMatch matches = matches(query, sourceIdx, o, scratch);
 
+					if (DEBUG) {
+						debug(sourceIdx, "loopJoinedNoSets condition match " + matches + " for " + o);
+					}
+					
 					if (matches == EMatch.NO) {
 						// Definite none-match, skip
 						continue;
@@ -338,17 +351,27 @@ final class ExecuteQueryPOJOs<QUERY> extends ExecutableQueryAggregateComputation
 				scratch.set(sourceIdx, o);
 
 				if (sourceIdx == numSources - 1) {
+
 					
 					if (reevaluationRequired) {
 						throw new UnsupportedOperationException("TODO");
 					}
 
 					result = computeResult(query, o, result, scratch);
+
+					if (DEBUG) {
+						debug(sourceIdx, "loopJoinedNoSets end source idx reached, computed result " + result);
+					}
 				}
 				else {
 					// Recurse to next source idx
 					loopJoinedNoSets(query, input, sourceIdx + 1,
 							numSources, scratch, numJoins, result, reevaluationRequired);
+				}
+			}
+			else {
+				if (DEBUG) {
+					debug(sourceIdx, "loopJoinedNoSets no join match for " + o);
 				}
 			}
 		}
@@ -405,6 +428,8 @@ final class ExecuteQueryPOJOs<QUERY> extends ExecutableQueryAggregateComputation
 
 		final int numJoinConditions = q.getJoinConditionCount(query, joinIdx);
 
+		boolean ret = true;
+		
 		for (int conditionIdx = 0; conditionIdx < numJoinConditions; ++ conditionIdx) {
 
 			final int conditionLeftSourceIdx  = q.getJoinConditionLeftSourceIdx(query, joinIdx, conditionIdx);
@@ -441,7 +466,8 @@ final class ExecuteQueryPOJOs<QUERY> extends ExecutableQueryAggregateComputation
 
 				if (!match) {
 					// Join condition failed to match so we should skip this instance
-					return false;
+					ret = false;
+					break;
 				}
 			}
 			else {
@@ -449,7 +475,7 @@ final class ExecuteQueryPOJOs<QUERY> extends ExecutableQueryAggregateComputation
 			}
 		}
 
-		return true;
+		return ret;
 	}
 	
 	
@@ -593,7 +619,9 @@ final class ExecuteQueryPOJOs<QUERY> extends ExecutableQueryAggregateComputation
 		
 		final EMatch ret;
 		
-		if (q.getRootConditionSourceIdx(query, conditionIdx) == sourceIdx) {
+		final int conditionSourceIdx = q.getRootConditionSourceIdx(query, conditionIdx);
+		
+		if (conditionSourceIdx == sourceIdx) {
 			ret = q.evaluateRootCondition(query, instance, conditionIdx, scratch)
 					
 					? EMatch.YES  // Definite match
@@ -601,6 +629,10 @@ final class ExecuteQueryPOJOs<QUERY> extends ExecutableQueryAggregateComputation
 		}
 		else {
 			ret = EMatch.NOT_APPLICABLE_TO_SOURCE; // for a different source, uncertain but for THIS source there is a match
+		}
+		
+		if (DEBUG) {
+			debug(sourceIdx, "rootOnlyMatchSingle sourceIdx=" + sourceIdx + ": " + ret);
 		}
 		
 		return ret;
@@ -615,6 +647,9 @@ final class ExecuteQueryPOJOs<QUERY> extends ExecutableQueryAggregateComputation
 			if (q.getRootConditionSourceIdx(query, conditionIdx) == sourceIdx) {
 				
 				if (!q.evaluateRootCondition(query, instance, conditionIdx, scratch)) {
+					if (DEBUG) {
+						debug(sourceIdx, "rootOnlyMatchAnd mismatch sourceIdx=" + sourceIdx + ", conditionIdx " + conditionIdx);
+					}
 					return EMatch.NO; // Definitely does not match
 				}
 				
@@ -623,9 +658,13 @@ final class ExecuteQueryPOJOs<QUERY> extends ExecutableQueryAggregateComputation
 			
 		}
 		
-		return numFromThisSource == 0
+		final EMatch ret = numFromThisSource == 0
 				? EMatch.NOT_APPLICABLE_TO_SOURCE 	// None from this source, so we can continue join even if we did
 				: EMatch.YES;  						// Matching all ANDs from this source
+
+		debug(sourceIdx, "rootOnlyMatchAnd match sourceIdx=" + sourceIdx + " : " + ret);
+		
+		return ret;
 	}
 
 	private EMatch rootOnlyMatchOr(QUERY query, int sourceIdx, Object instance, ExecuteQueryScratch scratch) {
@@ -639,6 +678,10 @@ final class ExecuteQueryPOJOs<QUERY> extends ExecutableQueryAggregateComputation
 				
 				if (q.evaluateRootCondition(query, instance, conditionIdx, scratch)) {
 
+					if (DEBUG) {
+						debug(sourceIdx, "rootOnlyMatchOr mismatch sourceIdx=" + sourceIdx + ", conditionIdx " + conditionIdx);
+					}
+
 					return EMatch.YES; // One of conditions matched, so we have a match
 				}
 				
@@ -647,9 +690,28 @@ final class ExecuteQueryPOJOs<QUERY> extends ExecutableQueryAggregateComputation
 		}
 		
 		
-		return numConditions == numFromThisSource
+		final EMatch ret = numConditions == numFromThisSource
 				? EMatch.NO										// All conditions in OR were from this source and not matched, so there is definitely no match
 				: EMatch.UNCERTAIN_REQUIRES_REEVALUATION;		// No conditions of this source matched but other sources might so we say this is uncertain and match later
+
+		debug(sourceIdx, "rootOnlyMatchOr ret sourceIdx=" + sourceIdx + " : " + ret);
+
+		return ret;
 	}
 
+	/*
+	private static void debug(String s) {
+		System.out.println(s);
+	}
+	*/
+
+	private static void debug(int indent, String s) {
+
+		for (int i = 0; i < indent; ++ i) {
+			System.out.append("  ");
+		}
+
+		System.out.println(s);
+	}
+	
 }

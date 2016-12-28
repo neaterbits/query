@@ -45,4 +45,9 @@ class Bar {
 			return false;
 		return true;
 	}
+
+	@Override
+	public String toString() {
+		return "Bar [fooId=" + fooId + ", baz=" + baz + "]";
+	}
 }

@@ -69,4 +69,9 @@ public class Foo {
 			return false;
 		return true;
 	}
+
+	@Override
+	public String toString() {
+		return "Foo [value=" + value + ", value2=" + value2 + ", decimal=" + decimal + "]";
+	}
 }

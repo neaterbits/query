@@ -177,6 +177,7 @@ abstract class AdhocConditionsStateMachine<MODEL, RESULT, CONDITIONS extends Adh
 			switch (conditionsType) {
 			case AND:
 				newState = EAdhocConditionsState.AND_FROM_JOIN_AND_OUTER;
+				intAddConditionToArray(function);
 				ret = getThis();
 				break;
 
@@ -191,6 +192,8 @@ abstract class AdhocConditionsStateMachine<MODEL, RESULT, CONDITIONS extends Adh
 				
 				sub.intAddSplitOr(function);
 				ret = sub;
+
+				intAddSub(sub);
 				
 				newState = EAdhocConditionsState.AND_FROM_JOIN_AND_OUTER;
 				break;
@@ -205,8 +208,6 @@ abstract class AdhocConditionsStateMachine<MODEL, RESULT, CONDITIONS extends Adh
 		}
 
 		setState(newState);
-
-		intAddConditionToArray(function);
 		
 		return ret;
 	}
