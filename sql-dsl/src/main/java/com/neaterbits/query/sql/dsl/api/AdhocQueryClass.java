@@ -36,7 +36,7 @@ abstract class AdhocQueryClass<MODEL, RESULT>
 	private AdhocJoin<?, ?> [] joins;
 	private int numJoins;
 	
-	abstract AdhocConditions<MODEL, RESULT, ?> createConditions(int level, Function<?, ?> function);
+	abstract AdhocConditions<MODEL, RESULT, ?> createConditions(int level);
 
 	AdhocQueryClass(Function<?, ?> aggregateGetter, EAggregateFunction aggregateFunction, ENumericType aggregateNumericInputType, ENumericType aggregateNumericOutputType) {
 		super(aggregateFunction, aggregateNumericInputType, aggregateNumericOutputType);
@@ -102,8 +102,9 @@ abstract class AdhocQueryClass<MODEL, RESULT>
 				getNumResultParts(this),
 				getSourceCount(this),
 				
-				getRootConditionCount(this));
-		
+				getRootConditionCount(this),
+				getConditionsMaxDepth(query));
+
 		return this;
 	}
 
@@ -111,8 +112,6 @@ abstract class AdhocQueryClass<MODEL, RESULT>
 	/**************************************************************************
 	** ExecuteQueryPOJOsInput
 	**************************************************************************/
-	
-	
 	
 	@Override
 	public final Collection<?> getPOJOs(int idx) {
@@ -177,7 +176,7 @@ abstract class AdhocQueryClass<MODEL, RESULT>
 
 	@Override
 	public final ConditionsType getRootConditionsType(AdhocQueryClass<MODEL, RESULT> query) {
-		return conditions.conditionsType;
+		return conditions.getConditionsType();
 	}
 
 	@Override
@@ -194,8 +193,7 @@ abstract class AdhocQueryClass<MODEL, RESULT>
 	public final boolean evaluateRootCondition(AdhocQueryClass<MODEL, RESULT> query, Object instance, int conditionIdx, ConditionValuesScratch scratch) {
 		return conditions.evaluate(instance, conditionIdx, this);
 	}
-	
-	
+
 	@Override
 	public boolean isRootConditionOnly(AdhocQueryClass<MODEL, RESULT> query) {
 		return !conditions.hasSubConditions();
@@ -217,7 +215,11 @@ abstract class AdhocQueryClass<MODEL, RESULT>
 	public boolean evaluateCondition(AdhocQueryClass<MODEL, RESULT> query, int[] conditionIndices, int levels, Object instance, ConditionValuesScratch scratch) {
 		return conditions.evaluateCondition(conditionIndices, 0, levels, instance, scratch);
 	}
-
+	
+	@Override
+	public int getConditionsMaxDepth(AdhocQueryClass<MODEL, RESULT> query) {
+		return conditions == null ? -1 : conditions.getMaxDepth();
+	}
 
 	/**************************************************************************
 	** IAdhocSelectSource
@@ -246,21 +248,21 @@ abstract class AdhocQueryClass<MODEL, RESULT>
 		
 		return (RESULT)ret;
 	}
-	
+
 	/**************************************************************************
 	** IAdhocWhere
 	**************************************************************************/
-	
 	final AdhocConditions<MODEL, RESULT, ?> addWhere(Function<?, ?> function) {
-		if (this.conditions != null) {
-			throw new IllegalStateException("conditions already set");
+
+		if (this.conditions == null) {
+			this.conditions = createConditions(0);
 		}
 
-		this.conditions = createConditions(0, function);
-		
+		this.conditions.addFromOuterWhere(function);
+
 		return conditions;
 	}
-	
+
 	@SuppressWarnings("rawtypes")
 	final <R extends Comparable<R>, AND_OR extends IAdhocAndOrLogicalClauses<MODEL, Object>>
 	
@@ -305,6 +307,7 @@ abstract class AdhocQueryClass<MODEL, RESULT>
 		if (numJoins == 0) {
 			this.joins = new AdhocJoin<?, ?>[INITIAL_JOINS];
 			
+			// We add all queries as
 		}
 		else if (numJoins == joins.length) {
 			this.joins = Arrays.copyOf(joins,  joins.length  * JOIN_INCR);
@@ -313,12 +316,38 @@ abstract class AdhocQueryClass<MODEL, RESULT>
 		final AdhocJoin<MODEL, RESULT> join = new AdhocJoin<>(this, joinType, leftSourceIdx, rightSourceIdx);
 
 		this.joins[numJoins ++] = join;
-
+		
 		@SuppressWarnings({ "unchecked", "rawtypes" })
 		final Consumer<IAdhocJoinSub> c = (Consumer)consumer;
 
 		c.accept(join);
 
+		// Check what type of conditions are present
+		switch (join.conditionsType) {
+		case NONE:
+			// No where-clause, nothing to join
+			break;
+
+		case SINGLE:
+			// Single-where clause, was never merged since we could not figure whether AND or OR.
+			// Merge into current as AND
+			if (conditions == null) {
+				conditions = createConditions(0);
+			}
+
+			conditions.addWhereFromJoin(join.whereCondition, join.whereOperator, join.whereValue, join.rightSourceIdx);
+			
+			break;
+			
+		case AND:
+		case OR:
+			// Was merged from Join into existing 
+			break;
+			
+		default:
+			throw new UnsupportedOperationException("Unknown join conditions type " + join.conditionsType);
+		}
+		
 		return join;
 	}
 
@@ -330,5 +359,65 @@ abstract class AdhocQueryClass<MODEL, RESULT>
 	final <LEFT, RIGHT> void compileLeftJoin(Collection<RIGHT> joinTo, Consumer<IAdhocJoinSub<MODEL, RESULT, LEFT, RIGHT>> consumer) {
 		compileJoin(EJoinType.LEFT, joinTo, consumer);
 	}
+
+	AdhocConditions<MODEL, RESULT, ?> mergeJoinComparison(
+			Function<?, ?> whereFunction, EClauseOperator whereOperator, Object whereValue,
+			int sourceIdx,
+			ConditionsType type, Function<?, ?> nextFunction) {
+		
+		final AdhocConditions<MODEL, RESULT, ?> ret;
+
+		switch (type) {
+	
+		case OR:
+			// Must add sub-condition to current
+			final AdhocConditions<MODEL, RESULT, ?> subConditions = createConditions(1);
+
+			subConditions.addWhereAndFunctionFromJoin(whereFunction, whereOperator, whereValue, sourceIdx, type, nextFunction);
+
+			// Add sub conditions to current
+			if (this.conditions == null) {
+				this.conditions = createConditions(0);
+			}
+
+			this.conditions.addSub(ConditionsType.AND, subConditions);
+
+			ret = subConditions;
+			break;
+	
+		case AND:
+			
+			if (this.conditions == null) {
+				this.conditions = createConditions(0);
+			}
+
+			// Add to existing conditions
+			conditions.addWhereAndFunctionFromJoin(whereFunction, whereOperator, whereValue, sourceIdx, type, nextFunction);
+
+			ret = conditions;
+			break;
+			
+		default:
+			throw new UnsupportedOperationException("Unexpected type " + type);
+		}
+		
+		
+		return ret;
+	}
+	/*
+	void addJoinWhereCondition() {
+		if (this.conditions == null) {
+			// Create conditions
+		}
+	}
+
+	void addJoinAndCondition() {
+		
+	}
+	
+	void addJoinOrCondition() {
+		
+	}
+	*/
 }
 

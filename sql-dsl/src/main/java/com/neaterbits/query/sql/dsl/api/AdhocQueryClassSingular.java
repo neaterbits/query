@@ -15,8 +15,8 @@ abstract class AdhocQueryClassSingular<MODEL> extends AdhocQueryClass<MODEL, Obj
 	}
 	
 	@Override
-	final AdhocConditions<MODEL, Object, ?> createConditions(int level, Function<?, ?> function) {
-		return new AdhocConditionsSingular<>(this, level, function);
+	final AdhocConditions<MODEL, Object, ?> createConditions(int level) {
+		return new AdhocConditionsSingular<>(this, level);
 	}
 
 	/**************************************************************************

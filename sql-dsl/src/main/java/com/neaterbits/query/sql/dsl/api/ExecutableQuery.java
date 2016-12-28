@@ -228,9 +228,11 @@ interface ExecutableQuery<QUERY> {
 
 	boolean evaluateRootCondition(QUERY query, Object instance, int conditionIdx, ConditionValuesScratch scratch);
 
-
+	int getConditionsMaxDepth(QUERY query);
+	
 	// Generic nested-condition evaluation
 	ConditionsType getConditionsType(QUERY query, int [] conditionIndices, int levels);
+	
 
 	int getConditionSourceIdx(QUERY query, int [] conditionIndices, int levels);
 

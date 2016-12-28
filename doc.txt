@@ -512,8 +512,9 @@ Men gir dette egentlig mening? Er bare join tilbake på instansen. Så må finne
 Neste:
 
  - adhoc queries med mininmalt overhead
- - JS / annen kode generering ut fra POJO joins
+ - nøsta and/or
  - parametere
+ - JS / annen kode generering ut fra POJO joins
  
  - dialekter, dvs statisk begrense muligheter
  - query ut fra context

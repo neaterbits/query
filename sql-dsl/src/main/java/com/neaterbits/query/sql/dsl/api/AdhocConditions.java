@@ -3,7 +3,9 @@ package com.neaterbits.query.sql.dsl.api;
 import java.util.Arrays;
 import java.util.function.Function;
 
-abstract class AdhocConditions<MODEL, RESULT, QUERY extends AdhocQueryClass<MODEL, RESULT>> 
+abstract class AdhocConditions<MODEL, RESULT, QUERY extends AdhocQueryClass<MODEL, RESULT>>
+
+	extends AdhocConditionsStateMachine<MODEL, RESULT>
 	implements
 		ISharedClauseComparableCommonValue<MODEL, RESULT, Comparable<Object>, ISharedLogicalClauses<MODEL, RESULT>>,
 		ISharedClauseComparableStringValue<MODEL, RESULT, ISharedLogicalClauses<MODEL, RESULT>>,
@@ -27,27 +29,25 @@ abstract class AdhocConditions<MODEL, RESULT, QUERY extends AdhocQueryClass<MODE
 	private AdhocConditions<MODEL, RESULT, QUERY> [] subConditions;
 	
 	int numConditions;
-	ConditionsType conditionsType;
 	
+	AdhocConditions(QUERY query, int level) {
 
-	AdhocConditions(QUERY query, int level, Function<?, ?> function) {
-		
 		if (query == null) {
 			throw new IllegalArgumentException("query == null");
-		}
-		
-		if (function == null) {
-			throw new IllegalArgumentException("function == null");
 		}
 
 		this.query = query;
 		this.conditionsLevel = level;
-		
-		addConditionInt(ConditionsType.SINGLE, function);
+
+		this.conditions 			= new Function		 [INITIAL_CONDITIONS]; 
+		this.operators 				= new EClauseOperator[INITIAL_CONDITIONS];
+		this.values 				= new Object		 [INITIAL_CONDITIONS];
+		this.conditionToSourceIdx 	= new int			 [INITIAL_CONDITIONS];
+
 	}
 
 	@Override
-	public RESULT get() {
+	public final RESULT get() {
 		return query.get();
 	}
 
@@ -55,7 +55,7 @@ abstract class AdhocConditions<MODEL, RESULT, QUERY extends AdhocQueryClass<MODE
 	** ISharedClauseConditionValue
 	**************************************************************************/
 	private ISharedLogicalClauses<MODEL, RESULT> addOperatorRet(EClauseOperator operator, Object value) {
-		addOperator(operator, value);
+		intAddOperator(operator, value, 0); // Always join source 0
 
 		return this;
 	}
@@ -130,14 +130,14 @@ abstract class AdhocConditions<MODEL, RESULT, QUERY extends AdhocQueryClass<MODE
 	
 	@SuppressWarnings({"unchecked", "rawtypes"})
 	private <T extends Comparable<?>> ISharedClauseComparableCommonValue<MODEL, RESULT, T, IAdhocAndClauses<MODEL, RESULT>>  addAndClause(Function<?, T> getter) {
-		addConditionInt(ConditionsType.AND, getter);
+		intAddCondition(ConditionsType.AND, getter);
 		
 		return (ISharedClauseComparableCommonValue)this;
 	}
 
 	@SuppressWarnings({"unchecked", "rawtypes"})
 	private <T extends Comparable<?>> ISharedClauseComparableCommonValue<MODEL, RESULT, T, IAdhocOrClauses<MODEL, RESULT>>  addOrClause(Function<?, T> getter) {
-		addConditionInt(ConditionsType.OR, getter);
+		intAddCondition(ConditionsType.OR, getter);
 		
 		return (ISharedClauseComparableCommonValue)this;
 	}
@@ -157,7 +157,7 @@ abstract class AdhocConditions<MODEL, RESULT, QUERY extends AdhocQueryClass<MODE
 	@Override
 	@SuppressWarnings({"unchecked", "rawtypes"})
 	public final <T> ISharedClauseComparableStringValue<MODEL, RESULT, IAdhocOrClauses<MODEL, RESULT>> or(StringFunction<T> getter) {
-		addConditionInt(ConditionsType.OR, getter);
+		intAddCondition(ConditionsType.OR, getter);
 
 		return (ISharedClauseComparableStringValue)this;
 	}
@@ -168,7 +168,6 @@ abstract class AdhocConditions<MODEL, RESULT, QUERY extends AdhocQueryClass<MODE
 		return addAndClause(getter);
 	}
 
-
 	@Override
 	public final <T> ISharedClauseComparableCommonValue<MODEL, RESULT, Long, IAdhocAndClauses<MODEL, RESULT>> and(IFunctionLong<T> getter) {
 		return addAndClause(getter);
@@ -177,81 +176,50 @@ abstract class AdhocConditions<MODEL, RESULT, QUERY extends AdhocQueryClass<MODE
 	@Override
 	@SuppressWarnings({"unchecked", "rawtypes"})
 	public final <T> ISharedClauseComparableStringValue<MODEL, RESULT, IAdhocAndClauses<MODEL, RESULT>> and(StringFunction<T> getter) {
-		addConditionInt(ConditionsType.AND, getter);
+		intAddCondition(ConditionsType.AND, getter);
 
 		return (ISharedClauseComparableStringValue)this;
 	}
-	
 
-	final void addConditionFoo(ConditionsType conditionsType, Function<?, ?> function) {
-		
-		if (conditionsType != ConditionsType.AND && conditionsType != ConditionsType.OR) {
-			throw new IllegalArgumentException("Expected AND or OR condition type:  " + conditionsType);
-		}
-		
-		addConditionInt(conditionsType, function);
-	}
 	
-	private final void addConditionInt(ConditionsType conditionsType, Function<?, ?> function) {
-		
-		if (conditionsType == null) {
-			throw new IllegalArgumentException("conditionsType == null");
-		}
-		
-		if (this.conditionsType == null) {
-			if (conditionsType != ConditionsType.SINGLE) {
-				throw new IllegalArgumentException("Expected single-condition");
-			}
-			this.conditionsType = conditionsType;
-		}
-		else {
-			if (this.conditionsType == ConditionsType.SINGLE) {
-				this.conditionsType = conditionsType;
-			}
-			else if (conditionsType != this.conditionsType) {
-				throw new IllegalStateException("Mismatch in condition from " + conditionsType + " to " + this.conditionsType);
-			}
-		}
-		
-		if (function == null) {
-			throw new IllegalArgumentException("function == null");
-		}
+	@Override
+	final void intAddConditionToArray(Function<?, ?> function) {
+		checkSizes(numConditions);
 
-		if (numConditions == 0) {
-			this.conditions = new Function[INITIAL_CONDITIONS]; 
-		}
-		else if (numConditions == conditions.length) {
-			this.conditions = Arrays.copyOf(conditions, conditions.length * 2);
-		}
-		
 		this.conditions[numConditions] = function;
 	}
 	
-	void addOperator(EClauseOperator operator, Object value) {
-		if (numConditions == 0) {
-			this.operators = new EClauseOperator[INITIAL_CONDITIONS];
-			this.values = new Object[INITIAL_CONDITIONS];
-			this.conditionToSourceIdx = new int[INITIAL_CONDITIONS];
-			
-		}
-		else if (numConditions == operators.length) {
-			
-			this.operators = Arrays.copyOf(operators, operators.length * 2);
-			this.values = Arrays.copyOf(values, values.length * 2);
-			this.conditionToSourceIdx = Arrays.copyOf(conditionToSourceIdx, conditionToSourceIdx.length * 2);
-		}
+	
+	@Override
+	final void intAddOperator(EClauseOperator operator, Object value, int sourceIdx) {
+		
+		checkSizes(numConditions);
 
 		this.operators[numConditions] = operator;
 		
 		// !! Always 0 here since this is the outer-loop.
-		// !! Joins will add more more select-sources before this is callsed so cannot go with numSources - 1
-		this.conditionToSourceIdx[numConditions] = 0; // numSources - 1;
+		// !! Joins will add more more select-sources before this is called so cannot go with numSources - 1
+		this.conditionToSourceIdx[numConditions] = sourceIdx;
 		this.values[numConditions ++] = value;
 	}
 
-	private static final ConditionEvaluatorComparable conditionValueComparable = new ConditionEvaluatorComparable();
-	
-	boolean evaluate(Object instance, int conditionIdx, ConditionValuesScratch scratch) {
+	@Override
+	@SuppressWarnings({"unchecked", "rawtypes"})
+	final void intAddSub(AdhocConditions<MODEL, RESULT, ?> sub) {
+
+		// Assure that space in existing
+		checkSizes(numConditions);
+
+		if (subConditions == null) {
+			this.subConditions = new AdhocConditions[conditions.length];
+		}
+
+		subConditions[numConditions ++] = (AdhocConditions)sub;
+	}
+
+	private static final ConditionEvaluatorComparableString conditionValueComparable = new ConditionEvaluatorComparableString();
+
+	final boolean evaluate(Object instance, int conditionIdx, ConditionValuesScratch scratch) {
 
 		final EClauseOperator operator = operators[conditionIdx];
 
@@ -315,17 +283,19 @@ abstract class AdhocConditions<MODEL, RESULT, QUERY extends AdhocQueryClass<MODE
 		return ret;
 	}
 	
-	boolean hasSubConditions() {
+	@Override
+	final boolean hasSubConditions() {
 		return subConditions != null;
 	}
 
-	ConditionsType getConditionsType(int [] conditionIndices, int level, int numLevels) {
+	
+	final ConditionsType getConditionsType(int [] conditionIndices, int level, int numLevels) {
 		return level == this.conditionsLevel
-				? conditionsType
+				? getConditionsType()
 				: subConditions[conditionIndices[level]].getConditionsType(conditionIndices, level + 1, numLevels);
 	}
 
-	int getConditionSourceIdx(int [] conditionIndices, int level, int numLevels) {
+	final int getConditionSourceIdx(int [] conditionIndices, int level, int numLevels) {
 		
 		final int conditionIdx = conditionIndices[level];
 
@@ -334,12 +304,55 @@ abstract class AdhocConditions<MODEL, RESULT, QUERY extends AdhocQueryClass<MODE
 				: subConditions[conditionIdx].getConditionSourceIdx(conditionIndices, level + 1, numLevels);
 	}
 
-	boolean evaluateCondition(int [] conditionIndices, int level, int numLevels, Object instance, ConditionValuesScratch scratch) {
+	final boolean evaluateCondition(int [] conditionIndices, int level, int numLevels, Object instance, ConditionValuesScratch scratch) {
 		final int conditionIdx = conditionIndices[level];
 
 		return level == this.conditionsLevel
 				? evaluate(instance, conditionIdx, scratch)
 				: subConditions[conditionIdx].evaluateCondition(conditionIndices, level + 1, numLevels, instance, scratch);
 						
+	}
+	
+	// Depth of sub-levels
+	final int getMaxDepth() {
+		
+		int ret;
+		
+		if (subConditions != null) {
+			
+			ret = 1;
+			
+			for (AdhocConditions<MODEL, RESULT, QUERY> sub : subConditions) {
+				if (sub != null) {
+					final int m = sub.getMaxDepth();
+					
+					if (m + 1 > ret) {
+						ret = m + 1; // + 1 for current level
+					}
+				}
+			}
+		}
+		else {
+			ret = 1;
+		}
+
+		return ret;
+	}
+
+	private void checkSizes(int num) {
+
+		if (num == conditions.length) {
+			this.conditions = Arrays.copyOf(conditions, conditions.length * 2);
+			this.operators = Arrays.copyOf(operators, operators.length * 2);
+			this.values = Arrays.copyOf(values, values.length * 2);
+			this.conditionToSourceIdx = Arrays.copyOf(conditionToSourceIdx, conditionToSourceIdx.length * 2);
+
+			if (subConditions != null) {
+				this.subConditions = Arrays.copyOf(subConditions, subConditions.length * 2);
+			}
+		}
+		else if (num > conditions.length) {
+			throw new IllegalStateException("Never to be called with larger than num");
+		}
 	}
 }

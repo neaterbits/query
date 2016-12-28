@@ -8,8 +8,8 @@ final class AdhocConditionsSet<MODEL, RESULT> extends AdhocConditions<MODEL, Set
 
 	implements IAdhocAndOrLogicalClausesSet<MODEL, Object, Set<Object>>{
 
-	AdhocConditionsSet(AdhocQueryClassSet<MODEL> query, int level, Function<?, ?> function) {
-		super(query, level, function);
+	AdhocConditionsSet(AdhocQueryClassSet<MODEL> query, int level) {
+		super(query, level);
 	}
 
 	@Override

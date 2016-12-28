@@ -26,8 +26,8 @@ final class AdhocQueryClassList<MODEL>
 	
 
 	@Override
-	AdhocConditions<MODEL, List<Object>, ?> createConditions(int level, Function<?, ?> function) {
-		return new AdhocConditionsList<>(this, level, function);
+	AdhocConditions<MODEL, List<Object>, ?> createConditions(int level) {
+		return new AdhocConditionsList<>(this, level);
 	}
 
 	/**************************************************************************

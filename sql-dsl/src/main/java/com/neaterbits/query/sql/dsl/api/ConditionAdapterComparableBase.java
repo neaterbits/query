@@ -4,21 +4,21 @@ public abstract class ConditionAdapterComparableBase<T, R> implements ConditionV
 
 	@Override
 	public R onStartsWith(ConditionStringStartsWith condition, T param) {
-		throw new UnsupportedOperationException("Not supporyed for numeric types");
+		throw new UnsupportedOperationException("Not supported for numeric types");
 	}
 
 	@Override
 	public R onEndsWith(ConditionStringEndsWith condition, T param) {
-		throw new UnsupportedOperationException("Not supporyed for numeric types");
+		throw new UnsupportedOperationException("Not supported for numeric types");
 	}
 
 	@Override
 	public R onContains(ConditionStringContains condition, T param) {
-		throw new UnsupportedOperationException("Not supporyed for numeric types");
+		throw new UnsupportedOperationException("Not supported for numeric types");
 	}
 
 	@Override
 	public R onMatches(ConditionStringMatches condition, T param) {
-		throw new UnsupportedOperationException("Not supporyed for numeric types");
+		throw new UnsupportedOperationException("Not supported for numeric types");
 	}
 }

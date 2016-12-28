@@ -181,7 +181,7 @@ public class SQLAdhocAPITest {
 	}
 
 	@Test
-	public void testAdhocListJoin() {
+	public void testAdhocListJoinWithOr() {
 		final List<Foo> fooList = new ArrayList<>();
 
 		final Foo foo1 = new Foo(1, 2, new BigDecimal("3.1"));
@@ -203,7 +203,9 @@ public class SQLAdhocAPITest {
 
 		final List<Foo> foos = Adhoc.list(fooList)
 				
-							.innerJoin(barList, j -> j.compare(Foo::getValue, Bar::getFooId))
+							.innerJoin(barList, j -> j
+										.compare(Foo::getValue, Bar::getFooId)
+										.where(Bar::getBaz).startsWith("Baz"))
 							
 							.where(Foo::getDecimal).isGreaterThan(new BigDecimal("2.0"))
 							   .or(Foo::getValue).isLessOrEqualTo(1)
@@ -213,6 +215,42 @@ public class SQLAdhocAPITest {
 		assertThat(foos.size()).isEqualTo(4);
 		assertThat(foos.contains(foo1)).isTrue();
 		assertThat(foos.contains(foo2)).isTrue();
+	}
+
+	@Test
+	public void testAdhocListJoinWithAnd() {
+		final List<Foo> fooList = new ArrayList<>();
+
+		final Foo foo1 = new Foo(1, 2, new BigDecimal("3.1"));
+		final Foo foo2 = new Foo(3, 1, new BigDecimal("4.8"));
+		final Foo foo3 = new Foo(2, 7, new BigDecimal("1.8"));
+
+		fooList.add(foo1);
+		fooList.add(foo2);
+		fooList.add(foo3);
+		
+		final List<Bar> barList = new ArrayList<>();
+
+		final Bar bar1 = new Bar(foo1.getValue(), "Foo1");
+		final Bar bar2 = new Bar(foo2.getValue(), "Foo2");
+		
+		barList.add(bar1);
+		barList.add(bar2);
+		
+
+		final List<Foo> foos = Adhoc.list(fooList)
+				
+							.innerJoin(barList, j -> j
+										.compare(Foo::getValue, Bar::getFooId)
+										.where(Bar::getBaz).startsWith("Foo"))
+							
+							.where(Foo::getDecimal).isGreaterThan(new BigDecimal("2.0"))
+							   .and(Foo::getValue).isLessOrEqualTo(1)
+							   .get();
+
+		// Inner-join but not distinct
+		assertThat(foos.size()).isEqualTo(1);
+		assertThat(foos.contains(foo1)).isTrue();
 	}
 }
 

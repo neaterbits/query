@@ -18,8 +18,9 @@ final class ExecutableQueryForCompiledQuery implements ExecutableQuery<CompiledQ
 		final int numResultParts 	= getNumResultParts(query);
 		final int numSelectSources 	= getSourceCount(query);
 		final int numConditions	 	= getRootConditionCount(query);
+		final int maxDepth 			= getConditionsMaxDepth(query);
 		
-		return new ExecuteQueryScratch(numResultParts, numSelectSources, numConditions, queryMetaModel);
+		return new ExecuteQueryScratch(numResultParts, numSelectSources, numConditions, queryMetaModel, maxDepth);
 	}
 
 	@Override
@@ -327,6 +328,11 @@ final class ExecutableQueryForCompiledQuery implements ExecutableQuery<CompiledQ
 
 	@Override
 	public boolean isRootConditionOnly(CompiledQuery query) {
+		throw new UnsupportedOperationException("TODO");
+	}
+
+	@Override
+	public int getConditionsMaxDepth(CompiledQuery query) {
 		throw new UnsupportedOperationException("TODO");
 	}
 

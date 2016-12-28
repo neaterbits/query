@@ -17,8 +17,8 @@ final class AdhocQueryClassSet<MODEL>
 	}
 
 	@Override
-	AdhocConditions<MODEL, Set<Object>, ?> createConditions(int level, Function<?, ?> function) {
-		return new AdhocConditionsSet<>(this, level, function);
+	AdhocConditions<MODEL, Set<Object>, ?> createConditions(int level) {
+		return new AdhocConditionsSet<>(this, level);
 	}
 
 	@Override

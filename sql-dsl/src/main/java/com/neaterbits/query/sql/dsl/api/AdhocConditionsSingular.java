@@ -6,7 +6,7 @@ final class AdhocConditionsSingular<MODEL, RESULT>
 		extends AdhocConditions<MODEL, Object, AdhocQueryClassSingular<MODEL>>
 	implements IAdhocAndOrLogicalClausesSingular<MODEL, Object> {
 
-	AdhocConditionsSingular(AdhocQueryClassSingular<MODEL> query, int level, Function<?, ?> function) {
-		super(query, level, function);
+	AdhocConditionsSingular(AdhocQueryClassSingular<MODEL> query, int level) {
+		super(query, level);
 	}
 }
