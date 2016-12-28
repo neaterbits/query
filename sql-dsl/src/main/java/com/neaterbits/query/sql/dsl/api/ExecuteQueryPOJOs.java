@@ -488,20 +488,6 @@ final class ExecuteQueryPOJOs<QUERY> extends ExecutableQueryAggregateComputation
 		Object result = computeInitialResult(query);
 
 		final Object ret = loopNonJoined(query, input, 0, numSelectSources, scratch, result, false);
-		
-		/*
-		// For each select source, loop over
-		for (int sourceIdx = 0; sourceIdx < numSelectSources; ++ sourceIdx) {
-			final Collection<?> source = input.getPOJOs(sourceIdx);
-			
-			for (Object o : source) {
-				// Loop over conditions to see if should be added
-				if (numConditions == 0 || matches(query, sourceIdx, o, numConditions)) {
-					scratch[sourceIdx] = o;
-				}
-			}
-		}
-		*/
 
 		return ret;
 	}

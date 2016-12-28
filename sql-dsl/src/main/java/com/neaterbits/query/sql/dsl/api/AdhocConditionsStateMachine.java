@@ -29,30 +29,6 @@ abstract class AdhocConditionsStateMachine<MODEL, RESULT, CONDITIONS extends Adh
 		this.state = EAdhocConditionsState.NONE;
 	}
 	
-	/*
-	private void conditionsCheck(ConditionsType conditionsType) {
-
-		if (conditionsType == null) {
-			throw new IllegalArgumentException("conditionsType == null");
-		}
-
-		if (this.state == null) {
-			if (conditionsType != ConditionsType.SINGLE) {
-				throw new IllegalArgumentException("Expected single-condition");
-			}
-			this.state = conditionsType;
-		}
-		else {
-			if (this.state == ConditionsType.SINGLE) {
-				this.state = conditionsType;
-			}
-			else if (conditionsType != this.state) {
-				throw new IllegalStateException("Mismatch in condition from " + conditionsType + " to " + this.state);
-			}
-		}
-	}
-	*/
-
 	final ConditionsType getConditionsType() {
 		
 		final ConditionsType ret;
@@ -88,52 +64,6 @@ abstract class AdhocConditionsStateMachine<MODEL, RESULT, CONDITIONS extends Adh
 		return ret;
 	}
 	
-	/*
-	final boolean hasJoinOrSubComparisons() {
-		final boolean ret;
-
-		if (hasSubConditions()) {
-			ret = true;
-		}
-		else {
-			switch (state) {
-			case NONE:
-				ret = false;
-				break;
-			case WHERE_FROM_JOIN:
-				ret = true;
-				break;
-				
-			case WHERE_FROM_OUTER:
-				ret = false;
-				break;
-	
-			case AND_IN_JOIN:
-			case AND_IN_OUTER:
-			case AND_MERGED_FROM_JOIN:
-				
-			case WHERE_FROM_JOIN_AND_WHERE_FROM_OUTER: // To where-clauses which become AND
-				ret = false;
-				break;
-				
-			case OR_IN_JOIN:
-				ret = true;
-				break;
-				
-			case OR_IN_OUTER:
-				ret = false;
-				break;
-			
-			default:
-				throw new IllegalStateException("Unknown conditions state "+ state);
-			}
-		}
-
-		return ret;
-	}
-	*/
-	
-
 	final CONDITIONS intAddCondition(ConditionsType conditionsType, Function<?, ?> function) {
 
 		if (function == null) {
@@ -406,57 +336,4 @@ abstract class AdhocConditionsStateMachine<MODEL, RESULT, CONDITIONS extends Adh
 		intAddConditionToArray(whereFunction);
 		intAddOperator(whereOperator, whereValue, sourceIdx);
 	}
-
-	/*
-	final void addSub(ConditionsType type, AdhocConditions<MODEL, RESULT, ?> sub) {
-		
-		if (type == null) {
-			throw new IllegalArgumentException("type == null");
-		}
-		
-		if (sub == null) {
-			throw new IllegalArgumentException("sub == null");
-		}
-		
-		
-		switch (state) {
-		default:
-			break;
-		}
-
-		//initConditionsType(type);
-		
-		intAddSub(sub);
-	}
-	*/
-	
-	/*
-	
-	private void initConditionsType(ConditionsType type) {
-		if (type != ConditionsType.AND && type != ConditionsType.OR) {
-			throw new IllegalArgumentException("Expected AND or OR condition type:  " + state);
-		}
-
-		if (this.state == null) {
-			this.state = type;
-		}
-		else {
-			switch (this.state) {
-			case SINGLE:
-				this.state = type;
-				break;
-
-			case AND:
-			case OR:
-				if (this.state != type) {
-					throw new IllegalStateException("Conditions type mismatch: " + this.state + "/" + type);
-				}
-				break;
-
-			default:
-				throw new IllegalStateException("Unknown condition type " + type);
-			}
-		}
-	}
-	*/
 }
