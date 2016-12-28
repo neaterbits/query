@@ -337,17 +337,32 @@ final class ExecutableQueryForCompiledQuery implements ExecutableQuery<CompiledQ
 	}
 
 	@Override
-	public ConditionsType getConditionsType(CompiledQuery query, int[] conditionIndices, int levels) {
+	public ConditionsType getConditionsType(CompiledQuery query, int level, int[] conditionIndices) {
 		throw new UnsupportedOperationException("TODO");
 	}
 
 	@Override
-	public int getConditionSourceIdx(CompiledQuery query, int[] conditionIndices, int levels) {
+	public int getConditionSourceIdx(CompiledQuery query, int level, int[] conditionIndices) {
 		throw new UnsupportedOperationException("TODO");
 	}
 
 	@Override
-	public boolean evaluateCondition(CompiledQuery query, int[] conditionIndices, int levels, Object instance, ConditionValuesScratch scratch) {
+	public boolean isSubCondition(CompiledQuery query, int level, int[] conditionIndices) {
+		throw new UnsupportedOperationException("TODO");
+	}
+
+	@Override
+	public int getConditionsCount(CompiledQuery query, int level, int[] conditionIndices) {
+		throw new UnsupportedOperationException("TODO");
+	}
+
+	@Override
+	public EClauseOperator getOperator(CompiledQuery query, int level, int[] conditionIndices) {
+		throw new UnsupportedOperationException("TODO");
+	}
+
+	@Override
+	public boolean evaluateCondition(CompiledQuery query, int level, int[] conditionIndices, Object instance, ConditionValuesScratch scratch) {
 		throw new UnsupportedOperationException("TODO");
 	}
 

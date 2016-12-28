@@ -1,6 +1,6 @@
 package com.neaterbits.query.sql.dsl.api;
 
-public enum EClauseOperator {
+enum EClauseOperator {
 
 	IS_EQUAL,
 	NOT_EQUAL,

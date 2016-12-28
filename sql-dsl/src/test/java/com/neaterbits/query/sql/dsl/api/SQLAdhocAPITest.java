@@ -213,7 +213,7 @@ public class SQLAdhocAPITest {
 		// Inner-join but not distinct
 		assertThat(foos.contains(foo1)).isTrue();
 		assertThat(foos.contains(foo2)).isTrue();
-		assertThat(foos.size()).isEqualTo(4);
+		assertThat(foos.size()).isEqualTo(2);
 	}
 
 	@Test

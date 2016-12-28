@@ -231,10 +231,15 @@ interface ExecutableQuery<QUERY> {
 	int getConditionsMaxDepth(QUERY query);
 	
 	// Generic nested-condition evaluation
-	ConditionsType getConditionsType(QUERY query, int [] conditionIndices, int levels);
+	ConditionsType getConditionsType(QUERY query, int level, int [] conditionIndices);
+
+	int getConditionSourceIdx(QUERY query, int level, int [] conditionIndices);
+
+	boolean evaluateCondition(QUERY query, int level, int [] conditionIndices, Object instance, ConditionValuesScratch scratch);
 	
+	boolean isSubCondition(QUERY query, int level, int [] conditionIndices);
+	
+	int getConditionsCount(QUERY query, int level, int [] conditionIndices);
 
-	int getConditionSourceIdx(QUERY query, int [] conditionIndices, int levels);
-
-	boolean evaluateCondition(QUERY query, int [] conditionIndices, int levels, Object instance, ConditionValuesScratch scratch);
+	EClauseOperator getOperator(QUERY query, int level, int [] conditionIndices);
 }

@@ -130,16 +130,12 @@ abstract class AdhocConditions<MODEL, RESULT, QUERY extends AdhocQueryClass<MODE
 	
 	@SuppressWarnings({"unchecked", "rawtypes"})
 	private <T extends Comparable<?>> ISharedClauseComparableCommonValue<MODEL, RESULT, T, IAdhocAndClauses<MODEL, RESULT>>  addAndClause(Function<?, T> getter) {
-		intAddCondition(ConditionsType.AND, getter);
-		
-		return (ISharedClauseComparableCommonValue)this;
+		return (ISharedClauseComparableCommonValue)intAddCondition(ConditionsType.AND, getter);
 	}
 
 	@SuppressWarnings({"unchecked", "rawtypes"})
 	private <T extends Comparable<?>> ISharedClauseComparableCommonValue<MODEL, RESULT, T, IAdhocOrClauses<MODEL, RESULT>>  addOrClause(Function<?, T> getter) {
-		intAddCondition(ConditionsType.OR, getter);
-		
-		return (ISharedClauseComparableCommonValue)this;
+		return (ISharedClauseComparableCommonValue)intAddCondition(ConditionsType.OR, getter);
 	}
 	
 	@Override
@@ -157,9 +153,7 @@ abstract class AdhocConditions<MODEL, RESULT, QUERY extends AdhocQueryClass<MODE
 	@Override
 	@SuppressWarnings({"unchecked", "rawtypes"})
 	public final <T> ISharedClauseComparableStringValue<MODEL, RESULT, IAdhocOrClauses<MODEL, RESULT>> or(StringFunction<T> getter) {
-		intAddCondition(ConditionsType.OR, getter);
-
-		return (ISharedClauseComparableStringValue)this;
+		return (ISharedClauseComparableStringValue)intAddCondition(ConditionsType.OR, getter);
 	}
 
 
@@ -176,9 +170,7 @@ abstract class AdhocConditions<MODEL, RESULT, QUERY extends AdhocQueryClass<MODE
 	@Override
 	@SuppressWarnings({"unchecked", "rawtypes"})
 	public final <T> ISharedClauseComparableStringValue<MODEL, RESULT, IAdhocAndClauses<MODEL, RESULT>> and(StringFunction<T> getter) {
-		intAddCondition(ConditionsType.AND, getter);
-
-		return (ISharedClauseComparableStringValue)this;
+		return (ISharedClauseComparableStringValue)intAddCondition(ConditionsType.AND, getter);
 	}
 
 	@Override
@@ -205,6 +197,44 @@ abstract class AdhocConditions<MODEL, RESULT, QUERY extends AdhocQueryClass<MODE
 		// !! Joins will add more more select-sources before this is called so cannot go with numSources - 1
 		this.conditionToSourceIdx[numConditions] = sourceIdx;
 		this.values[numConditions ++] = value;
+	}
+
+	@Override
+	final void intMoveLastToSubAndAddSub(AdhocConditions<MODEL, RESULT, QUERY> sub) {
+		
+		if (numConditions < 2) {
+			throw new IllegalStateException("Do not move when less than 2");
+		}
+		
+		if (sub.numConditions != 0) {
+			throw new IllegalStateException("Trying to move to instance with no conditions");
+		}
+
+		-- numConditions;
+		
+		final int idx = numConditions;
+		
+		sub.checkSizes(idx);
+
+		sub.conditions[0] = this.conditions[idx];
+		sub.values[0] = this.values[idx];
+		sub.operators[0] = this.operators[idx];
+		sub.conditionToSourceIdx[0] = this.conditionToSourceIdx[idx];
+		
+		this.conditions[idx] = null;
+		this.values[idx] = null;
+		this.operators[idx] = null;
+		this.conditionToSourceIdx[idx] = 0;
+
+		// If sub at idx, then add that
+		if (this.subConditions != null && this.subConditions[idx] != null) {
+			sub.intAddSub(this.subConditions[idx]);
+		}
+		else {
+			++ sub.numConditions;
+		}
+
+		intAddSub(sub);
 	}
 
 	@Override
@@ -298,27 +328,72 @@ abstract class AdhocConditions<MODEL, RESULT, QUERY extends AdhocQueryClass<MODE
 		return (AdhocConditions)query.createConditions(level);
 	}
 
-	final ConditionsType getConditionsType(int [] conditionIndices, int level, int numLevels) {
-		return level == this.conditionsLevel
-				? getConditionsType()
-				: subConditions[conditionIndices[level]].getConditionsType(conditionIndices, level + 1, numLevels);
+	final ConditionsType getConditionsType(int level, int [] conditionIndices) {
+		
+		final ConditionsType ret;
+		
+		if (level == this.conditionsLevel) {
+			ret = getConditionsType();
+		}
+		else {
+			final int conditionIdx = conditionIndices[this.conditionsLevel];
+			
+			ret = subConditions[conditionIdx].getConditionsType(level, conditionIndices);
+		}
+
+		return ret;
 	}
 
-	final int getConditionSourceIdx(int [] conditionIndices, int level, int numLevels) {
+	final int getConditionSourceIdx(int level, int [] conditionIndices) {
 		
-		final int conditionIdx = conditionIndices[level];
+		final int conditionIdx = conditionIndices[this.conditionsLevel];
 
 		return level == this.conditionsLevel
 				? conditionToSourceIdx[conditionIdx]
-				: subConditions[conditionIdx].getConditionSourceIdx(conditionIndices, level + 1, numLevels);
+				: subConditions[conditionIdx].getConditionSourceIdx(level, conditionIndices);
 	}
 
-	final boolean evaluateCondition(int [] conditionIndices, int level, int numLevels, Object instance, ConditionValuesScratch scratch) {
-		final int conditionIdx = conditionIndices[level];
+	final boolean isSubCondition(int level, int [] conditionIndices) {
+		
+		final int conditionIdx = conditionIndices[this.conditionsLevel];
+
+		return level == this.conditionsLevel
+				? subConditions != null && subConditions[conditionIdx] != null
+				: subConditions[conditionIdx].isSubCondition(level, conditionIndices);
+	}
+	
+	final int getConditionsCount(int level, int [] conditionIndices) {
+		
+		final int ret;
+		
+		if (level == this.conditionsLevel) {
+			ret = numConditions;
+		}
+		else {
+			final int conditionIdx = conditionIndices[this.conditionsLevel];
+			
+			ret = subConditions[conditionIdx].getConditionsCount(level, conditionIndices);
+		}
+
+		return ret;
+	}
+
+	final EClauseOperator getOperator(int level, int [] conditionIndices) {
+
+		final int conditionIdx = conditionIndices[this.conditionsLevel];
+
+		return level == this.conditionsLevel
+				? operators[conditionIdx]
+				: subConditions[conditionIdx].getOperator(level, conditionIndices);
+	}
+
+	
+	final boolean evaluateCondition(int level, int [] conditionIndices, Object instance, ConditionValuesScratch scratch) {
+		final int conditionIdx = conditionIndices[this.conditionsLevel];
 
 		return level == this.conditionsLevel
 				? evaluate(instance, conditionIdx, scratch)
-				: subConditions[conditionIdx].evaluateCondition(conditionIndices, level + 1, numLevels, instance, scratch);
+				: subConditions[conditionIdx].evaluateCondition(level, conditionIndices, instance, scratch);
 						
 	}
 	

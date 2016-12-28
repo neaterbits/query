@@ -5,6 +5,8 @@ import java.util.Collection;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
+import javax.crypto.CipherInputStream;
+
 import com.neaterbits.query.sql.dsl.api.entity.OneToManyJoinConditionResolver;
 import com.neaterbits.query.sql.dsl.api.entity.QueryMetaModel;
 
@@ -195,31 +197,55 @@ abstract class AdhocQueryClass<MODEL, RESULT>
 	}
 
 	@Override
-	public boolean isRootConditionOnly(AdhocQueryClass<MODEL, RESULT> query) {
+	public final boolean isRootConditionOnly(AdhocQueryClass<MODEL, RESULT> query) {
 		return !conditions.hasSubConditions();
 	}
 
 	@Override
-	public ConditionsType getConditionsType(AdhocQueryClass<MODEL, RESULT> query, int[] conditionIndices, int levels) {
-		return conditions.getConditionsType(conditionIndices, 0, levels);
+	public final ConditionsType getConditionsType(AdhocQueryClass<MODEL, RESULT> query, int level, int[] conditionIndices) {
+		return conditions.getConditionsType(level, conditionIndices);
 	}
 
 
 	@Override
-	public int getConditionSourceIdx(AdhocQueryClass<MODEL, RESULT> query, int[] conditionIndices, int levels) {
-		return conditions.getConditionSourceIdx(conditionIndices, 0, levels);
+	public final int getConditionSourceIdx(AdhocQueryClass<MODEL, RESULT> query, int level, int[] conditionIndices) {
+		return conditions.getConditionSourceIdx(level, conditionIndices);
 	}
 
 
 	@Override
-	public boolean evaluateCondition(AdhocQueryClass<MODEL, RESULT> query, int[] conditionIndices, int levels, Object instance, ConditionValuesScratch scratch) {
-		return conditions.evaluateCondition(conditionIndices, 0, levels, instance, scratch);
+	public final boolean evaluateCondition(AdhocQueryClass<MODEL, RESULT> query, int level, int[] conditionIndices, Object instance, ConditionValuesScratch scratch) {
+		return conditions.evaluateCondition(level, conditionIndices, instance, scratch);
 	}
 	
+	@Override
+	public final boolean isSubCondition(AdhocQueryClass<MODEL, RESULT> query, int level, int[] conditionIndices) {
+		return conditions.isSubCondition(level, conditionIndices);
+	}
+
+	@Override
+	public final int getConditionsCount(AdhocQueryClass<MODEL, RESULT> query, int level, int[] conditionIndices) {
+		final int count =  conditions.getConditionsCount(level, conditionIndices);
+
+		if (count <= 0) {
+			throw new IllegalStateException("count <= 0 : " + count + " at level " + level + " of indices " + Arrays.toString(conditionIndices));
+		}
+
+		return count;
+	}
+	
+	@Override
+	public EClauseOperator getOperator(AdhocQueryClass<MODEL, RESULT> query, int level, int[] conditionIndices) {
+		return conditions.getOperator(level, conditionIndices);
+	}
+
 	@Override
 	public int getConditionsMaxDepth(AdhocQueryClass<MODEL, RESULT> query) {
 		return conditions == null ? -1 : conditions.getMaxDepth();
 	}
+	
+	
+	
 
 	/**************************************************************************
 	** IAdhocSelectSource

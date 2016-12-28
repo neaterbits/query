@@ -547,33 +547,220 @@ final class ExecuteQueryPOJOs<QUERY> extends ExecutableQueryAggregateComputation
 		else {
 			// Does not only match on root, we need to evaluate nested subs as well
 			final int [] conditionIndices = scratch.assureConditionIndices();
-
-			q.getConditionSourceIdx(query, conditionIndices, -1);
 			
-			throw new UnsupportedOperationException("TODO");
+			ret = recursiveMatches(query, sourceIdx, instance, 0, conditionIndices, scratch);
 		}
 
 		return ret;
 	}
 
-	/*
-	private boolean recursiveMatches(QUERY query, int sourceIdx, Object instance, ExecuteQueryScratch scratch) {
-		final int [] conditionIndices = scratch.assureConditionIndices();
-		
-		
-		conditionIndices[0] = ;
+	private EMatch recursiveMatches(QUERY query, int sourceIdx, Object instance, int level, int [] conditionIndices, ConditionValuesScratch scratch) {
 
-		q.getConditionSourceIdx(query, conditionIndices, -1);
+		// Finding recursively everything that matches for a particular source
+
+		final ConditionsType type = q.getConditionsType(query, level, conditionIndices);
+
+		final EMatch ret;
 		
+		switch (type) {
+			case SINGLE:
+				ret = recursiveMatchSingle(query, sourceIdx, instance, level, conditionIndices, 0, scratch);
+				break;
+				
+			case AND:
+				ret = recursiveMatchAnd(query, sourceIdx, instance, level, conditionIndices, scratch);
+				break;
+				
+			case OR:
+				ret = recursiveMatchOr(query, sourceIdx, instance, level, conditionIndices, scratch);
+				break;
+				
+			default:
+				throw new UnsupportedOperationException("Unknown condition type " + type);
+		}
+
+		return ret;
 	}
 
-	private boolean recursiveMatches(QUERY query, int sourceIdx, Object instance, ExecuteQueryScratch scratch) {
-		final int [] conditionIndices = scratch.assureConditionIndices();
-
-		q.getConditionSourceIdx(query, conditionIndices, -1);
+	private EMatch recursiveMatchSingle(QUERY query, int sourceIdx, Object instance, int level, int [] conditionIndices, int conditionIdx, ConditionValuesScratch scratch) {
 		
+		final EMatch ret;
+		
+		conditionIndices[level] = conditionIdx;
+
+		final int conditionSourceIdx = q.getConditionSourceIdx(query, level, conditionIndices);
+		
+		if (conditionSourceIdx == sourceIdx) {
+			if (q.isSubCondition(query, level, conditionIndices)) {
+				ret = recursiveMatches(query, sourceIdx, instance, level + 1, conditionIndices, scratch);
+			}
+			else {
+				ret = q.evaluateCondition(query, level, conditionIndices, instance, scratch)
+					
+					? EMatch.YES  // Definite match
+					: EMatch.NO;  // Definite mismatch
+			}
+		}
+		else {
+			ret = EMatch.NOT_APPLICABLE_TO_SOURCE; // for a different source, uncertain but for THIS source there is a match
+		}
+		
+		if (DEBUG) {
+			final int indent = sourceIdx + level + 1;
+			
+			final EClauseOperator operator = q.getOperator(query, level, conditionIndices);
+
+			debug(indent, "recursiveMatchSingle end match sourceIdx=" + sourceIdx + ", op=" + operator + " : " + ret);
+		}
+		
+		return ret;
 	}
-	*/
+
+
+	private EMatch recursiveMatchAnd(QUERY query, int sourceIdx, Object instance, int level, int [] conditionIndices, ConditionValuesScratch scratch) {
+
+		int numFromThisSource = 0;
+		
+		final int numConditions = q.getConditionsCount(query, level, conditionIndices);
+		
+		final int indent = sourceIdx + level + 1;
+		
+		for (int conditionIdx = 0; conditionIdx < numConditions; ++ conditionIdx) {
+			
+			conditionIndices[level] = conditionIdx;
+			
+			final int conditionSourceIdx = q.getConditionSourceIdx(query, level, conditionIndices);
+
+			if (conditionSourceIdx == sourceIdx) {
+
+				if (q.isSubCondition(query, level, conditionIndices)) {
+					final EMatch subMatch = recursiveMatches(query, sourceIdx, instance, level + 1, conditionIndices, scratch);
+					
+					switch (subMatch){
+					case YES:
+						// continue loop
+						break;
+						
+					case NO:
+						if (DEBUG) {
+							final EClauseOperator operator = q.getOperator(query, level, conditionIndices);
+							
+							debug(indent, "recursiveMatchAnd sub MISMATCH sourceIdx=" + sourceIdx + ", conditionIdx " + conditionIdx + ", op=" + operator);
+						}
+						return EMatch.NO;
+						
+					case NOT_APPLICABLE_TO_SOURCE:
+						// Sub not applicable to source, continue past this one
+						throw new UnsupportedOperationException("TODO: What to do about numFromThisSource incrementation here ?");
+						
+					case UNCERTAIN_REQUIRES_REEVALUATION:
+						// Not certain that we can evaluate this one to true, might be true or not, must evaluate at end.
+						// So return a provisional match
+						return EMatch.UNCERTAIN_REQUIRES_REEVALUATION;
+						
+					default:
+						throw new UnsupportedOperationException("Unknown match " + subMatch);
+					}
+				}
+				else { 
+					
+					if (!q.evaluateCondition(query, level, conditionIndices, instance, scratch)) {
+						if (DEBUG) {
+							final EClauseOperator operator = q.getOperator(query, level, conditionIndices);
+
+							debug(indent, "recursiveMatchAnd MISMATCH sourceIdx=" + sourceIdx + ", conditionIdx " + conditionIdx + ", op=" + operator);
+						}
+						return EMatch.NO; // Definitely does not match
+					}
+				}
+			}
+
+			++ numFromThisSource;
+		}
+		
+		final EMatch ret = numFromThisSource == 0
+				? EMatch.NOT_APPLICABLE_TO_SOURCE 	// None from this source, so we can continue join even if we did
+				: EMatch.YES;  						// Matching all ANDs from this source
+
+		debug(indent, "recursiveMatchAnd end match sourceIdx=" + sourceIdx + " : " + ret);
+		
+		return ret;
+	}
+
+	private EMatch recursiveMatchOr(QUERY query, int sourceIdx, Object instance, int level, int [] conditionIndices, ConditionValuesScratch scratch) {
+		
+		final int numConditions = q.getConditionsCount(query, level, conditionIndices);
+
+		final int indent = sourceIdx + level + 1;
+		
+		int numFromThisSource = 0;
+		
+		for (int conditionIdx = 0; conditionIdx < numConditions; ++ conditionIdx) {
+			
+			conditionIndices[level] = conditionIdx;
+			
+			final int conditionSourceIdx = q.getConditionSourceIdx(query, level, conditionIndices);
+			
+			if (conditionSourceIdx == sourceIdx) {
+				
+				if (q.isSubCondition(query, level, conditionIndices)) {
+					final EMatch subMatch = recursiveMatches(query, sourceIdx, instance, level + 1, conditionIndices, scratch);
+					
+					switch (subMatch){
+					case YES:
+						if (DEBUG) {
+							final EClauseOperator operator = q.getOperator(query, level, conditionIndices);
+							
+							debug(indent, "recursiveMatchOr sub MATCH sourceIdx=" + sourceIdx + ", conditionIdx " + conditionIdx + ", op=" + operator);
+						}
+						return EMatch.YES;
+						
+					case NO:
+						if (DEBUG) {
+							debug(indent, "recursiveMatchOr sub mismatch sourceIdx=" + sourceIdx + ", conditionIdx " + conditionIdx);
+						}
+						break;
+						
+					case NOT_APPLICABLE_TO_SOURCE:
+						// Sub not applicable to source, continue past this one
+						throw new UnsupportedOperationException("TODO: What to do about numFromThisSource incrementation here ?");
+						
+					case UNCERTAIN_REQUIRES_REEVALUATION:
+						// Not certain that we can evaluate this one to true, might be true or not, must evaluate at end.
+						throw new UnsupportedOperationException("TODO: How to evaluate this one ? Perhaps keep variable of result");
+						
+					default:
+						throw new UnsupportedOperationException("Unknown match " + subMatch);
+					}
+					
+				}
+				else {
+				
+					if (q.evaluateCondition(query, level, conditionIndices, instance, scratch)) {
+	
+						if (DEBUG) {
+							final EClauseOperator operator = q.getOperator(query, level, conditionIndices);
+
+							debug(indent, "recursiveMatchOr MATCH sourceIdx=" + sourceIdx + ", conditionIdx " + conditionIdx + ", op=" + operator);
+						}
+	
+						return EMatch.YES; // One of conditions matched, so we have a match
+					}
+				}
+
+				++ numFromThisSource;
+			}
+		}
+		
+		
+		final EMatch ret = numConditions == numFromThisSource
+				? EMatch.NO										// All conditions in OR were from this source and not matched, so there is definitely no match
+				: EMatch.UNCERTAIN_REQUIRES_REEVALUATION;		// No conditions of this source matched but other sources might so we say this is uncertain and match later
+
+		debug(indent, "recursiveMatchOr end match sourceIdx=" + sourceIdx + ", numConditions=" + numConditions + ", numFromThisSource=" + numFromThisSource + " : " + ret);
+
+		return ret;
+	}
 	
 	private EMatch rootOnlyMatches(QUERY query, int sourceIdx, Object instance, ExecuteQueryScratch scratch) {
 		// Loop over conditions
@@ -665,7 +852,7 @@ final class ExecuteQueryPOJOs<QUERY> extends ExecutableQueryAggregateComputation
 				if (q.evaluateRootCondition(query, instance, conditionIdx, scratch)) {
 
 					if (DEBUG) {
-						debug(sourceIdx, "rootOnlyMatchOr mismatch sourceIdx=" + sourceIdx + ", conditionIdx " + conditionIdx);
+						debug(sourceIdx, "rootOnlyMatchOr match sourceIdx=" + sourceIdx + ", conditionIdx " + conditionIdx);
 					}
 
 					return EMatch.YES; // One of conditions matched, so we have a match

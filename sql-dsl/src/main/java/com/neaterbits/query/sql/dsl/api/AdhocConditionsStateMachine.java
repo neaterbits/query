@@ -18,12 +18,15 @@ abstract class AdhocConditionsStateMachine<MODEL, RESULT, CONDITIONS extends Adh
 	abstract void intAddSub(CONDITIONS sub);
 	
 	abstract void intAddOperator(EClauseOperator operator, Object value, int sourceIdx);
+
+	abstract void intMoveLastToSubAndAddSub(CONDITIONS sub);
 	
 	abstract boolean hasSubConditions();
 	
 	abstract CONDITIONS createConditions(int level);
 	
 	abstract int getLevel();
+	
 
 	AdhocConditionsStateMachine() {
 		this.state = EAdhocConditionsState.NONE;
@@ -46,7 +49,7 @@ abstract class AdhocConditionsStateMachine<MODEL, RESULT, CONDITIONS extends Adh
 		case AND_IN_OUTER:
 		case AND_MERGED_FROM_JOIN:
 			
-		case WHERE_FROM_JOIN_AND_WHERE_FROM_OUTER: // Two where-clauses which become AND
+		case WHERE_FROM_JOIN_AND_WHERE_FROM_OUTER: // Two where-clauses which are to be joind
 			
 		case AND_FROM_JOIN_AND_OUTER: // AND from both joined and outer
 			ret = ConditionsType.AND;
@@ -112,19 +115,19 @@ abstract class AdhocConditionsStateMachine<MODEL, RESULT, CONDITIONS extends Adh
 				break;
 
 			case OR:
-				// Two where-clauses, must create a sub-join and add that
+				// Two where-clauses, must create a sub-join and the latter WHERE to that
 				final int level = getLevel();
 				if (level != 0) {
 					throw new IllegalStateException("Not at root level");
 				}
 
 				final CONDITIONS sub = createConditions(level + 1);
-				
-				sub.intAddSplitOr(function);
+
+				// Remove last conditions and move to new sub OR-condition
+				sub.intSplitIntoSubOrs(getThis(), function);
+
 				ret = sub;
 
-				intAddSub(sub);
-				
 				newState = EAdhocConditionsState.AND_FROM_JOIN_AND_OUTER;
 				break;
 
@@ -142,18 +145,21 @@ abstract class AdhocConditionsStateMachine<MODEL, RESULT, CONDITIONS extends Adh
 		return ret;
 	}
 	
-	void intAddSplitOr(Function<?, ?> function) {
+	final void intSplitIntoSubOrs(CONDITIONS c, Function<?, ?> function) {
 
 		if (function == null) {
 			throw new IllegalArgumentException("function == null");
 		}
-			
-		
+
 		final EAdhocConditionsState newState;
 
 		switch (state) {
 		case NONE:
 			newState = EAdhocConditionsState.OR_IN_OUTER;
+
+			c.intMoveLastToSubAndAddSub(getThis());
+			
+			intAddConditionToArray(function);
 			break;
 
 		default:
