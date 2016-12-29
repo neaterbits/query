@@ -10,4 +10,9 @@ final class ConditionStringEndsWith extends ConditionStringImpl {
 	<T, R> R visit(ConditionVisitor<T, R> visitor, T param) {
 		return visitor.onEndsWith(this, param);
 	}
+
+	@Override
+	EClauseOperator getOperator() {
+		return EClauseOperator.ENDS_WITH;
+	}
 }

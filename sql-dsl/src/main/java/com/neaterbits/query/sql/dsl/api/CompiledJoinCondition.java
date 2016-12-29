@@ -4,6 +4,8 @@ abstract class CompiledJoinCondition {
 	private final CollectedJoinCondition original;
 	private final TypeMapSource left;
 	private final TypeMapSource right;
+
+	abstract EJoinConditionType getJoinConditionType();
 	
 	CompiledJoinCondition(CollectedJoinCondition original, TypeMapSource left, TypeMapSource right) {
 		if (original == null) {

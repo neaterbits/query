@@ -6,18 +6,20 @@ import java.util.List;
 import javax.persistence.NoResultException;
 import javax.persistence.Query;
 
-abstract class JPABasePreparedQuery implements DSPreparedQuery {
+abstract class JPABasePreparedQuery<QUERY> implements DSPreparedQuery {
 
-	private final CompiledQuery compiledQuery;
+	private final ExecutableQuery<QUERY> q;
+	private final QUERY query;
 	private final ParamNameAssigner paramNameAssigner;
 
-	JPABasePreparedQuery(CompiledQuery compiledQuery, ParamNameAssigner paramNameAssigner) {
+	JPABasePreparedQuery(ExecutableQuery<QUERY> queryAccess, QUERY query, ParamNameAssigner paramNameAssigner) {
 		
-		if (compiledQuery == null) {
+		if (query == null) {
 			throw new IllegalArgumentException("resultMode == null");
 		}
 
-		this.compiledQuery = compiledQuery;
+		this.query = query;
+		this.q = queryAccess;
 		this.paramNameAssigner = paramNameAssigner;
 	}
 
@@ -36,11 +38,13 @@ abstract class JPABasePreparedQuery implements DSPreparedQuery {
 		}
 
 		Object ret;
+
+		final EQueryResultDimension resultDimension = q.getDimension(query);
 		
-		switch (compiledQuery.getResultMode()) {
+		switch (resultDimension) {
 		case SINGLE:
 			try {
-				ret = mapSingle(compiledQuery.getResult(), jpaQuery.getSingleResult());
+				ret = mapSingle(jpaQuery.getSingleResult());
 			}
 			catch (NoResultException ex) {
 				ret = null;
@@ -49,91 +53,86 @@ abstract class JPABasePreparedQuery implements DSPreparedQuery {
 			
 			
 		case MULTI:
-			ret = mapMultiple(compiledQuery.getResult(), jpaQuery.getResultList());
+			ret = mapMultiple(jpaQuery.getResultList());
 			break;
 			
 		default:
-			throw new UnsupportedOperationException("Unknown result mode " + compiledQuery.getResultMode());
+			throw new UnsupportedOperationException("Unknown result mode " + resultDimension);
 		}
 		
 		return ret;
 	}
 	
-	private static Object createResult(QueryResult result) {
-		try {
-			return result.getType().newInstance();
-		} catch (InstantiationException | IllegalAccessException ex) {
-			throw new IllegalStateException("Failed to instantiate result type " + result.getType().getName(), ex);
-		}
-	}
-	
-	private Object mapSingle(CompiledQueryResult result, Object input) {
+	private Object mapSingle(Object input) {
 
-		return result.visit(mapResultVisitor, input);
+		final Object ret;
 		
-	}
-	
-	private List<Object> mapMultiple(CompiledQueryResult result,  @SuppressWarnings("rawtypes") List input) {
+		final EQueryResultGathering resultGathering = q.getGathering(query);
 		
-		final List<Object> ret = new ArrayList<>(input.size());
-		
-		for (Object o : input) {
-			ret.add(mapSingle(result, o));
-		}
+		switch (resultGathering) {
 
-		return ret;
-	}
-	
-	
-	private static final CompiledQueryResultVisitor<Object, Object> mapResultVisitor = new CompiledQueryResultVisitor<Object, Object>() {
-		
-		@Override
-		public Object onMapped(CompiledQueryResultMapped result, Object input) {
-			final Object ret = createResult(result.getOriginal());
+		case MAPPED:
+			ret = q.createMappedInstance(query);
+
+			final int numMappings = q.getMappingCount(query);
 			
-			final List<CompiledMapping> mappings = result.getMappings().getMappings();
-
-			switch (mappings.size()) {
+			switch (numMappings) {
 				case 0:
 					throw new IllegalStateException("empty mappings");
 
 				case 1:
 					// Just one field
-					mappings.get(0).getSetter().execute(ret, input);
+					q.executeMappingSetter(query, 0, ret, input);
 					break;
 					
 				default:
 					// More than one
 					final Object [] vals = (Object[])input;
 					for (int i = 0; i < vals.length; ++ i) {
-						mappings.get(i).getSetter().execute(ret, vals[i]);
+						
+						q.executeMappingSetter(query, i, ret, vals[i]);
 					}
 					break;
 			}
-			
-			return ret;
-		}
-		
-		@Override
-		public Object onEntity(CompiledQueryResultEntity result, Object input) {
+			break;
 
+		case ENTITY:
 			
-			if (!result.getOriginal().getType().isAssignableFrom(input.getClass())) {
+			final Class<?> entityResultType = q.getResultJavaType(query);
+			
+			if (!entityResultType.isAssignableFrom(input.getClass())) {
 				throw new IllegalStateException("not mapped and result not of mapped class: " + input.getClass().getName());
 			}
 			
-			return input;
-		}
+			ret = input;
+			break;
 
-		@Override
-		public Object onAggregate(CompiledQueryResultAggregate result, Object input) {
+		case AGGREGATE:
+			final Class<?> aggregateResultType = q.getResultJavaType(query);
 			
-			if (!result.getOriginal().getType().equals(input.getClass())) {
-				throw new IllegalStateException("Not of aggregated type " + result.getOriginal().getType().getName() + ": " + input.getClass().getName());
+			if (!aggregateResultType.equals(input.getClass())) {
+				throw new IllegalStateException("Not of aggregated type " + aggregateResultType.getName() + ": " + input.getClass().getName());
 			}
 
-			return input;
+			ret = input;
+			break;
+
+		default:
+			throw new UnsupportedOperationException("Unknown result gathering " + resultGathering);
 		}
-	};
+
+		return ret;
+	}
+	
+	private List<Object> mapMultiple(@SuppressWarnings("rawtypes") List input) {
+		
+		final List<Object> ret = new ArrayList<>(input.size());
+		
+		for (Object o : input) {
+			ret.add(mapSingle(o));
+		}
+
+		return ret;
+	}
 	
 }

@@ -2,7 +2,7 @@ package com.neaterbits.query.sql.dsl.api;
 
 abstract class QueryDataSourceBase implements QueryDataSource {
 
-	abstract DSPreparedQuery prepareSingleQuery(CompiledQuery compiled);
+	abstract <QUERY> DSPreparedQuery prepareSingleQuery(ExecutableQuery<QUERY> q, QUERY query);
 
-	abstract DSPreparedQuery prepareMultiQuery(CompiledQuery compiled);
+	abstract <QUERY> DSPreparedQuery prepareMultiQuery(ExecutableQuery<QUERY> q, QUERY query);
 }

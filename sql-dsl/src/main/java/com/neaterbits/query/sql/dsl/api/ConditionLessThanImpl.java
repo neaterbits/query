@@ -10,4 +10,9 @@ final class ConditionLessThanImpl extends ConditionComparisonImpl {
 	<T, R> R visit(ConditionVisitor<T, R> visitor, T param) {
 		return visitor.onLessThan(this, param);
 	}
+
+	@Override
+	EClauseOperator getOperator() {
+		return EClauseOperator.LESS_THAN;
+	}
 }

@@ -330,6 +330,8 @@ final class AdhocJoin<MODEL, RESULT>
 	
 	static abstract class JoinCondition {
 
+		abstract EJoinConditionType getJoinConditionType();
+		
 		abstract boolean evaluate(Object instance1, Object instance2, OneToManyJoinConditionResolver oneToManyResolver);
 	}
 	
@@ -359,6 +361,11 @@ final class AdhocJoin<MODEL, RESULT>
 			final Object rhs = right.apply(instance2);
 			
 			return EvaluateUtil.evaluateComparables(lhs, rhs);
+		}
+
+		@Override
+		EJoinConditionType getJoinConditionType() {
+			return EJoinConditionType.COMPARISON;
 		}
 	}
 }

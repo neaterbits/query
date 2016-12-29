@@ -19,4 +19,9 @@ final class CompiledJoinConditionComparison extends CompiledJoinCondition {
 	public CompiledFieldReference getRhs() {
 		return right;
 	}
+
+	@Override
+	EJoinConditionType getJoinConditionType() {
+		return EJoinConditionType.COMPARISON;
+	}
 }

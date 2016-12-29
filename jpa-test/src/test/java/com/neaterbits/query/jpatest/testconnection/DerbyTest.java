@@ -36,7 +36,7 @@ public class DerbyTest {
 		em.persist(company);
 		em.getTransaction().commit();
 		
-		final List results = em.createQuery("select c from Company c").getResultList();
+		final List<?> results = em.createQuery("select c from Company c").getResultList();
 		
 		assertThat(results.size()).isEqualTo(1);
 		

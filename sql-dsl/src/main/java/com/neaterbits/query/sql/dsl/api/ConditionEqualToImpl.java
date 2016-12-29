@@ -11,4 +11,9 @@ final class ConditionEqualToImpl extends ValueConditionImpl {
 	<T, R> R visit(ConditionVisitor<T, R> visitor, T param) {
 		return visitor.onEqualTo(this, param);
 	}
+
+	@Override
+	EClauseOperator getOperator() {
+		return EClauseOperator.IS_EQUAL;
+	}
 }

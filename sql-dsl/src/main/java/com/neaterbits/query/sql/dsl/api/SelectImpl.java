@@ -37,7 +37,7 @@ final class SelectImpl implements IClassic {
 			throw new IllegalArgumentException("cl == null");
 		}
 
-		return new MultiMapToResultImpl<MultiQuery<MAPPED_RESULT>, MAPPED_RESULT>(cl, multiQueryCompiler());
+		return new MultiMapToResultImpl<MultiQuery<MAPPED_RESULT>, MAPPED_RESULT>(cl, ECollectionType.LIST, multiQueryCompiler());
 	}
 
 	@Override
@@ -55,7 +55,7 @@ final class SelectImpl implements IClassic {
 			throw new IllegalArgumentException("cl == null");
 		}
 
-		return new MultiTypeResultImpl<MultiQuery<TYPE_RESULT>, TYPE_RESULT>(cl, multiQueryCompiler());
+		return new MultiTypeResultImpl<MultiQuery<TYPE_RESULT>, TYPE_RESULT>(cl, ECollectionType.LIST, multiQueryCompiler());
 	}
 
 	@Override
@@ -73,7 +73,7 @@ final class SelectImpl implements IClassic {
 			throw new IllegalArgumentException("cl == null");
 		}
 
-		return new SingleTableResultImpl<MultiQuery<TYPE_RESULT>, TYPE_RESULT>(new QueryResultEntityMulti(cl), multiQueryCompiler());
+		return new SingleTableResultImpl<MultiQuery<TYPE_RESULT>, TYPE_RESULT>(new QueryResultEntityMulti(cl, ECollectionType.LIST), multiQueryCompiler());
 	}
 	
 	static {

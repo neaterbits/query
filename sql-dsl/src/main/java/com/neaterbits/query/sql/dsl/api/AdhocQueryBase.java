@@ -1,8 +1,6 @@
 package com.neaterbits.query.sql.dsl.api;
 
 
-import com.neaterbits.query.sql.dsl.api.entity.OneToManyJoinConditionResolver;
-
 /**
  * Fast adhoc query, eg. similar to Streams API but aims at far fewer allocations
  * @author nhl
@@ -79,6 +77,11 @@ abstract class AdhocQueryBase<MODEL, QUERY extends AdhocQueryBase<MODEL, QUERY>>
 	}
 
 	@Override
+	public final Class<?> getResultJavaType(QUERY query) {
+		throw new UnsupportedOperationException("TODO");
+	}
+
+	@Override
 	public final ECollectionType getResultCollectionType(QUERY query) {
 		return collectionType;
 	}
@@ -88,6 +91,10 @@ abstract class AdhocQueryBase<MODEL, QUERY extends AdhocQueryBase<MODEL, QUERY>>
 		return aggregateFunction;
 	}
 
+	@Override
+	public final CompiledFieldReference getAggregateResultField(QUERY query) {
+		throw new UnsupportedOperationException("TODO");
+	}
 
 	@Override
 	public final ENumericType getAggregateNumericInputType(QUERY query) {
@@ -110,6 +117,10 @@ abstract class AdhocQueryBase<MODEL, QUERY extends AdhocQueryBase<MODEL, QUERY>>
 		throw new UnsupportedOperationException("Mapping not supported for Adhoc queries");
 	}
 
+	@Override
+	public final CompiledFieldReference getMappingField(QUERY query, int mappingIdx) {
+		throw new UnsupportedOperationException("Mapping not supported for Adhoc queries");
+	}
 
 	@Override
 	public final Object executeMappingGetter(QUERY query, int mappingIdx, Object instance) {
@@ -126,5 +137,20 @@ abstract class AdhocQueryBase<MODEL, QUERY extends AdhocQueryBase<MODEL, QUERY>>
 	@Override
 	public final Object createMappedInstance(QUERY query) {
 		throw new UnsupportedOperationException("TODO: support mapping");
+	}
+
+	@Override
+	public final CompiledFieldReference getRootConditionLhs(QUERY query, int conditionIdx) {
+		throw new UnsupportedOperationException("TODO - not supported for Adhoc queries");
+	}
+
+	@Override
+	public final ConditionValueImpl getRootConditionValue(QUERY query, int conditionIdx) {
+		throw new UnsupportedOperationException("TODO - not supported for Adhoc queries");
+	}
+	
+	@Override
+	public final Class<?> [] getSelectSourceClasses(QUERY query) {
+		throw new UnsupportedOperationException("TODO - not supported for Adhoc queries");
 	}
 }

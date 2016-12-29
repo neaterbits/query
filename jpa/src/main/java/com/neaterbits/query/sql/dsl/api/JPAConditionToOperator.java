@@ -1,93 +1,61 @@
 package com.neaterbits.query.sql.dsl.api;
 
-final class JPAConditionToOperatorVisitor implements ConditionVisitor<CompileConditionParam, Void> {
+final class JPAConditionToOperator {
 
-	@Override
-	public Void onEqualTo(ConditionEqualToImpl condition, CompileConditionParam param) {
-		appendOpAndValue("=", param.getValue(), param);
+	<QUERY> void convert(ExecutableQuery<QUERY> q, QUERY query, int conditionIdx, CompileConditionParam param) {
+		
+		final EClauseOperator operator = q.getRootConditionOperator(query, conditionIdx);
+		
+		switch (operator) {
+		case IS_EQUAL:
+			appendOpAndValue("=", param.getValue(), param);
+			break;
 
-		return null;
-	}
+		case NOT_EQUAL:
+			appendOpAndValue("!=", param.getValue(), param);
+			break;
 
-	@Override
-	public Void onNotEqualTo(ConditionNotEqualToImpl condition, CompileConditionParam param) {
+		case IN:
+			param.append("(");
 
-		appendOpAndValue("!=", param.getValue(), param);
+			q.getRootConditionValue(query, conditionIdx).visit(conditionValueVisitor, param);
 
-		return null;
-	}
+			param.append(")");
+			break;
 
-	@Override
-	public Void onIn(ConditionInImpl condition, CompileConditionParam param) {
+		case GREATER_THAN:
+			appendOpAndValue(">", param.getValue(), param);
+			break;
+			
+		case GREATER_OR_EQUAL:
+			appendOpAndValue(">=", param.getValue(), param);
+			break;
+			
+		case LESS_THAN:
+			appendOpAndValue("<", param.getValue(), param);
+			break;
+			
+		case LESS_OR_EQUAL:
+			appendOpAndValue("<=", param.getValue(), param);
+			break;
+			
+		case STARTS_WITH:
+			appendLike(false, true, param.getValue(), param);
+			break;
+			
+		case ENDS_WITH:
+			appendLike(true, false, param.getValue(), param);
+			break;
+			
+		case CONTAINS:
+			appendLike(true, true, param.getValue(), param);
+			break;
+			
+		case MATCHES:
+			throw new IllegalArgumentException("matches not supported");
+		}
 
-		param.append("(");
 
-		condition.getValue().visit(conditionValueVisitor, param);
-
-		param.append(")");
-
-		return null;
-	}
-
-	@Override
-	public Void onGreaterThan(ConditionGreaterThanImpl condition, CompileConditionParam param) {
-
-		appendOpAndValue(">", param.getValue(), param);
-
-		return null;
-	}
-
-	@Override
-	public Void onGreaterThanOrEqual(ConditionGreaterThanOrEqualImpl condition, CompileConditionParam param) {
-
-		appendOpAndValue(">=", param.getValue(), param);
-
-		return null;
-	}
-
-	@Override
-	public Void onLessThan(ConditionLessThanImpl condition, CompileConditionParam param) {
-
-		appendOpAndValue("<", param.getValue(), param);
-
-		return null;
-	}
-
-	@Override
-	public Void onLessThanOrEqual(ConditionLessThanOrEqualImpl condition, CompileConditionParam param) {
-
-		appendOpAndValue("<=", param.getValue(), param);
-
-		return null;
-	}
-
-	@Override
-	public Void onStartsWith(ConditionStringStartsWith condition, CompileConditionParam param) {
-
-		appendLike(false, true, param.getValue(), param);
-
-		return null;
-	}
-
-	@Override
-	public Void onEndsWith(ConditionStringEndsWith condition, CompileConditionParam param) {
-
-		appendLike(true, false, param.getValue(), param);
-
-		return null;
-	}
-
-	@Override
-	public Void onContains(ConditionStringContains condition, CompileConditionParam param) {
-
-		appendLike(true, true, param.getValue(), param);
-
-		return null;
-	}
-
-	@Override
-	public Void onMatches(ConditionStringMatches condition, CompileConditionParam param) {
-		throw new IllegalArgumentException("matches not supported");
 	}
 
 	private static void appendLike(boolean wildcardBefore, boolean wildcardAfter, ConditionValueImpl value,

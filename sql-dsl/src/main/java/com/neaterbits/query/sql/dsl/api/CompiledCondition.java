@@ -46,6 +46,10 @@ final class CompiledCondition {
 	TypeMapSource getLhsSource() {
 		return lhs.getSource();
 	}
+	
+	EClauseOperator getOperator() {
+		return original.getOperator();
+	}
 
 	ConditionValueImpl getValue() {
 		return value;

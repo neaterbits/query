@@ -23,4 +23,9 @@ final class CompiledJoinConditionOneToMany extends CompiledJoinCondition {
 	CompiledGetter getCollectionGetter() {
 		return collection.getGetter();
 	}
+
+	@Override
+	EJoinConditionType getJoinConditionType() {
+		return EJoinConditionType.ONE_TO_MANY;
+	}
 }

@@ -1,5 +1,6 @@
 package com.neaterbits.query.sql.dsl.api;
 
+import java.lang.reflect.Method;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 
@@ -99,10 +100,19 @@ interface ExecutableQuery<QUERY> {
 		return ret;
 	}
 	
+	public default boolean hasJoins(QUERY query) {
+		return getJoinCount(query) != 0;
+	}
+	
+	public default boolean joinHasConditions(QUERY query, int joinIdx) {
+		return getJoinConditionCount(query, joinIdx) != 0;
+	}
 	
 	ExecuteQueryScratch createScratchArea(QUERY query, QueryMetaModel queryMetaModel);
 	
 	ECollectionType getResultCollectionType(QUERY query);
+
+	Class<?> getResultJavaType(QUERY query);
 	
 	
 	/**
@@ -118,6 +128,8 @@ interface ExecutableQuery<QUERY> {
 	EQueryResultGathering getGathering(QUERY query);
 	
 	EAggregateFunction getAggregateResultFunction(QUERY query);
+
+	CompiledFieldReference getAggregateResultField(QUERY query);
 
 	ENumericType getAggregateNumericInputType(QUERY query);
 
@@ -136,7 +148,8 @@ interface ExecutableQuery<QUERY> {
 	int getMappingCount(QUERY query);
 	
 	int getMappingSourceIdx(QUERY query, int mappingIdx);
-	
+
+	CompiledFieldReference getMappingField(QUERY query, int mappingIdx);
 
 	Object createMappedInstance(QUERY query);
 
@@ -171,6 +184,11 @@ interface ExecutableQuery<QUERY> {
 	
 	int getSourceCount(QUERY query);
 	
+	Class<?> getSourceJavaType(QUERY query, int sourceIdx);
+	
+	String getSourceName(QUERY query, int sourceIdx);
+	
+	Class<?> [] getSelectSourceClasses(QUERY query);	
 	
 	/**
 	 * Get the total number of Joins
@@ -181,25 +199,44 @@ interface ExecutableQuery<QUERY> {
 	
 	int getJoinCount(QUERY query);
 	
-	
 	EJoinType getJoinType(QUERY query, int joinIdx);
-	
 	
 	int getJoinLeftSourceIdx(QUERY query, int joinIdx);
 	
 	int getJoinRightSourceIdx(QUERY query, int joinIdx);
+
+	Class<?> getJoinLeftJavaType(QUERY query, int joinIdx);
+	
+	Class<?> getJoinRightJavaType(QUERY query, int joinIdx);
 	
 	int getJoinConditionCount(QUERY query, int joinIdx);
-
-	//ConditionsType getJoinConditionType(QUERY query);
+	
+	EJoinConditionType getJoinConditionType(QUERY query, int joinIdx, int conditionIdx);
 	
 	// TODO: Might make sure through validation that is always the same as the main left and source indices
 	// but for now, just assume they may be differ
 	int getJoinConditionLeftSourceIdx(QUERY query, int joinIdx, int conditionIdx);
+
 	int getJoinConditionRightSourceIdx(QUERY query, int joinIdx, int conditionIdx);
+
+	String getJoinConditionLeftName(QUERY query, int joinIdx, int conditionIdx);
+
+	String getJoinConditionRightName(QUERY query, int joinIdx, int conditionIdx);
+	
+	Class<?> getJoinConditionLeftJavaType(QUERY query, int joinIdx, int conditionIdx);
+
+	Class<?> getJoinConditionRightJavaType(QUERY query, int joinIdx, int conditionIdx);
+	
+	Method getJoinConditionOneToManyCollectionGetter(QUERY query, int joinIdx, int conditionIdx);
+
+	CompiledFieldReference getJoinConditionComparisonLhs(QUERY query, int joinIdx, int conditionIdx);
+	
+	CompiledFieldReference getJoinConditionComparisonRhs(QUERY query, int joinIdx, int conditionIdx);
 	
 	boolean evaluateJoinCondition(QUERY query, int joinIdx, Object instance1, Object instance2, int conditionIdx, OneToManyJoinConditionResolver oneToManyResolver);
 
+
+	boolean hasConditions(QUERY query);
 	
 	/**
 	 * Query has only root conditions
@@ -215,6 +252,16 @@ interface ExecutableQuery<QUERY> {
 	 */
 	
 	int getRootConditionCount(QUERY query);
+	
+	CompiledFieldReference getRootConditionLhs(QUERY query, int conditionIdx);
+
+	
+	// TODO: convert this somehow to enum or simila
+	ConditionValueImpl getRootConditionValue(QUERY query, int conditionIdx);
+	
+	EClauseOperator getRootConditionOperator(QUERY query, int conditionIdx);
+	
+	
 
 	/**
 	 * Get type of condition for this query
@@ -229,6 +276,7 @@ interface ExecutableQuery<QUERY> {
 	boolean evaluateRootCondition(QUERY query, Object instance, int conditionIdx, ConditionValuesScratch scratch);
 
 	int getConditionsMaxDepth(QUERY query);
+	
 	
 	// Generic nested-condition evaluation
 	ConditionsType getConditionsType(QUERY query, int level, int [] conditionIndices);

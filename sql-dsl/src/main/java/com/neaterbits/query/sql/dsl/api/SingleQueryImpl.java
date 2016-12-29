@@ -12,7 +12,7 @@ final class SingleQueryImpl<RESULT> extends BaseQueryImpl<RESULT, RESULT> implem
 		
 		final QueryDataSourceBase dataSourceBase = (QueryDataSourceBase)dataSource;
 		
-		final DSPreparedQuery dsPrepared = dataSourceBase.prepareSingleQuery(getCompiledQuery());
+		final DSPreparedQuery dsPrepared = dataSourceBase.prepareSingleQuery(q, getCompiledQuery());
 		
 		return new SinglePreparedQueryImpl<RESULT>(dataSourceBase, dsPrepared);
 	}

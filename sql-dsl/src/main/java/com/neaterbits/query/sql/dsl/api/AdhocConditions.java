@@ -22,7 +22,7 @@ abstract class AdhocConditions<MODEL, RESULT, QUERY extends AdhocQueryClass<MODE
 	
 	@SuppressWarnings("rawtypes")
 	private Function [] conditions;
-	private EClauseOperator [] operators;
+	EClauseOperator [] operators;
 	int [] conditionToSourceIdx;
 	private Object [] values;
 

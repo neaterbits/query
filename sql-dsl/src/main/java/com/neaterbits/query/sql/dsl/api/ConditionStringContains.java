@@ -10,4 +10,9 @@ final class ConditionStringContains extends ConditionStringImpl {
 	<T, R> R visit(ConditionVisitor<T, R> visitor, T param) {
 		return visitor.onContains(this, param);
 	}
+
+	@Override
+	EClauseOperator getOperator() {
+		return EClauseOperator.CONTAINS;
+	}
 }

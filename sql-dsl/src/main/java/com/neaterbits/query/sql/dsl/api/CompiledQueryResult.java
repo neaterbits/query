@@ -18,4 +18,8 @@ abstract class CompiledQueryResult {
 	final QueryResult getOriginal() {
 		return original;
 	}
+	
+	final ECollectionType getCollectionType() {
+		return original.getCollectionType();
+	}
 }

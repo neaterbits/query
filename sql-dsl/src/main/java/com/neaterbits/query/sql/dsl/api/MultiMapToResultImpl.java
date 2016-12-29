@@ -8,8 +8,8 @@ final class MultiMapToResultImpl<MODEL, RESULT>
 		implements IClassicMultiMapToResult<MODEL, RESULT>,
 		           IClassicMultiMapToResultAlias<MODEL, RESULT> {
 
-	MultiMapToResultImpl(Class<?> resultType, ModelCompiler<MODEL> modelCompiler) {
-		super(new QueryResultMappedMulti(resultType), modelCompiler);
+	MultiMapToResultImpl(Class<?> resultType, ECollectionType collectionType, ModelCompiler<MODEL> modelCompiler) {
+		super(new QueryResultMappedMulti(resultType, collectionType), modelCompiler);
 	}
 
 	@Override

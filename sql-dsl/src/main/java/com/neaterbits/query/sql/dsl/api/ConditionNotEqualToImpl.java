@@ -11,4 +11,9 @@ final class ConditionNotEqualToImpl extends ValueConditionImpl {
 	final <T, R> R visit(ConditionVisitor<T, R> visitor, T param) {
 		return visitor.onNotEqualTo(this, param);
 	}
+
+	@Override
+	EClauseOperator getOperator() {
+		return EClauseOperator.NOT_EQUAL;
+	}
 }

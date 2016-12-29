@@ -6,16 +6,15 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
-final class JPAHalfwayPreparedQuery extends JPABasePreparedQuery {
+final class JPAHalfwayPreparedQuery<QUERY> extends JPABasePreparedQuery<QUERY> {
 
 	private final String base;
 	private final JPAOp op;
 	private final List<JPACondition> conditions;
 	private final EntityManager entityManager;
 	
-	
-	JPAHalfwayPreparedQuery(CompiledQuery compiledQuery, ParamNameAssigner paramNameAssigner, String base, JPAOp op, List<JPACondition> conditions, EntityManager entityManager) {
-		super(compiledQuery, paramNameAssigner);
+	JPAHalfwayPreparedQuery(ExecutableQuery<QUERY> queryAccess, QUERY query, ParamNameAssigner paramNameAssigner, String base, JPAOp op, List<JPACondition> conditions, EntityManager entityManager) {
+		super(queryAccess, query, paramNameAssigner);
 		
 		if (base == null) {
 			throw new IllegalArgumentException("base == null");

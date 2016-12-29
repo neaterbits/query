@@ -34,8 +34,13 @@ final class ExecutableQueryForCompiledQuery implements ExecutableQuery<CompiledQ
 	}
 	
 	@Override
+	public Class<?> getResultJavaType(CompiledQuery query) {
+		return query.getResultType();
+	}
+
+	@Override
 	public ECollectionType getResultCollectionType(CompiledQuery query) {
-		throw new UnsupportedOperationException("TODO");
+		return query.getResult().getCollectionType();
 	}
 
 	@Override
@@ -43,6 +48,11 @@ final class ExecutableQueryForCompiledQuery implements ExecutableQuery<CompiledQ
 		return ((QueryResultAggregate)query.getResult().getOriginal()).getAggregateFunction();
 	}
 	
+	@Override
+	public CompiledFieldReference getAggregateResultField(CompiledQuery query) {
+		return ((CompiledQueryResultAggregate)query.getResult()).getField();
+	}
+
 	@Override
 	public ENumericType getAggregateNumericInputType(CompiledQuery query) {
 		return ((QueryResultAggregate)query.getResult().getOriginal()).getInputNumericType();
@@ -80,6 +90,13 @@ final class ExecutableQueryForCompiledQuery implements ExecutableQuery<CompiledQ
 	}
 
 	@Override
+	public CompiledFieldReference getMappingField(CompiledQuery query, int mappingIdx) {
+		final CompiledQueryResultMapped mapped = (CompiledQueryResultMapped)query.getResult();
+
+		return mapped.getMappings().getMappings().get(mappingIdx).getField();
+	}
+
+	@Override
 	public Object createMappedInstance(CompiledQuery query) {
 		
 		final Class<?> type = query.getResult().getOriginal().getType();
@@ -88,7 +105,7 @@ final class ExecutableQueryForCompiledQuery implements ExecutableQuery<CompiledQ
 		try {
 			ret = type.newInstance();
 		} catch (InstantiationException | IllegalAccessException ex) {
-			throw new IllegalStateException("Failed to instantia type " + type);
+			throw new IllegalStateException("Failed to instantiate type " + type);
 		}
 		
 		return ret;
@@ -116,6 +133,22 @@ final class ExecutableQueryForCompiledQuery implements ExecutableQuery<CompiledQ
 	}
 
 	@Override
+	public Class<?> getSourceJavaType(CompiledQuery query, int sourceIdx) {
+		return query.getSelectSources().getSources().get(sourceIdx).getType();
+	}
+
+	@Override
+	public String getSourceName(CompiledQuery query, int sourceIdx) {
+		return query.getSelectSources().getSources().get(sourceIdx).getName();
+	}
+
+	@Override
+	public Class<?>[] getSelectSourceClasses(CompiledQuery query) {
+		return query.getSelectSourceClasses();
+	}
+
+	
+	@Override
 	public int getJoinCount(CompiledQuery query) {
 		final CompiledJoins joins = query.getJoins();
 		
@@ -142,7 +175,22 @@ final class ExecutableQueryForCompiledQuery implements ExecutableQuery<CompiledQ
 	public int getJoinConditionCount(CompiledQuery query, int joinIdx) {
 		return getJoin(query, joinIdx).getConditions().size();
 	}
+	
+	@Override
+	public EJoinConditionType getJoinConditionType(CompiledQuery query, int joinIdx, int conditionIdx) {
+		return getJoin(query, joinIdx).getConditions().get(conditionIdx).getJoinConditionType();
+	}
 
+	@Override
+	public Class<?> getJoinLeftJavaType(CompiledQuery query, int joinIdx) {
+		return getJoin(query, joinIdx).getLeft().getType();
+	}
+
+	@Override
+	public Class<?> getJoinRightJavaType(CompiledQuery query, int joinIdx) {
+		return getJoin(query, joinIdx).getRight().getType();
+	}
+	
 	/*
 	@Override
 	public ConditionsType getJoinConditionType(CompiledQuery query) {
@@ -152,6 +200,7 @@ final class ExecutableQueryForCompiledQuery implements ExecutableQuery<CompiledQ
 	*/
 
 	
+
 	@Override
 	public int getJoinConditionLeftSourceIdx(CompiledQuery query, int joinIdx, int conditionIdx) {
 
@@ -164,6 +213,48 @@ final class ExecutableQueryForCompiledQuery implements ExecutableQuery<CompiledQ
 		return getJoin(query, joinIdx).getConditions().get(conditionIdx).getRight().getIdx();
 	}
 	
+	@Override
+	public String getJoinConditionLeftName(CompiledQuery query, int joinIdx, int conditionIdx) {
+		return getJoin(query, joinIdx).getConditions().get(conditionIdx).getLeft().getName();
+	}
+
+	@Override
+	public String getJoinConditionRightName(CompiledQuery query, int joinIdx, int conditionIdx) {
+		return getJoin(query, joinIdx).getConditions().get(conditionIdx).getLeft().getName();
+	}
+	
+	@Override
+	public Class<?> getJoinConditionLeftJavaType(CompiledQuery query, int joinIdx, int conditionIdx) {
+		return getJoin(query, joinIdx).getConditions().get(conditionIdx).getLeft().getType();
+	}
+
+	@Override
+	public Class<?> getJoinConditionRightJavaType(CompiledQuery query, int joinIdx, int conditionIdx) {
+		return getJoin(query, joinIdx).getConditions().get(conditionIdx).getLeft().getType();
+	}
+	
+	@Override
+	public Method getJoinConditionOneToManyCollectionGetter(CompiledQuery query, int joinIdx, int conditionIdx) {
+		
+		final CompiledJoinConditionOneToMany condition = (CompiledJoinConditionOneToMany)getJoin(query, joinIdx).getConditions().get(conditionIdx);
+
+		return condition.getCollectionGetter().getGetterMethod();
+	}
+	
+	@Override
+	public CompiledFieldReference getJoinConditionComparisonLhs(CompiledQuery query, int joinIdx, int conditionIdx) {
+		final CompiledJoinConditionComparison condition = (CompiledJoinConditionComparison)getJoin(query, joinIdx).getConditions().get(conditionIdx);
+
+		return condition.getLhs();
+	}
+
+	@Override
+	public CompiledFieldReference getJoinConditionComparisonRhs(CompiledQuery query, int joinIdx, int conditionIdx) {
+		final CompiledJoinConditionComparison condition = (CompiledJoinConditionComparison)getJoin(query, joinIdx).getConditions().get(conditionIdx);
+
+		return condition.getRhs();
+	}
+
 	private CompiledJoin getJoin(CompiledQuery query, int joinIdx) {
 		final CompiledJoin join = query.getJoins().getJoins().get(joinIdx);
 
@@ -255,12 +346,38 @@ final class ExecutableQueryForCompiledQuery implements ExecutableQuery<CompiledQ
 		return EvaluateUtil.evaluateComparables(lhs, rhs);
 	}
 	
+	
+	@Override
+	public boolean hasConditions(CompiledQuery query) {
+		
+		final CompiledConditions conditions = query.getConditions();
+		
+		return conditions != null && !conditions.getConditions().isEmpty();
+	}
 
 	@Override
 	public int getRootConditionCount(CompiledQuery query) {
 		final CompiledConditions conditions = query.getConditions();
 		
 		return conditions != null ? conditions.getConditions().size() : 0;
+	}
+
+	@Override
+	public EClauseOperator getRootConditionOperator(CompiledQuery query, int conditionIdx) {
+		return query.getConditions().getConditions().get(conditionIdx).getOperator();
+	}
+
+	
+	
+	
+	@Override
+	public CompiledFieldReference getRootConditionLhs(CompiledQuery query, int conditionIdx) {
+		return query.getConditions().getConditions().get(conditionIdx).getLhs();
+	}
+
+	@Override
+	public ConditionValueImpl getRootConditionValue(CompiledQuery query, int conditionIdx) {
+		return query.getConditions().getConditions().get(conditionIdx).getValue();
 	}
 
 	@Override
@@ -328,12 +445,12 @@ final class ExecutableQueryForCompiledQuery implements ExecutableQuery<CompiledQ
 
 	@Override
 	public boolean isRootConditionOnly(CompiledQuery query) {
-		throw new UnsupportedOperationException("TODO");
+		return true; // For now
 	}
 
 	@Override
 	public int getConditionsMaxDepth(CompiledQuery query) {
-		throw new UnsupportedOperationException("TODO");
+		return 1; // For now
 	}
 
 	@Override

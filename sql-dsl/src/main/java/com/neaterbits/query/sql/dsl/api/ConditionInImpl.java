@@ -10,4 +10,9 @@ final class ConditionInImpl extends ValueConditionImpl {
 	<T, R> R visit(ConditionVisitor<T, R> visitor, T param) {
 		return visitor.onIn(this, param);
 	}
+
+	@Override
+	EClauseOperator getOperator() {
+		return EClauseOperator.IN;
+	}
 }

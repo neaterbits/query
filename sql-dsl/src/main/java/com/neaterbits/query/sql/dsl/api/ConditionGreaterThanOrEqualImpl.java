@@ -10,4 +10,9 @@ final class ConditionGreaterThanOrEqualImpl extends ConditionComparisonImpl  {
 	<T, R> R visit(ConditionVisitor<T, R> visitor, T param) {
 		return visitor.onGreaterThanOrEqual(this, param);
 	}
+
+	@Override
+	EClauseOperator getOperator() {
+		return EClauseOperator.GREATER_OR_EQUAL;
+	}
 }

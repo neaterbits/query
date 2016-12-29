@@ -6,6 +6,8 @@ abstract class QueryResult extends QueryBuilderItem {
 	abstract EQueryResultDimension getDimension();
 
 	abstract EQueryResultGathering getGathering();
+	
+	abstract ECollectionType getCollectionType();
 
 	QueryResult(Class<?> type) {
 		

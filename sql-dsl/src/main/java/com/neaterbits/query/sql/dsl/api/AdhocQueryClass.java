@@ -1,5 +1,6 @@
 package com.neaterbits.query.sql.dsl.api;
 
+import java.lang.reflect.Method;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.function.Consumer;
@@ -141,12 +142,25 @@ abstract class AdhocQueryClass<MODEL, RESULT>
 		return joins[joinIdx].rightSourceIdx;
 	}
 
+	@Override
+	public Class<?> getJoinLeftJavaType(AdhocQueryClass<MODEL, RESULT> query, int joinIdx) {
+		throw new UnsupportedOperationException("TODO");
+	}
+
+	@Override
+	public Class<?> getJoinRightJavaType(AdhocQueryClass<MODEL, RESULT> query, int joinIdx) {
+		throw new UnsupportedOperationException("TODO");
+	}
 
 	@Override
 	public final int getJoinConditionCount(AdhocQueryClass<MODEL, RESULT> query, int joinIdx) {
 		return joins[joinIdx].numConditions;
 	}
-
+	
+	@Override
+	public EJoinConditionType getJoinConditionType(AdhocQueryClass<MODEL, RESULT> query, int joinIdx, int conditionIdx) {
+		return joins[joinIdx].conditions[conditionIdx].getJoinConditionType();
+	}
 
 	@Override
 	public final int getJoinConditionLeftSourceIdx(AdhocQueryClass<MODEL, RESULT> query, int joinIdx, int conditionIdx) {
@@ -159,6 +173,40 @@ abstract class AdhocQueryClass<MODEL, RESULT>
 		return joins[joinIdx].rightSourceIdx;
 	}
 
+	@Override
+	public final String getJoinConditionLeftName(AdhocQueryClass<MODEL, RESULT> query, int joinIdx, int conditionIdx) {
+		throw new UnsupportedOperationException("TODO");
+	}
+
+	@Override
+	public final String getJoinConditionRightName(AdhocQueryClass<MODEL, RESULT> query, int joinIdx, int conditionIdx) {
+		throw new UnsupportedOperationException("TODO");
+	}
+
+	@Override
+	public final Class<?> getJoinConditionLeftJavaType(AdhocQueryClass<MODEL, RESULT> query, int joinIdx, int conditionIdx) {
+		throw new UnsupportedOperationException("TODO");
+	}
+
+	@Override
+	public final Class<?> getJoinConditionRightJavaType(AdhocQueryClass<MODEL, RESULT> query, int joinIdx, int conditionIdx) {
+		throw new UnsupportedOperationException("TODO");
+	}
+
+	@Override
+	public final Method getJoinConditionOneToManyCollectionGetter(AdhocQueryClass<MODEL, RESULT> query, int joinIdx, int conditionIdx) {
+		throw new UnsupportedOperationException("TODO");
+	}
+
+	@Override
+	public final CompiledFieldReference getJoinConditionComparisonLhs(AdhocQueryClass<MODEL, RESULT> query, int joinIdx, int conditionIdx) {
+		throw new UnsupportedOperationException("TODO");
+	}
+
+	@Override
+	public final CompiledFieldReference getJoinConditionComparisonRhs(AdhocQueryClass<MODEL, RESULT> query, int joinIdx, int conditionIdx) {
+		throw new UnsupportedOperationException("TODO");
+	}
 
 	@Override
 	public final boolean evaluateJoinCondition(AdhocQueryClass<MODEL, RESULT> query, int joinIdx, Object instance1, Object instance2, int conditionIdx, OneToManyJoinConditionResolver oneToManyResolver) {
@@ -175,6 +223,16 @@ abstract class AdhocQueryClass<MODEL, RESULT>
 	}
 
 	@Override
+	public Class<?> getSourceJavaType(AdhocQueryClass<MODEL, RESULT> query, int sourceIdx) {
+		throw new UnsupportedOperationException("TODO");
+	}
+
+	@Override
+	public String getSourceName(AdhocQueryClass<MODEL, RESULT> query, int sourceIdx) {
+		throw new UnsupportedOperationException("TODO");
+	}
+
+	@Override
 	public final ConditionsType getRootConditionsType(AdhocQueryClass<MODEL, RESULT> query) {
 		return conditions.getConditionsType();
 	}
@@ -187,6 +245,11 @@ abstract class AdhocQueryClass<MODEL, RESULT>
 	@Override
 	public final int getRootConditionSourceIdx(AdhocQueryClass<MODEL, RESULT> query, int conditionIdx) {
 		return conditions.conditionToSourceIdx[conditionIdx];
+	}
+
+	@Override
+	public EClauseOperator getRootConditionOperator(AdhocQueryClass<MODEL, RESULT> query, int conditionIdx) {
+		return conditions.operators[conditionIdx];
 	}
 
 	@Override
@@ -229,6 +292,11 @@ abstract class AdhocQueryClass<MODEL, RESULT>
 		}
 
 		return count;
+	}
+
+	@Override
+	public final boolean hasConditions(AdhocQueryClass<MODEL, RESULT> query) {
+		return conditions != null;
 	}
 
 	@Override

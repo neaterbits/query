@@ -10,4 +10,9 @@ final class ConditionStringStartsWith extends ConditionStringImpl {
 	<T, R> R visit(ConditionVisitor<T, R> visitor, T param) {
 		return visitor.onStartsWith(this, param);
 	}
+
+	@Override
+	EClauseOperator getOperator() {
+		return EClauseOperator.STARTS_WITH;
+	}
 }

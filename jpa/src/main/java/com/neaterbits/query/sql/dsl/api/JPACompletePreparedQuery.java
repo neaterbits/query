@@ -2,12 +2,12 @@ package com.neaterbits.query.sql.dsl.api;
 
 import javax.persistence.Query;
 
-final class JPACompletePreparedQuery extends JPABasePreparedQuery {
+final class JPACompletePreparedQuery<QUERY> extends JPABasePreparedQuery<QUERY> {
 
 	private final javax.persistence.Query jpaQuery;
 
-	JPACompletePreparedQuery(CompiledQuery compiledQuery, ParamNameAssigner paramNameAssigner, Query jpaQuery) {
-		super(compiledQuery, paramNameAssigner);
+	JPACompletePreparedQuery(ExecutableQuery<QUERY> queryAccess, QUERY query, ParamNameAssigner paramNameAssigner, Query jpaQuery) {
+		super(queryAccess, query, paramNameAssigner);
 		
 		if (jpaQuery == null) {
 			throw new IllegalArgumentException("jpaQuery == null");

@@ -10,4 +10,9 @@ final class QueryResultMappedSingle extends QueryResultMapped {
 	EQueryResultDimension getDimension() {
 		return EQueryResultDimension.SINGLE;
 	}
+
+	@Override
+	ECollectionType getCollectionType() {
+		throw new UnsupportedOperationException("Not a collection type");
+	}
 }

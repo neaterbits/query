@@ -68,6 +68,7 @@ public final class QueryTestDSJPA extends QueryTestDSBasePersistent<EntityManage
 		em.close();
 	}
 
+	@SuppressWarnings("rawtypes")
 	@Override
 	protected QueryDataSource createDataSource(EntityManager em) {
 		return new QueryDataSourceJPA(em);

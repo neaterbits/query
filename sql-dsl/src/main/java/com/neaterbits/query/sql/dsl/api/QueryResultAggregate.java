@@ -68,4 +68,9 @@ abstract class QueryResultAggregate extends QueryResult {
 	final EQueryResultGathering getGathering() {
 		return EQueryResultGathering.AGGREGATE;
 	}
+
+	@Override
+	final ECollectionType getCollectionType() {
+		throw new UnsupportedOperationException("Not a collection type");
+	}
 }
