@@ -513,6 +513,7 @@ Neste:
 
  - adhoc queries med mininmalt overhead
  - nøsta and/or
+ - bedre debugging a vin-memory query eksekvering
  - parametere
  - JS / annen kode generering ut fra POJO joins
  

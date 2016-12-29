@@ -76,6 +76,9 @@ final class ExecuteQueryPOJOs<QUERY> extends ExecutableQueryAggregateComputation
 
 		// TODO: Handle 1 result part case? no need for array
 		final ExecuteQueryScratch scratch =  q.createScratchArea(query, queryMetaModel);
+
+		final StructuredDebug debug = DEBUG ? new StructuredDebug("execute") : null;
+		
 		
 		if (joinCount > 0) {
 			// We shall perform joins over tables
@@ -89,11 +92,11 @@ final class ExecuteQueryPOJOs<QUERY> extends ExecutableQueryAggregateComputation
 				
 			}
 			*/
-			ret = loopJoinedNoSets(query, input, scratch);
+			ret = loopJoinedNoSets(query, input, scratch, debug);
 		}
 		else {
 			// Loop over all clauses to test
-			ret = loopNonJoined(query, input, scratch);
+			ret = loopNonJoined(query, input, scratch, debug);
 		}
 
 		final EQueryResultGathering gathering = q.getGathering(query);
@@ -107,6 +110,10 @@ final class ExecuteQueryPOJOs<QUERY> extends ExecutableQueryAggregateComputation
 				// return aggregate default
 				ret = q.getAggregateDefault(query);
 			}
+		}
+		
+		if (debug != null) {
+			debug.output(System.out);
 		}
 
 		return ret;
@@ -292,7 +299,7 @@ final class ExecuteQueryPOJOs<QUERY> extends ExecutableQueryAggregateComputation
 	// will require measurement for tuning but for later study
 	
 	
-	private Object loopJoinedNoSets(QUERY query, ExecuteQueryPOJOsInput input, ExecuteQueryScratch scratch) {
+	private Object loopJoinedNoSets(QUERY query, ExecuteQueryPOJOsInput input, ExecuteQueryScratch scratch, StructuredDebug debug) {
 		final int numSelectSources = q.getSourceCount(query);
 		
 		final int joinCount = q.getJoinCount(query);
@@ -303,7 +310,7 @@ final class ExecuteQueryPOJOs<QUERY> extends ExecutableQueryAggregateComputation
 
 		Object result = computeInitialResult(query);
 		
-		result = loopJoinedNoSets(query, input, 0, numSelectSources, scratch, joinCount, result, false);
+		result = loopJoinedNoSets(query, input, 0, numSelectSources, scratch, joinCount, result, false, debug);
 		
 		return result;
 	}
@@ -312,13 +319,16 @@ final class ExecuteQueryPOJOs<QUERY> extends ExecutableQueryAggregateComputation
 	// Non-joined simple case. Means outer-join of all structures
 	private Object loopJoinedNoSets(QUERY query,
 			ExecuteQueryPOJOsInput input, int sourceIdx, int numSources,
-			ExecuteQueryScratch scratch, int numJoins, Object result, boolean reevaluationRequired) {
+			ExecuteQueryScratch scratch, int numJoins, Object result, boolean reevaluationRequired, StructuredDebug debug) {
 		
 		
 		final Collection<?> source = input.getPOJOs(sourceIdx);
 		
-		if (DEBUG) {
-			debug(sourceIdx, "loopJoinedNoSets sourceIdx=" + sourceIdx +", count=" + source.size() + ",result=" + result);
+		if (debug != null) {
+			
+			debug.addIndent("loopJoinedNoSets sourceIdx=" + sourceIdx);
+			
+			debug.debug("count=" + source.size() + ", input result=" + result);
 		}
 		
 
@@ -326,17 +336,17 @@ final class ExecuteQueryPOJOs<QUERY> extends ExecutableQueryAggregateComputation
 			// Loop over conditions to see if should be added
 			if (joinMatches(query, sourceIdx, scratch, o, numJoins)) {
 
-				if (DEBUG) {
-					debug(sourceIdx, "loopJoinedNoSets join match for " + o);
+				if (debug != null) {
+					debug.debug("join match for " + o);
 				}
 				
 
 				if (scratch.hasConditions()) {
 					
-					final EMatch matches = matches(query, sourceIdx, o, scratch);
+					final EMatch matches = matches(query, sourceIdx, o, scratch, debug);
 
-					if (DEBUG) {
-						debug(sourceIdx, "loopJoinedNoSets condition match " + matches + " for " + o);
+					if (debug != null) {
+						debug.debug("condition match " + matches + " for " + o);
 					}
 					
 					if (matches == EMatch.NO) {
@@ -359,21 +369,25 @@ final class ExecuteQueryPOJOs<QUERY> extends ExecutableQueryAggregateComputation
 
 					result = computeResult(query, o, result, scratch);
 
-					if (DEBUG) {
-						debug(sourceIdx, "loopJoinedNoSets end source idx reached, computed result " + result);
+					if (debug != null) {
+						debug.debug("end source idx reached, computed result " + result);
 					}
 				}
 				else {
 					// Recurse to next source idx
 					loopJoinedNoSets(query, input, sourceIdx + 1,
-							numSources, scratch, numJoins, result, reevaluationRequired);
+							numSources, scratch, numJoins, result, reevaluationRequired, debug);
 				}
 			}
 			else {
-				if (DEBUG) {
-					debug(sourceIdx, "loopJoinedNoSets no join match for " + o);
+				if (debug != null) {
+					debug.debug("no join match for " + o);
 				}
 			}
+		}
+		
+		if (debug != null) {
+			debug.subIndent();
 		}
 		
 		return result;
@@ -443,13 +457,11 @@ final class ExecuteQueryPOJOs<QUERY> extends ExecutableQueryAggregateComputation
 			if (
 				   (conditionLeftSourceIdx == joinLeftSourceIdx && conditionRightSourceIdx == joinRightSourceIdx)
 				|| (conditionLeftSourceIdx == joinRightSourceIdx && conditionRightSourceIdx == joinLeftSourceIdx )) {
-			
 
 				// Match
-				
 				final Object left;
 				final Object right;
-				
+
 				if (thisSourceIdx == conditionLeftSourceIdx) {
 					left = thisInstance;
 					right = scratch.get(conditionRightSourceIdx);
@@ -482,12 +494,13 @@ final class ExecuteQueryPOJOs<QUERY> extends ExecutableQueryAggregateComputation
 	// ************************ Non-joined loop ************************
 
 	// Non-joined simple case. Means outer-join of all structures
-	private Object loopNonJoined(QUERY query, ExecuteQueryPOJOsInput input, ExecuteQueryScratch scratch) {
+	private Object loopNonJoined(QUERY query, ExecuteQueryPOJOsInput input, ExecuteQueryScratch scratch, StructuredDebug debug) {
+
 		final int numSelectSources = q.getSourceCount(query);
 		
 		Object result = computeInitialResult(query);
 
-		final Object ret = loopNonJoined(query, input, 0, numSelectSources, scratch, result, false);
+		final Object ret = loopNonJoined(query, input, 0, numSelectSources, scratch, result, false, debug);
 
 		return ret;
 	}
@@ -496,7 +509,8 @@ final class ExecuteQueryPOJOs<QUERY> extends ExecutableQueryAggregateComputation
 	private Object loopNonJoined(QUERY query,
 			ExecuteQueryPOJOsInput input, int sourceIdx, int numSources,
 			ExecuteQueryScratch scratch, Object result,
-			boolean reevaluationRequired) {
+			boolean reevaluationRequired,
+			StructuredDebug debug) {
 
 		final Collection<?> source = input.getPOJOs(sourceIdx);
 
@@ -505,7 +519,7 @@ final class ExecuteQueryPOJOs<QUERY> extends ExecutableQueryAggregateComputation
 			// Loop over conditions to see if should be added
 			if (scratch.hasConditions()) {
 
-				final EMatch matches = matches(query, sourceIdx, o, scratch);
+				final EMatch matches = matches(query, sourceIdx, o, scratch, debug);
 
 				if (matches == EMatch.NO) {
 					// Definite none-match, skip
@@ -530,59 +544,78 @@ final class ExecuteQueryPOJOs<QUERY> extends ExecutableQueryAggregateComputation
 			else {
 				// Recurse to next source idx
 				loopNonJoined(query, input, sourceIdx + 1,
-						numSources, scratch, result, reevaluationRequired);
+						numSources, scratch, result, reevaluationRequired, debug);
 			}
 		}
 		
 		return result;
 	}
 	
-	private EMatch matches(QUERY query, int sourceIdx, Object instance, ExecuteQueryScratch scratch) {
+	private EMatch matches(QUERY query, int sourceIdx, Object instance, ExecuteQueryScratch scratch, StructuredDebug debug) {
 
 		final EMatch ret;
 
 		if (q.isRootConditionOnly(query)) {
-			ret = rootOnlyMatches(query, sourceIdx, instance, scratch);
+			ret = rootOnlyMatches(query, sourceIdx, instance, scratch, debug);
 		}
 		else {
 			// Does not only match on root, we need to evaluate nested subs as well
 			final int [] conditionIndices = scratch.assureConditionIndices();
 			
-			ret = recursiveMatches(query, sourceIdx, instance, 0, conditionIndices, scratch);
+			ret = recursiveMatches(query, sourceIdx, instance, 0, conditionIndices, scratch, debug);
 		}
 
 		return ret;
 	}
 
-	private EMatch recursiveMatches(QUERY query, int sourceIdx, Object instance, int level, int [] conditionIndices, ConditionValuesScratch scratch) {
+	private EMatch recursiveMatches(QUERY query, int sourceIdx, Object instance, int level, int [] conditionIndices, ConditionValuesScratch scratch, StructuredDebug debug) {
 
+		if (debug != null) {
+			debug.addIndent("recursiveMatches");
+			
+		}
+		
 		// Finding recursively everything that matches for a particular source
 
 		final ConditionsType type = q.getConditionsType(query, level, conditionIndices);
 
 		final EMatch ret;
 		
+		
+		if (debug != null) {
+			debug.debug("type=" + type);
+		}
+		
 		switch (type) {
 			case SINGLE:
-				ret = recursiveMatchSingle(query, sourceIdx, instance, level, conditionIndices, 0, scratch);
+				ret = recursiveMatchSingle(query, sourceIdx, instance, level, conditionIndices, 0, scratch, debug);
 				break;
 				
 			case AND:
-				ret = recursiveMatchAnd(query, sourceIdx, instance, level, conditionIndices, scratch);
+				ret = recursiveMatchAnd(query, sourceIdx, instance, level, conditionIndices, scratch, debug);
 				break;
 				
 			case OR:
-				ret = recursiveMatchOr(query, sourceIdx, instance, level, conditionIndices, scratch);
+				ret = recursiveMatchOr(query, sourceIdx, instance, level, conditionIndices, scratch, debug);
 				break;
 				
 			default:
 				throw new UnsupportedOperationException("Unknown condition type " + type);
 		}
+		
+		if (debug != null) {
+			debug.debug("result=" + ret);
+		}
+		
+		
+		if (debug != null) {
+			debug.subIndent();
+		}
 
 		return ret;
 	}
 
-	private EMatch recursiveMatchSingle(QUERY query, int sourceIdx, Object instance, int level, int [] conditionIndices, int conditionIdx, ConditionValuesScratch scratch) {
+	private EMatch recursiveMatchSingle(QUERY query, int sourceIdx, Object instance, int level, int [] conditionIndices, int conditionIdx, ConditionValuesScratch scratch, StructuredDebug debug) {
 		
 		final EMatch ret;
 		
@@ -590,9 +623,14 @@ final class ExecuteQueryPOJOs<QUERY> extends ExecutableQueryAggregateComputation
 
 		final int conditionSourceIdx = q.getConditionSourceIdx(query, level, conditionIndices);
 		
+		if (debug != null) {
+			debug.addIndent("recursiveMatchSingle sourceIdx=" + sourceIdx  + " level=" + level);
+		}
+		
+		
 		if (conditionSourceIdx == sourceIdx) {
 			if (q.isSubCondition(query, level, conditionIndices)) {
-				ret = recursiveMatches(query, sourceIdx, instance, level + 1, conditionIndices, scratch);
+				ret = recursiveMatches(query, sourceIdx, instance, level + 1, conditionIndices, scratch, debug);
 			}
 			else {
 				ret = q.evaluateCondition(query, level, conditionIndices, instance, scratch)
@@ -605,26 +643,28 @@ final class ExecuteQueryPOJOs<QUERY> extends ExecutableQueryAggregateComputation
 			ret = EMatch.NOT_APPLICABLE_TO_SOURCE; // for a different source, uncertain but for THIS source there is a match
 		}
 		
-		if (DEBUG) {
-			final int indent = sourceIdx + level + 1;
-			
+		if (debug != null) {
 			final EClauseOperator operator = q.getOperator(query, level, conditionIndices);
 
-			debug(indent, "recursiveMatchSingle end match sourceIdx=" + sourceIdx + ", op=" + operator + " : " + ret);
+			debug.debug("reuturn end match op=" + operator + " : " + ret);
+			
+			debug.subIndent();
 		}
 		
 		return ret;
 	}
 
 
-	private EMatch recursiveMatchAnd(QUERY query, int sourceIdx, Object instance, int level, int [] conditionIndices, ConditionValuesScratch scratch) {
+	private EMatch recursiveMatchAnd(QUERY query, int sourceIdx, Object instance, int level, int [] conditionIndices, ConditionValuesScratch scratch, StructuredDebug debug) {
 
 		int numFromThisSource = 0;
-		
+
 		final int numConditions = q.getConditionsCount(query, level, conditionIndices);
-		
-		final int indent = sourceIdx + level + 1;
-		
+
+		if (debug != null) {
+			debug.addIndent("recursiveMatchAnd sourceIdx=" + sourceIdx  + " level=" + level);
+		}
+
 		for (int conditionIdx = 0; conditionIdx < numConditions; ++ conditionIdx) {
 			
 			conditionIndices[level] = conditionIdx;
@@ -634,7 +674,7 @@ final class ExecuteQueryPOJOs<QUERY> extends ExecutableQueryAggregateComputation
 			if (conditionSourceIdx == sourceIdx) {
 
 				if (q.isSubCondition(query, level, conditionIndices)) {
-					final EMatch subMatch = recursiveMatches(query, sourceIdx, instance, level + 1, conditionIndices, scratch);
+					final EMatch subMatch = recursiveMatches(query, sourceIdx, instance, level + 1, conditionIndices, scratch, debug);
 					
 					switch (subMatch){
 					case YES:
@@ -642,10 +682,12 @@ final class ExecuteQueryPOJOs<QUERY> extends ExecutableQueryAggregateComputation
 						break;
 						
 					case NO:
-						if (DEBUG) {
+						if (debug != null) {
 							final EClauseOperator operator = q.getOperator(query, level, conditionIndices);
 							
-							debug(indent, "recursiveMatchAnd sub MISMATCH sourceIdx=" + sourceIdx + ", conditionIdx " + conditionIdx + ", op=" + operator);
+							debug.debug("sub MISMATCH conditionIdx " + conditionIdx + ", op=" + operator);
+							
+							debug.subIndent();
 						}
 						return EMatch.NO;
 						
@@ -657,7 +699,7 @@ final class ExecuteQueryPOJOs<QUERY> extends ExecutableQueryAggregateComputation
 						// Not certain that we can evaluate this one to true, might be true or not, must evaluate at end.
 						// So return a provisional match
 						return EMatch.UNCERTAIN_REQUIRES_REEVALUATION;
-						
+
 					default:
 						throw new UnsupportedOperationException("Unknown match " + subMatch);
 					}
@@ -665,10 +707,12 @@ final class ExecuteQueryPOJOs<QUERY> extends ExecutableQueryAggregateComputation
 				else { 
 					
 					if (!q.evaluateCondition(query, level, conditionIndices, instance, scratch)) {
-						if (DEBUG) {
+						if (debug != null) {
 							final EClauseOperator operator = q.getOperator(query, level, conditionIndices);
 
-							debug(indent, "recursiveMatchAnd MISMATCH sourceIdx=" + sourceIdx + ", conditionIdx " + conditionIdx + ", op=" + operator);
+							debug.debug("MISMATCH conditionIdx " + conditionIdx + ", op=" + operator);
+							
+							debug.subIndent();
 						}
 						return EMatch.NO; // Definitely does not match
 					}
@@ -682,19 +726,25 @@ final class ExecuteQueryPOJOs<QUERY> extends ExecutableQueryAggregateComputation
 				? EMatch.NOT_APPLICABLE_TO_SOURCE 	// None from this source, so we can continue join even if we did
 				: EMatch.YES;  						// Matching all ANDs from this source
 
-		debug(indent, "recursiveMatchAnd end match sourceIdx=" + sourceIdx + " : " + ret);
+		if (debug != null) {
+			debug.debug("return " + ret);
+			
+			debug.subIndent();
+		}
 		
 		return ret;
 	}
 
-	private EMatch recursiveMatchOr(QUERY query, int sourceIdx, Object instance, int level, int [] conditionIndices, ConditionValuesScratch scratch) {
+	private EMatch recursiveMatchOr(QUERY query, int sourceIdx, Object instance, int level, int [] conditionIndices, ConditionValuesScratch scratch, StructuredDebug debug) {
+		
+		if (debug != null) {
+			debug.addIndent("recursiveMatchOr sourceIdx=" + sourceIdx + " level=" + level);
+		}
 		
 		final int numConditions = q.getConditionsCount(query, level, conditionIndices);
 
-		final int indent = sourceIdx + level + 1;
-		
 		int numFromThisSource = 0;
-		
+
 		for (int conditionIdx = 0; conditionIdx < numConditions; ++ conditionIdx) {
 			
 			conditionIndices[level] = conditionIdx;
@@ -704,20 +754,22 @@ final class ExecuteQueryPOJOs<QUERY> extends ExecutableQueryAggregateComputation
 			if (conditionSourceIdx == sourceIdx) {
 				
 				if (q.isSubCondition(query, level, conditionIndices)) {
-					final EMatch subMatch = recursiveMatches(query, sourceIdx, instance, level + 1, conditionIndices, scratch);
+					final EMatch subMatch = recursiveMatches(query, sourceIdx, instance, level + 1, conditionIndices, scratch, debug);
 					
 					switch (subMatch){
 					case YES:
-						if (DEBUG) {
+						if (debug != null) {
 							final EClauseOperator operator = q.getOperator(query, level, conditionIndices);
 							
-							debug(indent, "recursiveMatchOr sub MATCH sourceIdx=" + sourceIdx + ", conditionIdx " + conditionIdx + ", op=" + operator);
+							debug.debug("sub MATCH conditionIdx " + conditionIdx + ", op=" + operator);
+							
+							debug.subIndent();
 						}
 						return EMatch.YES;
 						
 					case NO:
-						if (DEBUG) {
-							debug(indent, "recursiveMatchOr sub mismatch sourceIdx=" + sourceIdx + ", conditionIdx " + conditionIdx);
+						if (debug != null) {
+							debug.debug("sub mismatch conditionIdx " + conditionIdx);
 						}
 						break;
 						
@@ -738,10 +790,12 @@ final class ExecuteQueryPOJOs<QUERY> extends ExecutableQueryAggregateComputation
 				
 					if (q.evaluateCondition(query, level, conditionIndices, instance, scratch)) {
 	
-						if (DEBUG) {
+						if (debug != null) {
 							final EClauseOperator operator = q.getOperator(query, level, conditionIndices);
 
-							debug(indent, "recursiveMatchOr MATCH sourceIdx=" + sourceIdx + ", conditionIdx " + conditionIdx + ", op=" + operator);
+							debug.debug("MATCH conditionIdx " + conditionIdx + ", op=" + operator);
+
+							debug.subIndent();
 						}
 	
 						return EMatch.YES; // One of conditions matched, so we have a match
@@ -757,12 +811,16 @@ final class ExecuteQueryPOJOs<QUERY> extends ExecutableQueryAggregateComputation
 				? EMatch.NO										// All conditions in OR were from this source and not matched, so there is definitely no match
 				: EMatch.UNCERTAIN_REQUIRES_REEVALUATION;		// No conditions of this source matched but other sources might so we say this is uncertain and match later
 
-		debug(indent, "recursiveMatchOr end match sourceIdx=" + sourceIdx + ", numConditions=" + numConditions + ", numFromThisSource=" + numFromThisSource + " : " + ret);
+		if (debug != null) {
+			debug.debug("return end match numConditions=" + numConditions + ", numFromThisSource=" + numFromThisSource + " : " + ret);
+			
+			debug.subIndent();
+		}
 
 		return ret;
 	}
 	
-	private EMatch rootOnlyMatches(QUERY query, int sourceIdx, Object instance, ExecuteQueryScratch scratch) {
+	private EMatch rootOnlyMatches(QUERY query, int sourceIdx, Object instance, ExecuteQueryScratch scratch, StructuredDebug debug) {
 		// Loop over conditions
 		final ConditionsType type = q.getRootConditionsType(query);
 		
@@ -770,15 +828,15 @@ final class ExecuteQueryPOJOs<QUERY> extends ExecutableQueryAggregateComputation
 		
 		switch (type) {
 			case SINGLE:
-				ret = rootOnlyMatchSingle(query, sourceIdx, instance, 0, scratch);
+				ret = rootOnlyMatchSingle(query, sourceIdx, instance, 0, scratch, debug);
 				break;
 				
 			case AND:
-				ret = rootOnlyMatchAnd(query, sourceIdx, instance, scratch);
+				ret = rootOnlyMatchAnd(query, sourceIdx, instance, scratch, debug);
 				break;
 				
 			case OR:
-				ret = rootOnlyMatchOr(query, sourceIdx, instance, scratch);
+				ret = rootOnlyMatchOr(query, sourceIdx, instance, scratch, debug);
 				break;
 				
 			default:
@@ -788,7 +846,11 @@ final class ExecuteQueryPOJOs<QUERY> extends ExecutableQueryAggregateComputation
 		return ret;
 	}
 	
-	private EMatch rootOnlyMatchSingle(QUERY query, int sourceIdx, Object instance, int conditionIdx, ConditionValuesScratch scratch) {
+	private EMatch rootOnlyMatchSingle(QUERY query, int sourceIdx, Object instance, int conditionIdx, ConditionValuesScratch scratch, StructuredDebug debug) {
+		
+		if (debug != null) {
+			debug.addIndent("rootOnlyMatchSingle sourceIdx=" + sourceIdx);
+		}
 		
 		final EMatch ret;
 		
@@ -804,24 +866,32 @@ final class ExecuteQueryPOJOs<QUERY> extends ExecutableQueryAggregateComputation
 			ret = EMatch.NOT_APPLICABLE_TO_SOURCE; // for a different source, uncertain but for THIS source there is a match
 		}
 		
-		if (DEBUG) {
-			debug(sourceIdx, "rootOnlyMatchSingle sourceIdx=" + sourceIdx + ": " + ret);
+		if (debug != null) {
+			debug.debug("return " + ret.name());
+			
+			debug.subIndent();
 		}
 		
 		return ret;
 	}
 
 
-	private EMatch rootOnlyMatchAnd(QUERY query, int sourceIdx, Object instance, ExecuteQueryScratch scratch) {
+	private EMatch rootOnlyMatchAnd(QUERY query, int sourceIdx, Object instance, ExecuteQueryScratch scratch, StructuredDebug debug) {
 
 		int numFromThisSource = 0;
 		
+		if (debug != null) {
+			debug.addIndent("rootOnlyMatchAnd sourceIdx=" + sourceIdx);
+		}
+
 		for (int conditionIdx = 0; conditionIdx < scratch.getNumConditions(); ++ conditionIdx) {
 			if (q.getRootConditionSourceIdx(query, conditionIdx) == sourceIdx) {
 				
 				if (!q.evaluateRootCondition(query, instance, conditionIdx, scratch)) {
-					if (DEBUG) {
-						debug(sourceIdx, "rootOnlyMatchAnd mismatch sourceIdx=" + sourceIdx + ", conditionIdx " + conditionIdx);
+					if (debug != null) {
+						debug.debug("MISMATCH conditionIdx=" + conditionIdx);
+						
+						debug.subIndent();
 					}
 					return EMatch.NO; // Definitely does not match
 				}
@@ -835,24 +905,32 @@ final class ExecuteQueryPOJOs<QUERY> extends ExecutableQueryAggregateComputation
 				? EMatch.NOT_APPLICABLE_TO_SOURCE 	// None from this source, so we can continue join even if we did
 				: EMatch.YES;  						// Matching all ANDs from this source
 
-		debug(sourceIdx, "rootOnlyMatchAnd match sourceIdx=" + sourceIdx + " : " + ret);
+		if (debug != null) {
+			debug.debug("return " + ret);
+			
+			debug.subIndent();
+		}
 		
 		return ret;
 	}
 
-	private EMatch rootOnlyMatchOr(QUERY query, int sourceIdx, Object instance, ExecuteQueryScratch scratch) {
+	private EMatch rootOnlyMatchOr(QUERY query, int sourceIdx, Object instance, ExecuteQueryScratch scratch, StructuredDebug debug) {
 		
 		final int numConditions = scratch.getNumConditions();
 
 		int numFromThisSource = 0;
+
+		if (debug != null) {
+			debug.addIndent("rootOnlyMatchOr sourceIdx=" + sourceIdx);
+		}
 		
 		for (int conditionIdx = 0; conditionIdx < numConditions; ++ conditionIdx) {
 			if (q.getRootConditionSourceIdx(query, conditionIdx) == sourceIdx) {
 				
 				if (q.evaluateRootCondition(query, instance, conditionIdx, scratch)) {
 
-					if (DEBUG) {
-						debug(sourceIdx, "rootOnlyMatchOr match sourceIdx=" + sourceIdx + ", conditionIdx " + conditionIdx);
+					if (debug != null) {
+						debug.debug("MATCH conditionIdx " + conditionIdx);
 					}
 
 					return EMatch.YES; // One of conditions matched, so we have a match
@@ -861,13 +939,16 @@ final class ExecuteQueryPOJOs<QUERY> extends ExecutableQueryAggregateComputation
 				++ numFromThisSource;
 			}
 		}
-		
-		
+
 		final EMatch ret = numConditions == numFromThisSource
 				? EMatch.NO										// All conditions in OR were from this source and not matched, so there is definitely no match
 				: EMatch.UNCERTAIN_REQUIRES_REEVALUATION;		// No conditions of this source matched but other sources might so we say this is uncertain and match later
 
-		debug(sourceIdx, "rootOnlyMatchOr ret sourceIdx=" + sourceIdx + " : " + ret);
+		if (debug != null) {
+			debug.debug("return " + ret);
+			
+			debug.subIndent();
+		}
 
 		return ret;
 	}
@@ -876,7 +957,6 @@ final class ExecuteQueryPOJOs<QUERY> extends ExecutableQueryAggregateComputation
 	private static void debug(String s) {
 		System.out.println(s);
 	}
-	*/
 
 	private static void debug(int indent, String s) {
 
@@ -886,5 +966,5 @@ final class ExecuteQueryPOJOs<QUERY> extends ExecutableQueryAggregateComputation
 
 		System.out.println(s);
 	}
-	
+*/	
 }

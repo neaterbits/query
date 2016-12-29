@@ -191,7 +191,7 @@ abstract class AdhocConditionsStateMachine<MODEL, RESULT, CONDITIONS extends Adh
 	final void addFromOuterWhere(Function<?, ?> whereFunction) {
 
 		final EAdhocConditionsState newState;
-		
+
 		switch (state) {
 		case NONE:
 			newState = EAdhocConditionsState.WHERE_FROM_OUTER;
@@ -210,26 +210,25 @@ abstract class AdhocConditionsStateMachine<MODEL, RESULT, CONDITIONS extends Adh
 		}
 
 		intAddConditionToArray(whereFunction);
-		
+
 		setState(newState);
 	}
-	
+
 	private void setState(EAdhocConditionsState newState) {
+
 		if (newState == null) {
 			throw new IllegalArgumentException("newState == null");
 		}
-		
+
 		if (DEBUG) {
-		
-			
 			final String methodName = Thread.currentThread().getStackTrace()[2].getMethodName();;
 
-			System.out.println("AdhocCondition." + methodName + "() : " + state + "=> " + newState);
+			System.out.println("AdhocCondition." + methodName + "() : " + state + " => " + newState);
 		}
 
 		this.state = newState;
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	final CONDITIONS mergeJoinComparison(
 			Function<?, ?> whereFunction, EClauseOperator whereOperator, Object whereValue,
