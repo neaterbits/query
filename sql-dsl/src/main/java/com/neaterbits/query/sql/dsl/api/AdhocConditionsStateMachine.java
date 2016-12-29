@@ -11,6 +11,8 @@ import java.util.function.Function;
 
 abstract class AdhocConditionsStateMachine<MODEL, RESULT, CONDITIONS extends AdhocConditionsStateMachine<MODEL, RESULT, CONDITIONS>> {
 
+	private static final boolean DEBUG = Boolean.TRUE; 
+	
 	private EAdhocConditionsState state;
 
 	abstract void intAddConditionToArray(Function<?, ?> function);
@@ -139,6 +141,8 @@ abstract class AdhocConditionsStateMachine<MODEL, RESULT, CONDITIONS extends Adh
 		default:
 			throw new IllegalStateException("Unknown conditions state "+ state);
 		}
+		
+		intAddConditionToArray(function);
 
 		setState(newState);
 		
@@ -213,6 +217,14 @@ abstract class AdhocConditionsStateMachine<MODEL, RESULT, CONDITIONS extends Adh
 	private void setState(EAdhocConditionsState newState) {
 		if (newState == null) {
 			throw new IllegalArgumentException("newState == null");
+		}
+		
+		if (DEBUG) {
+		
+			
+			final String methodName = Thread.currentThread().getStackTrace()[2].getMethodName();;
+
+			System.out.println("AdhocCondition." + methodName + "() : " + state + "=> " + newState);
 		}
 
 		this.state = newState;

@@ -5,8 +5,6 @@ import java.util.Collection;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
-import javax.crypto.CipherInputStream;
-
 import com.neaterbits.query.sql.dsl.api.entity.OneToManyJoinConditionResolver;
 import com.neaterbits.query.sql.dsl.api.entity.QueryMetaModel;
 
@@ -46,7 +44,7 @@ abstract class AdhocQueryClass<MODEL, RESULT>
 		if (aggregateGetter == null) {
 			throw new IllegalArgumentException("aggregateGetter == null");
 		}
-		
+
 		this.aggregateGetter = aggregateGetter;
 	}
 
@@ -54,7 +52,7 @@ abstract class AdhocQueryClass<MODEL, RESULT>
 	AdhocQueryClass(ECollectionType collectionType, Collection<?> coll) {
 
 		super(collectionType);
-		
+
 		if (coll == null) {
 			throw new IllegalArgumentException("coll == null");
 		}
@@ -212,12 +210,11 @@ abstract class AdhocQueryClass<MODEL, RESULT>
 		return conditions.getConditionSourceIdx(level, conditionIndices);
 	}
 
-
 	@Override
 	public final boolean evaluateCondition(AdhocQueryClass<MODEL, RESULT> query, int level, int[] conditionIndices, Object instance, ConditionValuesScratch scratch) {
 		return conditions.evaluateCondition(level, conditionIndices, instance, scratch);
 	}
-	
+
 	@Override
 	public final boolean isSubCondition(AdhocQueryClass<MODEL, RESULT> query, int level, int[] conditionIndices) {
 		return conditions.isSubCondition(level, conditionIndices);
@@ -233,19 +230,16 @@ abstract class AdhocQueryClass<MODEL, RESULT>
 
 		return count;
 	}
-	
+
 	@Override
-	public EClauseOperator getOperator(AdhocQueryClass<MODEL, RESULT> query, int level, int[] conditionIndices) {
+	public final EClauseOperator getOperator(AdhocQueryClass<MODEL, RESULT> query, int level, int[] conditionIndices) {
 		return conditions.getOperator(level, conditionIndices);
 	}
 
 	@Override
-	public int getConditionsMaxDepth(AdhocQueryClass<MODEL, RESULT> query) {
+	public final int getConditionsMaxDepth(AdhocQueryClass<MODEL, RESULT> query) {
 		return conditions == null ? -1 : conditions.getMaxDepth();
 	}
-	
-	
-	
 
 	/**************************************************************************
 	** IAdhocSelectSource

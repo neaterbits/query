@@ -184,8 +184,7 @@ abstract class AdhocConditions<MODEL, RESULT, QUERY extends AdhocQueryClass<MODE
 
 		this.conditions[numConditions] = function;
 	}
-	
-	
+
 	@Override
 	final void intAddOperator(EClauseOperator operator, Object value, int sourceIdx) {
 		
@@ -201,7 +200,7 @@ abstract class AdhocConditions<MODEL, RESULT, QUERY extends AdhocQueryClass<MODE
 
 	@Override
 	final void intMoveLastToSubAndAddSub(AdhocConditions<MODEL, RESULT, QUERY> sub) {
-		
+
 		if (numConditions < 2) {
 			throw new IllegalStateException("Do not move when less than 2");
 		}
