@@ -2,7 +2,7 @@ package com.neaterbits.query.sql.dsl.api;
 
 final class JPAConditionToOperator {
 
-	<QUERY> PreparedQueryConditionRHS convert(ExecutableQuery<QUERY> q, QUERY query, int conditionIdx, ConditionValueImpl value, StringBuilder sb) {
+	<QUERY> PreparedQueryComparisonRHS convert(ExecutableQuery<QUERY> q, QUERY query, int conditionIdx, ConditionValueImpl value, StringBuilder sb) {
 		
 		final EClauseOperator operator = q.getRootConditionOperator(query, conditionIdx);
 		

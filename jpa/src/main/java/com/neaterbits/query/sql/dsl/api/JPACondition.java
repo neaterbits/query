@@ -1,6 +1,6 @@
 package com.neaterbits.query.sql.dsl.api;
 
-abstract class JPACondition extends PreparedQueryConditionRHS {
+abstract class JPACondition extends PreparedQueryComparisonRHS {
 
 	private final String prefix;
 

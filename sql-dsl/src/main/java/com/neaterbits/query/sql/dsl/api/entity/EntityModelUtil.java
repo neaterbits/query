@@ -13,7 +13,16 @@ public class EntityModelUtil<MANAGED, EMBEDDED, IDENTIFIABLE, ATTRIBUTE, COLL ex
 	private final EntityModel<MANAGED, EMBEDDED, IDENTIFIABLE, ATTRIBUTE, COLL> model;
 	
 	protected EntityModelUtil(EntityModel<MANAGED, EMBEDDED, IDENTIFIABLE, ATTRIBUTE, COLL> model) {
+		
+		if (model == null) {
+			throw new IllegalArgumentException("model == null");
+		}
+
 		this.model = model;
+	}
+
+	public EntityModel<MANAGED, EMBEDDED, IDENTIFIABLE, ATTRIBUTE, COLL> getModel() {
+		return model;
 	}
 
 	List<EntityAttribute> getAttributes(MANAGED managed) {

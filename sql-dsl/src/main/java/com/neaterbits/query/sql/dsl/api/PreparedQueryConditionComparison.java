@@ -5,9 +5,9 @@ import com.neaterbits.query.sql.dsl.api.PreparedQueryBuilder.FieldReference;
 final class PreparedQueryConditionComparison extends PreparedQueryCondition {
 
 	private final FieldReference lhs;
-	private final PreparedQueryConditionRHS rhs;
+	private final PreparedQueryComparisonRHS rhs;
 	
-	PreparedQueryConditionComparison(FieldReference lhs, PreparedQueryConditionRHS rhs) {
+	PreparedQueryConditionComparison(FieldReference lhs, PreparedQueryComparisonRHS rhs) {
 		
 		if (lhs == null) {
 			throw new IllegalArgumentException("lhs == null");
@@ -25,7 +25,12 @@ final class PreparedQueryConditionComparison extends PreparedQueryCondition {
 		return lhs;
 	}
 
-	PreparedQueryConditionRHS getRhs() {
+	PreparedQueryComparisonRHS getRhs() {
 		return rhs;
+	}
+
+	@Override
+	boolean isUnresolved() {
+		return rhs.isUnresolved();
 	}
 }

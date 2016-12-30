@@ -2,16 +2,12 @@ package com.neaterbits.query.sql.dsl.api;
 
 import java.lang.reflect.AccessibleObject;
 import java.lang.reflect.Member;
-import java.net.CookieHandler;
 import java.util.Set;
 
-import javax.accessibility.Accessible;
-import javax.persistence.Access;
 import javax.persistence.Column;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinColumns;
 import javax.persistence.ManyToOne;
-import javax.persistence.MapsId;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.metamodel.Attribute;

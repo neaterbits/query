@@ -1,7 +1,7 @@
 package com.neaterbits.query.sql.dsl.api;
 
-interface DSPreparedQuery {
+abstract class DSPreparedQuery {
 
-	Object execute(ParamValueResolver collectedParams);
+	abstract Object execute(ParamValueResolver collectedParams);
 	
 }

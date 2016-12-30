@@ -10,4 +10,9 @@ final class JPAConditionResolved extends JPACondition {
 	void resolve(StringBuilder sb, ParamValueResolver resolver) {
 		sb.append(getPrefix());
 	}
+
+	@Override
+	boolean isUnresolved() {
+		return false;
+	}
 }

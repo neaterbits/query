@@ -42,7 +42,7 @@ final class JPAHalfwayPreparedQuery<QUERY> extends JPABasePreparedQuery<QUERY> {
 	}
 
 	@Override
-	public Object execute(ParamValueResolver collectedParams) {
+	Object execute(ParamValueResolver collectedParams) {
 		
 		final StringBuilder sb = new StringBuilder(base);
 
@@ -50,7 +50,9 @@ final class JPAHalfwayPreparedQuery<QUERY> extends JPABasePreparedQuery<QUERY> {
 
 		conditions.resolveFromParams(sb, collectedParams);
 
-		final Query jpaQuery = entityManager.createQuery(sb.toString()); 
+		final String queryString = sb.toString();
+		
+		final Query jpaQuery = entityManager.createQuery(queryString); 
 
 		return executeWithParams(jpaQuery, collectedParams); 
 	}

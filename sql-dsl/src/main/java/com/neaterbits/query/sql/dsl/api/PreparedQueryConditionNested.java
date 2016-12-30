@@ -16,4 +16,9 @@ final class PreparedQueryConditionNested extends PreparedQueryCondition {
 	PreparedQueryConditionsBuilder getSub() {
 		return sub;
 	}
+
+	@Override
+	boolean isUnresolved() {
+		return false;
+	}
 }

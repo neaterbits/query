@@ -1,84 +1,21 @@
 package com.neaterbits.query.sql.dsl.api;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.neaterbits.query.sql.dsl.api.PreparedQueryBuilder.FieldReference;
 
 final class PreparedQueryConditionsBuilderJPA extends PreparedQueryConditionsBuilder {
 
-	private final boolean atRoot;
 	private final StringBuilder sb;
 
-	private ConditionsType joinType;
-	private ConditionsType comparisonType;
-	private List<PreparedQueryCondition> conditions;
-	
 	PreparedQueryConditionsBuilderJPA(boolean atRoot) {
+		super(atRoot);
+
 		this.sb = new StringBuilder();
-		
-		this.atRoot = atRoot;
-		this.joinType = null;
-		this.comparisonType = null;
-		this.conditions = new ArrayList<>();
 	}
-	
-	private void updateJoinType(ConditionsType type) {
-		if (type == null) {
-			throw new IllegalArgumentException("type == null");
-		}
-		
-		if (this.joinType == null) {
-			if (type != ConditionsType.AND) {
-				throw new IllegalStateException("Expected AND for joins");
-			}
-			
-			this.joinType = type;
-		}
-		else {
-			if (type != ConditionsType.AND) {
-				throw new IllegalStateException("Expected AND for joins");
-			}
-			
-			if (this.joinType != ConditionsType.AND) {
-				throw new IllegalStateException("Expected already AND for joins");
-			}
-		}
+
+	@Override
+	PreparedQueryConditionsBuilder createConditionsBuilder(boolean atRoot) {
+		return new PreparedQueryConditionsBuilderJPA(atRoot);
 	}
-	
-	private void updateComparisonType(ConditionsType type) {
-		if (type == null) {
-			throw new IllegalArgumentException("type == null");
-		}
-		
-		if (this.comparisonType == null) {
-			if (type != ConditionsType.SINGLE && type != ConditionsType.AND && type != ConditionsType.OR) {
-				throw new IllegalStateException("Expected SINGLE, AND or OR as first: " + type);
-			}
-			
-			this.comparisonType = type;
-		}
-		else {
-			if (type != ConditionsType.AND && type != ConditionsType.OR) {
-				throw new IllegalStateException("Expected AND or OR for comparison");
-			}
-			
-			if (joinType != null && type != joinType) {
-				throw new IllegalStateException("Mismatch with join type");
-			}
-			
-			// Check that does not change eg from AND to OR
-			if (this.comparisonType != ConditionsType.SINGLE) {
-				if (type != this.comparisonType) {
-					throw new IllegalArgumentException("Changed in comparison type");
-				}
-			}
-			
-			this.comparisonType = type;
-		}
-	}
-		
-		
 
 	@Override
 	void addJoinCondition(ConditionsType type, FieldReference left, EClauseOperator operator, FieldReference right) {
@@ -102,45 +39,6 @@ final class PreparedQueryConditionsBuilderJPA extends PreparedQueryConditionsBui
 		sb.append(' ');
 	}
 	
-	@Override
-	PreparedQueryConditionsBuilder addNested(ConditionsType type) {
-
-		updateJoinType(type);
-		
-		if (type == null) {
-			throw new IllegalArgumentException("type == null");
-		}
-		
-		final PreparedQueryConditionsBuilderJPA sub = new PreparedQueryConditionsBuilderJPA(false);
-
-		conditions.add(new PreparedQueryConditionNested(sub));
-		
-		return sub;
-	}
-	
-	@Override
-	void addComparisonCondition(ConditionsType type, PreparedQueryConditionComparison condition) {
-		
-		updateComparisonType(type);
-		
-		if (condition == null) {
-			throw new IllegalArgumentException("condition == null");
-		}
-
-		conditions.add(condition);
-	}
-
-	boolean isEmpty() {
-		return conditions.isEmpty();
-	}
-
-	int size() {
-		return conditions.size();
-	}
-
-	ConditionsType getType() {
-		return joinType != null ? joinType : comparisonType;
-	}
 	
 
 	private static final String getConditionsString(ConditionsType type) {
@@ -178,10 +76,10 @@ final class PreparedQueryConditionsBuilderJPA extends PreparedQueryConditionsBui
 
 		boolean first = true;
 
-		for (PreparedQueryCondition condition : conditions) {
+		for (PreparedQueryCondition condition : getConditions()) {
 		
 			if (first) {
-				if (atRoot) {
+				if (isAtRoot()) {
 					sb.append(' ').append("WHERE").append(' ');
 				}
 				
@@ -216,15 +114,4 @@ final class PreparedQueryConditionsBuilderJPA extends PreparedQueryConditionsBui
 			}
 		}
 	}
-	
-	
-	/*
-	
-	
-	private static String clauseToString(EClauseOperator clauseOperator) {
-		switch (clauseOperator) {
-		case 
-		}
-	}
-	*/
 }

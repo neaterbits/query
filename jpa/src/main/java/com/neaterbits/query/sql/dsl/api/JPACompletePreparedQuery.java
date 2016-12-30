@@ -17,7 +17,7 @@ final class JPACompletePreparedQuery<QUERY> extends JPABasePreparedQuery<QUERY> 
 	}
 
 	@Override
-	public Object execute(ParamValueResolver paramCollector) {
+	Object execute(ParamValueResolver paramCollector) {
 
 		return executeWithParams(jpaQuery, paramCollector);
 	}

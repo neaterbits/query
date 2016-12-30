@@ -5,4 +5,9 @@ abstract class JPAConditionUnresolved extends JPACondition {
 	JPAConditionUnresolved(String prefix) {
 		super(prefix);
 	}
+
+	@Override
+	final boolean isUnresolved() {
+		return true;
+	}
 }
