@@ -230,7 +230,7 @@ final class ExecutableQueryForCompiledQuery implements ExecutableQuery<CompiledQ
 
 	@Override
 	public Class<?> getJoinConditionRightJavaType(CompiledQuery query, int joinIdx, int conditionIdx) {
-		return getJoin(query, joinIdx).getConditions().get(conditionIdx).getLeft().getType();
+		return getJoin(query, joinIdx).getConditions().get(conditionIdx).getRight().getType();
 	}
 	
 	@Override

@@ -40,8 +40,9 @@ public class SQLAPITest extends BaseSQLAPITest {
 	private static QueryTestDSCheck store(Consumer<QueryTestDSBuilder> b) {
 		
 		return new QueryTestDSCombined(
-				() -> new QueryTestDSInMemory(jpaQueryMetaModel),
-				() -> new QueryTestDSJPA("query-jpa-test"))
+				() -> new QueryTestDSJPA("query-jpa-test"),
+				() -> new QueryTestDSInMemory(jpaQueryMetaModel)
+				)
 				
 				.store(b);
 	}

@@ -142,16 +142,21 @@ abstract class QueryDataSourceORM<ORM_QUERY, MANAGED, EMBEDDED, IDENTIFIABLE, AT
 			throw new IllegalStateException("Left entity equals right entity: "  + leftEntityType + " / " + rightEntityType);
 		}
 
+		final EJoinType joinType = q.getJoinType(query, joinIdx);
+
 		// Look at conditions to see if there is a join on any of the conditions
-		if (q.joinHasConditions(query, joinIdx)) {
-			sb.appendJoinStatement(q.getJoinType(query, joinIdx));
+		if (!q.joinHasConditions(query, joinIdx)) {
+
+			// No conditions in join so must look for the one defined join between the types
+			
+			sb.appendJoinStatement(joinType);
 			
 			// Must find exactly one relation from this one to other
 			final List<Relation> leftToRight =  entityModelUtil.findRelations(leftType, rightType);
 			final List<Relation> rightToLeft =  entityModelUtil.findRelations(leftType, rightType);
 			
 			if (leftToRight.size() != 1) {
-				throw new IllegalStateException("Expected exactly one relation from " + leftType + " to " + rightType);
+				throw new IllegalStateException("Expected exactly one relation from " + leftType + " to " + rightType + ": " + leftToRight.size());
 			}
 			
 			// final Relation leftRelation = leftToRight.get(0);
@@ -167,8 +172,6 @@ abstract class QueryDataSourceORM<ORM_QUERY, MANAGED, EMBEDDED, IDENTIFIABLE, AT
 			// Must find metamodel entry that matches the foreign key patterns specified
 			
 			final int numJoinConditions = q.getJoinConditionCount(query, joinIdx);
-			
-			final EJoinType joinType = q.getJoinType(query, joinIdx);
 			
 			for (int conditionIdx = 0; conditionIdx < numJoinConditions; ++ conditionIdx) {
 				// Find something that matches this condition in correct order
@@ -205,7 +208,7 @@ abstract class QueryDataSourceORM<ORM_QUERY, MANAGED, EMBEDDED, IDENTIFIABLE, AT
 					final Relation relation = entityModelUtil.findOneToManyRelation(oneToManyLeftType, oneToManyRightType, collectionGetterMethod);
 					
 					if (relation == null) {
-						throw new IllegalStateException("Failed to find relation for " + collectionGetterMethod);
+						throw new IllegalStateException("Failed to find relation for " + collectionGetterMethod + " from " + oneToManyLeftType + " to " + oneToManyRightType);
 					}
 					
 					final String entityAliasName = q.getJoinConditionLeftName(query, joinIdx, conditionIdx);
@@ -230,7 +233,8 @@ abstract class QueryDataSourceORM<ORM_QUERY, MANAGED, EMBEDDED, IDENTIFIABLE, AT
 	private <QUERY> ConditionsType prepareConditions(ExecutableQuery<QUERY> q, QUERY query, PreparedQueryConditionsBuilder conditionsBuilder, List<JoinConditionId> joinComparisonConditions) {
 
 		final ConditionsType original = q.getRootConditionsType(query);
-		
+
+		// Default to SINGLE
 		ConditionsType os = ConditionsType.SINGLE;
 		
 		final boolean nestConditions =
@@ -242,9 +246,13 @@ abstract class QueryDataSourceORM<ORM_QUERY, MANAGED, EMBEDDED, IDENTIFIABLE, AT
 		
 		// Must add comparisons from joins
 		if (!joinComparisonConditions.isEmpty()) {
-			
+
+			// Comparison joins are always ANDed
+			os = ConditionsType.AND;
+
 			for (JoinConditionId comparison : joinComparisonConditions) {
 				
+
 				if (os == null) {
 					throw new IllegalStateException("os == null");
 				}
@@ -257,8 +265,6 @@ abstract class QueryDataSourceORM<ORM_QUERY, MANAGED, EMBEDDED, IDENTIFIABLE, AT
 				final FieldReference right = prepareFieldReference(rhs);
 
 				conditionsBuilder.addJoinCondition(os, left, EClauseOperator.IS_EQUAL, right);
-
-				os = ConditionsType.AND;
 			}
 		}
 		

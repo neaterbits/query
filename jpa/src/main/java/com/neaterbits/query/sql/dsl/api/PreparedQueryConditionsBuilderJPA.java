@@ -20,9 +20,9 @@ final class PreparedQueryConditionsBuilderJPA extends PreparedQueryConditionsBui
 	@Override
 	void addJoinCondition(ConditionsType type, FieldReference left, EClauseOperator operator, FieldReference right) {
 
-		updateJoinType(type);
-		
-		final String os = getConditionsString(type);
+		final ConditionsType lastJoinType = updateJoinType(type);
+
+		final String os = getConditionsString(lastJoinType == null ? ConditionsType.SINGLE : type);
 
 		sb.append(os).append(' ');
 		
@@ -74,7 +74,17 @@ final class PreparedQueryConditionsBuilderJPA extends PreparedQueryConditionsBui
 		
 		final ConditionsType type = getType();
 
-		boolean first = true;
+		
+		boolean first;
+		
+		if (this.sb.length() == 0) {
+			first = true;
+		}
+		else {
+			sb.append(' ').append(this.sb.toString());
+
+			first = false;
+		}
 
 		for (PreparedQueryCondition condition : getConditions()) {
 		

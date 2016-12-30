@@ -78,27 +78,31 @@ abstract class PreparedQueryConditionsBuilder {
 		return conditions;
 	}
 	
-	final void updateJoinType(ConditionsType type) {
+	final ConditionsType updateJoinType(ConditionsType type) {
 		if (type == null) {
 			throw new IllegalArgumentException("type == null");
 		}
 		
+		final ConditionsType lastJoinType = this.joinType;
+		
 		if (this.joinType == null) {
 			if (type != ConditionsType.AND) {
-				throw new IllegalStateException("Expected AND for joins");
+				throw new IllegalStateException("Expected AND for joins, got " + type);
 			}
 			
 			this.joinType = type;
 		}
 		else {
 			if (type != ConditionsType.AND) {
-				throw new IllegalStateException("Expected AND for joins");
+				throw new IllegalStateException("Expected AND for joins, got " + type);
 			}
 			
 			if (this.joinType != ConditionsType.AND) {
 				throw new IllegalStateException("Expected already AND for joins");
 			}
 		}
+
+		return lastJoinType;
 	}
 	
 	private void updateComparisonType(ConditionsType type) {
