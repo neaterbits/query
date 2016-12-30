@@ -513,12 +513,12 @@ Neste:
 
  - adhoc queries med mininmalt overhead
  - nøsta and/or
- - bedre debugging a vin-memory query eksekvering
+ - bedre debugging av in-memory query eksekvering
  - parametere
  - JS / annen kode generering ut fra POJO joins
  
  - dialekter, dvs statisk begrense muligheter
- - query ut fra context
+ - query ut fra context variabel
    * forenklede queries uten from eller join sources.
  - optionals
  - subselects

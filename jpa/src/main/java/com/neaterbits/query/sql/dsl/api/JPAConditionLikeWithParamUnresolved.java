@@ -19,7 +19,7 @@ final class JPAConditionLikeWithParamUnresolved extends JPAConditionUnresolved {
 	}
 
 	@Override
-	void append(StringBuilder sb, ParamValueResolver resolver) {
+	void resolve(StringBuilder sb, ParamValueResolver resolver) {
 
 		final Object value = resolver.resolveParam(param);
 		

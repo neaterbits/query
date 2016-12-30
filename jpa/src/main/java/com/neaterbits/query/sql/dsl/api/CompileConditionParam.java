@@ -6,15 +6,16 @@ import java.util.function.Function;
 
 import javax.persistence.EntityManager;
 
+import com.neaterbits.query.sql.dsl.api.PreparedQueryBuilder.FieldReference;
 import com.neaterbits.query.util.java8.Coll8;
 
 final class CompileConditionParam {
 
-	private final StringBuilder conditionSB;
+	private final PreparedQueryConditionsBuilder conditionsBuilder;
 	private final ParamNameAssigner paramNameAssigner;
 	private final EntityManager entityManager;
 	private final List<JPACondition> conditions;
-	
+
 	private ConditionValueImpl value;
 
 	CompileConditionParam(ParamNameAssigner paramNameAssigner, EntityManager entityManager) {
@@ -27,7 +28,7 @@ final class CompileConditionParam {
 			throw new IllegalArgumentException("entityManager == null");
 		}
 
-		this.conditionSB = new StringBuilder();
+		this.conditionsBuilder = new PreparedQueryConditionsBuilderJPA();
 		this.paramNameAssigner = paramNameAssigner;
 		this.entityManager = entityManager;
 		this.conditions = new ArrayList<>();
@@ -36,14 +37,11 @@ final class CompileConditionParam {
 	boolean hasUnresolved() {
 		return Coll8.has(conditions, condition -> condition instanceof JPAConditionUnresolved);
 	}
-
-	CompileConditionParam append(String s) {
-		conditionSB.append(s);
-
-		return this;
+	
+	PreparedQueryConditionsBuilder getConditionsBuilder() {
+		return conditionsBuilder;
 	}
 
-	
 	ConditionValueImpl getValue() {
 		return value;
 	}
@@ -52,28 +50,7 @@ final class CompileConditionParam {
 		this.value = value;
 	}
 
-	void completeResolvedCondition() {
-		final JPAConditionResolved resolved = new JPAConditionResolved(conditionSB.toString());
-
-		conditions.add(resolved);
-		
-		clear();
-	}
-
-	<T extends JPAConditionUnresolved> void unresolvedCondition(Function<String, T> ctor) {
-
-		final String prefix = conditionSB.toString();
-		final JPAConditionUnresolved conditionUnresolved = ctor.apply(prefix);
-
-		if (conditionUnresolved == null) {
-			throw new IllegalArgumentException("conditionUnresolved == null");
-		}
-
-		conditions.add(conditionUnresolved);
-
-		clear();
-	}
-	
+	/*
 	void appendParam(Param<?> param) {
 		if (param == null) {
 			throw new IllegalArgumentException("param == null");
@@ -85,7 +62,7 @@ final class CompileConditionParam {
 	}
 	
 	private void clear() {
-		conditionSB.setLength(0);
+		conditionsBuilder.setLength(0);
 	}
 	
 	ParamNameAssigner getParamNameAssigner() {
@@ -100,13 +77,14 @@ final class CompileConditionParam {
 		return entityManager;
 	}
 
-	void addAllConditions(StringBuilder sb, ParamValueResolver resolver) {
+	void addAllConditions(PreparedQueryBuilder sb, ParamValueResolver resolver) {
 		addAllConditions(sb, conditions, resolver);
 	}
 
-	static void addAllConditions(StringBuilder sb, List<JPACondition> conditions, ParamValueResolver resolver) {
+	static void addAllConditions(PreparedQueryBuilder sb, List<JPACondition> conditions, ParamValueResolver resolver) {
 		for (JPACondition condition : conditions) {
 			condition.append(sb, resolver);
 		}
 	}
+	*/
 }

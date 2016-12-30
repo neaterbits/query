@@ -1,19 +1,15 @@
 package com.neaterbits.query.sql.dsl.api;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
 final class JPAHalfwayPreparedQuery<QUERY> extends JPABasePreparedQuery<QUERY> {
 
 	private final String base;
-	private final JPAOp op;
-	private final List<JPACondition> conditions;
+	private final PreparedQueryConditionsBuilderJPA conditions;
 	private final EntityManager entityManager;
 	
-	JPAHalfwayPreparedQuery(ExecutableQuery<QUERY> queryAccess, QUERY query, ParamNameAssigner paramNameAssigner, String base, JPAOp op, List<JPACondition> conditions, EntityManager entityManager) {
+	JPAHalfwayPreparedQuery(ExecutableQuery<QUERY> queryAccess, QUERY query, ParamNameAssigner paramNameAssigner, String base, PreparedQueryConditionsBuilderJPA conditions, EntityManager entityManager) {
 		super(queryAccess, query, paramNameAssigner);
 		
 		if (base == null) {
@@ -32,7 +28,7 @@ final class JPAHalfwayPreparedQuery<QUERY> extends JPABasePreparedQuery<QUERY> {
 			throw new IllegalArgumentException("no conditions");
 		}
 		
-		if (conditions.size() > 1 && op == null) {
+		if (conditions.size() > 1 && conditions.getType() == null) {
 			throw new IllegalArgumentException("no op when conditions > 1");
 		}
 		
@@ -41,8 +37,7 @@ final class JPAHalfwayPreparedQuery<QUERY> extends JPABasePreparedQuery<QUERY> {
 		}
 		
 		this.base = base;
-		this.op = op;
-		this.conditions = new ArrayList<>(conditions);
+		this.conditions = conditions;
 		this.entityManager = entityManager;
 	}
 
@@ -50,11 +45,11 @@ final class JPAHalfwayPreparedQuery<QUERY> extends JPABasePreparedQuery<QUERY> {
 	public Object execute(ParamValueResolver collectedParams) {
 		
 		final StringBuilder sb = new StringBuilder(base);
-		
+
 		sb.append(" ");
-		
-		CompileConditionParam.addAllConditions(sb, conditions, collectedParams);
-		
+
+		conditions.addAllConditions(sb, collectedParams);
+
 		final Query jpaQuery = entityManager.createQuery(sb.toString()); 
 
 		return executeWithParams(jpaQuery, collectedParams); 
