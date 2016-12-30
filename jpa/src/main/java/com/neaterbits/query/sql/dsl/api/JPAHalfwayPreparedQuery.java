@@ -48,7 +48,7 @@ final class JPAHalfwayPreparedQuery<QUERY> extends JPABasePreparedQuery<QUERY> {
 
 		sb.append(" ");
 
-		conditions.addAllConditions(sb, collectedParams);
+		conditions.resolveFromParams(sb, collectedParams);
 
 		final Query jpaQuery = entityManager.createQuery(sb.toString()); 
 

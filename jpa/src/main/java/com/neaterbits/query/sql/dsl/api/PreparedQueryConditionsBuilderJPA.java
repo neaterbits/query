@@ -1,27 +1,89 @@
 package com.neaterbits.query.sql.dsl.api;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.neaterbits.query.sql.dsl.api.PreparedQueryBuilder.FieldReference;
 
 final class PreparedQueryConditionsBuilderJPA extends PreparedQueryConditionsBuilder {
 
+	private final boolean atRoot;
 	private final StringBuilder sb;
 
-	private boolean nested;
-	private ConditionsType type;
+	private ConditionsType joinType;
+	private ConditionsType comparisonType;
 	private List<PreparedQueryCondition> conditions;
 	
-	PreparedQueryConditionsBuilderJPA() {
+	PreparedQueryConditionsBuilderJPA(boolean atRoot) {
 		this.sb = new StringBuilder();
 		
-		this.nested = false;
-		this.type = null;
-		this.conditions = null;
+		this.atRoot = atRoot;
+		this.joinType = null;
+		this.comparisonType = null;
+		this.conditions = new ArrayList<>();
 	}
+	
+	private void updateJoinType(ConditionsType type) {
+		if (type == null) {
+			throw new IllegalArgumentException("type == null");
+		}
+		
+		if (this.joinType == null) {
+			if (type != ConditionsType.AND) {
+				throw new IllegalStateException("Expected AND for joins");
+			}
+			
+			this.joinType = type;
+		}
+		else {
+			if (type != ConditionsType.AND) {
+				throw new IllegalStateException("Expected AND for joins");
+			}
+			
+			if (this.joinType != ConditionsType.AND) {
+				throw new IllegalStateException("Expected already AND for joins");
+			}
+		}
+	}
+	
+	private void updateComparisonType(ConditionsType type) {
+		if (type == null) {
+			throw new IllegalArgumentException("type == null");
+		}
+		
+		if (this.comparisonType == null) {
+			if (type != ConditionsType.SINGLE && type != ConditionsType.AND && type != ConditionsType.OR) {
+				throw new IllegalStateException("Expected SINGLE, AND or OR as first: " + type);
+			}
+			
+			this.comparisonType = type;
+		}
+		else {
+			if (type != ConditionsType.AND && type != ConditionsType.OR) {
+				throw new IllegalStateException("Expected AND or OR for comparison");
+			}
+			
+			if (joinType != null && type != joinType) {
+				throw new IllegalStateException("Mismatch with join type");
+			}
+			
+			// Check that does not change eg from AND to OR
+			if (this.comparisonType != ConditionsType.SINGLE) {
+				if (type != this.comparisonType) {
+					throw new IllegalArgumentException("Changed in comparison type");
+				}
+			}
+			
+			this.comparisonType = type;
+		}
+	}
+		
+		
 
 	@Override
-	void addCondition(ConditionsType type, FieldReference left, EClauseOperator operator, FieldReference right) {
+	void addJoinCondition(ConditionsType type, FieldReference left, EClauseOperator operator, FieldReference right) {
+
+		updateJoinType(type);
 		
 		final String os = getConditionsString(type);
 
@@ -41,13 +103,31 @@ final class PreparedQueryConditionsBuilderJPA extends PreparedQueryConditionsBui
 	}
 	
 	@Override
-	void addNested(ConditionsType type, List<PreparedQueryCondition> conditions) {
-		addConditions(true, type, conditions);
-	}
+	PreparedQueryConditionsBuilder addNested(ConditionsType type) {
 
+		updateJoinType(type);
+		
+		if (type == null) {
+			throw new IllegalArgumentException("type == null");
+		}
+		
+		final PreparedQueryConditionsBuilderJPA sub = new PreparedQueryConditionsBuilderJPA(false);
+
+		conditions.add(new PreparedQueryConditionNested(sub));
+		
+		return sub;
+	}
+	
 	@Override
-	void addConditions(ConditionsType type, List<PreparedQueryCondition> conditions) {
-		addConditions(false, type, conditions);
+	void addComparisonCondition(ConditionsType type, PreparedQueryConditionComparison condition) {
+		
+		updateComparisonType(type);
+		
+		if (condition == null) {
+			throw new IllegalArgumentException("condition == null");
+		}
+
+		conditions.add(condition);
 	}
 
 	boolean isEmpty() {
@@ -59,47 +139,15 @@ final class PreparedQueryConditionsBuilderJPA extends PreparedQueryConditionsBui
 	}
 
 	ConditionsType getType() {
-		return type;
+		return joinType != null ? joinType : comparisonType;
 	}
 	
-	private void addConditions(boolean nested, ConditionsType type, List<PreparedQueryCondition> conditions) {
+
+	private static final String getConditionsString(ConditionsType type) {
+		
 		if (type == null) {
 			throw new IllegalArgumentException("type == null");
 		}
-		
-		if (conditions == null) {
-			throw new IllegalArgumentException("conditions == null");
-		}
-		
-		if (conditions.isEmpty()) {
-			throw new IllegalArgumentException("no conditions");
-		}
-		
-		switch (type) {
-		
-		case SINGLE:
-			if (conditions.size() != 1) {
-				throw new IllegalStateException("Expected exactly one condition: " + conditions);
-			}
-			break;
-			
-		case AND:
-		case OR:
-			if (conditions.size() < 2) {
-				throw new IllegalStateException("Expected two or more conditions: " + conditions);
-			}
-			break;
-
-		default:
-			throw new UnsupportedOperationException("Unknown conditons type " + type);
-		}
-
-		this.nested = nested;
-		this.type = type;
-		this.conditions = conditions;
-	}
-
-	private static final String getConditionsString(ConditionsType type) {
 		
 		final String os;
 		
@@ -124,39 +172,48 @@ final class PreparedQueryConditionsBuilderJPA extends PreparedQueryConditionsBui
 	}
 
 	@Override
-	void addAllConditions(StringBuilder sb, ParamValueResolver resolver) {
+	void resolveFromParams(StringBuilder sb, ParamValueResolver resolver) {
 		
+		final ConditionsType type = getType();
 
-		boolean prependType;
-		
-		if (nested) {
-			sb.append(' ').append(getConditionsString(type)).append(' ');
-			sb.append('(');
-			
-			prependType = false;
-		}
-		else {
-			prependType = true;
-		}
-		
+		boolean first = true;
+
 		for (PreparedQueryCondition condition : conditions) {
-			
-			if (prependType) {
+		
+			if (first) {
+				if (atRoot) {
+					sb.append(' ').append("WHERE").append(' ');
+				}
+				
+				first = false;
+			}
+			else {
+				// 
 				sb.append(' ').append(getConditionsString(type)).append(' ');
 			}
 			
-			JPAPreparedQueryBuilder.appendFieldReference(sb, condition.getLhs());
-			condition.getLhs();
-			
-			sb.append(' ');
-			
-			condition.getRhs().resolve(sb, resolver);
-			
-			prependType = true;
-		}
-		
-		if (nested) {
-			sb.append(')');
+			if (condition instanceof PreparedQueryConditionNested) {
+				final PreparedQueryConditionNested nested = (PreparedQueryConditionNested)condition;
+
+				sb.append('(');
+				
+				nested.getSub().resolveFromParams(sb, resolver);
+
+				sb.append(')');
+			}
+			else if (condition instanceof PreparedQueryConditionComparison) {
+				// comparison
+				final PreparedQueryConditionComparison comparison = (PreparedQueryConditionComparison)condition;
+
+				JPAPreparedQueryBuilder.appendFieldReference(sb, comparison.getLhs());
+				
+				sb.append(' ');
+				
+				comparison.getRhs().resolve(sb, resolver);
+			}
+			else {
+				throw new UnsupportedOperationException("Unknown condition type " + condition.getClass().getSimpleName());
+			}
 		}
 	}
 	

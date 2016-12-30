@@ -88,8 +88,8 @@ final class JPAPreparedQueryBuilder implements PreparedQueryBuilder {
 	
 
 	@Override
-	public void addAllConditions(PreparedQueryConditionsBuilder conditionsBuilder, ParamValueResolver paramValueResolver) {
-		conditionsBuilder.addAllConditions(sb, paramValueResolver);
+	public void resolveFromParams(PreparedQueryConditionsBuilder conditionsBuilder, ParamValueResolver paramValueResolver) {
+		conditionsBuilder.resolveFromParams(sb, paramValueResolver);
 	}
 
 	private String entityName(Class<?> entityType) {

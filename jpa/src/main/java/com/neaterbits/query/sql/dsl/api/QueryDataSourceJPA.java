@@ -71,7 +71,7 @@ public final class QueryDataSourceJPA extends QueryDataSourceGenBase {
 			final ParamNameAssigner paramNameAssigner = new ParamNameAssigner();
 			final CompileConditionParam param = new CompileConditionParam(paramNameAssigner, em);
 
-			final PreparedQueryConditionsBuilderJPA conditionsBuilderJPA = new PreparedQueryConditionsBuilderJPA();
+			final PreparedQueryConditionsBuilderJPA conditionsBuilderJPA = new PreparedQueryConditionsBuilderJPA(true);
 			
 			prepareConditions(q, query, conditionsBuilderJPA, addJoinToWhere);
 
@@ -80,7 +80,7 @@ public final class QueryDataSourceJPA extends QueryDataSourceGenBase {
 			}
 			else {
 
-				sb.addAllConditions(conditionsBuilderJPA, null);
+				sb.resolveFromParams(conditionsBuilderJPA, null);
 
 				ret = makeComplete(q, query, paramNameAssigner, sb);
 			}
@@ -213,7 +213,6 @@ public final class QueryDataSourceJPA extends QueryDataSourceGenBase {
 					
 					sb.appendJoinStatement(joinType);
 
-					
 					final Class<?> oneToManyLeftType  = q.getJoinConditionLeftJavaType(query, joinIdx, conditionIdx);
 					final Class<?> oneToManyRightType = q.getJoinConditionRightJavaType(query, joinIdx, conditionIdx);
 					
@@ -272,40 +271,34 @@ public final class QueryDataSourceJPA extends QueryDataSourceGenBase {
 				final CompiledFieldReference rhs = q.getJoinConditionComparisonRhs(query, comparison.joinIdx, comparison.conditionIdx);
 				
 				// Output join condition as regular join
-				final FieldReference left = prepareFieldReference(lhs, em);
-
+				final FieldReference left  = prepareFieldReference(lhs, em);
 				final FieldReference right = prepareFieldReference(rhs, em);
 
-				conditionsBuilder.addCondition(os, left, EClauseOperator.IS_EQUAL, right);
+				conditionsBuilder.addJoinCondition(os, left, EClauseOperator.IS_EQUAL, right);
 
 				os = ConditionsType.AND;
 			}
 		}
-
+		
 		if (!q.isRootConditionOnly(query)) {
 			throw new UnsupportedOperationException("TODO: supports root conditions only for now");
 		}
-		
-		final List<PreparedQueryCondition> rootConditions = prepareRootConditions(q, query, original);
-		
-		if (!rootConditions.isEmpty()) {
-			if (nestConditions) {
-				conditionsBuilder.addNested(os, rootConditions);
-			}
-			else {
-				conditionsBuilder.addConditions(os, rootConditions);
-			}
-		}
+
+		final PreparedQueryConditionsBuilder sub = nestConditions
+				? conditionsBuilder.addNested(os)
+				: conditionsBuilder;
+
+		prepareRootConditions(q, query, original, sub);
 
 		return os;
 	}
 	
-	private <QUERY> List<PreparedQueryCondition> prepareRootConditions(ExecutableQuery<QUERY> q, QUERY query, ConditionsType os) {
+	private <QUERY> List<PreparedQueryConditionComparison> prepareRootConditions(ExecutableQuery<QUERY> q, QUERY query, ConditionsType original, PreparedQueryConditionsBuilder sub) {
 
 		final int numConditions = q.getRootConditionCount(query);
 		final StringBuilder conditionSB = new StringBuilder();
 		
-		final List<PreparedQueryCondition> ret = new ArrayList<>(numConditions);
+		final List<PreparedQueryConditionComparison> ret = new ArrayList<>(numConditions);
 		
 		for (int conditionIdx = 0; conditionIdx < numConditions; ++ conditionIdx) {
 
@@ -318,7 +311,12 @@ public final class QueryDataSourceJPA extends QueryDataSourceGenBase {
 			// Operator and value
 			final PreparedQueryConditionRHS preparedCondition = conditionToOperator.convert(q, query, conditionIdx, value, conditionSB);
 
-			ret.add(new PreparedQueryCondition(left, preparedCondition));
+			final PreparedQueryConditionComparison prepared = new PreparedQueryConditionComparison(left, preparedCondition);
+
+			sub.addComparisonCondition(original, prepared);
+			
+			// Clear for next iteration
+			conditionSB.setLength(0);
 		}
 
 		return ret;

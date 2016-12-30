@@ -18,7 +18,7 @@ interface PreparedQueryBuilder {
 	
 	void appendJoinStatement(EJoinType joinType);
 	
-	void addAllConditions(PreparedQueryConditionsBuilder conditionsBuilder, ParamValueResolver paramValueResolver);
+	void resolveFromParams(PreparedQueryConditionsBuilder conditionsBuilder, ParamValueResolver paramValueResolver);
 	
 	static class SourceReference {
 		
@@ -79,6 +79,3 @@ interface PreparedQueryBuilder {
 		}
 	}
 }
-
-
-

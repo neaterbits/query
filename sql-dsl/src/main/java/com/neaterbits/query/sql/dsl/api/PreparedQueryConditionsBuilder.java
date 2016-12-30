@@ -1,16 +1,15 @@
 package com.neaterbits.query.sql.dsl.api;
 
-import java.util.List;
 
 import com.neaterbits.query.sql.dsl.api.PreparedQueryBuilder.FieldReference;
 
 abstract class PreparedQueryConditionsBuilder {
 
-	abstract void addCondition(ConditionsType type, FieldReference left, EClauseOperator operator, FieldReference right);
-	
-	abstract void addNested(ConditionsType type, List<PreparedQueryCondition> conditions);
-	
-	abstract void addConditions(ConditionsType type, List<PreparedQueryCondition> conditions);
-	
-	abstract void addAllConditions(StringBuilder sb, ParamValueResolver resolver);
+	abstract void addJoinCondition(ConditionsType type, FieldReference left, EClauseOperator operator, FieldReference right);
+
+	abstract PreparedQueryConditionsBuilder addNested(ConditionsType type);
+
+	abstract void addComparisonCondition(ConditionsType type, PreparedQueryConditionComparison condition);
+
+	abstract void resolveFromParams(StringBuilder sb, ParamValueResolver resolver);
 }

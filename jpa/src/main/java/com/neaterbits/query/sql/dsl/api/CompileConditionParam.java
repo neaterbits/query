@@ -28,7 +28,7 @@ final class CompileConditionParam {
 			throw new IllegalArgumentException("entityManager == null");
 		}
 
-		this.conditionsBuilder = new PreparedQueryConditionsBuilderJPA();
+		this.conditionsBuilder = new PreparedQueryConditionsBuilderJPA(true);
 		this.paramNameAssigner = paramNameAssigner;
 		this.entityManager = entityManager;
 		this.conditions = new ArrayList<>();
