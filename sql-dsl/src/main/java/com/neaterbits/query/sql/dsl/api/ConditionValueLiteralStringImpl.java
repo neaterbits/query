@@ -10,4 +10,9 @@ final class ConditionValueLiteralStringImpl extends BaseConditionValueLiteralImp
 	<T, R> R visit(ConditionValueVisitor<T, R> visitor, T param) {
 		return visitor.onLiteralString(this, param);
 	}
+
+	@Override
+	public String toString() {
+		return '"' + getLiteral() + '"';
+	}
 }

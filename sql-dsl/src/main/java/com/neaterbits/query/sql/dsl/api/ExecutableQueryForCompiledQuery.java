@@ -482,6 +482,16 @@ final class ExecutableQueryForCompiledQuery implements ExecutableQuery<CompiledQ
 	public boolean evaluateCondition(CompiledQuery query, int level, int[] conditionIndices, Object instance, ConditionValuesScratch scratch) {
 		throw new UnsupportedOperationException("TODO");
 	}
+	
+	@Override
+	public Method getForDebugConditionLhsMethod(CompiledQuery query, int level, int[] conditionIndices) {
+		throw new UnsupportedOperationException("TODO");
+	}
+
+	@Override
+	public String getForDebugConditionValue(CompiledQuery query, int level, int[] conditionIndices) {
+		throw new UnsupportedOperationException("TODO");
+	}
 
 
 	private static final ConditionEvaluatorComparable comparableEvaluator = new ConditionEvaluatorComparable();

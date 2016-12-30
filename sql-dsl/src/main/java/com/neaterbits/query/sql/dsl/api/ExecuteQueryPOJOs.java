@@ -1,5 +1,6 @@
 package com.neaterbits.query.sql.dsl.api;
 
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
@@ -644,14 +645,36 @@ final class ExecuteQueryPOJOs<QUERY> extends ExecutableQueryAggregateComputation
 		}
 		
 		if (debug != null) {
-			final EClauseOperator operator = q.getOperator(query, level, conditionIndices);
-
-			debug.debug("reuturn end match op=" + operator + " : " + ret);
+			
+			debugMatch(query, level, conditionIndices, ret, debug);
 			
 			debug.subIndent();
 		}
 		
 		return ret;
+	}
+	
+	private void debugMatch(QUERY query, int level, int [] conditionIndices, EMatch ret, StructuredDebug debug) {
+		final EClauseOperator operator = q.getOperator(query, level, conditionIndices);
+		final Method lhsMethod = q.getForDebugConditionLhsMethod(query, level, conditionIndices);
+		final String value = q.getForDebugConditionValue(query, level, conditionIndices);
+		
+		debugMatch(query, lhsMethod, operator, value, ret, debug);
+	}
+
+	private void debugRootMatch(QUERY query, int conditionIdx, EMatch ret, StructuredDebug debug) {
+		final EClauseOperator operator = q.getRootConditionOperator(query, conditionIdx);
+		final Method lhsMethod = q.getForDebugRootConditionLhsMethod(query, conditionIdx);
+		final String value = q.getForDebugRootConditionValue(query, conditionIdx);
+		
+		debugMatch(query, lhsMethod, operator, value, ret, debug);
+	}
+	
+	private void debugMatch(QUERY query, Method lhsMethod, EClauseOperator operator, String value, EMatch ret, StructuredDebug debug) {
+		
+		final String lhsString = lhsMethod.getDeclaringClass().getSimpleName() + "." + lhsMethod.getName();
+		
+		debug.debug(lhsString, operator.name(), value.toString(), " => ", ret != null ? ret.toString() : "null");
 	}
 
 
@@ -867,7 +890,7 @@ final class ExecuteQueryPOJOs<QUERY> extends ExecutableQueryAggregateComputation
 		}
 		
 		if (debug != null) {
-			debug.debug("return " + ret.name());
+			debugRootMatch(query, conditionIdx, ret, debug);
 			
 			debug.subIndent();
 		}
@@ -888,12 +911,16 @@ final class ExecuteQueryPOJOs<QUERY> extends ExecutableQueryAggregateComputation
 			if (q.getRootConditionSourceIdx(query, conditionIdx) == sourceIdx) {
 				
 				if (!q.evaluateRootCondition(query, instance, conditionIdx, scratch)) {
+					
+					
+					final EMatch ret = EMatch.NO;
 					if (debug != null) {
+						debugRootMatch(query, conditionIdx, ret, debug);
 						debug.debug("MISMATCH conditionIdx=" + conditionIdx);
 						
 						debug.subIndent();
 					}
-					return EMatch.NO; // Definitely does not match
+					return ret; // Definitely does not match
 				}
 				
 				++ numFromThisSource;
@@ -929,11 +956,14 @@ final class ExecuteQueryPOJOs<QUERY> extends ExecutableQueryAggregateComputation
 				
 				if (q.evaluateRootCondition(query, instance, conditionIdx, scratch)) {
 
+					final EMatch ret = EMatch.YES;
+					
 					if (debug != null) {
+						debugRootMatch(query, conditionIdx, ret, debug);
 						debug.debug("MATCH conditionIdx " + conditionIdx);
 					}
 
-					return EMatch.YES; // One of conditions matched, so we have a match
+					return ret; // One of conditions matched, so we have a match
 				}
 				
 				++ numFromThisSource;

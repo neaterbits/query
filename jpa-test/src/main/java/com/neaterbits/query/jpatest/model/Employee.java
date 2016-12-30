@@ -54,4 +54,9 @@ public class Employee {
 	public void setPersonId(long personId) {
 		this.personId = personId;
 	}
+
+	@Override
+	public String toString() {
+		return "Employee [id=" + id + ", company=" + company + ", personId=" + personId + "]";
+	}
 }

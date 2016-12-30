@@ -1,7 +1,10 @@
 package com.neaterbits.query.sql.dsl.api;
 
+import java.lang.reflect.Method;
 import java.util.Arrays;
 import java.util.function.Function;
+
+import com.neaterbits.query.util.java8.MethodFinder;
 
 abstract class AdhocConditions<MODEL, RESULT, QUERY extends AdhocQueryClass<MODEL, RESULT>>
 
@@ -395,6 +398,35 @@ abstract class AdhocConditions<MODEL, RESULT, QUERY extends AdhocQueryClass<MODE
 				: subConditions[conditionIdx].evaluateCondition(level, conditionIndices, instance, scratch);
 						
 	}
+
+	final Method getForDebugConditionLhsMethod(int level, int[] conditionIndices, Class<?> [] sourceClasses) {
+		final int conditionIdx = conditionIndices[this.conditionsLevel];
+
+		return level == this.conditionsLevel
+				? getForDebugLhsMethod(conditionIdx, sourceClasses)
+				: subConditions[conditionIdx].getForDebugConditionLhsMethod(level, conditionIndices, sourceClasses);
+		
+	}
+
+	final Object getForDebugConditionValue(int level, int[] conditionIndices) {
+		final int conditionIdx = conditionIndices[this.conditionsLevel];
+
+		return level == this.conditionsLevel
+				? values[conditionIdx]
+				: subConditions[conditionIdx].getForDebugConditionValue(level, conditionIndices);
+		
+	}
+
+	@SuppressWarnings({"unchecked", "rawtypes"})
+	private Method getForDebugLhsMethod(int conditionIdx, Class<?> [] sourceClasses) {
+		final int sourceIdx = conditionToSourceIdx[conditionIdx];
+
+		final Class<?> sourceClass = sourceClasses[sourceIdx];
+		
+		final Function getter = conditions[conditionIdx];
+		
+		return MethodFinder.find(sourceClass, getter);
+	}
 	
 	// Depth of sub-levels
 	final int getMaxDepth() {
@@ -421,6 +453,7 @@ abstract class AdhocConditions<MODEL, RESULT, QUERY extends AdhocQueryClass<MODE
 
 		return ret;
 	}
+	
 
 	private void checkSizes(int num) {
 

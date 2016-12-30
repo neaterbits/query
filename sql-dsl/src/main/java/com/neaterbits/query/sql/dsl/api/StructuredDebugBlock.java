@@ -7,6 +7,8 @@ import java.util.List;
 
 final class StructuredDebugBlock {
 
+	private static final int COLUMN_SPACING = 1;
+
 	private final int indent;
 	private final String prefix;
 	private final List<String[]> lines;
@@ -56,7 +58,7 @@ final class StructuredDebugBlock {
 					throw new IllegalStateException("columnLen < len");
 				}
 				
-				final int padding = columnLen - len;
+				final int padding = columnLen - len + COLUMN_SPACING;
 
 				if (column != null) {
 					out.append(column);

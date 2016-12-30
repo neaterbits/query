@@ -261,8 +261,14 @@ interface ExecutableQuery<QUERY> {
 	
 	EClauseOperator getRootConditionOperator(QUERY query, int conditionIdx);
 	
-	
+	public default Method getForDebugRootConditionLhsMethod(QUERY query, int conditionIdx) {
+		return getRootConditionLhs(query, conditionIdx).getGetter().getGetterMethod();
+	}
 
+	public default String getForDebugRootConditionValue(QUERY query, int conditionIdx) {
+		return getRootConditionValue(query, conditionIdx).toString();
+	}
+	
 	/**
 	 * Get type of condition for this query
 	 * @param query
@@ -290,4 +296,8 @@ interface ExecutableQuery<QUERY> {
 	int getConditionsCount(QUERY query, int level, int [] conditionIndices);
 
 	EClauseOperator getOperator(QUERY query, int level, int [] conditionIndices);
+
+	Method getForDebugConditionLhsMethod(QUERY query, int level, int [] conditionIndices);
+	
+	String getForDebugConditionValue(QUERY query, int level, int [] conditionIndices);
 }

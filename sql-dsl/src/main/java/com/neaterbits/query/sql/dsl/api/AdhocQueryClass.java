@@ -6,6 +6,7 @@ import java.util.Collection;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
+import com.neaterbits.query.sql.dsl.api.entity.EntityUtil;
 import com.neaterbits.query.sql.dsl.api.entity.OneToManyJoinConditionResolver;
 import com.neaterbits.query.sql.dsl.api.entity.QueryMetaModel;
 
@@ -258,6 +259,16 @@ abstract class AdhocQueryClass<MODEL, RESULT>
 	}
 
 	@Override
+	public Method getForDebugRootConditionLhsMethod(AdhocQueryClass<MODEL, RESULT> query, int conditionIdx) {
+		return getForDebugConditionLhsMethod(query, 0, new int[] { conditionIdx });
+	}
+
+	@Override
+	public String getForDebugRootConditionValue(AdhocQueryClass<MODEL, RESULT> query, int conditionIdx) {
+		return getForDebugConditionValue(query, 0, new int[] { conditionIdx });
+	}
+
+	@Override
 	public final boolean isRootConditionOnly(AdhocQueryClass<MODEL, RESULT> query) {
 		return !conditions.hasSubConditions();
 	}
@@ -307,6 +318,37 @@ abstract class AdhocQueryClass<MODEL, RESULT>
 	@Override
 	public final int getConditionsMaxDepth(AdhocQueryClass<MODEL, RESULT> query) {
 		return conditions == null ? -1 : conditions.getMaxDepth();
+	}
+	
+	@Override
+	public Method getForDebugConditionLhsMethod(AdhocQueryClass<MODEL, RESULT> query, int level, int[] conditionIndices) {
+		return conditions.getForDebugConditionLhsMethod(level, conditionIndices, getForDebugSourceClasses());
+	}
+
+	@Override
+	public String getForDebugConditionValue(AdhocQueryClass<MODEL, RESULT> query, int level, int[] conditionIndices) {
+		return conditions.getForDebugConditionValue(level, conditionIndices).toString();
+	}
+	
+	private Class<?> [] getForDebugSourceClasses() {
+		
+		final Class<?> [] ret = new Class<?>[numSources];
+		
+		for (int i = 0; i < numSources; ++ i) {
+			final Class<?> type = getTypeFromColl(sources[i]); // EntityUtil.getGenericCollectionType(sources[i]);
+			
+			if (type == null) {
+				throw new IllegalStateException("No generic type for source " + i);
+			}
+
+			ret[i] = type;
+		}
+		
+		return ret;
+	}
+	
+	private Class<?> getTypeFromColl(Collection<?> coll) {
+		return coll.isEmpty() ? Void.class : coll.iterator().next().getClass();
 	}
 
 	/**************************************************************************
