@@ -5,6 +5,11 @@ final class FieldReferenceEntity extends FieldReference {
 
 	FieldReferenceEntity(Class<?> javaType, String columnName) {
 		super(columnName);
+
+		if (javaType == null) {
+			throw new IllegalArgumentException("javaType == null");
+		}
+
 		this.javaType = javaType;
 	}
 

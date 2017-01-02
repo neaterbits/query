@@ -1,7 +1,6 @@
 package com.neaterbits.query.jpatest.model;
 
 import java.math.BigDecimal;
-import java.util.Collection;
 import java.util.List;
 
 import javax.persistence.Column;

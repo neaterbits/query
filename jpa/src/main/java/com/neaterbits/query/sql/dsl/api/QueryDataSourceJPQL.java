@@ -46,4 +46,9 @@ public final class QueryDataSourceJPQL extends QueryDataSourceJPA {
 	<QUERY> List<Object> mapMultipleEntitities(ExecutableQuery<QUERY> q, QUERY query, List<?> input) {
 		return (List<Object>)input;
 	}
+
+	@Override
+	boolean supportsNonRelationJoins() {
+		return false;
+	}
 }

@@ -22,6 +22,10 @@ abstract class CompiledSelectSources<T extends CompiledSelectSource>
 	
 	abstract int getSourceIdx(SelectSource source);
 	
+	final int getCount() {
+		return sources.size();
+	}
+	
 	CompiledSelectSources(SelectSourceImpl original, List<T> sources) {
 		super(original);
 

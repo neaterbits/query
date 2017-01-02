@@ -144,4 +144,9 @@ public final class QueryDataSourceJPANative extends QueryDataSourceJPA {
 		
 		return entity;
 	}
+
+	@Override
+	boolean supportsNonRelationJoins() {
+		return true;
+	}
 }

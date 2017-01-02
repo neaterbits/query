@@ -14,9 +14,11 @@ abstract class PreparedQueryBuilder {
 
 	abstract void addMappings(List<FieldReference> references);
 
-	abstract void addSelectSources(FieldReferenceType fieldReferenceType, List<SourceReference> references);
+	abstract void addFromSelectSources(FieldReferenceType fieldReferenceType, List<SourceReference> references);
 	
 	abstract void addOneToManyJoin(Relation relation, FieldReferenceType fieldReferenceType, SourceReference from, SourceReference to);
+	
+	abstract void addComparisonJoin(List<JoinFieldComparison> fieldComparisons, SourceReference from, SourceReference to);
 	
 	// abstract void addOneToManyJoin(Relation relation, String entityAliasName, String collectionAttrName, String joinVarName);
 	

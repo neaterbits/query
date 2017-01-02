@@ -7,8 +7,7 @@ final class CompiledJoin {
 	private final CollectedJoin original;
 	private final TypeMapSource left;
 	private final TypeMapSource right;
-	
-	
+
 	private final List<CompiledJoinCondition> conditions;
 
 	CompiledJoin(

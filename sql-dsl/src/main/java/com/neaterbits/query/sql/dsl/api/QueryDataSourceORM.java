@@ -3,7 +3,10 @@ package com.neaterbits.query.sql.dsl.api;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
 
 import com.neaterbits.query.sql.dsl.api.entity.EntityModel;
 import com.neaterbits.query.sql.dsl.api.entity.EntityModelUtil;
@@ -23,7 +26,15 @@ abstract class QueryDataSourceORM<ORM_QUERY, MANAGED, EMBEDDED, IDENTIFIABLE, AT
 	abstract <QUERY> DSPreparedQueryDB<QUERY, ORM_QUERY> makeCompletePreparedQuery(ExecutableQuery<QUERY> q, QUERY query, ParamNameAssigner paramNameAssigner, PreparedQueryBuilder sb);
 	
 	abstract <QUERY> DSPreparedQueryDB<QUERY, ORM_QUERY> makeHalfwayPreparedQuery(ExecutableQuery<QUERY> queryAccess, QUERY query, ParamNameAssigner paramNameAssigner, String base, PreparedQueryConditionsBuilder conditions);
+
 	
+	/**
+	 * Whether supports join fields natively, ie. ON table1.somefield = table2.somefiled.
+	 * This is not true for JPQL and we have to simulate this by implicit join in WHERE and then add conditions to the WHERE clause 
+	 *  
+	 * @return
+	 */
+	abstract boolean supportsNonRelationJoins();
 	
 	QueryDataSourceORM(EntityModelUtil<MANAGED, EMBEDDED, IDENTIFIABLE, ATTRIBUTE, COLL> modelUtil) {
 
@@ -46,8 +57,13 @@ abstract class QueryDataSourceORM<ORM_QUERY, MANAGED, EMBEDDED, IDENTIFIABLE, AT
 		
 		convertResult(q, query, sb);
 
-		// Add all select sources
-		prepareSelectSources(sb, q, query);
+		// Figure out the from select source
+		final int [] fromSelectSources = getFromSelectSources(q, query);
+
+		validateFromIndices(fromSelectSources, q, query);
+		
+		// Add all froms
+		prepareFroms(sb, q, query, fromSelectSources);
 
 		List<JoinConditionId> addJoinToWhere = new ArrayList<>();
 		
@@ -83,6 +99,122 @@ abstract class QueryDataSourceORM<ORM_QUERY, MANAGED, EMBEDDED, IDENTIFIABLE, AT
 		return ret;
 	}
 	
+	private <QUERY> int [] getFromSelectSources(ExecutableQuery<QUERY> q, QUERY query) {
+
+		
+		// For JPQL, we cannot remove from where any compare-inner joins
+		// but when supports inner-joins we can remove thos as well.
+		// for one-to-many joins, we always remove
+		
+
+		final int [] fromSelectSources;
+		
+		final int numSources = q.getAllSourceCount(query);
+		
+		
+		if (q.hasJoins(query)) {
+			
+			// We might have to remove sources in the "from" set if they are duplicated within joins
+			// since joins will take precedence over implicit outer-join semantics
+			// NOTE: This is supported here to be generic in backen but may be restricted in API so that one cannot mix joins
+			
+			final int numJoins = q.getJoinCount(query);
+			
+			final LinkedHashSet<Integer> fromSources = new LinkedHashSet<>(numSources);
+
+			// Default, add all sources
+			for (int sourceIdx = 0; sourceIdx < numSources; ++ sourceIdx) {
+				fromSources.add(sourceIdx);
+			}
+
+			
+			// Loop over all joins to see if we should remove any of them from the FROM clause
+			// ie. when already part of an ANSI style join
+			for (int joinIdx = 0; joinIdx < numJoins; ++ joinIdx) {
+				final EJoinConditionType joinConditionType = q.getJoinConditionType(query, joinIdx);
+				
+				final boolean removeFromFROMifPresent;
+				
+				switch (joinConditionType) {
+				case COMPARISON:
+					if (supportsNonRelationJoins()) {
+						// We can remove this from FROM clause since we can do inner join
+						removeFromFROMifPresent = true;
+					}
+					else {
+						// Cannot remove since we need to emulate join through FROM and WHERE
+						// TODO: Also emulate LEFT JOIN on comparison?
+						removeFromFROMifPresent = false;
+					}
+					break;
+					
+				case ONE_TO_MANY:
+					// Always remove from FROM if present
+					removeFromFROMifPresent = true;
+					break;
+					
+				default:
+					throw new UnsupportedOperationException("Unknown join condition type " + joinConditionType);
+				}
+				
+				if (removeFromFROMifPresent) {
+					// Remove from FROM clause
+					final int rightSourceIdx = q.getJoinRightSourceIdx(query, joinIdx);
+
+					fromSources.remove(rightSourceIdx);
+				}
+			}
+			
+
+			fromSelectSources = new int [fromSources.size()];
+			
+			int dstIdx = 0;
+			for (int fromSourceIdx : fromSources) {
+				fromSelectSources[dstIdx ++] = fromSourceIdx;
+			}
+		}
+		else {
+			
+			fromSelectSources = new int [numSources];
+			
+			int dstIdx = 0;
+			
+			for (int sourceIdx = 0; sourceIdx < numSources; ++ sourceIdx) {
+				fromSelectSources[dstIdx ++] = sourceIdx;
+			}
+		}
+		
+		return fromSelectSources;
+	}
+	
+	private static <QUERY> void validateFromIndices(int [] fromSelectSources, ExecutableQuery<QUERY> q, QUERY query) {
+		
+		if (fromSelectSources.length > q.getAllSourceCount(query)) {
+			throw new IllegalArgumentException("Should never be more from sources than all sources");
+		}
+
+		final Set<Integer> unique = new HashSet<>(fromSelectSources.length);
+		
+		for (int fromSelectSource : fromSelectSources) {
+			if (unique.contains(fromSelectSource)) {
+				throw new IllegalStateException("From select source " + fromSelectSource + " contained twice or more");
+			}
+			
+			unique.add(fromSelectSource);
+			
+			if (!hasSelectSource(q, query, fromSelectSource)) {
+				throw new IllegalArgumentException("from select source " + fromSelectSource + " not among select sources");
+			}
+		}
+	}
+	
+	private static <QUERY> boolean hasSelectSource(ExecutableQuery<QUERY> q, QUERY query, int sourceIdx) {
+
+		return sourceIdx >= 0 && sourceIdx < q.getAllSourceCount(query);
+		
+	}
+	
+	
 	private <QUERY> SourceReference getSourceReference(ExecutableQuery<QUERY> q, QUERY query, int idx) {
 		final SourceReference ref = new SourceReference(q.getSourceJavaType(query, idx), q.getSourceName(query, idx));
 
@@ -90,22 +222,24 @@ abstract class QueryDataSourceORM<ORM_QUERY, MANAGED, EMBEDDED, IDENTIFIABLE, AT
 	}
 	
 	
-	private <QUERY> void prepareSelectSources(PreparedQueryBuilder sb, ExecutableQuery<QUERY> q, QUERY query) {
+	private <QUERY> void prepareFroms(PreparedQueryBuilder sb, ExecutableQuery<QUERY> q, QUERY query, int [] fromSelectSources) {
 
-		final FieldReferenceType fieldReferenceType = q.getQueryFieldRefereneType(query);
+		final FieldReferenceType fieldReferenceType = q.getQueryFieldReferenceType(query);
 
-		final int numSources = q.getSourceCount(query);
+		final int numFroms = fromSelectSources.length;
 		
-		final List<SourceReference> refs = new ArrayList<>(numSources);
+		final List<SourceReference> refs = new ArrayList<>(numFroms);
 		
-		for (int i = 0; i < numSources; ++ i) {
+		for (int fromIdx = 0; fromIdx < numFroms; ++ fromIdx) {
+
+			final int sourceIdx = fromSelectSources[fromIdx];
 			
-			final SourceReference ref = getSourceReference(q, query, i);
+			final SourceReference ref = getSourceReference(q, query, sourceIdx);
 			
 			refs.add(ref);
 		}
 
-		sb.addSelectSources(fieldReferenceType, refs);
+		sb.addFromSelectSources(fieldReferenceType, refs);
 	}
 	
 	private <QUERY> FieldReference prepareFieldReference(ExecutableQuery<QUERY> q, QUERY query, CompiledFieldReference field) {
@@ -116,7 +250,7 @@ abstract class QueryDataSourceORM<ORM_QUERY, MANAGED, EMBEDDED, IDENTIFIABLE, AT
 
 		final String columnName = getColumnNameForGetter(source, getter);
 
-		final FieldReferenceType fieldReferenceType = q.getQueryFieldRefereneType(query);
+		final FieldReferenceType fieldReferenceType = q.getQueryFieldReferenceType(query);
 		
 		final FieldReference ret;
 		
@@ -196,63 +330,107 @@ abstract class QueryDataSourceORM<ORM_QUERY, MANAGED, EMBEDDED, IDENTIFIABLE, AT
 			// Must find metamodel entry that matches the foreign key patterns specified
 			
 			final int numJoinConditions = q.getJoinConditionCount(query, joinIdx);
-			
-			for (int conditionIdx = 0; conditionIdx < numJoinConditions; ++ conditionIdx) {
-				// Find something that matches this condition in correct order
-				
-				final EJoinConditionType conditionType = q.getJoinConditionType(query, joinIdx, conditionIdx);
-				switch (conditionType) {
+			final EJoinConditionType conditionType = q.getJoinConditionType(query, joinIdx);
 
-				case COMPARISON:
+			switch (conditionType) {
+
+			case COMPARISON:
+				
+				if (joinType != EJoinType.INNER) {
+					throw new IllegalStateException("Can only do inner joins when performing field comparison");
+				}
+
+				
+				
+
+				// Joining two fields. TODO Which version of JPA are we?
+
+				// Add as where-queries for later on
+				
+				if (supportsNonRelationJoins()) {
+					// Supports comparison joins
 					
-					if (joinType != EJoinType.INNER) {
-						throw new IllegalStateException("Can only do inner joins when performing field comparison");
+					final List<JoinFieldComparison> fieldComparisons = new ArrayList<>(numJoinConditions);
+					
+					
+					for (int conditionIdx = 0; conditionIdx < numJoinConditions; ++ conditionIdx) {
+
+						final CompiledFieldReference lhs = q.getJoinConditionComparisonLhs(query, joinIdx, conditionIdx);
+						final CompiledFieldReference rhs = q.getJoinConditionComparisonRhs(query, joinIdx, conditionIdx);
+						
+						final JoinFieldComparison comparison = new JoinFieldComparison(
+								prepareFieldReference(q, query, lhs),
+								prepareFieldReference(q, query, rhs));
+						
+						fieldComparisons.add(comparison);
 					}
 
-					final JoinConditionId comparison = new JoinConditionId(joinIdx, conditionIdx);
-
-					// Joining two fields. TODO Which version of JPA are we?
-
-					// Add as where-queries for later on
-					
-					addJoinToWhere.add(comparison);
-					break;
-
-				case ONE_TO_MANY:
-					
 					sb.appendJoinStatement(joinType);
 
-					final Class<?> oneToManyLeftType  = q.getJoinConditionLeftJavaType(query, joinIdx, conditionIdx);
-					final Class<?> oneToManyRightType = q.getJoinConditionRightJavaType(query, joinIdx, conditionIdx);
-					
-					final Method collectionGetterMethod = q.getJoinConditionOneToManyCollectionGetter(query, joinIdx, conditionIdx);
-					
-					final FieldReferenceType fieldReferenceType = q.getQueryFieldRefereneType(query);
-					
-					final int oneToManyLeftSourceIdx  = q.getJoinConditionLeftSourceIdx(query, joinIdx, conditionIdx);
-					final int oneToManyRightSourceIdx = q.getJoinConditionRightSourceIdx(query, joinIdx, conditionIdx);
-					
-					// Must figure out which relation attribute this is ?
-					final Relation relation = entityModelUtil.findOneToManyRelation(oneToManyLeftType, oneToManyRightType, collectionGetterMethod);
+					final int comparisonLeftSourceIdx  = q.getJoinLeftSourceIdx(query, joinIdx);
+					final int comparisonRightSourceIdx = q.getJoinRightSourceIdx(query, joinIdx);
 
-					if (relation == null) {
-						throw new IllegalStateException("Failed to find relation for " + collectionGetterMethod + " from " + oneToManyLeftType + " to " + oneToManyRightType);
-					}
-
-					sb.addOneToManyJoin(
-							relation,
-							fieldReferenceType,
-							getSourceReference(q, query, oneToManyLeftSourceIdx),
-							getSourceReference(q, query, oneToManyRightSourceIdx));
-					break;
-
-				default:
-					throw new UnsupportedOperationException("Unknown join condition type " + conditionType);
+					// Add to list and add join
+					sb.addComparisonJoin(
+							fieldComparisons,
+							getSourceReference(q, query, comparisonLeftSourceIdx),
+							getSourceReference(q, query, comparisonRightSourceIdx)
+							);
 				}
+				else {
+					// Just add comparisons to return list
+					for (int conditionIdx = 0; conditionIdx < numJoinConditions; ++ conditionIdx) {
+						final JoinConditionId comparison = new JoinConditionId(joinIdx, conditionIdx);
+
+						addJoinToWhere.add(comparison);
+					}
+				}
+				break;
+
+			case ONE_TO_MANY:
+				if (numJoinConditions != 1) {
+					throw new IllegalStateException("Should be exacly one condition");
+				}
+				addOneToManyJoin(sb, joinType, joinIdx, q, query);
+				break;
+
+			default:
+				throw new UnsupportedOperationException("Unknown join condition type " + conditionType);
 			}
 		}
 		
 		return joinParamIdx;
+	}
+
+	private <QUERY> void addOneToManyJoin(PreparedQueryBuilder sb, EJoinType joinType, int joinIdx, ExecutableQuery<QUERY> q, QUERY query) {
+		
+		final int conditionIdx = 0;
+		
+		sb.appendJoinStatement(joinType);
+
+		final Class<?> oneToManyLeftType  = q.getJoinConditionLeftJavaType(query, joinIdx, conditionIdx);
+		final Class<?> oneToManyRightType = q.getJoinConditionRightJavaType(query, joinIdx, conditionIdx);
+		
+		final Method collectionGetterMethod = q.getJoinConditionOneToManyCollectionGetter(query, joinIdx, conditionIdx);
+		
+		final FieldReferenceType fieldReferenceType = q.getQueryFieldReferenceType(query);
+		
+		final int oneToManyLeftSourceIdx  = q.getJoinConditionLeftSourceIdx(query, joinIdx, conditionIdx);
+		final int oneToManyRightSourceIdx = q.getJoinConditionRightSourceIdx(query, joinIdx, conditionIdx);
+		
+		// Must figure out which relation attribute this is ?
+		final Relation relation = entityModelUtil.findOneToManyRelation(oneToManyLeftType, oneToManyRightType, collectionGetterMethod);
+
+		if (relation == null) {
+			throw new IllegalStateException("Failed to find relation for " + collectionGetterMethod + " from " + oneToManyLeftType + " to " + oneToManyRightType);
+		}
+
+		sb.addOneToManyJoin(
+				relation,
+				fieldReferenceType,
+				getSourceReference(q, query, oneToManyLeftSourceIdx),
+				getSourceReference(q, query, oneToManyRightSourceIdx));
+		
 	}
 	
 	private <QUERY> ConditionsType prepareConditions(ExecutableQuery<QUERY> q, QUERY query, PreparedQueryConditionsBuilder conditionsBuilder, List<JoinConditionId> joinComparisonConditions) {
@@ -306,6 +484,7 @@ abstract class QueryDataSourceORM<ORM_QUERY, MANAGED, EMBEDDED, IDENTIFIABLE, AT
 		return os;
 	}
 	
+	
 	private <QUERY> List<PreparedQueryConditionComparison> prepareRootConditions(ExecutableQuery<QUERY> q, QUERY query, ConditionsType original, PreparedQueryConditionsBuilder sub) {
 
 		final int numConditions = q.getRootConditionCount(query);
@@ -342,7 +521,7 @@ abstract class QueryDataSourceORM<ORM_QUERY, MANAGED, EMBEDDED, IDENTIFIABLE, AT
 		switch (resultGathering) {
 		case ENTITY:
 			// Result may be an alias
-			final FieldReferenceType fieldReferenceType = q.getQueryFieldRefereneType(query);
+			final FieldReferenceType fieldReferenceType = q.getQueryFieldReferenceType(query);
 			
 			// Find the resulting source
 			

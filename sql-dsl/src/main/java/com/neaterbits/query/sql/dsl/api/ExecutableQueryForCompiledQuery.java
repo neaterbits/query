@@ -16,7 +16,7 @@ final class ExecutableQueryForCompiledQuery implements ExecutableQuery<CompiledQ
 	@Override
 	public ExecuteQueryScratch createScratchArea(CompiledQuery query, QueryMetaModel queryMetaModel) {
 		final int numResultParts 	= getNumResultParts(query);
-		final int numSelectSources 	= getSourceCount(query);
+		final int numSelectSources 	= getAllSourceCount(query);
 		final int numConditions	 	= getRootConditionCount(query);
 		final int maxDepth 			= getConditionsMaxDepth(query);
 		
@@ -25,7 +25,7 @@ final class ExecutableQueryForCompiledQuery implements ExecutableQuery<CompiledQ
 
 	
 	@Override
-	public FieldReferenceType getQueryFieldRefereneType(CompiledQuery query) {
+	public FieldReferenceType getQueryFieldReferenceType(CompiledQuery query) {
 		
 		final CompiledSelectSources<?> source = query.getSelectSources();
 		
@@ -154,9 +154,9 @@ final class ExecutableQueryForCompiledQuery implements ExecutableQuery<CompiledQ
 
 		mapped.getMappings().getMappings().get(mappingIdx).executeSetter(instance, value);
 	}
-
+	
 	@Override
-	public int getSourceCount(CompiledQuery query) {
+	public int getAllSourceCount(CompiledQuery query) {
 		return query.getSelectSources().getSources().size();
 	}
 

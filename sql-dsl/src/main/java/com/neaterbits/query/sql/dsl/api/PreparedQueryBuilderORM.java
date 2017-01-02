@@ -42,7 +42,7 @@ abstract class PreparedQueryBuilderORM extends PreparedQueryBuilder implements P
 	}
 
 	@Override
-	final void addSelectSources(FieldReferenceType fieldReferenceType, List<SourceReference> references) {
+	final void addFromSelectSources(FieldReferenceType fieldReferenceType, List<SourceReference> references) {
 
 		sb.append("\n").append("FROM ");
 

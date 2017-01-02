@@ -18,6 +18,43 @@ import com.neaterbits.query.sql.dsl.api.entity.QueryMetaModel;
 
 interface ExecutableQuery<QUERY> {
 
+	public default EJoinConditionType getJoinConditionType(QUERY query, int joinIdx) {
+		
+		final int numConditions = getJoinConditionCount(query, joinIdx);
+		
+		if (numConditions == 0) {
+			throw new IllegalStateException("numConditions == 0");
+		}
+		
+		EJoinConditionType found = null;
+		
+		for (int conditionIdx = 0; conditionIdx < numConditions; ++ conditionIdx) {
+
+			final EJoinConditionType conditionType = getJoinConditionType(query, joinIdx, conditionIdx);
+			
+			if (conditionType == null) {
+				throw new IllegalStateException("conditionType == null");
+			}
+			
+			if (found == null) {
+				found = conditionType;
+			}
+			else {
+				if (found != conditionType) {
+					throw new IllegalStateException("Multiple condtition types found at " + joinIdx); 
+				}
+				
+			}
+		}
+		
+		if (found == null) {
+			throw new IllegalStateException("found == null");
+		}
+		
+
+		return found;
+	}
+	
 	public default int getNumResultParts(QUERY query) {
 		
 		final int numResultParts;
@@ -121,7 +158,7 @@ interface ExecutableQuery<QUERY> {
 	 * @return
 	 */
 	
-	FieldReferenceType getQueryFieldRefereneType(QUERY query);
+	FieldReferenceType getQueryFieldReferenceType(QUERY query);
 	
 	
 	/**
@@ -186,14 +223,15 @@ interface ExecutableQuery<QUERY> {
 	 */
 	
 	void executeMappingSetter(QUERY query, int mappingIdx, Object instance, Object value);
-	
+
 	/**
 	 * Get the total number of sources (eg. what is in "from" of an SQL)
 	 * 
 	 * @return
 	 */
+
 	
-	int getSourceCount(QUERY query);
+	int getAllSourceCount(QUERY query);
 	
 	Class<?> getSourceJavaType(QUERY query, int sourceIdx);
 	

@@ -301,7 +301,7 @@ final class ExecuteQueryPOJOs<QUERY> extends ExecutableQueryAggregateComputation
 	
 	
 	private Object loopJoinedNoSets(QUERY query, ExecuteQueryPOJOsInput input, ExecuteQueryScratch scratch, StructuredDebug debug) {
-		final int numSelectSources = q.getSourceCount(query);
+		final int numSelectSources = q.getAllSourceCount(query);
 		
 		final int joinCount = q.getJoinCount(query);
 		
@@ -497,7 +497,7 @@ final class ExecuteQueryPOJOs<QUERY> extends ExecutableQueryAggregateComputation
 	// Non-joined simple case. Means outer-join of all structures
 	private Object loopNonJoined(QUERY query, ExecuteQueryPOJOsInput input, ExecuteQueryScratch scratch, StructuredDebug debug) {
 
-		final int numSelectSources = q.getSourceCount(query);
+		final int numSelectSources = q.getAllSourceCount(query);
 		
 		Object result = computeInitialResult(query);
 

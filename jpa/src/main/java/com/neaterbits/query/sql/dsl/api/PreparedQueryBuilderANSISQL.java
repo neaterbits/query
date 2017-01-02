@@ -1,7 +1,8 @@
 package com.neaterbits.query.sql.dsl.api;
 
 import java.util.Collection;
-
+import java.util.List;
+import java.util.function.BiFunction;
 
 import com.neaterbits.query.sql.dsl.api.entity.EntityModelUtil;
 import com.neaterbits.query.sql.dsl.api.entity.IEntity;
@@ -116,14 +117,45 @@ final class PreparedQueryBuilderANSISQL<MANAGED, EMBEDDED, IDENTIFIABLE, ATTRIBU
 		}
 	}
 
+	private void appendJoinVar(SourceReference to) {
+		sb.append(getSourceTypeName(to.getJavaType())).append(' ').append(to.getVarName());
+	}
 	
-	
+	@Override
+	void addComparisonJoin(List<JoinFieldComparison> fieldComparisons, SourceReference from, SourceReference to) {
+		
+		appendJoinVar(to);
+		
+		sb.append(' ');
+		
+		final int num = fieldComparisons.size();
+		
+		for (int i = 0; i < num; ++ i) {
+
+			sb.append(i == 0 ? "ON" : "AND");
+
+			sb.append(' ');
+			
+			final JoinFieldComparison comparison = fieldComparisons.get(i);
+
+			appendFieldReference(sb, comparison.getLeft());
+
+			addOp();
+
+			appendFieldReference(sb, comparison.getRight());
+		}
+	}
+
 	@Override
 	void addOneToManyJoin(Relation relation, FieldReferenceType fieldReferenceType, SourceReference from, SourceReference to) {
 		
 		// One-to-many is a bit tricky, we must write ANSI joins on the model fields
 		
 		// Must add ON query for the columns in question
+
+		appendJoinVar(to);
+		
+		sb.append(' ');
 		
 		final String [] fromColumns = relation.getFrom().getAttribute().getColumns();
 		final String [] toColumns   = relation.getTo()  .getAttribute().getColumns();
@@ -148,7 +180,6 @@ final class PreparedQueryBuilderANSISQL<MANAGED, EMBEDDED, IDENTIFIABLE, ATTRIBU
 
 			String fromTableName = null;
 			String toTableName = null;
-			
 			
 			sb.append(i == 0 ? "ON" : "AND");
 

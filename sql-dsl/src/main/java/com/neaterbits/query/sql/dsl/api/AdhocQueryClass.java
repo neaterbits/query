@@ -6,7 +6,6 @@ import java.util.Collection;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
-import com.neaterbits.query.sql.dsl.api.entity.EntityUtil;
 import com.neaterbits.query.sql.dsl.api.entity.OneToManyJoinConditionResolver;
 import com.neaterbits.query.sql.dsl.api.entity.QueryMetaModel;
 
@@ -93,7 +92,7 @@ abstract class AdhocQueryClass<MODEL, RESULT>
 	
 	
 	@Override
-	public FieldReferenceType getQueryFieldRefereneType(AdhocQueryClass<MODEL, RESULT> query) {
+	public FieldReferenceType getQueryFieldReferenceType(AdhocQueryClass<MODEL, RESULT> query) {
 		return FieldReferenceType.ENTITY;
 	}
 
@@ -108,7 +107,7 @@ abstract class AdhocQueryClass<MODEL, RESULT>
 
 		initScratchArea(
 				getNumResultParts(this),
-				getSourceCount(this),
+				getAllSourceCount(this),
 				
 				getRootConditionCount(this),
 				getConditionsMaxDepth(query));
@@ -224,8 +223,9 @@ abstract class AdhocQueryClass<MODEL, RESULT>
 	/**************************************************************************
 	** ExeutableQuery⋅
 	**************************************************************************/
+
 	@Override
-	public final int getSourceCount(AdhocQueryClass<MODEL, RESULT> query) {
+	public final int getAllSourceCount(AdhocQueryClass<MODEL, RESULT> query) {
 		return numSources;
 	}
 

@@ -1,5 +1,6 @@
 package com.neaterbits.query.sql.dsl.api;
 
+import java.util.List;
 import java.util.function.Consumer;
 
 import com.neaterbits.query.sql.dsl.api.entity.Relation;
@@ -55,6 +56,12 @@ final class PreparedQueryBuilderJPQL extends PreparedQueryBuilderORM {
 		}
 	}
 	
+	@Override
+	void addComparisonJoin(List<JoinFieldComparison> fieldComparisons, SourceReference from, SourceReference to) {
+		throw new UnsupportedOperationException("Not supported for now");
+	}
+
+
 	@Override
 	void addOneToManyJoin(Relation relation, FieldReferenceType fieldReferenceType, SourceReference from, SourceReference to) {
 		
