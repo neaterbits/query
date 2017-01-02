@@ -659,3 +659,42 @@ Så greit med en utility-klasse for management av arrayene ?
 
 
 
+
+----
+
+
+
+Joins:
+
+ * implicit join i from-clausen
+ * explicit join (ANSI join)
+
+OBS! Kan ikke ha samme alias i begge, må fjerne fra from om finnes (m/warning?)
+
+Bør tillate i query-generering men fjerne fra syntax, ihvertfall den forenklede.
+
+Kun nøsta-joins? Men blir ikke typesjekking ved alias uansett.
+
+
+Men har da to typer SelectSources
+ - fra from
+ - fra join
+
+- Må kunne søke på de
+- Må kunne fjerne from 'from' når er duplikat. Gjøre dette under kompilering og tildeling av indekser.
+
+
+Så må endre noe på CompiledSelectSources ? Kan ha flere sources, både from og join.
+
+Hvordan fikse indeks tildelingen i så fall?
+Antalig best å oppdatere indeksene til slutt.
+
+Hvis ikke må ha ett steg til i kompileringen.
+Men bør ha dette uansett? Sources er uavhengig av from/to og disse opprettes i etterkant?
+Omtrent som SelectSource.
+
+Så bare en liste over kjente sources som vi søker i? med remove() osv.
+
+
+
+

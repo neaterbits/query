@@ -2,6 +2,8 @@ package com.neaterbits.query.sql.dsl.api;
 
 import java.util.function.Consumer;
 
+import com.neaterbits.query.sql.dsl.api.entity.Relation;
+
 
 
 final class PreparedQueryBuilderJPQL extends PreparedQueryBuilderORM {
@@ -52,9 +54,25 @@ final class PreparedQueryBuilderJPQL extends PreparedQueryBuilderORM {
 			throw new UnsupportedOperationException("Unknown join type " + joinType);
 		}
 	}
-
+	
 	@Override
-	void addOneToManyJoin(String entityAliasName, String collectionAttrName, String joinVarName) {
+	void addOneToManyJoin(Relation relation, FieldReferenceType fieldReferenceType, SourceReference from, SourceReference to) {
+		
+		// final String entityAliasName = q.getJoinConditionLeftName(query, joinIdx, conditionIdx);
+		
+		
+		final String entityAliasName = from.getVarName();
+		final String collectionAttrName = relation.getFrom().getAttribute().getName();
+
+		// final String joinVarName = "join" + joinParamIdx++;
+
+		final String joinVarName = to.getVarName();
+		
+		addOneToManyJoin(entityAliasName, collectionAttrName, joinVarName);
+	}
+
+
+	private void addOneToManyJoin(String entityAliasName, String collectionAttrName, String joinVarName) {
 		// Output JPA join on collection
 		// from name in from-clause
 		sb.append(" ")

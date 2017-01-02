@@ -19,7 +19,7 @@ public final class RelationField {
 		this.attribute = attribute;
 	}
 
-	public Class<?> getType() {
+	public Class<?> getEntityType() {
 		return type;
 	}
 

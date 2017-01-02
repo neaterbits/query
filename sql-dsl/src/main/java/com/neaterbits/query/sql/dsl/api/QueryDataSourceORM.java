@@ -227,22 +227,23 @@ abstract class QueryDataSourceORM<ORM_QUERY, MANAGED, EMBEDDED, IDENTIFIABLE, AT
 					
 					final Method collectionGetterMethod = q.getJoinConditionOneToManyCollectionGetter(query, joinIdx, conditionIdx);
 					
+					final FieldReferenceType fieldReferenceType = q.getQueryFieldRefereneType(query);
+					
+					final int oneToManyLeftSourceIdx  = q.getJoinConditionLeftSourceIdx(query, joinIdx, conditionIdx);
+					final int oneToManyRightSourceIdx = q.getJoinConditionRightSourceIdx(query, joinIdx, conditionIdx);
 					
 					// Must figure out which relation attribute this is ?
 					final Relation relation = entityModelUtil.findOneToManyRelation(oneToManyLeftType, oneToManyRightType, collectionGetterMethod);
-					
+
 					if (relation == null) {
 						throw new IllegalStateException("Failed to find relation for " + collectionGetterMethod + " from " + oneToManyLeftType + " to " + oneToManyRightType);
 					}
-					
-					final String entityAliasName = q.getJoinConditionLeftName(query, joinIdx, conditionIdx);
-					final String collectionAttrName = relation.getFrom().getAttribute().getName();
 
-					final String joinVarName = "join" + joinParamIdx++;
-					
-					sb.addOneToManyJoin(entityAliasName, collectionAttrName, joinVarName);
-
-					// TODO: Join comparison on rhs?
+					sb.addOneToManyJoin(
+							relation,
+							fieldReferenceType,
+							getSourceReference(q, query, oneToManyLeftSourceIdx),
+							getSourceReference(q, query, oneToManyRightSourceIdx));
 					break;
 
 				default:

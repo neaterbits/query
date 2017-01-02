@@ -2,6 +2,8 @@ package com.neaterbits.query.sql.dsl.api;
 
 import java.util.List;
 
+import com.neaterbits.query.sql.dsl.api.entity.Relation;
+
 abstract class PreparedQueryBuilder {
 
 	abstract void select();
@@ -14,7 +16,9 @@ abstract class PreparedQueryBuilder {
 
 	abstract void addSelectSources(FieldReferenceType fieldReferenceType, List<SourceReference> references);
 	
-	abstract void addOneToManyJoin(String entityAliasName, String collectionAttrName, String joinVarName);
+	abstract void addOneToManyJoin(Relation relation, FieldReferenceType fieldReferenceType, SourceReference from, SourceReference to);
+	
+	// abstract void addOneToManyJoin(Relation relation, String entityAliasName, String collectionAttrName, String joinVarName);
 	
 	abstract void appendJoinStatement(EJoinType joinType);
 	

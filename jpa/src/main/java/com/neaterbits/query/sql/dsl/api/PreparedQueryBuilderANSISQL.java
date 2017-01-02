@@ -5,6 +5,7 @@ import java.util.Collection;
 
 import com.neaterbits.query.sql.dsl.api.entity.EntityModelUtil;
 import com.neaterbits.query.sql.dsl.api.entity.IEntity;
+import com.neaterbits.query.sql.dsl.api.entity.Relation;
 
 final class PreparedQueryBuilderANSISQL<MANAGED, EMBEDDED, IDENTIFIABLE, ATTRIBUTE, COLL extends Collection<ATTRIBUTE>> extends PreparedQueryBuilderORM {
 
@@ -115,9 +116,75 @@ final class PreparedQueryBuilderANSISQL<MANAGED, EMBEDDED, IDENTIFIABLE, ATTRIBU
 		}
 	}
 
+	
+	
 	@Override
-	void addOneToManyJoin(String entityAliasName, String collectionAttrName, String joinVarName) {
-		throw new UnsupportedOperationException("TODO");
+	void addOneToManyJoin(Relation relation, FieldReferenceType fieldReferenceType, SourceReference from, SourceReference to) {
+		
+		// One-to-many is a bit tricky, we must write ANSI joins on the model fields
+		
+		// Must add ON query for the columns in question
+		
+		final String [] fromColumns = relation.getFrom().getAttribute().getColumns();
+		final String [] toColumns   = relation.getTo()  .getAttribute().getColumns();
+
+		if (fromColumns.length != toColumns.length) {
+			throw new IllegalArgumentException("from columns != to columns: " + fromColumns.length + "/" + toColumns.length);
+		}
+
+		if (fromColumns.length == 0) {
+			throw new IllegalArgumentException("No columns");
+		}
+		
+		if  (!from.getJavaType().equals(relation.getFrom().getEntityType())) {
+			throw new IllegalStateException("from type mismatch");
+		}
+		
+		if  (!to.getJavaType().equals(relation.getTo().getEntityType())) {
+			throw new IllegalStateException("to type mismatch");
+		}
+		
+		for (int i = 0; i < fromColumns.length; ++ i) {
+
+			String fromTableName = null;
+			String toTableName = null;
+			
+			
+			sb.append(i == 0 ? "ON" : "AND");
+
+			sb.append(' ');
+			
+			switch (fieldReferenceType) {
+			case ALIAS:
+				sb.append(from.getVarName()).append('.').append(fromColumns[i]);
+				
+				addOp();
+				
+				sb.append(to.getVarName()).append('.').append(toColumns[i]);
+				break;
+				
+			case ENTITY:
+				if (fromTableName == null) {
+					fromTableName = getTableName(from.getJavaType());
+				}
+				sb.append(fromTableName).append('.').append(fromColumns[i]);
+				
+				addOp();
+
+				if (toTableName == null) {
+					toTableName = getTableName(to.getJavaType());
+				}
+				sb.append(toTableName).append('.').append(toColumns[i]);
+				break;
+				
+			default:
+				throw new UnsupportedOperationException("Unknown field reference type " + fieldReferenceType);
+			}
+		}
+	}
+	
+	private void addOp() {
+		sb.append(" = ");
 	}
 
 	@Override
@@ -142,7 +209,7 @@ final class PreparedQueryBuilderANSISQL<MANAGED, EMBEDDED, IDENTIFIABLE, ATTRIBU
 		
 		switch (fieldReferenceType) {
 		case ENTITY:
-			// Just add taable name
+			// Just add table name
 			sb.append(getSourceTypeName(ref.getJavaType()));
 			break;
 
@@ -173,9 +240,15 @@ final class PreparedQueryBuilderANSISQL<MANAGED, EMBEDDED, IDENTIFIABLE, ATTRIBU
 	
 	@Override
 	public void appendEntityFieldReference(StringBuilder sb, FieldReferenceEntity r) {
-		final String tableName = entityModelUtil.getEntityInfo(r.getJavaType()).getTableName();
+		final String tableName = getTableName(r.getJavaType());
 		
 		sb.append(tableName).append(".").append(r.getColumnName());
+	}
+	
+	private String getTableName(Class<?> javaType) {
+		final String tableName = entityModelUtil.getEntityInfo(javaType).getTableName();
+
+		return tableName;
 	}
 
 	@Override
