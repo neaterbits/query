@@ -4,7 +4,6 @@ package com.neaterbits.query.sql.dsl.api;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.neaterbits.query.sql.dsl.api.PreparedQueryBuilder.FieldReference;
 import com.neaterbits.query.util.java8.Coll8;
 
 abstract class PreparedQueryConditionsBuilder {

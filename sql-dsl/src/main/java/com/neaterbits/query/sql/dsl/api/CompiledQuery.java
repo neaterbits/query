@@ -44,11 +44,11 @@ final class CompiledQuery {
 	}
 
 	EQueryResultDimension getResultMode() {
-		return result.getOriginal().getDimension();
+		return result.getDimension();
 	}
 	
 	EQueryResultGathering getGathering() {
-		return result.getOriginal().getGathering();
+		return result.getGathering();
 	}
 
 	CompiledQueryResult getResult() {
@@ -56,7 +56,7 @@ final class CompiledQuery {
 	}
 
 	Class<?> getResultType() {
-		return result.getOriginal().getType();
+		return result.getResultType();
 	}
 
 	CompiledConditions getConditions() {

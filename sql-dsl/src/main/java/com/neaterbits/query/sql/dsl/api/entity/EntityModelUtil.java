@@ -2,18 +2,20 @@ package com.neaterbits.query.sql.dsl.api.entity;
 
 import java.lang.reflect.AccessibleObject;
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Member;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.function.BiConsumer;
 
 public class EntityModelUtil<MANAGED, EMBEDDED, IDENTIFIABLE, ATTRIBUTE, COLL extends Collection<ATTRIBUTE>> {
-	
+
 	private final EntityModel<MANAGED, EMBEDDED, IDENTIFIABLE, ATTRIBUTE, COLL> model;
-	
+
 	protected EntityModelUtil(EntityModel<MANAGED, EMBEDDED, IDENTIFIABLE, ATTRIBUTE, COLL> model) {
-		
+
 		if (model == null) {
 			throw new IllegalArgumentException("model == null");
 		}
@@ -23,6 +25,30 @@ public class EntityModelUtil<MANAGED, EMBEDDED, IDENTIFIABLE, ATTRIBUTE, COLL ex
 
 	public EntityModel<MANAGED, EMBEDDED, IDENTIFIABLE, ATTRIBUTE, COLL> getModel() {
 		return model;
+	}
+	
+	public IEntity getEntityInfo(Class<?> type) {
+		
+		if (type == null) {
+			throw new IllegalArgumentException("type == null");
+		}
+
+		final MANAGED managed = model.getManaged(type);
+		
+		final IEntity ret;
+		
+		if (!type.equals(model.getJavaType(managed))) {
+			throw new IllegalStateException("Type mismatch");
+		}
+
+		if (managed != null) {
+			ret = new EntityImpl(type, managed);
+		}
+		else {
+			ret = null;
+		}
+
+		return ret;
 	}
 
 	List<EntityAttribute> getAttributes(MANAGED managed) {
@@ -37,10 +63,60 @@ public class EntityModelUtil<MANAGED, EMBEDDED, IDENTIFIABLE, ATTRIBUTE, COLL ex
 			if (entityAttribute == null) {
 				throw new IllegalStateException("entityAttribute == null");
 			}
+			
+			ret.add(entityAttribute);
 		}
 		
 		return ret;
 	}
+	
+	private BiConsumer<Object, Object> getSetter(Member member) {
+	
+		final BiConsumer<Object, Object> ret;
+		
+		
+		if (member instanceof Field) {
+			throw new UnsupportedOperationException("TODO - does not support fields");
+		}
+		else if (member instanceof Method) {
+			final Method method = (Method)member;
+			final String methodName = method.getName();
+			
+			final String suffix;
+			
+			
+			if (methodName.startsWith("get")) {
+				suffix = methodName.substring(3);
+			}
+			else if (methodName.startsWith("set")) {
+				suffix = methodName.substring(2);
+			}
+			else {
+				throw new IllegalStateException("Method name is not a getter: " + method);
+			}
+			
+			Method setter;
+			try {
+				setter = method.getDeclaringClass().getMethod("set" + suffix, method.getReturnType());
+			} catch (NoSuchMethodException | SecurityException ex) {
+				throw new IllegalStateException("No setter for for getter " + method, ex);
+			}
+
+			ret = (instance, value) -> {
+				try {
+					setter.invoke(instance, value);
+				} catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException ex) {
+					throw new IllegalStateException("Faield to invoke setter " + setter, ex);
+				}
+			};
+		}
+		else {
+			throw new UnsupportedOperationException("Unknown member type " + member.getClass());
+		}
+		
+		return ret;
+	}
+	
 	
 	private EntityAttribute makeEntityAttribute(ATTRIBUTE attr) {
 
@@ -56,7 +132,7 @@ public class EntityModelUtil<MANAGED, EMBEDDED, IDENTIFIABLE, ATTRIBUTE, COLL ex
 		switch (attrType) {
 		
 		case SCALAR:
-			ret = new ScalarAttribute(name, columns, attrType, javaType, member);
+			ret = new ScalarAttribute(name, columns, attrType, javaType, member, getSetter(member));
 			break;
 			
 		case EMBEDDED:
@@ -255,4 +331,34 @@ public class EntityModelUtil<MANAGED, EMBEDDED, IDENTIFIABLE, ATTRIBUTE, COLL ex
 		return EntityUtil.getGenericCollectionMemberType((AccessibleObject)member);
 	}
 
+	private class EntityImpl implements IEntity {
+		private final Class<?> javaType;
+		private final MANAGED managed;
+
+		public EntityImpl(Class<?> javaType, MANAGED managed) {
+			this.javaType = javaType;
+			this.managed = managed;
+		}
+
+		@Override
+		public String getName() {
+			return model.getName(managed);
+		}
+
+		@Override
+		public String getTableName() {
+			return model.getTableName(managed);
+		}
+
+		@SuppressWarnings({"unchecked", "rawtypes"})
+		@Override
+		public Iterable<IEntityAttribute> getAttributes() {
+			return (Collection)EntityModelUtil.this.getAttributes(managed);
+		}
+
+		@Override
+		public Class<?> getJavaType() {
+			return javaType;
+		}
+	}
 }

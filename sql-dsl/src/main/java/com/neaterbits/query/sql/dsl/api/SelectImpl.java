@@ -46,7 +46,9 @@ final class SelectImpl implements IClassic {
 			throw new IllegalArgumentException("cl == null");
 		}
 
-		return new SingleTypeResultImpl<SingleQuery<TYPE_RESULT>, TYPE_RESULT>(cl, singleQueryCompiler());
+		final SelectSource selectSource = new SelectSourceClass(cl);
+
+		return new SingleTypeResultImpl<SingleQuery<TYPE_RESULT>, TYPE_RESULT>(selectSource, singleQueryCompiler());
 	}
 
 	@Override
@@ -54,8 +56,10 @@ final class SelectImpl implements IClassic {
 		if (cl == null) {
 			throw new IllegalArgumentException("cl == null");
 		}
+		
+		final SelectSource selectSource = new SelectSourceClass(cl);
 
-		return new MultiTypeResultImpl<MultiQuery<TYPE_RESULT>, TYPE_RESULT>(cl, ECollectionType.LIST, multiQueryCompiler());
+		return new MultiTypeResultImpl<MultiQuery<TYPE_RESULT>, TYPE_RESULT>(selectSource, ECollectionType.LIST, multiQueryCompiler());
 	}
 
 	@Override
@@ -64,7 +68,9 @@ final class SelectImpl implements IClassic {
 			throw new IllegalArgumentException("cl == null");
 		}
 
-		return new SingleTableResultImpl<SingleQuery<TYPE_RESULT>, TYPE_RESULT>(new QueryResultEntitySingle(cl), singleQueryCompiler());
+		final SelectSource selectSource = new SelectSourceClass(cl);
+		
+		return new SingleTableResultImpl<SingleQuery<TYPE_RESULT>, TYPE_RESULT>(new QueryResultEntitySingle(selectSource), singleQueryCompiler());
 	}
 
 	@Override
@@ -73,7 +79,11 @@ final class SelectImpl implements IClassic {
 			throw new IllegalArgumentException("cl == null");
 		}
 
-		return new SingleTableResultImpl<MultiQuery<TYPE_RESULT>, TYPE_RESULT>(new QueryResultEntityMulti(cl, ECollectionType.LIST), multiQueryCompiler());
+		final SelectSource selectSource = new SelectSourceClass(cl);
+
+		final QueryResultEntityMulti result = new QueryResultEntityMulti(selectSource, ECollectionType.LIST);
+		
+		return new SingleTableResultImpl<MultiQuery<TYPE_RESULT>, TYPE_RESULT>(result, multiQueryCompiler());
 	}
 	
 	static {

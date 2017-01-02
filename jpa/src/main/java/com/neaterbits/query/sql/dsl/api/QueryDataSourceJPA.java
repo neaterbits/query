@@ -19,7 +19,7 @@ import javax.persistence.metamodel.Metamodel;
  *
  */
 
-public final class QueryDataSourceJPA extends QueryDataSourceORM<
+public abstract class QueryDataSourceJPA extends QueryDataSourceORM<
 									javax.persistence.Query,
 									ManagedType<?>,
 									EmbeddableType<?>,
@@ -27,7 +27,7 @@ public final class QueryDataSourceJPA extends QueryDataSourceORM<
 									Attribute<?, ?>,
 									Set<Attribute<?, ?>>> {
 	
-	private final EntityManager em;
+	final EntityManager em;
 
 	public QueryDataSourceJPA(EntityManager entityManager) {
 		super(new JPAEntityModelUtil(new JPAEntityModel(entityManager.getMetamodel())));
@@ -36,48 +36,32 @@ public final class QueryDataSourceJPA extends QueryDataSourceORM<
 	}
 	
 	
-	@Override
-	PreparedQueryBuilder createBuilder() {
-		return new JPAPreparedQueryBuilder();
-	}
 
 	@Override
-	PreparedQueryConditionsBuilder createConditionsBuilder(boolean atRoot) {
-		return new PreparedQueryConditionsBuilderJPA(atRoot);
+	final PreparedQueryConditionsBuilder createConditionsBuilder(PreparedQueryBuilderORM queryBuilderORM, boolean atRoot) {
+		return new PreparedQueryConditionsBuilderJPA(queryBuilderORM, atRoot);
 	}
 
 
 	@Override
-	<QUERY> DSPreparedQueryDB<QUERY, Query> makeHalfwayPreparedQuery(ExecutableQuery<QUERY> queryAccess, QUERY query,
+	final <QUERY> DSPreparedQueryDB<QUERY, Query> makeHalfwayPreparedQuery(ExecutableQuery<QUERY> queryAccess, QUERY query,
 			ParamNameAssigner paramNameAssigner, String base, PreparedQueryConditionsBuilder conditions) {
 		
-		return new JPAHalfwayPreparedQuery<QUERY>(queryAccess, query, paramNameAssigner, base, (PreparedQueryConditionsBuilderJPA)conditions, em);
+		return new JPAHalfwayPreparedQuery<QUERY>(this, queryAccess, query, paramNameAssigner, base, (PreparedQueryConditionsBuilderJPA)conditions, em);
 	}
-
-	@Override
-	final <QUERY> DSPreparedQueryDB<QUERY, javax.persistence.Query> makeCompletePreparedQuery(ExecutableQuery<QUERY> q, QUERY query, ParamNameAssigner paramNameAssigner, PreparedQueryBuilder sb) {
-		final String jpql = sb.toString();
-		
-		System.out.println("## jpql:\n" + jpql);
-		
-		final javax.persistence.Query jpaQuery = em.createQuery(jpql);
-
-		return new JPACompletePreparedQuery<QUERY>(q, query, paramNameAssigner, jpaQuery);
-	}
-
 
 	private static final JPAConditionToOperator conditionToOperator = new JPAConditionToOperator();
 
 	
 	@Override
-	<QUERY> PreparedQueryComparisonRHS convertConditions(ExecutableQuery<QUERY> q, QUERY query, int conditionIdx, ConditionValueImpl value, StringBuilder sb) {
+	final <QUERY> PreparedQueryComparisonRHS convertConditions(ExecutableQuery<QUERY> q, QUERY query, int conditionIdx, ConditionValueImpl value, StringBuilder sb) {
 
 		return conditionToOperator.convert(q, query, conditionIdx, value, sb);
 	}
 
 
 	@Override
-	String getColumnNameForGetter(TypeMapSource source, CompiledGetter getter) {
+	final String getColumnNameForGetter(TypeMapSource source, CompiledGetter getter) {
 
 		// Look up in entity manager
 		

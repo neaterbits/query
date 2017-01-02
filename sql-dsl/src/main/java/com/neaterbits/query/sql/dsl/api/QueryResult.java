@@ -7,8 +7,10 @@ abstract class QueryResult extends QueryBuilderItem {
 
 	abstract EQueryResultGathering getGathering();
 	
+	// For multi-result
 	abstract ECollectionType getCollectionType();
-
+	
+	
 	QueryResult(Class<?> type) {
 		
 		if (type == null) {

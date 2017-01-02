@@ -91,6 +91,12 @@ abstract class AdhocQueryClass<MODEL, RESULT>
 		return sourceIdx;
 	}
 	
+	
+	@Override
+	public FieldReferenceType getQueryFieldRefereneType(AdhocQueryClass<MODEL, RESULT> query) {
+		return FieldReferenceType.ENTITY;
+	}
+
 	@Override
 	@SuppressWarnings("unchecked")
 	public final Object getAggregateResultValue(AdhocQueryClass<MODEL, RESULT> query, Object instance) {
@@ -330,6 +336,11 @@ abstract class AdhocQueryClass<MODEL, RESULT>
 		return conditions.getForDebugConditionValue(level, conditionIndices).toString();
 	}
 	
+	@Override
+	public int getEntityResultSourceIdx(AdhocQueryClass<MODEL, RESULT> query) {
+		throw new UnsupportedOperationException("TODO");
+	}
+
 	private Class<?> [] getForDebugSourceClasses() {
 		
 		final Class<?> [] ret = new Class<?>[numSources];

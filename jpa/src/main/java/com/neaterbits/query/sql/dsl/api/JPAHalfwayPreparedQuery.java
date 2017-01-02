@@ -9,8 +9,8 @@ final class JPAHalfwayPreparedQuery<QUERY> extends JPABasePreparedQuery<QUERY> {
 	private final PreparedQueryConditionsBuilderJPA conditions;
 	private final EntityManager entityManager;
 	
-	JPAHalfwayPreparedQuery(ExecutableQuery<QUERY> queryAccess, QUERY query, ParamNameAssigner paramNameAssigner, String base, PreparedQueryConditionsBuilderJPA conditions, EntityManager entityManager) {
-		super(queryAccess, query, paramNameAssigner);
+	JPAHalfwayPreparedQuery(QueryDataSourceJPA dataSource, ExecutableQuery<QUERY> queryAccess, QUERY query, ParamNameAssigner paramNameAssigner, String base, PreparedQueryConditionsBuilderJPA conditions, EntityManager entityManager) {
+		super(dataSource, queryAccess, query, paramNameAssigner);
 		
 		if (base == null) {
 			throw new IllegalArgumentException("base == null");

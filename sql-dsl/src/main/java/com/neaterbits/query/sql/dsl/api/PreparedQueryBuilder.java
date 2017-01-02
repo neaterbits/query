@@ -2,80 +2,24 @@ package com.neaterbits.query.sql.dsl.api;
 
 import java.util.List;
 
-interface PreparedQueryBuilder {
+abstract class PreparedQueryBuilder {
 
-	void select();
+	abstract void select();
 	
-	void addEntityResult(Class<?> resultType, String resultVarName);
+	abstract void addEntityResult(FieldReferenceType fieldReferenceType, SourceReference sourceReference);
 	
-	void addAggregateResult(EAggregateFunction function, FieldReference field);
+	abstract void addAggregateResult(EAggregateFunction function, FieldReference field);
 
-	void addMappings(List<FieldReference> references);
+	abstract void addMappings(List<FieldReference> references);
 
-	void addSelectSources(List<SourceReference> references);
+	abstract void addSelectSources(FieldReferenceType fieldReferenceType, List<SourceReference> references);
 	
-	void addOneToManyJoin(String entityAliasName, String collectionAttrName, String joinVarName);
+	abstract void addOneToManyJoin(String entityAliasName, String collectionAttrName, String joinVarName);
 	
-	void appendJoinStatement(EJoinType joinType);
+	abstract void appendJoinStatement(EJoinType joinType);
 	
-	void resolveFromParams(PreparedQueryConditionsBuilder conditionsBuilder, ParamValueResolver paramValueResolver);
+	abstract void resolveFromParams(PreparedQueryConditionsBuilder conditionsBuilder, ParamValueResolver paramValueResolver);
 	
-	static class SourceReference {
-		
-		private final Class<?> javaType;
-		private final String varName;
-
-		
-		public SourceReference(Class<?> javaType, String varName) {
-			
-			if (javaType == null) {
-				throw new IllegalArgumentException("javaType == null");
-			}
-			
-			if (varName == null) {
-				throw new IllegalArgumentException("varName == null");
-			}
-			
-			this.javaType = javaType;
-			this.varName = varName;
-		}
-
-
-		public Class<?> getJavaType() {
-			return javaType;
-		}
-
-
-		public String getVarName() {
-			return varName;
-		}
-	}
-
-	static class FieldReference {
-		
-		private final String varName;
-		private final String columnName;
-		
-		public FieldReference(String varName, String columnName) {
-			
-			if (varName == null) {
-				throw new IllegalArgumentException("varName == null");
-			}
-			
-			if (columnName == null) {
-				throw new IllegalArgumentException("columnName == null");
-			}
-			
-			this.varName = varName;
-			this.columnName = columnName;
-		}
-
-		public String getVarName() {
-			return varName;
-		}
-
-		public String getColumnName() {
-			return columnName;
-		}
-	}
+	abstract String getQueryAsString();
 }
+

@@ -13,16 +13,16 @@ final class QueryDataSourcePojoWithInput extends QueryDataSourcePojoBase {
 	}
 
 	@Override
-	<QUERY> DSPreparedQuery prepareSingleQuery(ExecutableQuery<QUERY> q, QUERY query) {
+	<QUERY> DSPreparedQuery<QueryDataSourcePojoBase> prepareSingleQuery(ExecutableQuery<QUERY> q, QUERY query) {
 		final ExecuteQueryPOJOs<QUERY> executeQueryPOJOs = new ExecuteQueryPOJOs<>(q);
 
-		return new PojoPreparedQuery<>(query, executeQueryPOJOs, input, getQueryMetaModel());
+		return new PojoPreparedQuery<>(this, query, executeQueryPOJOs, input, getQueryMetaModel());
 	}
 
 	@Override
-	<QUERY> DSPreparedQuery prepareMultiQuery(ExecutableQuery<QUERY> q, QUERY query) {
+	<QUERY> DSPreparedQuery<QueryDataSourcePojoBase> prepareMultiQuery(ExecutableQuery<QUERY> q, QUERY query) {
 		final ExecuteQueryPOJOs<QUERY> executeQueryPOJOs = new ExecuteQueryPOJOs<>(q);
 
-		return new PojoPreparedQuery<>(query, executeQueryPOJOs, input, getQueryMetaModel());
+		return new PojoPreparedQuery<>(this, query, executeQueryPOJOs, input, getQueryMetaModel());
 	}
 }

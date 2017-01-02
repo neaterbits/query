@@ -1,6 +1,5 @@
 package com.neaterbits.query.sql.dsl.api;
 
-import com.neaterbits.query.sql.dsl.api.PreparedQueryBuilder.FieldReference;
 
 final class PreparedQueryConditionComparison extends PreparedQueryCondition {
 

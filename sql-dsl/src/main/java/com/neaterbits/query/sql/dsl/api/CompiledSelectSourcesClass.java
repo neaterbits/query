@@ -29,5 +29,19 @@ final class CompiledSelectSourcesClass extends CompiledSelectSources<CompiledSel
 	TypeMapSource getAliasesSource(IAlias alias) {
 		throw new IllegalStateException("Expected type: " + alias);
 	}
+	
+	@Override
+	int getSourceIdx(SelectSource source) {
+		final SelectSourceClass classSource = (SelectSourceClass)source;
+		
+		
+		for (int i = 0; i < getSources().size(); ++ i) {
+			if (classSource.getType().equals(getSources().get(i).getType())) {
+				return i;
+			}
+		}
+		
+		return -1;
+	}
 }
 

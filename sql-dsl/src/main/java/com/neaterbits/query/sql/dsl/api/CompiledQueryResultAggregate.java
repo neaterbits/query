@@ -4,6 +4,8 @@ final class CompiledQueryResultAggregate extends CompiledQueryResult {
 
 	private final CompiledFieldReference field;
 	
+	private final QueryResultAggregate original;
+	
 	CompiledQueryResultAggregate(QueryResultAggregate original, CompiledFieldReference field) {
 		super(original);
 		
@@ -12,6 +14,7 @@ final class CompiledQueryResultAggregate extends CompiledQueryResult {
 		}
 
 		this.field = field;
+		this.original = original;
 	}
 
 	CompiledFieldReference getField() {
@@ -21,5 +24,17 @@ final class CompiledQueryResultAggregate extends CompiledQueryResult {
 	@Override
 	<T, R> R visit(CompiledQueryResultVisitor<T, R> visitor, T param) {
 		return visitor.onAggregate(this, param);
+	}
+
+	final ENumericType getInputNumericType() {
+		return original.getInputNumericType();
+	}
+
+	final ENumericType getOutputNumericType() {
+		return original.getOutputNumericType();
+	}
+
+	final EAggregateFunction getAggregateFunction() {
+		return original.getAggregateFunction();
 	}
 }

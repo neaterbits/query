@@ -4,7 +4,9 @@ import java.lang.reflect.Member;
 import java.util.List;
 import java.util.Set;
 
-class EntityAttribute implements IEntityAttribute {
+import com.neaterbits.util.StringUtils;
+
+abstract class EntityAttribute implements IEntityAttribute {
 
 	private final String name;
 	private final String [] columns;
@@ -23,6 +25,14 @@ class EntityAttribute implements IEntityAttribute {
 		this.javaMember = member;
 		this.javaType = javaType;
 		this.collectionMemberType = memberType;
+		
+		if (columns != null) {
+			for (int i = 0; i < columns.length; ++ i) {
+				if (StringUtils.isBlank(columns[i])) {
+					throw new IllegalArgumentException("Blank column at index " + i + " of " + name);
+				}
+			}
+		}
 		
 		if (memberType == null) {
 			this.collectionType = null;

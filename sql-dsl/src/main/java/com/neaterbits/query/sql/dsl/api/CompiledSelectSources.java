@@ -20,6 +20,8 @@ abstract class CompiledSelectSources<T extends CompiledSelectSource>
 	abstract TypeMapSource getClassesSource(Class<?> type);
 	abstract TypeMapSource getAliasesSource(IAlias alias);
 	
+	abstract int getSourceIdx(SelectSource source);
+	
 	CompiledSelectSources(SelectSourceImpl original, List<T> sources) {
 		super(original);
 
@@ -37,7 +39,5 @@ abstract class CompiledSelectSources<T extends CompiledSelectSource>
 	final List<T> getSources() {
 		return sources;
 	}
-	
-	
 }
 

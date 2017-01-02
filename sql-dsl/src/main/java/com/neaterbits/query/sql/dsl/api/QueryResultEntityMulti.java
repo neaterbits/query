@@ -4,8 +4,8 @@ final class QueryResultEntityMulti extends QueryResultEntity {
 
 	private final ECollectionType collectionType;
 	
-	QueryResultEntityMulti(Class<?> type, ECollectionType collectionType) {
-		super(type);
+	QueryResultEntityMulti(SelectSource selectSource, ECollectionType collectionType) {
+		super(selectSource);
 
 		if (collectionType == null) {
 			throw new IllegalArgumentException("collectionType == null");

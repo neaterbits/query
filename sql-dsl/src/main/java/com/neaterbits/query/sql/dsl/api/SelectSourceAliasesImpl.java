@@ -7,12 +7,12 @@ import java.util.function.Supplier;
 final class SelectSourceAliasesImpl extends SelectSourceImpl {
 
 	private final IAlias [] aliases;
-	
+
 	public SelectSourceAliasesImpl(Object [] aliases) {
 		super(getTypes(aliases));
-		
+
 		this.aliases = new IAlias[aliases.length];
-		
+
 		for (int i = 0; i < aliases.length; ++ i) {
 			this.aliases[i] = (IAlias)aliases[i];
 		}

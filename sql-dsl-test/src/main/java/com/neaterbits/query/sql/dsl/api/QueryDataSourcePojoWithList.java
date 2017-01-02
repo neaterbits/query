@@ -20,12 +20,12 @@ public class QueryDataSourcePojoWithList extends QueryDataSourcePojoBase {
 	}
 
 	@Override
-	<QUERY> DSPreparedQuery prepareSingleQuery(ExecutableQuery<QUERY> q, QUERY query) {
+	<QUERY> DSPreparedQuery<QueryDataSourcePojoBase> prepareSingleQuery(ExecutableQuery<QUERY> q, QUERY query) {
 		return prepare(q, query);
 	}
 
 	@Override
-	<QUERY> DSPreparedQuery prepareMultiQuery(ExecutableQuery<QUERY> q, QUERY query) {
+	<QUERY> DSPreparedQuery<QueryDataSourcePojoBase> prepareMultiQuery(ExecutableQuery<QUERY> q, QUERY query) {
 		return prepare(q, query);
 	}
 	
@@ -35,6 +35,6 @@ public class QueryDataSourcePojoWithList extends QueryDataSourcePojoBase {
 		
 		final ExecuteQueryPOJOsFromListInput input = new ExecuteQueryPOJOsFromListInput(instances, q.getSelectSourceClasses(query));
 
-		return new PojoPreparedQuery<QUERY>(query, executeQueryPOJOs, input, getQueryMetaModel());
+		return new PojoPreparedQuery<QUERY>(this, query, executeQueryPOJOs, input, getQueryMetaModel());
 	}
 }

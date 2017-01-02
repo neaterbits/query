@@ -100,6 +100,7 @@ interface ExecutableQuery<QUERY> {
 		return ret;
 	}
 	
+	
 	public default boolean hasJoins(QUERY query) {
 		return getJoinCount(query) != 0;
 	}
@@ -113,6 +114,14 @@ interface ExecutableQuery<QUERY> {
 	ECollectionType getResultCollectionType(QUERY query);
 
 	Class<?> getResultJavaType(QUERY query);
+	
+	/**
+	 * Either query is all references or it is all entities
+	 * 
+	 * @return
+	 */
+	
+	FieldReferenceType getQueryFieldRefereneType(QUERY query);
 	
 	
 	/**
@@ -137,7 +146,9 @@ interface ExecutableQuery<QUERY> {
 	
 	Object getAggregateResultValue(QUERY query, Object instance);
 	
-	
+	// Entity results
+	int getEntityResultSourceIdx(QUERY query);
+
 	/**
 	 * Get count of mappings from result
 	 * @param query the query

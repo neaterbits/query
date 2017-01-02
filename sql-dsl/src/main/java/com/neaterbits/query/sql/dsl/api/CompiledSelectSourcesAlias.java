@@ -38,4 +38,18 @@ final class CompiledSelectSourcesAlias extends CompiledSelectSources<CompiledSel
 		
 		throw new IllegalStateException("Unable to find alias " + alias);
 	}
+
+	@Override
+	int getSourceIdx(SelectSource source) {
+		
+		final SelectSourceAlias aliasSource = (SelectSourceAlias)source;
+		
+		for (int i = 0; i < getSources().size(); ++ i) {
+			if (aliasSource.getAlias() == getSources().get(i).getAlias()) {
+				return i;
+			}
+		}
+		
+		return -1;
+	}
 }

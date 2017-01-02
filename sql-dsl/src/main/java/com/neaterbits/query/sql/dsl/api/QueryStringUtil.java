@@ -2,7 +2,7 @@ package com.neaterbits.query.sql.dsl.api;
 
 import java.util.function.BiConsumer;
 
-final class JPAUtil {
+final class QueryStringUtil {
 
 	static <T> void commaSeparated(StringBuilder sb, Iterable<T> iter, BiConsumer<StringBuilder, T> c) {
 		separated(sb, iter, ", ", c);

@@ -5,8 +5,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import com.neaterbits.query.sql.dsl.api.PreparedQueryBuilder.FieldReference;
-import com.neaterbits.query.sql.dsl.api.PreparedQueryBuilder.SourceReference;
 import com.neaterbits.query.sql.dsl.api.entity.EntityModel;
 import com.neaterbits.query.sql.dsl.api.entity.EntityModelUtil;
 import com.neaterbits.query.sql.dsl.api.entity.Relation;
@@ -20,12 +18,11 @@ abstract class QueryDataSourceORM<ORM_QUERY, MANAGED, EMBEDDED, IDENTIFIABLE, AT
 	
 	abstract <QUERY> PreparedQueryComparisonRHS convertConditions(ExecutableQuery<QUERY> q, QUERY query, int conditionIdx, ConditionValueImpl value, StringBuilder sb);
 	
-	abstract PreparedQueryConditionsBuilder createConditionsBuilder(boolean atRoot);
+	abstract PreparedQueryConditionsBuilder createConditionsBuilder(PreparedQueryBuilderORM queryBuilderORM, boolean atRoot);
 	
 	abstract <QUERY> DSPreparedQueryDB<QUERY, ORM_QUERY> makeCompletePreparedQuery(ExecutableQuery<QUERY> q, QUERY query, ParamNameAssigner paramNameAssigner, PreparedQueryBuilder sb);
 	
 	abstract <QUERY> DSPreparedQueryDB<QUERY, ORM_QUERY> makeHalfwayPreparedQuery(ExecutableQuery<QUERY> queryAccess, QUERY query, ParamNameAssigner paramNameAssigner, String base, PreparedQueryConditionsBuilder conditions);
-	
 	
 	
 	QueryDataSourceORM(EntityModelUtil<MANAGED, EMBEDDED, IDENTIFIABLE, ATTRIBUTE, COLL> modelUtil) {
@@ -37,11 +34,13 @@ abstract class QueryDataSourceORM<ORM_QUERY, MANAGED, EMBEDDED, IDENTIFIABLE, AT
 		this.entityModelUtil = modelUtil;
 		this.entityModel = modelUtil.getModel();
 	}
-
 	
+	final EntityModelUtil<MANAGED, EMBEDDED, IDENTIFIABLE, ATTRIBUTE, COLL> getEntityModelUtil() {
+		return entityModelUtil;
+	}
 
 	@Override
-	final <QUERY> DSPreparedQuery prepare(PreparedQueryBuilder sb, ExecutableQuery<QUERY> q, QUERY query) {
+	final <QUERY> DSPreparedQuery<QueryDataSourceDB> prepare(PreparedQueryBuilder sb, ExecutableQuery<QUERY> q, QUERY query) {
 		
 		sb.select();
 		
@@ -64,7 +63,7 @@ abstract class QueryDataSourceORM<ORM_QUERY, MANAGED, EMBEDDED, IDENTIFIABLE, AT
 			final ParamNameAssigner paramNameAssigner = new ParamNameAssigner();
 			//final CompileConditionParam param = new CompileConditionParam(paramNameAssigner, em);
 
-			final PreparedQueryConditionsBuilder conditionsBuilder = createConditionsBuilder(true);
+			final PreparedQueryConditionsBuilder conditionsBuilder = createConditionsBuilder((PreparedQueryBuilderORM)sb, true);
 
 			prepareConditions(q, query, conditionsBuilder, addJoinToWhere);
 
@@ -84,7 +83,16 @@ abstract class QueryDataSourceORM<ORM_QUERY, MANAGED, EMBEDDED, IDENTIFIABLE, AT
 		return ret;
 	}
 	
+	private <QUERY> SourceReference getSourceReference(ExecutableQuery<QUERY> q, QUERY query, int idx) {
+		final SourceReference ref = new SourceReference(q.getSourceJavaType(query, idx), q.getSourceName(query, idx));
+
+		return ref;
+	}
+	
+	
 	private <QUERY> void prepareSelectSources(PreparedQueryBuilder sb, ExecutableQuery<QUERY> q, QUERY query) {
+
+		final FieldReferenceType fieldReferenceType = q.getQueryFieldRefereneType(query);
 
 		final int numSources = q.getSourceCount(query);
 		
@@ -92,16 +100,15 @@ abstract class QueryDataSourceORM<ORM_QUERY, MANAGED, EMBEDDED, IDENTIFIABLE, AT
 		
 		for (int i = 0; i < numSources; ++ i) {
 			
-			final SourceReference ref = new SourceReference(q.getSourceJavaType(query, i), q.getSourceName(query, i));
+			final SourceReference ref = getSourceReference(q, query, i);
 			
 			refs.add(ref);
-			
 		}
 
-		sb.addSelectSources(refs);
+		sb.addSelectSources(fieldReferenceType, refs);
 	}
 	
-	private FieldReference prepareFieldReference(CompiledFieldReference field) {
+	private <QUERY> FieldReference prepareFieldReference(ExecutableQuery<QUERY> q, QUERY query, CompiledFieldReference field) {
 
 		final TypeMapSource source = field.getSource();
 
@@ -109,7 +116,24 @@ abstract class QueryDataSourceORM<ORM_QUERY, MANAGED, EMBEDDED, IDENTIFIABLE, AT
 
 		final String columnName = getColumnNameForGetter(source, getter);
 
-		return new FieldReference(source.getName(), columnName);
+		final FieldReferenceType fieldReferenceType = q.getQueryFieldRefereneType(query);
+		
+		final FieldReference ret;
+		
+		switch (fieldReferenceType) {
+		case ALIAS:
+			ret = new FieldReferenceAlias(source.getName(), columnName);
+			break;
+			
+		case ENTITY:
+			ret = new FieldReferenceEntity(source.getType(), columnName);
+			break;
+			
+		default:
+			throw new IllegalStateException("field reference type: " + fieldReferenceType);
+		}
+
+		return ret;
 	}
 
 	private <QUERY> void prepareJoins(PreparedQueryBuilder sb, ExecutableQuery<QUERY> q, QUERY query, List<JoinConditionId> addJoinToWhere) {
@@ -261,8 +285,8 @@ abstract class QueryDataSourceORM<ORM_QUERY, MANAGED, EMBEDDED, IDENTIFIABLE, AT
 				final CompiledFieldReference rhs = q.getJoinConditionComparisonRhs(query, comparison.joinIdx, comparison.conditionIdx);
 				
 				// Output join condition as regular join
-				final FieldReference left  = prepareFieldReference(lhs);
-				final FieldReference right = prepareFieldReference(rhs);
+				final FieldReference left  = prepareFieldReference(q, query, lhs);
+				final FieldReference right = prepareFieldReference(q, query, rhs);
 
 				conditionsBuilder.addJoinCondition(os, left, EClauseOperator.IS_EQUAL, right);
 			}
@@ -293,7 +317,7 @@ abstract class QueryDataSourceORM<ORM_QUERY, MANAGED, EMBEDDED, IDENTIFIABLE, AT
 			final CompiledFieldReference lhs = q.getRootConditionLhs(query, conditionIdx);
 			final ConditionValueImpl value = q.getRootConditionValue(query, conditionIdx);
 			
-			final FieldReference left = prepareFieldReference(lhs);
+			final FieldReference left = prepareFieldReference(q, query, lhs);
 			
 
 			// Operator and value
@@ -316,33 +340,32 @@ abstract class QueryDataSourceORM<ORM_QUERY, MANAGED, EMBEDDED, IDENTIFIABLE, AT
 		
 		switch (resultGathering) {
 		case ENTITY:
-			final Class<?> resultType = q.getResultJavaType(query);
+			// Result may be an alias
+			final FieldReferenceType fieldReferenceType = q.getQueryFieldRefereneType(query);
 			
-			sb.addEntityResult(resultType, resultVarName(resultType));
+			// Find the resulting source
+			
+			final int entityResultSourceIdx = q.getEntityResultSourceIdx(query);
+			final SourceReference sourceReference = getSourceReference(q, query, entityResultSourceIdx);
+
+			sb.addEntityResult(fieldReferenceType, sourceReference);
 			break;
-			
+
 		case MAPPED:
 			prepareMappings(sb, q, query);
 			break;
-			
+
 		case AGGREGATE:
-			
 			final EAggregateFunction function = q.getAggregateResultFunction(query);
 			final CompiledFieldReference resultField = q.getAggregateResultField(query);
-			final FieldReference ref = prepareFieldReference(resultField);
-			
+			final FieldReference ref = prepareFieldReference(q, query, resultField);
+
 			sb.addAggregateResult(function, ref);
 			break;
 			
 		default:
 			throw new UnsupportedOperationException("Unknown result gathering " + resultGathering);
 		}
-		
-	}
-	
-	// TODO: Assure unique
-	private static String resultVarName(Class<?> resultType) {
-		return "_result";
 	}
 	
 	private <QUERY> void prepareMappings(PreparedQueryBuilder sb, ExecutableQuery<QUERY> q, QUERY query) {
@@ -354,7 +377,7 @@ abstract class QueryDataSourceORM<ORM_QUERY, MANAGED, EMBEDDED, IDENTIFIABLE, AT
 		for (int i = 0; i < numMappings; ++ i) {
 			final CompiledFieldReference field = q.getMappingField(query, i);
 
-			final FieldReference ref = prepareFieldReference(field);
+			final FieldReference ref = prepareFieldReference(q, query, field);
 			
 			refs.add(ref);
 		}

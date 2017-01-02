@@ -10,20 +10,22 @@ import java.util.List;
  *
  */
 
-abstract class DSPreparedQueryDB<QUERY, ORM_QUERY> extends DSPreparedQuery {
+abstract class DSPreparedQueryDB<QUERY, ORM_QUERY> extends DSPreparedQuery<QueryDataSourceDB> {
 
 	private final ExecutableQuery<QUERY> q;
 	private final QUERY query;
 	
 	abstract void initParams(ORM_QUERY ormQuery, ParamValueResolver paramCollector);
 	
-	// return null if not founr
+	// return null if not found
 	abstract Object executeForSingleResult(ORM_QUERY ormQuery);
 	
 	abstract List<?> executeForMultiResult(ORM_QUERY ormQuery);
 	
 	
-	DSPreparedQueryDB(ExecutableQuery<QUERY> q, QUERY query) {
+	DSPreparedQueryDB(QueryDataSourceDB dataSource, ExecutableQuery<QUERY> q, QUERY query) {
+		
+		super(dataSource);
 		
 		if (q == null) {
 			throw new IllegalArgumentException("q == null");
@@ -102,14 +104,7 @@ abstract class DSPreparedQueryDB<QUERY, ORM_QUERY> extends DSPreparedQuery {
 			break;
 
 		case ENTITY:
-			
-			final Class<?> entityResultType = q.getResultJavaType(query);
-			
-			if (!entityResultType.isAssignableFrom(input.getClass())) {
-				throw new IllegalStateException("not mapped and result not of mapped class: " + input.getClass().getName());
-			}
-			
-			ret = input;
+			ret = getDataSource().mapSingleEntity(q, query, input);
 			break;
 
 		case AGGREGATE:
@@ -131,10 +126,27 @@ abstract class DSPreparedQueryDB<QUERY, ORM_QUERY> extends DSPreparedQuery {
 	
 	private List<Object> mapMultiple(@SuppressWarnings("rawtypes") List input) {
 		
-		final List<Object> ret = new ArrayList<>(input.size());
+		List<Object> ret;
+
+		final EQueryResultGathering resultGathering = q.getGathering(query);
 		
-		for (Object o : input) {
-			ret.add(mapSingle(o));
+		switch (resultGathering) { 
+		
+		case MAPPED:
+		
+			ret = new ArrayList<>(input.size());
+			
+			for (Object o : input) {
+				ret.add(mapSingle(o));
+			}
+			break;
+			
+		case ENTITY:
+			ret = getDataSource().mapMultipleEntitities(q, query, input);
+			break;
+			
+		default:
+			throw new UnsupportedOperationException("Unknown gathering " + resultGathering);
 		}
 
 		return ret;

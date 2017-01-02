@@ -5,11 +5,13 @@ import java.lang.reflect.Member;
 import java.util.Set;
 
 import javax.persistence.Column;
+import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinColumns;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.Table;
 import javax.persistence.metamodel.Attribute;
 import javax.persistence.metamodel.Attribute.PersistentAttributeType;
 import javax.persistence.metamodel.BasicType;
@@ -19,6 +21,7 @@ import javax.persistence.metamodel.IdentifiableType;
 import javax.persistence.metamodel.ManagedType;
 import javax.persistence.metamodel.Metamodel;
 import javax.persistence.metamodel.Type;
+import javax.persistence.metamodel.Type.PersistenceType;
 
 import com.neaterbits.query.sql.dsl.api.entity.AttributeType;
 import com.neaterbits.query.sql.dsl.api.entity.ComplexType;
@@ -27,6 +30,7 @@ import com.neaterbits.query.sql.dsl.api.entity.EntityUtil;
 import com.neaterbits.query.sql.dsl.api.entity.IdType;
 import com.neaterbits.query.sql.dsl.api.entity.RelationType;
 import com.neaterbits.query.sql.dsl.api.entity.ScalarType;
+import com.neaterbits.util.StringUtils;
 
 public class JPAEntityModel implements EntityModel<
 									ManagedType<?>,
@@ -60,20 +64,70 @@ public class JPAEntityModel implements EntityModel<
 		return metamodel.managedType(type);
 	}
 
+	
 	@Override
-	public ComplexType getComplexType(ManagedType<?> managed) {
-		// TODO Auto-generated method stub
-		return null;
+	public Class<?> getJavaType(ManagedType<?> managed) {
+		return managed.getJavaType();
 	}
 
 
+	@Override
+	public String getName(ManagedType<?> managed) {
+		if (managed.getPersistenceType() != PersistenceType.ENTITY) {
+			throw new IllegalArgumentException("Not an entity");
+		}
+
+		return ((EntityType<?>)managed).getName();
+	}
+
+
+
+	@Override
+	public String getTableName(ManagedType<?> managed) {
+		
+		if (managed.getPersistenceType() != PersistenceType.ENTITY) {
+			throw new IllegalArgumentException("Not an entity");
+		}
+		
+		final Class<?> javaType = managed.getJavaType();
+		
+		final Table table = javaType.getDeclaredAnnotation(Table.class);
+		
+		String ret = null;
+		
+		if (table != null) {
+			ret = table.name();
+		}
+
+		if (StringUtils.isBlank(ret)) {
+			final Entity entity = javaType.getDeclaredAnnotation(Entity.class);
+			
+			String entityName = null;
+			
+			if (entity != null) {
+				entityName = entity.name(); 
+			}
+			
+			if (StringUtils.isBlank(entityName)) {
+				entityName = javaType.getSimpleName();
+			}
+
+			
+			ret = getDefaultTableNameFromAttr(entityName);
+		}
+
+		return ret;
+	}
+
+	@Override
+	public ComplexType getComplexType(ManagedType<?> managed) {
+		throw new UnsupportedOperationException("TODO");
+	}
 
 	@Override
 	public IdentifiableType<?> getIdentifiable(ManagedType<?> managed) {
-		// TODO Auto-generated method stub
-		return null;
+		throw new UnsupportedOperationException("TODO");
 	}
-
 
 	@Override
 	public IdType getIdType(IdentifiableType<?> identifiable) {
@@ -281,6 +335,13 @@ public class JPAEntityModel implements EntityModel<
 		if (ret == null) {
 			throw new IllegalStateException("Unable to get column for attribute " + attribute);
 		}
+		else {
+			for (String c : ret) {
+				if (StringUtils.isBlank(c)) {
+					throw new IllegalStateException("Blank column for attribute " + attribute + ", attr type " + persistentAttributeType);
+				}
+			}
+		}
 		
 		return ret;
 	}
@@ -294,17 +355,28 @@ public class JPAEntityModel implements EntityModel<
 
 		final AccessibleObject accessible = (AccessibleObject)attribute.getJavaMember();
 
-		final String ret;
+		String ret = null;
 		
 		final Column column = accessible.getAnnotation(Column.class);
 
 		if (column != null) {
 			ret = column.name();
 		}
-		else {
-			ret = attribute.getName();
-		}
 
+		if (StringUtils.isBlank(ret)) {
+			final String attrName = attribute.getName();
+			
+			if (StringUtils.isBlank(attrName)) {
+				throw new IllegalStateException("Blank attr name for" + attribute);
+			}
+
+			ret = getDefaultColumnNameFromAttr(attrName);
+		}
+		
+		if (StringUtils.isBlank(ret)) {
+			throw new IllegalStateException("Blank column for attribute " + attribute);
+		}
+		
 		return ret;
 	}
 	
@@ -539,7 +611,7 @@ public class JPAEntityModel implements EntityModel<
 			
 			int num = 0;
 			for (int i = 0; i < src.length; ++ i) {
-				if (src[i].referencedColumnName() != null) {
+				if (!StringUtils.isBlank(src[i].referencedColumnName())) {
 					++ num;
 				}
 			}
@@ -554,7 +626,7 @@ public class JPAEntityModel implements EntityModel<
 				ret = new String[num];
 				
 				for (int i = 0; i < src.length; ++ i) {
-					if (src[i].name() == null) {
+					if (StringUtils.isBlank(src[i].name())) {
 						throw new IllegalStateException("No at idx " + i);
 					}
 					
@@ -563,9 +635,9 @@ public class JPAEntityModel implements EntityModel<
 			}
 		}
 		else if (null != (joinColumn = accessible.getAnnotation(JoinColumn.class))) {
-			ret = joinColumn.referencedColumnName() != null
-					? new String [] { joinColumn.referencedColumnName() }
-					: null;
+			ret = StringUtils.isBlank(joinColumn.referencedColumnName())
+					? null
+					: new String [] { joinColumn.referencedColumnName() };
 		}
 		else {
 			ret = null;
@@ -574,5 +646,18 @@ public class JPAEntityModel implements EntityModel<
 		return ret;
 	}
 
+	private static String getDefaultColumnNameFromAttr(String attrName) {
+		//return StringUtils.toLowerWithUnderscore(attrName);
+		
+		return attrName.toLowerCase();
+	}
+	
+	private static String getDefaultTableNameFromAttr(String entityName) {
+		// return StringUtils.toLowerWithUnderscore(entityName);
+		
+		return entityName.toLowerCase();
+	}
+	
+	
 }
 

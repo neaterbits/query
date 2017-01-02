@@ -10,8 +10,8 @@ abstract class JPABasePreparedQuery<QUERY> extends DSPreparedQueryDB<QUERY, java
 	private final ParamNameAssigner paramNameAssigner;
 
 
-	JPABasePreparedQuery(ExecutableQuery<QUERY> queryAccess, QUERY query, ParamNameAssigner paramNameAssigner) {
-		super(queryAccess, query);
+	JPABasePreparedQuery(QueryDataSourceJPA dataSource, ExecutableQuery<QUERY> queryAccess, QUERY query, ParamNameAssigner paramNameAssigner) {
+		super(dataSource, queryAccess, query);
 
 		this.paramNameAssigner = paramNameAssigner;
 	}

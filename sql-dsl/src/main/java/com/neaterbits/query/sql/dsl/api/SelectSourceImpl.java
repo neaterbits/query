@@ -8,7 +8,7 @@ abstract class SelectSourceImpl
 	private final Class<?> [] types;
 
 	abstract CompiledGetter compileGetter(CollectedMapping mapping, CompiledGetterSetterCache cache) throws CompileException;
-	
+
 	SelectSourceImpl(Class<?> [] types) {
 		
 		if (types == null) {

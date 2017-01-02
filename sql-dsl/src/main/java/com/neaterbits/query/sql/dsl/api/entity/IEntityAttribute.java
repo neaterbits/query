@@ -13,4 +13,6 @@ public interface IEntityAttribute {
 	Class<?> getJavaType();
 	
 	Member getJavaMember();
+	
+	void set(Object instance, Object value);
 }

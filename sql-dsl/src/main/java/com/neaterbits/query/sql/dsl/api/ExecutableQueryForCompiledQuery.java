@@ -23,6 +23,26 @@ final class ExecutableQueryForCompiledQuery implements ExecutableQuery<CompiledQ
 		return new ExecuteQueryScratch(numResultParts, numSelectSources, numConditions, queryMetaModel, maxDepth);
 	}
 
+	
+	@Override
+	public FieldReferenceType getQueryFieldRefereneType(CompiledQuery query) {
+		
+		final CompiledSelectSources<?> source = query.getSelectSources();
+		
+		final FieldReferenceType ret;
+		
+		if (source instanceof CompiledSelectSourcesAlias) {
+			ret = FieldReferenceType.ALIAS;
+		}
+		else if (source instanceof CompiledSelectSourcesClass) {
+			ret = FieldReferenceType.ENTITY;
+		}
+		else {
+			throw new IllegalStateException("Unknown select source class " + source.getClass());
+		}
+		return ret;
+	}
+
 	@Override
 	public EQueryResultDimension getDimension(CompiledQuery query) {
 		return query.getResultMode();
@@ -45,7 +65,7 @@ final class ExecutableQueryForCompiledQuery implements ExecutableQuery<CompiledQ
 
 	@Override
 	public EAggregateFunction getAggregateResultFunction(CompiledQuery query) {
-		return ((QueryResultAggregate)query.getResult().getOriginal()).getAggregateFunction();
+		return ((CompiledQueryResultAggregate)query.getResult()).getAggregateFunction();
 	}
 	
 	@Override
@@ -55,18 +75,26 @@ final class ExecutableQueryForCompiledQuery implements ExecutableQuery<CompiledQ
 
 	@Override
 	public ENumericType getAggregateNumericInputType(CompiledQuery query) {
-		return ((QueryResultAggregate)query.getResult().getOriginal()).getInputNumericType();
+		return ((CompiledQueryResultAggregate)query.getResult()).getInputNumericType();
 	}
 	
 	@Override
 	public ENumericType getAggregateNumericOutputType(CompiledQuery query) {
-		return ((QueryResultAggregate)query.getResult().getOriginal()).getOutputNumericType();
+		return ((CompiledQueryResultAggregate)query.getResult()).getOutputNumericType();
 	}
 
 	@Override
 	public Object getAggregateResultValue(CompiledQuery query, Object instance) {
 		return ((CompiledQueryResultAggregate)query.getResult()).getField().getValue(instance);
 	}
+
+	@Override
+	public int getEntityResultSourceIdx(CompiledQuery query) {
+		final SelectSource selectSource = ((CompiledQueryResultEntity)query.getResult()).getSelectSource();
+		
+		return query.getSelectSources().getSourceIdx(selectSource);
+	}
+
 
 	@Override
 	public int getMappingCount(CompiledQuery query) {
@@ -99,7 +127,7 @@ final class ExecutableQueryForCompiledQuery implements ExecutableQuery<CompiledQ
 	@Override
 	public Object createMappedInstance(CompiledQuery query) {
 		
-		final Class<?> type = query.getResult().getOriginal().getType();
+		final Class<?> type = query.getResult().getResultType();
 		final Object ret;
 
 		try {

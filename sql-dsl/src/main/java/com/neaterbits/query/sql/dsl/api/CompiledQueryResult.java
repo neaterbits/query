@@ -15,11 +15,25 @@ abstract class CompiledQueryResult {
 		this.original = original;
 	}
 
+	/*
 	final QueryResult getOriginal() {
 		return original;
 	}
+	*/
 	
 	final ECollectionType getCollectionType() {
 		return original.getCollectionType();
+	}
+	
+	final EQueryResultGathering getGathering() {
+		return original.getGathering();
+	}
+	
+	final EQueryResultDimension getDimension() {
+		return original.getDimension();
+	}
+
+	final Class<?> getResultType() {
+		return original.getType();
 	}
 }

@@ -88,7 +88,7 @@ final class StructuredDebugBlock {
 			if (ret == null) {
 				ret = new int[line.length];
 			}
-			else {
+			else if (line.length > ret.length) {
 				ret = Arrays.copyOf(ret, line.length);
 			}
 

@@ -24,7 +24,7 @@ import com.neaterbits.query.jpatest.model.Employee;
 import com.neaterbits.query.jpatest.model.Person;
 import com.neaterbits.query.jpatest.model.Role;
 import com.neaterbits.query.sql.dsl.api.entity.QueryMetaModel;
-import com.neaterbits.query.sql.dsl.api.helper.jpa.QueryTestDSJPA;
+import com.neaterbits.query.sql.dsl.api.helper.jpa.QueryTestDSJPANative;
 import com.neaterbits.query.sql.dsl.api.testhelper.BaseSQLAPITest;
 import com.neaterbits.query.sql.dsl.api.testhelper.QueryTestDSBuilder;
 import com.neaterbits.query.sql.dsl.api.testhelper.QueryTestDSCheck;
@@ -34,13 +34,16 @@ import com.neaterbits.query.sql.dsl.api.testhelper.QueryTestDSInMemory;
 public class SQLAPITest extends BaseSQLAPITest {
 
 	private static final EntityManagerFactory emf = Persistence.createEntityManagerFactory("query-jpa-test");
-	
+
 	private static final QueryMetaModel jpaQueryMetaModel = new JPAQueryMetaModel(emf.getMetamodel());
 
 	private static QueryTestDSCheck store(Consumer<QueryTestDSBuilder> b) {
 		
 		return new QueryTestDSCombined(
-				() -> new QueryTestDSJPA("query-jpa-test"),
+				// () -> new QueryTestDSJPQL("query-jpa-test"),
+				
+				() -> new QueryTestDSJPANative("query-jpa-test"),
+
 				() -> new QueryTestDSInMemory(jpaQueryMetaModel)
 				)
 				
@@ -197,30 +200,29 @@ public class SQLAPITest extends BaseSQLAPITest {
 	        		q -> q.execute());
 		});
 	}
-	
 
 	@Test
     public void testAliasBasedJoin() {
-    	
+
 		final Company  company  = alias(Company.class);
 		final Employee employee = alias(Employee.class);
 		final Person   person   = alias(Person.class);
-		
+
 		final int acmeCompanyId = 1;
 		final int fooCompanyId = 2;
-		
+
 		final Company acme = new Company(acmeCompanyId, "Acme");
-		final Company foo = new Company(fooCompanyId, "Foo");
+		final Company foo  = new Company(fooCompanyId,  "Foo");
 
 		final long fooPerson1Id = 123L;
 		final long fooPerson2Id = 124L;
 		
 		final Person fooPerson1 = new Person(fooPerson1Id, "Foo1", "Person1");
 		final Person fooPerson2 = new Person(fooPerson2Id, "Foo2", "Person2");
-		
+
 		final int fooEmployeeId1 = 231; 
 		final int fooEmployeeId2 = 232; 
-		
+
 		final Employee fooEmp1 = new Employee(fooEmployeeId1, foo, fooPerson1.getId());
 		final Employee fooEmp2 = new Employee(fooEmployeeId2, foo, fooPerson2.getId());
 		
@@ -243,7 +245,7 @@ public class SQLAPITest extends BaseSQLAPITest {
         	.where(company::getName).startsWith("Fo")
 
         	.compile();
-		
+
 		store(s  -> s.add(acme).add(foo)).
 		check(ds -> {
 			/*
@@ -260,6 +262,7 @@ public class SQLAPITest extends BaseSQLAPITest {
 				.add(acme).add(foo)
 				.add(fooEmp1).add(fooPerson1)
 				.add(fooEmp2).add(fooPerson2)).
+
 		check(ds -> {
 			checkSelectListUnordered(
 				    ds,
@@ -271,8 +274,7 @@ public class SQLAPITest extends BaseSQLAPITest {
 	       			new CompanyPersonResultVO(fooCompanyId, fooPerson2Id, "Foo2", "Person2"));
 		});
 	}
-	
-	
+
     //@Test
     public void testAliasBasedObsolete() {
     	EntityManager em = null;
@@ -284,7 +286,7 @@ public class SQLAPITest extends BaseSQLAPITest {
 			final Employee 	employee = alias(Employee.class);
 			final Role 		role	 = alias(Role.class);
     		
-	    	final QueryDataSource ds = new QueryDataSourceJPA(em);
+	    	final QueryDataSource ds = new QueryDataSourceJPQL(em);
 	    	
 	    	final Param<Integer> param1 = intParam();
 	    	final Param<Integer> param2 = intParam();

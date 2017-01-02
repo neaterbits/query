@@ -14,12 +14,18 @@ public interface EntityModel<MANAGED, EMBEDDED, IDENTIFIABLE, ATTRIBUTE, ATTRIBU
 	
 
 	MANAGED getManaged(Class<?> type);
+	
+	Class<?> getJavaType(MANAGED managed);
+	
+	String getName(MANAGED managed);
 
 	ATTRIBUTE_COLL getAttributes(MANAGED managed);
 
 	ComplexType getComplexType(MANAGED managed);
 
 	IDENTIFIABLE getIdentifiable(MANAGED managed);
+
+	String getTableName(MANAGED managed);
 	
 	IdType getIdType(IDENTIFIABLE identifiable);
 
