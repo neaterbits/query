@@ -41,25 +41,25 @@ final class ClassicSelect implements IClassic {
 	}
 
 	@Override
-	public <TYPE_RESULT> IClassicSingleTypeResult<SingleQuery<TYPE_RESULT>, TYPE_RESULT> selectOneFrom(Class<TYPE_RESULT> cl) {
+	public <ENTITY_RESULT> IClassicSingleEntityResult<SingleQuery<ENTITY_RESULT>, ENTITY_RESULT> selectOneFrom(Class<ENTITY_RESULT> cl) {
 		if (cl == null) {
 			throw new IllegalArgumentException("cl == null");
 		}
 
 		final SharedSelectSource selectSource = new SharedSelectSource_Named(cl);
 
-		return new ClassicSingleTypeResult<SingleQuery<TYPE_RESULT>, TYPE_RESULT>(selectSource, singleQueryCompiler());
+		return new Classic_Collector_SingleTypeResult<SingleQuery<ENTITY_RESULT>, ENTITY_RESULT>(selectSource, singleQueryCompiler());
 	}
 
 	@Override
-	public <TYPE_RESULT> IClassicMultiTypeResult<MultiQuery<TYPE_RESULT>, TYPE_RESULT> selectListFrom(Class<TYPE_RESULT> cl) {
+	public <ENTITY_RESULT> IClassicMultiEntityResult<MultiQuery<ENTITY_RESULT>, ENTITY_RESULT> selectListFrom(Class<ENTITY_RESULT> cl) {
 		if (cl == null) {
 			throw new IllegalArgumentException("cl == null");
 		}
 		
 		final SharedSelectSource selectSource = new SharedSelectSource_Named(cl);
 
-		return new MultiTypeResultImpl<MultiQuery<TYPE_RESULT>, TYPE_RESULT>(selectSource, ECollectionType.LIST, multiQueryCompiler());
+		return new Classic_Collector_MultiEntityResult<MultiQuery<ENTITY_RESULT>, ENTITY_RESULT>(selectSource, ECollectionType.LIST, multiQueryCompiler());
 	}
 
 	@Override
@@ -191,7 +191,7 @@ final class ClassicSelect implements IClassic {
 	
 
 	private <T, NUM> IClassicNumericNamedResult<NUM> sum(Function<T, NUM> field, Class<NUM> cl) {
-		return new AggregateNamedResultImpl<>(new QueryResultSum(cl, new FunctionGetter(field)), singleQueryCompiler());
+		return new Collector_AggregateNamedResult<>(new QueryResultSum(cl, new FunctionGetter(field)), singleQueryCompiler());
 	}
 	
 	@Override

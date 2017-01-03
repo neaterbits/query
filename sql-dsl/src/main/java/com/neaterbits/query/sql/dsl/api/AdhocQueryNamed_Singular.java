@@ -5,12 +5,12 @@ import java.util.Collection;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
-abstract class AdhocQueryNamedSingular<MODEL> extends AdhocQueryNamed<MODEL, Object> 
+abstract class AdhocQueryNamed_Singular<MODEL> extends AdhocQueryNamed<MODEL, Object> 
 
 	implements IAdhocWhereOrJoinSingular<MODEL, Object, Object> {
 
 	
-	AdhocQueryNamedSingular(Function<?, ?> aggregateGetter, EAggregateFunction aggregateFunction, ENumericType aggregateNumericInputType, ENumericType aggregateNumericOutputType) {
+	AdhocQueryNamed_Singular(Function<?, ?> aggregateGetter, EAggregateFunction aggregateFunction, ENumericType aggregateNumericInputType, ENumericType aggregateNumericOutputType) {
 		super(aggregateGetter, aggregateFunction, aggregateNumericInputType, aggregateNumericOutputType);
 	}
 	

@@ -12,11 +12,11 @@ public interface Select {
 		return ClassicSelect.selectImpl.selectList(cl);
 	}
 
-	public static <TYPE_RESULT> IClassicSingleTypeResult<SingleQuery<TYPE_RESULT>, TYPE_RESULT> selectOneFrom(Class<TYPE_RESULT> cl) {
+	public static <TYPE_RESULT> IClassicSingleEntityResult<SingleQuery<TYPE_RESULT>, TYPE_RESULT> selectOneFrom(Class<TYPE_RESULT> cl) {
 		return ClassicSelect.selectImpl.selectOneFrom(cl);
 	}
 
-	public static <TYPE_RESULT> IClassicMultiTypeResult<MultiQuery<TYPE_RESULT>, TYPE_RESULT> selectListFrom(Class<TYPE_RESULT> cl) {
+	public static <TYPE_RESULT> IClassicMultiEntityResult<MultiQuery<TYPE_RESULT>, TYPE_RESULT> selectListFrom(Class<TYPE_RESULT> cl) {
 		return ClassicSelect.selectImpl.selectListFrom(cl);
 	}
 
