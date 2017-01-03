@@ -20,6 +20,7 @@ import javax.persistence.metamodel.EntityType;
 import javax.persistence.metamodel.IdentifiableType;
 import javax.persistence.metamodel.ManagedType;
 import javax.persistence.metamodel.Metamodel;
+import javax.persistence.metamodel.SingularAttribute;
 import javax.persistence.metamodel.Type;
 import javax.persistence.metamodel.Type.PersistenceType;
 
@@ -304,10 +305,20 @@ public class JPAEntityModel implements EntityModel<
 				// Must look for JoinColumns on other side
 				final String [] joinColumns = getJoinColumnsReferenced((AccessibleObject)corresponding.getJavaMember());
 				
-				ret = joinColumns != null
-						? joinColumns
-						: getColumnAnnotationOrDefaultAsArray(attribute); 
 				
+
+				if (joinColumns != null) {
+					ret = joinColumns;
+				}
+				else {
+					// Default to match PK of this-instance
+					
+					ret = tryGetPrimaryKeyColumns(attribute.getDeclaringType());
+					
+					if (ret == null) {
+						throw new IllegalStateException("Unable to get columns for ONE_TO_MANY attribute " + attribute);
+					}
+				}
 			}
 			else {
 				// unidirectional
@@ -345,6 +356,41 @@ public class JPAEntityModel implements EntityModel<
 		
 		return ret;
 	}
+	
+	private static String [] tryGetPrimaryKeyColumns(ManagedType<?> managed) {
+		if (managed.getPersistenceType() != PersistenceType.ENTITY) {
+			throw new IllegalArgumentException("Not an entity: " + managed);
+		}
+		
+		final String [] ret;
+		
+		final EntityType<?> entity = (EntityType<?>)managed;
+
+		if (!entity.hasSingleIdAttribute()) {
+			throw new UnsupportedOperationException("TODO - support multi IDs");
+		}
+		
+		Attribute<?, ?> idAttribute = null;
+
+		for (Attribute<?, ?> attr : entity.getAttributes()) {
+
+			if (attr instanceof SingularAttribute) {
+				final SingularAttribute<?, ?> singular = (SingularAttribute<?, ?>)attr;
+
+				if (singular.isId()) {
+					idAttribute = singular;
+					break;
+				}
+			}
+		}
+
+		ret = getColumnAnnotationOrDefaultAsArray(idAttribute);
+
+		return ret;
+	}
+	
+	
+	
 	
 	
 	private static String [] getColumnAnnotationOrDefaultAsArray(Attribute<?, ?> attribute) {

@@ -269,9 +269,10 @@ public class SQLAPITest extends BaseSQLAPITest {
 	       			startsWithFoo,
 	       			q -> q.execute(),
 	       			new CompanyPersonResultVO(fooCompanyId, fooPerson1Id, "Foo1", "Person1"),
-	       			new CompanyPersonResultVO(fooCompanyId, fooPerson1Id, "Foo1", "Person1"),
-	       			new CompanyPersonResultVO(fooCompanyId, fooPerson2Id, "Foo2", "Person2"),
-	       			new CompanyPersonResultVO(fooCompanyId, fooPerson2Id, "Foo2", "Person2"));
+	       			// new CompanyPersonResultVO(fooCompanyId, fooPerson1Id, "Foo1", "Person1"),
+	       			//new CompanyPersonResultVO(fooCompanyId, fooPerson2Id, "Foo2", "Person2"),
+	       			new CompanyPersonResultVO(fooCompanyId, fooPerson2Id, "Foo2", "Person2")
+   			);
 		});
 	}
 

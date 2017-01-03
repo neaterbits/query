@@ -103,7 +103,7 @@ sum().distinct(foo::bar)
 * and().lower(foo::bar)
   and().lower().trim(foo::bar)
 
- - ikke scopet (men er heller ikke hele and-en uansett)
+ - ikke scopet (men er heller ikke hele and-en uansett siden ikke i lambda)
  + ikke prototye kræsj
  + fleksiblelt med å legge til mere.
  + færre kombinasjoner
@@ -511,22 +511,25 @@ Men gir dette egentlig mening? Er bare join tilbake på instansen. Så må finne
 
 Neste:
 
- - adhoc queries med mininmalt overhead
+% - adhoc queries med mininmalt overhead
  - nøsta and/or
- - bedre debugging av in-memory query eksekvering
+ - in
+# - bedre debugging av in-memory query eksekvering
  - parametere
- - JS / annen kode generering ut fra POJO joins
- 
- - dialekter, dvs statisk begrense muligheter
+ - unit tester rett på JPAModel og utils for å sjekke at henter ut relations riktig, attributt kolonner mm på rett vis.
+   * se om bør endre API slik at eget for å hente kolonner for relation attributter?
+
+ - dialekter, dvs statisk begrense muligheter (kun ANSI joins?)
  - query ut fra context variabel
-   * forenklede queries uten from eller join sources.
- - optionals
+   * forenklede queries uten from eller join sources. Trenge ikke from/implisitt join om kun ANSI joins
  - subselects
  - mere tester
  - transformasjons-API
- - lagre/slette API som er uavhengig av JPA
-   * batch insert update
- - hibernate direkte støtte? Mulig kan gjenbruke fra JPA
+ - optionals
+ - JS / annen kode generering ut fra POJO joins
+ - lagre/slette-API som er uavhengig av JPA
+   * batch insert/update
+ - hibernate direkte støtte? Mulig kan gjenbruke en del fra JPA
 
 
 
