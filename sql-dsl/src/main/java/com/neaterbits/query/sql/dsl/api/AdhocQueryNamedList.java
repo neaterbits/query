@@ -6,14 +6,14 @@ import java.util.List;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
-final class AdhocQueryClassList<MODEL>
+final class AdhocQueryNamedList<MODEL>
 
-		extends AdhocQueryClassCollection<MODEL, List<Object>>
+		extends AdhocQueryNamedCollection<MODEL, List<Object>>
 
 		implements IAdhocWhereOrJoinList<MODEL, Object, List<Object>>,
 		IAdhocEndClauseList<MODEL, Object, List<Object>> {
 
-	AdhocQueryClassList(Collection<?> coll) {
+	AdhocQueryNamedList(Collection<?> coll) {
 		super(ECollectionType.LIST, coll);
 	}
 	

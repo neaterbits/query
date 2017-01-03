@@ -23,7 +23,7 @@ final class AdhocJoin<MODEL, RESULT>
 	
 	private static final int JOIN_CONDITIONS_INITIAL = 10;
 	
-	final AdhocQueryClass<MODEL, RESULT> query;
+	final AdhocQueryNamed<MODEL, RESULT> query;
 	final EJoinType type;
 	final int leftSourceIdx;
 	final int rightSourceIdx;
@@ -41,7 +41,7 @@ final class AdhocJoin<MODEL, RESULT>
 	Object whereValue;
 
 	
-	AdhocJoin(AdhocQueryClass<MODEL, RESULT> query, EJoinType type, int leftSourceIdx, int rightSourceIdx) {
+	AdhocJoin(AdhocQueryNamed<MODEL, RESULT> query, EJoinType type, int leftSourceIdx, int rightSourceIdx) {
 
 		if (query == null) {
 			throw new IllegalArgumentException("query == null");

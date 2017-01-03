@@ -4,11 +4,11 @@ import java.util.Collection;
 import java.util.Set;
 import java.util.function.Function;
 
-final class AdhocConditionsSet<MODEL, RESULT> extends AdhocConditions<MODEL, Set<Object>, AdhocQueryClassSet<MODEL>> 
+final class AdhocConditionsSet<MODEL, RESULT> extends AdhocConditions<MODEL, Set<Object>, AdhocQueryNamedSet<MODEL>> 
 
 	implements IAdhocAndOrLogicalClausesSet<MODEL, Object, Set<Object>>{
 
-	AdhocConditionsSet(AdhocQueryClassSet<MODEL> query, int level) {
+	AdhocConditionsSet(AdhocQueryNamedSet<MODEL> query, int level) {
 		super(query, level);
 	}
 

@@ -2,9 +2,9 @@ package com.neaterbits.query.sql.dsl.api;
 
 import java.util.List;
 
-final class CompiledSelectSourcesClass extends CompiledSelectSources<CompiledSelectSourceClass> {
+final class CompiledSelectSourcesNamed extends CompiledSelectSources<CompiledSelectSourceNamed> {
 
-	CompiledSelectSourcesClass(SelectSourceImpl original, List<CompiledSelectSourceClass> sources) {
+	CompiledSelectSourcesNamed(SelectSourceImpl original, List<CompiledSelectSourceNamed> sources) {
 		super(original, sources);
 	}
 
@@ -14,9 +14,9 @@ final class CompiledSelectSourcesClass extends CompiledSelectSources<CompiledSel
 	}
 
 	@Override
-	TypeMapSource getClassesSource(Class<?> type) {
+	TypeMapSource getNamedSource(Class<?> type) {
 		
-		for (CompiledSelectSourceClass compiled : getSources()) {
+		for (CompiledSelectSourceNamed compiled : getSources()) {
 			if (compiled.getType().equals(type)) {
 				return compiled;
 			}
@@ -32,7 +32,7 @@ final class CompiledSelectSourcesClass extends CompiledSelectSources<CompiledSel
 	
 	@Override
 	int getSourceIdx(SelectSource source) {
-		final SelectSourceClass classSource = (SelectSourceClass)source;
+		final SelectSourceNamed classSource = (SelectSourceNamed)source;
 		
 		
 		for (int i = 0; i < getSources().size(); ++ i) {

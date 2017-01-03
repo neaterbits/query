@@ -19,7 +19,7 @@ final class AdhocImpl<MODEL> implements IAdhoc<MODEL> {
 						ENumericType hinputNnumericType,
 						ENumericType outputNnumericType) {
 
-		return (IAdhocNumericNamedResult)new AdhocQueryClassAggregate(field, aggregateFunction, hinputNnumericType, outputNnumericType);
+		return (IAdhocNumericNamedResult)new AdhocQueryNamedAggregate(field, aggregateFunction, hinputNnumericType, outputNnumericType);
 	}
 
 	@SuppressWarnings({"unchecked", "rawtypes"})
@@ -31,21 +31,21 @@ final class AdhocImpl<MODEL> implements IAdhoc<MODEL> {
 						ENumericType inputNnumericType,
 						ENumericType outputNnumericType) {
 
-		return (IAdhocNumericInstanceResult)new AdhocQueryClassAggregate(field, aggregateFunction, inputNnumericType, outputNnumericType);
+		return (IAdhocNumericInstanceResult)new AdhocQueryNamedAggregate(field, aggregateFunction, inputNnumericType, outputNnumericType);
 	}
 
 	@SuppressWarnings({"unchecked", "rawtypes"})
 	private <T, COLL extends List<T>, INPUT_TYPE, OUTPUT_TYPE>
 				IAdhocWhereOrJoinList<MODEL, T, COLL> createCollectionInstanceList(Collection<?> coll) {
 
-		return (IAdhocWhereOrJoinList)new AdhocQueryClassList(coll);
+		return (IAdhocWhereOrJoinList)new AdhocQueryNamedList(coll);
 	}
 
 	@SuppressWarnings({"unchecked", "rawtypes"})
 	private <T, COLL extends Set<T>, INPUT_TYPE, OUTPUT_TYPE>
 				IAdhocWhereOrJoinSet<MODEL, T, COLL> createCollectionInstanceSet(Collection<?> coll) {
 
-		return (IAdhocWhereOrJoinSet)new AdhocQueryClassSet(coll);
+		return (IAdhocWhereOrJoinSet)new AdhocQueryNamedSet(coll);
 	}
 				
 	@Override

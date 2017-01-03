@@ -46,7 +46,7 @@ final class SelectImpl implements IClassic {
 			throw new IllegalArgumentException("cl == null");
 		}
 
-		final SelectSource selectSource = new SelectSourceClass(cl);
+		final SelectSource selectSource = new SelectSourceNamed(cl);
 
 		return new SingleTypeResultImpl<SingleQuery<TYPE_RESULT>, TYPE_RESULT>(selectSource, singleQueryCompiler());
 	}
@@ -57,7 +57,7 @@ final class SelectImpl implements IClassic {
 			throw new IllegalArgumentException("cl == null");
 		}
 		
-		final SelectSource selectSource = new SelectSourceClass(cl);
+		final SelectSource selectSource = new SelectSourceNamed(cl);
 
 		return new MultiTypeResultImpl<MultiQuery<TYPE_RESULT>, TYPE_RESULT>(selectSource, ECollectionType.LIST, multiQueryCompiler());
 	}
@@ -68,7 +68,7 @@ final class SelectImpl implements IClassic {
 			throw new IllegalArgumentException("cl == null");
 		}
 
-		final SelectSource selectSource = new SelectSourceClass(cl);
+		final SelectSource selectSource = new SelectSourceNamed(cl);
 		
 		return new SingleNamedResultImpl<SingleQuery<TYPE_RESULT>, TYPE_RESULT>(new QueryResultEntitySingle(selectSource), singleQueryCompiler());
 	}
@@ -79,7 +79,7 @@ final class SelectImpl implements IClassic {
 			throw new IllegalArgumentException("cl == null");
 		}
 
-		final SelectSource selectSource = new SelectSourceClass(cl);
+		final SelectSource selectSource = new SelectSourceNamed(cl);
 
 		final QueryResultEntityMulti result = new QueryResultEntityMulti(selectSource, ECollectionType.LIST);
 		

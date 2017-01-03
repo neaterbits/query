@@ -9,9 +9,9 @@ import java.util.function.Function;
 import com.neaterbits.query.sql.dsl.api.entity.OneToManyJoinConditionResolver;
 import com.neaterbits.query.sql.dsl.api.entity.QueryMetaModel;
 
-abstract class AdhocQueryClass<MODEL, RESULT>
+abstract class AdhocQueryNamed<MODEL, RESULT>
 
-		extends AdhocQueryBase<MODEL, AdhocQueryClass<MODEL, RESULT>> 
+		extends AdhocQueryBase<MODEL, AdhocQueryNamed<MODEL, RESULT>> 
 		implements
 
 			IAdhocEndClauseBase<MODEL, RESULT>,
@@ -39,7 +39,7 @@ abstract class AdhocQueryClass<MODEL, RESULT>
 	
 	abstract AdhocConditions<MODEL, RESULT, ?> createConditions(int level);
 
-	AdhocQueryClass(Function<?, ?> aggregateGetter, EAggregateFunction aggregateFunction, ENumericType aggregateNumericInputType, ENumericType aggregateNumericOutputType) {
+	AdhocQueryNamed(Function<?, ?> aggregateGetter, EAggregateFunction aggregateFunction, ENumericType aggregateNumericInputType, ENumericType aggregateNumericOutputType) {
 		super(aggregateFunction, aggregateNumericInputType, aggregateNumericOutputType);
 
 		if (aggregateGetter == null) {
@@ -50,7 +50,7 @@ abstract class AdhocQueryClass<MODEL, RESULT>
 	}
 
 
-	AdhocQueryClass(ECollectionType collectionType, Collection<?> coll) {
+	AdhocQueryNamed(ECollectionType collectionType, Collection<?> coll) {
 
 		super(collectionType);
 
@@ -92,18 +92,18 @@ abstract class AdhocQueryClass<MODEL, RESULT>
 	
 	
 	@Override
-	public FieldReferenceType getQueryFieldReferenceType(AdhocQueryClass<MODEL, RESULT> query) {
+	public FieldReferenceType getQueryFieldReferenceType(AdhocQueryNamed<MODEL, RESULT> query) {
 		return FieldReferenceType.ENTITY;
 	}
 
 	@Override
 	@SuppressWarnings("unchecked")
-	public final Object getAggregateResultValue(AdhocQueryClass<MODEL, RESULT> query, Object instance) {
+	public final Object getAggregateResultValue(AdhocQueryNamed<MODEL, RESULT> query, Object instance) {
 		return aggregateGetter.apply(instance);
 	}
 
 	@Override
-	public final ExecuteQueryScratch createScratchArea(AdhocQueryClass<MODEL, RESULT> query, QueryMetaModel queryMetaModel) {
+	public final ExecuteQueryScratch createScratchArea(AdhocQueryNamed<MODEL, RESULT> query, QueryMetaModel queryMetaModel) {
 
 		initScratchArea(
 				getNumResultParts(this),
@@ -127,95 +127,95 @@ abstract class AdhocQueryClass<MODEL, RESULT>
 	
 	// Joins
 	@Override
-	public final int getJoinCount(AdhocQueryClass<MODEL, RESULT> query) {
+	public final int getJoinCount(AdhocQueryNamed<MODEL, RESULT> query) {
 		return numJoins;
 	}
 
 	@Override
-	public final EJoinType getJoinType(AdhocQueryClass<MODEL, RESULT> query, int joinIdx) {
+	public final EJoinType getJoinType(AdhocQueryNamed<MODEL, RESULT> query, int joinIdx) {
 		return joins[joinIdx].type;
 	}
 
 
 	@Override
-	public final int getJoinLeftSourceIdx(AdhocQueryClass<MODEL, RESULT> query, int joinIdx) {
+	public final int getJoinLeftSourceIdx(AdhocQueryNamed<MODEL, RESULT> query, int joinIdx) {
 		return joins[joinIdx].leftSourceIdx;
 	}
 
 
 	@Override
-	public final int getJoinRightSourceIdx(AdhocQueryClass<MODEL, RESULT> query, int joinIdx) {
+	public final int getJoinRightSourceIdx(AdhocQueryNamed<MODEL, RESULT> query, int joinIdx) {
 		return joins[joinIdx].rightSourceIdx;
 	}
 
 	@Override
-	public Class<?> getJoinLeftJavaType(AdhocQueryClass<MODEL, RESULT> query, int joinIdx) {
+	public Class<?> getJoinLeftJavaType(AdhocQueryNamed<MODEL, RESULT> query, int joinIdx) {
 		throw new UnsupportedOperationException("TODO");
 	}
 
 	@Override
-	public Class<?> getJoinRightJavaType(AdhocQueryClass<MODEL, RESULT> query, int joinIdx) {
+	public Class<?> getJoinRightJavaType(AdhocQueryNamed<MODEL, RESULT> query, int joinIdx) {
 		throw new UnsupportedOperationException("TODO");
 	}
 
 	@Override
-	public final int getJoinConditionCount(AdhocQueryClass<MODEL, RESULT> query, int joinIdx) {
+	public final int getJoinConditionCount(AdhocQueryNamed<MODEL, RESULT> query, int joinIdx) {
 		return joins[joinIdx].numConditions;
 	}
 	
 	@Override
-	public EJoinConditionType getJoinConditionType(AdhocQueryClass<MODEL, RESULT> query, int joinIdx, int conditionIdx) {
+	public EJoinConditionType getJoinConditionType(AdhocQueryNamed<MODEL, RESULT> query, int joinIdx, int conditionIdx) {
 		return joins[joinIdx].conditions[conditionIdx].getJoinConditionType();
 	}
 
 	@Override
-	public final int getJoinConditionLeftSourceIdx(AdhocQueryClass<MODEL, RESULT> query, int joinIdx, int conditionIdx) {
+	public final int getJoinConditionLeftSourceIdx(AdhocQueryNamed<MODEL, RESULT> query, int joinIdx, int conditionIdx) {
 		return joins[joinIdx].leftSourceIdx;
 	}
 
 
 	@Override
-	public final int getJoinConditionRightSourceIdx(AdhocQueryClass<MODEL, RESULT> query, int joinIdx, int conditionIdx) {
+	public final int getJoinConditionRightSourceIdx(AdhocQueryNamed<MODEL, RESULT> query, int joinIdx, int conditionIdx) {
 		return joins[joinIdx].rightSourceIdx;
 	}
 
 	@Override
-	public final String getJoinConditionLeftName(AdhocQueryClass<MODEL, RESULT> query, int joinIdx, int conditionIdx) {
+	public final String getJoinConditionLeftName(AdhocQueryNamed<MODEL, RESULT> query, int joinIdx, int conditionIdx) {
 		throw new UnsupportedOperationException("TODO");
 	}
 
 	@Override
-	public final String getJoinConditionRightName(AdhocQueryClass<MODEL, RESULT> query, int joinIdx, int conditionIdx) {
+	public final String getJoinConditionRightName(AdhocQueryNamed<MODEL, RESULT> query, int joinIdx, int conditionIdx) {
 		throw new UnsupportedOperationException("TODO");
 	}
 
 	@Override
-	public final Class<?> getJoinConditionLeftJavaType(AdhocQueryClass<MODEL, RESULT> query, int joinIdx, int conditionIdx) {
+	public final Class<?> getJoinConditionLeftJavaType(AdhocQueryNamed<MODEL, RESULT> query, int joinIdx, int conditionIdx) {
 		throw new UnsupportedOperationException("TODO");
 	}
 
 	@Override
-	public final Class<?> getJoinConditionRightJavaType(AdhocQueryClass<MODEL, RESULT> query, int joinIdx, int conditionIdx) {
+	public final Class<?> getJoinConditionRightJavaType(AdhocQueryNamed<MODEL, RESULT> query, int joinIdx, int conditionIdx) {
 		throw new UnsupportedOperationException("TODO");
 	}
 
 	@Override
-	public final Method getJoinConditionOneToManyCollectionGetter(AdhocQueryClass<MODEL, RESULT> query, int joinIdx, int conditionIdx) {
+	public final Method getJoinConditionOneToManyCollectionGetter(AdhocQueryNamed<MODEL, RESULT> query, int joinIdx, int conditionIdx) {
 		throw new UnsupportedOperationException("TODO");
 	}
 
 	@Override
-	public final CompiledFieldReference getJoinConditionComparisonLhs(AdhocQueryClass<MODEL, RESULT> query, int joinIdx, int conditionIdx) {
+	public final CompiledFieldReference getJoinConditionComparisonLhs(AdhocQueryNamed<MODEL, RESULT> query, int joinIdx, int conditionIdx) {
 		throw new UnsupportedOperationException("TODO");
 	}
 
 	@Override
-	public final CompiledFieldReference getJoinConditionComparisonRhs(AdhocQueryClass<MODEL, RESULT> query, int joinIdx, int conditionIdx) {
+	public final CompiledFieldReference getJoinConditionComparisonRhs(AdhocQueryNamed<MODEL, RESULT> query, int joinIdx, int conditionIdx) {
 		throw new UnsupportedOperationException("TODO");
 	}
 
 	@Override
-	public final boolean evaluateJoinCondition(AdhocQueryClass<MODEL, RESULT> query, int joinIdx, Object instance1, Object instance2, int conditionIdx, OneToManyJoinConditionResolver oneToManyResolver) {
+	public final boolean evaluateJoinCondition(AdhocQueryNamed<MODEL, RESULT> query, int joinIdx, Object instance1, Object instance2, int conditionIdx, OneToManyJoinConditionResolver oneToManyResolver) {
 		return joins[joinIdx].conditions[conditionIdx].evaluate(instance1, instance2, oneToManyResolver);
 	}
 	
@@ -225,83 +225,83 @@ abstract class AdhocQueryClass<MODEL, RESULT>
 	**************************************************************************/
 
 	@Override
-	public final int getAllSourceCount(AdhocQueryClass<MODEL, RESULT> query) {
+	public final int getAllSourceCount(AdhocQueryNamed<MODEL, RESULT> query) {
 		return numSources;
 	}
 
 	@Override
-	public Class<?> getSourceJavaType(AdhocQueryClass<MODEL, RESULT> query, int sourceIdx) {
+	public Class<?> getSourceJavaType(AdhocQueryNamed<MODEL, RESULT> query, int sourceIdx) {
 		throw new UnsupportedOperationException("TODO");
 	}
 
 	@Override
-	public String getSourceName(AdhocQueryClass<MODEL, RESULT> query, int sourceIdx) {
+	public String getSourceName(AdhocQueryNamed<MODEL, RESULT> query, int sourceIdx) {
 		throw new UnsupportedOperationException("TODO");
 	}
 
 	@Override
-	public final ConditionsType getRootConditionsType(AdhocQueryClass<MODEL, RESULT> query) {
+	public final ConditionsType getRootConditionsType(AdhocQueryNamed<MODEL, RESULT> query) {
 		return conditions.getConditionsType();
 	}
 
 	@Override
-	public final int getRootConditionCount(AdhocQueryClass<MODEL, RESULT> query) {
+	public final int getRootConditionCount(AdhocQueryNamed<MODEL, RESULT> query) {
 		return conditions == null ? 0 : conditions.numConditions;
 	}
 
 	@Override
-	public final int getRootConditionSourceIdx(AdhocQueryClass<MODEL, RESULT> query, int conditionIdx) {
+	public final int getRootConditionSourceIdx(AdhocQueryNamed<MODEL, RESULT> query, int conditionIdx) {
 		return conditions.conditionToSourceIdx[conditionIdx];
 	}
 
 	@Override
-	public EClauseOperator getRootConditionOperator(AdhocQueryClass<MODEL, RESULT> query, int conditionIdx) {
+	public EClauseOperator getRootConditionOperator(AdhocQueryNamed<MODEL, RESULT> query, int conditionIdx) {
 		return conditions.operators[conditionIdx];
 	}
 
 	@Override
-	public final boolean evaluateRootCondition(AdhocQueryClass<MODEL, RESULT> query, Object instance, int conditionIdx, ConditionValuesScratch scratch) {
+	public final boolean evaluateRootCondition(AdhocQueryNamed<MODEL, RESULT> query, Object instance, int conditionIdx, ConditionValuesScratch scratch) {
 		return conditions.evaluate(instance, conditionIdx, this);
 	}
 
 	@Override
-	public Method getForDebugRootConditionLhsMethod(AdhocQueryClass<MODEL, RESULT> query, int conditionIdx) {
+	public Method getForDebugRootConditionLhsMethod(AdhocQueryNamed<MODEL, RESULT> query, int conditionIdx) {
 		return getForDebugConditionLhsMethod(query, 0, new int[] { conditionIdx });
 	}
 
 	@Override
-	public String getForDebugRootConditionValue(AdhocQueryClass<MODEL, RESULT> query, int conditionIdx) {
+	public String getForDebugRootConditionValue(AdhocQueryNamed<MODEL, RESULT> query, int conditionIdx) {
 		return getForDebugConditionValue(query, 0, new int[] { conditionIdx });
 	}
 
 	@Override
-	public final boolean isRootConditionOnly(AdhocQueryClass<MODEL, RESULT> query) {
+	public final boolean isRootConditionOnly(AdhocQueryNamed<MODEL, RESULT> query) {
 		return !conditions.hasSubConditions();
 	}
 
 	@Override
-	public final ConditionsType getConditionsType(AdhocQueryClass<MODEL, RESULT> query, int level, int[] conditionIndices) {
+	public final ConditionsType getConditionsType(AdhocQueryNamed<MODEL, RESULT> query, int level, int[] conditionIndices) {
 		return conditions.getConditionsType(level, conditionIndices);
 	}
 
 
 	@Override
-	public final int getConditionSourceIdx(AdhocQueryClass<MODEL, RESULT> query, int level, int[] conditionIndices) {
+	public final int getConditionSourceIdx(AdhocQueryNamed<MODEL, RESULT> query, int level, int[] conditionIndices) {
 		return conditions.getConditionSourceIdx(level, conditionIndices);
 	}
 
 	@Override
-	public final boolean evaluateCondition(AdhocQueryClass<MODEL, RESULT> query, int level, int[] conditionIndices, Object instance, ConditionValuesScratch scratch) {
+	public final boolean evaluateCondition(AdhocQueryNamed<MODEL, RESULT> query, int level, int[] conditionIndices, Object instance, ConditionValuesScratch scratch) {
 		return conditions.evaluateCondition(level, conditionIndices, instance, scratch);
 	}
 
 	@Override
-	public final boolean isSubCondition(AdhocQueryClass<MODEL, RESULT> query, int level, int[] conditionIndices) {
+	public final boolean isSubCondition(AdhocQueryNamed<MODEL, RESULT> query, int level, int[] conditionIndices) {
 		return conditions.isSubCondition(level, conditionIndices);
 	}
 
 	@Override
-	public final int getConditionsCount(AdhocQueryClass<MODEL, RESULT> query, int level, int[] conditionIndices) {
+	public final int getConditionsCount(AdhocQueryNamed<MODEL, RESULT> query, int level, int[] conditionIndices) {
 		final int count =  conditions.getConditionsCount(level, conditionIndices);
 
 		if (count <= 0) {
@@ -312,32 +312,32 @@ abstract class AdhocQueryClass<MODEL, RESULT>
 	}
 
 	@Override
-	public final boolean hasConditions(AdhocQueryClass<MODEL, RESULT> query) {
+	public final boolean hasConditions(AdhocQueryNamed<MODEL, RESULT> query) {
 		return conditions != null;
 	}
 
 	@Override
-	public final EClauseOperator getOperator(AdhocQueryClass<MODEL, RESULT> query, int level, int[] conditionIndices) {
+	public final EClauseOperator getOperator(AdhocQueryNamed<MODEL, RESULT> query, int level, int[] conditionIndices) {
 		return conditions.getOperator(level, conditionIndices);
 	}
 
 	@Override
-	public final int getConditionsMaxDepth(AdhocQueryClass<MODEL, RESULT> query) {
+	public final int getConditionsMaxDepth(AdhocQueryNamed<MODEL, RESULT> query) {
 		return conditions == null ? -1 : conditions.getMaxDepth();
 	}
 	
 	@Override
-	public Method getForDebugConditionLhsMethod(AdhocQueryClass<MODEL, RESULT> query, int level, int[] conditionIndices) {
+	public Method getForDebugConditionLhsMethod(AdhocQueryNamed<MODEL, RESULT> query, int level, int[] conditionIndices) {
 		return conditions.getForDebugConditionLhsMethod(level, conditionIndices, getForDebugSourceClasses());
 	}
 
 	@Override
-	public String getForDebugConditionValue(AdhocQueryClass<MODEL, RESULT> query, int level, int[] conditionIndices) {
+	public String getForDebugConditionValue(AdhocQueryNamed<MODEL, RESULT> query, int level, int[] conditionIndices) {
 		return conditions.getForDebugConditionValue(level, conditionIndices).toString();
 	}
 	
 	@Override
-	public int getEntityResultSourceIdx(AdhocQueryClass<MODEL, RESULT> query) {
+	public int getEntityResultSourceIdx(AdhocQueryNamed<MODEL, RESULT> query) {
 		throw new UnsupportedOperationException("TODO");
 	}
 
@@ -383,7 +383,7 @@ abstract class AdhocQueryClass<MODEL, RESULT>
 	@Override
 	@SuppressWarnings("unchecked")
 	public final RESULT get() {
-		final ExecuteQueryPOJOs<AdhocQueryClass<MODEL, RESULT>> executor = new ExecuteQueryPOJOs<>(this);
+		final ExecuteQueryPOJOs<AdhocQueryNamed<MODEL, RESULT>> executor = new ExecuteQueryPOJOs<>(this);
 		
 		final Object ret = executor.execute(this, this, null, null);
 		

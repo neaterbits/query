@@ -20,7 +20,7 @@ final class SingleNamedResultImpl<MODEL, RESULT>
 	private static QueryCollectorImpl makeCollector(QueryResult result) {
 		final QueryCollectorImpl collector = new QueryCollectorImpl(result);
 		
-		collector.setSources(new SelectSourceClassesImpl(new Class<?> [] { result.getType() }));
+		collector.setSources(new SelectSourceNamedImpl(new Class<?> [] { result.getType() }));
 		
 		return collector;
 	}

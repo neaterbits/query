@@ -34,7 +34,7 @@ final class ExecutableQueryForCompiledQuery implements ExecutableQuery<CompiledQ
 		if (source instanceof CompiledSelectSourcesAlias) {
 			ret = FieldReferenceType.ALIAS;
 		}
-		else if (source instanceof CompiledSelectSourcesClass) {
+		else if (source instanceof CompiledSelectSourcesNamed) {
 			ret = FieldReferenceType.ENTITY;
 		}
 		else {

@@ -17,7 +17,7 @@ abstract class CompiledSelectSources<T extends CompiledSelectSource>
 
 	private final List<T> sources;
 
-	abstract TypeMapSource getClassesSource(Class<?> type);
+	abstract TypeMapSource getNamedSource(Class<?> type);
 	abstract TypeMapSource getAliasesSource(IAlias alias);
 	
 	abstract int getSourceIdx(SelectSource source);

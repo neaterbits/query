@@ -222,11 +222,11 @@ final class CompiledQuery {
 		final CompiledSelectSources<?> compiled;
 
 		// Figure out the type of select source
-		if (sources instanceof SelectSourceClassesImpl) {
-			final List<CompiledSelectSourceClass> compiledList = new ArrayList<>();
+		if (sources instanceof SelectSourceNamedImpl) {
+			final List<CompiledSelectSourceNamed> compiledList = new ArrayList<>();
 			
 			// table names
-			final SelectSourceClassesImpl selectSourceClasses = (SelectSourceClassesImpl)sources;
+			final SelectSourceNamedImpl selectSourceClasses = (SelectSourceNamedImpl)sources;
 
 			int classNo = 0;
 			
@@ -237,14 +237,14 @@ final class CompiledQuery {
 					throw new IllegalStateException("Two entity classes with same lowercase name \"" + name + "\"");
 				}
 
-				final CompiledSelectSourceClass c = new CompiledSelectSourceClass(selectSourceClasses, cl, name, classNo);
+				final CompiledSelectSourceNamed c = new CompiledSelectSourceNamed(selectSourceClasses, cl, name, classNo);
 
 				compiledList.add(c);
 
 				++ classNo;
 			}
 
-			compiled = new CompiledSelectSourcesClass(sources, compiledList);
+			compiled = new CompiledSelectSourcesNamed(sources, compiledList);
 		}
 		else if (sources instanceof SelectSourceAliasesImpl) {
 			final List<CompiledSelectSourceAlias> compiledList = new ArrayList<>();
@@ -285,10 +285,10 @@ final class CompiledQuery {
 			TypeMapSource leftSource = null;
 			TypeMapSource rightSource = null;
 
-			if (join instanceof CollectedJoinClasses) {
+			if (join instanceof CollectedJoinNamed) {
 				if (join.getLeftType() != null && join.getRightType() != null) {
-					leftSource  = sources.getClassesSource(join.getLeftType());
-					rightSource = sources.getClassesSource(join.getRightType());
+					leftSource  = sources.getNamedSource(join.getLeftType());
+					rightSource = sources.getNamedSource(join.getRightType());
 				}
 				
 				isClass = true;
@@ -308,13 +308,13 @@ final class CompiledQuery {
 				
 				final boolean thisOneIsClass;
 
-				if (joinCondition instanceof CollectedJoinConditionComparisonClasses) {
+				if (joinCondition instanceof CollectedJoinConditionComparisonNamed) {
 					thisOneIsClass = true;
 				}
 				else if (joinCondition instanceof CollectedJoinConditionComparisonAliases) {
 					thisOneIsClass = false;
 				}
-				else if (joinCondition instanceof CollectedJoinConditionOneToManyClass) {
+				else if (joinCondition instanceof CollectedJoinConditionOneToManyNamed) {
 					thisOneIsClass = true;
 				}
 				else if (joinCondition instanceof CollectedJoinConditionOneToManyAlias) {
@@ -385,7 +385,7 @@ final class CompiledQuery {
 		}
 
 		final CompiledJoins ret = isClass
-				? new CompiledJoinsClasses(compiledJoins)
+				? new CompiledJoinsNamed(compiledJoins)
 				: new CompiledJoinsAliases(compiledJoins);
 
 		return ret;

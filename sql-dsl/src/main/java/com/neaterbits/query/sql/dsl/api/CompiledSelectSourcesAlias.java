@@ -22,7 +22,7 @@ final class CompiledSelectSourcesAlias extends CompiledSelectSources<CompiledSel
 
 
 	@Override
-	TypeMapSource getClassesSource(Class<?> type) {
+	TypeMapSource getNamedSource(Class<?> type) {
 		throw new IllegalStateException("Expected aliases: " + type);
 	}
 

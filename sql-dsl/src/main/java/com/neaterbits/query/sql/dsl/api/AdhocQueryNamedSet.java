@@ -6,13 +6,13 @@ import java.util.Set;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
-final class AdhocQueryClassSet<MODEL>
-		extends AdhocQueryClassCollection<MODEL, Set<Object>>
+final class AdhocQueryNamedSet<MODEL>
+		extends AdhocQueryNamedCollection<MODEL, Set<Object>>
 
 		implements IAdhocWhereOrJoinSet<MODEL, Object, Set<Object>>,
 				   IAdhocEndClauseSet<MODEL, Object, Set<Object>> {
 
-	AdhocQueryClassSet(Collection<?> coll) {
+	AdhocQueryNamedSet(Collection<?> coll) {
 		super(ECollectionType.SET, coll);
 	}
 

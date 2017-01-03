@@ -44,7 +44,7 @@ final class WhereOrJoinClauseBuilderImpl<MODEL, RESULT>
 	@Override
 	public <LEFT, RIGHT> IClassicJoinConditionNamed<MODEL, RESULT, LEFT, RIGHT> innerJoin(Class<LEFT> leftType, Class<RIGHT> rightType) {
 
-		final CollectedJoinClasses collectedJoin = new CollectedJoinClasses(EJoinType.INNER, leftType, rightType);
+		final CollectedJoinNamed collectedJoin = new CollectedJoinNamed(EJoinType.INNER, leftType, rightType);
 		
 		addJoin(collectedJoin);
 		
@@ -54,7 +54,7 @@ final class WhereOrJoinClauseBuilderImpl<MODEL, RESULT>
 	@Override
 	public <LEFT, RIGHT> IClassicJoinConditionNamed<MODEL, RESULT, LEFT, RIGHT> leftJoin(Class<LEFT> leftType, Class<RIGHT> rightType) {
 
-		final CollectedJoinClasses collectedJoin = new CollectedJoinClasses(EJoinType.LEFT, leftType, rightType);
+		final CollectedJoinNamed collectedJoin = new CollectedJoinNamed(EJoinType.LEFT, leftType, rightType);
 		
 		addJoin(collectedJoin);
 		
@@ -68,7 +68,7 @@ final class WhereOrJoinClauseBuilderImpl<MODEL, RESULT>
 
 		final CollectedJoin curJoin = getQueryCollector().getJoins().getLast();
 
-		final CollectedJoinCondition joinCondition = new CollectedJoinConditionOneToManyClass(collectionGetter);
+		final CollectedJoinCondition joinCondition = new CollectedJoinConditionOneToManyNamed(collectionGetter);
 		
 		curJoin.addJoinCondition(joinCondition);
 		
@@ -83,7 +83,7 @@ final class WhereOrJoinClauseBuilderImpl<MODEL, RESULT>
 		
 		final CollectedJoin curJoin = getQueryCollector().getJoins().getLast();
 		
-		final CollectedJoinCondition joinCondition = new CollectedJoinConditionComparisonClasses(leftGetter, rightGetter);
+		final CollectedJoinCondition joinCondition = new CollectedJoinConditionComparisonNamed(leftGetter, rightGetter);
 		
 		curJoin.addJoinCondition(joinCondition);
 		

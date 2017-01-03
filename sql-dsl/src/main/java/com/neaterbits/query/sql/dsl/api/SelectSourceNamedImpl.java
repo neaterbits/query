@@ -1,10 +1,10 @@
 package com.neaterbits.query.sql.dsl.api;
 
-final class SelectSourceClassesImpl extends SelectSourceImpl {
+final class SelectSourceNamedImpl extends SelectSourceImpl {
 
 	private final Class<?> [] classes;
 
-	SelectSourceClassesImpl(Class<?>[] classes) {
+	SelectSourceNamedImpl(Class<?>[] classes) {
 		super(classes);
 
 		if (classes == null) {

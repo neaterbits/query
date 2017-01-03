@@ -6,7 +6,7 @@ import java.util.function.Function;
 
 import com.neaterbits.query.util.java8.MethodFinder;
 
-abstract class AdhocConditions<MODEL, RESULT, QUERY extends AdhocQueryClass<MODEL, RESULT>>
+abstract class AdhocConditions<MODEL, RESULT, QUERY extends AdhocQueryNamed<MODEL, RESULT>>
 
 	extends AdhocConditionsStateMachine<MODEL, RESULT, AdhocConditions<MODEL, RESULT, QUERY>>
 	implements
