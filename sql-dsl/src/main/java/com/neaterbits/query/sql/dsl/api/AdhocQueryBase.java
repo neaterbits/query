@@ -10,7 +10,7 @@ package com.neaterbits.query.sql.dsl.api;
 abstract class AdhocQueryBase<MODEL, QUERY extends AdhocQueryBase<MODEL, QUERY>>
 			extends ExecuteQueryScratch
 			implements 
-				IAdhocNumericTableResult<MODEL, Object, Object>,
+				IAdhocNumericNamedResult<MODEL, Object, Object>,
 
 				ExecutableQuery<QUERY> {
 

@@ -3,7 +3,7 @@ package com.neaterbits.query.sql.dsl.api;
 
 abstract class SelectSourceBuilderImpl<MODEL, RESULT> extends BaseQueryEntity<MODEL>
 		implements 
-				IClassicSelectSourceBuilderTable<MODEL, RESULT>,
+				IClassicSelectSourceBuilderNamed<MODEL, RESULT>,
 				IClassicSelectSourceBuilderAlias<MODEL, RESULT>,
 				SelectSourceBuilderAliasAlias<MODEL, RESULT> {
 
@@ -15,7 +15,7 @@ abstract class SelectSourceBuilderImpl<MODEL, RESULT> extends BaseQueryEntity<MO
 	}
 	
 	@Override
-	public final IClassicWhereOrJoinBuilderTable<MODEL, RESULT> from(Class<?> ... classes) {
+	public final IClassicWhereOrJoinBuilderNamed<MODEL, RESULT> from(Class<?> ... classes) {
 		
 		if (classes.length == 0) {
 			throw new IllegalArgumentException("no classes");

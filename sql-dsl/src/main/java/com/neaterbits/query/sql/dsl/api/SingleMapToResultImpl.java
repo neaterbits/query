@@ -6,7 +6,7 @@ import java.util.function.Supplier;
 public class SingleMapToResultImpl<MODEL, RESULT>
 	extends BaseMapToResultImpl<MODEL, RESULT>
 	implements IClassicSingleMapToResult<MODEL, RESULT>,
-			   IClassicSingleMapToResultTable<MODEL, RESULT>,
+			   IClassicSingleMapToResultNamed<MODEL, RESULT>,
 			   IClassicSingleMapToResultAlias<MODEL, RESULT> {
 
 	SingleMapToResultImpl(Class<?> resultType, ModelCompiler<MODEL> modelCompiler) {
@@ -14,10 +14,10 @@ public class SingleMapToResultImpl<MODEL, RESULT>
 	}
 
 	@Override
-	public <T, R> ISharedResultMapperTo<MODEL, RESULT, R, IClassicSingleMapToResultTable<MODEL, RESULT>>
+	public <T, R> ISharedResultMapperTo<MODEL, RESULT, R, IClassicSingleMapToResultNamed<MODEL, RESULT>>
 				map(Function<T, R> getter) {
 
-		return new ResultMapperToImpl<MODEL, RESULT, R, IClassicSingleMapToResultTable<MODEL, RESULT>>(getter, this);
+		return new ResultMapperToImpl<MODEL, RESULT, R, IClassicSingleMapToResultNamed<MODEL, RESULT>>(getter, this);
 	}
 
 	@Override

@@ -25,7 +25,7 @@ final class SelectSourceClassesImpl extends SelectSourceImpl {
 	@Override
 	final CompiledGetter compileGetter(CollectedMapping mapping, CompiledGetterSetterCache cache) throws CompileException {
 
-		final CollectedMappingTable tableMapping = (CollectedMappingTable)mapping;
+		final CollectedMappingNamed tableMapping = (CollectedMappingNamed)mapping;
 		
 		final CompiledGetter ret = cache.findGetterFromTypesArray(getTypes(), tableMapping.getFunctionGetter());
 		

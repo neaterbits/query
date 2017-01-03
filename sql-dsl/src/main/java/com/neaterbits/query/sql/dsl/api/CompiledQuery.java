@@ -432,10 +432,10 @@ final class CompiledQuery {
 				conditions.add(compileCondition(clause.getCondition(), sources, cache));
 			}
 			
-			if (clauseClass.equals(AndClausesImpl.class) || clauseClass.equals(AndClausesImplTableSingle.class)) {
+			if (clauseClass.equals(AndClausesImpl.class) || clauseClass.equals(AndClausesImplNamedSingle.class)) {
 				ret = new CompiledConditionsAnd(conditions);
 			}
-			else if (clauseClass.equals(OrClausesImpl.class) || clauseClass.equals(OrClausesImplTableSingle.class)) {
+			else if (clauseClass.equals(OrClausesImpl.class) || clauseClass.equals(OrClausesImplNamedSingle.class)) {
 				ret = new CompiledConditionsOr(conditions);
 			}
 			else {

@@ -16,7 +16,7 @@ final class MappingCollector {
 
 	void add(QueryBuilderItem builderItem, Function<?, ?> getter, BiConsumer<?, ?> setter) {
 
-		final CollectedMapping mapping = new CollectedMappingTable(builderItem, getter, setter);
+		final CollectedMapping mapping = new CollectedMappingNamed(builderItem, getter, setter);
 
 		checkSameType(mapping);
 

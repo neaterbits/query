@@ -12,14 +12,14 @@ final class AdhocImpl<MODEL> implements IAdhoc<MODEL> {
 
 	@SuppressWarnings({"unchecked", "rawtypes"})
 	private <T, INPUT_TYPE, OUTPUT_TYPE>
-				IAdhocNumericTableResult<MODEL, OUTPUT_TYPE, T> createNumeric(
+				IAdhocNumericNamedResult<MODEL, OUTPUT_TYPE, T> createNumeric(
 
 						Function<T, INPUT_TYPE> field,
 						EAggregateFunction aggregateFunction,
 						ENumericType hinputNnumericType,
 						ENumericType outputNnumericType) {
 
-		return (IAdhocNumericTableResult)new AdhocQueryClassAggregate(field, aggregateFunction, hinputNnumericType, outputNnumericType);
+		return (IAdhocNumericNamedResult)new AdhocQueryClassAggregate(field, aggregateFunction, hinputNnumericType, outputNnumericType);
 	}
 
 	@SuppressWarnings({"unchecked", "rawtypes"})
@@ -49,43 +49,43 @@ final class AdhocImpl<MODEL> implements IAdhoc<MODEL> {
 	}
 				
 	@Override
-	public <T> IAdhocNumericTableResult<MODEL, Integer, T> sum(IFunctionShort<T> field) {
+	public <T> IAdhocNumericNamedResult<MODEL, Integer, T> sum(IFunctionShort<T> field) {
 		return createNumeric(field, EAggregateFunction.SUM, ENumericType.SHORT, ENumericType.INTEGER);
 	}
 
 	@Override
-	public <T> IAdhocNumericTableResult<MODEL, Integer, T> sum(IFunctionInteger<T> field) {
+	public <T> IAdhocNumericNamedResult<MODEL, Integer, T> sum(IFunctionInteger<T> field) {
 		return createNumeric(field, EAggregateFunction.SUM, ENumericType.INTEGER, ENumericType.INTEGER);
 	}
 
 	@Override
-	public <T> IAdhocNumericTableResult<MODEL, Long, T> sum(IFunctionLong<T> field) {
+	public <T> IAdhocNumericNamedResult<MODEL, Long, T> sum(IFunctionLong<T> field) {
 		return createNumeric(field, EAggregateFunction.SUM, ENumericType.LONG, ENumericType.LONG);
 	}
 
 	@Override
-	public <T> IAdhocNumericTableResult<MODEL, BigDecimal, T> sum(IFunctionBigDecimal<T> field) {
+	public <T> IAdhocNumericNamedResult<MODEL, BigDecimal, T> sum(IFunctionBigDecimal<T> field) {
 		return createNumeric(field, EAggregateFunction.SUM, ENumericType.DECIMAL, ENumericType.DECIMAL);
 	}
 
 	/* Max */
 	@Override
-	public <T> IAdhocNumericTableResult<MODEL, Short, T> max(IFunctionShort<T> field) {
+	public <T> IAdhocNumericNamedResult<MODEL, Short, T> max(IFunctionShort<T> field) {
 		return createNumeric(field, EAggregateFunction.MAX, ENumericType.SHORT, ENumericType.SHORT);
 	}
 
 	@Override
-	public <T> IAdhocNumericTableResult<MODEL, Integer, T> max(IFunctionInteger<T> field) {
+	public <T> IAdhocNumericNamedResult<MODEL, Integer, T> max(IFunctionInteger<T> field) {
 		return createNumeric(field, EAggregateFunction.MAX, ENumericType.INTEGER, ENumericType.INTEGER);
 	}
 
 	@Override
-	public <T> IAdhocNumericTableResult<MODEL, Long, T> max(IFunctionLong<T> field) {
+	public <T> IAdhocNumericNamedResult<MODEL, Long, T> max(IFunctionLong<T> field) {
 		return createNumeric(field, EAggregateFunction.MAX, ENumericType.LONG, ENumericType.LONG);
 	}
 
 	@Override
-	public <T> IAdhocNumericTableResult<MODEL, BigDecimal, T> max(IFunctionBigDecimal<T> field) {
+	public <T> IAdhocNumericNamedResult<MODEL, BigDecimal, T> max(IFunctionBigDecimal<T> field) {
 		return createNumeric(field, EAggregateFunction.MAX, ENumericType.DECIMAL, ENumericType.DECIMAL);
 	}
 

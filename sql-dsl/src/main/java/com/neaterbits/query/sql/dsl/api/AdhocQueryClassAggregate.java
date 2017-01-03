@@ -3,7 +3,7 @@ package com.neaterbits.query.sql.dsl.api;
 import java.util.function.Function;
 
 final class AdhocQueryClassAggregate<MODEL> extends AdhocQueryClassSingular<MODEL>
-	implements 	IAdhocNumericTableResult<MODEL, Object, Object>,
+	implements 	IAdhocNumericNamedResult<MODEL, Object, Object>,
 				IAdhocNumericInstanceResult<MODEL, Object>{
 
 	AdhocQueryClassAggregate(Function<?, ?> aggregateGetter, EAggregateFunction aggregateFunction,

@@ -20,11 +20,11 @@ public interface Select {
 		return SelectImpl.selectImpl.selectListFrom(cl);
 	}
 
-	public static <TYPE_RESULT> IClassicSingleWhereClauseBuilderTable<SingleQuery<TYPE_RESULT>, TYPE_RESULT> oneFrom(Class<TYPE_RESULT> cl) {
+	public static <TYPE_RESULT> IClassicSingleWhereClauseBuilderNamed<SingleQuery<TYPE_RESULT>, TYPE_RESULT> oneFrom(Class<TYPE_RESULT> cl) {
 		return SelectImpl.selectImpl.oneFrom(cl);
 	}
 
-	public static <TYPE_RESULT> IClassicSingleWhereClauseBuilderTable<MultiQuery<TYPE_RESULT>, TYPE_RESULT> listFrom(Class<TYPE_RESULT> cl) {
+	public static <TYPE_RESULT> IClassicSingleWhereClauseBuilderNamed<MultiQuery<TYPE_RESULT>, TYPE_RESULT> listFrom(Class<TYPE_RESULT> cl) {
 		return SelectImpl.selectImpl.listFrom(cl);
 	}
 	
@@ -36,19 +36,19 @@ public interface Select {
 		return SelectImpl.selectImpl.aliasAlias(aliasType);
     }
 
-    public static <T> IClassicNumericTableResult<Short> sum(IFunctionShort<T> field) {
+    public static <T> IClassicNumericNamedResult<Short> sum(IFunctionShort<T> field) {
     	return SelectImpl.selectImpl.sum(field);
     }
 	
-    public static <T> IClassicNumericTableResult<Integer> sum(IFunctionInteger<T> field) {
+    public static <T> IClassicNumericNamedResult<Integer> sum(IFunctionInteger<T> field) {
     	return SelectImpl.selectImpl.sum(field);
     }
 
-    public static <T> IClassicNumericTableResult<Long> sum(IFunctionLong<T> field) {
+    public static <T> IClassicNumericNamedResult<Long> sum(IFunctionLong<T> field) {
     	return SelectImpl.selectImpl.sum(field);
     }
 
-    public static <T> IClassicNumericTableResult<BigDecimal> sum(IFunctionBigDecimal<T> field) {
+    public static <T> IClassicNumericNamedResult<BigDecimal> sum(IFunctionBigDecimal<T> field) {
     	return SelectImpl.selectImpl.sum(field);
     }
     

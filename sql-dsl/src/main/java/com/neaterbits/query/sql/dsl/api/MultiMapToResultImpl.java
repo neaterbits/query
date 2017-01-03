@@ -13,10 +13,10 @@ final class MultiMapToResultImpl<MODEL, RESULT>
 	}
 
 	@Override
-	public <T, R> ISharedResultMapperTo<MODEL, RESULT, R, IClassicMultiMapToResultTable<MODEL, RESULT>>
+	public <T, R> ISharedResultMapperTo<MODEL, RESULT, R, IClassicMultiMapToResultNamed<MODEL, RESULT>>
 				map(Function<T, R> getter) {
 
-		return new ResultMapperToImpl<MODEL, RESULT, R, IClassicMultiMapToResultTable<MODEL, RESULT>>(getter, this);
+		return new ResultMapperToImpl<MODEL, RESULT, R, IClassicMultiMapToResultNamed<MODEL, RESULT>>(getter, this);
 	}
 
 	@Override

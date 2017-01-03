@@ -4,10 +4,10 @@ import java.math.BigDecimal;
 
 public interface IClassic 
 	extends SumFunction<
-				IClassicNumericTableResult<Short>,
-				IClassicNumericTableResult<Integer>,
-				IClassicNumericTableResult<Long>,
-				IClassicNumericTableResult<BigDecimal>>
+				IClassicNumericNamedResult<Short>,
+				IClassicNumericNamedResult<Integer>,
+				IClassicNumericNamedResult<Long>,
+				IClassicNumericNamedResult<BigDecimal>>
 
 {
 	<MAPPED_RESULT> IClassicSingleMapToResult<SingleQuery<MAPPED_RESULT>, MAPPED_RESULT> selectOneOrNull(Class<MAPPED_RESULT> cl);
@@ -18,9 +18,9 @@ public interface IClassic
 
 	<TYPE_RESULT> IClassicMultiTypeResult<MultiQuery<TYPE_RESULT>, TYPE_RESULT> selectListFrom(Class<TYPE_RESULT> cl);
 
-	<TYPE_RESULT> IClassicSingleWhereClauseBuilderTable<SingleQuery<TYPE_RESULT>, TYPE_RESULT> oneFrom(Class<TYPE_RESULT> cl);
+	<TYPE_RESULT> IClassicSingleWhereClauseBuilderNamed<SingleQuery<TYPE_RESULT>, TYPE_RESULT> oneFrom(Class<TYPE_RESULT> cl);
 
-	<TYPE_RESULT> IClassicSingleWhereClauseBuilderTable<MultiQuery<TYPE_RESULT>, TYPE_RESULT> listFrom(Class<TYPE_RESULT> cl);
+	<TYPE_RESULT> IClassicSingleWhereClauseBuilderNamed<MultiQuery<TYPE_RESULT>, TYPE_RESULT> listFrom(Class<TYPE_RESULT> cl);
     
 	<T> T alias(Class<T> aliasType);
 	

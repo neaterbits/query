@@ -4,14 +4,14 @@ import java.util.function.Function;
 import java.util.function.Supplier;
 
 final class OrClausesImpl<MODEL, RESULT> extends ClausesImpl<MODEL, RESULT>
-			implements IClassicOrClausesTable<MODEL, RESULT>, IClassicOrClausesAlias<MODEL, RESULT> {
+			implements IClassicOrClausesNamed<MODEL, RESULT>, IClassicOrClausesAlias<MODEL, RESULT> {
 
 	OrClausesImpl(ClausesImplInitial<MODEL, RESULT> last) {
 		super(last);
 	}
 
-	private <T, RR extends Comparable<RR>> ISharedClauseComparableCommonAll<MODEL, RESULT, RR, IClassicOrClausesTable<MODEL, RESULT>> orClassImpl(Function<T, RR> getter) {
-		return new ComparativeClauseImpl<MODEL, RESULT, RR, IClassicOrClausesTable<MODEL,RESULT>>(this, makeGetter(getter));
+	private <T, RR extends Comparable<RR>> ISharedClauseComparableCommonAll<MODEL, RESULT, RR, IClassicOrClausesNamed<MODEL, RESULT>> orClassImpl(Function<T, RR> getter) {
+		return new ComparativeClauseImpl<MODEL, RESULT, RR, IClassicOrClausesNamed<MODEL,RESULT>>(this, makeGetter(getter));
 	}
 	
 	private <RR extends Comparable<RR>> ISharedClauseConditionAll<MODEL, RESULT, RR, IClassicOrClausesAlias<MODEL, RESULT>> orAliasImpl(Supplier<RR> getter) {
@@ -19,18 +19,18 @@ final class OrClausesImpl<MODEL, RESULT> extends ClausesImpl<MODEL, RESULT>
 	}
 
 	@Override
-	public <T> ISharedClauseComparableCommonAll<MODEL, RESULT, Integer, IClassicOrClausesTable<MODEL, RESULT>> or(IFunctionInteger<T> getter) {
+	public <T> ISharedClauseComparableCommonAll<MODEL, RESULT, Integer, IClassicOrClausesNamed<MODEL, RESULT>> or(IFunctionInteger<T> getter) {
 		return orClassImpl(getter);
 	}
 
 	@Override
-	public <T> ISharedClauseComparableCommonAll<MODEL, RESULT, Long, IClassicOrClausesTable<MODEL, RESULT>> or(IFunctionLong<T> getter) {
+	public <T> ISharedClauseComparableCommonAll<MODEL, RESULT, Long, IClassicOrClausesNamed<MODEL, RESULT>> or(IFunctionLong<T> getter) {
 		return orClassImpl(getter);
 	}
 
 	@Override
-	public <T> ISharedClauseComparableStringAll<MODEL, RESULT, IClassicOrClausesTable<MODEL, RESULT>> or(StringFunction<T> getter) {
-		return new StringClauseImpl<MODEL, RESULT, IClassicOrClausesTable<MODEL,RESULT>>(this, makeGetter(getter));
+	public <T> ISharedClauseComparableStringAll<MODEL, RESULT, IClassicOrClausesNamed<MODEL, RESULT>> or(StringFunction<T> getter) {
+		return new StringClauseImpl<MODEL, RESULT, IClassicOrClausesNamed<MODEL,RESULT>>(this, makeGetter(getter));
 	}
 
 	@Override

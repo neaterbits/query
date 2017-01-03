@@ -4,14 +4,14 @@ import java.util.function.Function;
 import java.util.function.Supplier;
 
 final class AndClausesImpl<MODEL, RESULT> extends ClausesImpl<MODEL, RESULT>
-			implements IClassicAndClausesTable<MODEL, RESULT>,
+			implements IClassicAndClausesNamed<MODEL, RESULT>,
 					   IClassicAndClausesAlias<MODEL, RESULT> {
 
 	AndClausesImpl(ClausesImplInitial<MODEL, RESULT> last) {
 		super(last);
 	}
 	
-	private <T, RR extends Comparable<RR>, AND_CLAUSES extends ISharedAndClausesTableAll<MODEL, RESULT, AND_CLAUSES>>
+	private <T, RR extends Comparable<RR>, AND_CLAUSES extends ISharedAndClausesNamedAll<MODEL, RESULT, AND_CLAUSES>>
 		ISharedClauseComparableCommonAll<MODEL, RESULT, RR, AND_CLAUSES> andClassImpl(Function<T, RR> getter) {
 		
 		return new ComparativeClauseImpl<MODEL, RESULT, RR, AND_CLAUSES>(this, makeGetter(getter));
@@ -24,18 +24,18 @@ final class AndClausesImpl<MODEL, RESULT> extends ClausesImpl<MODEL, RESULT>
 	}
 	
 	@Override
-	public <T> ISharedClauseComparableCommonAll<MODEL, RESULT, Integer, IClassicAndClausesTable<MODEL, RESULT>> and(IFunctionInteger<T> getter) {
+	public <T> ISharedClauseComparableCommonAll<MODEL, RESULT, Integer, IClassicAndClausesNamed<MODEL, RESULT>> and(IFunctionInteger<T> getter) {
 		return andClassImpl(getter);
 	}
 
 	@Override
-	public <T> ISharedClauseComparableCommonAll<MODEL, RESULT, Long, IClassicAndClausesTable<MODEL, RESULT>> and(IFunctionLong<T> getter) {
+	public <T> ISharedClauseComparableCommonAll<MODEL, RESULT, Long, IClassicAndClausesNamed<MODEL, RESULT>> and(IFunctionLong<T> getter) {
 		return andClassImpl(getter);
 	}
 
 	@Override
-	public <T> ISharedClauseComparableStringAll<MODEL, RESULT, IClassicAndClausesTable<MODEL, RESULT>> and(StringFunction<T> getter) {
-		return new StringClauseImpl<MODEL, RESULT, IClassicAndClausesTable<MODEL,RESULT>>(this, makeGetter(getter));
+	public <T> ISharedClauseComparableStringAll<MODEL, RESULT, IClassicAndClausesNamed<MODEL, RESULT>> and(StringFunction<T> getter) {
+		return new StringClauseImpl<MODEL, RESULT, IClassicAndClausesNamed<MODEL,RESULT>>(this, makeGetter(getter));
 	}
 
 	@Override

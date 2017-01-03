@@ -63,18 +63,18 @@ final class SelectImpl implements IClassic {
 	}
 
 	@Override
-	public <TYPE_RESULT> IClassicSingleWhereClauseBuilderTable<SingleQuery<TYPE_RESULT>, TYPE_RESULT> oneFrom(Class<TYPE_RESULT> cl) {
+	public <TYPE_RESULT> IClassicSingleWhereClauseBuilderNamed<SingleQuery<TYPE_RESULT>, TYPE_RESULT> oneFrom(Class<TYPE_RESULT> cl) {
 		if (cl == null) {
 			throw new IllegalArgumentException("cl == null");
 		}
 
 		final SelectSource selectSource = new SelectSourceClass(cl);
 		
-		return new SingleTableResultImpl<SingleQuery<TYPE_RESULT>, TYPE_RESULT>(new QueryResultEntitySingle(selectSource), singleQueryCompiler());
+		return new SingleNamedResultImpl<SingleQuery<TYPE_RESULT>, TYPE_RESULT>(new QueryResultEntitySingle(selectSource), singleQueryCompiler());
 	}
 
 	@Override
-	public <TYPE_RESULT> IClassicSingleWhereClauseBuilderTable<MultiQuery<TYPE_RESULT>, TYPE_RESULT> listFrom(Class<TYPE_RESULT> cl) {
+	public <TYPE_RESULT> IClassicSingleWhereClauseBuilderNamed<MultiQuery<TYPE_RESULT>, TYPE_RESULT> listFrom(Class<TYPE_RESULT> cl) {
 		if (cl == null) {
 			throw new IllegalArgumentException("cl == null");
 		}
@@ -83,7 +83,7 @@ final class SelectImpl implements IClassic {
 
 		final QueryResultEntityMulti result = new QueryResultEntityMulti(selectSource, ECollectionType.LIST);
 		
-		return new SingleTableResultImpl<MultiQuery<TYPE_RESULT>, TYPE_RESULT>(result, multiQueryCompiler());
+		return new SingleNamedResultImpl<MultiQuery<TYPE_RESULT>, TYPE_RESULT>(result, multiQueryCompiler());
 	}
 	
 	static {
@@ -190,27 +190,27 @@ final class SelectImpl implements IClassic {
 	// ------------------------ Sum ------------------------
 	
 
-	private <T, NUM> IClassicNumericTableResult<NUM> sum(Function<T, NUM> field, Class<NUM> cl) {
-		return new AggregateTableResultImpl<>(new QueryResultSum(cl, new FunctionGetter(field)), singleQueryCompiler());
+	private <T, NUM> IClassicNumericNamedResult<NUM> sum(Function<T, NUM> field, Class<NUM> cl) {
+		return new AggregateNamedResultImpl<>(new QueryResultSum(cl, new FunctionGetter(field)), singleQueryCompiler());
 	}
 	
 	@Override
-	public <T> IClassicNumericTableResult<Short> sum(IFunctionShort<T> field) {
+	public <T> IClassicNumericNamedResult<Short> sum(IFunctionShort<T> field) {
 		return sum(field, Short.class);
 	}
 
 	@Override
-	public <T> IClassicNumericTableResult<Integer> sum(IFunctionInteger<T> field) {
+	public <T> IClassicNumericNamedResult<Integer> sum(IFunctionInteger<T> field) {
 		return sum(field, Integer.class);
 	}
 
 	@Override
-	public <T> IClassicNumericTableResult<Long> sum(IFunctionLong<T> field) {
+	public <T> IClassicNumericNamedResult<Long> sum(IFunctionLong<T> field) {
 		return sum(field, Long.class);
 	}
 
 	@Override
-	public <T> IClassicNumericTableResult<BigDecimal> sum(IFunctionBigDecimal<T> field) {
+	public <T> IClassicNumericNamedResult<BigDecimal> sum(IFunctionBigDecimal<T> field) {
 		return sum(field, BigDecimal.class);
 	}
 }

@@ -12,22 +12,22 @@ interface IAdhoc<MODEL>
 	IAdhocNumericTableResult<MODEL, Long>,
 	IAdhocNumericTableResult<MODEL, BigDecimal>> */ {
 	
-    <T> IAdhocNumericTableResult<MODEL, Integer, T> 	sum(IFunctionShort<T> field);    // Sum short to integer    (TODO: throw exception on overflow)
+    <T> IAdhocNumericNamedResult<MODEL, Integer, T> 	sum(IFunctionShort<T> field);    // Sum short to integer    (TODO: throw exception on overflow)
 	
-    <T> IAdhocNumericTableResult<MODEL, Integer, T> 	sum(IFunctionInteger<T> field);  // Sum integers to integer (TODO: throw exception on overflow) 
+    <T> IAdhocNumericNamedResult<MODEL, Integer, T> 	sum(IFunctionInteger<T> field);  // Sum integers to integer (TODO: throw exception on overflow) 
     
-    <T> IAdhocNumericTableResult<MODEL, Long, T> 		sum(IFunctionLong<T> field);   	 // Sum integers to integer (TODO: throw exception on overflow)			
+    <T> IAdhocNumericNamedResult<MODEL, Long, T> 		sum(IFunctionLong<T> field);   	 // Sum integers to integer (TODO: throw exception on overflow)			
 
-    <T> IAdhocNumericTableResult<MODEL, BigDecimal, T> 	sum(IFunctionBigDecimal<T> field);
+    <T> IAdhocNumericNamedResult<MODEL, BigDecimal, T> 	sum(IFunctionBigDecimal<T> field);
 
     /* Max */
-    <T> IAdhocNumericTableResult<MODEL, Short, T> 		max(IFunctionShort<T> field);
+    <T> IAdhocNumericNamedResult<MODEL, Short, T> 		max(IFunctionShort<T> field);
 	
-    <T> IAdhocNumericTableResult<MODEL, Integer, T> 	max(IFunctionInteger<T> field); 
+    <T> IAdhocNumericNamedResult<MODEL, Integer, T> 	max(IFunctionInteger<T> field); 
     
-    <T> IAdhocNumericTableResult<MODEL, Long, T> 		max(IFunctionLong<T> field);			
+    <T> IAdhocNumericNamedResult<MODEL, Long, T> 		max(IFunctionLong<T> field);			
 
-    <T> IAdhocNumericTableResult<MODEL, BigDecimal, T> 	max(IFunctionBigDecimal<T> field);
+    <T> IAdhocNumericNamedResult<MODEL, BigDecimal, T> 	max(IFunctionBigDecimal<T> field);
 
     /* MaxInstance */
     <T> IAdhocNumericInstanceResult<MODEL, T> 	maxInstance(IFunctionShort<T> field);
