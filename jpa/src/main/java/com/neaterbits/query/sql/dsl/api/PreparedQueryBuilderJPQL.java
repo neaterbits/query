@@ -17,8 +17,10 @@ final class PreparedQueryBuilderJPQL extends PreparedQueryBuilderORM {
 
 		final Class<?> resultType = sourceReference.getJavaType();
 		final String resultVarName = sourceReference.getVarName();
+		
+		sb.append(resultVarName);
 
-		sb.append(resultType.getSimpleName()).append(" ").append(resultVarName);
+		//sb.append(resultType.getSimpleName()).append(" ").append(resultVarName);
 	}
 	
 	
