@@ -386,7 +386,7 @@ final class CompiledQuery {
 
 		final CompiledJoins ret = isClass
 				? new CompiledJoins_Named(compiledJoins)
-				: new CompiledJoinsAlias(compiledJoins);
+				: new CompiledJoins_Alias(compiledJoins);
 
 		return ret;
 	}

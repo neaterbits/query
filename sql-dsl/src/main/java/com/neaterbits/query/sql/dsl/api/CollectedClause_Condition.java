@@ -24,7 +24,7 @@ class CollectedClause_Condition<MODEL, RESULT, R, L extends ISharedLogicalClause
 		this.getter = getter;
 	}
 
-	final <V> BaseConditionValueLiteralImpl<V> makeLiteralValue(V value) {
+	final <V> ConditionValue_Literal_Base<V> makeLiteralValue(V value) {
 		return new ConditionValue_Literal_Any<>(value);
 	}
 

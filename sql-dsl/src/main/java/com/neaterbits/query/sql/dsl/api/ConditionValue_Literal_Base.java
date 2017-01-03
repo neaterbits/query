@@ -1,10 +1,10 @@
 package com.neaterbits.query.sql.dsl.api;
 
-abstract class BaseConditionValueLiteralImpl<T> extends ConditionValue {
+abstract class ConditionValue_Literal_Base<T> extends ConditionValue {
 
 	private final T literal;
 	
-	BaseConditionValueLiteralImpl(T literal) {
+	ConditionValue_Literal_Base(T literal) {
 
 		if (literal == null) {
 			throw new IllegalArgumentException("literal == null");

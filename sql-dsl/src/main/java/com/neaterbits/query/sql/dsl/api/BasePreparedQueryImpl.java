@@ -4,10 +4,10 @@ import java.util.function.Function;
 
 abstract class BasePreparedQueryImpl<RESULT_TYPE> implements ISharedPreparedQueryOps<RESULT_TYPE> {
 
-	private final QueryDataSource_Base dataSource;
-	private final DSPreparedQuery preparedQuery;
+	private final QueryDataSource_Base<?> dataSource;
+	private final DSPreparedQuery<?> preparedQuery;
 
-	BasePreparedQueryImpl(QueryDataSource_Base dataSource, DSPreparedQuery preparedQuery) {
+	BasePreparedQueryImpl(QueryDataSource_Base<?> dataSource, DSPreparedQuery<?> preparedQuery) {
 
 		if (dataSource == null) {
 			throw new IllegalArgumentException("dataSource == null");
@@ -36,7 +36,7 @@ abstract class BasePreparedQueryImpl<RESULT_TYPE> implements ISharedPreparedQuer
 
 				= new QueryResultGetterParamsBuilderImpl<>(
 						queryParamCollector,
-						(QueryDataSource_Base)dataSource,
+						(QueryDataSource_Base<?>)dataSource,
 						preparedQuery,
 						this); 
 
