@@ -104,11 +104,11 @@ final class PreparedQueryBuilderJPQL extends PreparedQueryBuilderORM {
 	}
 
 	@Override
-	public void appendEntityFieldReference(StringBuilder sb, FieldReferenceEntity r) {
-		throw new UnsupportedOperationException("TODO");
+	public void appendEntityFieldReference(StringBuilder sb, FieldReferenceEntity ref) {
+		appendFieldReferenceStatic(sb, ref);
 	}
 
-	static void appendFieldReferenceStatic(StringBuilder sb, FieldReferenceAlias ref) {
+	static void appendFieldReferenceStatic(StringBuilder sb, FieldReference ref) {
 		appendFieldReference(sb::append, ref);
 	}
 
@@ -123,7 +123,7 @@ final class PreparedQueryBuilderJPQL extends PreparedQueryBuilderORM {
 		return javaType.getSimpleName();
 	}
 
-	private static void appendFieldReference(Consumer<String> c, FieldReferenceAlias ref) {
+	private static void appendFieldReference(Consumer<String> c, FieldReference ref) {
 		c.accept(ref.getVarName());
 		c.accept(".");
 		c.accept(ref.getColumnName());

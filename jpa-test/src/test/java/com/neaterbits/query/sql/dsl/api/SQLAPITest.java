@@ -25,6 +25,7 @@ import com.neaterbits.query.jpatest.model.Person;
 import com.neaterbits.query.jpatest.model.Role;
 import com.neaterbits.query.sql.dsl.api.entity.QueryMetaModel;
 import com.neaterbits.query.sql.dsl.api.helper.jpa.QueryTestDSJPANative;
+import com.neaterbits.query.sql.dsl.api.helper.jpa.QueryTestDSJPQL;
 import com.neaterbits.query.sql.dsl.api.testhelper.BaseSQLAPITest;
 import com.neaterbits.query.sql.dsl.api.testhelper.QueryTestDSBuilder;
 import com.neaterbits.query.sql.dsl.api.testhelper.QueryTestDSCheck;
@@ -40,10 +41,9 @@ public class SQLAPITest extends BaseSQLAPITest {
 	private static QueryTestDSCheck store(Consumer<QueryTestDSBuilder> b) {
 		
 		return new QueryTestDSCombined(
-				// () -> new QueryTestDSJPQL("query-jpa-test"),
 				
-				() -> new QueryTestDSJPANative("query-jpa-test"),
-
+				//() -> new QueryTestDSJPANative("query-jpa-test"),
+				() -> new QueryTestDSJPQL("query-jpa-test"),
 				() -> new QueryTestDSInMemory(jpaQueryMetaModel)
 				)
 				

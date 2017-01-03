@@ -260,7 +260,7 @@ abstract class QueryDataSourceORM<ORM_QUERY, MANAGED, EMBEDDED, IDENTIFIABLE, AT
 			break;
 			
 		case ENTITY:
-			ret = new FieldReferenceEntity(source.getType(), columnName);
+			ret = new FieldReferenceEntity(source.getType(), source.getName(), columnName);
 			break;
 			
 		default:
