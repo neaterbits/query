@@ -512,6 +512,12 @@ Men gir dette egentlig mening? Er bare join tilbake på instansen. Så må finne
 Neste:
 
 % - adhoc queries med mininmalt overhead
+  ! IAdhocAndClauses er ikke typesafe, type parameteren må være typen vi opererer på akkurat nå. OBS! Dette bør kunne gjenbrukes
+    for vanlige queries også siden gir mere strukturert syntaks.
+
+  Hvordan skille disse? Er to forskjellige typer, Checked og Unchecked der adhoc er Checked.
+  
+ - rename av Class / Table => Entity (i motsetning til Alias) slik at blir konsistent.
  - nøsta and/or
  - in
 # - bedre debugging av in-memory query eksekvering
@@ -699,5 +705,100 @@ Omtrent som SelectSource.
 Så bare en liste over kjente sources som vi søker i? med remove() osv.
 
 
+
+----
+
+
+Nøsta and/ors.
+
+
+and(o -> o.where(Foo::getBar).			)
+
+
+ - ser for mye ut som subselect
+ + nøsta
+
+
+and(o -> o.or(Foo::getBar).or()			)
+
+ - or først ser rart ut
+
+andAny(Foo::getBar).or(Bar::getBaz)
+.and(Foo::) // and avslutter konteksten
+
+ - avhengig av indenterug for lesbarhet, vanskelig å skille dobbel nøsting
+ + kan vøre mere lesbart
+
+
+
+.and(o -> o.any(Foo::getBar).or (Bar::getBaz) )
+
+. or(a -> a.all(Foo::getBar).and(Bar::getBaz) )
+
+ - fortsatt ikke kjempe lesbart
+ + nøsta så parantesene sier hva som er logikken
+
+---
+
+Bør rydde i table/entity/class
+
+
+table:
+ - database spesifikt, passer ikke med Pojo
+ + ??
+
+entity:
+ - vagt
+ + generisk
+ + gjenbrukt i JPA
+
+
+class:
+
+ - pojo spesifikt
+ + kjent
+
+
+
+Kontra er alias
+
+Det motsatte av alias er concrete kanskje, men tror satser på Entity
+
+
+---
+
+
+
+
+ 
+
+
+@FunctionalInterface
+public interface ISharedSubOr<MODEL, RESULT, OR_CLAUSES extends ISharedOrClauses<MODEL, RESULT>> extends Consumer<OR_CLAUSES> {
+
+}
+
+
+
+
+
+
+	modified:   sql-dsl/src/main/java/com/neaterbits/query/sql/dsl/api/ISharedAndClausesAlias.java
+
+no changes added to commit (use "git add" and/or "git commit -a")
+nhl@nhl-SATELLITE-P50-A-11J:~/projects/all-neon/query$ git diff sql-dsl/src/main/java/com/neaterbits/query/sql/dsl/api/ISharedAndClausesAlias.java
+diff --git a/sql-dsl/src/main/java/com/neaterbits/query/sql/dsl/api/ISharedAndClausesAlias.java b/sql-dsl/src/main/java/com/neaterbits/query/sql/dsl/api/ISharedAndClausesAlias.java
+index 6114dd8..6bc7bf6 100644
+--- a/sql-dsl/src/main/java/com/neaterbits/query/sql/dsl/api/ISharedAndClausesAlias.java
++++ b/sql-dsl/src/main/java/com/neaterbits/query/sql/dsl/api/ISharedAndClausesAlias.java
+@@ -8,5 +8,8 @@ public interface ISharedAndClausesAlias<MODEL, RESULT, AND_CLAUSES extends IShar
+        ISharedConditionClauseAlias<MODEL, RESULT, Long, AND_CLAUSES> and(ISupplierLong getter);
+ 
+     ISharedClauseComparableStringAll<MODEL, RESULT, AND_CLAUSES> and(ISupplierString getter);
++    
++    <SUB_OR_CLAUSES extends ISharedOrClausesAlias<MODEL, RESULT, SUB_OR_CLAUSES>>
++               ISharedAndClausesAlias<MODEL, RESULT, AND_CLAUSES> and(ISharedSubOr<MODEL, RESULT, SUB_OR_CLAUSES> orBuilder);
+ 
+ }
 
 
