@@ -2,7 +2,7 @@ package com.neaterbits.query.sql.dsl.api;
 
 import java.math.BigDecimal;
 
-abstract class QueryResultAggregate extends QueryResult {
+abstract class QueryResultAggregate extends CollectedQueryResult {
 
 	private final Getter getter;
 	private final ENumericType inputNumericType;

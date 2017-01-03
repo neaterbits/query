@@ -253,7 +253,7 @@ abstract class AdhocConditions<MODEL, RESULT, QUERY extends AdhocQueryNamed<MODE
 		subConditions[numConditions ++] = (AdhocConditions)sub;
 	}
 
-	private static final ConditionEvaluatorComparableString conditionValueComparable = new ConditionEvaluatorComparableString();
+	private static final ConditionEvaluator_Comparable_String conditionValueComparable = new ConditionEvaluator_Comparable_String();
 
 	final boolean evaluate(Object instance, int conditionIdx, ConditionValuesScratch scratch) {
 

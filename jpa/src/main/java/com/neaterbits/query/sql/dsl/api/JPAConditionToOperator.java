@@ -2,7 +2,7 @@ package com.neaterbits.query.sql.dsl.api;
 
 final class JPAConditionToOperator {
 
-	<QUERY> PreparedQueryComparisonRHS convert(ExecutableQuery<QUERY> q, QUERY query, int conditionIdx, ConditionValueImpl value, StringBuilder sb) {
+	<QUERY> PreparedQueryComparisonRHS convert(ExecutableQuery<QUERY> q, QUERY query, int conditionIdx, ConditionValue value, StringBuilder sb) {
 		
 		final EClauseOperator operator = q.getRootConditionOperator(query, conditionIdx);
 		
@@ -69,13 +69,13 @@ final class JPAConditionToOperator {
 		return ret;
 	}
 
-	private static JPACondition appendLike(boolean wildcardBefore, boolean wildcardAfter, ConditionValueImpl value, StringBuilder param) {
+	private static JPACondition appendLike(boolean wildcardBefore, boolean wildcardAfter, ConditionValue value, StringBuilder param) {
 
 		final JPACondition ret;
 		
 		param.append("LIKE ");
 
-		if (value instanceof ConditionValueLiteralStringImpl) {
+		if (value instanceof ConditionValue_Literal_String) {
 
 			param.append("'");
 
@@ -83,7 +83,7 @@ final class JPAConditionToOperator {
 				param.append("%");
 			}
 
-			final String stringValue = ((ConditionValueLiteralStringImpl) value).getLiteral();
+			final String stringValue = ((ConditionValue_Literal_String) value).getLiteral();
 
 			if (stringValue == null) {
 				throw new IllegalArgumentException("stringValue == null");
@@ -99,9 +99,9 @@ final class JPAConditionToOperator {
 
 			ret = new JPAConditionResolved(param.toString());
 
-		} else if (value instanceof ConditionValueParamImpl) {
+		} else if (value instanceof ConditionValue_Param) {
 
-			final ConditionValueParamImpl conditionValueParam = (ConditionValueParamImpl) value;
+			final ConditionValue_Param conditionValueParam = (ConditionValue_Param) value;
 
 			ret = new JPAConditionLikeWithParamUnresolved(
 					param.toString(),
@@ -116,7 +116,7 @@ final class JPAConditionToOperator {
 		return ret;
 	}
 
-	private static JPACondition appendOpAndValue(String op, ConditionValueImpl value, StringBuilder sb) {
+	private static JPACondition appendOpAndValue(String op, ConditionValue value, StringBuilder sb) {
 		sb.append(op).append(" ");
 
 		return value.visit(conditionValueVisitor, sb);
@@ -127,7 +127,7 @@ final class JPAConditionToOperator {
 	private static final ConditionValueVisitor<StringBuilder, JPACondition> conditionValueVisitor = new ConditionValueVisitor<StringBuilder, JPACondition>() {
 
 		@Override
-		public JPACondition onLiteralAny(ConditionValueLiteralAnyImpl<?> value, StringBuilder param) {
+		public JPACondition onLiteralAny(ConditionValue_Literal_Any<?> value, StringBuilder param) {
 
 			appendLiteral(value.getLiteral(), param);
 
@@ -135,7 +135,7 @@ final class JPAConditionToOperator {
 		}
 
 		@Override
-		public JPACondition onLiteralString(ConditionValueLiteralStringImpl value, StringBuilder param) {
+		public JPACondition onLiteralString(ConditionValue_Literal_String value, StringBuilder param) {
 
 			appendStringLiteral(value.getLiteral(), param);
 
@@ -143,7 +143,7 @@ final class JPAConditionToOperator {
 		}
 
 		@Override
-		public JPACondition onArray(ConditionValueArrayImpl value, StringBuilder param) {
+		public JPACondition onArray(ConditionValue_Array value, StringBuilder param) {
 
 			final Object[] values = value.getValues();
 
@@ -159,7 +159,7 @@ final class JPAConditionToOperator {
 		}
 
 		@Override
-		public JPACondition onParam(ConditionValueParamImpl value, StringBuilder param) {
+		public JPACondition onParam(ConditionValue_Param value, StringBuilder param) {
 
 			/*
 			param.appendParam(value.getParam());
@@ -170,12 +170,12 @@ final class JPAConditionToOperator {
 		}
 
 		@Override
-		public JPACondition onGetter(ConditionValueGetterImpl value, StringBuilder param) {
+		public JPACondition onGetter(ConditionValue_Getter value, StringBuilder param) {
 			throw new UnsupportedOperationException("Getter should have been compiled");
 		}
 
 		@Override
-		public JPACondition onFieldReference(ConditionValueFieldRerefenceImpl value, StringBuilder param) {
+		public JPACondition onFieldReference(ConditionValue_FieldRerefence value, StringBuilder param) {
 			throw new UnsupportedOperationException("Field references should only be present in joins");
 		}
 		

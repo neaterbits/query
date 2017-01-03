@@ -9,20 +9,20 @@ final class QueryCollectorImpl {
 
 	
 	// The expected result type
-	private final QueryResult result;
+	private final CollectedQueryResult result;
 	
 	// Optional mappings to map result to result type
 	private MappingCollector mappings;
 	
 	// Select sources (tables or aliases)
-	private SelectSourceImpl sources;
+	private CollectedSelectSource sources;
 
 	private JoinCollector joins;
 
 	// Select clauses
-	private ClauseCollectorImpl clauses;
+	private Collector_Clause clauses;
 	
-	QueryCollectorImpl(QueryResult result) {
+	QueryCollectorImpl(CollectedQueryResult result) {
 
 		if (result == null) {
 			throw new IllegalArgumentException("result == null");
@@ -31,9 +31,9 @@ final class QueryCollectorImpl {
 		this.result = result;
 	}
 
-	QueryCollectorImpl(QueryResult result, MappingCollector mappings,
-			SelectSourceImpl sources,
-			ClauseCollectorImpl clauses, boolean isMulti) {
+	QueryCollectorImpl(CollectedQueryResult result, MappingCollector mappings,
+			CollectedSelectSource sources,
+			Collector_Clause clauses, boolean isMulti) {
 		
 
 		if (result == null) {
@@ -66,7 +66,7 @@ final class QueryCollectorImpl {
 		return result.getType();
 	}
 	
-	QueryResult getResult() {
+	CollectedQueryResult getResult() {
 		return result;
 	}
 
@@ -102,11 +102,11 @@ final class QueryCollectorImpl {
 		this.mappings = mappings;
 	}
 
-	SelectSourceImpl getSources() {
+	CollectedSelectSource getSources() {
 		return sources;
 	}
 
-	void setSources(SelectSourceImpl sources) {
+	void setSources(CollectedSelectSource sources) {
 		
 		if (sources == null) {
 			throw new IllegalArgumentException("sources == null");
@@ -136,11 +136,11 @@ final class QueryCollectorImpl {
 		this.joins = joins;
 	}
 
-	ClauseCollectorImpl getClauses() {
+	Collector_Clause getClauses() {
 		return clauses;
 	}
 
-	void setClauses(ClauseCollectorImpl clauses) {
+	void setClauses(Collector_Clause clauses) {
 		
 		if (clauses == null) {
 			throw new IllegalArgumentException("clauses == null");

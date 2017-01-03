@@ -93,7 +93,7 @@ final class CompiledQuery {
 		}
 		
 		final CompiledGetterSetterCache cache = new CompiledGetterSetterCache();
-		final SelectSourceImpl sources = collector.getSources();
+		final CollectedSelectSource sources = collector.getSources();
 
 		final CompiledSelectSources<?> compiledSources = compileSelectSources(sources);
 		final CompiledQueryResult compiledQueryResult = compileQueryResult(collector, compiledSources, cache);
@@ -125,9 +125,9 @@ final class CompiledQuery {
 		
 		final CompiledQueryResult ret;
 		
-		final QueryResult result = collector.getResult();
+		final CollectedQueryResult result = collector.getResult();
 		
-		if (result instanceof QueryResultMapped) {
+		if (result instanceof CollectedQueryResult_Mapped) {
 			
 			if (collector.getMappings() != null) {
 				
@@ -138,14 +138,14 @@ final class CompiledQuery {
 						compiledSources,
 						cache);
 				
-				ret = new CompiledQueryResultMapped((QueryResultMapped)result, compiledMappings);
+				ret = new CompiledQueryResult_Mapped((CollectedQueryResult_Mapped)result, compiledMappings);
 			}
 			else {
 				throw new IllegalStateException("No mappings for result " + result);
 			}
 		}
-		else if (result instanceof QueryResultEntity) {
-			ret = new CompiledQueryResultEntity((QueryResultEntity)result);
+		else if (result instanceof CollectedQueryResult_Entity) {
+			ret = new CompiledQueryResult_Entity((CollectedQueryResult_Entity)result);
 		}
 		else if (result instanceof QueryResultAggregate) {
 			ret = compileAggregateQueryResult((QueryResultAggregate)result, compiledSources, cache);
@@ -157,7 +157,7 @@ final class CompiledQuery {
 		return ret;
 	}
 	
-	private static CompiledQueryResultAggregate compileAggregateQueryResult(
+	private static CompiledQueryResult_Aggregate compileAggregateQueryResult(
 			QueryResultAggregate result,
 			CompiledSelectSources<?> compiledSelectSources,
 			CompiledGetterSetterCache cache) throws CompileException {
@@ -167,14 +167,14 @@ final class CompiledQuery {
 				result.getGetter(),
 				cache);
 
-		return new CompiledQueryResultAggregate(result, fieldReference);
+		return new CompiledQueryResult_Aggregate(result, fieldReference);
 	}
 
 
 	private static CompiledMappings compileMappings(
 			Class<?> resultType,
 			MappingCollector mappingCollector,
-			SelectSourceImpl selectSource,
+			CollectedSelectSource selectSource,
 			CompiledSelectSources<?> compiledSelectSources,
 			CompiledGetterSetterCache cache) throws CompileException {
 
@@ -199,7 +199,7 @@ final class CompiledQuery {
 	private static CompiledMapping compileMapping(
 			Class<?> resultType,
 			CollectedMapping collected,
-			SelectSourceImpl selectSource,
+			CollectedSelectSource selectSource,
 			CompiledSelectSources<?> compiledSelectSources,
 			CompiledGetterSetterCache cache) throws CompileException {
 
@@ -217,16 +217,16 @@ final class CompiledQuery {
 		return new CompiledMapping(fieldReference, mapSetter);
 	}
 	
-	private static CompiledSelectSources<?> compileSelectSources(SelectSourceImpl sources) {
+	private static CompiledSelectSources<?> compileSelectSources(CollectedSelectSource sources) {
 
 		final CompiledSelectSources<?> compiled;
 
 		// Figure out the type of select source
-		if (sources instanceof SelectSourceNamedImpl) {
-			final List<CompiledSelectSourceNamed> compiledList = new ArrayList<>();
+		if (sources instanceof CollectedSelectSource_Named) {
+			final List<CompiledSelectSource_Named> compiledList = new ArrayList<>();
 			
 			// table names
-			final SelectSourceNamedImpl selectSourceClasses = (SelectSourceNamedImpl)sources;
+			final CollectedSelectSource_Named selectSourceClasses = (CollectedSelectSource_Named)sources;
 
 			int classNo = 0;
 			
@@ -237,31 +237,31 @@ final class CompiledQuery {
 					throw new IllegalStateException("Two entity classes with same lowercase name \"" + name + "\"");
 				}
 
-				final CompiledSelectSourceNamed c = new CompiledSelectSourceNamed(selectSourceClasses, cl, name, classNo);
+				final CompiledSelectSource_Named c = new CompiledSelectSource_Named(selectSourceClasses, cl, name, classNo);
 
 				compiledList.add(c);
 
 				++ classNo;
 			}
 
-			compiled = new CompiledSelectSourcesNamed(sources, compiledList);
+			compiled = new CompiledSelectSources_Named(sources, compiledList);
 		}
-		else if (sources instanceof SelectSourceAliasesImpl) {
-			final List<CompiledSelectSourceAlias> compiledList = new ArrayList<>();
+		else if (sources instanceof CollectedSelectSource_Aliases) {
+			final List<CompiledSelectSource_Alias> compiledList = new ArrayList<>();
 
-			final SelectSourceAliasesImpl selectSourceAliases = (SelectSourceAliasesImpl)sources;
+			final CollectedSelectSource_Aliases selectSourceAliases = (CollectedSelectSource_Aliases)sources;
 
 			int aliasNo = 0;
 			
 			for (IAlias alias : selectSourceAliases.getAliases()) {
-				final CompiledSelectSourceAlias c = new CompiledSelectSourceAlias(selectSourceAliases, alias, "al" + aliasNo, aliasNo);
+				final CompiledSelectSource_Alias c = new CompiledSelectSource_Alias(selectSourceAliases, alias, "al" + aliasNo, aliasNo);
 
 				compiledList.add(c);
 
 				++ aliasNo;
 			}
 
-			compiled = new CompiledSelectSourcesAlias(sources, compiledList);
+			compiled = new CompiledSelectSources_Alias(sources, compiledList);
 		}
 		else {
 			throw new IllegalArgumentException("Unknown select sources type " + sources);
@@ -285,7 +285,7 @@ final class CompiledQuery {
 			TypeMapSource leftSource = null;
 			TypeMapSource rightSource = null;
 
-			if (join instanceof CollectedJoinNamed) {
+			if (join instanceof CollectedJoin_Named) {
 				if (join.getLeftType() != null && join.getRightType() != null) {
 					leftSource  = sources.getNamedSource(join.getLeftType());
 					rightSource = sources.getNamedSource(join.getRightType());
@@ -293,8 +293,8 @@ final class CompiledQuery {
 				
 				isClass = true;
 			}
-			else if (join instanceof CollectedJoinAliases) {
-				final CollectedJoinAliases aliasJoin = (CollectedJoinAliases)join;
+			else if (join instanceof CollectedJoin_Alias) {
+				final CollectedJoin_Alias aliasJoin = (CollectedJoin_Alias)join;
 				leftSource  = sources.getAliasesSource(aliasJoin.getLeftAlias());
 				rightSource = sources.getAliasesSource(aliasJoin.getRightAlias());
 				isClass = false;
@@ -308,16 +308,16 @@ final class CompiledQuery {
 				
 				final boolean thisOneIsClass;
 
-				if (joinCondition instanceof CollectedJoinConditionComparisonNamed) {
+				if (joinCondition instanceof CollectedJoinCondition_Comparison_Named) {
 					thisOneIsClass = true;
 				}
-				else if (joinCondition instanceof CollectedJoinConditionComparisonAliases) {
+				else if (joinCondition instanceof CollectedJoinCondition_Comparison_Alias) {
 					thisOneIsClass = false;
 				}
-				else if (joinCondition instanceof CollectedJoinConditionOneToManyNamed) {
+				else if (joinCondition instanceof CollectedJoinCondition_OneToMany_Named) {
 					thisOneIsClass = true;
 				}
-				else if (joinCondition instanceof CollectedJoinConditionOneToManyAlias) {
+				else if (joinCondition instanceof CollectedJoinCondition_OneToMany_Alias) {
 					thisOneIsClass = false;
 				}
 				else {
@@ -335,18 +335,18 @@ final class CompiledQuery {
 				
 				final CompiledJoinCondition compiledJoinCondition;
 				
-				if (joinCondition instanceof CollectedJoinConditionComparison) {
+				if (joinCondition instanceof CollectedJoinCondition_Comparison) {
 
-					final CollectedJoinConditionComparison joinConditionComparison = (CollectedJoinConditionComparison)joinCondition;
+					final CollectedJoinCondition_Comparison joinConditionComparison = (CollectedJoinCondition_Comparison)joinCondition;
 
 					final CompiledFieldReference left = sources.makeFieldReference(joinCondition, joinConditionComparison.getLeftGetter(), cache);
 					final CompiledFieldReference right = sources.makeFieldReference(joinCondition, joinConditionComparison.getRightGetter(), cache);
 					
-					compiledJoinCondition = new CompiledJoinConditionComparison(joinConditionComparison, left, right);
+					compiledJoinCondition = new CompiledJoinCondition_Comparison(joinConditionComparison, left, right);
 				}
-				else if (joinCondition instanceof CollectedJoinConditionOneToMany) {
+				else if (joinCondition instanceof CollectedJoinCondition_OneToMany) {
 
-					final CollectedJoinConditionOneToMany oneToMany = (CollectedJoinConditionOneToMany)joinCondition;
+					final CollectedJoinCondition_OneToMany oneToMany = (CollectedJoinCondition_OneToMany)joinCondition;
 					final CompiledFieldReference collection = sources.makeFieldReference(joinCondition, oneToMany.getCollectionGetter(), cache);
 					
 					final TypeMapSource left;
@@ -366,7 +366,7 @@ final class CompiledQuery {
 						throw new UnsupportedOperationException("Could not match neither left nor right : collection=" + collectionSourceType + ", left=" + leftSource.getType() + ", right=" + rightSource.getType());
 					}
 
-					compiledJoinCondition = new CompiledJoinConditionOneToMany(oneToMany, left, right, collection);
+					compiledJoinCondition = new CompiledJoinCondition_OneToMany(oneToMany, left, right, collection);
 				}
 				else {
 					throw new UnsupportedOperationException("Unknown join condition instance " + joinCondition.getClass().getSimpleName());
@@ -385,22 +385,22 @@ final class CompiledQuery {
 		}
 
 		final CompiledJoins ret = isClass
-				? new CompiledJoinsNamed(compiledJoins)
-				: new CompiledJoinsAliases(compiledJoins);
+				? new CompiledJoins_Named(compiledJoins)
+				: new CompiledJoinsAlias(compiledJoins);
 
 		return ret;
 	}
 	
-	private static CompiledConditions compileConditions(ClauseCollectorImpl clauses, CompiledSelectSources<?> sources, CompiledGetterSetterCache cache)
+	private static CompiledConditions compileConditions(Collector_Clause clauses, CompiledSelectSources<?> sources, CompiledGetterSetterCache cache)
 		throws CompileException {
 
-		final List<ClauseImpl> list = clauses.getClauses();
+		final List<CollectedClause> list = clauses.getClauses();
 		
 		if (list.isEmpty()) {
 			throw new IllegalStateException("no clauses");
 		}
 
-		if (!(list.get(0).getClause() instanceof ClausesImplInitial<?, ?>)) {
+		if (!(list.get(0).getClause() instanceof CollectedClauses_Initial<?, ?>)) {
 			throw new IllegalStateException("first entry is not a whereclause");
 		}
 		
@@ -412,7 +412,7 @@ final class CompiledQuery {
 			
 			final CompiledCondition singleCondition = compileCondition(list.get(0).getCondition(), sources, cache);
 			
-			ret = new CompiledConditionsSingle(singleCondition);
+			ret = new CompiledConditions_Single(singleCondition);
 		}
 		else {
 			final Class<?> clauseClass = list.get(1).getClause().getClass();
@@ -422,7 +422,7 @@ final class CompiledQuery {
 
 			for (int i = 1; i < num; ++ i) {
 
-				final ClauseImpl clause = list.get(i);
+				final CollectedClause clause = list.get(i);
 				final Class<?> otherClauseClass = clause.getClause().getClass();
 
 				if (!clauseClass.equals(otherClauseClass)) {
@@ -432,11 +432,11 @@ final class CompiledQuery {
 				conditions.add(compileCondition(clause.getCondition(), sources, cache));
 			}
 			
-			if (clauseClass.equals(AndClausesImpl.class) || clauseClass.equals(AndClausesImplNamedSingle.class)) {
-				ret = new CompiledConditionsAnd(conditions);
+			if (clauseClass.equals(ClassicCollectedAndClauses.class) || clauseClass.equals(ClassicCollectedAndClauses_Named_Single.class)) {
+				ret = new CompiledConditions_And(conditions);
 			}
-			else if (clauseClass.equals(OrClausesImpl.class) || clauseClass.equals(OrClausesImplNamedSingle.class)) {
-				ret = new CompiledConditionsOr(conditions);
+			else if (clauseClass.equals(ClassicCollectedOrClauses.class) || clauseClass.equals(ClassicCollectedOrClauses_Named_Single.class)) {
+				ret = new CompiledConditions_Or(conditions);
 			}
 			else {
 				throw new IllegalStateException("Unknown clause class "
@@ -448,7 +448,7 @@ final class CompiledQuery {
 		return ret;
 	}
 
-	private static CompiledCondition compileCondition(ConditionImpl condition, CompiledSelectSources<?> sources, CompiledGetterSetterCache cache) throws CompileException {
+	private static CompiledCondition compileCondition(CollectedCondition condition, CompiledSelectSources<?> sources, CompiledGetterSetterCache cache) throws CompileException {
 		
 		if (condition == null) {
 			throw new IllegalArgumentException("condition == null");
@@ -456,19 +456,19 @@ final class CompiledQuery {
 		
 		final CompiledFieldReference lhs = sources.makeFieldReference(condition, condition.getGetter(), cache);
 		
-		ConditionValueImpl value;
+		ConditionValue value;
 		
-		if (condition instanceof ValueConditionImpl) {
-			value = ((ValueConditionImpl)condition).getValue();
+		if (condition instanceof CollectedCondition_Value) {
+			value = ((CollectedCondition_Value)condition).getValue();
 			
-			if (value instanceof ConditionValueGetterImpl) {
+			if (value instanceof ConditionValue_Getter) {
 				// Getter value, should compile
 				
-				final Getter valueGetter = ((ConditionValueGetterImpl)value).getGetter();
+				final Getter valueGetter = ((ConditionValue_Getter)value).getGetter();
 				
 				final CompiledFieldReference rhs = sources.makeFieldReference(value, valueGetter, cache);
 				
-				value = new ConditionValueFieldRerefenceImpl(rhs);
+				value = new ConditionValue_FieldRerefence(rhs);
 			}
 		}
 		else {

@@ -6,6 +6,6 @@ package com.neaterbits.query.sql.dsl.api;
 
 interface TypeMap {
 
-	CompiledFieldReference makeFieldReference(QueryBuilderItem original, Getter inputGetter, CompiledGetterSetterCache cache) throws CompileException;
+	CompiledFieldReference makeFieldReference(CollectedItem original, Getter inputGetter, CompiledGetterSetterCache cache) throws CompileException;
 
 }

@@ -2,13 +2,13 @@ package com.neaterbits.query.sql.dsl.api;
 
 import java.util.function.BiConsumer;
 
-abstract class CollectedMapping extends QueryBuilderItem {
-	private final QueryBuilderItem original;
+abstract class CollectedMapping extends CollectedItem {
+	private final CollectedItem original;
 	private final Getter getter;
 	private final BiConsumer<?, ?> setter;
 
 	
-	CollectedMapping(QueryBuilderItem original, Getter getter, BiConsumer<?, ?> setter) {
+	CollectedMapping(CollectedItem original, Getter getter, BiConsumer<?, ?> setter) {
 		
 		if (original == null) {
 			throw new IllegalArgumentException("original == null");
@@ -31,7 +31,7 @@ abstract class CollectedMapping extends QueryBuilderItem {
 		return getter;
 	}
 
-	final QueryBuilderItem getOriginal() {
+	final CollectedItem getOriginal() {
 		return original;
 	}
 

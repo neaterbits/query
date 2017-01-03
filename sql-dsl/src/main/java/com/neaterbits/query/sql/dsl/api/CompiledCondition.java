@@ -5,13 +5,13 @@ import java.lang.reflect.Method;
 import com.neaterbits.query.sql.dsl.api.entity.ScalarType;
 
 final class CompiledCondition {
-	private final ConditionImpl original;
+	private final CollectedCondition original;
 	private final CompiledFieldReference lhs;
-	private final ConditionValueImpl value;
+	private final ConditionValue value;
 	
 	private final ScalarType scalarType; // All conditions are scalars
 	
-	CompiledCondition(ConditionImpl original, CompiledFieldReference lhs, ConditionValueImpl value) {
+	CompiledCondition(CollectedCondition original, CompiledFieldReference lhs, ConditionValue value) {
 		
 		if (original == null) {
 			throw new IllegalArgumentException("original == null");
@@ -35,7 +35,7 @@ final class CompiledCondition {
 		}
 	}
 
-	ConditionImpl getOriginal() {
+	CollectedCondition getOriginal() {
 		return original;
 	}
 
@@ -51,7 +51,7 @@ final class CompiledCondition {
 		return original.getOperator();
 	}
 
-	ConditionValueImpl getValue() {
+	ConditionValue getValue() {
 		return value;
 	}
 

@@ -9,7 +9,7 @@ import com.neaterbits.util.compat.Coll;
 abstract class TypeMapBase {
 
 	static <T extends TypeMapSource> CompiledFieldReference makeFieldReferenceFromClasses(
-			QueryBuilderItem original,
+			CollectedItem original,
 			Getter inputGetter,
 			CompiledGetterSetterCache cache,
 			Iterable<T> iterable,
@@ -46,7 +46,7 @@ abstract class TypeMapBase {
 	}
 	
 	static<T extends TypeMapSource> CompiledFieldReference makeFieldReferenceFromAliases(
-			QueryBuilderItem original,
+			CollectedItem original,
 			Getter inputGetter,
 			CompiledGetterSetterCache cache,
 			Iterable<T> sources,

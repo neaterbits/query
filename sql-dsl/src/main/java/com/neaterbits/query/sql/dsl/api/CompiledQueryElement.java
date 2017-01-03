@@ -1,6 +1,6 @@
 package com.neaterbits.query.sql.dsl.api;
 
-abstract class CompiledQueryElement<T extends QueryBuilderItem> {
+abstract class CompiledQueryElement<T extends CollectedItem> {
 
 	private final T original;
 

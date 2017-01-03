@@ -2,11 +2,11 @@ package com.neaterbits.query.sql.dsl.api;
 
 abstract class CompiledQueryResult {
 
-	private final QueryResult original;
+	private final CollectedQueryResult original;
 
 	abstract <T, R> R visit(CompiledQueryResultVisitor<T, R> visitor, T param);
 	
-	CompiledQueryResult(QueryResult original) {
+	CompiledQueryResult(CollectedQueryResult original) {
 		
 		if (original == null) {
 			throw new IllegalArgumentException("original == null");

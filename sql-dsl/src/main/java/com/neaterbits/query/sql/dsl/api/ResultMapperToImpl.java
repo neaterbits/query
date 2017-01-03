@@ -4,16 +4,16 @@ import java.util.function.BiConsumer;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
-final class ResultMapperToImpl<MODEL, RESULT, R, SOURCE extends SelectSourceBuilder<MODEL, RESULT>>
-		extends QueryBuilderItem
+final class ResultMapperToImpl<MODEL, RESULT, R, SOURCE extends ISharedSelectSourceBuilder<MODEL, RESULT>>
+		extends CollectedItem
 		implements ISharedResultMapperTo<MODEL, RESULT, R, SOURCE> {
 
 	private final Function<?, ?> fromGetter;
 	private final Supplier<?> fromSupplier;
 	
-	private final BaseMapToResultImpl<MODEL, RESULT> impl;
+	private final Collector_MapToResult_Base<MODEL, RESULT> impl;
 
-	ResultMapperToImpl(Function<?, ?> fromGetter, BaseMapToResultImpl<MODEL, RESULT> impl) {
+	ResultMapperToImpl(Function<?, ?> fromGetter, Collector_MapToResult_Base<MODEL, RESULT> impl) {
 		
 		if (fromGetter == null) {
 			throw new IllegalArgumentException("fromGetter == null");
@@ -29,7 +29,7 @@ final class ResultMapperToImpl<MODEL, RESULT, R, SOURCE extends SelectSourceBuil
 		this.impl = impl;
 	}
 
-	ResultMapperToImpl(Supplier<?> fromSupplier, BaseMapToResultImpl<MODEL, RESULT> impl) {
+	ResultMapperToImpl(Supplier<?> fromSupplier, Collector_MapToResult_Base<MODEL, RESULT> impl) {
 		
 		if (fromSupplier == null) {
 			throw new IllegalArgumentException("fromGetter == null");

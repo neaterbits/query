@@ -1,6 +1,6 @@
 package com.neaterbits.query.sql.dsl.api;
 
-public interface IClassicSelectSourceBuilderNamed<MODEL, RESULT> extends SelectSourceBuilder<MODEL, RESULT> {
+public interface IClassicSelectSourceBuilderNamed<MODEL, RESULT> extends ISharedSelectSourceBuilder<MODEL, RESULT> {
 
 	/**
 	 * Pure table search

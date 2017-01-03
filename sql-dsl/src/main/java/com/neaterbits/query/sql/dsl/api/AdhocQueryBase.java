@@ -145,7 +145,7 @@ abstract class AdhocQueryBase<MODEL, QUERY extends AdhocQueryBase<MODEL, QUERY>>
 	}
 
 	@Override
-	public final ConditionValueImpl getRootConditionValue(QUERY query, int conditionIdx) {
+	public final ConditionValue getRootConditionValue(QUERY query, int conditionIdx) {
 		throw new UnsupportedOperationException("TODO - not supported for Adhoc queries");
 	}
 	

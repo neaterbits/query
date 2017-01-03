@@ -1,12 +1,12 @@
 package com.neaterbits.query.sql.dsl.api;
 
-abstract class CompiledSelectSource extends CompiledQueryElement<SelectSourceImpl> implements TypeMapSource {
+abstract class CompiledSelectSource extends CompiledQueryElement<CollectedSelectSource> implements TypeMapSource {
 
 	private final Class<?> type;
 	private final String name;
 	private final int idx;
 	
-	CompiledSelectSource(SelectSourceImpl original, Class<?> type, String name, int idx) {
+	CompiledSelectSource(CollectedSelectSource original, Class<?> type, String name, int idx) {
 
 		super(original);
 

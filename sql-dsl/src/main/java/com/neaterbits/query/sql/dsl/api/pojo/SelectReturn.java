@@ -2,13 +2,13 @@ package com.neaterbits.query.sql.dsl.api.pojo;
 
 import com.neaterbits.query.sql.dsl.api.CollectionModel;
 import com.neaterbits.query.sql.dsl.api.SingleModel;
-import com.neaterbits.query.sql.dsl.api.WhereClauseBuilderAll;
+import com.neaterbits.query.sql.dsl.api.ClassicWhereClauseBuilder_Named_All;
 
 
 public interface SelectReturn<MODEL extends CollectionModel<T>, T> {
 
-	<SMODEL extends SingleModel<T>> WhereClauseBuilderAll<SMODEL, T> first();
+	<SMODEL extends SingleModel<T>> ClassicWhereClauseBuilder_Named_All<SMODEL, T> first();
 	
-	<CMODEL extends CollectionModel<T>> WhereClauseBuilderAll<CMODEL, T> first(int count);
+	<CMODEL extends CollectionModel<T>> ClassicWhereClauseBuilder_Named_All<CMODEL, T> first(int count);
 
 }

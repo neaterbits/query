@@ -2,10 +2,10 @@ package com.neaterbits.query.sql.dsl.api;
 
 import java.util.Collection;
 
-import com.neaterbits.query.sql.dsl.api.QueryDataSourcePojoBase;
+import com.neaterbits.query.sql.dsl.api.QueryDataSource_Pojo_Base;
 import com.neaterbits.query.sql.dsl.api.entity.QueryMetaModel;
 
-public class QueryDataSourcePojoWithList extends QueryDataSourcePojoBase {
+public class QueryDataSourcePojoWithList extends QueryDataSource_Pojo_Base {
 
 	private final Collection<?> instances;
 
@@ -20,12 +20,12 @@ public class QueryDataSourcePojoWithList extends QueryDataSourcePojoBase {
 	}
 
 	@Override
-	<QUERY> DSPreparedQuery<QueryDataSourcePojoBase> prepareSingleQuery(ExecutableQuery<QUERY> q, QUERY query) {
+	<QUERY> DSPreparedQuery<QueryDataSource_Pojo_Base> prepareSingleQuery(ExecutableQuery<QUERY> q, QUERY query) {
 		return prepare(q, query);
 	}
 
 	@Override
-	<QUERY> DSPreparedQuery<QueryDataSourcePojoBase> prepareMultiQuery(ExecutableQuery<QUERY> q, QUERY query) {
+	<QUERY> DSPreparedQuery<QueryDataSource_Pojo_Base> prepareMultiQuery(ExecutableQuery<QUERY> q, QUERY query) {
 		return prepare(q, query);
 	}
 	

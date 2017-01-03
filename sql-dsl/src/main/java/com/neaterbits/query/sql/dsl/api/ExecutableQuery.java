@@ -306,7 +306,7 @@ interface ExecutableQuery<QUERY> {
 
 	
 	// TODO: convert this somehow to enum or simila
-	ConditionValueImpl getRootConditionValue(QUERY query, int conditionIdx);
+	ConditionValue getRootConditionValue(QUERY query, int conditionIdx);
 	
 	EClauseOperator getRootConditionOperator(QUERY query, int conditionIdx);
 	

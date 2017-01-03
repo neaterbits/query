@@ -11,14 +11,14 @@ final class QueryResultGetterParamsBuilderImpl<RESULT_TYPE>
 
 							   
 	private final QueryParamCollector queryParamCollector;
-	private final QueryDataSourceBase dataSource;
+	private final QueryDataSource_Base dataSource;
 	private final DSPreparedQuery dsQuery;
 	private final BasePreparedQueryImpl<RESULT_TYPE> query; 
 	private Param<?> lastParam;
 
 	QueryResultGetterParamsBuilderImpl(
 			QueryParamCollector queryParamCollector,
-			QueryDataSourceBase dataSource,
+			QueryDataSource_Base dataSource,
 			DSPreparedQuery dsQuery,
 			BasePreparedQueryImpl<RESULT_TYPE> query) {
 

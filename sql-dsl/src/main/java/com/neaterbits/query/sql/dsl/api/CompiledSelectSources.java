@@ -12,7 +12,7 @@ import java.util.List;
  */
 
 abstract class CompiledSelectSources<T extends CompiledSelectSource>
-	extends CompiledQueryElement<SelectSourceImpl>
+	extends CompiledQueryElement<CollectedSelectSource>
 	implements TypeMap {
 
 	private final List<T> sources;
@@ -20,13 +20,13 @@ abstract class CompiledSelectSources<T extends CompiledSelectSource>
 	abstract TypeMapSource getNamedSource(Class<?> type);
 	abstract TypeMapSource getAliasesSource(IAlias alias);
 	
-	abstract int getSourceIdx(SelectSource source);
+	abstract int getSourceIdx(SharedSelectSource source);
 	
 	final int getCount() {
 		return sources.size();
 	}
 	
-	CompiledSelectSources(SelectSourceImpl original, List<T> sources) {
+	CompiledSelectSources(CollectedSelectSource original, List<T> sources) {
 		super(original);
 
 		if (original == null) {

@@ -2,7 +2,7 @@ package com.neaterbits.query.sql.dsl.api;
 
 import com.neaterbits.query.sql.dsl.api.entity.QueryMetaModel;
 
-abstract class BasePojoPreparedQuery<QUERY> extends DSPreparedQuery<QueryDataSourcePojoBase> {
+abstract class BasePojoPreparedQuery<QUERY> extends DSPreparedQuery<QueryDataSource_Pojo_Base> {
 
 	private final QUERY query;
 	private final ExecuteQueryPOJOs<QUERY> executor;
@@ -10,7 +10,7 @@ abstract class BasePojoPreparedQuery<QUERY> extends DSPreparedQuery<QueryDataSou
 	private final QueryMetaModel queryMetaModel;
 	
 	
-	BasePojoPreparedQuery(QueryDataSourcePojoBase dataSource, QUERY query, ExecuteQueryPOJOs<QUERY> executor, ExecuteQueryPOJOsInput input, QueryMetaModel queryMetaModel) {
+	BasePojoPreparedQuery(QueryDataSource_Pojo_Base dataSource, QUERY query, ExecuteQueryPOJOs<QUERY> executor, ExecuteQueryPOJOsInput input, QueryMetaModel queryMetaModel) {
 		
 		super(dataSource);
 		

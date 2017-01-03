@@ -1,8 +1,8 @@
 package com.neaterbits.query.sql.dsl.api;
 
-abstract class BaseTypeResultImpl<MODEL, RESULT> extends SelectSourceBuilderImpl<MODEL, RESULT> {
+abstract class BaseTypeResultImpl<MODEL, RESULT> extends Collector_SelectSource<MODEL, RESULT> {
 
-	BaseTypeResultImpl(QueryResult result, ModelCompiler<MODEL> modelCompiler) {
+	BaseTypeResultImpl(CollectedQueryResult result, ModelCompiler<MODEL> modelCompiler) {
 		super(result, modelCompiler);
 	}
 }

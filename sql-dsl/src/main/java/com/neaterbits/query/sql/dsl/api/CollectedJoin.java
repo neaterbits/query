@@ -3,7 +3,7 @@ package com.neaterbits.query.sql.dsl.api;
 import java.util.ArrayList;
 import java.util.List;
 
-abstract class CollectedJoin extends QueryBuilderItem {
+abstract class CollectedJoin extends CollectedItem {
 
 	private final EJoinType joinType;
 	private final Class<?> leftType;

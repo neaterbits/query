@@ -3,22 +3,22 @@ package com.neaterbits.query.sql.dsl.api;
 public abstract class ConditionAdapterComparableBase<T, R> implements ConditionVisitor<T, R> {
 
 	@Override
-	public R onStartsWith(ConditionStringStartsWith condition, T param) {
+	public R onStartsWith(CollectedCondition_StringStartsWith condition, T param) {
 		throw new UnsupportedOperationException("Not supported for numeric types");
 	}
 
 	@Override
-	public R onEndsWith(ConditionStringEndsWith condition, T param) {
+	public R onEndsWith(CollectedCondition_StringEndsWith condition, T param) {
 		throw new UnsupportedOperationException("Not supported for numeric types");
 	}
 
 	@Override
-	public R onContains(ConditionStringContains condition, T param) {
+	public R onContains(CollectedCondition_StringContains condition, T param) {
 		throw new UnsupportedOperationException("Not supported for numeric types");
 	}
 
 	@Override
-	public R onMatches(ConditionStringMatches condition, T param) {
+	public R onMatches(CollectedCondition_StringMatches condition, T param) {
 		throw new UnsupportedOperationException("Not supported for numeric types");
 	}
 }

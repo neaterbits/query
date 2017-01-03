@@ -19,7 +19,7 @@ import javax.persistence.metamodel.Metamodel;
  *
  */
 
-public abstract class QueryDataSourceJPA extends QueryDataSourceORM<
+public abstract class QueryDataSourceJPA extends QueryDataSource_ORM<
 									javax.persistence.Query,
 									ManagedType<?>,
 									EmbeddableType<?>,
@@ -54,7 +54,7 @@ public abstract class QueryDataSourceJPA extends QueryDataSourceORM<
 
 	
 	@Override
-	final <QUERY> PreparedQueryComparisonRHS convertConditions(ExecutableQuery<QUERY> q, QUERY query, int conditionIdx, ConditionValueImpl value, StringBuilder sb) {
+	final <QUERY> PreparedQueryComparisonRHS convertConditions(ExecutableQuery<QUERY> q, QUERY query, int conditionIdx, ConditionValue value, StringBuilder sb) {
 
 		return conditionToOperator.convert(q, query, conditionIdx, value, sb);
 	}

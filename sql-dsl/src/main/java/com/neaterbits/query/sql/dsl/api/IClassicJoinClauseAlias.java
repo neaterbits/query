@@ -1,6 +1,6 @@
 package com.neaterbits.query.sql.dsl.api;
 
-public interface IClassicJoinClauseAlias<MODEL, RESULT> extends JoinClause {
+public interface IClassicJoinClauseAlias<MODEL, RESULT> extends ISharedJoinClause {
 
 	IClassicJoinConditionAlias<MODEL, RESULT> innerJoin(Object left, Object right);
 	

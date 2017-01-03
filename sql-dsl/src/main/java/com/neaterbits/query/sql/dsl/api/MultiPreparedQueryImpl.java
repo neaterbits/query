@@ -5,7 +5,7 @@ import java.util.List;
 final class MultiPreparedQueryImpl<RESULT> extends BasePreparedQueryImpl<List<RESULT>>
 	implements ISharedMultiPreparedQuery<RESULT> {
 
-	MultiPreparedQueryImpl(QueryDataSourceBase dataSource, DSPreparedQuery preparedQuery) {
+	MultiPreparedQueryImpl(QueryDataSource_Base dataSource, DSPreparedQuery preparedQuery) {
 		super(dataSource, preparedQuery);
 	}
 

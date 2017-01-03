@@ -1,6 +1,6 @@
 package com.neaterbits.query.sql.dsl.api;
 
-abstract class BaseQueryEntity<MODEL> extends QueryBuilderItem {
+abstract class BaseQueryEntity<MODEL> extends CollectedItem {
 
 	private final QueryCollectorImpl queryCollector;
 	private final ModelCompiler<MODEL> modelCompiler;

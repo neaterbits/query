@@ -4,12 +4,12 @@ import java.util.function.Function;
 import java.util.function.Supplier;
 
 final class MultiMapToResultImpl<MODEL, RESULT>
-		extends BaseMapToResultImpl<MODEL, RESULT>
+		extends Collector_MapToResult_Base<MODEL, RESULT>
 		implements IClassicMultiMapToResult<MODEL, RESULT>,
 		           IClassicMultiMapToResultAlias<MODEL, RESULT> {
 
 	MultiMapToResultImpl(Class<?> resultType, ECollectionType collectionType, ModelCompiler<MODEL> modelCompiler) {
-		super(new QueryResultMappedMulti(resultType, collectionType), modelCompiler);
+		super(new CollectedQueryResult_Mapped_Multi(resultType, collectionType), modelCompiler);
 	}
 
 	@Override

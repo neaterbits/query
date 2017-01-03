@@ -1,6 +1,6 @@
 package com.neaterbits.query.sql.dsl.api;
 
-abstract class BaseConditionValueLiteralImpl<T> extends ConditionValueImpl {
+abstract class BaseConditionValueLiteralImpl<T> extends ConditionValue {
 
 	private final T literal;
 	

@@ -31,10 +31,10 @@ final class ExecutableQueryForCompiledQuery implements ExecutableQuery<CompiledQ
 		
 		final FieldReferenceType ret;
 		
-		if (source instanceof CompiledSelectSourcesAlias) {
+		if (source instanceof CompiledSelectSources_Alias) {
 			ret = FieldReferenceType.ALIAS;
 		}
-		else if (source instanceof CompiledSelectSourcesNamed) {
+		else if (source instanceof CompiledSelectSources_Named) {
 			ret = FieldReferenceType.ENTITY;
 		}
 		else {
@@ -65,32 +65,32 @@ final class ExecutableQueryForCompiledQuery implements ExecutableQuery<CompiledQ
 
 	@Override
 	public EAggregateFunction getAggregateResultFunction(CompiledQuery query) {
-		return ((CompiledQueryResultAggregate)query.getResult()).getAggregateFunction();
+		return ((CompiledQueryResult_Aggregate)query.getResult()).getAggregateFunction();
 	}
 	
 	@Override
 	public CompiledFieldReference getAggregateResultField(CompiledQuery query) {
-		return ((CompiledQueryResultAggregate)query.getResult()).getField();
+		return ((CompiledQueryResult_Aggregate)query.getResult()).getField();
 	}
 
 	@Override
 	public ENumericType getAggregateNumericInputType(CompiledQuery query) {
-		return ((CompiledQueryResultAggregate)query.getResult()).getInputNumericType();
+		return ((CompiledQueryResult_Aggregate)query.getResult()).getInputNumericType();
 	}
 	
 	@Override
 	public ENumericType getAggregateNumericOutputType(CompiledQuery query) {
-		return ((CompiledQueryResultAggregate)query.getResult()).getOutputNumericType();
+		return ((CompiledQueryResult_Aggregate)query.getResult()).getOutputNumericType();
 	}
 
 	@Override
 	public Object getAggregateResultValue(CompiledQuery query, Object instance) {
-		return ((CompiledQueryResultAggregate)query.getResult()).getField().getValue(instance);
+		return ((CompiledQueryResult_Aggregate)query.getResult()).getField().getValue(instance);
 	}
 
 	@Override
 	public int getEntityResultSourceIdx(CompiledQuery query) {
-		final SelectSource selectSource = ((CompiledQueryResultEntity)query.getResult()).getSelectSource();
+		final SharedSelectSource selectSource = ((CompiledQueryResult_Entity)query.getResult()).getSelectSource();
 		
 		return query.getSelectSources().getSourceIdx(selectSource);
 	}
@@ -105,21 +105,21 @@ final class ExecutableQueryForCompiledQuery implements ExecutableQuery<CompiledQ
 		}
 		*/
 		
-		final CompiledQueryResultMapped mapped = (CompiledQueryResultMapped)query.getResult();
+		final CompiledQueryResult_Mapped mapped = (CompiledQueryResult_Mapped)query.getResult();
 		
 		return mapped.getMappings().getMappings().size();
 	}
 
 	@Override
 	public int getMappingSourceIdx(CompiledQuery query, int mappingIdx) {
-		final CompiledQueryResultMapped mapped = (CompiledQueryResultMapped)query.getResult();
+		final CompiledQueryResult_Mapped mapped = (CompiledQueryResult_Mapped)query.getResult();
 
 		return mapped.getMappings().getMappings().get(mappingIdx).getField().getSource().getIdx();
 	}
 
 	@Override
 	public CompiledFieldReference getMappingField(CompiledQuery query, int mappingIdx) {
-		final CompiledQueryResultMapped mapped = (CompiledQueryResultMapped)query.getResult();
+		final CompiledQueryResult_Mapped mapped = (CompiledQueryResult_Mapped)query.getResult();
 
 		return mapped.getMappings().getMappings().get(mappingIdx).getField();
 	}
@@ -141,7 +141,7 @@ final class ExecutableQueryForCompiledQuery implements ExecutableQuery<CompiledQ
 
 	@Override
 	public Object executeMappingGetter(CompiledQuery query, int mappingIdx, Object instance) {
-		final CompiledQueryResultMapped mapped = (CompiledQueryResultMapped)query.getResult();
+		final CompiledQueryResult_Mapped mapped = (CompiledQueryResult_Mapped)query.getResult();
 		
 		final CompiledMapping mapping = mapped.getMappings().getMappings().get(mappingIdx);
 		
@@ -150,7 +150,7 @@ final class ExecutableQueryForCompiledQuery implements ExecutableQuery<CompiledQ
 
 	@Override
 	public void executeMappingSetter(CompiledQuery query, int mappingIdx, Object instance, Object value) {
-		final CompiledQueryResultMapped mapped = (CompiledQueryResultMapped)query.getResult();
+		final CompiledQueryResult_Mapped mapped = (CompiledQueryResult_Mapped)query.getResult();
 
 		mapped.getMappings().getMappings().get(mappingIdx).executeSetter(instance, value);
 	}
@@ -264,21 +264,21 @@ final class ExecutableQueryForCompiledQuery implements ExecutableQuery<CompiledQ
 	@Override
 	public Method getJoinConditionOneToManyCollectionGetter(CompiledQuery query, int joinIdx, int conditionIdx) {
 		
-		final CompiledJoinConditionOneToMany condition = (CompiledJoinConditionOneToMany)getJoin(query, joinIdx).getConditions().get(conditionIdx);
+		final CompiledJoinCondition_OneToMany condition = (CompiledJoinCondition_OneToMany)getJoin(query, joinIdx).getConditions().get(conditionIdx);
 
 		return condition.getCollectionGetter().getGetterMethod();
 	}
 	
 	@Override
 	public CompiledFieldReference getJoinConditionComparisonLhs(CompiledQuery query, int joinIdx, int conditionIdx) {
-		final CompiledJoinConditionComparison condition = (CompiledJoinConditionComparison)getJoin(query, joinIdx).getConditions().get(conditionIdx);
+		final CompiledJoinCondition_Comparison condition = (CompiledJoinCondition_Comparison)getJoin(query, joinIdx).getConditions().get(conditionIdx);
 
 		return condition.getLhs();
 	}
 
 	@Override
 	public CompiledFieldReference getJoinConditionComparisonRhs(CompiledQuery query, int joinIdx, int conditionIdx) {
-		final CompiledJoinConditionComparison condition = (CompiledJoinConditionComparison)getJoin(query, joinIdx).getConditions().get(conditionIdx);
+		final CompiledJoinCondition_Comparison condition = (CompiledJoinCondition_Comparison)getJoin(query, joinIdx).getConditions().get(conditionIdx);
 
 		return condition.getRhs();
 	}
@@ -298,12 +298,12 @@ final class ExecutableQueryForCompiledQuery implements ExecutableQuery<CompiledQ
 		
 		final boolean ret;
 		
-		if (condition instanceof CompiledJoinConditionComparison) {
-			ret = evaluateJoinConditionComparison((CompiledJoinConditionComparison)condition, instance1, instance2);
+		if (condition instanceof CompiledJoinCondition_Comparison) {
+			ret = evaluateJoinConditionComparison((CompiledJoinCondition_Comparison)condition, instance1, instance2);
 		}
-		else if (condition instanceof CompiledJoinConditionOneToMany) {
+		else if (condition instanceof CompiledJoinCondition_OneToMany) {
 			// Check whether we are able to evaluate this using direct-mapping
-			ret = evaluateJoinConditionOneToMany((CompiledJoinConditionOneToMany)condition, instance1, instance2, oneToManyResolver);
+			ret = evaluateJoinConditionOneToMany((CompiledJoinCondition_OneToMany)condition, instance1, instance2, oneToManyResolver);
 		}
 		else {
 			throw new UnsupportedOperationException("Unknown condition type " + condition.getClass().getSimpleName());
@@ -312,7 +312,7 @@ final class ExecutableQueryForCompiledQuery implements ExecutableQuery<CompiledQ
 		return ret;
 	}
 
-	private boolean evaluateJoinConditionOneToMany(CompiledJoinConditionOneToMany condition, Object instance1, Object instance2, OneToManyJoinConditionResolver oneToManyResolver) {
+	private boolean evaluateJoinConditionOneToMany(CompiledJoinCondition_OneToMany condition, Object instance1, Object instance2, OneToManyJoinConditionResolver oneToManyResolver) {
 		
 		final boolean ret;
 		
@@ -366,7 +366,7 @@ final class ExecutableQueryForCompiledQuery implements ExecutableQuery<CompiledQ
 	}
 	
 	
-	private static boolean evaluateJoinConditionComparison(CompiledJoinConditionComparison comparison, Object instance1, Object instance2) {
+	private static boolean evaluateJoinConditionComparison(CompiledJoinCondition_Comparison comparison, Object instance1, Object instance2) {
 
 		final Object lhs = comparison.getLhs().getValue(instance1);
 		final Object rhs = comparison.getRhs().getValue(instance2);
@@ -404,7 +404,7 @@ final class ExecutableQueryForCompiledQuery implements ExecutableQuery<CompiledQ
 	}
 
 	@Override
-	public ConditionValueImpl getRootConditionValue(CompiledQuery query, int conditionIdx) {
+	public ConditionValue getRootConditionValue(CompiledQuery query, int conditionIdx) {
 		return query.getConditions().getConditions().get(conditionIdx).getValue();
 	}
 
@@ -418,13 +418,13 @@ final class ExecutableQueryForCompiledQuery implements ExecutableQuery<CompiledQ
 		if (conditions == null) {
 			ret = ConditionsType.NONE;
 		}
-		else if (conditions instanceof CompiledConditionsAnd) {
+		else if (conditions instanceof CompiledConditions_And) {
 			ret = ConditionsType.AND;
 		}
-		else if (conditions instanceof CompiledConditionsOr) {
+		else if (conditions instanceof CompiledConditions_Or) {
 			ret = ConditionsType.OR;
 		}
-		else if (conditions instanceof CompiledConditionsSingle) {
+		else if (conditions instanceof CompiledConditions_Single) {
 			ret = ConditionsType.SINGLE;
 		}
 		else {
@@ -522,39 +522,39 @@ final class ExecutableQueryForCompiledQuery implements ExecutableQuery<CompiledQ
 	}
 
 
-	private static final ConditionEvaluatorComparable comparableEvaluator = new ConditionEvaluatorComparable();
-	private static final ConditionEvaluatorComparableString stringEvaluator = new ConditionEvaluatorComparableString();
+	private static final ConditionEvaluator_Comparable comparableEvaluator = new ConditionEvaluator_Comparable();
+	private static final ConditionEvaluator_Comparable_String stringEvaluator = new ConditionEvaluator_Comparable_String();
 	
 	
 	private static final ConditionValueVisitor<ParamValueResolver, Object> valueVisitor = new ConditionValueVisitor<ParamValueResolver, Object>() {
 		
 		@Override
-		public Object onParam(ConditionValueParamImpl value, ParamValueResolver param) {
+		public Object onParam(ConditionValue_Param value, ParamValueResolver param) {
 			return param.resolveParam(value.getParam());
 		}
 		
 		@Override
-		public Object onLiteralString(ConditionValueLiteralStringImpl value, ParamValueResolver param) {
+		public Object onLiteralString(ConditionValue_Literal_String value, ParamValueResolver param) {
 			return value.getLiteral();
 		}
 		
 		@Override
-		public Object onLiteralAny(ConditionValueLiteralAnyImpl<?> value, ParamValueResolver param) {
+		public Object onLiteralAny(ConditionValue_Literal_Any<?> value, ParamValueResolver param) {
 			return value.getLiteral();
 		}
 		
 		@Override
-		public Object onGetter(ConditionValueGetterImpl value, ParamValueResolver param) {
+		public Object onGetter(ConditionValue_Getter value, ParamValueResolver param) {
 			throw new UnsupportedOperationException("Should only call getters in joins");
 		}
 		
 		@Override
-		public Object onFieldReference(ConditionValueFieldRerefenceImpl value, ParamValueResolver param) {
+		public Object onFieldReference(ConditionValue_FieldRerefence value, ParamValueResolver param) {
 			throw new UnsupportedOperationException("Should only call getters in joins");
 		}
 		
 		@Override
-		public Object onArray(ConditionValueArrayImpl value, ParamValueResolver param) {
+		public Object onArray(ConditionValue_Array value, ParamValueResolver param) {
 			return value.getValues();
 		}
 	};
