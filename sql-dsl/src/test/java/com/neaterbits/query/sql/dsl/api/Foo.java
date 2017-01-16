@@ -5,6 +5,10 @@ import java.math.BigDecimal;
 public class Foo {
 	
 	
+	public Foo() {
+		
+	}
+	
 	public Foo(int value, int value2, BigDecimal decimal) {
 		this.value = value;
 		this.value2 = value2;

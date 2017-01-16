@@ -738,6 +738,27 @@ andAny(Foo::getBar).or(Bar::getBaz)
  - fortsatt ikke kjempe lesbart
  + nøsta så parantesene sier hva som er logikken
 
+
+
+##
+
+Hvordan differensiere fra subselects? Funker ikke å bare sende inn en annen builder for da vil en få ambiguity?
+Kan teste om så er tilfelle.
+
+.and(s -> s.select().first(xyz).from()) . isEqualTo("123").
+
+Kunne det lønt seg å sende inn verdien først? Er mere lesbart siden ellers vil .isEqualTo() forsvinne i andre koden, men om er først så blir det motsatt fra hva som er ellers.
+Kan likevel virke litt for mye tilpasning å sny på flisa, man er vant til å skrive kolonne først, ikke parameteren. Så antakelig ok å sende inn query først.
+Gjør også at vi vet at dette er en subselect og kan gjøre valg i builderen vi returnerer.
+
+---
+
+For adhoc queries, så MÅ vi kode typen rett inn i AND/OR interfacene for at skal bli riktig statisk typesjekking, ellers så kan en sende inn hva som helst,
+dvs om er <T> i input interfacet i stede for i parameteren.
+Så er et bra starting point å opprette eget her, slik at vi kan fortsette med IShared<> .
+
+
+
 ---
 
 Bør rydde i table/entity/class
@@ -801,4 +822,25 @@ index 6114dd8..6bc7bf6 100644
  
  }
 
+
+
+
+-----
+
+
+
+package com.neaterbits.query.sql.dsl.api;
+
+public interface ISharedOrClausesNamedValues<MODEL, RESULT, OR_CLAUSES extends ISharedOrClausesNamedValues<MODEL, RESULT, OR_CLAUSES>>
+
+		extends ISharedOrClausesNamedBase<
+			MODEL,
+			RESULT,
+			OR_CLAUSES,
+			
+			ISharedClauseComparableCommonValue<MODEL, RESULT, Integer, OR_CLAUSES>,
+			ISharedClauseComparableCommonValue<MODEL, RESULT, Long, OR_CLAUSES>,
+			ISharedClauseComparableStringValue<MODEL, RESULT, OR_CLAUSES>> {
+
+}
 

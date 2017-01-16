@@ -14,9 +14,9 @@ abstract class AdhocConditions<MODEL, RESULT, QUERY extends AdhocQueryNamed<MODE
 		ISharedClauseComparableStringValue<MODEL, RESULT, ISharedLogicalClauses<MODEL, RESULT>>,
 		ISharedLogicalClauses<MODEL, RESULT>,
 
-		IAdhocAndClauses<MODEL, RESULT>,
-		IAdhocOrClauses<MODEL, RESULT>,
-		IAdhocAndOrLogicalClauses<MODEL, RESULT> {
+		IAdhocAndClauses<MODEL, RESULT, Object>,
+		IAdhocOrClauses<MODEL, RESULT, Object>,
+		IAdhocAndOrLogicalClauses<MODEL, RESULT, Object> {
 
 	private static final int INITIAL_CONDITIONS = 10;
 
@@ -132,47 +132,47 @@ abstract class AdhocConditions<MODEL, RESULT, QUERY extends AdhocQueryNamed<MODE
 	**************************************************************************/
 	
 	@SuppressWarnings({"unchecked", "rawtypes"})
-	private <T extends Comparable<?>> ISharedClauseComparableCommonValue<MODEL, RESULT, T, IAdhocAndClauses<MODEL, RESULT>>  addAndClause(Function<?, T> getter) {
+	private <T extends Comparable<?>> ISharedClauseComparableCommonValue<MODEL, RESULT, T, IAdhocAndClauses<MODEL, RESULT, Object>>  addAndClause(Function<?, T> getter) {
 		return (ISharedClauseComparableCommonValue)intAddCondition(ConditionsType.AND, getter);
 	}
 
 	@SuppressWarnings({"unchecked", "rawtypes"})
-	private <T extends Comparable<?>> ISharedClauseComparableCommonValue<MODEL, RESULT, T, IAdhocOrClauses<MODEL, RESULT>>  addOrClause(Function<?, T> getter) {
+	private <T extends Comparable<?>> ISharedClauseComparableCommonValue<MODEL, RESULT, T, IAdhocOrClauses<MODEL, RESULT, Object>>  addOrClause(Function<?, T> getter) {
 		return (ISharedClauseComparableCommonValue)intAddCondition(ConditionsType.OR, getter);
 	}
 	
 	@Override
-	public final <T> ISharedClauseComparableCommonValue<MODEL, RESULT, Integer, IAdhocOrClauses<MODEL, RESULT>> or(IFunctionInteger<T> getter) {
+	public final ISharedClauseComparableCommonValue<MODEL, RESULT, Integer, IAdhocOrClauses<MODEL, RESULT, Object>> or(IFunctionInteger<Object> getter) {
 		return addOrClause(getter);
 	}
 
 
 	@Override
-	public final <T> ISharedClauseComparableCommonValue<MODEL, RESULT, Long, IAdhocOrClauses<MODEL, RESULT>> or(IFunctionLong<T> getter) {
+	public final ISharedClauseComparableCommonValue<MODEL, RESULT, Long, IAdhocOrClauses<MODEL, RESULT, Object>> or(IFunctionLong<Object> getter) {
 		return addOrClause(getter);
 	}
 	
 	
 	@Override
 	@SuppressWarnings({"unchecked", "rawtypes"})
-	public final <T> ISharedClauseComparableStringValue<MODEL, RESULT, IAdhocOrClauses<MODEL, RESULT>> or(StringFunction<T> getter) {
+	public final ISharedClauseComparableStringValue<MODEL, RESULT, IAdhocOrClauses<MODEL, RESULT, Object>> or(StringFunction<Object> getter) {
 		return (ISharedClauseComparableStringValue)intAddCondition(ConditionsType.OR, getter);
 	}
 
 
 	@Override
-	public final <T> ISharedClauseComparableCommonValue<MODEL, RESULT, Integer, IAdhocAndClauses<MODEL, RESULT>> and(IFunctionInteger<T> getter) {
+	public final ISharedClauseComparableCommonValue<MODEL, RESULT, Integer, IAdhocAndClauses<MODEL, RESULT, Object>> and(IFunctionInteger<Object> getter) {
 		return addAndClause(getter);
 	}
 
 	@Override
-	public final <T> ISharedClauseComparableCommonValue<MODEL, RESULT, Long, IAdhocAndClauses<MODEL, RESULT>> and(IFunctionLong<T> getter) {
+	public final ISharedClauseComparableCommonValue<MODEL, RESULT, Long, IAdhocAndClauses<MODEL, RESULT, Object>> and(IFunctionLong<Object> getter) {
 		return addAndClause(getter);
 	}
 
 	@Override
 	@SuppressWarnings({"unchecked", "rawtypes"})
-	public final <T> ISharedClauseComparableStringValue<MODEL, RESULT, IAdhocAndClauses<MODEL, RESULT>> and(StringFunction<T> getter) {
+	public final ISharedClauseComparableStringValue<MODEL, RESULT, IAdhocAndClauses<MODEL, RESULT, Object>> and(StringFunction<Object> getter) {
 		return (ISharedClauseComparableStringValue)intAddCondition(ConditionsType.AND, getter);
 	}
 

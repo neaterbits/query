@@ -405,7 +405,7 @@ abstract class AdhocQueryNamed<MODEL, RESULT>
 	}
 
 	@SuppressWarnings("rawtypes")
-	final <R extends Comparable<R>, AND_OR extends IAdhocAndOrLogicalClauses<MODEL, Object>>
+	final <R extends Comparable<R>, AND_OR extends IAdhocAndOrLogicalClauses<MODEL, Object, Object>>
 	
 		ISharedClauseComparableCommonValue // <MODEL, Object, R, AND_OR>
 				addComparativeWhere(Function<?, ?> function) {
@@ -415,7 +415,7 @@ abstract class AdhocQueryNamed<MODEL, RESULT>
 	
 
 	@SuppressWarnings("rawtypes")
-	final <R extends Comparable<R>, AND_OR extends IAdhocAndOrLogicalClauses<MODEL, Object>>
+	final <R extends Comparable<R>, AND_OR extends IAdhocAndOrLogicalClauses<MODEL, Object, Object>>
 	
 		ISharedClauseConditionValue // <MODEL, Object, R, AND_OR>
 	

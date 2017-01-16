@@ -4,7 +4,8 @@ import java.util.Collection;
 import java.util.Set;
 import java.util.function.Function;
 
-final class AdhocConditionsSet<MODEL, RESULT> extends AdhocConditions<MODEL, Set<Object>, AdhocQueryNamed_Set<MODEL>> 
+final class AdhocConditionsSet<MODEL, RESULT>
+			extends AdhocConditions<MODEL, Set<Object>, AdhocQueryNamed_Set<MODEL>> 
 
 	implements IAdhocAndOrLogicalClausesSet<MODEL, Object, Set<Object>>{
 
