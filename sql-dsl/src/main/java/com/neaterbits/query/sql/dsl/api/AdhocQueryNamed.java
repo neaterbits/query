@@ -481,7 +481,7 @@ abstract class AdhocQueryNamed<MODEL, RESULT>
 
 		case AND:
 		case OR:
-			// Was merged from Join into existing 
+			// Was merged from Join into existing at time builder was run
 			break;
 			
 		default:

@@ -12,7 +12,7 @@ import java.util.function.Function;
 
 abstract class AdhocConditionsStateMachine<MODEL, RESULT, CONDITIONS extends AdhocConditionsStateMachine<MODEL, RESULT, CONDITIONS>> {
 
-	private static final boolean DEBUG = Boolean.FALSE; 
+	private static final boolean DEBUG = Boolean.TRUE; 
 	
 	private EAdhocConditionsState state;
 
@@ -347,29 +347,39 @@ abstract class AdhocConditionsStateMachine<MODEL, RESULT, CONDITIONS extends Adh
 
 		final CONDITIONS ret;
 		
-		switch (type) {
+		switch (state) {
+		case NONE:
 		
-		case OR:
-			// Must add sub-condition to current
-			final CONDITIONS subConditions = createConditions(1);
-
-			subConditions.addWhereAndFunctionFromJoin(whereFunction, whereOperator, whereValue, sourceIdx, type, nextFunction);
-
-			intAddSub(subConditions);
-
-			ret = subConditions;
-			break;
-	
-		case AND:
+			switch (type) {
 			
-			// Add to existing conditions
-			addWhereAndFunctionFromJoin(whereFunction, whereOperator, whereValue, sourceIdx, type, nextFunction);
+			case OR:
+				// Must add sub-condition to current
+				// Too complex to add OR at this level so upper state becomes AND
+				final CONDITIONS subConditions = createConditions(1);
+	
+				subConditions.addWhereAndFunctionFromJoin(whereFunction, whereOperator, whereValue, sourceIdx, type, nextFunction);
+	
+				intAddSub(subConditions);
+	
+				ret = subConditions;
+				break;
 
-			ret = (CONDITIONS)this;
+			case AND:
+				// Add to existing conditions
+				addWhereAndFunctionFromJoin(whereFunction, whereOperator, whereValue, sourceIdx, type, nextFunction);
+	
+				ret = (CONDITIONS)this;
+				break;
+
+			default:
+				throw new UnsupportedOperationException("Unexpected type " + type);
+
+			}
 			break;
-
+			
 		default:
-			throw new UnsupportedOperationException("Unexpected type " + type);
+			throw new IllegalStateException("Unexpected state " + state);
+			
 		}
 
 		return ret;
@@ -437,11 +447,11 @@ abstract class AdhocConditionsStateMachine<MODEL, RESULT, CONDITIONS extends Adh
 		if (whereFunction == null) {
 			throw new IllegalArgumentException("whereFunction == null");
 		}
-		
+
 		if (whereOperator == null) {
 			throw new IllegalArgumentException("whereOperator == null");
 		}
-		
+
 		if (whereValue == null) {
 			throw new IllegalArgumentException("whereValue == null");
 		}
@@ -463,5 +473,4 @@ abstract class AdhocConditionsStateMachine<MODEL, RESULT, CONDITIONS extends Adh
 		intAddConditionToArray(whereFunction);
 		intAddOperator(whereOperator, whereValue, sourceIdx);
 	}
-	
 }
