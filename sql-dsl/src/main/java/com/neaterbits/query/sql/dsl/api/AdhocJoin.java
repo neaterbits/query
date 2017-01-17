@@ -282,7 +282,16 @@ final class AdhocJoin<MODEL, RESULT>
 		return addOrClause(getter);
 	}
 	
-	
+	@Override
+	public final ISharedClauseComparableCommonValue<MODEL, RESULT, BigDecimal, IAdhocOrClauses<MODEL, RESULT, Object>> or(IFunctionBigDecimal<Object> getter) {
+		return addOrClause(getter);
+	}
+
+	@Override
+	public IAdhocAndClauses<MODEL, RESULT, Object> orNest(Consumer<IAdhocAndClauses<MODEL, RESULT, Object>> andBuilder) {
+		throw new UnsupportedOperationException("TODO");
+	}
+
 	@Override
 	@SuppressWarnings({"unchecked", "rawtypes"})
 	public final ISharedClauseComparableStringValue<MODEL, RESULT, IAdhocOrClauses<MODEL, RESULT, Object>> or(StringFunction<Object> getter) {
@@ -304,6 +313,11 @@ final class AdhocJoin<MODEL, RESULT>
 	}
 
 	@Override
+	public final ISharedClauseComparableCommonValue<MODEL, RESULT, BigDecimal, IAdhocAndClauses<MODEL, RESULT, Object>> and(IFunctionBigDecimal<Object> getter) {
+		return addAndClause(getter);
+	}
+
+	@Override
 	@SuppressWarnings({"unchecked", "rawtypes"})
 	public final ISharedClauseComparableStringValue<MODEL, RESULT, IAdhocAndClauses<MODEL, RESULT, Object>> and(StringFunction<Object> getter) {
 		addConditionInt(ConditionsType.AND, getter);
@@ -311,6 +325,11 @@ final class AdhocJoin<MODEL, RESULT>
 		return (ISharedClauseComparableStringValue)this;
 	}
 	
+	@Override
+	public IAdhocAndClauses<MODEL, RESULT, Object> andNest(Consumer<IAdhocOrClauses<MODEL, RESULT, Object>> orBuilder) {
+		throw new UnsupportedOperationException("TODO");
+	}
+
 	
 	void addJoinCondition(JoinCondition condition) {
 		

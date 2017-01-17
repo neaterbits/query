@@ -53,10 +53,7 @@ public class PerformanceTest {
 
 		System.out.println("Sum test with filter ");
 		checkPerformance(
-				testData -> sum(Foo::getValue)
-					.from(testData)
-					.where(Foo::getValue).isLessThan(50)
-					.get(),
+				testData -> sum(Foo::getValue).from(testData).where(Foo::getValue).isLessThan(50).get(),
 
 				testData -> testData.stream()
 					.mapToInt(Foo::getValue)

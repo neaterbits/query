@@ -1,5 +1,6 @@
 package com.neaterbits.query.sql.dsl.api;
 
+import java.util.function.Consumer;
 import java.util.function.Function;
 
 /**
@@ -11,7 +12,7 @@ import java.util.function.Function;
 
 abstract class AdhocConditionsStateMachine<MODEL, RESULT, CONDITIONS extends AdhocConditionsStateMachine<MODEL, RESULT, CONDITIONS>> {
 
-	private static final boolean DEBUG = Boolean.TRUE; 
+	private static final boolean DEBUG = Boolean.FALSE; 
 	
 	private EAdhocConditionsState state;
 
@@ -50,6 +51,7 @@ abstract class AdhocConditionsStateMachine<MODEL, RESULT, CONDITIONS extends Adh
 		case AND_IN_JOIN:
 		case AND_IN_OUTER:
 		case AND_MERGED_FROM_JOIN:
+		case AND_IN_NESTED:
 			
 		case WHERE_FROM_JOIN_AND_WHERE_FROM_OUTER: // Two where-clauses which are to be joind
 			
@@ -59,6 +61,7 @@ abstract class AdhocConditionsStateMachine<MODEL, RESULT, CONDITIONS extends Adh
 			
 		case OR_IN_JOIN:
 		case OR_IN_OUTER:
+		case OR_IN_NESTED:
 			ret = ConditionsType.OR;
 			break;
 		
@@ -68,16 +71,25 @@ abstract class AdhocConditionsStateMachine<MODEL, RESULT, CONDITIONS extends Adh
 		
 		return ret;
 	}
-	
-	final CONDITIONS intAddCondition(ConditionsType conditionsType, Function<?, ?> function) {
 
-		if (function == null) {
-			throw new IllegalArgumentException("function == null");
+	
+	final <QUERY extends AdhocQueryNamed<MODEL, RESULT>>
+			CONDITIONS intAddCondition(ConditionsType conditionsType, Function<?, ?> function, Consumer<?> nestedBuilder) {
+
+		if (function == null && nestedBuilder == null) {
+			throw new IllegalArgumentException("function == null && nested == null");
 		}
+
+		if (function != null && nestedBuilder != null) {
+			throw new IllegalArgumentException("function != null && nested != null");
+		}
+		
 
 		//conditionsCheck(conditionsType);
 
 		final EAdhocConditionsState newState;
+		
+		boolean added = false;
 
 		final CONDITIONS ret;
 		
@@ -85,9 +97,24 @@ abstract class AdhocConditionsStateMachine<MODEL, RESULT, CONDITIONS extends Adh
 		case AND_IN_JOIN:
 		case AND_IN_OUTER:
 		case AND_MERGED_FROM_JOIN:
+		case AND_IN_NESTED:
+
+			if (conditionsType != ConditionsType.AND) {
+				throw new IllegalStateException("Unxpected condition in state " + state + ": " + conditionsType);
+			}
+
+			newState = state;
+			ret = getThis();
+			break;
+
 		case OR_IN_JOIN:
 		case OR_IN_OUTER:
-			// Keep current state
+		case OR_IN_NESTED:
+			
+			if (conditionsType != ConditionsType.OR) {
+				throw new IllegalStateException("Unxpected condition in state " + state + ": " + conditionsType);
+			}
+
 			newState = state;
 			ret = getThis();
 			break;
@@ -108,16 +135,21 @@ abstract class AdhocConditionsStateMachine<MODEL, RESULT, CONDITIONS extends Adh
 			ret = getThis();
 			break;
 
-		case WHERE_FROM_JOIN_AND_WHERE_FROM_OUTER:
+		case WHERE_FROM_JOIN_AND_WHERE_FROM_OUTER: // Two where-clases, adding a new one in outer
 			switch (conditionsType) {
 			case AND:
 				newState = EAdhocConditionsState.AND_FROM_JOIN_AND_OUTER;
-				intAddConditionToArray(function);
+				
+				// Nothing to do here, we add at end in regular fashion
 				ret = getThis();
 				break;
 
 			case OR:
-				// Two where-clauses, must create a sub-join and the latter WHERE to that
+				// Two where-clauses, must create a nested condition and add the latter WHERE to that
+				// so that we AND the join-comparison to the OR'ed where and new condition at the outer level
+				
+				// TODO: What if more than one or here? Looks like we're returning sub below, so
+				// one is adding new ORs at outer level to sub
 				final int level = getLevel();
 				if (level != 0) {
 					throw new IllegalStateException("Not at root level");
@@ -125,9 +157,10 @@ abstract class AdhocConditionsStateMachine<MODEL, RESULT, CONDITIONS extends Adh
 
 				final CONDITIONS sub = createConditions(level + 1);
 
-				// Remove last conditions and move to new sub OR-condition
-				sub.intSplitIntoSubOrs(getThis(), function);
-
+				// Remove last conditions and move to new sub OR-condition ?
+				sub.intSplitIntoSubOrs(getThis(), function, nestedBuilder);
+				added = true;
+				
 				ret = sub;
 
 				newState = EAdhocConditionsState.AND_FROM_JOIN_AND_OUTER;
@@ -141,19 +174,84 @@ abstract class AdhocConditionsStateMachine<MODEL, RESULT, CONDITIONS extends Adh
 		default:
 			throw new IllegalStateException("Unknown conditions state "+ state);
 		}
-		
-		intAddConditionToArray(function);
+
+		if (!added) {
+			if (function != null) {
+				// If function, just call subclass to add to subclass specific storage (may be multiple implementations for trying to optimize for allocations) 
+				intAddConditionToArray(function);
+			}
+			else if (nestedBuilder != null) {
+				// add nested as sub-condition in current
+				// nested-condition must have the opposite type of what is present at *this* level
+				addNested(conditionsType.opposite(), nestedBuilder, getLevel());
+			}
+			else {
+				throw new IllegalStateException();
+			}
+		}
 
 		setState(newState);
 		
 		return ret;
 	}
 	
-	final void intSplitIntoSubOrs(CONDITIONS c, Function<?, ?> function) {
+	@SuppressWarnings({"unchecked", "rawtypes"})
+	private void addNested(ConditionsType conditionsType, Consumer<?> nestedBuilder, int curLevel) {
+		
+		final CONDITIONS nested = createConditions(curLevel + 1);
+		
+		
+		// Initiate state-machine for nested
+		nested.initNested(conditionsType, nestedBuilder);
+		
+		// Must call builder in order to add the user-specified conditions
+		((Consumer)nestedBuilder).accept(nested);
+		
+		// Call subclass to add
+		intAddSub(nested);
+	}
 
-		if (function == null) {
-			throw new IllegalArgumentException("function == null");
+	final void initNested(ConditionsType conditionsType, Consumer<?> nestedBuilder) {
+
+		if (conditionsType == null) {
+			throw new IllegalArgumentException("conditionsType == null");
 		}
+
+		final EAdhocConditionsState newState;
+
+		switch (state) {
+		case NONE:
+			switch (conditionsType) {
+			case AND:
+				newState = EAdhocConditionsState.AND_IN_NESTED;
+				break;
+
+			case OR:
+				newState = EAdhocConditionsState.OR_IN_NESTED;
+				break;
+
+			default:
+				throw new UnsupportedOperationException("Unknown conditions type " + conditionsType);
+			}
+			break;
+
+		default:
+			throw new IllegalStateException("Unknown conditions state "+ state);
+		
+		}
+
+		setState(newState);
+	}
+	
+	
+	// Called when there are AND conditions from joins that must be merged with OR conditions outer-level
+	// We must move the outer OR into a nested condition
+	// in order to make sure we use AND at the outer level
+	// may take either a function, or nested-info if the first or at outer level was a nested one
+	final void intSplitIntoSubOrs(
+			CONDITIONS c,
+			Function<?, ?> function,
+			Consumer<?> nestedBuilder) {
 
 		final EAdhocConditionsState newState;
 
@@ -161,9 +259,21 @@ abstract class AdhocConditionsStateMachine<MODEL, RESULT, CONDITIONS extends Adh
 		case NONE:
 			newState = EAdhocConditionsState.OR_IN_OUTER;
 
+			// Move last from c to this
 			c.intMoveLastToSubAndAddSub(getThis());
 			
-			intAddConditionToArray(function);
+			if (function != null) {
+				intAddConditionToArray(function);
+			}
+			else if (nestedBuilder != null) {
+				
+				// Add nested as sub to this (so there's three levels involved)
+				// Conditions type is always AND since we do this for an OR at the top-level
+				addNested(ConditionsType.AND, nestedBuilder, c.getLevel());
+			}
+			else {
+				throw new IllegalStateException();
+			}
 			break;
 
 		default:
@@ -353,4 +463,5 @@ abstract class AdhocConditionsStateMachine<MODEL, RESULT, CONDITIONS extends Adh
 		intAddConditionToArray(whereFunction);
 		intAddOperator(whereOperator, whereValue, sourceIdx);
 	}
+	
 }

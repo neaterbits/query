@@ -757,6 +757,17 @@ For adhoc queries, så MÅ vi kode typen rett inn i AND/OR interfacene for at sk
 dvs om er <T> i input interfacet i stede for i parameteren.
 Så er et bra starting point å opprette eget her, slik at vi kan fortsette med IShared<> .
 
+interfaces for and?
+ - subinterface builder for any() og all() som har StringFunction osv (så blir en del duplisering .. men har ikke noen betydning her). Men ser ut som like greit å bare ha and() først.
+
+ - returnerer samme som for topp-nivå and() eller or() og som retur-type for Comparatoene, dvs AndClauses eller OrClauses.
+
+
+Hvordan lagre nøstingen? Må allokere ny instans. Bare gjenbruke query-klassen som vi har? Antakelig det enkleste, bare sette i rett initial-state.
+Trenger ikke vite om er List eller Set her, kan ha AdhocConditionsNested siden vi uansett ikke skal gjøre get() for å hente ut noe resultat,
+er kun for å lagre unna conditions.
+
+OK stryk forrige, ser ut som AdhocConditions allerede er separat så kan bare nøste disse.
 
 
 ---

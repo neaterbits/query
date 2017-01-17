@@ -18,5 +18,8 @@ public enum EAdhocConditionsState {
 
 	AND_FROM_JOIN_AND_OUTER,
 	
-	WHERE_FROM_JOIN_AND_WHERE_FROM_OUTER
+	WHERE_FROM_JOIN_AND_WHERE_FROM_OUTER, // Merging where-clause from a join with a where clause in outer
+	
+	AND_IN_NESTED,
+	OR_IN_NESTED
 }

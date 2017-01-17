@@ -1,7 +1,9 @@
 package com.neaterbits.query.sql.dsl.api;
 
 import java.lang.reflect.Method;
+import java.math.BigDecimal;
 import java.util.Arrays;
+import java.util.function.Consumer;
 import java.util.function.Function;
 
 import com.neaterbits.query.util.java8.MethodFinder;
@@ -30,9 +32,9 @@ abstract class AdhocConditions<MODEL, RESULT, QUERY extends AdhocQueryNamed<MODE
 	private Object [] values;
 
 	private AdhocConditions<MODEL, RESULT, QUERY> [] subConditions;
-	
+
 	int numConditions;
-	
+
 	AdhocConditions(QUERY query, int level) {
 
 		if (query == null) {
@@ -46,7 +48,6 @@ abstract class AdhocConditions<MODEL, RESULT, QUERY extends AdhocQueryNamed<MODE
 		this.operators 				= new EClauseOperator[INITIAL_CONDITIONS];
 		this.values 				= new Object		 [INITIAL_CONDITIONS];
 		this.conditionToSourceIdx 	= new int			 [INITIAL_CONDITIONS];
-
 	}
 
 	@Override
@@ -133,12 +134,12 @@ abstract class AdhocConditions<MODEL, RESULT, QUERY extends AdhocQueryNamed<MODE
 	
 	@SuppressWarnings({"unchecked", "rawtypes"})
 	private <T extends Comparable<?>> ISharedClauseComparableCommonValue<MODEL, RESULT, T, IAdhocAndClauses<MODEL, RESULT, Object>>  addAndClause(Function<?, T> getter) {
-		return (ISharedClauseComparableCommonValue)intAddCondition(ConditionsType.AND, getter);
+		return (ISharedClauseComparableCommonValue)intAddCondition(ConditionsType.AND, getter, null);
 	}
 
 	@SuppressWarnings({"unchecked", "rawtypes"})
 	private <T extends Comparable<?>> ISharedClauseComparableCommonValue<MODEL, RESULT, T, IAdhocOrClauses<MODEL, RESULT, Object>>  addOrClause(Function<?, T> getter) {
-		return (ISharedClauseComparableCommonValue)intAddCondition(ConditionsType.OR, getter);
+		return (ISharedClauseComparableCommonValue)intAddCondition(ConditionsType.OR, getter, null);
 	}
 	
 	@Override
@@ -146,20 +147,35 @@ abstract class AdhocConditions<MODEL, RESULT, QUERY extends AdhocQueryNamed<MODE
 		return addOrClause(getter);
 	}
 
-
 	@Override
 	public final ISharedClauseComparableCommonValue<MODEL, RESULT, Long, IAdhocOrClauses<MODEL, RESULT, Object>> or(IFunctionLong<Object> getter) {
 		return addOrClause(getter);
 	}
 	
+	@Override
+	public final ISharedClauseComparableCommonValue<MODEL, RESULT, BigDecimal, IAdhocOrClauses<MODEL, RESULT, Object>> or(IFunctionBigDecimal<Object> getter) {
+		return addOrClause(getter);
+	}
 	
 	@Override
 	@SuppressWarnings({"unchecked", "rawtypes"})
 	public final ISharedClauseComparableStringValue<MODEL, RESULT, IAdhocOrClauses<MODEL, RESULT, Object>> or(StringFunction<Object> getter) {
-		return (ISharedClauseComparableStringValue)intAddCondition(ConditionsType.OR, getter);
+		return (ISharedClauseComparableStringValue)intAddCondition(ConditionsType.OR, getter, null);
 	}
 
+	@Override
+	public final IAdhocAndClauses<MODEL, RESULT, Object> orNest(Consumer<IAdhocAndClauses<MODEL, RESULT, Object>> andBuilder) {
 
+		if (andBuilder == null) {
+			throw new IllegalArgumentException("andBuilder == null");
+		}
+
+		intAddCondition(ConditionsType.OR, null, andBuilder);
+
+		return this;
+	}
+
+	
 	@Override
 	public final ISharedClauseComparableCommonValue<MODEL, RESULT, Integer, IAdhocAndClauses<MODEL, RESULT, Object>> and(IFunctionInteger<Object> getter) {
 		return addAndClause(getter);
@@ -171,9 +187,25 @@ abstract class AdhocConditions<MODEL, RESULT, QUERY extends AdhocQueryNamed<MODE
 	}
 
 	@Override
+	public final ISharedClauseComparableCommonValue<MODEL, RESULT, BigDecimal, IAdhocAndClauses<MODEL, RESULT, Object>> and(IFunctionBigDecimal<Object> getter) {
+		return addAndClause(getter);
+	}
+
+	@Override
 	@SuppressWarnings({"unchecked", "rawtypes"})
 	public final ISharedClauseComparableStringValue<MODEL, RESULT, IAdhocAndClauses<MODEL, RESULT, Object>> and(StringFunction<Object> getter) {
-		return (ISharedClauseComparableStringValue)intAddCondition(ConditionsType.AND, getter);
+		return (ISharedClauseComparableStringValue)intAddCondition(ConditionsType.AND, getter, null);
+	}
+
+	@Override
+	public final IAdhocAndClauses<MODEL, RESULT, Object> andNest(Consumer<IAdhocOrClauses<MODEL, RESULT, Object>> orBuilder) {
+		if (orBuilder == null) {
+			throw new IllegalArgumentException("orBuilder == null");
+		}
+
+		intAddCondition(ConditionsType.AND, null, orBuilder);
+
+		return this;
 	}
 
 	@Override

@@ -477,9 +477,8 @@ abstract class AdhocQueryNamed<MODEL, RESULT>
 			}
 
 			conditions.addWhereFromJoin(join.whereCondition, join.whereOperator, join.whereValue, join.rightSourceIdx);
-			
 			break;
-			
+
 		case AND:
 		case OR:
 			// Was merged from Join into existing 

@@ -181,6 +181,40 @@ public class SQLAdhocAPITest {
 	}
 
 	@Test
+	public void testAdhocListOrWithNestedAnd() {
+		final List<Foo> fooList = new ArrayList<>();
+
+		final Foo foo1 = new Foo(1, 2, new BigDecimal("3.1"));
+		final Foo foo2 = new Foo(3, 1, new BigDecimal("4.8"));
+		final Foo foo3 = new Foo(2, 7, new BigDecimal("1.8"));
+
+		fooList.add(foo1);
+		fooList.add(foo2);
+		fooList.add(foo3);
+
+		final List<Foo> foos = Adhoc.list(fooList)
+							.where(Foo::getDecimal).isGreaterThan(new BigDecimal("3.2"))
+							
+								// .or(Foo::getDecimal).isEqualTo(new BigDecimal("1.8"))
+							
+								.orNest(a -> a
+
+									.and(Foo::getValue) .isEqualTo(2)
+									.and(Foo::getValue2).isEqualTo(7)
+									.andNest(o -> o
+										.or(Foo::getDecimal).isEqualTo(new BigDecimal("9.8"))
+										.or(Foo::getDecimal).isEqualTo(new BigDecimal("1.8"))
+								   )
+								)
+								.get();
+
+		assertThat(foos.contains(foo2)).isTrue();
+		assertThat(foos.contains(foo3)).isTrue();
+		assertThat(foos.size()).isEqualTo(2);
+	}
+	
+	
+	@Test
 	public void testAdhocListJoinWithOr() {
 		final List<Foo> fooList = new ArrayList<>();
 
@@ -208,6 +242,7 @@ public class SQLAdhocAPITest {
 
 							.where(Foo::getDecimal).isGreaterThan(new BigDecimal("2.0"))
 							   .or(Foo::getValue).isLessOrEqualTo(1)
+							   .or(Foo::getValue).isGreaterOrEqualTo(0)
 							   .get();
 
 		// Inner-join but not distinct
