@@ -12,8 +12,6 @@ import java.util.function.Function;
 
 abstract class AdhocConditionsStateMachine<MODEL, RESULT, CONDITIONS extends AdhocConditionsStateMachine<MODEL, RESULT, CONDITIONS>> {
 
-	private static final boolean DEBUG = Boolean.TRUE; 
-	
 	private EAdhocConditionsState state;
 
 
@@ -74,10 +72,11 @@ abstract class AdhocConditionsStateMachine<MODEL, RESULT, CONDITIONS extends Adh
 	}
 
 	void addOperator(EClauseOperator operator, Object value, int sourceIdx) {
-		if (DEBUG) {
+		if (AdhocDebug.DEBUG_BUILD_CONDITIONS) {
+			
 			final String methodName = Thread.currentThread().getStackTrace()[2].getMethodName();
 
-			System.out.println("addOperator AdhocCondition." + methodName + "() level " + getLevel() + ", source "
+			AdhocDebug.println("addOperator AdhocCondition." + methodName + "() level " + getLevel() + ", source "
 					+ sourceIdx + 
 					(operator != null ? (" op " + operator + " value " + value) : "")
 					+ " in state  " + state);
@@ -343,10 +342,9 @@ abstract class AdhocConditionsStateMachine<MODEL, RESULT, CONDITIONS extends Adh
 			throw new IllegalArgumentException("newState == null");
 		}
 
-		if (DEBUG) {
-			final String methodName = Thread.currentThread().getStackTrace()[2].getMethodName();
+		if (AdhocDebug.DEBUG_BUILD_CONDITIONS) {
 
-			System.out.println("AdhocCondition." + methodName + "() level " + getLevel() + ", source "
+			AdhocDebug.println("level " + getLevel() + ", source "
 					+ sourceIdx + 
 					(operator != null ? (" op " + operator + " value " + value) : "")
 					+ ": " + state + " => " + newState);

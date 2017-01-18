@@ -31,6 +31,8 @@ abstract class AdhocQueryNamed<MODEL, RESULT>
 
 	private AdhocConditions<MODEL, RESULT, ?> conditions;
 
+	private int curSource; 
+	
 	private Collection<?> [] sources;
 	private int numSources;
 
@@ -59,9 +61,30 @@ abstract class AdhocQueryNamed<MODEL, RESULT>
 		}
 
 		addSource(coll);
+		
+		// Only one source so far
+		this.curSource = -1; // to avoid exception about setting to same for initial
+		setCurSource(0);
 	}
 
-	
+	final int getCurSource() {
+		return curSource;
+	}
+
+	final void setCurSource(int newCurSource) {
+
+		if (newCurSource == curSource) {
+			throw new IllegalStateException("Setting to existing source which is probably not what was intended: " + newCurSource);
+		}
+		
+		if (AdhocDebug.DEBUG_BUILD_QUERY) {
+			
+			AdhocDebug.println("switching source from " + curSource + " to " + newCurSource);
+		}
+
+		this.curSource = newCurSource;
+	}
+
 	private int addSource(Collection<?> collection) {
 		if (collection == null) {
 			throw new IllegalArgumentException("collection == null");
@@ -459,10 +482,22 @@ abstract class AdhocQueryNamed<MODEL, RESULT>
 
 		this.joins[numJoins ++] = join;
 
+		if (curSource != leftSourceIdx) {
+			throw new IllegalStateException("curSourceIdx != leftSourceIdx");
+		}
+		
+		// Anything added within join should be added to rightSourceId
+		setCurSource(rightSourceIdx);
+		
 		// Run join statement, this may recurse if there are nested joins
 		@SuppressWarnings({ "unchecked", "rawtypes" })
 		final Consumer<IAdhocJoinSub> c = (Consumer)consumer;
 		c.accept(join);
+		
+		
+		// After build, set source back to original
+		setCurSource(leftSourceIdx);
+		
 
 		// Check what type of conditions are present in the join after having joined
 		switch (join.conditionsType) {

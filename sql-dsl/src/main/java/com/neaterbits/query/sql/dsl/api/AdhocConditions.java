@@ -60,7 +60,7 @@ abstract class AdhocConditions<MODEL, RESULT, QUERY extends AdhocQueryNamed<MODE
 	**************************************************************************/
 	private ISharedLogicalClauses<MODEL, RESULT> addOperatorRet(EClauseOperator operator, Object value) {
 		
-		addOperator(operator, value, 0); // Always join source 0
+		addOperator(operator, value, query.getCurSource()); // Join with current-source from query
 
 		return this;
 	}
@@ -294,8 +294,10 @@ abstract class AdhocConditions<MODEL, RESULT, QUERY extends AdhocQueryNamed<MODE
 
 		final boolean ret;
 
-		System.out.println("## applying condintion at " + conditionIdx + " to " + instance);
-		
+		if (AdhocDebug.DEBUG_EXECUTE_CONDITIONS)  {
+			AdhocDebug.println("applying condition at " + conditionIdx + " to " + instance);
+		}
+
 		@SuppressWarnings("unchecked")
 		final Object instanceValue = conditions[conditionIdx].apply(instance);
 		final Object compareValue = values[conditionIdx];
