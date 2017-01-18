@@ -160,9 +160,8 @@ final class AdhocJoin<MODEL, RESULT>
 			throw new IllegalArgumentException("operator == null");
 		}
 
-		
 		if (this.whereOperator != null) {
-			throw new IllegalStateException("where operator already set");
+			throw new IllegalStateException("where operator already set - should only be called once since additional AND or OR should be added to root conditions");
 		}
 		
 		this.whereOperator = operator;
@@ -253,22 +252,18 @@ final class AdhocJoin<MODEL, RESULT>
 
 		this.conditionsType = conditionsType; 
 		
-		// Merge into query conditions now that we know merge type, those will collect the rest of the join conditions
+		// Merge into query top level conditions now that we know merge type, those will collect the rest of the join conditions
 		return query.mergeJoinComparison(whereCondition, whereOperator, whereValue, rightSourceIdx, conditionsType, getter);
 	}
 	
 	@SuppressWarnings({"unchecked", "rawtypes"})
 	private <FIELD extends Comparable<?>> ISharedClauseComparableCommonValue<MODEL, RESULT, FIELD, IAdhocAndClauses<MODEL, RESULT, Object>>  addAndClause(Function<?, FIELD> getter) {
-		addConditionInt(ConditionsType.AND, getter);
-		
-		return (ISharedClauseComparableCommonValue)this;
+		return (ISharedClauseComparableCommonValue)addConditionInt(ConditionsType.AND, getter);
 	}
 
 	@SuppressWarnings({"unchecked", "rawtypes"})
 	private <T extends Comparable<?>> ISharedClauseComparableCommonValue<MODEL, RESULT, T, IAdhocOrClauses<MODEL, RESULT, Object>>  addOrClause(Function<?, T> getter) {
-		addConditionInt(ConditionsType.OR, getter);
-		
-		return (ISharedClauseComparableCommonValue)this;
+		return (ISharedClauseComparableCommonValue)addConditionInt(ConditionsType.OR, getter);
 	}
 	
 	@Override
@@ -295,9 +290,7 @@ final class AdhocJoin<MODEL, RESULT>
 	@Override
 	@SuppressWarnings({"unchecked", "rawtypes"})
 	public final ISharedClauseComparableStringValue<MODEL, RESULT, IAdhocOrClauses<MODEL, RESULT, Object>> or(StringFunction<Object> getter) {
-		addConditionInt(ConditionsType.OR, getter);
-
-		return (ISharedClauseComparableStringValue)this;
+		return (ISharedClauseComparableStringValue)addConditionInt(ConditionsType.OR, getter);
 	}
 
 
@@ -320,9 +313,7 @@ final class AdhocJoin<MODEL, RESULT>
 	@Override
 	@SuppressWarnings({"unchecked", "rawtypes"})
 	public final ISharedClauseComparableStringValue<MODEL, RESULT, IAdhocAndClauses<MODEL, RESULT, Object>> and(StringFunction<Object> getter) {
-		addConditionInt(ConditionsType.AND, getter);
-
-		return (ISharedClauseComparableStringValue)this;
+		return (ISharedClauseComparableStringValue)addConditionInt(ConditionsType.AND, getter);
 	}
 	
 	@Override

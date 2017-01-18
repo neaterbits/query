@@ -454,16 +454,17 @@ abstract class AdhocQueryNamed<MODEL, RESULT>
 			this.joins = Arrays.copyOf(joins,  joins.length  * JOIN_INCR);
 		}
 
+		// pass query so that additional AND or OR can be added to the query, not to the join instance
 		final AdhocJoin<MODEL, RESULT> join = new AdhocJoin<>(this, joinType, leftSourceIdx, rightSourceIdx);
 
 		this.joins[numJoins ++] = join;
-		
+
+		// Run join statement, this may recurse if there are nested joins
 		@SuppressWarnings({ "unchecked", "rawtypes" })
 		final Consumer<IAdhocJoinSub> c = (Consumer)consumer;
-
 		c.accept(join);
 
-		// Check what type of conditions are present
+		// Check what type of conditions are present in the join after having joined
 		switch (join.conditionsType) {
 		case NONE:
 			// No where-clause, nothing to join
@@ -476,12 +477,13 @@ abstract class AdhocQueryNamed<MODEL, RESULT>
 				conditions = createConditions(0);
 			}
 
+			// Add where-clause from the join onto root query
 			conditions.addWhereFromJoin(join.whereCondition, join.whereOperator, join.whereValue, join.rightSourceIdx);
 			break;
 
 		case AND:
 		case OR:
-			// Was merged from Join into existing at time builder was run
+			// Was merged from Join into query at time builder was run
 			break;
 			
 		default:

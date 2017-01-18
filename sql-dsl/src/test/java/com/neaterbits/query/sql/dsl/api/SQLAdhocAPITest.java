@@ -276,11 +276,12 @@ public class SQLAdhocAPITest {
 				
 							.innerJoin(barList, j -> j
 										.compare(Foo::getValue, Bar::getFooId)
-										.where(Bar::getBaz).startsWith("Foo"))
+										.where(Bar::getBaz).startsWith("Foo")
+										.   or(Bar::getBaz).startsWith("Fo-non-existent"))
 							
-							.where(Foo::getDecimal).isGreaterThan(new BigDecimal("2.0"))
-							   .and(Foo::getValue).isLessOrEqualTo(1)
-							   .get();
+							.where(Foo::getDecimal).isGreaterThan  (new BigDecimal("2.0"))
+							 . and(Foo::getValue)  .isLessOrEqualTo(1)
+							 .get();
 
 		// Inner-join but not distinct
 		assertThat(foos.size()).isEqualTo(1);

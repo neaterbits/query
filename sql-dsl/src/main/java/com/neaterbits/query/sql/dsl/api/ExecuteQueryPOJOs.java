@@ -2,6 +2,7 @@ package com.neaterbits.query.sql.dsl.api;
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashSet;
 
@@ -70,15 +71,16 @@ final class ExecuteQueryPOJOs<QUERY> extends ExecutableQueryAggregateComputation
 
 	
 	Object execute(QUERY query, ExecuteQueryPOJOsInput input, ParamValueResolver collectedParams, QueryMetaModel queryMetaModel) {
+
+		final StructuredDebug debug = DEBUG ? new StructuredDebug("execute") : null;
+		Object ret;
+	
+		try {
 		
 		final int joinCount = q.getJoinCount(query);
-		
-		Object ret;
 
 		// TODO: Handle 1 result part case? no need for array
 		final ExecuteQueryScratch scratch =  q.createScratchArea(query, queryMetaModel);
-
-		final StructuredDebug debug = DEBUG ? new StructuredDebug("execute") : null;
 		
 		
 		if (joinCount > 0) {
@@ -112,9 +114,12 @@ final class ExecuteQueryPOJOs<QUERY> extends ExecutableQueryAggregateComputation
 				ret = q.getAggregateDefault(query);
 			}
 		}
+		}
+		finally {
 		
 		if (debug != null) {
 			debug.output(System.out);
+		}
 		}
 
 		return ret;
@@ -654,12 +659,40 @@ final class ExecuteQueryPOJOs<QUERY> extends ExecutableQueryAggregateComputation
 		return ret;
 	}
 	
-	private void debugMatch(QUERY query, int level, int [] conditionIndices, EMatch ret, StructuredDebug debug) {
+	private static class ConditionDebug {
+		private final EClauseOperator operator;
+		private final Method lhsMethod;
+		private final String value;
+
+		public ConditionDebug(EClauseOperator operator, Method lhsMethod, String value) {
+
+			this.operator = operator;
+			this.lhsMethod = lhsMethod;
+			this.value = value;
+		}
+		
+		String getMethodName() {
+			return lhsMethod.getDeclaringClass().getSimpleName() + "." + lhsMethod.getName();			
+		}
+		
+		String getConditionsString() {
+			return getMethodName() + " " + operator.name() + " " + value;
+		}
+	}
+	
+	private ConditionDebug getConditionDebug(QUERY query, int level, int [] conditionIndices) {
 		final EClauseOperator operator = q.getOperator(query, level, conditionIndices);
 		final Method lhsMethod = q.getForDebugConditionLhsMethod(query, level, conditionIndices);
 		final String value = q.getForDebugConditionValue(query, level, conditionIndices);
+
+		return new ConditionDebug(operator, lhsMethod, value);
+	}
+	
+	private void debugMatch(QUERY query, int level, int [] conditionIndices, EMatch ret, StructuredDebug debug) {
 		
-		debugMatch(query, lhsMethod, operator, value, ret, debug);
+		final ConditionDebug conditionDebug = getConditionDebug(query, level, conditionIndices);
+		
+		debugMatch(conditionDebug, ret, debug);
 	}
 
 	private void debugRootMatch(QUERY query, int conditionIdx, EMatch ret, StructuredDebug debug) {
@@ -667,14 +700,16 @@ final class ExecuteQueryPOJOs<QUERY> extends ExecutableQueryAggregateComputation
 		final Method lhsMethod = q.getForDebugRootConditionLhsMethod(query, conditionIdx);
 		final String value = q.getForDebugRootConditionValue(query, conditionIdx);
 		
-		debugMatch(query, lhsMethod, operator, value, ret, debug);
+		final ConditionDebug conditionDebug = new ConditionDebug(operator, lhsMethod, value);
+		
+		debugMatch(conditionDebug, ret, debug);
 	}
 	
-	private void debugMatch(QUERY query, Method lhsMethod, EClauseOperator operator, String value, EMatch ret, StructuredDebug debug) {
+	private void debugMatch(ConditionDebug conditionDebug, EMatch ret, StructuredDebug debug) {
 		
-		final String lhsString = lhsMethod.getDeclaringClass().getSimpleName() + "." + lhsMethod.getName();
+		final String lhsString = conditionDebug.getMethodName();
 		
-		debug.debug(lhsString, operator.name(), value.toString(), " => ", ret != null ? ret.toString() : "null");
+		debug.debug(lhsString, conditionDebug.operator.name(), conditionDebug.value.toString(), " => ", ret != null ? ret.toString() : "null");
 	}
 
 
@@ -774,6 +809,9 @@ final class ExecuteQueryPOJOs<QUERY> extends ExecutableQueryAggregateComputation
 			
 			final int conditionSourceIdx = q.getConditionSourceIdx(query, level, conditionIndices);
 			
+			System.out.println("## got source idx " + conditionSourceIdx + " for level " + level + ", indices: " + Arrays.toString(conditionIndices));
+			
+			
 			if (conditionSourceIdx == sourceIdx) {
 				
 				if (q.isSubCondition(query, level, conditionIndices)) {
@@ -810,6 +848,10 @@ final class ExecuteQueryPOJOs<QUERY> extends ExecutableQueryAggregateComputation
 					
 				}
 				else {
+					
+					if (debug != null) {
+						debug.debug("evaluating this-level condition level " + level + ", source " + sourceIdx + " on indices " + Arrays.toString(conditionIndices));
+					}
 				
 					if (q.evaluateCondition(query, level, conditionIndices, instance, scratch)) {
 	

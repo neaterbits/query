@@ -16,6 +16,7 @@ abstract class AdhocConditionsStateMachine<MODEL, RESULT, CONDITIONS extends Adh
 	
 	private EAdhocConditionsState state;
 
+
 	abstract void intAddConditionToArray(Function<?, ?> function);
 
 	abstract void intAddSub(CONDITIONS sub);
@@ -72,6 +73,18 @@ abstract class AdhocConditionsStateMachine<MODEL, RESULT, CONDITIONS extends Adh
 		return ret;
 	}
 
+	void addOperator(EClauseOperator operator, Object value, int sourceIdx) {
+		if (DEBUG) {
+			final String methodName = Thread.currentThread().getStackTrace()[2].getMethodName();
+
+			System.out.println("addOperator AdhocCondition." + methodName + "() level " + getLevel() + ", source "
+					+ sourceIdx + 
+					(operator != null ? (" op " + operator + " value " + value) : "")
+					+ " in state  " + state);
+		}
+		
+		intAddOperator(operator, value, sourceIdx);
+	}
 	
 	final <QUERY extends AdhocQueryNamed<MODEL, RESULT>>
 			CONDITIONS intAddCondition(ConditionsType conditionsType, Function<?, ?> function, Consumer<?> nestedBuilder) {
@@ -190,7 +203,7 @@ abstract class AdhocConditionsStateMachine<MODEL, RESULT, CONDITIONS extends Adh
 			}
 		}
 
-		setState(newState);
+		setState(newState, -1, null, null);
 		
 		return ret;
 	}
@@ -240,7 +253,7 @@ abstract class AdhocConditionsStateMachine<MODEL, RESULT, CONDITIONS extends Adh
 		
 		}
 
-		setState(newState);
+		setState(newState, -1, null, null);
 	}
 	
 	
@@ -280,7 +293,7 @@ abstract class AdhocConditionsStateMachine<MODEL, RESULT, CONDITIONS extends Adh
 			throw new IllegalStateException("Unknown conditions state "+ state);
 		}
 
-		setState(newState);
+		setState(newState, -1, null, null);
 	}
 
 	@SuppressWarnings({"unchecked"})
@@ -321,19 +334,22 @@ abstract class AdhocConditionsStateMachine<MODEL, RESULT, CONDITIONS extends Adh
 
 		intAddConditionToArray(whereFunction);
 
-		setState(newState);
+		setState(newState, -1, null, null);
 	}
 
-	private void setState(EAdhocConditionsState newState) {
+	private void setState(EAdhocConditionsState newState, int sourceIdx, EClauseOperator operator, Object value) {
 
 		if (newState == null) {
 			throw new IllegalArgumentException("newState == null");
 		}
 
 		if (DEBUG) {
-			final String methodName = Thread.currentThread().getStackTrace()[2].getMethodName();;
+			final String methodName = Thread.currentThread().getStackTrace()[2].getMethodName();
 
-			System.out.println("AdhocCondition." + methodName + "() : " + state + " => " + newState);
+			System.out.println("AdhocCondition." + methodName + "() level " + getLevel() + ", source "
+					+ sourceIdx + 
+					(operator != null ? (" op " + operator + " value " + value) : "")
+					+ ": " + state + " => " + newState);
 		}
 
 		this.state = newState;
@@ -435,10 +451,10 @@ abstract class AdhocConditionsStateMachine<MODEL, RESULT, CONDITIONS extends Adh
 		}
 		
 		
-		setState(newState);
+		setState(newState, sourceIdx, whereOperator, whereValue);
 		
 		intAddConditionToArray(whereFunction);
-		intAddOperator(whereOperator, whereValue, sourceIdx);
+		addOperator(whereOperator, whereValue, sourceIdx);
 		
 		intAddConditionToArray(nextFunction);
 	}
@@ -468,9 +484,9 @@ abstract class AdhocConditionsStateMachine<MODEL, RESULT, CONDITIONS extends Adh
 			throw new IllegalStateException("Unexpected state " + state);
 		}
 
-		setState(newState);
+		setState(newState, sourceIdx, whereOperator, whereValue);
 
 		intAddConditionToArray(whereFunction);
-		intAddOperator(whereOperator, whereValue, sourceIdx);
+		addOperator(whereOperator, whereValue, sourceIdx);
 	}
 }
