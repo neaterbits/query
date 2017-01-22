@@ -454,6 +454,20 @@ final class CompiledQuery {
 			throw new IllegalArgumentException("condition == null");
 		}
 		
+		final CompiledCondition ret;
+		
+		if (condition instanceof CollectedCondition_NonNested) {
+			ret = compileNonNestedCondition((CollectedCondition_NonNested)condition, sources, cache);
+		}
+		else {
+			throw new UnsupportedOperationException("unknown condition type " + condition);
+		}
+
+		return ret;
+	}
+
+	private static CompiledCondition compileNonNestedCondition(CollectedCondition_NonNested condition, CompiledSelectSources<?> sources, CompiledGetterSetterCache cache) throws CompileException {
+		
 		final CompiledFieldReference lhs = sources.makeFieldReference(condition, condition.getGetter(), cache);
 		
 		ConditionValue value;
@@ -475,7 +489,7 @@ final class CompiledQuery {
 			value = null;
 		}
 
-		final CompiledCondition ret = new CompiledCondition(condition, lhs, value);
+		final CompiledConditionComparison ret = new CompiledConditionComparison(condition, lhs, value);
 		
 		return ret;
 	}

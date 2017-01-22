@@ -21,4 +21,9 @@ public abstract class ConditionAdapterComparableBase<T, R> implements ConditionV
 	public R onMatches(CollectedCondition_StringMatches condition, T param) {
 		throw new UnsupportedOperationException("Not supported for numeric types");
 	}
+
+	@Override
+	public R onNested(CollectedCondition_Nested condition, T param) {
+		throw new UnsupportedOperationException("Not supported for numeric types");
+	}
 }

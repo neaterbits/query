@@ -390,22 +390,27 @@ final class ExecutableQueryForCompiledQuery implements ExecutableQuery<CompiledQ
 		return conditions != null ? conditions.getConditions().size() : 0;
 	}
 
+	private CompiledConditionComparison getRootComparisonCondition(CompiledQuery query, int conditionIdx) {
+		return (CompiledConditionComparison)query.getConditions().getConditions().get(conditionIdx);
+	}
+	
 	@Override
 	public EClauseOperator getRootConditionOperator(CompiledQuery query, int conditionIdx) {
-		return query.getConditions().getConditions().get(conditionIdx).getOperator();
-	}
 
-	
+		return getRootComparisonCondition(query, conditionIdx).getOperator();
+	}
 	
 	
 	@Override
 	public CompiledFieldReference getRootConditionLhs(CompiledQuery query, int conditionIdx) {
-		return query.getConditions().getConditions().get(conditionIdx).getLhs();
+
+		return getRootComparisonCondition(query, conditionIdx).getLhs();
 	}
 
 	@Override
 	public ConditionValue getRootConditionValue(CompiledQuery query, int conditionIdx) {
-		return query.getConditions().getConditions().get(conditionIdx).getValue();
+
+		return getRootComparisonCondition(query, conditionIdx).getValue();
 	}
 
 	@Override
@@ -437,13 +442,14 @@ final class ExecutableQueryForCompiledQuery implements ExecutableQuery<CompiledQ
 
 	@Override
 	public int getRootConditionSourceIdx(CompiledQuery query, int conditionIdx) {
-		return query.getConditions().getConditions().get(conditionIdx).getLhsSource().getIdx();
+		
+		return getRootComparisonCondition(query, conditionIdx).getLhsSource().getIdx();
 	}
 
 	@Override
 	public boolean evaluateRootCondition(CompiledQuery query, Object instance, int conditionIdx, ConditionValuesScratch scratch) {
 		
-		final CompiledCondition condition = query.getConditions().getConditions().get(conditionIdx);
+		final CompiledConditionComparison condition = (CompiledConditionComparison)query.getConditions().getConditions().get(conditionIdx);
 		
 		// Must evaluate condition with params.
 		// First figure lhs

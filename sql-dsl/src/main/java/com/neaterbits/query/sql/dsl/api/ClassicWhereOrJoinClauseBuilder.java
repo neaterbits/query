@@ -1,5 +1,6 @@
 package com.neaterbits.query.sql.dsl.api;
 
+import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
@@ -313,25 +314,45 @@ final class ClassicWhereOrJoinClauseBuilder<MODEL, RESULT>
 		return new CollectedClause_Comparative<MODEL, RESULT, RR, OR_CLAUSES>(orClauses, makeGetter(getter));
 	}
 
+	private final <T extends ISharedAndClauses<MODEL, RESULT>, IMPL extends CollectedClauses<MODEL, RESULT>>
+		ClassicCollectedOrClauses<MODEL, RESULT> addNestedAndImpl(Consumer<T> orBuilder) {
+	
+		super.addNestedAndImpl(orBuilder, new ClassicCollectedAndClauses<MODEL, RESULT>(null));
+
+		final ClassicCollectedOrClauses<MODEL, RESULT> orClauses = new ClassicCollectedOrClauses<>(this);
+		
+		return orClauses;
+	}
+	
+	private final <T extends ISharedOrClauses<MODEL, RESULT>, IMPL extends CollectedClauses<MODEL, RESULT>>
+		ClassicCollectedAndClauses<MODEL, RESULT> addNestedOrImpl(Consumer<T> orBuilder) {
+
+		super.addNestedOrImpl(orBuilder, new ClassicCollectedOrClauses<MODEL, RESULT>(null));
+
+		final ClassicCollectedAndClauses<MODEL, RESULT> andClauses = new ClassicCollectedAndClauses<>(this);
+		
+		return andClauses;
+	}
+	
 
 	@Override
 	public IClassicAndClausesAlias<MODEL, RESULT> andNest(ISharedNestedOrConsumerAlias<MODEL, RESULT, IClassicOrClausesAlias<MODEL, RESULT>> orBuilder) {
-		throw new UnsupportedOperationException("TODO");
+		return addNestedOrImpl(orBuilder);
 	}
 
 	@Override
-	public IClassicOrClausesAlias<MODEL, RESULT> orNest(ISharedNestedAndConsumerAlias<MODEL, RESULT, IClassicAndClausesAlias<MODEL, RESULT>> orBuilder) {
-		throw new UnsupportedOperationException("TODO");
+	public IClassicOrClausesAlias<MODEL, RESULT> orNest(ISharedNestedAndConsumerAlias<MODEL, RESULT, IClassicAndClausesAlias<MODEL, RESULT>> andBuilder) {
+		return addNestedAndImpl(andBuilder);
 	}
 
 	@Override
 	public IClassicAndClausesNamed<MODEL, RESULT> andNest(ISharedNestedOrConsumerNamed<MODEL, RESULT, IClassicOrClausesNamed<MODEL, RESULT>> orBuilder) {
-		throw new UnsupportedOperationException("TODO");
+		return addNestedOrImpl(orBuilder);
 	}
 
 	@Override
-	public IClassicOrClausesNamed<MODEL, RESULT> orNest(ISharedNestedAndConsumerNamed<MODEL, RESULT, IClassicAndClausesNamed<MODEL, RESULT>> orBuilder) {
-		throw new UnsupportedOperationException("TODO");
+	public IClassicOrClausesNamed<MODEL, RESULT> orNest(ISharedNestedAndConsumerNamed<MODEL, RESULT, IClassicAndClausesNamed<MODEL, RESULT>> andBuilder) {
+		return addNestedAndImpl(andBuilder);
 	}
 }
 

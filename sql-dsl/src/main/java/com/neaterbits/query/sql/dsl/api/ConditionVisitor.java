@@ -23,5 +23,7 @@ interface ConditionVisitor<T, R> {
 	R onContains(CollectedCondition_StringContains condition, T param);
 
 	R onMatches(CollectedCondition_StringMatches condition, T param);
+	
+	R onNested(CollectedCondition_Nested condition, T param);
 }
 

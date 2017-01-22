@@ -1,5 +1,6 @@
 package com.neaterbits.query.sql.dsl.api;
 
+import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
@@ -58,13 +59,24 @@ final class ClassicCollectedAndClauses<MODEL, RESULT> extends CollectedClauses<M
 		return new CollectedClause_String<MODEL, RESULT, IClassicAndClausesAlias<MODEL,RESULT>>(this, makeGetter(getter));
 	}
 
+	private final <T extends ISharedOrClauses<MODEL, RESULT>, IMPL extends CollectedClauses<MODEL, RESULT>> void addNestedOrImpl(Consumer<T> orBuilder) {
+		super.addNestedOrImpl(orBuilder, new ClassicCollectedOrClauses<MODEL, RESULT>(null));
+	}
+	
 	@Override
 	public IClassicAndClausesAlias<MODEL, RESULT> andNest(ISharedNestedOrConsumerAlias<MODEL, RESULT, IClassicOrClausesAlias<MODEL, RESULT>> orBuilder) {
-		throw new UnsupportedOperationException();
+	
+		addNestedOrImpl(orBuilder);
+	
+		return this;
 	}
 
 	@Override
 	public IClassicAndClausesNamed<MODEL, RESULT> andNest(ISharedNestedOrConsumerNamed<MODEL, RESULT, IClassicOrClausesNamed<MODEL, RESULT>> orBuilder) {
-		throw new UnsupportedOperationException();
+		
+		addNestedOrImpl(orBuilder);
+		
+		return this;
 	}
+	
 }

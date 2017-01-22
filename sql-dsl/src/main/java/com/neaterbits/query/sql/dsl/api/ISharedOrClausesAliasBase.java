@@ -13,6 +13,6 @@ public interface ISharedOrClausesAliasBase<
     
     ISharedClauseComparableStringAll<MODEL, RESULT, OR_CLAUSES> or(ISupplierString getter);
 
-	OR_CLAUSES orNest(ISharedNestedAndConsumerAlias<MODEL, RESULT, NESTED_AND_CLAUSES> orBuilder);
+	OR_CLAUSES orNest(ISharedNestedAndConsumerAlias<MODEL, RESULT, NESTED_AND_CLAUSES> andBuilder);
     
 }

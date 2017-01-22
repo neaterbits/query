@@ -19,6 +19,6 @@ public interface ISharedOrClausesNamedBase<
 
     <T> STRING_CLAUSE or(StringFunction<T> getter);
     
-	OR_CLAUSES orNest(ISharedNestedAndConsumerNamed<MODEL, RESULT, NESTED_AND_CLAUSES> orBuilder);
+	OR_CLAUSES orNest(ISharedNestedAndConsumerNamed<MODEL, RESULT, NESTED_AND_CLAUSES> andBuilder);
     
 }

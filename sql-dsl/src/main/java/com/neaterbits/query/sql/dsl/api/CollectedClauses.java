@@ -1,5 +1,6 @@
 package com.neaterbits.query.sql.dsl.api;
 
+import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
@@ -36,6 +37,23 @@ abstract class CollectedClauses<MODEL, RESULT>
 		this.clauseCollector = collector;
 	}
 
+	@SuppressWarnings("unchecked")
+	final <T extends ISharedOrClauses<MODEL, RESULT>, IMPL extends CollectedClauses<MODEL, RESULT>> void addNestedOrImpl(Consumer<T> orBuilder, IMPL impl) {
+		orBuilder.accept((T)impl);
+		
+		// add nested to super
+		clauseCollector.add(this, new CollectedCondition_Nested(impl));
+	}
+
+	@SuppressWarnings("unchecked")
+	final <T extends ISharedAndClauses<MODEL, RESULT>, IMPL extends CollectedClauses<MODEL, RESULT>> void addNestedAndImpl(Consumer<T> orBuilder, IMPL impl) {
+		
+		orBuilder.accept((T)impl);
+		
+		// add nested to super
+		clauseCollector.add(this, new CollectedCondition_Nested(impl));
+	}
+	
 	
 	@Override
 	public final MODEL compile() {
@@ -43,7 +61,7 @@ abstract class CollectedClauses<MODEL, RESULT>
 		// Get collected query
 		final QueryCollectorImpl queryCollector = getQueryCollector();
 		
-		// Compile the collectd query
+		// Compile the collected query
 		CompiledQuery compiledQuery;
 		try {
 			compiledQuery = CompiledQuery.compile(queryCollector);
@@ -54,4 +72,5 @@ abstract class CollectedClauses<MODEL, RESULT>
 		// Compile into model (better name for this operation?)
 		return getModelCompiler().compile(compiledQuery);
 	}
+
 }
