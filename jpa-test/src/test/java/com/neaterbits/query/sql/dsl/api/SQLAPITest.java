@@ -52,7 +52,7 @@ public class SQLAPITest extends BaseSQLAPITest {
 
 	
 	@Test
-    public void testTableBased() {
+    public void testNameBased() {
 
 		final Company acme = new Company(-1, "Acme");
 		final Company foo = new Company(-1, "Foo");
@@ -159,6 +159,47 @@ public class SQLAPITest extends BaseSQLAPITest {
 			assertThat(ret.compareTo(new BigDecimal("176.39"))).isEqualTo(0);
 		});
 		
+	}
+
+	@Test
+    public void testNameBasedNested() {
+
+		final Company acme = new Company(-1, "Acme");
+		final Company foo = new Company(-1, "Foo");
+
+        final SingleQuery<CompanyResultVO> startsWithAc =
+        		selectOneOrNull(CompanyResultVO.class)
+
+        	.map(Company::getName).to(CompanyResultVO::setName)
+        	
+        	.from(Company.class)
+
+        	.where(Company::getName).startsWith("Ac")
+        	.andNest(o -> o
+        			.or(Company::getName).endsWith("e")
+        			.or(Company::getName).endsWith("a"))
+        						
+
+        	.compile();
+		
+		store(s  -> s.add(acme)).
+		check(ds -> {
+	        checkSelectOneOrNull(
+	        		ds,
+	        		new CompanyResultVO(acme.getName()),
+	        		startsWithAc,
+	        		q -> q.execute());
+		});
+
+		// Search for foo as well, should return no matches
+		store(s  -> s.add(foo)).
+		check(ds -> {
+	        checkSelectOneOrNull(
+	        		ds,
+	        		null,
+	        		startsWithAc,
+	        		q -> q.execute());
+		});
 	}
 	
 	

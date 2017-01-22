@@ -417,7 +417,11 @@ final class ExecutableQueryForCompiledQuery implements ExecutableQuery<CompiledQ
 	public ConditionsType getRootConditionsType(CompiledQuery query) {
 		
 		final CompiledConditions conditions = query.getConditions();
-		
+
+		return getConditionsType(conditions);
+	}
+	
+	private ConditionsType getConditionsType(CompiledConditions conditions) {
 		final ConditionsType ret;
 		
 		if (conditions == null) {
@@ -439,17 +443,22 @@ final class ExecutableQueryForCompiledQuery implements ExecutableQuery<CompiledQ
 
 		return ret;
 	}
+	
 
 	@Override
-	public int getRootConditionSourceIdx(CompiledQuery query, int conditionIdx) {
-		
+	public final int getRootConditionSourceIdx(CompiledQuery query, int conditionIdx) {
 		return getRootComparisonCondition(query, conditionIdx).getLhsSource().getIdx();
 	}
 
 	@Override
-	public boolean evaluateRootCondition(CompiledQuery query, Object instance, int conditionIdx, ConditionValuesScratch scratch) {
-		
+	public final boolean evaluateRootCondition(CompiledQuery query, Object instance, int conditionIdx, ConditionValuesScratch scratch) {
+
 		final CompiledConditionComparison condition = (CompiledConditionComparison)query.getConditions().getConditions().get(conditionIdx);
+
+		return evaluateCondition(condition, instance, scratch);
+	}
+	
+	private boolean evaluateCondition(CompiledConditionComparison condition, Object instance, ConditionValuesScratch scratch) {
 		
 		// Must evaluate condition with params.
 		// First figure lhs
@@ -473,9 +482,8 @@ final class ExecutableQueryForCompiledQuery implements ExecutableQuery<CompiledQ
 		}
 
 		return ret;
+		
 	}
-	
-	
 
 	@Override
 	public boolean isRootConditionOnly(CompiledQuery query) {
@@ -487,44 +495,78 @@ final class ExecutableQueryForCompiledQuery implements ExecutableQuery<CompiledQ
 		return 1; // For now
 	}
 
+	private CompiledCondition getCondition(CompiledQuery query, int level, int[] conditionIndices) {
+		// First find CompiledConditions
+		CompiledConditions conditions = getConditionsList(query, level, conditionIndices);
+		
+
+		return conditions.getConditions().get(conditionIndices[level]);
+	}
+	
+	private CompiledConditionComparison getComparisonCondition(CompiledQuery query, int level, int[] conditionIndices) {
+
+		return (CompiledConditionComparison)getCondition(query, level, conditionIndices);
+	}
+
+	private CompiledConditions getConditionsList(CompiledQuery query, int level, int[] conditionIndices) {
+		
+		CompiledConditions cur = query.getConditions();
+
+		// Must loop over all indices
+		for (int i = 0; i < level; ++ i) {
+			final CompiledConditionNested nested = ((CompiledConditionNested)cur.getConditions().get(conditionIndices[i]));
+			
+			cur = nested.getSub();
+		}
+
+		return cur;
+	}
+	
 	@Override
 	public ConditionsType getConditionsType(CompiledQuery query, int level, int[] conditionIndices) {
-		throw new UnsupportedOperationException("TODO");
+		
+		final CompiledConditions conditions = getConditionsList(query, level, conditionIndices);
+
+		return getConditionsType(conditions);
 	}
 
 	@Override
 	public int getConditionSourceIdx(CompiledQuery query, int level, int[] conditionIndices) {
-		throw new UnsupportedOperationException("TODO");
+		return getComparisonCondition(query, level, conditionIndices).getLhsSource().getIdx();
 	}
 
 	@Override
 	public boolean isSubCondition(CompiledQuery query, int level, int[] conditionIndices) {
-		throw new UnsupportedOperationException("TODO");
+
+		return getCondition(query, level, conditionIndices) instanceof CompiledConditionNested;
 	}
 
 	@Override
 	public int getConditionsCount(CompiledQuery query, int level, int[] conditionIndices) {
-		throw new UnsupportedOperationException("TODO");
+		return getConditionsList(query, level, conditionIndices).getConditions().size();
 	}
 
 	@Override
 	public EClauseOperator getOperator(CompiledQuery query, int level, int[] conditionIndices) {
-		throw new UnsupportedOperationException("TODO");
+		return getComparisonCondition(query, level, conditionIndices).getOperator();
 	}
 
 	@Override
 	public boolean evaluateCondition(CompiledQuery query, int level, int[] conditionIndices, Object instance, ConditionValuesScratch scratch) {
-		throw new UnsupportedOperationException("TODO");
+		
+		final CompiledConditionComparison comparison = getComparisonCondition(query, level, conditionIndices);
+		
+		return evaluateCondition(comparison, instance, scratch);
 	}
 	
 	@Override
 	public Method getForDebugConditionLhsMethod(CompiledQuery query, int level, int[] conditionIndices) {
-		throw new UnsupportedOperationException("TODO");
+		return getComparisonCondition(query, level, conditionIndices).getLhs().getGetter().getGetterMethod();
 	}
 
 	@Override
 	public String getForDebugConditionValue(CompiledQuery query, int level, int[] conditionIndices) {
-		throw new UnsupportedOperationException("TODO");
+		return getComparisonCondition(query, level, conditionIndices).getValue().toString();
 	}
 
 

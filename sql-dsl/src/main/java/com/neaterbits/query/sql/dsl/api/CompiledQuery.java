@@ -102,7 +102,7 @@ final class CompiledQuery {
 		
 		// Check all clauses etc
 		if (collector.getClauses() != null && !collector.getClauses().getClauses().isEmpty()) {
-			compiledConditions = compileConditions(collector.getClauses(), compiledSources, cache);
+			compiledConditions = compileConditions(collector.getClauses(), compiledSources, cache, 0);
 		}
 		else {
 			compiledConditions = null;
@@ -391,7 +391,7 @@ final class CompiledQuery {
 		return ret;
 	}
 	
-	private static CompiledConditions compileConditions(Collector_Clause clauses, CompiledSelectSources<?> sources, CompiledGetterSetterCache cache)
+	private static CompiledConditions compileConditions(Collector_Clause clauses, CompiledSelectSources<?> sources, CompiledGetterSetterCache cache, int level)
 		throws CompileException {
 
 		final List<CollectedClause> list = clauses.getClauses();
@@ -400,7 +400,7 @@ final class CompiledQuery {
 			throw new IllegalStateException("no clauses");
 		}
 
-		if (!(list.get(0).getClause() instanceof CollectedClauses_Initial<?, ?>)) {
+		if (level == 0 && !(list.get(0).getClause() instanceof CollectedClauses_Initial<?, ?>)) {
 			throw new IllegalStateException("first entry is not a whereclause");
 		}
 		
@@ -410,7 +410,7 @@ final class CompiledQuery {
 		
 		if (num == 1) {
 			
-			final CompiledCondition singleCondition = compileCondition(list.get(0).getCondition(), sources, cache);
+			final CompiledCondition singleCondition = compileCondition(list.get(0).getCondition(), sources, cache, level);
 			
 			ret = new CompiledConditions_Single(singleCondition);
 		}
@@ -418,7 +418,7 @@ final class CompiledQuery {
 			final Class<?> clauseClass = list.get(1).getClause().getClass();
 			final List<CompiledCondition> conditions = new ArrayList<>(num);
 
-			conditions.add(compileCondition(list.get(0).getCondition(), sources, cache));
+			conditions.add(compileCondition(list.get(0).getCondition(), sources, cache, level));
 
 			for (int i = 1; i < num; ++ i) {
 
@@ -429,7 +429,7 @@ final class CompiledQuery {
 					throw new IllegalStateException("class mismatch: " + clauseClass.getSimpleName() + "/" + otherClauseClass.getSimpleName());
 				}
 
-				conditions.add(compileCondition(clause.getCondition(), sources, cache));
+				conditions.add(compileCondition(clause.getCondition(), sources, cache, level));
 			}
 			
 			if (clauseClass.equals(ClassicCollectedAndClauses.class) || clauseClass.equals(ClassicCollectedAndClauses_Named_Single.class)) {
@@ -448,7 +448,7 @@ final class CompiledQuery {
 		return ret;
 	}
 
-	private static CompiledCondition compileCondition(CollectedCondition condition, CompiledSelectSources<?> sources, CompiledGetterSetterCache cache) throws CompileException {
+	private static CompiledCondition compileCondition(CollectedCondition condition, CompiledSelectSources<?> sources, CompiledGetterSetterCache cache, int level) throws CompileException {
 		
 		if (condition == null) {
 			throw new IllegalArgumentException("condition == null");
@@ -459,6 +459,9 @@ final class CompiledQuery {
 		if (condition instanceof CollectedCondition_NonNested) {
 			ret = compileNonNestedCondition((CollectedCondition_NonNested)condition, sources, cache);
 		}
+		else if (condition instanceof CollectedCondition_Nested) {
+			ret = compileNestedCondition((CollectedCondition_Nested)condition, sources, cache, level);
+		}
 		else {
 			throw new UnsupportedOperationException("unknown condition type " + condition);
 		}
@@ -466,6 +469,20 @@ final class CompiledQuery {
 		return ret;
 	}
 
+
+	private static CompiledCondition compileNestedCondition(CollectedCondition_Nested condition, CompiledSelectSources<?> sources, CompiledGetterSetterCache cache, int level) throws CompileException {
+
+		final CompiledConditionNested ret;
+		
+		// Compiled recursively
+		final CompiledConditions compiled = compileConditions(condition.getCollected().clauseCollector, sources, cache, level + 1);
+		
+		ret = new CompiledConditionNested(compiled);
+		
+		return ret;
+	}
+
+	
 	private static CompiledCondition compileNonNestedCondition(CollectedCondition_NonNested condition, CompiledSelectSources<?> sources, CompiledGetterSetterCache cache) throws CompileException {
 		
 		final CompiledFieldReference lhs = sources.makeFieldReference(condition, condition.getGetter(), cache);

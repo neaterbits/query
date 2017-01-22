@@ -313,13 +313,16 @@ final class ClassicWhereOrJoinClauseBuilder<MODEL, RESULT>
 
 		return new CollectedClause_Comparative<MODEL, RESULT, RR, OR_CLAUSES>(orClauses, makeGetter(getter));
 	}
+		
+		
 
+	// ------------------------  OR helpers ------------------------
 	private final <T extends ISharedAndClauses<MODEL, RESULT>, IMPL extends CollectedClauses<MODEL, RESULT>>
 		ClassicCollectedOrClauses<MODEL, RESULT> addNestedAndImpl(Consumer<T> orBuilder) {
 	
-		super.addNestedAndImpl(orBuilder, new ClassicCollectedAndClauses<MODEL, RESULT>(null));
-
 		final ClassicCollectedOrClauses<MODEL, RESULT> orClauses = new ClassicCollectedOrClauses<>(this);
+		
+		super.addNestedAndImpl(orBuilder, new ClassicCollectedAndClauses<MODEL, RESULT>(orClauses, new Collector_Clause()));
 		
 		return orClauses;
 	}
@@ -327,9 +330,9 @@ final class ClassicWhereOrJoinClauseBuilder<MODEL, RESULT>
 	private final <T extends ISharedOrClauses<MODEL, RESULT>, IMPL extends CollectedClauses<MODEL, RESULT>>
 		ClassicCollectedAndClauses<MODEL, RESULT> addNestedOrImpl(Consumer<T> orBuilder) {
 
-		super.addNestedOrImpl(orBuilder, new ClassicCollectedOrClauses<MODEL, RESULT>(null));
-
 		final ClassicCollectedAndClauses<MODEL, RESULT> andClauses = new ClassicCollectedAndClauses<>(this);
+
+		super.addNestedOrImpl(orBuilder, new ClassicCollectedOrClauses<MODEL, RESULT>(andClauses, new Collector_Clause()));
 		
 		return andClauses;
 	}

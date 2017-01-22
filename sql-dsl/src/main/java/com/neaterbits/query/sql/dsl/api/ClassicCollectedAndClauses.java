@@ -12,6 +12,11 @@ final class ClassicCollectedAndClauses<MODEL, RESULT> extends CollectedClauses<M
 		super(last);
 	}
 	
+	ClassicCollectedAndClauses(BaseQueryEntity<MODEL> qe, Collector_Clause clausesCollector) {
+		super(qe.getQueryCollector(), qe.getModelCompiler(), clausesCollector);
+	}
+	
+	
 	private <T, RR extends Comparable<RR>,
 			AND_CLAUSES extends ISharedAndClausesNamedAll<MODEL, RESULT, AND_CLAUSES, NESTED_OR_CLAUSES>,
 			NESTED_OR_CLAUSES extends ISharedOrClausesNamedAll<MODEL, RESULT, NESTED_OR_CLAUSES, AND_CLAUSES>>
@@ -60,7 +65,7 @@ final class ClassicCollectedAndClauses<MODEL, RESULT> extends CollectedClauses<M
 	}
 
 	private final <T extends ISharedOrClauses<MODEL, RESULT>, IMPL extends CollectedClauses<MODEL, RESULT>> void addNestedOrImpl(Consumer<T> orBuilder) {
-		super.addNestedOrImpl(orBuilder, new ClassicCollectedOrClauses<MODEL, RESULT>(null));
+		super.addNestedOrImpl(orBuilder, new ClassicCollectedOrClauses<MODEL, RESULT>(this, new Collector_Clause()));
 	}
 	
 	@Override
