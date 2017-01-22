@@ -21,8 +21,8 @@ final class ClassicCollectedAndClauses<MODEL, RESULT> extends CollectedClauses<M
 	}
 
 	private <RR,
-			AND_CLAUSES extends ISharedAndClausesAlias<MODEL, RESULT, AND_CLAUSES, NESTED_OR_CLAUSES>,
-			NESTED_OR_CLAUSES extends ISharedOrClauses<MODEL, RESULT>>
+			AND_CLAUSES extends ISharedAndClausesAliasBase<MODEL, RESULT, AND_CLAUSES, NESTED_OR_CLAUSES>,
+			NESTED_OR_CLAUSES extends ISharedOrClausesAlias<MODEL, RESULT>>
 		ISharedConditionClauseAlias<MODEL, RESULT, RR, AND_CLAUSES> andAliasImpl(Supplier<RR> getter) {
 		
 		return new CollectedClause_Condition<MODEL, RESULT, RR, AND_CLAUSES>(this, makeGetter(getter));
@@ -56,5 +56,15 @@ final class ClassicCollectedAndClauses<MODEL, RESULT> extends CollectedClauses<M
 	@Override
 	public ISharedClauseComparableStringAll<MODEL, RESULT, IClassicAndClausesAlias<MODEL, RESULT>> and(ISupplierString getter) {
 		return new CollectedClause_String<MODEL, RESULT, IClassicAndClausesAlias<MODEL,RESULT>>(this, makeGetter(getter));
+	}
+
+	@Override
+	public IClassicAndClausesAlias<MODEL, RESULT> andNest(ISharedNestedOrConsumerAlias<MODEL, RESULT, IClassicOrClausesAlias<MODEL, RESULT>> orBuilder) {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public IClassicAndClausesNamed<MODEL, RESULT> andNest(ISharedNestedOrConsumerNamed<MODEL, RESULT, IClassicOrClausesNamed<MODEL, RESULT>> orBuilder) {
+		throw new UnsupportedOperationException();
 	}
 }

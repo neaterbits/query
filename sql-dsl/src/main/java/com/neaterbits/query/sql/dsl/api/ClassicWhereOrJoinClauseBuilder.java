@@ -280,8 +280,8 @@ final class ClassicWhereOrJoinClauseBuilder<MODEL, RESULT>
 	}
 
 	private <RR,
-			AND_CLAUSES extends ISharedAndClausesAlias<MODEL, RESULT, AND_CLAUSES, NESTED_OR_CLAUSES>,
-			NESTED_OR_CLAUSES extends ISharedOrClauses<MODEL, RESULT>>
+			AND_CLAUSES extends ISharedAndClausesAliasBase<MODEL, RESULT, AND_CLAUSES, NESTED_OR_CLAUSES>,
+			NESTED_OR_CLAUSES extends ISharedOrClausesAlias<MODEL, RESULT>>
 	
 		ISharedConditionClauseAlias<MODEL, RESULT, RR, AND_CLAUSES> andAliasImpl(Supplier<RR> getter) {
 
@@ -304,13 +304,34 @@ final class ClassicWhereOrJoinClauseBuilder<MODEL, RESULT>
 	}
 
 	private <RR extends Comparable<RR>,
-			OR_CLAUSES extends ISharedOrClausesAlias<MODEL, RESULT, OR_CLAUSES, NESTED_AND_CLAUSES>,
-			NESTED_AND_CLAUSES extends ISharedAndClausesAlias<MODEL, RESULT, NESTED_AND_CLAUSES, OR_CLAUSES>>
+			OR_CLAUSES extends ISharedOrClausesAliasBase<MODEL, RESULT, OR_CLAUSES, NESTED_AND_CLAUSES>,
+			NESTED_AND_CLAUSES extends ISharedAndClausesAliasBase<MODEL, RESULT, NESTED_AND_CLAUSES, OR_CLAUSES>>
 		ISharedClauseConditionAll<MODEL, RESULT, RR, OR_CLAUSES> orAliasImpl(CollectedClauses_Initial<MODEL, RESULT> last, Supplier<RR> getter) {
 
 		final ClassicCollectedOrClauses<MODEL, RESULT> orClauses = new ClassicCollectedOrClauses<>(last);
 
 		return new CollectedClause_Comparative<MODEL, RESULT, RR, OR_CLAUSES>(orClauses, makeGetter(getter));
+	}
+
+
+	@Override
+	public IClassicAndClausesAlias<MODEL, RESULT> andNest(ISharedNestedOrConsumerAlias<MODEL, RESULT, IClassicOrClausesAlias<MODEL, RESULT>> orBuilder) {
+		throw new UnsupportedOperationException("TODO");
+	}
+
+	@Override
+	public IClassicOrClausesAlias<MODEL, RESULT> orNest(ISharedNestedAndConsumerAlias<MODEL, RESULT, IClassicAndClausesAlias<MODEL, RESULT>> orBuilder) {
+		throw new UnsupportedOperationException("TODO");
+	}
+
+	@Override
+	public IClassicAndClausesNamed<MODEL, RESULT> andNest(ISharedNestedOrConsumerNamed<MODEL, RESULT, IClassicOrClausesNamed<MODEL, RESULT>> orBuilder) {
+		throw new UnsupportedOperationException("TODO");
+	}
+
+	@Override
+	public IClassicOrClausesNamed<MODEL, RESULT> orNest(ISharedNestedAndConsumerNamed<MODEL, RESULT, IClassicAndClausesNamed<MODEL, RESULT>> orBuilder) {
+		throw new UnsupportedOperationException("TODO");
 	}
 }
 

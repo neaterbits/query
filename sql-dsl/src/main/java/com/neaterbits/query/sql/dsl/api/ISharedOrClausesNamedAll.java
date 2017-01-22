@@ -1,6 +1,6 @@
 package com.neaterbits.query.sql.dsl.api;
 
-public interface ISharedOrClausesNamedAll<MODEL, RESULT, OR_CLAUSES extends ISharedOrClausesNamedAll<MODEL, RESULT, OR_CLAUSES, NESTED_AND_CLAUSES>, NESTED_AND_CLAUSES extends ISharedAndClauses<MODEL, RESULT>>
+public interface ISharedOrClausesNamedAll<MODEL, RESULT, OR_CLAUSES extends ISharedOrClausesNamedAll<MODEL, RESULT, OR_CLAUSES, NESTED_AND_CLAUSES>, NESTED_AND_CLAUSES extends ISharedAndClausesNamed<MODEL, RESULT>>
 
 		extends ISharedOrClausesNamedBase<
 				MODEL,

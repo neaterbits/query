@@ -47,4 +47,14 @@ final class ClassicCollectedOrClauses<MODEL, RESULT> extends CollectedClauses<MO
 	public ISharedClauseComparableStringAll<MODEL, RESULT, IClassicOrClausesAlias<MODEL, RESULT>> or(ISupplierString getter) {
 		return new CollectedClause_String<MODEL, RESULT, IClassicOrClausesAlias<MODEL,RESULT>>(this, makeGetter(getter));
 	}
+
+	@Override
+	public IClassicOrClausesAlias<MODEL, RESULT> orNest(ISharedNestedAndConsumerAlias<MODEL, RESULT, IClassicAndClausesAlias<MODEL, RESULT>> orBuilder) {
+		throw new UnsupportedOperationException("TODO");
+	}
+
+	@Override
+	public IClassicOrClausesNamed<MODEL, RESULT> orNest(ISharedNestedAndConsumerNamed<MODEL, RESULT, IClassicAndClausesNamed<MODEL, RESULT>> orBuilder) {
+		throw new UnsupportedOperationException("TODO");
+	}
 }

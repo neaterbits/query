@@ -4,7 +4,7 @@ public interface ISharedOrClausesNamedValues<
 				MODEL,
 				RESULT,
 				OR_CLAUSES extends ISharedOrClausesNamedValues<MODEL, RESULT, OR_CLAUSES, NESTED_AND_CLAUSES>,
-				NESTED_AND_CLAUSES extends ISharedAndClauses<MODEL, RESULT>>
+				NESTED_AND_CLAUSES extends ISharedAndClausesNamed<MODEL, RESULT>>
 
 		extends ISharedOrClausesNamedBase<
 			MODEL,

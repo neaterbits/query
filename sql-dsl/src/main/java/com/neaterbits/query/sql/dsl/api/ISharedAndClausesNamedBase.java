@@ -1,18 +1,17 @@
 package com.neaterbits.query.sql.dsl.api;
 
-import java.util.function.Consumer;
 
 public interface ISharedAndClausesNamedBase<
 		MODEL,
 		RESULT,
 		AND_CLAUSES extends ISharedAndClauses<MODEL, RESULT>,
-		NESTED_OR_CLAUSES extends ISharedOrClauses<MODEL, RESULT>,
+		NESTED_OR_CLAUSES extends ISharedOrClausesNamed<MODEL, RESULT>,
 
 		INTEGER_CLAUSE extends ISharedClauseComparableCommonBase<MODEL, RESULT, Integer, AND_CLAUSES>,
 		LONG_CLAUSE extends ISharedClauseComparableCommonBase<MODEL, RESULT, Long, AND_CLAUSES>,
 		STRING_CLAUSE extends ISharedClauseComparableStringBase<MODEL, RESULT, AND_CLAUSES>>
 
-		extends ISharedAndClauses<MODEL, RESULT> {
+		extends ISharedAndClausesNamed<MODEL, RESULT> {
 	
     <T> INTEGER_CLAUSE and(IFunctionInteger<T> getter);
 
@@ -20,6 +19,6 @@ public interface ISharedAndClausesNamedBase<
 
     <T> STRING_CLAUSE and(StringFunction<T> getter);
     
-	AND_CLAUSES andNest(Consumer<NESTED_OR_CLAUSES> orBuilder);
+	AND_CLAUSES andNest(ISharedNestedOrConsumerNamed<MODEL, RESULT, NESTED_OR_CLAUSES> orBuilder);
     
 }
