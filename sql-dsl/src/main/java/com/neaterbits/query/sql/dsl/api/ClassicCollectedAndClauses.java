@@ -11,13 +11,18 @@ final class ClassicCollectedAndClauses<MODEL, RESULT> extends CollectedClauses<M
 		super(last);
 	}
 	
-	private <T, RR extends Comparable<RR>, AND_CLAUSES extends ISharedAndClausesNamedAll<MODEL, RESULT, AND_CLAUSES>>
+	private <T, RR extends Comparable<RR>,
+			AND_CLAUSES extends ISharedAndClausesNamedAll<MODEL, RESULT, AND_CLAUSES, NESTED_OR_CLAUSES>,
+			NESTED_OR_CLAUSES extends ISharedOrClausesNamedAll<MODEL, RESULT, NESTED_OR_CLAUSES, AND_CLAUSES>>
+			
 		ISharedClauseComparableCommonAll<MODEL, RESULT, RR, AND_CLAUSES> andClassImpl(Function<T, RR> getter) {
 		
 		return new CollectedClause_Comparative<MODEL, RESULT, RR, AND_CLAUSES>(this, makeGetter(getter));
 	}
 
-	private <RR, AND_CLAUSES extends ISharedAndClausesAlias<MODEL, RESULT, AND_CLAUSES>>
+	private <RR,
+			AND_CLAUSES extends ISharedAndClausesAlias<MODEL, RESULT, AND_CLAUSES, NESTED_OR_CLAUSES>,
+			NESTED_OR_CLAUSES extends ISharedOrClauses<MODEL, RESULT>>
 		ISharedConditionClauseAlias<MODEL, RESULT, RR, AND_CLAUSES> andAliasImpl(Supplier<RR> getter) {
 		
 		return new CollectedClause_Condition<MODEL, RESULT, RR, AND_CLAUSES>(this, makeGetter(getter));

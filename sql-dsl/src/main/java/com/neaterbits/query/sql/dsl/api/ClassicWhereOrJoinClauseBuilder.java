@@ -267,7 +267,11 @@ final class ClassicWhereOrJoinClauseBuilder<MODEL, RESULT>
 
 	// ------------------------  AND helpers ------------------------
 
-	private <T, RR extends Comparable<RR>, AND_CLAUSES extends ISharedAndClausesNamedAll<MODEL, RESULT, AND_CLAUSES>>
+	private <T,
+			RR extends Comparable<RR>,
+			AND_CLAUSES extends ISharedAndClausesNamedAll<MODEL, RESULT, AND_CLAUSES, NESTED_OR_CLAUSES>,
+			NESTED_OR_CLAUSES extends ISharedOrClausesNamedAll<MODEL, RESULT, NESTED_OR_CLAUSES, AND_CLAUSES>>
+			
 		ISharedClauseComparableCommonAll<MODEL, RESULT, RR, AND_CLAUSES> andClassImpl(Function<T, RR> getter) {
 		
 		final ClassicCollectedAndClauses<MODEL, RESULT> andClauses = new ClassicCollectedAndClauses<>(this);
@@ -275,7 +279,10 @@ final class ClassicWhereOrJoinClauseBuilder<MODEL, RESULT>
 		return new CollectedClause_Comparative<MODEL, RESULT, RR, AND_CLAUSES>(andClauses, makeGetter(getter));
 	}
 
-	private <RR, AND_CLAUSES extends ISharedAndClausesAlias<MODEL, RESULT, AND_CLAUSES>>
+	private <RR,
+			AND_CLAUSES extends ISharedAndClausesAlias<MODEL, RESULT, AND_CLAUSES, NESTED_OR_CLAUSES>,
+			NESTED_OR_CLAUSES extends ISharedOrClauses<MODEL, RESULT>>
+	
 		ISharedConditionClauseAlias<MODEL, RESULT, RR, AND_CLAUSES> andAliasImpl(Supplier<RR> getter) {
 
 		final ClassicCollectedAndClauses<MODEL, RESULT> andClauses = new ClassicCollectedAndClauses<>(this);
@@ -284,7 +291,11 @@ final class ClassicWhereOrJoinClauseBuilder<MODEL, RESULT>
 	}
 
 	// ------------------------  OR helpers ------------------------
-	private <T, RR extends Comparable<RR>, OR_CLAUSES extends ISharedOrClausesNamed<MODEL, RESULT, OR_CLAUSES>>
+	private <T,
+			RR extends Comparable<RR>,
+			OR_CLAUSES extends ISharedOrClausesNamedAll<MODEL, RESULT, OR_CLAUSES, NESTED_AND_CLAUSES>,
+			NESTED_AND_CLAUSES extends ISharedAndClausesNamedAll<MODEL, RESULT, NESTED_AND_CLAUSES, OR_CLAUSES>>
+	
 		ISharedClauseComparableCommonAll<MODEL, RESULT, RR, OR_CLAUSES> orClassImpl(Function<T, RR> getter) {
 		
 		final ClassicCollectedOrClauses<MODEL, RESULT> orClauses = new ClassicCollectedOrClauses<>(this);
@@ -292,7 +303,9 @@ final class ClassicWhereOrJoinClauseBuilder<MODEL, RESULT>
 		return new CollectedClause_Comparative<MODEL, RESULT, RR, OR_CLAUSES>(orClauses, makeGetter(getter));
 	}
 
-	private <RR extends Comparable<RR>, OR_CLAUSES extends ISharedOrClausesAlias<MODEL, RESULT, OR_CLAUSES>>
+	private <RR extends Comparable<RR>,
+			OR_CLAUSES extends ISharedOrClausesAlias<MODEL, RESULT, OR_CLAUSES, NESTED_AND_CLAUSES>,
+			NESTED_AND_CLAUSES extends ISharedAndClausesAlias<MODEL, RESULT, NESTED_AND_CLAUSES, OR_CLAUSES>>
 		ISharedClauseConditionAll<MODEL, RESULT, RR, OR_CLAUSES> orAliasImpl(CollectedClauses_Initial<MODEL, RESULT> last, Supplier<RR> getter) {
 
 		final ClassicCollectedOrClauses<MODEL, RESULT> orClauses = new ClassicCollectedOrClauses<>(last);
