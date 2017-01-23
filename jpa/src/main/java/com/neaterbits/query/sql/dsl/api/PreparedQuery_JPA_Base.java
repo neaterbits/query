@@ -5,12 +5,12 @@ import java.util.List;
 import javax.persistence.NoResultException;
 import javax.persistence.Query;
 
-abstract class JPABasePreparedQuery<QUERY> extends DSPreparedQueryDB<QUERY, javax.persistence.Query> {
+abstract class PreparedQuery_JPA_Base<QUERY> extends PreparedQuery_DB<QUERY, javax.persistence.Query> {
 
 	private final ParamNameAssigner paramNameAssigner;
 
 
-	JPABasePreparedQuery(QueryDataSourceJPA dataSource, ExecutableQuery<QUERY> queryAccess, QUERY query, ParamNameAssigner paramNameAssigner) {
+	PreparedQuery_JPA_Base(QueryDataSourceJPA dataSource, ExecutableQuery<QUERY> queryAccess, QUERY query, ParamNameAssigner paramNameAssigner) {
 		super(dataSource, queryAccess, query);
 
 		this.paramNameAssigner = paramNameAssigner;

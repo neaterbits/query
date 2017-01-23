@@ -1,10 +1,10 @@
 package com.neaterbits.query.sql.dsl.api;
 
-abstract class DSPreparedQuery<DATASOURCE extends QueryDataSource> {
+abstract class PreparedQuery_DS<DATASOURCE extends QueryDataSource> {
 
 	private final DATASOURCE dataSource;
 
-	DSPreparedQuery(DATASOURCE dataSource) {
+	PreparedQuery_DS(DATASOURCE dataSource) {
 
 		if (dataSource == null) {
 			throw new IllegalArgumentException("dataSource == null");

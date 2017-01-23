@@ -12,15 +12,15 @@ final class QueryResultGetterParamsBuilderImpl<RESULT_TYPE>
 							   
 	private final QueryParamCollector queryParamCollector;
 	private final QueryDataSource_Base dataSource;
-	private final DSPreparedQuery dsQuery;
-	private final BasePreparedQueryImpl<RESULT_TYPE> query; 
+	private final PreparedQuery_DS dsQuery;
+	private final Builder_PreparedQuery_Base<RESULT_TYPE> query; 
 	private Param<?> lastParam;
 
 	QueryResultGetterParamsBuilderImpl(
 			QueryParamCollector queryParamCollector,
 			QueryDataSource_Base dataSource,
-			DSPreparedQuery dsQuery,
-			BasePreparedQueryImpl<RESULT_TYPE> query) {
+			PreparedQuery_DS dsQuery,
+			Builder_PreparedQuery_Base<RESULT_TYPE> query) {
 
 		if (queryParamCollector == null) {
 			throw new IllegalArgumentException("queryParamCollector == null");

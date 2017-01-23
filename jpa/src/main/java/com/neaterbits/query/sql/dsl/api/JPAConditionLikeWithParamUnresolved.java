@@ -21,6 +21,10 @@ final class JPAConditionLikeWithParamUnresolved extends JPAConditionUnresolved {
 	@Override
 	void resolve(StringBuilder sb, ParamValueResolver resolver) {
 
+		if (resolver == null) {
+			throw new IllegalArgumentException("resolver == null");
+		}
+
 		final Object value = resolver.resolveParam(param);
 		
 		if (value == null) {

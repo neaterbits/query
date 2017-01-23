@@ -20,12 +20,12 @@ public class QueryDataSourcePojoWithList extends QueryDataSource_Pojo_Base {
 	}
 
 	@Override
-	<QUERY> DSPreparedQuery<QueryDataSource_Pojo_Base> prepareSingleQuery(ExecutableQuery<QUERY> q, QUERY query) {
+	<QUERY> PreparedQuery_DS<QueryDataSource_Pojo_Base> prepareSingleQuery(ExecutableQuery<QUERY> q, QUERY query) {
 		return prepare(q, query);
 	}
 
 	@Override
-	<QUERY> DSPreparedQuery<QueryDataSource_Pojo_Base> prepareMultiQuery(ExecutableQuery<QUERY> q, QUERY query) {
+	<QUERY> PreparedQuery_DS<QueryDataSource_Pojo_Base> prepareMultiQuery(ExecutableQuery<QUERY> q, QUERY query) {
 		return prepare(q, query);
 	}
 	

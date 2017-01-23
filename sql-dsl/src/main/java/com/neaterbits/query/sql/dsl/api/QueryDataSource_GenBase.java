@@ -9,10 +9,10 @@ abstract class QueryDataSource_GenBase extends QueryDataSource_DB {
 
 	abstract PreparedQueryBuilder createBuilder();
 	
-	abstract <QUERY> DSPreparedQuery<QueryDataSource_DB> prepare(PreparedQueryBuilder sb, ExecutableQuery<QUERY> q, QUERY query);
+	abstract <QUERY> PreparedQuery_DS<QueryDataSource_DB> prepare(PreparedQueryBuilder sb, ExecutableQuery<QUERY> q, QUERY query);
 
 	@Override
-	<QUERY> DSPreparedQuery<QueryDataSource_DB> prepareSingleQuery(ExecutableQuery<QUERY> q, QUERY query) {
+	<QUERY> PreparedQuery_DS<QueryDataSource_DB> prepareSingleQuery(ExecutableQuery<QUERY> q, QUERY query) {
 
 		if (query == null) {
 			throw new IllegalArgumentException("query == null");
@@ -22,7 +22,7 @@ abstract class QueryDataSource_GenBase extends QueryDataSource_DB {
 	}
 
 	@Override
-	<QUERY> DSPreparedQuery<QueryDataSource_DB> prepareMultiQuery(ExecutableQuery<QUERY> q, QUERY query) {
+	<QUERY> PreparedQuery_DS<QueryDataSource_DB> prepareMultiQuery(ExecutableQuery<QUERY> q, QUERY query) {
 
 		if (query == null) {
 			throw new IllegalArgumentException("query == null");
@@ -31,7 +31,7 @@ abstract class QueryDataSource_GenBase extends QueryDataSource_DB {
 		return prepareQuery(q, query);
 	}
 
-	private <QUERY> DSPreparedQuery<QueryDataSource_DB> prepareQuery(ExecutableQuery<QUERY> q, QUERY query) {
+	private <QUERY> PreparedQuery_DS<QueryDataSource_DB> prepareQuery(ExecutableQuery<QUERY> q, QUERY query) {
 
 		final PreparedQueryBuilder sb = createBuilder();
 

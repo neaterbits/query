@@ -14,8 +14,8 @@ final class SharedQuery_Multi<RESULT> extends SharedQuery_Base<List<RESULT>, RES
 
 		final QueryDataSource_Base<?> dataSourceBase = (QueryDataSource_Base<?>)dataSource;
 		
-		final DSPreparedQuery<?> dsPrepared = dataSourceBase.prepareMultiQuery(q, getCompiledQuery());
+		final PreparedQuery_DS<?> dsPrepared = dataSourceBase.prepareMultiQuery(q, getCompiledQuery());
 		
-		return new MultiPreparedQueryImpl<>(dataSourceBase, dsPrepared);
+		return new Builder_PreparedQuery_Multi<>(dataSourceBase, dsPrepared);
 	}
 }

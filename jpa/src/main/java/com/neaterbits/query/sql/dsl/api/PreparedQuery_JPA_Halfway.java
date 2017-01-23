@@ -3,13 +3,13 @@ package com.neaterbits.query.sql.dsl.api;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
-final class JPAHalfwayPreparedQuery<QUERY> extends JPABasePreparedQuery<QUERY> {
+final class PreparedQuery_JPA_Halfway<QUERY> extends PreparedQuery_JPA_Base<QUERY> {
 
 	private final String base;
 	private final PreparedQueryConditionsBuilderJPA conditions;
 	private final EntityManager entityManager;
 	
-	JPAHalfwayPreparedQuery(QueryDataSourceJPA dataSource, ExecutableQuery<QUERY> queryAccess, QUERY query, ParamNameAssigner paramNameAssigner, String base, PreparedQueryConditionsBuilderJPA conditions, EntityManager entityManager) {
+	PreparedQuery_JPA_Halfway(QueryDataSourceJPA dataSource, ExecutableQuery<QUERY> queryAccess, QUERY query, ParamNameAssigner paramNameAssigner, String base, PreparedQueryConditionsBuilderJPA conditions, EntityManager entityManager) {
 		super(dataSource, queryAccess, query, paramNameAssigner);
 		
 		if (base == null) {

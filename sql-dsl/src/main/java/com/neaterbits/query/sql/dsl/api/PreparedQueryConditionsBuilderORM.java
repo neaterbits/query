@@ -90,12 +90,15 @@ abstract class PreparedQueryConditionsBuilderORM extends PreparedQueryConditions
 
 	@Override
 	final void resolveFromParams(StringBuilder sb, ParamValueResolver resolver) {
-		
-		final ConditionsType type = getType();
 
+		if (resolver == null) {
+			throw new IllegalArgumentException("resolver == null");
+		}
+
+		final ConditionsType type = getType();
 		
 		boolean first;
-		
+
 		if (this.sb.length() == 0) {
 			first = true;
 		}

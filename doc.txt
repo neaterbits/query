@@ -517,8 +517,9 @@ Neste:
 
   Hvordan skille disse? Er to forskjellige typer, Checked og Unchecked der adhoc er Checked.
   
- - rename av Class / Table => Entity (i motsetning til Alias) slik at blir konsistent.
- - nøsta and/or
+# - rename av Class / Table => Entity (i motsetning til Alias) slik at blir konsistent.
+Renamed til Named
+#  - nøsta and/or
  - in
 # - bedre debugging av in-memory query eksekvering
  - parametere
@@ -581,7 +582,7 @@ flatten(Foo::getSubs)
 
 list(fooLis)
    .join(sub).on(Main::foo).isEqualTo(Sub::bar)
-	.where(Sub::var).isLessThat(10)
+	.where(Sub::var).isLessThan(10)
    .join() 
 
 

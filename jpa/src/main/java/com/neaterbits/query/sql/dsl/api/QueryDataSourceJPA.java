@@ -44,10 +44,10 @@ public abstract class QueryDataSourceJPA extends QueryDataSource_ORM<
 
 
 	@Override
-	final <QUERY> DSPreparedQueryDB<QUERY, Query> makeHalfwayPreparedQuery(ExecutableQuery<QUERY> queryAccess, QUERY query,
+	final <QUERY> PreparedQuery_DB<QUERY, Query> makeHalfwayPreparedQuery(ExecutableQuery<QUERY> queryAccess, QUERY query,
 			ParamNameAssigner paramNameAssigner, String base, PreparedQueryConditionsBuilder conditions) {
 		
-		return new JPAHalfwayPreparedQuery<QUERY>(this, queryAccess, query, paramNameAssigner, base, (PreparedQueryConditionsBuilderJPA)conditions, em);
+		return new PreparedQuery_JPA_Halfway<QUERY>(this, queryAccess, query, paramNameAssigner, base, (PreparedQueryConditionsBuilderJPA)conditions, em);
 	}
 
 	private static final JPAConditionToOperator conditionToOperator = new JPAConditionToOperator();

@@ -26,14 +26,14 @@ public final class QueryDataSourceJPANative extends QueryDataSourceJPA {
 	}
 	
 	@Override
-	final <QUERY> DSPreparedQueryDB<QUERY, javax.persistence.Query> makeCompletePreparedQuery(ExecutableQuery<QUERY> q, QUERY query, ParamNameAssigner paramNameAssigner, PreparedQueryBuilder sb) {
+	final <QUERY> PreparedQuery_DB<QUERY, javax.persistence.Query> makeCompletePreparedQuery(ExecutableQuery<QUERY> q, QUERY query, ParamNameAssigner paramNameAssigner, PreparedQueryBuilder sb) {
 		final String ansiSQL = sb.getQueryAsString();
 		
 		System.out.println("## native:\n" + ansiSQL);
 		
 		final javax.persistence.Query jpaQuery = em.createNativeQuery(ansiSQL);
 
-		return new JPACompletePreparedQuery<QUERY>(this, q, query, paramNameAssigner, jpaQuery);
+		return new PreparedQuery_JPA_Complete<QUERY>(this, q, query, paramNameAssigner, jpaQuery);
 	}
 
 	

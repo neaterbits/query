@@ -25,9 +25,9 @@ abstract class QueryDataSource_ORM<ORM_QUERY, MANAGED, EMBEDDED, IDENTIFIABLE, A
 	
 	abstract PreparedQueryConditionsBuilder createConditionsBuilder(PreparedQueryBuilderORM queryBuilderORM, boolean atRoot);
 	
-	abstract <QUERY> DSPreparedQueryDB<QUERY, ORM_QUERY> makeCompletePreparedQuery(ExecutableQuery<QUERY> q, QUERY query, ParamNameAssigner paramNameAssigner, PreparedQueryBuilder sb);
+	abstract <QUERY> PreparedQuery_DB<QUERY, ORM_QUERY> makeCompletePreparedQuery(ExecutableQuery<QUERY> q, QUERY query, ParamNameAssigner paramNameAssigner, PreparedQueryBuilder sb);
 	
-	abstract <QUERY> DSPreparedQueryDB<QUERY, ORM_QUERY> makeHalfwayPreparedQuery(ExecutableQuery<QUERY> queryAccess, QUERY query, ParamNameAssigner paramNameAssigner, String base, PreparedQueryConditionsBuilder conditions);
+	abstract <QUERY> PreparedQuery_DB<QUERY, ORM_QUERY> makeHalfwayPreparedQuery(ExecutableQuery<QUERY> queryAccess, QUERY query, ParamNameAssigner paramNameAssigner, String base, PreparedQueryConditionsBuilder conditions);
 
 	
 	/**
@@ -53,7 +53,7 @@ abstract class QueryDataSource_ORM<ORM_QUERY, MANAGED, EMBEDDED, IDENTIFIABLE, A
 	}
 
 	@Override
-	final <QUERY> DSPreparedQuery<QueryDataSource_DB> prepare(PreparedQueryBuilder sb, ExecutableQuery<QUERY> q, QUERY query) {
+	final <QUERY> PreparedQuery_DS<QueryDataSource_DB> prepare(PreparedQueryBuilder sb, ExecutableQuery<QUERY> q, QUERY query) {
 		
 		sb.select();
 		
@@ -74,7 +74,7 @@ abstract class QueryDataSource_ORM<ORM_QUERY, MANAGED, EMBEDDED, IDENTIFIABLE, A
 		}
 		
 		// Prepare conditions if present
-		final DSPreparedQueryDB<QUERY, ORM_QUERY> ret;
+		final PreparedQuery_DB<QUERY, ORM_QUERY> ret;
 		
 		if (q.hasConditions(query)) {
 			

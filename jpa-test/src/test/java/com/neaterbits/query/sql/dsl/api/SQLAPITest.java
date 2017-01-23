@@ -25,7 +25,6 @@ import com.neaterbits.query.jpatest.model.Person;
 import com.neaterbits.query.jpatest.model.Role;
 import com.neaterbits.query.sql.dsl.api.entity.QueryMetaModel;
 import com.neaterbits.query.sql.dsl.api.helper.jpa.QueryTestDSJPANative;
-import com.neaterbits.query.sql.dsl.api.helper.jpa.QueryTestDSJPQL;
 import com.neaterbits.query.sql.dsl.api.testhelper.BaseSQLAPITest;
 import com.neaterbits.query.sql.dsl.api.testhelper.QueryTestDSBuilder;
 import com.neaterbits.query.sql.dsl.api.testhelper.QueryTestDSCheck;
@@ -42,8 +41,8 @@ public class SQLAPITest extends BaseSQLAPITest {
 		
 		return new QueryTestDSCombined(
 				
-				//() -> new QueryTestDSJPANative("query-jpa-test"),
-				() -> new QueryTestDSJPQL("query-jpa-test"),
+				() -> new QueryTestDSJPANative("query-jpa-test"),
+				//() -> new QueryTestDSJPQL("query-jpa-test"),
 				() -> new QueryTestDSInMemory(jpaQueryMetaModel)
 				)
 				
@@ -65,7 +64,7 @@ public class SQLAPITest extends BaseSQLAPITest {
         	.from(Company.class)
 
         	.where(Company::getName).startsWith("Ac")
-        	.and(Company::getName).endsWith("cme")
+        	.  and(Company::getName).endsWith("cme")
 
         	.compile();
 		
@@ -146,7 +145,49 @@ public class SQLAPITest extends BaseSQLAPITest {
 			});
 	}
 	
-	
+
+	@Test
+    public void testNameWithParam() {
+
+		final Company acme = new Company(-1, "Acme");
+		final Company foo = new Company(-1, "Foo");
+
+		final Param<String> endParam = Select.stringParam();
+		
+		
+		
+        final SingleQuery<CompanyResultVO> startsWithAc =
+        		selectOneOrNull(CompanyResultVO.class)
+
+        	.map(Company::getName).to(CompanyResultVO::setName)
+        	
+        	.from(Company.class)
+
+        	.where(Company::getName).startsWith("Ac")
+        	.  and(Company::getName).endsWith(endParam)
+
+        	.compile();
+		
+		store(s  -> s.add(acme)).
+		check(ds -> {
+	        checkSelectOneOrNull(
+	        		ds,
+	        		new CompanyResultVO(acme.getName()),
+	        		startsWithAc,
+	        		q -> q.execute());
+		});
+
+		// Search for foo as well, should return no matches
+		store(s  -> s.add(foo)).
+		check(ds -> {
+	        checkSelectOneOrNull(
+	        		ds,
+	        		null,
+	        		startsWithAc,
+	        		q -> q.execute());
+		});
+	}
+
 	@Test
     public void testSum() {
 		final Company acme = new Company(-1, "Acme", new BigDecimal("100.90"));

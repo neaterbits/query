@@ -10,7 +10,7 @@ import java.util.List;
  *
  */
 
-abstract class DSPreparedQueryDB<QUERY, ORM_QUERY> extends DSPreparedQuery<QueryDataSource_DB> {
+abstract class PreparedQuery_DB<QUERY, ORM_QUERY> extends PreparedQuery_DS<QueryDataSource_DB> {
 
 	private final ExecutableQuery<QUERY> q;
 	private final QUERY query;
@@ -23,7 +23,7 @@ abstract class DSPreparedQueryDB<QUERY, ORM_QUERY> extends DSPreparedQuery<Query
 	abstract List<?> executeForMultiResult(ORM_QUERY ormQuery);
 	
 	
-	DSPreparedQueryDB(QueryDataSource_DB dataSource, ExecutableQuery<QUERY> q, QUERY query) {
+	PreparedQuery_DB(QueryDataSource_DB dataSource, ExecutableQuery<QUERY> q, QUERY query) {
 		
 		super(dataSource);
 		

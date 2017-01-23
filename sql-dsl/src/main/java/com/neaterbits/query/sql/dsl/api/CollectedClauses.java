@@ -19,7 +19,7 @@ abstract class CollectedClauses<MODEL, RESULT>
 	}
 
 	
-	CollectedClauses(CollectedClauses<MODEL, RESULT> last, ConditionsType newConditionsType) {
+	CollectedClauses(CollectedClauses_Initial<MODEL, RESULT> last, ConditionsType newConditionsType) {
 		super(last);
 		
 		if (last.clauseCollector.getConditionsType() != ConditionsType.SINGLE) {

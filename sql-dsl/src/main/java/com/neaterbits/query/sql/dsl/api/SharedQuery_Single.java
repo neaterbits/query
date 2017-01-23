@@ -12,8 +12,8 @@ final class SharedQuery_Single<RESULT> extends SharedQuery_Base<RESULT, RESULT> 
 		
 		final QueryDataSource_Base<?> dataSourceBase = (QueryDataSource_Base<?>)dataSource;
 		
-		final DSPreparedQuery<?> dsPrepared = dataSourceBase.prepareSingleQuery(q, getCompiledQuery());
+		final PreparedQuery_DS<?> dsPrepared = dataSourceBase.prepareSingleQuery(q, getCompiledQuery());
 		
-		return new ClassicSinglePreparedQueryImpl<RESULT>(dataSourceBase, dsPrepared);
+		return new Builder_PreparedQuery_ClassicSingle<RESULT>(dataSourceBase, dsPrepared);
 	}
 }

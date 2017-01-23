@@ -18,14 +18,14 @@ public final class QueryDataSourceJPQL extends QueryDataSourceJPA {
 	
 
 	@Override
-	<QUERY> DSPreparedQueryDB<QUERY, javax.persistence.Query> makeCompletePreparedQuery(ExecutableQuery<QUERY> q, QUERY query, ParamNameAssigner paramNameAssigner, PreparedQueryBuilder sb) {
+	<QUERY> PreparedQuery_DB<QUERY, javax.persistence.Query> makeCompletePreparedQuery(ExecutableQuery<QUERY> q, QUERY query, ParamNameAssigner paramNameAssigner, PreparedQueryBuilder sb) {
 		final String jpql = sb.toString();
 		
 		System.out.println("## jpql:\n" + jpql);
 		
 		final javax.persistence.Query jpaQuery = em.createQuery(jpql);
 
-		return new JPACompletePreparedQuery<QUERY>(this, q, query, paramNameAssigner, jpaQuery);
+		return new PreparedQuery_JPA_Complete<QUERY>(this, q, query, paramNameAssigner, jpaQuery);
 	}
 
 	@Override
