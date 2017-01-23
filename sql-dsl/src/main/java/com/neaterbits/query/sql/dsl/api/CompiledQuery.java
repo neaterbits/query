@@ -111,7 +111,7 @@ final class CompiledQuery {
 		
 		// Check all clauses etc
 		final int conditionsMaxDepth;
-		if (collector.getClauses() != null && !collector.getClauses().getClauses().isEmpty()) {
+		if (collector.getClauses() != null && !collector.getClauses().getConditions().isEmpty()) {
 			compiledConditions = compileConditions(collector.getClauses(), compiledSources, cache, 0);
 			
 			conditionsMaxDepth = compiledConditions.getMaxDepth();
@@ -413,54 +413,45 @@ final class CompiledQuery {
 	private static CompiledConditions compileConditions(Collector_Clause clauses, CompiledSelectSources<?> sources, CompiledGetterSetterCache cache, int level)
 		throws CompileException {
 
-		final List<CollectedClause> list = clauses.getClauses();
+		final List<CollectedCondition> list = clauses.getConditions();
 		
 		if (list.isEmpty()) {
 			throw new IllegalStateException("no clauses");
 		}
 
-		if (level == 0 && !(list.get(0).getClause() instanceof CollectedClauses_Initial<?, ?>)) {
-			throw new IllegalStateException("first entry is not a whereclause");
-		}
-		
 		final CompiledConditions ret;
 		
 		final int num = list.size();
 		
 		if (num == 1) {
 			
-			final CompiledCondition singleCondition = compileCondition(list.get(0).getCondition(), sources, cache, level);
+			final CompiledCondition singleCondition = compileCondition(list.get(0), sources, cache, level);
 			
 			ret = new CompiledConditions_Single(singleCondition);
 		}
 		else {
-			final Class<?> clauseClass = list.get(1).getClause().getClass();
 			final List<CompiledCondition> conditions = new ArrayList<>(num);
 
-			conditions.add(compileCondition(list.get(0).getCondition(), sources, cache, level));
+			conditions.add(compileCondition(list.get(0), sources, cache, level));
 
 			for (int i = 1; i < num; ++ i) {
 
-				final CollectedClause clause = list.get(i);
-				final Class<?> otherClauseClass = clause.getClause().getClass();
+				final CollectedCondition condition = list.get(i);
 
-				if (!clauseClass.equals(otherClauseClass)) {
-					throw new IllegalStateException("class mismatch: " + clauseClass.getSimpleName() + "/" + otherClauseClass.getSimpleName());
-				}
-
-				conditions.add(compileCondition(clause.getCondition(), sources, cache, level));
+				conditions.add(compileCondition(condition, sources, cache, level));
 			}
 			
-			if (clauseClass.equals(ClassicCollectedAndClauses.class) || clauseClass.equals(ClassicCollectedAndClauses_Named_Single.class)) {
+			switch (clauses.getConditionsType()) {
+			case AND:
 				ret = new CompiledConditions_And(conditions);
-			}
-			else if (clauseClass.equals(ClassicCollectedOrClauses.class) || clauseClass.equals(ClassicCollectedOrClauses_Named_Single.class)) {
+				break;
+				
+			case OR:
 				ret = new CompiledConditions_Or(conditions);
-			}
-			else {
-				throw new IllegalStateException("Unknown clause class "
-					    + clauseClass.getSimpleName()
-						+ ", at 0 = " + list.get(0).getClause().getClass().getSimpleName());
+				break;
+				
+			default:
+				throw new IllegalStateException("Unknown conditions type " + clauses.getConditionsType());
 			}
 		}
 

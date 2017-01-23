@@ -90,7 +90,7 @@ public class SQLAPITest extends BaseSQLAPITest {
 	}
 
 	@Test
-    public void testSingleTable() {
+    public void testSingleTable1() {
     	
 		final Company acme = new Company(-1, "Acme");
 		final Company foo = new Company(-2, "Foo");
@@ -119,6 +119,14 @@ public class SQLAPITest extends BaseSQLAPITest {
 	        		startsWithAc,
 	        		q -> q.execute());
 		});
+	}
+	
+
+	@Test
+    public void testSingleTable2() {
+    	
+		final Company acme = new Company(-1, "Acme");
+		final Company foo = new Company(-2, "Foo");
 
         final MultiQuery<Company> startsWithAcOrEndsWithoo =
         		listFrom(Company.class)

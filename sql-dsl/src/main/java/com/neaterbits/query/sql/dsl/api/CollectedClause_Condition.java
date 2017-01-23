@@ -45,7 +45,7 @@ class CollectedClause_Condition<MODEL, RESULT, R, L extends ISharedLogicalClause
 			throw new IllegalArgumentException("condition == null");
 		}
 
-		clause.clauseCollector.add(clause, condition);
+		clause.clauseCollector.add(condition);
 		
 		return getLogicalClause();
 	}

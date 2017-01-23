@@ -12,9 +12,7 @@ final class ClassicSingleNamedResult<MODEL, RESULT>
 		super(
 				makeCollector(result),
 				modelCompiler,
-				new Collector_Clause());
-		
-		getQueryCollector().setClauses(super.clauseCollector);
+				new Collector_Clause(ConditionsType.SINGLE));
 	}
 	
 	private static QueryCollectorImpl makeCollector(CollectedQueryResult result) {

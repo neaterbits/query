@@ -4,7 +4,7 @@ final class ClassicCollectedOrClauses_Named_Single<MODEL, RESULT> extends Collec
 		implements IClassicSingleOrClausesNamed<MODEL, RESULT> {
 	
 	ClassicCollectedOrClauses_Named_Single(CollectedClauses_Initial<MODEL, RESULT> last) {
-		super(last);
+		super(last, ConditionsType.OR);
 	}
 
 	@Override

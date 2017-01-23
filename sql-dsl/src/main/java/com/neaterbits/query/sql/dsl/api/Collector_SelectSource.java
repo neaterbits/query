@@ -27,8 +27,6 @@ abstract class Collector_SelectSource<MODEL, RESULT> extends BaseQueryEntity<MOD
 		getQueryCollector().setSources(new CollectedSelectSource_Named(classes));
 		
 		final ClassicWhereOrJoinClauseBuilder<MODEL, RESULT> ret =  new ClassicWhereOrJoinClauseBuilder<MODEL, RESULT>(this);
-
-		getQueryCollector().setClauses(ret.clauseCollector);
 		
 		return ret;
 	}
@@ -46,8 +44,6 @@ abstract class Collector_SelectSource<MODEL, RESULT> extends BaseQueryEntity<MOD
 
 		final ClassicWhereOrJoinClauseBuilder<MODEL, RESULT> ret = new ClassicWhereOrJoinClauseBuilder<MODEL, RESULT>(this);
 		
-		getQueryCollector().setClauses(ret.clauseCollector);
-		
 		return ret;
 	}
 
@@ -61,8 +57,6 @@ abstract class Collector_SelectSource<MODEL, RESULT> extends BaseQueryEntity<MOD
 		getQueryCollector().setSources(new CollectedSelectSource_Aliases(aliases));
 
 		final ClassicWhereOrJoinClauseBuilder<MODEL, RESULT> ret = new ClassicWhereOrJoinClauseBuilder<MODEL, RESULT>(this);
-		
-		getQueryCollector().setClauses(ret.clauseCollector);
 		
 		return ret;
 	}

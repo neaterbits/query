@@ -5,7 +5,7 @@ final class ClassicCollectedAndClauses_Named_Single<MODEL, RESULT> extends Colle
 	implements IClassicSingleAndClausesNamed<MODEL, RESULT> {
 
 	ClassicCollectedAndClauses_Named_Single(CollectedClauses_Initial<MODEL, RESULT> last) {
-		super(last);
+		super(last, ConditionsType.AND);
 	}
 
 	@Override

@@ -15,7 +15,7 @@ final class ClassicWhereOrJoinClauseBuilder<MODEL, RESULT>
 			   IClassicJoinConditionAlias<MODEL, RESULT> {
 
 	ClassicWhereOrJoinClauseBuilder(BaseQueryEntity<MODEL> last) {
-		super(last, new Collector_Clause());
+		super(last);
 	}
 
 	// ------------------------  JOIN ------------------------
@@ -322,7 +322,8 @@ final class ClassicWhereOrJoinClauseBuilder<MODEL, RESULT>
 	
 		final ClassicCollectedOrClauses<MODEL, RESULT> orClauses = new ClassicCollectedOrClauses<>(this);
 		
-		super.addNestedAndImpl(orBuilder, orClauses, new ClassicCollectedAndClauses<MODEL, RESULT>(orClauses, new Collector_Clause()));
+		// Add to new OR
+		orClauses.addNestedAndImpl(orBuilder, new ClassicCollectedAndClauses<MODEL, RESULT>(orClauses));
 		
 		return orClauses;
 	}
@@ -332,7 +333,8 @@ final class ClassicWhereOrJoinClauseBuilder<MODEL, RESULT>
 
 		final ClassicCollectedAndClauses<MODEL, RESULT> andClauses = new ClassicCollectedAndClauses<>(this);
 
-		super.addNestedOrImpl(orBuilder, andClauses, new ClassicCollectedOrClauses<MODEL, RESULT>(andClauses, new Collector_Clause()));
+		// Add to new AND clause
+		andClauses.addNestedOrImpl(orBuilder, new ClassicCollectedOrClauses<MODEL, RESULT>(andClauses));
 		
 		return andClauses;
 	}

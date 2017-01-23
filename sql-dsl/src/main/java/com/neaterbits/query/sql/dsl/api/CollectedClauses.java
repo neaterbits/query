@@ -19,10 +19,15 @@ abstract class CollectedClauses<MODEL, RESULT>
 	}
 
 	
-	CollectedClauses(CollectedClauses<MODEL, RESULT> last) {
+	CollectedClauses(CollectedClauses<MODEL, RESULT> last, ConditionsType newConditionsType) {
 		super(last);
 		
-		this.clauseCollector = last.clauseCollector;
+		if (last.clauseCollector.getConditionsType() != ConditionsType.SINGLE) {
+			throw new IllegalArgumentException("Only call this constructor after WHERE");
+		}
+		
+		
+		this.clauseCollector = new Collector_Clause(last.clauseCollector, newConditionsType);
 	}
 	
 	CollectedClauses(BaseQueryEntity<MODEL> last, Collector_Clause collector) {
@@ -39,24 +44,24 @@ abstract class CollectedClauses<MODEL, RESULT>
 
 	@SuppressWarnings("unchecked")
 	final <T extends ISharedOrClauses<MODEL, RESULT>, IMPL extends CollectedClauses<MODEL, RESULT>>
-		void addNestedOrImpl(Consumer<T> orBuilder, IMPL andImpl, IMPL subOrImpl) {
+		void addNestedOrImpl(Consumer<T> orBuilder, IMPL subOrImpl) {
 		
 		
 		orBuilder.accept((T)subOrImpl);
 		
 		// add nested to super
-		clauseCollector.add(andImpl, new CollectedCondition_Nested(subOrImpl));
+		clauseCollector.add(new CollectedCondition_Nested(subOrImpl));
 	}
 
 	@SuppressWarnings("unchecked")
 	final <T extends ISharedAndClauses<MODEL, RESULT>, IMPL extends CollectedClauses<MODEL, RESULT>>
 	
-		void addNestedAndImpl(Consumer<T> orBuilder, IMPL orImpl, IMPL subAndImpl) {
+		void addNestedAndImpl(Consumer<T> orBuilder, IMPL subAndImpl) {
 		
 		orBuilder.accept((T)subAndImpl);
 		
 		// add nested to super
-		clauseCollector.add(orImpl, new CollectedCondition_Nested(subAndImpl));
+		clauseCollector.add(new CollectedCondition_Nested(subAndImpl));
 	}
 	
 	
@@ -65,6 +70,13 @@ abstract class CollectedClauses<MODEL, RESULT>
 		
 		// Get collected query
 		final QueryCollectorImpl queryCollector = getQueryCollector();
+		
+		if (queryCollector.getClauses() != null) {
+			throw new IllegalStateException("clauses already set");
+		}
+
+		// Now set clauses before compiling
+		queryCollector.setClauses(clauseCollector);
 		
 		// Compile the collected query
 		CompiledQuery compiledQuery;
