@@ -30,36 +30,6 @@ final class QueryCollectorImpl {
 
 		this.result = result;
 	}
-
-	QueryCollectorImpl(CollectedQueryResult result, MappingCollector mappings,
-			CollectedSelectSource sources,
-			Collector_Clause clauses, boolean isMulti) {
-		
-
-		if (result == null) {
-			throw new IllegalArgumentException("result == null");
-		}
-		
-		if (sources == null) {
-			throw new IllegalArgumentException("sources == null");
-		}
-		
-		if (clauses == null) {
-			throw new IllegalArgumentException("clauses == null");
-		}
-
-		this.result = result;
-		this.mappings = mappings;
-		this.sources = sources;
-		this.clauses = clauses;
-	}
-
-	
-	/*
-	QueryResultMode getResultMode() {
-		return result.getMode();
-	}
-	*/
 	
 	
 	Class<?> getResultType() {
@@ -69,21 +39,6 @@ final class QueryCollectorImpl {
 	CollectedQueryResult getResult() {
 		return result;
 	}
-
-	
-
-//	void setResultType(Class<?> resultType) {
-//		
-//		if (resultType == null) {
-//			throw new IllegalArgumentException("resultType == null");
-//		}
-//		
-//		if (this.resultType != null) {
-//			throw new IllegalStateException("resultType already set");
-//		}
-//		
-//		this.resultType = resultType;
-//	}
 
 	MappingCollector getMappings() {
 		return mappings;
