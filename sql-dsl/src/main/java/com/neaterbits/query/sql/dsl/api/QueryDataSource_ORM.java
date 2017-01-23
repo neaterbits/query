@@ -537,18 +537,19 @@ abstract class QueryDataSource_ORM<ORM_QUERY, MANAGED, EMBEDDED, IDENTIFIABLE, A
 			
 			if (q.isSubCondition(query, level, conditionIndices)) {
 				// Condition a subcondition? must add nested
+
+				final int nextLevel = level + 1;
 				
-				final ConditionsType conditionsType = q.getConditionsType(query, level, conditionIndices);
+				final ConditionsType conditionsType = q.getConditionsType(query, nextLevel, conditionIndices);
 				
 				if (conditionsType == null) {
 					throw new IllegalArgumentException("conditionsType == null");
 				}
 				
-				
 				final PreparedQueryConditionsBuilder subsub = sub.addNestedForRegularSub(conditionsType);
 				
 				// Recursively prepare
-				prepareConditions(q, query, conditionsType, subsub, level + 1, conditionIndices);
+				prepareConditions(q, query, conditionsType, subsub, nextLevel, conditionIndices);
 				
 			}
 			else {
