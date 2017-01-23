@@ -38,20 +38,25 @@ abstract class CollectedClauses<MODEL, RESULT>
 	}
 
 	@SuppressWarnings("unchecked")
-	final <T extends ISharedOrClauses<MODEL, RESULT>, IMPL extends CollectedClauses<MODEL, RESULT>> void addNestedOrImpl(Consumer<T> orBuilder, IMPL impl) {
-		orBuilder.accept((T)impl);
+	final <T extends ISharedOrClauses<MODEL, RESULT>, IMPL extends CollectedClauses<MODEL, RESULT>>
+		void addNestedOrImpl(Consumer<T> orBuilder, IMPL andImpl, IMPL subOrImpl) {
+		
+		
+		orBuilder.accept((T)subOrImpl);
 		
 		// add nested to super
-		clauseCollector.add(this, new CollectedCondition_Nested(impl));
+		clauseCollector.add(andImpl, new CollectedCondition_Nested(subOrImpl));
 	}
 
 	@SuppressWarnings("unchecked")
-	final <T extends ISharedAndClauses<MODEL, RESULT>, IMPL extends CollectedClauses<MODEL, RESULT>> void addNestedAndImpl(Consumer<T> orBuilder, IMPL impl) {
+	final <T extends ISharedAndClauses<MODEL, RESULT>, IMPL extends CollectedClauses<MODEL, RESULT>>
+	
+		void addNestedAndImpl(Consumer<T> orBuilder, IMPL orImpl, IMPL subAndImpl) {
 		
-		orBuilder.accept((T)impl);
+		orBuilder.accept((T)subAndImpl);
 		
 		// add nested to super
-		clauseCollector.add(this, new CollectedCondition_Nested(impl));
+		clauseCollector.add(orImpl, new CollectedCondition_Nested(subAndImpl));
 	}
 	
 	

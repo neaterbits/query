@@ -8,6 +8,8 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
+import javax.crypto.CipherInputStream;
+
 import com.neaterbits.query.sql.dsl.api.entity.EntityModel;
 import com.neaterbits.query.sql.dsl.api.entity.EntityModelUtil;
 import com.neaterbits.query.sql.dsl.api.entity.Relation;
@@ -19,7 +21,7 @@ abstract class QueryDataSource_ORM<ORM_QUERY, MANAGED, EMBEDDED, IDENTIFIABLE, A
 	
 	abstract String getColumnNameForGetter(TypeMapSource source, CompiledGetter getter);
 	
-	abstract <QUERY> PreparedQueryComparisonRHS convertConditions(ExecutableQuery<QUERY> q, QUERY query, int conditionIdx, ConditionValue value, StringBuilder sb);
+	abstract <QUERY> PreparedQueryComparisonRHS convertConditions(ExecutableQuery<QUERY> q, QUERY query, EClauseOperator operator, ConditionValue value, StringBuilder sb);
 	
 	abstract PreparedQueryConditionsBuilder createConditionsBuilder(PreparedQueryBuilderORM queryBuilderORM, boolean atRoot);
 	
@@ -471,15 +473,21 @@ abstract class QueryDataSource_ORM<ORM_QUERY, MANAGED, EMBEDDED, IDENTIFIABLE, A
 			}
 		}
 		
-		if (!q.isRootConditionOnly(query)) {
-			throw new UnsupportedOperationException("TODO: supports root conditions only for now");
-		}
 
 		final PreparedQueryConditionsBuilder sub = nestConditions
-				? conditionsBuilder.addNested(os)
+				? conditionsBuilder.addNestedForJoin(os)
 				: conditionsBuilder;
 
-		prepareRootConditions(q, query, original, sub);
+	    if (q.isRootConditionOnly(query)) {
+	    	prepareRootConditions(q, query, original, sub);
+	    }
+	    else {
+	    	final int maxDepth = q.getConditionsMaxDepth(query);
+	    	
+	    	final int [] conditionIndices = new int[maxDepth];
+	    	
+	    	prepareConditions(q, query, original, sub, 0, conditionIndices);
+	    }
 
 		return os;
 	}
@@ -496,12 +504,13 @@ abstract class QueryDataSource_ORM<ORM_QUERY, MANAGED, EMBEDDED, IDENTIFIABLE, A
 
 			final CompiledFieldReference lhs = q.getRootConditionLhs(query, conditionIdx);
 			final ConditionValue value = q.getRootConditionValue(query, conditionIdx);
+			final EClauseOperator operator = q.getRootConditionOperator(query, conditionIdx);
 			
 			final FieldReference left = prepareFieldReference(q, query, lhs);
 			
 
 			// Operator and value
-			final PreparedQueryComparisonRHS preparedCondition = convertConditions(q, query, conditionIdx, value, conditionSB);
+			final PreparedQueryComparisonRHS preparedCondition = convertConditions(q, query, operator, value, conditionSB);
 
 			final PreparedQueryConditionComparison prepared = new PreparedQueryConditionComparison(left, preparedCondition);
 
@@ -514,6 +523,58 @@ abstract class QueryDataSource_ORM<ORM_QUERY, MANAGED, EMBEDDED, IDENTIFIABLE, A
 		return ret;
 	}
 
+	private <QUERY> List<PreparedQueryConditionComparison> prepareConditions(ExecutableQuery<QUERY> q, QUERY query, ConditionsType original, PreparedQueryConditionsBuilder sub, int level, int [] conditionIndices) {
+
+		final int numConditions = q.getConditionsCount(query, level, conditionIndices);
+		
+		final StringBuilder conditionSB = new StringBuilder();
+		
+		final List<PreparedQueryConditionComparison> ret = new ArrayList<>(numConditions);
+		
+		for (int conditionIdx = 0; conditionIdx < numConditions; ++ conditionIdx) {
+
+			conditionIndices[level] = conditionIdx;
+			
+			if (q.isSubCondition(query, level, conditionIndices)) {
+				// Condition a subcondition? must add nested
+				
+				final ConditionsType conditionsType = q.getConditionsType(query, level, conditionIndices);
+				
+				if (conditionsType == null) {
+					throw new IllegalArgumentException("conditionsType == null");
+				}
+				
+				
+				final PreparedQueryConditionsBuilder subsub = sub.addNestedForRegularSub(conditionsType);
+				
+				// Recursively prepare
+				prepareConditions(q, query, conditionsType, subsub, level + 1, conditionIndices);
+				
+			}
+			else {
+				// Just create comparison condition
+				final CompiledFieldReference lhs = q.getConditionLhs(query, level, conditionIndices);
+				final ConditionValue value = q.getConditionValue(query, level, conditionIndices);
+				final EClauseOperator operator = q.getOperator(query, level, conditionIndices);
+				
+				final FieldReference left = prepareFieldReference(q, query, lhs);
+				
+
+				// Operator and value
+				final PreparedQueryComparisonRHS preparedCondition = convertConditions(q, query, operator, value, conditionSB);
+
+				final PreparedQueryConditionComparison prepared = new PreparedQueryConditionComparison(left, preparedCondition);
+
+				sub.addComparisonCondition(original, prepared);
+				
+				// Clear for next iteration
+				conditionSB.setLength(0);
+			}
+		}
+
+		return ret;
+	}
+	
 	private <QUERY> void convertResult(ExecutableQuery<QUERY> q, QUERY query, PreparedQueryBuilder sb) {
 		
 		final EQueryResultGathering resultGathering = q.getGathering(query);

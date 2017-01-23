@@ -123,7 +123,7 @@ abstract class PreparedQueryConditionsBuilderORM extends PreparedQueryConditions
 				final PreparedQueryConditionNested nested = (PreparedQueryConditionNested)condition;
 
 				sb.append('(');
-				
+
 				nested.getSub().resolveFromParams(sb, resolver);
 
 				sb.append(')');
@@ -135,7 +135,7 @@ abstract class PreparedQueryConditionsBuilderORM extends PreparedQueryConditions
 				appendFieldReference(sb, comparison.getLhs());
 				
 				sb.append(' ');
-				
+
 				comparison.getRhs().resolve(sb, resolver);
 			}
 			else {

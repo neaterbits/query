@@ -16,4 +16,9 @@ final class CompiledConditionNested extends CompiledCondition {
 	CompiledConditions getSub() {
 		return sub;
 	}
+
+	@Override
+	int getSourceIdx() {
+		throw new UnsupportedOperationException();
+	}
 }

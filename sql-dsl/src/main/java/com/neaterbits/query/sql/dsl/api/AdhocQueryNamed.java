@@ -310,6 +310,11 @@ abstract class AdhocQueryNamed<MODEL, RESULT>
 
 	@Override
 	public final int getConditionSourceIdx(AdhocQueryNamed<MODEL, RESULT> query, int level, int[] conditionIndices) {
+		
+		if (isSubCondition(query, level, conditionIndices)) {
+			throw new IllegalStateException("sub conditions do not have source idx");
+		}
+		
 		return conditions.getConditionSourceIdx(level, conditionIndices);
 	}
 

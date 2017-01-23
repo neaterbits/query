@@ -65,7 +65,7 @@ final class ClassicCollectedAndClauses<MODEL, RESULT> extends CollectedClauses<M
 	}
 
 	private final <T extends ISharedOrClauses<MODEL, RESULT>, IMPL extends CollectedClauses<MODEL, RESULT>> void addNestedOrImpl(Consumer<T> orBuilder) {
-		super.addNestedOrImpl(orBuilder, new ClassicCollectedOrClauses<MODEL, RESULT>(this, new Collector_Clause()));
+		super.addNestedOrImpl(orBuilder, this, new ClassicCollectedOrClauses<MODEL, RESULT>(this, new Collector_Clause()));
 	}
 	
 	@Override

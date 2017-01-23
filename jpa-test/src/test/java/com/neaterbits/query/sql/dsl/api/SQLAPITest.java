@@ -65,6 +65,7 @@ public class SQLAPITest extends BaseSQLAPITest {
         	.from(Company.class)
 
         	.where(Company::getName).startsWith("Ac")
+        	.and(Company::getName).endsWith("cme")
 
         	.compile();
 		

@@ -2,9 +2,7 @@ package com.neaterbits.query.sql.dsl.api;
 
 final class JPAConditionToOperator {
 
-	<QUERY> PreparedQueryComparisonRHS convert(ExecutableQuery<QUERY> q, QUERY query, int conditionIdx, ConditionValue value, StringBuilder sb) {
-		
-		final EClauseOperator operator = q.getRootConditionOperator(query, conditionIdx);
+	<QUERY> PreparedQueryComparisonRHS convert(ExecutableQuery<QUERY> q, QUERY query, EClauseOperator operator, ConditionValue value, StringBuilder sb) {
 		
 		final JPACondition ret;
 		
@@ -20,7 +18,7 @@ final class JPAConditionToOperator {
 		case IN:
 			sb.append("(");
 
-			q.getRootConditionValue(query, conditionIdx).visit(conditionValueVisitor, sb);
+			value.visit(conditionValueVisitor, sb);
 
 			sb.append(")");
 			if (Boolean.TRUE) {

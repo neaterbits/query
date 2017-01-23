@@ -19,12 +19,16 @@ final class CompiledQuery {
 	private final CompiledJoins joins;
 	
 	private final CompiledConditions conditions;
+	
+	private final int conditionsMaxDepth;
+	
 
 	private CompiledQuery(
 			CompiledQueryResult result,
 			CompiledSelectSources<?> selectSources,
 			CompiledJoins joins,
-			CompiledConditions conditions) {
+			CompiledConditions conditions,
+			int conditionsMaxDepth) {
 
 		if (result == null) {
 			throw new IllegalArgumentException("result == null");
@@ -41,6 +45,7 @@ final class CompiledQuery {
 		this.conditions = conditions;
 		
 		this.joins = joins;
+		this.conditionsMaxDepth = conditionsMaxDepth;
 	}
 
 	EQueryResultDimension getResultMode() {
@@ -82,7 +87,11 @@ final class CompiledQuery {
 		
 		return ret;
 	}
-	
+
+	int getConditionsMaxDepth() {
+		return conditionsMaxDepth;
+	}
+
 	public CompiledJoins getJoins() {
 		return joins;
 	}
@@ -101,15 +110,20 @@ final class CompiledQuery {
 		final CompiledConditions compiledConditions;
 		
 		// Check all clauses etc
+		final int conditionsMaxDepth;
 		if (collector.getClauses() != null && !collector.getClauses().getClauses().isEmpty()) {
 			compiledConditions = compileConditions(collector.getClauses(), compiledSources, cache, 0);
+			
+			conditionsMaxDepth = compiledConditions.getMaxDepth();
 		}
 		else {
 			compiledConditions = null;
+
+			conditionsMaxDepth = -1;
 		}
 		
 		final CompiledJoins joins;
-		
+
 		if (collector.getJoins() != null) {
 			joins = compileJoins(collector.getJoins(), compiledSources, cache);
 		}
@@ -117,7 +131,12 @@ final class CompiledQuery {
 			joins = null;
 		}
 
-		return new CompiledQuery(compiledQueryResult, compiledSources, joins, compiledConditions);
+		return new CompiledQuery(
+				compiledQueryResult,
+				compiledSources,
+				joins,
+				compiledConditions,
+				conditionsMaxDepth);
 	}
 
 	

@@ -727,43 +727,42 @@ final class ExecuteQueryPOJOs<QUERY> extends ExecutableQueryAggregateComputation
 			
 			conditionIndices[level] = conditionIdx;
 			
-			final int conditionSourceIdx = q.getConditionSourceIdx(query, level, conditionIndices);
-
-			if (conditionSourceIdx == sourceIdx) {
-
-				if (q.isSubCondition(query, level, conditionIndices)) {
-					final EMatch subMatch = recursiveMatches(query, sourceIdx, instance, level + 1, conditionIndices, scratch, debug);
+			if (q.isSubCondition(query, level, conditionIndices)) {
+				final EMatch subMatch = recursiveMatches(query, sourceIdx, instance, level + 1, conditionIndices, scratch, debug);
+				
+				switch (subMatch){
+				case YES:
+					// continue loop
+					break;
 					
-					switch (subMatch){
-					case YES:
-						// continue loop
-						break;
+				case NO:
+					if (debug != null) {
+						final EClauseOperator operator = q.getOperator(query, level, conditionIndices);
 						
-					case NO:
-						if (debug != null) {
-							final EClauseOperator operator = q.getOperator(query, level, conditionIndices);
-							
-							debug.debug("sub MISMATCH conditionIdx " + conditionIdx + ", op=" + operator);
-							
-							debug.subIndent();
-						}
-						return EMatch.NO;
+						debug.debug("sub MISMATCH conditionIdx " + conditionIdx + ", op=" + operator);
 						
-					case NOT_APPLICABLE_TO_SOURCE:
-						// Sub not applicable to source, continue past this one
-						throw new UnsupportedOperationException("TODO: What to do about numFromThisSource incrementation here ?");
-						
-					case UNCERTAIN_REQUIRES_REEVALUATION:
-						// Not certain that we can evaluate this one to true, might be true or not, must evaluate at end.
-						// So return a provisional match
-						return EMatch.UNCERTAIN_REQUIRES_REEVALUATION;
-
-					default:
-						throw new UnsupportedOperationException("Unknown match " + subMatch);
+						debug.subIndent();
 					}
-				}
-				else { 
+					return EMatch.NO;
 					
+				case NOT_APPLICABLE_TO_SOURCE:
+					// Sub not applicable to source, continue past this one
+					throw new UnsupportedOperationException("TODO: What to do about numFromThisSource incrementation here ?");
+					
+				case UNCERTAIN_REQUIRES_REEVALUATION:
+					// Not certain that we can evaluate this one to true, might be true or not, must evaluate at end.
+					// So return a provisional match
+					return EMatch.UNCERTAIN_REQUIRES_REEVALUATION;
+
+				default:
+					throw new UnsupportedOperationException("Unknown match " + subMatch);
+				}
+			}
+			else { 
+				final int conditionSourceIdx = q.getConditionSourceIdx(query, level, conditionIndices);
+
+				if (conditionSourceIdx == sourceIdx) {
+				
 					if (!q.evaluateCondition(query, level, conditionIndices, instance, scratch)) {
 						if (debug != null) {
 							final EClauseOperator operator = q.getOperator(query, level, conditionIndices);
@@ -774,10 +773,10 @@ final class ExecuteQueryPOJOs<QUERY> extends ExecutableQueryAggregateComputation
 						}
 						return EMatch.NO; // Definitely does not match
 					}
+
+					++ numFromThisSource; // only count if from this source
 				}
 			}
-
-			++ numFromThisSource;
 		}
 		
 		final EMatch ret = numFromThisSource == 0
@@ -807,48 +806,49 @@ final class ExecuteQueryPOJOs<QUERY> extends ExecutableQueryAggregateComputation
 			
 			conditionIndices[level] = conditionIdx;
 			
-			final int conditionSourceIdx = q.getConditionSourceIdx(query, level, conditionIndices);
-			
-			System.out.println("## got source idx " + conditionSourceIdx + " for level " + level + ", indices: " + Arrays.toString(conditionIndices));
-			
-			
-			if (conditionSourceIdx == sourceIdx) {
 				
-				if (q.isSubCondition(query, level, conditionIndices)) {
-					final EMatch subMatch = recursiveMatches(query, sourceIdx, instance, level + 1, conditionIndices, scratch, debug);
-					
-					switch (subMatch){
-					case YES:
-						if (debug != null) {
-							final EClauseOperator operator = q.getOperator(query, level, conditionIndices);
-							
-							debug.debug("sub MATCH conditionIdx " + conditionIdx + ", op=" + operator);
-							
-							debug.subIndent();
-						}
-						return EMatch.YES;
+			if (q.isSubCondition(query, level, conditionIndices)) {
+				final EMatch subMatch = recursiveMatches(query, sourceIdx, instance, level + 1, conditionIndices, scratch, debug);
+				
+				switch (subMatch){
+				case YES:
+					if (debug != null) {
+						final EClauseOperator operator = q.getOperator(query, level, conditionIndices);
 						
-					case NO:
-						if (debug != null) {
-							debug.debug("sub mismatch conditionIdx " + conditionIdx);
-						}
-						break;
+						debug.debug("sub MATCH conditionIdx " + conditionIdx + ", op=" + operator);
 						
-					case NOT_APPLICABLE_TO_SOURCE:
-						// Sub not applicable to source, continue past this one
-						throw new UnsupportedOperationException("TODO: What to do about numFromThisSource incrementation here ?");
-						
-					case UNCERTAIN_REQUIRES_REEVALUATION:
-						// Not certain that we can evaluate this one to true, might be true or not, must evaluate at end.
-						throw new UnsupportedOperationException("TODO: How to evaluate this one ? Perhaps keep variable of result");
-						
-					default:
-						throw new UnsupportedOperationException("Unknown match " + subMatch);
+						debug.subIndent();
 					}
+					return EMatch.YES;
 					
+				case NO:
+					if (debug != null) {
+						debug.debug("sub mismatch conditionIdx " + conditionIdx);
+					}
+					break;
+					
+				case NOT_APPLICABLE_TO_SOURCE:
+					// Sub not applicable to source, continue past this one
+					throw new UnsupportedOperationException("TODO: What to do about numFromThisSource incrementation here ?");
+					
+				case UNCERTAIN_REQUIRES_REEVALUATION:
+					// Not certain that we can evaluate this one to true, might be true or not, must evaluate at end.
+					throw new UnsupportedOperationException("TODO: How to evaluate this one ? Perhaps keep variable of result");
+					
+				default:
+					throw new UnsupportedOperationException("Unknown match " + subMatch);
 				}
-				else {
-					
+				
+			}
+			else {
+				
+				final int conditionSourceIdx = q.getConditionSourceIdx(query, level, conditionIndices);
+				
+				System.out.println("## got source idx " + conditionSourceIdx + " for level " + level + ", indices: " + Arrays.toString(conditionIndices));
+				
+
+				if (conditionSourceIdx == sourceIdx) { // only count if for this source
+
 					if (debug != null) {
 						debug.debug("evaluating this-level condition level " + level + ", source " + sourceIdx + " on indices " + Arrays.toString(conditionIndices));
 					}
@@ -865,9 +865,9 @@ final class ExecuteQueryPOJOs<QUERY> extends ExecutableQueryAggregateComputation
 	
 						return EMatch.YES; // One of conditions matched, so we have a match
 					}
-				}
 
-				++ numFromThisSource;
+					++ numFromThisSource;
+				}
 			}
 		}
 		

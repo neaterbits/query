@@ -27,10 +27,19 @@ abstract class PreparedQueryConditionsBuilder {
 		this.conditions = new ArrayList<>();
 	}
 	
-	final PreparedQueryConditionsBuilder addNested(ConditionsType type) {
+	final PreparedQueryConditionsBuilder addNestedForJoin(ConditionsType type) {
 
 		updateJoinType(type);
 		
+		return addNested(type);
+	}
+		
+	final PreparedQueryConditionsBuilder addNestedForRegularSub(ConditionsType type) {
+
+		return addNested(type);
+	}
+				
+	private PreparedQueryConditionsBuilder addNested(ConditionsType type) { 		
 		if (type == null) {
 			throw new IllegalArgumentException("type == null");
 		}

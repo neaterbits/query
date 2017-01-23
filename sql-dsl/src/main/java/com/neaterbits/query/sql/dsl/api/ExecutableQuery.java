@@ -329,6 +329,18 @@ interface ExecutableQuery<QUERY> {
 	int getRootConditionSourceIdx(QUERY query, int conditionIdx);
 
 	boolean evaluateRootCondition(QUERY query, Object instance, int conditionIdx, ConditionValuesScratch scratch);
+	
+	/**
+	 * Get max depth of dub conditions
+	 * @param query query to get max depth for
+	 * 
+	 *  - returns -1 if has no conditions at all
+	 *  - 0 should never occur
+	 *  - returns 1 if only has conditions at the root level
+	 *  - returns 2+ if eg. has a nested or inside where-and at the topmost level, etc 
+	 *  
+	 * @return max depth
+	 */
 
 	int getConditionsMaxDepth(QUERY query);
 	
@@ -346,6 +358,11 @@ interface ExecutableQuery<QUERY> {
 
 	EClauseOperator getOperator(QUERY query, int level, int [] conditionIndices);
 
+	// for compiled-queries only?
+	CompiledFieldReference getConditionLhs(QUERY query, int level, int [] conditionIndices);
+
+	ConditionValue getConditionValue(QUERY query, int level, int [] conditionIndices);
+	
 	Method getForDebugConditionLhsMethod(QUERY query, int level, int [] conditionIndices);
 	
 	String getForDebugConditionValue(QUERY query, int level, int [] conditionIndices);

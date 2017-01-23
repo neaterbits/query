@@ -26,11 +26,11 @@ final class ExecutableQueryForCompiledQuery implements ExecutableQuery<CompiledQ
 	
 	@Override
 	public FieldReferenceType getQueryFieldReferenceType(CompiledQuery query) {
-		
+
 		final CompiledSelectSources<?> source = query.getSelectSources();
-		
+
 		final FieldReferenceType ret;
-		
+
 		if (source instanceof CompiledSelectSources_Alias) {
 			ret = FieldReferenceType.ALIAS;
 		}
@@ -482,17 +482,40 @@ final class ExecutableQueryForCompiledQuery implements ExecutableQuery<CompiledQ
 		}
 
 		return ret;
-		
 	}
 
 	@Override
-	public boolean isRootConditionOnly(CompiledQuery query) {
-		return true; // For now
+	public final boolean isRootConditionOnly(CompiledQuery query) {
+
+		final int maxDepth = getConditionsMaxDepth(query);
+		final boolean ret;
+
+		switch (maxDepth) {
+
+		case -1:
+			throw new IllegalStateException("-1 maxdepth so no conditions at all");
+
+		case 0:
+			throw new IllegalStateException("should never have max depth 0");
+			
+		case 1:
+			ret = true;
+			break;
+
+		default:
+			if (maxDepth < 0) {
+				throw new IllegalStateException("negative maxdepth");
+			}
+			ret = false;
+			break;
+		}
+
+		return ret;
 	}
 
 	@Override
 	public int getConditionsMaxDepth(CompiledQuery query) {
-		return 1; // For now
+		return query.getConditionsMaxDepth();
 	}
 
 	private CompiledCondition getCondition(CompiledQuery query, int level, int[] conditionIndices) {
@@ -505,7 +528,9 @@ final class ExecutableQueryForCompiledQuery implements ExecutableQuery<CompiledQ
 	
 	private CompiledConditionComparison getComparisonCondition(CompiledQuery query, int level, int[] conditionIndices) {
 
-		return (CompiledConditionComparison)getCondition(query, level, conditionIndices);
+		final CompiledCondition condition = getCondition(query, level, conditionIndices);
+		
+		return (CompiledConditionComparison)condition;
 	}
 
 	private CompiledConditions getConditionsList(CompiledQuery query, int level, int[] conditionIndices) {
@@ -532,13 +557,15 @@ final class ExecutableQueryForCompiledQuery implements ExecutableQuery<CompiledQ
 
 	@Override
 	public int getConditionSourceIdx(CompiledQuery query, int level, int[] conditionIndices) {
-		return getComparisonCondition(query, level, conditionIndices).getLhsSource().getIdx();
+		return getCondition(query, level, conditionIndices).getSourceIdx();
 	}
 
 	@Override
 	public boolean isSubCondition(CompiledQuery query, int level, int[] conditionIndices) {
 
-		return getCondition(query, level, conditionIndices) instanceof CompiledConditionNested;
+		final CompiledCondition condition =  getCondition(query, level, conditionIndices);
+			
+		return condition instanceof CompiledConditionNested;
 	}
 
 	@Override
@@ -549,6 +576,16 @@ final class ExecutableQueryForCompiledQuery implements ExecutableQuery<CompiledQ
 	@Override
 	public EClauseOperator getOperator(CompiledQuery query, int level, int[] conditionIndices) {
 		return getComparisonCondition(query, level, conditionIndices).getOperator();
+	}
+
+	@Override
+	public CompiledFieldReference getConditionLhs(CompiledQuery query, int level, int[] conditionIndices) {
+		return getComparisonCondition(query, level, conditionIndices).getLhs();
+	}
+
+	@Override
+	public ConditionValue getConditionValue(CompiledQuery query, int level, int[] conditionIndices) {
+		return getComparisonCondition(query, level, conditionIndices).getValue();
 	}
 
 	@Override

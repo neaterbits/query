@@ -59,4 +59,9 @@ final class CompiledConditionComparison extends CompiledCondition {
 	ScalarType getScalarType() {
 		return scalarType;
 	}
+
+	@Override
+	int getSourceIdx() {
+		return lhs.getSource().getIdx();
+	}
 }
