@@ -82,6 +82,7 @@ final class ExecuteQueryPOJOs<QUERY> extends ExecutableQueryAggregateComputation
 		// TODO: Handle 1 result part case? no need for array
 		final ExecuteQueryScratch scratch =  q.createScratchArea(query, queryMetaModel);
 		
+		scratch.setCollectedParams(collectedParams);
 		
 		if (joinCount > 0) {
 			// We shall perform joins over tables

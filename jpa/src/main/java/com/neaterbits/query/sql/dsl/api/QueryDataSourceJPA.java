@@ -28,6 +28,9 @@ public abstract class QueryDataSourceJPA extends QueryDataSource_ORM<
 									Set<Attribute<?, ?>>> {
 	
 	final EntityManager em;
+	
+	abstract Query createJPAQuery(String queryString);
+	
 
 	public QueryDataSourceJPA(EntityManager entityManager) {
 		super(new JPAEntityModelUtil(new JPAEntityModel(entityManager.getMetamodel())));
@@ -47,7 +50,7 @@ public abstract class QueryDataSourceJPA extends QueryDataSource_ORM<
 	final <QUERY> PreparedQuery_DB<QUERY, Query> makeHalfwayPreparedQuery(ExecutableQuery<QUERY> queryAccess, QUERY query,
 			ParamNameAssigner paramNameAssigner, String base, PreparedQueryConditionsBuilder conditions) {
 		
-		return new PreparedQuery_JPA_Halfway<QUERY>(this, queryAccess, query, paramNameAssigner, base, (PreparedQueryConditionsBuilderJPA)conditions, em);
+		return new PreparedQuery_JPA_Halfway<QUERY>(this, queryAccess, query, paramNameAssigner, base, (PreparedQueryConditionsBuilderJPA)conditions);
 	}
 
 	private static final JPAConditionToOperator conditionToOperator = new JPAConditionToOperator();

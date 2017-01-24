@@ -25,6 +25,7 @@ import com.neaterbits.query.jpatest.model.Person;
 import com.neaterbits.query.jpatest.model.Role;
 import com.neaterbits.query.sql.dsl.api.entity.QueryMetaModel;
 import com.neaterbits.query.sql.dsl.api.helper.jpa.QueryTestDSJPANative;
+import com.neaterbits.query.sql.dsl.api.helper.jpa.QueryTestDSJPQL;
 import com.neaterbits.query.sql.dsl.api.testhelper.BaseSQLAPITest;
 import com.neaterbits.query.sql.dsl.api.testhelper.QueryTestDSBuilder;
 import com.neaterbits.query.sql.dsl.api.testhelper.QueryTestDSCheck;
@@ -41,8 +42,9 @@ public class SQLAPITest extends BaseSQLAPITest {
 		
 		return new QueryTestDSCombined(
 				
-				() -> new QueryTestDSJPANative("query-jpa-test"),
-				//() -> new QueryTestDSJPQL("query-jpa-test"),
+				() -> new QueryTestDSJPQL("query-jpa-test"),
+				//() -> new QueryTestDSJPANative("query-jpa-test"),
+				
 				() -> new QueryTestDSInMemory(jpaQueryMetaModel)
 				)
 				
@@ -174,7 +176,7 @@ public class SQLAPITest extends BaseSQLAPITest {
 	        		ds,
 	        		new CompanyResultVO(acme.getName()),
 	        		startsWithAc,
-	        		q -> q.execute());
+	        		q -> q.executeWith(endParam).setTo("me").get());
 		});
 
 		// Search for foo as well, should return no matches
@@ -184,7 +186,7 @@ public class SQLAPITest extends BaseSQLAPITest {
 	        		ds,
 	        		null,
 	        		startsWithAc,
-	        		q -> q.execute());
+	        		q -> q.executeWith(endParam).setTo("me").get());
 		});
 	}
 

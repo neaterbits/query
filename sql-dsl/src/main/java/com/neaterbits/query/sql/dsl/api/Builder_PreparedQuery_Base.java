@@ -53,6 +53,6 @@ abstract class Builder_PreparedQuery_Base<RESULT_TYPE> implements ISharedPrepare
 		throw new UnsupportedOperationException("TODO");
 	}
 
-	abstract RESULT_TYPE executeOn(PreparedQuery_DS query, QueryParamCollector collectedParams);
+	abstract RESULT_TYPE executeOn(PreparedQuery_DS<?> query, QueryParamCollector collectedParams);
 	
 }

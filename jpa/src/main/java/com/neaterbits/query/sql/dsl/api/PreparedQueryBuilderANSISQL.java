@@ -2,7 +2,6 @@ package com.neaterbits.query.sql.dsl.api;
 
 import java.util.Collection;
 import java.util.List;
-import java.util.function.BiFunction;
 
 import com.neaterbits.query.sql.dsl.api.entity.EntityModelUtil;
 import com.neaterbits.query.sql.dsl.api.entity.IEntity;

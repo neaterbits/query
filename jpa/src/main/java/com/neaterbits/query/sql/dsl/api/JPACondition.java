@@ -2,19 +2,19 @@ package com.neaterbits.query.sql.dsl.api;
 
 abstract class JPACondition extends PreparedQueryComparisonRHS {
 
-	private final String prefix;
+	private final String conditionResolvedPrefix;
 
-	JPACondition(String prefix) {
+	JPACondition(String conditionResolvedPrefix) {
 		
-		if (prefix == null) {
-			throw new IllegalArgumentException("prefix == null");
+		if (conditionResolvedPrefix == null) {
+			throw new IllegalArgumentException("conditionResolvedPrefix == null");
 		}
 
-		this.prefix = prefix;
+		this.conditionResolvedPrefix = conditionResolvedPrefix;
 	}
 
-	final String getPrefix() {
-		return prefix;
+	final String getConditionResolvedPrefix() {
+		return conditionResolvedPrefix;
 	}
 }
 

@@ -25,12 +25,17 @@ final class JPAConditionLikeWithParamUnresolved extends JPAConditionUnresolved {
 			throw new IllegalArgumentException("resolver == null");
 		}
 
+		
 		final Object value = resolver.resolveParam(param);
 		
 		if (value == null) {
 			throw new IllegalStateException("No value for param " + param);
 		}
+		
+		sb.append(' ').append(getConditionResolvedPrefix());
 
+		sb.append('\'');
+		
 		if (wildcardBefore) {
 			sb.append("%");
 		}
@@ -40,5 +45,7 @@ final class JPAConditionLikeWithParamUnresolved extends JPAConditionUnresolved {
 		if (wildcardAfter) {
 			sb.append("%");
 		}
+
+		sb.append('\'');
 	}
 }

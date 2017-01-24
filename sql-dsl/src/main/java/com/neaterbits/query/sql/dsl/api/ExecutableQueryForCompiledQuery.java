@@ -614,8 +614,13 @@ final class ExecutableQueryForCompiledQuery implements ExecutableQuery<CompiledQ
 	private static final ConditionValueVisitor<ParamValueResolver, Object> valueVisitor = new ConditionValueVisitor<ParamValueResolver, Object>() {
 		
 		@Override
-		public Object onParam(ConditionValue_Param value, ParamValueResolver param) {
-			return param.resolveParam(value.getParam());
+		public Object onParam(ConditionValue_Param value, ParamValueResolver paramValueResolver) {
+			
+			if (paramValueResolver == null) {
+				throw new IllegalArgumentException("paramValueResolver == null");
+			}
+			
+			return paramValueResolver.resolveParam(value.getParam());
 		}
 		
 		@Override

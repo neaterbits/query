@@ -86,7 +86,7 @@ abstract class QueryDataSource_ORM<ORM_QUERY, MANAGED, EMBEDDED, IDENTIFIABLE, A
 			prepareConditions(q, query, conditionsBuilder, addJoinToWhere);
 
 			if (conditionsBuilder.hasUnresolved()) {
-				ret = makeHalfwayPreparedQuery(q, query, paramNameAssigner, sb.toString(), conditionsBuilder);
+				ret = makeHalfwayPreparedQuery(q, query, paramNameAssigner, sb.getQueryAsString(), conditionsBuilder);
 			}
 			else {
 				sb.resolveFromParams(conditionsBuilder, null);

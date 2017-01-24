@@ -8,7 +8,7 @@ final class JPAConditionResolved extends JPACondition {
 
 	@Override
 	void resolve(StringBuilder sb, ParamValueResolver resolver) {
-		sb.append(getPrefix());
+		sb.append(getConditionResolvedPrefix());
 	}
 
 	@Override

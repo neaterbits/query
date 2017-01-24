@@ -1,9 +1,9 @@
 package com.neaterbits.query.sql.dsl.api;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.EntityManager;
+import javax.persistence.Query;
 
 public final class QueryDataSourceJPQL extends QueryDataSourceJPA {
 
@@ -23,7 +23,7 @@ public final class QueryDataSourceJPQL extends QueryDataSourceJPA {
 		
 		System.out.println("## jpql:\n" + jpql);
 		
-		final javax.persistence.Query jpaQuery = em.createQuery(jpql);
+		final javax.persistence.Query jpaQuery = createJPAQuery(jpql);
 
 		return new PreparedQuery_JPA_Complete<QUERY>(
 				this,
@@ -31,6 +31,12 @@ public final class QueryDataSourceJPQL extends QueryDataSourceJPA {
 				query, 
 				paramNameAssigner,
 				jpaQuery);
+	}
+	
+
+	@Override
+	Query createJPAQuery(String queryString) {
+		return em.createQuery(queryString);
 	}
 
 	@Override

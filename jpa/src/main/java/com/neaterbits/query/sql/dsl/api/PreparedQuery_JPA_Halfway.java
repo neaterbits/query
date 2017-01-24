@@ -1,15 +1,13 @@
 package com.neaterbits.query.sql.dsl.api;
 
-import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
 final class PreparedQuery_JPA_Halfway<QUERY> extends PreparedQuery_JPA_Base<QUERY> {
 
 	private final String base;
 	private final PreparedQueryConditionsBuilderJPA conditions;
-	private final EntityManager entityManager;
 	
-	PreparedQuery_JPA_Halfway(QueryDataSourceJPA dataSource, ExecutableQuery<QUERY> queryAccess, QUERY query, ParamNameAssigner paramNameAssigner, String base, PreparedQueryConditionsBuilderJPA conditions, EntityManager entityManager) {
+	PreparedQuery_JPA_Halfway(QueryDataSourceJPA dataSource, ExecutableQuery<QUERY> queryAccess, QUERY query, ParamNameAssigner paramNameAssigner, String base, PreparedQueryConditionsBuilderJPA conditions) {
 		super(dataSource, queryAccess, query, paramNameAssigner);
 		
 		if (base == null) {
@@ -32,13 +30,9 @@ final class PreparedQuery_JPA_Halfway<QUERY> extends PreparedQuery_JPA_Base<QUER
 			throw new IllegalArgumentException("no op when conditions > 1");
 		}
 		
-		if (entityManager == null) {
-			throw new IllegalArgumentException("entityManager == null");
-		}
 		
 		this.base = base;
 		this.conditions = conditions;
-		this.entityManager = entityManager;
 	}
 
 	@Override
@@ -51,8 +45,8 @@ final class PreparedQuery_JPA_Halfway<QUERY> extends PreparedQuery_JPA_Base<QUER
 		conditions.resolveFromParams(sb, collectedParams);
 
 		final String queryString = sb.toString();
-		
-		final Query jpaQuery = entityManager.createQuery(queryString); 
+
+		final Query jpaQuery = ((QueryDataSourceJPA)getDataSource()).createJPAQuery(queryString); 
 
 		return executeWithParams(jpaQuery, collectedParams); 
 	}

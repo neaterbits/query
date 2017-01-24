@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.EntityManager;
+import javax.persistence.Query;
 
 import com.neaterbits.query.sql.dsl.api.entity.AttributeType;
 import com.neaterbits.query.sql.dsl.api.entity.IEntity;
@@ -31,11 +32,11 @@ public final class QueryDataSourceJPANative extends QueryDataSourceJPA {
 		
 		System.out.println("## native:\n" + ansiSQL);
 		
-		final javax.persistence.Query jpaQuery = em.createNativeQuery(ansiSQL);
+		final javax.persistence.Query jpaQuery = createJPAQuery(ansiSQL);
 
 		return new PreparedQuery_JPA_Complete<QUERY>(this, q, query, paramNameAssigner, jpaQuery);
 	}
-
+	
 	
 	/*
 	mapMultipleEntities) {
@@ -44,6 +45,11 @@ public final class QueryDataSourceJPANative extends QueryDataSourceJPA {
 	*/
 	
 	
+	@Override
+	Query createJPAQuery(String queryString) {
+		return em.createNativeQuery(queryString);
+	}
+
 	static void forEachResultColumn(IEntity entity, EntityEachAttribute each) {
 		int idx = 0;
 		
