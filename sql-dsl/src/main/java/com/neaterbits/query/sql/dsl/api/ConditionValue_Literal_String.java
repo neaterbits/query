@@ -7,6 +7,12 @@ final class ConditionValue_Literal_String extends ConditionValue_Literal_Base<St
 	}
 
 	@Override
+	EConditionValue getType() {
+		return EConditionValue.SCALAR_LITERAL;
+	}
+
+
+	@Override
 	<T, R> R visit(ConditionValueVisitor<T, R> visitor, T param) {
 		return visitor.onLiteralString(this, param);
 	}

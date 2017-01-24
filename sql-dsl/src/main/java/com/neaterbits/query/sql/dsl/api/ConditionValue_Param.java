@@ -12,6 +12,11 @@ final class ConditionValue_Param extends ConditionValue {
 		this.param = param;
 	}
 	
+	@Override
+	EConditionValue getType() {
+		return EConditionValue.PARAM;
+	}
+
 	Param<?> getParam() {
 		return param;
 	}

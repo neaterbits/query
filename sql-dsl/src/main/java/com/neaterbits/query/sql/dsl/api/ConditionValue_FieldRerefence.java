@@ -18,6 +18,11 @@ final class ConditionValue_FieldRerefence extends ConditionValue {
 	}
 
 	@Override
+	EConditionValue getType() {
+		return EConditionValue.FIELD_REFERENCE;
+	}
+
+	@Override
 	<T, R> R visit(ConditionValueVisitor<T, R> visitor, T param) {
 		return visitor.onFieldReference(this, param);
 	}

@@ -25,7 +25,12 @@ public final class QueryDataSourceJPQL extends QueryDataSourceJPA {
 		
 		final javax.persistence.Query jpaQuery = em.createQuery(jpql);
 
-		return new PreparedQuery_JPA_Complete<QUERY>(this, q, query, paramNameAssigner, jpaQuery);
+		return new PreparedQuery_JPA_Complete<QUERY>(
+				this,
+				q,
+				query, 
+				paramNameAssigner,
+				jpaQuery);
 	}
 
 	@Override

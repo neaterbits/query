@@ -23,7 +23,12 @@ abstract class Builder_PreparedQuery_Base<RESULT_TYPE> implements ISharedPrepare
 
 	@SuppressWarnings("unchecked")
 	public final RESULT_TYPE execute() {
-		// Execute directly
+		// Execute directly with no params
+		
+		if (preparedQuery.getMetaData().hasParams()) {
+			throw new IllegalStateException("query has parameters so cannot execute directly, must pass parameters");
+		}
+		
 		return (RESULT_TYPE)preparedQuery.execute(null);
 	}
 

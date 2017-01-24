@@ -25,11 +25,7 @@ abstract class PreparedQuery_DB<QUERY, ORM_QUERY> extends PreparedQuery_DS<Query
 	
 	PreparedQuery_DB(QueryDataSource_DB dataSource, ExecutableQuery<QUERY> q, QUERY query) {
 		
-		super(dataSource);
-		
-		if (q == null) {
-			throw new IllegalArgumentException("q == null");
-		}
+		super(dataSource, q.makeMetaData(query));
 
 		if (query == null) {
 			throw new IllegalArgumentException("queryMode == null");

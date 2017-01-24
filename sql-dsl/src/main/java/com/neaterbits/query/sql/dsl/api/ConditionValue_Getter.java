@@ -21,4 +21,9 @@ final class ConditionValue_Getter extends ConditionValue {
 	<T, R> R visit(ConditionValueVisitor<T, R> visitor, T param) {
 		return visitor.onGetter(this, param);
 	}
+
+	@Override
+	EConditionValue getType() {
+		throw new UnsupportedOperationException("Should have been replaced bu field reference");
+	}
 }

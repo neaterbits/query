@@ -16,4 +16,9 @@ final class ConditionValue_Array extends ConditionValue {
 	<T, R> R visit(ConditionValueVisitor<T, R> visitor, T param) {
 		return visitor.onArray(this, param);
 	}
+
+	@Override
+	EConditionValue getType() {
+		return EConditionValue.ARRAY_LITERAL;
+	}
 }

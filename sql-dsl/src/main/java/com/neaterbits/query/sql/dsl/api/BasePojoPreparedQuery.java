@@ -10,9 +10,9 @@ abstract class BasePojoPreparedQuery<QUERY> extends PreparedQuery_DS<QueryDataSo
 	private final QueryMetaModel queryMetaModel;
 	
 	
-	BasePojoPreparedQuery(QueryDataSource_Pojo_Base dataSource, QUERY query, ExecuteQueryPOJOs<QUERY> executor, ExecuteQueryPOJOsInput input, QueryMetaModel queryMetaModel) {
+	BasePojoPreparedQuery(QueryDataSource_Pojo_Base dataSource, PreparedQueryMetaData metaData, QUERY query, ExecuteQueryPOJOs<QUERY> executor, ExecuteQueryPOJOsInput input, QueryMetaModel queryMetaModel) {
 		
-		super(dataSource);
+		super(dataSource, metaData);
 		
 		if (query == null) {
 			throw new IllegalArgumentException("query == null");

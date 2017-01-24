@@ -35,6 +35,12 @@ public class QueryDataSourcePojoWithList extends QueryDataSource_Pojo_Base {
 		
 		final ExecuteQueryPOJOsFromListInput input = new ExecuteQueryPOJOsFromListInput(instances, q.getSelectSourceClasses(query));
 
-		return new PojoPreparedQuery<QUERY>(this, query, executeQueryPOJOs, input, getQueryMetaModel());
+		return new PojoPreparedQuery<QUERY>(
+				this,
+				q.makeMetaData(query),
+				query,
+				executeQueryPOJOs,
+				input,
+				getQueryMetaModel());
 	}
 }

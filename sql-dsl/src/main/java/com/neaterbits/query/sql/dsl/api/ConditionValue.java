@@ -4,4 +4,6 @@ abstract class ConditionValue extends CollectedItem {
 
 	abstract <T, R> R visit(ConditionValueVisitor<T, R> visitor, T param);
 	
+	abstract EConditionValue getType();
+	
 }

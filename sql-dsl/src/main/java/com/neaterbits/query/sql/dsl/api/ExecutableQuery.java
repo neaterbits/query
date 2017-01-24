@@ -55,6 +55,14 @@ interface ExecutableQuery<QUERY> {
 		return found;
 	}
 	
+	public default PreparedQueryMetaData makeMetaData(QUERY query) {
+
+		// Figure whether requires parameters by recursing downwards 
+		final boolean hasParams = QueryHelper.hasConditionParams(this, query);
+		
+		return new PreparedQueryMetaData(hasParams);
+	}
+	
 	public default int getNumResultParts(QUERY query) {
 		
 		final int numResultParts;
