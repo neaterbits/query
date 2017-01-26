@@ -122,15 +122,16 @@ final class JPAConditionToOperator {
 	private static JPACondition appendOpAndValue(String op, ConditionValue value, ConditionStringBuilder sb) {
 		sb.append(op).append(" ");
 
-		return value.visit(conditionValueVisitor, sb);
+		value.visit(conditionValueVisitor, sb);
 
-		//param.completeResolvedCondition();
+		// new resolved condition
+		return new JPAConditionResolved(sb.getBuiltString());
 	}
 
-	private static final ConditionValueVisitor<ConditionStringBuilder, JPACondition> conditionValueVisitor = new ConditionValueVisitor<ConditionStringBuilder, JPACondition>() {
+	private static final ConditionValueVisitor<ConditionStringBuilder, Void> conditionValueVisitor = new ConditionValueVisitor<ConditionStringBuilder, Void>() {
 
 		@Override
-		public JPACondition onLiteralAny(ConditionValue_Literal_Any<?> value, ConditionStringBuilder param) {
+		public Void onLiteralAny(ConditionValue_Literal_Any<?> value, ConditionStringBuilder param) {
 
 			appendLiteral(value.getLiteral(), param);
 
@@ -138,7 +139,7 @@ final class JPAConditionToOperator {
 		}
 
 		@Override
-		public JPACondition onLiteralString(ConditionValue_Literal_String value, ConditionStringBuilder param) {
+		public Void onLiteralString(ConditionValue_Literal_String value, ConditionStringBuilder param) {
 
 			appendStringLiteral(value.getLiteral(), param);
 
@@ -146,7 +147,7 @@ final class JPAConditionToOperator {
 		}
 
 		@Override
-		public JPACondition onArray(ConditionValue_Array value, ConditionStringBuilder param) {
+		public Void onArray(ConditionValue_Array value, ConditionStringBuilder param) {
 
 			final Object[] values = value.getValues();
 
@@ -162,7 +163,7 @@ final class JPAConditionToOperator {
 		}
 
 		@Override
-		public JPACondition onParam(ConditionValue_Param value, ConditionStringBuilder param) {
+		public Void onParam(ConditionValue_Param value, ConditionStringBuilder param) {
 			
 			// We must append a param-value to the built query, that is 
 			// for JPQL this could be :param1, or ? for a native-query.
@@ -172,12 +173,12 @@ final class JPAConditionToOperator {
 		}
 
 		@Override
-		public JPACondition onGetter(ConditionValue_Getter value, ConditionStringBuilder param) {
+		public Void onGetter(ConditionValue_Getter value, ConditionStringBuilder param) {
 			throw new UnsupportedOperationException("Getter should have been compiled");
 		}
 
 		@Override
-		public JPACondition onFieldReference(ConditionValue_FieldRerefence value, ConditionStringBuilder param) {
+		public Void onFieldReference(ConditionValue_FieldRerefence value, ConditionStringBuilder param) {
 			throw new UnsupportedOperationException("Field references should only be present in joins");
 		}
 		
