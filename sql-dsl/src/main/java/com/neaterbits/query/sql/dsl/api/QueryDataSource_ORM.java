@@ -23,11 +23,11 @@ abstract class QueryDataSource_ORM<ORM_QUERY, MANAGED, EMBEDDED, IDENTIFIABLE, A
 	
 	abstract PreparedQueryConditionsBuilder createConditionsBuilder(PreparedQueryBuilderORM queryBuilderORM, boolean atRoot);
 	
-	abstract <QUERY> PreparedQuery_DB<QUERY, ORM_QUERY> makeCompletePreparedQuery(ExecutableQuery<QUERY> q, QUERY query, ParamNameAssigner paramNameAssigner, PreparedQueryBuilder sb);
+	abstract <QUERY> PreparedQuery_DB<QUERY, ORM_QUERY> makeCompletePreparedQuery(ExecutableQuery<QUERY> q, QUERY query, QueryParametersDistinct distinctParams, PreparedQueryBuilder sb);
 	
-	abstract <QUERY> PreparedQuery_DB<QUERY, ORM_QUERY> makeHalfwayPreparedQuery(ExecutableQuery<QUERY> queryAccess, QUERY query, ParamNameAssigner paramNameAssigner, String base, PreparedQueryConditionsBuilder conditions);
+	abstract <QUERY> PreparedQuery_DB<QUERY, ORM_QUERY> makeHalfwayPreparedQuery(ExecutableQuery<QUERY> queryAccess, QUERY query, QueryParametersDistinct distinctParams, String base, PreparedQueryConditionsBuilder conditions);
 
-	abstract ConditionStringBuilder makeConditionStringBuilder(List<Param<?>> distinctParams);
+	abstract ConditionStringBuilder makeConditionStringBuilder(QueryParametersDistinct distinctParams);
 	
 	
 	/**
@@ -78,20 +78,21 @@ abstract class QueryDataSource_ORM<ORM_QUERY, MANAGED, EMBEDDED, IDENTIFIABLE, A
 		
 		if (q.hasConditions(query)) {
 			
-			final ParamNameAssigner paramNameAssigner = new ParamNameAssigner();
+		    final QueryParametersDistinct distinctParams = q.getDistinctParams(query);
+			
 			//final CompileConditionParam param = new CompileConditionParam(paramNameAssigner, em);
 
 			final PreparedQueryConditionsBuilder conditionsBuilder = createConditionsBuilder((PreparedQueryBuilderORM)sb, true);
 
-			prepareConditions(q, query, conditionsBuilder, addJoinToWhere);
+			prepareConditions(q, query, conditionsBuilder, addJoinToWhere, distinctParams);
 
 			if (conditionsBuilder.hasUnresolved()) {
-				ret = makeHalfwayPreparedQuery(q, query, paramNameAssigner, sb.getQueryAsString(), conditionsBuilder);
+				ret = makeHalfwayPreparedQuery(q, query, distinctParams, sb.getQueryAsString(), conditionsBuilder);
 			}
 			else {
 				sb.resolveFromParams(conditionsBuilder, null);
 
-				ret = makeCompletePreparedQuery(q, query, paramNameAssigner, sb);
+				ret = makeCompletePreparedQuery(q, query, distinctParams, sb);
 			}
 		}
 		else {
@@ -435,7 +436,7 @@ abstract class QueryDataSource_ORM<ORM_QUERY, MANAGED, EMBEDDED, IDENTIFIABLE, A
 		
 	}
 	
-	private <QUERY> ConditionsType prepareConditions(ExecutableQuery<QUERY> q, QUERY query, PreparedQueryConditionsBuilder conditionsBuilder, List<JoinConditionId> joinComparisonConditions) {
+	private <QUERY> ConditionsType prepareConditions(ExecutableQuery<QUERY> q, QUERY query, PreparedQueryConditionsBuilder conditionsBuilder, List<JoinConditionId> joinComparisonConditions, QueryParametersDistinct distinctParams) {
 
 		final ConditionsType original = q.getRootConditionsType(query);
 
@@ -479,7 +480,6 @@ abstract class QueryDataSource_ORM<ORM_QUERY, MANAGED, EMBEDDED, IDENTIFIABLE, A
 				: conditionsBuilder;
 
 			
-	    final List<Param<?>> distinctParams = q.getDistinctParams(query);
 		final ConditionStringBuilder conditionSB = makeConditionStringBuilder(distinctParams);
 				
 	    if (q.isRootConditionOnly(query)) {

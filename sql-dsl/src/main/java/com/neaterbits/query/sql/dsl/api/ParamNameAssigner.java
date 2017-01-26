@@ -14,17 +14,19 @@ import com.neaterbits.util.IdentityKey;
  *
  */
 
+@Deprecated
 final class ParamNameAssigner {
 
 	private final Map<IdentityKey<Param<?>>, String> names;
 
 	private int curParam;
 
-	ParamNameAssigner() {
+	private ParamNameAssigner() {
 		this.names = new HashMap<>();
 		this.curParam = 0;
 	}
 
+	@Deprecated
 	String getOrAllocateName(Param<?> param) {
 
 		if (param == null) {
@@ -45,6 +47,7 @@ final class ParamNameAssigner {
 		return name;
 	}
 
+	@Deprecated
 	String getExistingName(Param<?> param) {
 
 		if (param == null) {
@@ -56,6 +59,7 @@ final class ParamNameAssigner {
 		return names.get(key);
 	}
 	
+	@Deprecated
 	void forEach(BiConsumer<Param<?>, String> consumer) {
 		for (Map.Entry<IdentityKey<Param<?>>, String> entry : names.entrySet()) {
 			consumer.accept(entry.getKey().get(), entry.getValue());

@@ -1,5 +1,7 @@
 package com.neaterbits.query.sql.dsl.api;
 
+import java.util.function.Consumer;
+
 final class PreparedQueryConditionNested extends PreparedQueryCondition {
 
 	private final PreparedQueryConditionsBuilder sub;
@@ -20,5 +22,10 @@ final class PreparedQueryConditionNested extends PreparedQueryCondition {
 	@Override
 	boolean isUnresolved() {
 		return false;
+	}
+	
+	@Override
+	void walk(Consumer<PreparedQueryConditionComparison> consumer) {
+		sub.walk(consumer);
 	}
 }

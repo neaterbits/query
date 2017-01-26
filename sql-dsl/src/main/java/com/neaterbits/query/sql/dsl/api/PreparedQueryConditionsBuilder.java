@@ -3,6 +3,7 @@ package com.neaterbits.query.sql.dsl.api;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Consumer;
 
 import com.neaterbits.query.util.java8.Coll8;
 
@@ -81,6 +82,14 @@ abstract class PreparedQueryConditionsBuilder {
 	final boolean isAtRoot() {
 		return atRoot;
 	}
+	
+	final void walk(Consumer<PreparedQueryConditionComparison> consumer) {
+
+		for (PreparedQueryCondition condition : conditions) {
+			condition.walk(consumer);
+		}
+	}
+	
 
 	Iterable<PreparedQueryCondition> getConditions() {
 		return conditions;

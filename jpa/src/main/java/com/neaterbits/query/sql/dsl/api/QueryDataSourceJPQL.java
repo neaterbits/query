@@ -18,7 +18,7 @@ public final class QueryDataSourceJPQL extends QueryDataSourceJPA {
 	
 
 	@Override
-	<QUERY> PreparedQuery_DB<QUERY, javax.persistence.Query> makeCompletePreparedQuery(ExecutableQuery<QUERY> q, QUERY query, ParamNameAssigner paramNameAssigner, PreparedQueryBuilder sb) {
+	<QUERY> PreparedQuery_DB<QUERY, javax.persistence.Query> makeCompletePreparedQuery(ExecutableQuery<QUERY> q, QUERY query, QueryParametersDistinct distinctParams, PreparedQueryBuilder sb) {
 		final String jpql = sb.toString();
 		
 		System.out.println("## jpql:\n" + jpql);
@@ -28,8 +28,8 @@ public final class QueryDataSourceJPQL extends QueryDataSourceJPA {
 		return new PreparedQuery_JPA_Complete<QUERY>(
 				this,
 				q,
-				query, 
-				paramNameAssigner,
+				query,
+				distinctParams,
 				jpaQuery);
 	}
 	
@@ -61,24 +61,5 @@ public final class QueryDataSourceJPQL extends QueryDataSourceJPA {
 	@Override
 	boolean supportsNonRelationJoins() {
 		return false;
-	}
-
-	@Override
-	ConditionStringBuilder makeConditionStringBuilder(final List<Param<?>> distinctParams) {
-		return new ConditionStringBuilder() {
-			
-			@Override
-			void appendParam(Param<?> param) {
-				
-				final int idx = distinctParams.indexOf(param);
-				
-				if (idx < 0) {
-					throw new IllegalArgumentException("Cannot find param " + param + " out of " + distinctParams);
-				}
-				
-				
-				append(":param").append(idx);
-			}
-		};
 	}
 }

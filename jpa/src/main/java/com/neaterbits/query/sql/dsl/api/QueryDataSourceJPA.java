@@ -48,9 +48,9 @@ public abstract class QueryDataSourceJPA extends QueryDataSource_ORM<
 
 	@Override
 	final <QUERY> PreparedQuery_DB<QUERY, Query> makeHalfwayPreparedQuery(ExecutableQuery<QUERY> queryAccess, QUERY query,
-			ParamNameAssigner paramNameAssigner, String base, PreparedQueryConditionsBuilder conditions) {
+			QueryParametersDistinct distinctParams, String base, PreparedQueryConditionsBuilder conditions) {
 		
-		return new PreparedQuery_JPA_Halfway<QUERY>(this, queryAccess, query, paramNameAssigner, base, (PreparedQueryConditionsBuilderJPA)conditions);
+		return new PreparedQuery_JPA_Halfway<QUERY>(this, queryAccess, query, distinctParams, base, (PreparedQueryConditionsBuilderJPA)conditions);
 	}
 
 	private static final JPAConditionToOperator conditionToOperator = new JPAConditionToOperator();
@@ -81,6 +81,11 @@ public abstract class QueryDataSourceJPA extends QueryDataSource_ORM<
 		}
 
 		return attr.getName();
+	}
+
+	@Override
+	final ConditionStringBuilder makeConditionStringBuilder(QueryParametersDistinct distinctParams) {
+		return new ConditionStringBuilder_JPA(distinctParams);
 	}
 	
 	private static Attribute<?, ?> findAttr(EntityType<?> entityType, Method getterMethod) {

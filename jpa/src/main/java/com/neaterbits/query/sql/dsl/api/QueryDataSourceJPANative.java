@@ -27,14 +27,14 @@ public final class QueryDataSourceJPANative extends QueryDataSourceJPA {
 	}
 	
 	@Override
-	final <QUERY> PreparedQuery_DB<QUERY, javax.persistence.Query> makeCompletePreparedQuery(ExecutableQuery<QUERY> q, QUERY query, ParamNameAssigner paramNameAssigner, PreparedQueryBuilder sb) {
+	final <QUERY> PreparedQuery_DB<QUERY, javax.persistence.Query> makeCompletePreparedQuery(ExecutableQuery<QUERY> q, QUERY query, QueryParametersDistinct distinctParams, PreparedQueryBuilder sb) {
 		final String ansiSQL = sb.getQueryAsString();
 		
 		System.out.println("## native:\n" + ansiSQL);
 		
 		final javax.persistence.Query jpaQuery = createJPAQuery(ansiSQL);
 
-		return new PreparedQuery_JPA_Complete<QUERY>(this, q, query, paramNameAssigner, jpaQuery);
+		return new PreparedQuery_JPA_Complete<QUERY>(this, q, query, distinctParams, jpaQuery);
 	}
 	
 	
@@ -155,17 +155,5 @@ public final class QueryDataSourceJPANative extends QueryDataSourceJPA {
 	boolean supportsNonRelationJoins() {
 		return true;
 	}
-
-	@Override
-	ConditionStringBuilder makeConditionStringBuilder(List<Param<?>> distinctParams) {
-		return new ConditionStringBuilder() {
-			
-			@Override
-			void appendParam(Param<?> param) {
-				append('?');
-			}
-		};
-	}
-	
 	
 }

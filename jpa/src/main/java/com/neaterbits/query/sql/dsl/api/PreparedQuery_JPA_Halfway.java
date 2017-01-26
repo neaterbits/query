@@ -1,5 +1,8 @@
 package com.neaterbits.query.sql.dsl.api;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.Query;
 
 final class PreparedQuery_JPA_Halfway<QUERY> extends PreparedQuery_JPA_Base<QUERY> {
@@ -7,8 +10,8 @@ final class PreparedQuery_JPA_Halfway<QUERY> extends PreparedQuery_JPA_Base<QUER
 	private final String base;
 	private final PreparedQueryConditionsBuilderJPA conditions;
 	
-	PreparedQuery_JPA_Halfway(QueryDataSourceJPA dataSource, ExecutableQuery<QUERY> queryAccess, QUERY query, ParamNameAssigner paramNameAssigner, String base, PreparedQueryConditionsBuilderJPA conditions) {
-		super(dataSource, queryAccess, query, paramNameAssigner);
+	PreparedQuery_JPA_Halfway(QueryDataSourceJPA dataSource, ExecutableQuery<QUERY> queryAccess, QUERY query, QueryParametersDistinct distinctParams, String base, PreparedQueryConditionsBuilderJPA conditions) {
+		super(dataSource, queryAccess, query, distinctParams);
 		
 		if (base == null) {
 			throw new IllegalArgumentException("base == null");
@@ -36,6 +39,46 @@ final class PreparedQuery_JPA_Halfway<QUERY> extends PreparedQuery_JPA_Base<QUER
 	}
 
 	@Override
+	final void initParams(Query ormQuery, ParamValueResolver paramCollector) {
+		
+		// Since this is a completely resolved query, that means that all parameters could be resolved to a :paramXyz
+		// thus we can iterate over all params
+
+		final List<Param<?>> paramsThatWereResolved  = new ArrayList<>();
+
+		// Set all unique params still in use
+		conditions.walk(comparison -> {
+			
+			if (comparison.isUnresolved()) {
+				// still unresolved so is resolved into literal instead, skip
+			}
+			else {
+				final JPAConditionResolved condition = (JPAConditionResolved)comparison.getRhs();
+
+				final Param<?> param = condition.getAnyResolvedParam();
+				
+				if (param != null && !paramsThatWereResolved.contains(param)) {
+					paramsThatWereResolved.add(param);
+				}
+			}
+		});
+		
+		
+		// Got list of all params that were resolved to query parameters, now add them to query 
+		for (Param<?> param : paramsThatWereResolved) {
+			final int idx = distincParams.getIndexOf(param);
+
+			if (idx < 0) {
+				throw new IllegalStateException("param not found");
+			}
+
+			final String name = ConditionStringBuilder_JPA.makeParamName(idx);
+
+			ormQuery.setParameter(name, paramCollector.resolveParam(param));
+		}
+	}
+	
+	@Override
 	Object execute(ParamValueResolver collectedParams) {
 		
 		final StringBuilder sb = new StringBuilder(base);
@@ -45,6 +88,8 @@ final class PreparedQuery_JPA_Halfway<QUERY> extends PreparedQuery_JPA_Base<QUER
 		conditions.resolveFromParams(sb, collectedParams);
 
 		final String queryString = sb.toString();
+		
+		System.out.println("## execute halfway-query: " + queryString);
 
 		final Query jpaQuery = ((QueryDataSourceJPA)getDataSource()).createJPAQuery(queryString); 
 

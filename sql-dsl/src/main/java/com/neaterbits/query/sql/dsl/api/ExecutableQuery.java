@@ -56,8 +56,8 @@ interface ExecutableQuery<QUERY> {
 		return found;
 	}
 	
-	public default List<Param<?>> getDistinctParams(QUERY query) {
-		return QueryHelper.getConditionParamRefs(this, query, true);
+	public default QueryParametersDistinct getDistinctParams(QUERY query) {
+		return new QueryParametersDistinct(QueryHelper.getConditionParamRefs(this, query, true));
 	}
 	
 	

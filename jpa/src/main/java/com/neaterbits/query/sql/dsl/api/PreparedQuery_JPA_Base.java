@@ -7,30 +7,21 @@ import javax.persistence.Query;
 
 abstract class PreparedQuery_JPA_Base<QUERY> extends PreparedQuery_DB<QUERY, javax.persistence.Query> {
 
-	private final ParamNameAssigner paramNameAssigner;
+	final QueryParametersDistinct distincParams;
 
 
-	PreparedQuery_JPA_Base(QueryDataSourceJPA dataSource, ExecutableQuery<QUERY> queryAccess, QUERY query, ParamNameAssigner paramNameAssigner) {
+	PreparedQuery_JPA_Base(QueryDataSourceJPA dataSource, ExecutableQuery<QUERY> queryAccess, QUERY query, QueryParametersDistinct distinctParams) {
 		super(dataSource, queryAccess, query);
 
-		this.paramNameAssigner = paramNameAssigner;
+		this.distincParams = distinctParams;
 	}
 
+	/*
 	final String getNameForParam(Param<?> param) {
-		return paramNameAssigner.getExistingName(param);
+		return distincParams.getExistingName(param);
 	}
+	*/
 	
-	
-	@Override
-	final void initParams(Query ormQuery, ParamValueResolver paramCollector) {
-		if (paramNameAssigner != null) {
-			paramNameAssigner.forEach((Param<?> param, String name) -> {
-				
-				ormQuery.setParameter(name, paramCollector.resolveParam(param));
-				
-			});
-		}
-	}
 
 	@Override
 	final Object executeForSingleResult(Query ormQuery) {

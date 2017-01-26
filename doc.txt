@@ -523,7 +523,8 @@ Renamed til Named
  - in
 # - bedre debugging av in-memory query eksekvering
  - parametere
- - unit tester rett på JPAModel og utils for å sjekke at henter ut relations riktig, attributt kolonner mm på rett vis.
+ - unit tester rett på JPAModel og utils for å sje
+kke at henter ut relations riktig, attributt kolonner mm på rett vis.
    * se om bør endre API slik at eget for å hente kolonner for relation attributter?
 
  - dialekter, dvs statisk begrense muligheter (kun ANSI joins? kun samme-type rekursjon?)
@@ -857,3 +858,9 @@ public interface ISharedOrClausesNamedValues<MODEL, RESULT, OR_CLAUSES extends I
 
 }
 
+
+
+----
+
+
+må ha liste over alle som er resolved, og er parameter 
