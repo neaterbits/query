@@ -9,11 +9,11 @@ public interface ISharedClauseComparableCommonParam<
 	extends ISharedClauseComparableCommonBase<MODEL, RESULT, R, L>,
 			ISharedClauseConditionParam<MODEL, RESULT, R, L> {
 
-	L isGreaterThan(Param<R> value);
+	L isGreaterThan(ValParam<R> value);
 	
-	L isGreaterOrEqualTo(Param<R> value);
+	L isGreaterOrEqualTo(ValParam<R> value);
 	
-	L isLesserThan(Param<R> value);
+	L isLesserThan(ValParam<R> value);
 	
-	L isLesserOrEqualTo(Param<R> value);
+	L isLesserOrEqualTo(ValParam<R> value);
 }

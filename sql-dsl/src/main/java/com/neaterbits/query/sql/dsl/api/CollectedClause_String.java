@@ -27,7 +27,7 @@ final class CollectedClause_String<MODEL, RESULT, L extends ISharedLogicalClause
 	}
 
 	@Override
-	public L startsWith(Param<String> param) {
+	public L startsWith(ValParam<String> param) {
 		if (param == null) {
 			throw new IllegalArgumentException("param == null");
 		}
@@ -45,7 +45,7 @@ final class CollectedClause_String<MODEL, RESULT, L extends ISharedLogicalClause
 	}
 
 	@Override
-	public L endsWith(Param<String> param) {
+	public L endsWith(ValParam<String> param) {
 		if (param == null) {
 			throw new IllegalArgumentException("param == null");
 		}
@@ -63,7 +63,7 @@ final class CollectedClause_String<MODEL, RESULT, L extends ISharedLogicalClause
 	}
 
 	@Override
-	public L contains(Param<String> param) {
+	public L contains(ValParam<String> param) {
 		if (param == null) {
 			throw new IllegalArgumentException("param == null");
 		}
@@ -81,7 +81,7 @@ final class CollectedClause_String<MODEL, RESULT, L extends ISharedLogicalClause
 	}
 
 	@Override
-	public L matches(Param<String> param) {
+	public L matches(ValParam<String> param) {
 		if (param == null) {
 			throw new IllegalArgumentException("param == null");
 		}

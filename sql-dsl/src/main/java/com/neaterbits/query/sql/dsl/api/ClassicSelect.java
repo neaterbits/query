@@ -163,24 +163,35 @@ final class ClassicSelect implements IClassic {
     }
 
 	@Override
-    public <T> Param<T> param(Class<T> paramType) {
+    public <T> ValParam<T> param(Class<T> paramType) {
 		if (paramType == null) {
 			throw new IllegalArgumentException("paramType == null");
 		}
 
-		final ParamImpl<T> param = new ParamImpl<T>(paramType);
+		final ValParamImpl<T> param = new ValParamImpl<T>(paramType);
+
+		return param;
+    }
+
+	@Override
+    public <T> InParam<T> inParam(Class<T> paramType) {
+		if (paramType == null) {
+			throw new IllegalArgumentException("paramType == null");
+		}
+
+		final InParamImpl<T> param = new InParamImpl<T>(paramType);
 
 		return param;
     }
     
     // Parameters. We only support known base types that support equals()/hashCode() 
 	@Override
-    public Param<Integer> intParam() {
+    public ValParam<Integer> intParam() {
     	return param(Integer.class);
     }
 
 	@Override
-    public Param<String> stringParam() {
+    public ValParam<String> stringParam() {
     	return param(String.class);
     }
 

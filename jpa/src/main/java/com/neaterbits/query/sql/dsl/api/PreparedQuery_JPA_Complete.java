@@ -1,5 +1,8 @@
 package com.neaterbits.query.sql.dsl.api;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.Query;
 
 final class PreparedQuery_JPA_Complete<QUERY> extends PreparedQuery_JPA_Base<QUERY> {
@@ -23,17 +26,27 @@ final class PreparedQuery_JPA_Complete<QUERY> extends PreparedQuery_JPA_Base<QUE
 		// thus we can iterate over all params
 
 		if (distincParams != null) {
-			
+
 			distincParams.forEach((Param<?> param, Integer idx) -> {
-				
+
+				final BaseParamImpl<?> impl = (BaseParamImpl<?>)param;
 				final String name = ConditionStringBuilder_JPA.makeParamName(idx);
+
+				final Object value = paramCollector.resolveParam(param);
 				
-				ormQuery.setParameter(name, paramCollector.resolveParam(param));
-				
+				if (impl.isList()) {
+					
+					final List<?> listVal = (List<?>)value;
+					
+					ormQuery.setParameter(name, listVal);
+				}
+				else {
+					ormQuery.setParameter(name, paramCollector.resolveParam(param));
+				}
 			});
 		}
 	}
-	
+
 	@Override
 	Object execute(ParamValueResolver paramCollector) {
 

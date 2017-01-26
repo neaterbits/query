@@ -17,17 +17,19 @@ final class JPAConditionToOperator {
 			break;
 
 		case IN:
-			builder.append("(");
-
-			value.visit(conditionValueVisitor, builder);
-
-			builder.append(")");
-			if (Boolean.TRUE) {
-				throw new UnsupportedOperationException("TODO - support parameterized by returing a custom JPACondition");
+			builder.append("in ");
+			
+			if (value.getType() != EConditionValue.PARAM) {
+				builder.append('(');
 			}
-			else {
-				ret = null;
+
+			final Param<?> resolvedParam = value.visit(conditionValueVisitor, builder);
+
+			if (value.getType() != EConditionValue.PARAM) {
+				builder.append(')');
 			}
+
+			ret = new JPAConditionResolved(builder.getBuiltString(), resolvedParam);
 			break;
 
 		case GREATER_THAN:

@@ -33,4 +33,11 @@ public class Coll8 {
 		return ret;
 	}
 
+	public static <T> List<T> fromIterable(List<T> dst, Iterable<T> iterable) {
+		for (T item : iterable) {
+			dst.add(item);
+		}
+		
+		return dst;
+	}
 }

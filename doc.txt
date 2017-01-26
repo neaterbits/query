@@ -522,17 +522,16 @@ Renamed til Named
 #  - nøsta and/or
  - in
 # - bedre debugging av in-memory query eksekvering
- - parametere
- - unit tester rett på JPAModel og utils for å sje
-kke at henter ut relations riktig, attributt kolonner mm på rett vis.
-   * se om bør endre API slik at eget for å hente kolonner for relation attributter?
-
+W - parametere
  - dialekter, dvs statisk begrense muligheter (kun ANSI joins? kun samme-type rekursjon?)
  - query ut fra context variabel
    * forenklede queries uten from eller join sources. Trenger ikke from/implisitt join om kun ANSI joins
      siden from er der for cartesian product.
  - subselects
  - mere tester
+ - unit tester rett på JPAModel og utils for å sjekke at henter ut relations riktig, attributt kolonner mm på rett vis.
+   * se om bør endre API slik at eget for å hente kolonner for relation attributter?
+
  - transformasjons-API
  - optionals
  - JS / annen kode generering ut fra POJO joins
@@ -863,4 +862,8 @@ public interface ISharedOrClausesNamedValues<MODEL, RESULT, OR_CLAUSES extends I
 ----
 
 
-må ha liste over alle som er resolved, og er parameter 
+må ha liste over alle som er resolved, og er parameter, dvs de er parameter-resolved.
+
+
+
+

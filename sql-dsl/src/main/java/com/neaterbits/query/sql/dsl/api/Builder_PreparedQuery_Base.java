@@ -33,8 +33,19 @@ abstract class Builder_PreparedQuery_Base<RESULT_TYPE> implements ISharedPrepare
 	}
 
 
+	@SuppressWarnings({"unchecked", "rawtypes"})
 	@Override
-	public final <T> QueryParamsValueBuilder<T, QueryResultGetterParamsAdditionalBuilder<RESULT_TYPE>> executeWith(Param<T> param) {
+	public final <T> QueryParamsValueBuilder<T, QueryResultGetterParamsAdditionalBuilder<RESULT_TYPE>> executeWith(ValParam<T> param) {
+		return (QueryParamsValueBuilder)intExecuteWith(param);
+	}
+
+	@SuppressWarnings({"unchecked", "rawtypes"})
+	@Override
+	public final <T> QueryParamsValueBuilderForCollection<T, QueryResultGetterParamsAdditionalBuilder<RESULT_TYPE>> executeWith(InParam<T> param) {
+		return (QueryParamsValueBuilderForCollection)intExecuteWith(param);
+	}
+
+	private <T> QueryParamsValueBuilder<T, QueryResultGetterParamsAdditionalBuilder<RESULT_TYPE>> intExecuteWith(Param<T> param) {
 
 		final QueryParamCollector queryParamCollector = new QueryParamCollector();
 		final QueryResultGetterParamsBuilderImpl<RESULT_TYPE> paramsBuilder
@@ -47,7 +58,8 @@ abstract class Builder_PreparedQuery_Base<RESULT_TYPE> implements ISharedPrepare
 
 		return paramsBuilder.addParam(param);
 	}
-
+	
+	
 	@Override
 	public final RESULT_TYPE execute(Function<QueryParamsInitialBuilder, QueryParamsEnd> builder) {
 		throw new UnsupportedOperationException("TODO");

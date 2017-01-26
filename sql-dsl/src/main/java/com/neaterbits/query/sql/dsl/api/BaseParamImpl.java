@@ -1,9 +1,13 @@
 package com.neaterbits.query.sql.dsl.api;
 
-final class ParamImpl<T> implements Param<T> {
+abstract class BaseParamImpl<T> {
 	private final Class<T> paramType;
 
-	ParamImpl(Class<T> paramType) {
+	abstract boolean check(Object value);
+	
+	abstract boolean isList();
+	
+	BaseParamImpl(Class<T> paramType) {
 		if (paramType == null) {
 			throw new IllegalArgumentException("paramType == null");
 		}
@@ -11,7 +15,8 @@ final class ParamImpl<T> implements Param<T> {
 		this.paramType = paramType;
 	}
 
-	Class<T> getParamType() {
+	final Class<T> getParamType() {
 		return paramType;
 	}
+
 }

@@ -60,11 +60,16 @@ public interface Select {
     */
     
     // Parameters. We only support known base types that support equals()/hashCode() 
-    public static Param<Integer> intParam() {
+    public static ValParam<Integer> intParam() {
     	return ClassicSelect.selectImpl.param(Integer.class);
     }
 
-    public static Param<String> stringParam() {
+    public static ValParam<String> stringParam() {
     	return ClassicSelect.selectImpl.param(String.class);
     }
+
+    public static <T> InParam<T> inParam(Class<T> paramype) {
+    	return ClassicSelect.selectImpl.inParam(paramype);
+    }
+
 }

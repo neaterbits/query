@@ -89,6 +89,84 @@ public class SQLAPITest extends BaseSQLAPITest {
 	        		q -> q.execute());
 		});
 	}
+
+	@Test
+    public void testInBasedLiteral() {
+
+		final Company acme = new Company(-1, "Acme");
+		final Company foo = new Company(-1, "Foo");
+
+        final SingleQuery<CompanyResultVO> startsWithAc =
+        		selectOneOrNull(CompanyResultVO.class)
+
+        	.map(Company::getName).to(CompanyResultVO::setName)
+        	
+        	.from(Company.class)
+
+        	.where(Company::getName).in("Acme", "Baz")
+        	.compile();
+		
+		store(s  -> s.add(acme)).
+		check(ds -> {
+	        checkSelectOneOrNull(
+	        		ds,
+	        		new CompanyResultVO(acme.getName()),
+	        		startsWithAc,
+	        		q -> q.execute());
+		});
+
+		// Search for foo as well, should return no matches
+		store(s  -> s.add(foo)).
+		check(ds -> {
+	        checkSelectOneOrNull(
+	        		ds,
+	        		null,
+	        		startsWithAc,
+	        		q -> q.execute());
+		});
+	}
+	
+	@Test
+    public void testInBasedParam() {
+
+		final Company acme = new Company(-1, "Acme");
+		final Company foo = new Company(-1, "Foo");
+		
+		final InParam<String> inParam = Select.inParam(String.class);
+		
+
+        final SingleQuery<CompanyResultVO> startsWithAc =
+        		selectOneOrNull(CompanyResultVO.class)
+
+        	.map(Company::getName).to(CompanyResultVO::setName)
+        	
+        	.from(Company.class)
+
+        	.where(Company::getName).in(inParam)
+
+        	.compile();
+		
+		store(s  -> s.add(acme)).
+		check(ds -> {
+	        checkSelectOneOrNull(
+	        		ds,
+	        		new CompanyResultVO(acme.getName()),
+	        		startsWithAc,
+	        		q -> q.executeWith(inParam).setTo("Acme", "Baz")
+	        			  .get());
+		});
+
+		// Search for foo as well, should return no matches
+		store(s  -> s.add(foo)).
+		check(ds -> {
+	        checkSelectOneOrNull(
+	        		ds,
+	        		null,
+	        		startsWithAc,
+	        		q -> q.executeWith(inParam).setTo("Acme", "Baz")
+        				  .get());
+		});
+	}
 	
 	@Test
     public void testNameBasedEquals() {
@@ -190,8 +268,7 @@ public class SQLAPITest extends BaseSQLAPITest {
 		final Company acme = new Company(-1, "Acme");
 		final Company foo = new Company(-1, "Foo");
 
-		final Param<String> endParam = Select.stringParam();
-		
+		final ValParam<String> endParam = Select.stringParam();
 		
 		
         final SingleQuery<CompanyResultVO> startsWithAc =
@@ -232,8 +309,8 @@ public class SQLAPITest extends BaseSQLAPITest {
 		final Company acme = new Company(-1, "Acme");
 		final Company foo = new Company(-1, "Foo");
 
-		final Param<String> eqParam = Select.stringParam();
-		final Param<String> endParam = Select.stringParam();
+		final ValParam<String> eqParam = Select.stringParam();
+		final ValParam<String> endParam = Select.stringParam();
 		
 		
 		
@@ -463,8 +540,8 @@ public class SQLAPITest extends BaseSQLAPITest {
     		
 	    	final QueryDataSource ds = new QueryDataSourceJPQL(em);
 	    	
-	    	final Param<Integer> param1 = intParam();
-	    	final Param<Integer> param2 = intParam();
+	    	final ValParam<Integer> param1 = intParam();
+	    	final ValParam<Integer> param2 = intParam();
 	    	
 	    	
 	        final SingleQuery<ResultVO > query =

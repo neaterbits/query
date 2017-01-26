@@ -1,5 +1,10 @@
 package com.neaterbits.query.sql.dsl.api;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
+import com.neaterbits.query.util.java8.Coll8;
+
 final class QueryResultGetterParamsBuilderImpl<RESULT_TYPE>
 
 		extends QueryResultGetterImpl<RESULT_TYPE>
@@ -7,19 +12,20 @@ final class QueryResultGetterParamsBuilderImpl<RESULT_TYPE>
 		implements QueryResultGetterParamsInitialBuilder   <RESULT_TYPE>,
 				   QueryResultGetterParamsAdditionalBuilder<RESULT_TYPE>,
 				   QueryParamsValueBuilder<Object, QueryResultGetterParamsAdditionalBuilder<RESULT_TYPE>>,
+				   QueryParamsValueBuilderForCollection<Object, QueryResultGetterParamsAdditionalBuilder<RESULT_TYPE>>,
 				   QueryResultGetter<RESULT_TYPE> {
 
 							   
 	private final QueryParamCollector queryParamCollector;
-	private final QueryDataSource_Base dataSource;
-	private final PreparedQuery_DS dsQuery;
+	private final QueryDataSource_Base<?> dataSource;
+	private final PreparedQuery_DS<?> dsQuery;
 	private final Builder_PreparedQuery_Base<RESULT_TYPE> query; 
 	private Param<?> lastParam;
 
 	QueryResultGetterParamsBuilderImpl(
 			QueryParamCollector queryParamCollector,
-			QueryDataSource_Base dataSource,
-			PreparedQuery_DS dsQuery,
+			QueryDataSource_Base<?> dataSource,
+			PreparedQuery_DS<?> dsQuery,
 			Builder_PreparedQuery_Base<RESULT_TYPE> query) {
 
 		if (queryParamCollector == null) {
@@ -49,14 +55,28 @@ final class QueryResultGetterParamsBuilderImpl<RESULT_TYPE>
 		return addParam(param);
 	}
 
-	@Override
-	public QueryResultGetterParamsAdditionalBuilder<RESULT_TYPE> setTo(Object value) {
+	private QueryResultGetterParamsAdditionalBuilder<RESULT_TYPE> intSetTo(Object value) {
 
 		queryParamCollector.add(lastParam, value);
 
 		this.lastParam = null;
 
 		return this;
+	}
+
+	@Override
+	public QueryResultGetterParamsAdditionalBuilder<RESULT_TYPE> setTo(Object value) {
+		return intSetTo(value);
+	}
+
+	@Override
+	public QueryResultGetterParamsAdditionalBuilder<RESULT_TYPE> setTo(Object... values) {
+		return intSetTo(Arrays.asList(values));
+	}
+
+	@Override
+	public QueryResultGetterParamsAdditionalBuilder<RESULT_TYPE> setTo(Iterable<Object> values) {
+		return intSetTo(Coll8.fromIterable(new ArrayList<>(), values));
 	}
 
 	@Override

@@ -17,9 +17,9 @@ final class QueryParamCollector implements ParamValueResolver {
 			throw new IllegalArgumentException("param == null");
 		}
 		
-		final ParamImpl<?> impl = (ParamImpl<?>)param;
+		final BaseParamImpl<?> impl = (BaseParamImpl<?>)param;
 		
-		if (value != null && !impl.getParamType().equals(value.getClass())) {
+		if (value != null && !impl.check(value)) {
 			throw new IllegalArgumentException("Mismatch between param class " + param.getClass().getSimpleName()
 						+ " and value class " + value.getClass().getSimpleName());
 		}

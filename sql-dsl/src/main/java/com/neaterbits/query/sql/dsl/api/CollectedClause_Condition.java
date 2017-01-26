@@ -67,7 +67,7 @@ class CollectedClause_Condition<MODEL, RESULT, R, L extends ISharedLogicalClause
 	}
 
 	@Override
-	public final L isEqualTo(Param<R> other) {
+	public final L isEqualTo(ValParam<R> other) {
 		
 		if (other == null) {
 			throw new IllegalArgumentException("other == null");
@@ -110,7 +110,7 @@ class CollectedClause_Condition<MODEL, RESULT, R, L extends ISharedLogicalClause
 	}
 
 	@Override
-	public final L isNotEqualTo(Param<R> other) {
+	public final L isNotEqualTo(ValParam<R> other) {
 
 		if (other == null) {
 			throw new IllegalArgumentException("other == null");
@@ -156,5 +156,10 @@ class CollectedClause_Condition<MODEL, RESULT, R, L extends ISharedLogicalClause
 		}
 
 		return addCondition(new CollectedCondition_In(getter, new ConditionValue_Array(values)));
+	}
+
+	@Override
+	public L in(InParam<R> param) {
+		return addCondition(new CollectedCondition_In(getter, new ConditionValue_Param(param)));
 	}
 }

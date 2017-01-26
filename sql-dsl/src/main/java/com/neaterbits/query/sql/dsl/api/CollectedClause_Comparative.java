@@ -19,7 +19,7 @@ class CollectedClause_Comparative<MODEL, RESULT, R extends Comparable<R>, L exte
 
 	
 	@Override
-	public final L isGreaterThan(Param<R> value) {
+	public final L isGreaterThan(ValParam<R> value) {
 		if (value == null) {
 			throw new IllegalArgumentException("value == null");
 		}
@@ -48,7 +48,7 @@ class CollectedClause_Comparative<MODEL, RESULT, R extends Comparable<R>, L exte
 	}
 
 	@Override
-	public final L isGreaterOrEqualTo(Param<R> value) {
+	public final L isGreaterOrEqualTo(ValParam<R> value) {
 		if (value == null) {
 			throw new IllegalArgumentException("value == null");
 		}
@@ -77,7 +77,7 @@ class CollectedClause_Comparative<MODEL, RESULT, R extends Comparable<R>, L exte
 	}
 
 	@Override
-	public final L isLesserThan(Param<R> value) {
+	public final L isLesserThan(ValParam<R> value) {
 		if (value == null) {
 			throw new IllegalArgumentException("value == null");
 		}
@@ -106,7 +106,7 @@ class CollectedClause_Comparative<MODEL, RESULT, R extends Comparable<R>, L exte
 	}
 
 	@Override
-	public final L isLesserOrEqualTo(Param<R> value) {
+	public final L isLesserOrEqualTo(ValParam<R> value) {
 		if (value == null) {
 			throw new IllegalArgumentException("value == null");
 		}
