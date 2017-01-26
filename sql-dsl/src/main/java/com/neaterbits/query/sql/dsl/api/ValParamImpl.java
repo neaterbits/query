@@ -13,6 +13,6 @@ final class ValParamImpl<T> extends BaseParamImpl<T> implements ValParam<T> {
 
 	@Override
 	boolean isList() {
-		return true;
+		return false;
 	}
 }

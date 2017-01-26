@@ -523,6 +523,9 @@ Renamed til Named
  - in
 # - bedre debugging av in-memory query eksekvering
 W - parametere
+
+- !!! for halway queries (startsWith/endsWith/in for native), fortsatt parametrisere for å unngå at logger verdier !!!
+
  - dialekter, dvs statisk begrense muligheter (kun ANSI joins? kun samme-type rekursjon?)
  - query ut fra context variabel
    * forenklede queries uten from eller join sources. Trenger ikke from/implisitt join om kun ANSI joins

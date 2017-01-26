@@ -1,11 +1,11 @@
 package com.neaterbits.query.sql.dsl.api;
 
-final class ConditionStringBuilder_JPA extends ConditionStringBuilder {
+final class ConditionStringBuilder_JPQL extends ConditionStringBuilder {
 
 	private final QueryParametersDistinct distinctParams;
 	
 	
-	ConditionStringBuilder_JPA(QueryParametersDistinct distinctParams) {
+	ConditionStringBuilder_JPQL(QueryParametersDistinct distinctParams) {
 		
 		if (distinctParams == null) {
 			throw new IllegalArgumentException("distinctParams == null");
@@ -33,4 +33,15 @@ final class ConditionStringBuilder_JPA extends ConditionStringBuilder {
 		append(':').append(makeParamName(idx));
 	}
 
+
+	@Override
+	PreparedQueryComparisonRHS convertInParam(ConditionValue_Param value) {
+		
+		final Param<?> param = value.getParam();
+		
+		// just add as regular param
+		appendParam(param);
+		
+		return new JPAConditionResolved(getBuiltString(), param);
+	}
 }

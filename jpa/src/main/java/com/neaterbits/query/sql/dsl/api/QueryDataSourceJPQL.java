@@ -16,6 +16,13 @@ public final class QueryDataSourceJPQL extends QueryDataSourceJPA {
 		return new PreparedQueryBuilderJPQL();
 	}
 	
+	@Override
+	final <QUERY> PreparedQuery_DB<QUERY, Query> makeHalfwayPreparedQuery(ExecutableQuery<QUERY> queryAccess, QUERY query,
+			QueryParametersDistinct distinctParams, String base, PreparedQueryConditionsBuilder conditions) {
+		
+		return new PreparedQuery_JPA_Halfway_JPQL<QUERY>(this, queryAccess, query, distinctParams, base, (PreparedQueryConditionsBuilderJPA)conditions);
+	}
+	
 
 	@Override
 	<QUERY> PreparedQuery_DB<QUERY, javax.persistence.Query> makeCompletePreparedQuery(ExecutableQuery<QUERY> q, QUERY query, QueryParametersDistinct distinctParams, PreparedQueryBuilder sb) {
@@ -25,7 +32,7 @@ public final class QueryDataSourceJPQL extends QueryDataSourceJPA {
 		
 		final javax.persistence.Query jpaQuery = createJPAQuery(jpql);
 
-		return new PreparedQuery_JPA_Complete<QUERY>(
+		return new PreparedQuery_JPA_Complete_JPQL<QUERY>(
 				this,
 				q,
 				query,
@@ -61,5 +68,10 @@ public final class QueryDataSourceJPQL extends QueryDataSourceJPA {
 	@Override
 	boolean supportsNonRelationJoins() {
 		return false;
+	}
+	
+	@Override
+	final ConditionStringBuilder makeConditionStringBuilder(QueryParametersDistinct distinctParams) {
+		return new ConditionStringBuilder_JPQL(distinctParams);
 	}
 }

@@ -43,7 +43,7 @@ public class SQLAPITest extends BaseSQLAPITest {
 		return new QueryTestDSCombined(
 				
 				() -> new QueryTestDSJPQL("query-jpa-test"),
-				//+() -> new QueryTestDSJPANative("query-jpa-test"),
+				//() -> new QueryTestDSJPANative("query-jpa-test"),
 				
 				() -> new QueryTestDSInMemory(jpaQueryMetaModel)
 				)
@@ -303,8 +303,49 @@ public class SQLAPITest extends BaseSQLAPITest {
 		});
 	}
 
+
 	@Test
     public void testNameWithParamForEquals() {
+
+		final Company acme = new Company(-1, "Acme");
+		final Company foo = new Company(-1, "Foo");
+
+		final ValParam<String> eqParam = Select.stringParam();
+		
+        final SingleQuery<CompanyResultVO> startsWithAc =
+        		selectOneOrNull(CompanyResultVO.class)
+
+        	.map(Company::getName).to(CompanyResultVO::setName)
+        	
+        	.from(Company.class)
+
+        	.where(Company::getName).isEqualTo(eqParam)
+        	.compile();
+		
+		store(s  -> s.add(acme)).
+		check(ds -> {
+	        checkSelectOneOrNull(
+	        		ds,
+	        		new CompanyResultVO(acme.getName()),
+	        		startsWithAc,
+	        		q -> q.executeWith(eqParam).setTo("Acme")
+	        			   .get());
+		});
+
+		// Search for foo as well, should return no matches
+		store(s  -> s.add(foo)).
+		check(ds -> {
+	        checkSelectOneOrNull(
+	        		ds,
+	        		null,
+	        		startsWithAc,
+	        		q -> q.executeWith(eqParam).setTo("Acme")
+     			   		.get());
+		});
+	}
+	
+	@Test
+    public void testNameWithParamForEqualsAndLike() {
 
 		final Company acme = new Company(-1, "Acme");
 		final Company foo = new Company(-1, "Foo");

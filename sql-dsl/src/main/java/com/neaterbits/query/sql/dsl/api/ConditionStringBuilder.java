@@ -16,6 +16,8 @@ abstract class ConditionStringBuilder {
 	private final StringBuilder sb;
 
 	abstract void appendParam(Param<?> param);
+	
+	abstract PreparedQueryComparisonRHS convertInParam(ConditionValue_Param value);
 
 	ConditionStringBuilder() {
 		this.sb = new StringBuilder();

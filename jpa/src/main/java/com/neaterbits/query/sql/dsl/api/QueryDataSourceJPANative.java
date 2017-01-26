@@ -34,9 +34,16 @@ public final class QueryDataSourceJPANative extends QueryDataSourceJPA {
 		
 		final javax.persistence.Query jpaQuery = createJPAQuery(ansiSQL);
 
-		return new PreparedQuery_JPA_Complete<QUERY>(this, q, query, distinctParams, jpaQuery);
+		return new PreparedQuery_JPA_Complete_Native<QUERY>(this, q, query, distinctParams, jpaQuery);
 	}
 	
+	
+	@Override
+	final <QUERY> PreparedQuery_DB<QUERY, Query> makeHalfwayPreparedQuery(ExecutableQuery<QUERY> queryAccess, QUERY query,
+			QueryParametersDistinct distinctParams, String base, PreparedQueryConditionsBuilder conditions) {
+		
+		return new PreparedQuery_JPA_Halfway_Native<QUERY>(this, queryAccess, query, distinctParams, base, (PreparedQueryConditionsBuilderJPA)conditions);
+	}
 	
 	/*
 	mapMultipleEntities) {
@@ -152,8 +159,13 @@ public final class QueryDataSourceJPANative extends QueryDataSourceJPA {
 	}
 
 	@Override
+	final ConditionStringBuilder makeConditionStringBuilder(QueryParametersDistinct distinctParams) {
+		return new ConditionStringBuilder_Native(distinctParams);
+	}
+	
+	@Override
 	boolean supportsNonRelationJoins() {
 		return true;
 	}
-	
 }
+

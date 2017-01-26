@@ -5,7 +5,7 @@ import java.util.List;
 
 import javax.persistence.Query;
 
-final class PreparedQuery_JPA_Halfway<QUERY> extends PreparedQuery_JPA_Base<QUERY> {
+abstract class PreparedQuery_JPA_Halfway<QUERY> extends PreparedQuery_JPA_Base<QUERY> {
 
 	private final String base;
 	private final PreparedQueryConditionsBuilderJPA conditions;
@@ -39,7 +39,7 @@ final class PreparedQuery_JPA_Halfway<QUERY> extends PreparedQuery_JPA_Base<QUER
 	}
 
 	@Override
-	final void initParams(Query ormQuery, ParamValueResolver paramCollector) {
+	final void initParams(Query jpaQuery, ParamValueResolver paramCollector) {
 		
 		// Since this is a completely resolved query, that means that all parameters could be resolved to a :paramXyz
 		// thus we can iterate over all params
@@ -71,10 +71,10 @@ final class PreparedQuery_JPA_Halfway<QUERY> extends PreparedQuery_JPA_Base<QUER
 			if (idx < 0) {
 				throw new IllegalStateException("param not found");
 			}
-
-			final String name = ConditionStringBuilder_JPA.makeParamName(idx);
-
-			ormQuery.setParameter(name, paramCollector.resolveParam(param));
+			
+			final Object value = paramCollector.resolveParam(param);
+			
+			setParam(jpaQuery, (BaseParamImpl<?>)param, idx, value);
 		}
 	}
 	

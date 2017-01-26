@@ -1,11 +1,14 @@
 package com.neaterbits.query.sql.dsl.api;
 
+import java.util.function.BiFunction;
+
+import com.google.inject.internal.Function;
 
 final class JPAConditionToOperator {
 
 	<QUERY> PreparedQueryComparisonRHS convert(ExecutableQuery<QUERY> q, QUERY query, EClauseOperator operator, ConditionValue value, ConditionStringBuilder builder) {
 		
-		final JPACondition ret;
+		final PreparedQueryComparisonRHS ret;
 		
 		switch (operator) {
 		case IS_EQUAL:
@@ -19,17 +22,24 @@ final class JPAConditionToOperator {
 		case IN:
 			builder.append("in ");
 			
-			if (value.getType() != EConditionValue.PARAM) {
+			if (value.getType() == EConditionValue.PARAM) {
+				// IN list is a parameter so ask builder to add since may be different ways, depending
+				ret = builder.convertInParam((ConditionValue_Param)value);
+			}
+			else {
+				// Literals, should be same for any type of SQL like syntax (JPQL or native)
 				builder.append('(');
-			}
 
-			final Param<?> resolvedParam = value.visit(conditionValueVisitor, builder);
-
-			if (value.getType() != EConditionValue.PARAM) {
+				final Param<?> resolvedParam = value.visit(conditionValueVisitor, builder);
+				
+				if (resolvedParam != null) {
+					throw new IllegalStateException("Should never return parameters as this is for resolved-values");
+				}
+				
 				builder.append(')');
+				
+				ret = new JPAConditionResolved(builder.getBuiltString(), resolvedParam);
 			}
-
-			ret = new JPAConditionResolved(builder.getBuiltString(), resolvedParam);
 			break;
 
 		case GREATER_THAN:
@@ -135,7 +145,7 @@ final class JPAConditionToOperator {
 		@Override
 		public Param<?> onLiteralAny(ConditionValue_Literal_Any<?> value, ConditionStringBuilder builder) {
 
-			appendLiteral(value.getLiteral(), builder);
+			appendLiteral(value.getLiteral(), builder::append);
 
 			return null;
 		}
@@ -143,7 +153,7 @@ final class JPAConditionToOperator {
 		@Override
 		public Param<?> onLiteralString(ConditionValue_Literal_String value, ConditionStringBuilder builder) {
 
-			appendStringLiteral(value.getLiteral(), builder);
+			appendStringLiteral(value.getLiteral(), builder::append);
 
 			return null;
 		}
@@ -158,7 +168,7 @@ final class JPAConditionToOperator {
 					builder.append(", ");
 				}
 
-				appendLiteral(values[i], builder);
+				appendLiteral(values[i], builder::append);
 			}
 
 			return null;
@@ -198,16 +208,18 @@ final class JPAConditionToOperator {
 		*/
 	};
 
-	private static void appendStringLiteral(String literal, ConditionStringBuilder builder) {
-		builder.append("'").append(literal).append("'");
+	private static void appendStringLiteral(String literal, Function<String, ?> append) {
+		append.apply("'");
+		append.apply(literal);
+		append.apply("'");
 	}
 
-	private static void appendLiteral(Object literal, ConditionStringBuilder builder) {
+	static void appendLiteral(Object literal, Function<String, ?> append) {
 
 		if (literal instanceof String) {
-			appendStringLiteral((String) literal, builder);
+			appendStringLiteral((String) literal, append);
 		} else if (literal instanceof Integer) {
-			builder.append(String.valueOf((Integer) literal));
+			append.apply(String.valueOf((Integer) literal));
 		} else {
 			throw new UnsupportedOperationException("Unknown literal of type " + literal.getClass().getName());
 		}

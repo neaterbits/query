@@ -9,6 +9,7 @@ abstract class PreparedQuery_JPA_Base<QUERY> extends PreparedQuery_DB<QUERY, jav
 
 	final QueryParametersDistinct distincParams;
 
+	abstract void setParam(javax.persistence.Query jpaQuery, BaseParamImpl<?> param, int idx, Object value);
 
 	PreparedQuery_JPA_Base(QueryDataSourceJPA dataSource, ExecutableQuery<QUERY> queryAccess, QUERY query, QueryParametersDistinct distinctParams) {
 		super(dataSource, queryAccess, query);

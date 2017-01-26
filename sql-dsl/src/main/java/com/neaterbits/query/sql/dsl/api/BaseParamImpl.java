@@ -1,6 +1,6 @@
 package com.neaterbits.query.sql.dsl.api;
 
-abstract class BaseParamImpl<T> {
+abstract class BaseParamImpl<T> implements Param<T> {
 	private final Class<T> paramType;
 
 	abstract boolean check(Object value);
