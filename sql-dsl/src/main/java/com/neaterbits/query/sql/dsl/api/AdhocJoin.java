@@ -174,6 +174,12 @@ final class AdhocJoin<MODEL, RESULT>
 
 		return this;
 	}
+
+	private ISharedLogicalClauses<MODEL, RESULT> addInOperatorRet(EClauseOperator operator, Comparable<?>  [] values) {
+		return addOperatorRet(
+				operator,
+				Constants.IN_AS_LIST ? Arrays.asList(values) : values);
+	}
 	
 	@Override
 	public final ISharedLogicalClauses<MODEL, RESULT> isEqualTo(Comparable<Object> other) {
@@ -187,7 +193,7 @@ final class AdhocJoin<MODEL, RESULT>
 
 	@Override
 	public final ISharedLogicalClauses<MODEL, RESULT> in(@SuppressWarnings("unchecked") Comparable<Object>... values) {
-		return addOperatorRet(EClauseOperator.IN, values);
+		return addInOperatorRet(EClauseOperator.IN, values);
 	}
 	
 	/**************************************************************************

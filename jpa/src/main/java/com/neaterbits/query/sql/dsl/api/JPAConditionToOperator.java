@@ -1,8 +1,8 @@
 package com.neaterbits.query.sql.dsl.api;
 
-import java.util.function.BiFunction;
-
-import com.google.inject.internal.Function;
+import java.util.Arrays;
+import java.util.List;
+import java.util.function.Function;
 
 final class JPAConditionToOperator {
 
@@ -160,17 +160,19 @@ final class JPAConditionToOperator {
 
 		@Override
 		public Param<?> onArray(ConditionValue_Array value, ConditionStringBuilder builder) {
+			
+			appendLiteralArray(value.getValues(), builder::append);
 
-			final Object[] values = value.getValues();
+			return null;
+		}
+		
 
-			for (int i = 0; i < values.length; ++i) {
-				if (i > 0) {
-					builder.append(", ");
-				}
-
-				appendLiteral(values[i], builder::append);
-			}
-
+		@Override
+		public Param<?> onList(ConditionValue_List value, ConditionStringBuilder builder) {
+			
+			appendLiteralList(value.getValues(), builder::append);
+			
+			
 			return null;
 		}
 
@@ -223,6 +225,24 @@ final class JPAConditionToOperator {
 		} else {
 			throw new UnsupportedOperationException("Unknown literal of type " + literal.getClass().getName());
 		}
+	}
+
+	static void appendLiteralArray(Object [] values, Function<String, ?> append) {
+		appendLiteralList(Arrays.asList(values), append);
+	}
+	
+	static void appendLiteralList(List<?> values, Function<String, ?> append) {
+		
+		final int num = values.size();
+		
+		for (int i = 0; i < num; ++i) {
+			if (i > 0) {
+				append.apply(", ");
+			}
+
+			appendLiteral(values.get(i), append);
+		}
+		
 	}
 
 }

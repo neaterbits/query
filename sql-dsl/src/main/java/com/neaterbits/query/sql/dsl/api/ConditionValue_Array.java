@@ -1,6 +1,6 @@
 package com.neaterbits.query.sql.dsl.api;
 
-final class ConditionValue_Array extends ConditionValue {
+final class ConditionValue_Array extends ConditionValue_Collection {
 
 	private final Object [] values;
 	
@@ -19,6 +19,6 @@ final class ConditionValue_Array extends ConditionValue {
 
 	@Override
 	EConditionValue getType() {
-		return EConditionValue.ARRAY_LITERAL;
+		return EConditionValue.ARRAY_OF_LITERAL;
 	}
 }

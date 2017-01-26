@@ -647,5 +647,10 @@ final class ExecutableQueryForCompiledQuery implements ExecutableQuery<CompiledQ
 		public Object onArray(ConditionValue_Array value, ParamValueResolver param) {
 			return value.getValues();
 		}
+
+		@Override
+		public Object onList(ConditionValue_List value, ParamValueResolver param) {
+			return value.getValues();
+		}
 	};
 }

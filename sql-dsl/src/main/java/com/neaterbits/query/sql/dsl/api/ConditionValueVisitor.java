@@ -8,6 +8,8 @@ interface ConditionValueVisitor<T, R> {
 
 	R onArray(ConditionValue_Array value, T param);
 
+	R onList(ConditionValue_List value, T param);
+
 	R onGetter(ConditionValue_Getter value, T param);
 
 	R onParam(ConditionValue_Param value, T param);

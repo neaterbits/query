@@ -1,5 +1,6 @@
 package com.neaterbits.query.sql.dsl.api;
 
+import java.util.Arrays;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
@@ -155,7 +156,13 @@ class CollectedClause_Condition<MODEL, RESULT, R, L extends ISharedLogicalClause
 			}
 		}
 
-		return addCondition(new CollectedCondition_In(getter, new ConditionValue_Array(values)));
+		final ConditionValue_Collection conditionValue =
+				Constants.IN_AS_LIST 
+					? new ConditionValue_List(Arrays.asList(values))
+					: new ConditionValue_Array(values);
+						
+		
+		return addCondition(new CollectedCondition_In(getter, conditionValue));
 	}
 
 	@Override

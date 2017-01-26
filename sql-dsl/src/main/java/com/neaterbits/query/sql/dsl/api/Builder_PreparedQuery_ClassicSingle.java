@@ -9,7 +9,7 @@ final class Builder_PreparedQuery_ClassicSingle<RESULT> extends Builder_Prepared
 
 	@Override
 	@SuppressWarnings("unchecked")
-	RESULT executeOn(PreparedQuery_DS query, QueryParamCollector collectedParams) {
+	RESULT executeOn(PreparedQuery_DS<?> query, QueryParamCollector collectedParams) {
 		return (RESULT)query.execute(collectedParams);
 	}
 }

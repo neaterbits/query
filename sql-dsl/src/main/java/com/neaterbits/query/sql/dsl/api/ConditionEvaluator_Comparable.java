@@ -1,6 +1,7 @@
 package com.neaterbits.query.sql.dsl.api;
 
 import java.lang.reflect.Array;
+import java.nio.channels.UnsupportedAddressTypeException;
 import java.util.List;
 
 class ConditionEvaluator_Comparable extends ConditionAdapterComparableBase<ConditionValuesScratch, Boolean> {
@@ -45,6 +46,9 @@ class ConditionEvaluator_Comparable extends ConditionAdapterComparableBase<Condi
 			}
 		}
 		else if (rhsValues.getClass().isArray()) {
+			if (Constants.IN_AS_LIST) {
+				throw new UnsupportedOperationException("arrays should jave been converted to lists");
+			}
 			final int len = Array.getLength(rhsValues);
 			
 			for (int i = 0; i < len; ++ i) {
