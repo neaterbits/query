@@ -525,6 +525,9 @@ Renamed til Named
 W - parametere
 
 - !!! for halway queries (startsWith/endsWith/in for native), fortsatt parametrisere for å unngå at logger verdier !!!
+ * bør støtte både tidlig og sein resolve, arve JPAConditionToOperator fra ConditionStringBuilder og så arve fra der igjen?
+ * fortsatt resolved/unresolved men unresolved også må kunne resolve via parametre, egen abstract-metode for det noe sted.
+ * bør også kunne resolve alt til konkrete parametre om ønsker.
 
  - dialekter, dvs statisk begrense muligheter (kun ANSI joins? kun samme-type rekursjon?)
  - query ut fra context variabel

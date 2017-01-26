@@ -1,13 +1,20 @@
 package com.neaterbits.query.sql.dsl.api;
 
+import java.lang.reflect.Array;
+import java.util.List;
+
 class ConditionEvaluator_Comparable extends ConditionAdapterComparableBase<ConditionValuesScratch, Boolean> {
 
+	private static boolean comparableEquals(Comparable<Object> lhs, Comparable<Object> rhs) {
+		return lhs == null ? rhs == null : lhs.compareTo(rhs) == 0;
+	}
+	
 	@Override
 	public final Boolean onEqualTo(CollectedCondition_EqualTo condition, ConditionValuesScratch param) {
 		final Comparable<Object> lhs = param.getLhsComparable();
 		final Comparable<Object> rhs = param.getRhsComparable();
 		
-		return lhs == null ? rhs == null : lhs.compareTo(rhs) == 0;
+		return comparableEquals(lhs, rhs);
 	}
 
 	@Override
@@ -20,7 +27,41 @@ class ConditionEvaluator_Comparable extends ConditionAdapterComparableBase<Condi
 
 	@Override
 	public final Boolean onIn(CollectedCondition_In condition, ConditionValuesScratch param) {
-		throw new UnsupportedOperationException("TODO");
+
+		final Comparable<Object> lhs = param.getLhsComparable();
+		
+		final Object rhsValues = param.getRhs();
+		
+		if (rhsValues instanceof List) {
+			@SuppressWarnings("unchecked")
+			final List<Comparable<Object>> list = (List<Comparable<Object>>)param.getRhs();
+			
+			for (Comparable<Object> rhs : list) {
+				final boolean equals = comparableEquals(lhs, rhs);
+
+				if (equals) {
+					return true;
+				}
+			}
+		}
+		else if (rhsValues.getClass().isArray()) {
+			final int len = Array.getLength(rhsValues);
+			
+			for (int i = 0; i < len; ++ i) {
+				@SuppressWarnings("unchecked")
+				final Comparable<Object> rhs = (Comparable<Object>)Array.get(rhsValues, i);
+				final boolean equals = comparableEquals(lhs, rhs);
+
+				if (equals) {
+					return true;
+				}
+			}
+		}
+		else {
+			throw new UnsupportedOperationException("Unexpected ths type for in-query: " + rhsValues);
+		}
+		
+		return false;
 	}
 
 	@Override
