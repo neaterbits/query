@@ -3,6 +3,7 @@ package com.neaterbits.query.sql.dsl.api;
 import java.lang.reflect.Method;
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.util.List;
 
 import com.neaterbits.query.sql.dsl.api.entity.OneToManyJoinConditionResolver;
 import com.neaterbits.query.sql.dsl.api.entity.QueryMetaModel;
@@ -54,6 +55,11 @@ interface ExecutableQuery<QUERY> {
 
 		return found;
 	}
+	
+	public default List<Param<?>> getDistinctParams(QUERY query) {
+		return QueryHelper.getConditionParamRefs(this, query, true);
+	}
+	
 	
 	public default PreparedQueryMetaData makeMetaData(QUERY query) {
 

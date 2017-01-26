@@ -155,4 +155,17 @@ public final class QueryDataSourceJPANative extends QueryDataSourceJPA {
 	boolean supportsNonRelationJoins() {
 		return true;
 	}
+
+	@Override
+	ConditionStringBuilder makeConditionStringBuilder(List<Param<?>> distinctParams) {
+		return new ConditionStringBuilder() {
+			
+			@Override
+			void appendParam(Param<?> param) {
+				append('?');
+			}
+		};
+	}
+	
+	
 }

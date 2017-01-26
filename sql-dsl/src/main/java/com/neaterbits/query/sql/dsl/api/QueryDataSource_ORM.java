@@ -8,8 +8,6 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
-import javax.crypto.CipherInputStream;
-
 import com.neaterbits.query.sql.dsl.api.entity.EntityModel;
 import com.neaterbits.query.sql.dsl.api.entity.EntityModelUtil;
 import com.neaterbits.query.sql.dsl.api.entity.Relation;
@@ -21,7 +19,7 @@ abstract class QueryDataSource_ORM<ORM_QUERY, MANAGED, EMBEDDED, IDENTIFIABLE, A
 	
 	abstract String getColumnNameForGetter(TypeMapSource source, CompiledGetter getter);
 	
-	abstract <QUERY> PreparedQueryComparisonRHS convertConditions(ExecutableQuery<QUERY> q, QUERY query, EClauseOperator operator, ConditionValue value, StringBuilder sb);
+	abstract <QUERY> PreparedQueryComparisonRHS convertConditions(ExecutableQuery<QUERY> q, QUERY query, EClauseOperator operator, ConditionValue value, ConditionStringBuilder sb);
 	
 	abstract PreparedQueryConditionsBuilder createConditionsBuilder(PreparedQueryBuilderORM queryBuilderORM, boolean atRoot);
 	
@@ -29,6 +27,8 @@ abstract class QueryDataSource_ORM<ORM_QUERY, MANAGED, EMBEDDED, IDENTIFIABLE, A
 	
 	abstract <QUERY> PreparedQuery_DB<QUERY, ORM_QUERY> makeHalfwayPreparedQuery(ExecutableQuery<QUERY> queryAccess, QUERY query, ParamNameAssigner paramNameAssigner, String base, PreparedQueryConditionsBuilder conditions);
 
+	abstract ConditionStringBuilder makeConditionStringBuilder(List<Param<?>> distinctParams);
+	
 	
 	/**
 	 * Whether supports join fields natively, ie. ON table1.somefield = table2.somefiled.
@@ -478,25 +478,28 @@ abstract class QueryDataSource_ORM<ORM_QUERY, MANAGED, EMBEDDED, IDENTIFIABLE, A
 				? conditionsBuilder.addNestedForJoin(os)
 				: conditionsBuilder;
 
+			
+	    final List<Param<?>> distinctParams = q.getDistinctParams(query);
+		final ConditionStringBuilder conditionSB = makeConditionStringBuilder(distinctParams);
+				
 	    if (q.isRootConditionOnly(query)) {
-	    	prepareRootConditions(q, query, original, sub);
+	    	prepareRootConditions(q, query, original, sub, conditionSB);
 	    }
 	    else {
 	    	final int maxDepth = q.getConditionsMaxDepth(query);
 	    	
 	    	final int [] conditionIndices = new int[maxDepth];
 	    	
-	    	prepareConditions(q, query, original, sub, 0, conditionIndices);
+	    	prepareConditions(q, query, original, sub, 0, conditionIndices, conditionSB);
 	    }
 
 		return os;
 	}
 	
 	
-	private <QUERY> List<PreparedQueryConditionComparison> prepareRootConditions(ExecutableQuery<QUERY> q, QUERY query, ConditionsType original, PreparedQueryConditionsBuilder sub) {
+	private <QUERY> List<PreparedQueryConditionComparison> prepareRootConditions(ExecutableQuery<QUERY> q, QUERY query, ConditionsType original, PreparedQueryConditionsBuilder sub, ConditionStringBuilder conditionSB) {
 
 		final int numConditions = q.getRootConditionCount(query);
-		final StringBuilder conditionSB = new StringBuilder();
 		
 		final List<PreparedQueryConditionComparison> ret = new ArrayList<>(numConditions);
 		
@@ -505,7 +508,7 @@ abstract class QueryDataSource_ORM<ORM_QUERY, MANAGED, EMBEDDED, IDENTIFIABLE, A
 			final CompiledFieldReference lhs = q.getRootConditionLhs(query, conditionIdx);
 			final ConditionValue value = q.getRootConditionValue(query, conditionIdx);
 			final EClauseOperator operator = q.getRootConditionOperator(query, conditionIdx);
-			
+
 			final FieldReference left = prepareFieldReference(q, query, lhs);
 			
 
@@ -517,17 +520,15 @@ abstract class QueryDataSource_ORM<ORM_QUERY, MANAGED, EMBEDDED, IDENTIFIABLE, A
 			sub.addComparisonCondition(original, prepared);
 			
 			// Clear for next iteration
-			conditionSB.setLength(0);
+			conditionSB.clear();
 		}
 
 		return ret;
 	}
 
-	private <QUERY> List<PreparedQueryConditionComparison> prepareConditions(ExecutableQuery<QUERY> q, QUERY query, ConditionsType original, PreparedQueryConditionsBuilder sub, int level, int [] conditionIndices) {
+	private <QUERY> List<PreparedQueryConditionComparison> prepareConditions(ExecutableQuery<QUERY> q, QUERY query, ConditionsType original, PreparedQueryConditionsBuilder sub, int level, int [] conditionIndices, ConditionStringBuilder conditionSB) {
 
 		final int numConditions = q.getConditionsCount(query, level, conditionIndices);
-		
-		final StringBuilder conditionSB = new StringBuilder();
 		
 		final List<PreparedQueryConditionComparison> ret = new ArrayList<>(numConditions);
 		
@@ -536,7 +537,7 @@ abstract class QueryDataSource_ORM<ORM_QUERY, MANAGED, EMBEDDED, IDENTIFIABLE, A
 			conditionIndices[level] = conditionIdx;
 			
 			if (q.isSubCondition(query, level, conditionIndices)) {
-				// Condition a subcondition? must add nested
+				// Condition a sub condition? must add nested
 
 				final int nextLevel = level + 1;
 				
@@ -549,7 +550,7 @@ abstract class QueryDataSource_ORM<ORM_QUERY, MANAGED, EMBEDDED, IDENTIFIABLE, A
 				final PreparedQueryConditionsBuilder subsub = sub.addNestedForRegularSub(conditionsType);
 				
 				// Recursively prepare
-				prepareConditions(q, query, conditionsType, subsub, nextLevel, conditionIndices);
+				prepareConditions(q, query, conditionsType, subsub, nextLevel, conditionIndices, conditionSB);
 				
 			}
 			else {
@@ -569,7 +570,7 @@ abstract class QueryDataSource_ORM<ORM_QUERY, MANAGED, EMBEDDED, IDENTIFIABLE, A
 				sub.addComparisonCondition(original, prepared);
 				
 				// Clear for next iteration
-				conditionSB.setLength(0);
+				conditionSB.clear();
 			}
 		}
 

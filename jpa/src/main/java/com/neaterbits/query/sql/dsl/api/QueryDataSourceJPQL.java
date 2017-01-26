@@ -62,4 +62,23 @@ public final class QueryDataSourceJPQL extends QueryDataSourceJPA {
 	boolean supportsNonRelationJoins() {
 		return false;
 	}
+
+	@Override
+	ConditionStringBuilder makeConditionStringBuilder(final List<Param<?>> distinctParams) {
+		return new ConditionStringBuilder() {
+			
+			@Override
+			void appendParam(Param<?> param) {
+				
+				final int idx = distinctParams.indexOf(param);
+				
+				if (idx < 0) {
+					throw new IllegalArgumentException("Cannot find param " + param + " out of " + distinctParams);
+				}
+				
+				
+				append(":param").append(idx);
+			}
+		};
+	}
 }

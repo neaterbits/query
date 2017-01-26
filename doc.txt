@@ -526,9 +526,10 @@ Renamed til Named
  - unit tester rett på JPAModel og utils for å sjekke at henter ut relations riktig, attributt kolonner mm på rett vis.
    * se om bør endre API slik at eget for å hente kolonner for relation attributter?
 
- - dialekter, dvs statisk begrense muligheter (kun ANSI joins? kun samme-type rekurson?)
+ - dialekter, dvs statisk begrense muligheter (kun ANSI joins? kun samme-type rekursjon?)
  - query ut fra context variabel
-   * forenklede queries uten from eller join sources. Trenge ikke from/implisitt join om kun ANSI joins
+   * forenklede queries uten from eller join sources. Trenger ikke from/implisitt join om kun ANSI joins
+     siden from er der for cartesian product.
  - subselects
  - mere tester
  - transformasjons-API

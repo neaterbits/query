@@ -9,7 +9,7 @@ final class ConditionValue_Literal_Any<V> extends ConditionValue_Literal_Base<V>
 	
 	@Override
 	EConditionValue getType() {
-		throw new UnsupportedOperationException("TODO");
+		return EConditionValue.ANY;
 	}
 
 

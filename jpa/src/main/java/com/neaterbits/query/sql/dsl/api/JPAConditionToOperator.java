@@ -1,8 +1,9 @@
 package com.neaterbits.query.sql.dsl.api;
 
+
 final class JPAConditionToOperator {
 
-	<QUERY> PreparedQueryComparisonRHS convert(ExecutableQuery<QUERY> q, QUERY query, EClauseOperator operator, ConditionValue value, StringBuilder sb) {
+	<QUERY> PreparedQueryComparisonRHS convert(ExecutableQuery<QUERY> q, QUERY query, EClauseOperator operator, ConditionValue value, ConditionStringBuilder sb) {
 		
 		final JPACondition ret;
 		
@@ -22,7 +23,7 @@ final class JPAConditionToOperator {
 
 			sb.append(")");
 			if (Boolean.TRUE) {
-				throw new UnsupportedOperationException("TODO - support paramterized by returing a custom JPACondition");
+				throw new UnsupportedOperationException("TODO - support parameterized by returing a custom JPACondition");
 			}
 			else {
 				ret = null;
@@ -64,10 +65,14 @@ final class JPAConditionToOperator {
 			throw new UnsupportedOperationException("Unknown comparator type " + operator);
 		}
 		
+		if (ret == null) {
+			throw new IllegalStateException("no rhs for operator " + operator);
+		}
+		
 		return ret;
 	}
 
-	private static JPACondition appendLike(boolean wildcardBefore, boolean wildcardAfter, ConditionValue value, StringBuilder param) {
+	private static JPACondition appendLike(boolean wildcardBefore, boolean wildcardAfter, ConditionValue value, ConditionStringBuilder param) {
 
 		final JPACondition ret;
 		
@@ -95,14 +100,14 @@ final class JPAConditionToOperator {
 
 			param.append("'");
 
-			ret = new JPAConditionResolved(param.toString());
+			ret = new JPAConditionResolved(param.getBuiltString());
 
 		} else if (value instanceof ConditionValue_Param) {
 
 			final ConditionValue_Param conditionValueParam = (ConditionValue_Param) value;
 
 			ret = new JPAConditionLikeWithParamUnresolved(
-					param.toString(),
+					param.getBuiltString(),
 					wildcardBefore,
 					wildcardAfter,
 					conditionValueParam.getParam());
@@ -114,7 +119,7 @@ final class JPAConditionToOperator {
 		return ret;
 	}
 
-	private static JPACondition appendOpAndValue(String op, ConditionValue value, StringBuilder sb) {
+	private static JPACondition appendOpAndValue(String op, ConditionValue value, ConditionStringBuilder sb) {
 		sb.append(op).append(" ");
 
 		return value.visit(conditionValueVisitor, sb);
@@ -122,10 +127,10 @@ final class JPAConditionToOperator {
 		//param.completeResolvedCondition();
 	}
 
-	private static final ConditionValueVisitor<StringBuilder, JPACondition> conditionValueVisitor = new ConditionValueVisitor<StringBuilder, JPACondition>() {
+	private static final ConditionValueVisitor<ConditionStringBuilder, JPACondition> conditionValueVisitor = new ConditionValueVisitor<ConditionStringBuilder, JPACondition>() {
 
 		@Override
-		public JPACondition onLiteralAny(ConditionValue_Literal_Any<?> value, StringBuilder param) {
+		public JPACondition onLiteralAny(ConditionValue_Literal_Any<?> value, ConditionStringBuilder param) {
 
 			appendLiteral(value.getLiteral(), param);
 
@@ -133,7 +138,7 @@ final class JPAConditionToOperator {
 		}
 
 		@Override
-		public JPACondition onLiteralString(ConditionValue_Literal_String value, StringBuilder param) {
+		public JPACondition onLiteralString(ConditionValue_Literal_String value, ConditionStringBuilder param) {
 
 			appendStringLiteral(value.getLiteral(), param);
 
@@ -141,7 +146,7 @@ final class JPAConditionToOperator {
 		}
 
 		@Override
-		public JPACondition onArray(ConditionValue_Array value, StringBuilder param) {
+		public JPACondition onArray(ConditionValue_Array value, ConditionStringBuilder param) {
 
 			final Object[] values = value.getValues();
 
@@ -157,23 +162,22 @@ final class JPAConditionToOperator {
 		}
 
 		@Override
-		public JPACondition onParam(ConditionValue_Param value, StringBuilder param) {
-
-			/*
+		public JPACondition onParam(ConditionValue_Param value, ConditionStringBuilder param) {
+			
+			// We must append a param-value to the built query, that is 
+			// for JPQL this could be :param1, or ? for a native-query.
 			param.appendParam(value.getParam());
 
 			return null;
-			*/
-			throw new UnsupportedOperationException("TODO");
 		}
 
 		@Override
-		public JPACondition onGetter(ConditionValue_Getter value, StringBuilder param) {
+		public JPACondition onGetter(ConditionValue_Getter value, ConditionStringBuilder param) {
 			throw new UnsupportedOperationException("Getter should have been compiled");
 		}
 
 		@Override
-		public JPACondition onFieldReference(ConditionValue_FieldRerefence value, StringBuilder param) {
+		public JPACondition onFieldReference(ConditionValue_FieldRerefence value, ConditionStringBuilder param) {
 			throw new UnsupportedOperationException("Field references should only be present in joins");
 		}
 		
@@ -189,11 +193,11 @@ final class JPAConditionToOperator {
 		*/
 	};
 
-	private static void appendStringLiteral(String literal, StringBuilder param) {
+	private static void appendStringLiteral(String literal, ConditionStringBuilder param) {
 		param.append("'").append(literal).append("'");
 	}
 
-	private static void appendLiteral(Object literal, StringBuilder param) {
+	private static void appendLiteral(Object literal, ConditionStringBuilder param) {
 
 		if (literal instanceof String) {
 			appendStringLiteral((String) literal, param);
