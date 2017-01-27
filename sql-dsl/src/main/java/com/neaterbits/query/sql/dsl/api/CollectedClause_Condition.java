@@ -9,9 +9,14 @@ class CollectedClause_Condition<MODEL, RESULT, R, L extends ISharedLogicalClause
 			   ISharedConditionClauseAlias<MODEL, RESULT, R, L> {
 
 	private final CollectedClauses<MODEL, RESULT> clause;
+	final CollectedFunctions functions;
 	final Getter getter;
 
 	CollectedClause_Condition(CollectedClauses<MODEL, RESULT> clause, Getter getter) {
+		this(clause, null, getter);
+	}
+
+	CollectedClause_Condition(CollectedClauses<MODEL, RESULT> clause, CollectedFunctions functions, Getter getter) {
 
 		if (clause == null) {
 			throw new IllegalArgumentException("clause == null");
@@ -22,6 +27,7 @@ class CollectedClause_Condition<MODEL, RESULT, R, L extends ISharedLogicalClause
 		}
 
 		this.clause = clause;
+		this.functions = functions; // optional
 		this.getter = getter;
 	}
 

@@ -21,11 +21,29 @@ final class ClassicCollectedAndClauses<MODEL, RESULT> extends CollectedClauses<M
 			AND_CLAUSES extends ISharedAndClausesNamedAll<MODEL, RESULT, AND_CLAUSES, NESTED_OR_CLAUSES>,
 			NESTED_OR_CLAUSES extends ISharedOrClausesNamedAll<MODEL, RESULT, NESTED_OR_CLAUSES, AND_CLAUSES>>
 			
-		ISharedClauseComparableCommonAll<MODEL, RESULT, RR, AND_CLAUSES> andClassImpl(Function<T, RR> getter) {
-		
-		return new CollectedClause_Comparative<MODEL, RESULT, RR, AND_CLAUSES>(this, makeGetter(getter));
+		ISharedClauseComparableCommonAll<MODEL, RESULT, RR, AND_CLAUSES> andClassImplComparable(Function<T, RR> getter) {
+
+	    return andClassImplComparable(null, getter);
 	}
 
+	private <T, RR extends Comparable<RR>,
+		AND_CLAUSES extends ISharedAndClausesNamedAll<MODEL, RESULT, AND_CLAUSES, NESTED_OR_CLAUSES>,
+		NESTED_OR_CLAUSES extends ISharedOrClausesNamedAll<MODEL, RESULT, NESTED_OR_CLAUSES, AND_CLAUSES>>
+		
+	ISharedClauseComparableCommonAll<MODEL, RESULT, RR, AND_CLAUSES> andClassImplComparable(CollectedFunctions functions, Function<T, RR> getter) {
+	
+		return new CollectedClause_Comparative<MODEL, RESULT, RR, AND_CLAUSES>(this, functions, makeGetter(getter));
+	}
+
+	private <
+		AND_CLAUSES extends ISharedAndClausesNamedAll<MODEL, RESULT, AND_CLAUSES, NESTED_OR_CLAUSES>,
+		NESTED_OR_CLAUSES extends ISharedOrClausesNamedAll<MODEL, RESULT, NESTED_OR_CLAUSES, AND_CLAUSES>>
+	
+		ISharedClauseComparableStringAll<MODEL, RESULT, AND_CLAUSES> andClassImplString(CollectedFunctions functions, StringFunction<?> getter) {
+
+			return new CollectedClause_String<MODEL, RESULT, AND_CLAUSES>(this, functions, makeGetter(getter));
+}
+	
 	private <RR,
 			AND_CLAUSES extends ISharedAndClausesAliasBase<MODEL, RESULT, AND_CLAUSES, NESTED_OR_CLAUSES>,
 			NESTED_OR_CLAUSES extends ISharedOrClausesAlias<MODEL, RESULT>>
@@ -36,12 +54,12 @@ final class ClassicCollectedAndClauses<MODEL, RESULT> extends CollectedClauses<M
 	
 	@Override
 	public <T> ISharedClauseComparableCommonAll<MODEL, RESULT, Integer, IClassicAndClausesNamed<MODEL, RESULT>> and(IFunctionInteger<T> getter) {
-		return andClassImpl(getter);
+		return andClassImplComparable(getter);
 	}
 
 	@Override
 	public <T> ISharedClauseComparableCommonAll<MODEL, RESULT, Long, IClassicAndClausesNamed<MODEL, RESULT>> and(IFunctionLong<T> getter) {
-		return andClassImpl(getter);
+		return andClassImplComparable(getter);
 	}
 
 	@Override
@@ -84,4 +102,35 @@ final class ClassicCollectedAndClauses<MODEL, RESULT> extends CollectedClauses<M
 		return this;
 	}
 	
+	@Override
+	public ISharedFunctionsNamedInitial<
+				MODEL,
+				RESULT,
+				IClassicAndClausesNamed<MODEL, RESULT>,
+				ISharedClauseComparableCommonBase<MODEL, RESULT, ?, IClassicAndClausesNamed<MODEL, RESULT>>,
+				ISharedClauseComparableStringAll<MODEL, RESULT, IClassicAndClausesNamed<MODEL, RESULT>>
+			>
+			and() {
+		
+		@SuppressWarnings({"unchecked", "rawtypes"})
+		final Collector_Functions_Callback<MODEL, RESULT, IClassicAndClausesNamed<MODEL, RESULT>> cb
+				= new Collector_Functions_Callback<MODEL, RESULT, IClassicAndClausesNamed<MODEL, RESULT>>() {
+
+			@Override
+			public ISharedClauseComparableCommonBase<MODEL, RESULT, Comparable<?>, IClassicAndClausesNamed<MODEL, RESULT>>
+				onComparable(CollectedFunctions functions, Function getter) {
+				
+				return andClassImplComparable(functions, (Function)getter);
+			}
+
+			@Override
+			public ISharedClauseComparableStringBase<MODEL, RESULT, IClassicAndClausesNamed<MODEL, RESULT>>
+				onString(CollectedFunctions functions, StringFunction getter) {
+				
+				return andClassImplString(functions, getter);
+			}
+		};
+
+		return new Collector_SharedFunctions<>(cb);
+	}
 }

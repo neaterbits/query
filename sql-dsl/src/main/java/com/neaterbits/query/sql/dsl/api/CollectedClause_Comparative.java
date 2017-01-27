@@ -8,6 +8,10 @@ class CollectedClause_Comparative<MODEL, RESULT, R extends Comparable<R>, L exte
 		super(clause, getter);
 	}
 
+	CollectedClause_Comparative(CollectedClauses<MODEL, RESULT> clause, CollectedFunctions functions, Getter getter) {
+		super(clause, functions, getter);
+	}
+
 	@Override
 	public final L isGreaterThan(R value) {
 		if (value == null) {

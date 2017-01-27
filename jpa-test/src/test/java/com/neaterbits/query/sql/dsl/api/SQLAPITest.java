@@ -24,7 +24,6 @@ import com.neaterbits.query.jpatest.model.Employee;
 import com.neaterbits.query.jpatest.model.Person;
 import com.neaterbits.query.jpatest.model.Role;
 import com.neaterbits.query.sql.dsl.api.entity.QueryMetaModel;
-import com.neaterbits.query.sql.dsl.api.helper.jpa.QueryTestDSJPANative;
 import com.neaterbits.query.sql.dsl.api.helper.jpa.QueryTestDSJPQL;
 import com.neaterbits.query.sql.dsl.api.testhelper.BaseSQLAPITest;
 import com.neaterbits.query.sql.dsl.api.testhelper.QueryTestDSBuilder;
@@ -90,6 +89,45 @@ public class SQLAPITest extends BaseSQLAPITest {
 		});
 	}
 
+	@Test
+    public void testNameBasedFunctions() {
+
+		final Company acme = new Company(-1, "Acme");
+		final Company foo = new Company(-1, "Foo");
+
+        final SingleQuery<CompanyResultVO> startsWithAc =
+        		selectOneOrNull(CompanyResultVO.class)
+
+        	.map(Company::getName).to(CompanyResultVO::setName)
+        	
+        	.from(Company.class)
+
+        	.where(Company::getName).startsWith("Ac")
+        	.  and().lower().trim(Company::getName).endsWith("cme")
+
+        	.compile();
+		
+		store(s  -> s.add(acme)).
+		check(ds -> {
+	        checkSelectOneOrNull(
+	        		ds,
+	        		new CompanyResultVO(acme.getName()),
+	        		startsWithAc,
+	        		q -> q.execute());
+		});
+
+		// Search for foo as well, should return no matches
+		store(s  -> s.add(foo)).
+		check(ds -> {
+	        checkSelectOneOrNull(
+	        		ds,
+	        		null,
+	        		startsWithAc,
+	        		q -> q.execute());
+		});
+	}
+
+	
 	@Test
     public void testInBasedLiteral() {
 

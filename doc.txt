@@ -520,9 +520,18 @@ Neste:
 # - rename av Class / Table => Entity (i motsetning til Alias) slik at blir konsistent.
 Renamed til Named
 #  - nøsta and/or
- - in
+# - in
 # - bedre debugging av in-memory query eksekvering
 W - parametere
+
+ - funksjoner lower(), trim() osv
+   * named
+   * alias
+   * adhoc
+
+ - subselects
+
+ 
 
 - !!! for halway queries (startsWith/endsWith/in for native), fortsatt parametrisere for å unngå at logger verdier !!!
  * bør støtte både tidlig og sein resolve, arve JPAConditionToOperator fra ConditionStringBuilder og så arve fra der igjen?
@@ -534,6 +543,7 @@ W - parametere
    * forenklede queries uten from eller join sources. Trenger ikke from/implisitt join om kun ANSI joins
      siden from er der for cartesian product.
  - subselects
+
  - mere tester
  - unit tester rett på JPAModel og utils for å sjekke at henter ut relations riktig, attributt kolonner mm på rett vis.
    * se om bør endre API slik at eget for å hente kolonner for relation attributter?

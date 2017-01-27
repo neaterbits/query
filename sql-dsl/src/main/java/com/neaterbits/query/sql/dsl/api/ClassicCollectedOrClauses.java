@@ -16,8 +16,17 @@ final class ClassicCollectedOrClauses<MODEL, RESULT> extends CollectedClauses<MO
 	}
 	
 
-	private <T, RR extends Comparable<RR>> ISharedClauseComparableCommonAll<MODEL, RESULT, RR, IClassicOrClausesNamed<MODEL, RESULT>> orClassImpl(Function<T, RR> getter) {
-		return new CollectedClause_Comparative<MODEL, RESULT, RR, IClassicOrClausesNamed<MODEL,RESULT>>(this, makeGetter(getter));
+	private <T, RR extends Comparable<RR>> ISharedClauseComparableCommonAll<MODEL, RESULT, RR, IClassicOrClausesNamed<MODEL, RESULT>> orClassImplComparable(Function<T, RR> getter) {
+		return orClassImplComparable(null, getter);
+	}
+
+	private <T, RR extends Comparable<RR>> ISharedClauseComparableCommonAll<MODEL, RESULT, RR, IClassicOrClausesNamed<MODEL, RESULT>> orClassImplComparable(CollectedFunctions functions, Function<T, RR> getter) {
+		return new CollectedClause_Comparative<MODEL, RESULT, RR, IClassicOrClausesNamed<MODEL,RESULT>>(this, functions, makeGetter(getter));
+	}
+
+
+	private ISharedClauseComparableStringAll<MODEL, RESULT, IClassicOrClausesNamed<MODEL, RESULT>> orClassImplString(CollectedFunctions functions, StringFunction<?> getter) {
+		return new CollectedClause_String<MODEL, RESULT, IClassicOrClausesNamed<MODEL,RESULT>>(this, functions, makeGetter(getter));
 	}
 	
 	private <RR extends Comparable<RR>> ISharedClauseConditionAll<MODEL, RESULT, RR, IClassicOrClausesAlias<MODEL, RESULT>> orAliasImpl(Supplier<RR> getter) {
@@ -26,17 +35,17 @@ final class ClassicCollectedOrClauses<MODEL, RESULT> extends CollectedClauses<MO
 
 	@Override
 	public <T> ISharedClauseComparableCommonAll<MODEL, RESULT, Integer, IClassicOrClausesNamed<MODEL, RESULT>> or(IFunctionInteger<T> getter) {
-		return orClassImpl(getter);
+		return orClassImplComparable(getter);
 	}
 
 	@Override
 	public <T> ISharedClauseComparableCommonAll<MODEL, RESULT, Long, IClassicOrClausesNamed<MODEL, RESULT>> or(IFunctionLong<T> getter) {
-		return orClassImpl(getter);
+		return orClassImplComparable(getter);
 	}
 
 	@Override
 	public <T> ISharedClauseComparableStringAll<MODEL, RESULT, IClassicOrClausesNamed<MODEL, RESULT>> or(StringFunction<T> getter) {
-		return new CollectedClause_String<MODEL, RESULT, IClassicOrClausesNamed<MODEL,RESULT>>(this, makeGetter(getter));
+		return orClassImplString(null, getter);
 	}
 
 	@Override
@@ -73,4 +82,36 @@ final class ClassicCollectedOrClauses<MODEL, RESULT> extends CollectedClauses<MO
 		
 		return this;
 	}
+
+	@Override
+	public ISharedFunctionsNamedInitial<
+				MODEL,
+				RESULT,
+				IClassicOrClausesNamed<MODEL, RESULT>,
+				ISharedClauseComparableCommonBase<MODEL, RESULT, ?, IClassicOrClausesNamed<MODEL, RESULT>>,
+				ISharedClauseComparableStringAll<MODEL, RESULT, IClassicOrClausesNamed<MODEL, RESULT>>
+			>
+			or() {
+		
+		@SuppressWarnings({"unchecked", "rawtypes"})
+		final Collector_Functions_Callback<MODEL, RESULT, IClassicOrClausesNamed<MODEL, RESULT>> cb
+				= new Collector_Functions_Callback<MODEL, RESULT, IClassicOrClausesNamed<MODEL, RESULT>>() {
+
+			@Override
+			public ISharedClauseComparableCommonAll<MODEL, RESULT, Comparable<?>, IClassicOrClausesNamed<MODEL, RESULT>>
+				onComparable(CollectedFunctions functions, Function getter) {
+				
+				return orClassImplComparable(functions, (Function)getter);
+			}
+
+			@Override
+			public ISharedClauseComparableStringBase<MODEL, RESULT, IClassicOrClausesNamed<MODEL, RESULT>>
+				onString(CollectedFunctions functions, StringFunction getter) {
+				return orClassImplString(functions, getter);
+			}
+		};
+
+		return new Collector_SharedFunctions<>(cb);
+	}
+	
 }

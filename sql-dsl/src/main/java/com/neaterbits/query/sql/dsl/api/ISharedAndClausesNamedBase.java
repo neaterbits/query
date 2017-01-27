@@ -18,6 +18,8 @@ public interface ISharedAndClausesNamedBase<
     <T> LONG_CLAUSE and(IFunctionLong<T> getter);
 
     <T> STRING_CLAUSE and(StringFunction<T> getter);
+
+    ISharedFunctionsNamedInitial<MODEL, RESULT, AND_CLAUSES, ISharedClauseComparableCommonBase<MODEL, RESULT, ?, AND_CLAUSES>, STRING_CLAUSE> and();
     
 	AND_CLAUSES andNest(ISharedNestedOrConsumerNamed<MODEL, RESULT, NESTED_OR_CLAUSES> orBuilder);
     

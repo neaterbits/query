@@ -7,6 +7,10 @@ final class CollectedClause_String<MODEL, RESULT, L extends ISharedLogicalClause
 	CollectedClause_String(CollectedClauses<MODEL, RESULT> clause, Getter getter) {
 		super(clause, getter);
 	}
+	
+	CollectedClause_String(CollectedClauses<MODEL, RESULT> clause, CollectedFunctions functions, Getter getter) {
+		super(clause, functions, getter);
+	}
 
 	private ConditionValue_Literal_String makeLiteralValue(String value) {
 		
