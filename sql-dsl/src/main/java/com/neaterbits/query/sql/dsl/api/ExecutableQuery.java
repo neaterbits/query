@@ -317,11 +317,16 @@ interface ExecutableQuery<QUERY> {
 	
 	CompiledFieldReference getRootConditionLhs(QUERY query, int conditionIdx);
 
+
 	
 	// TODO: convert this somehow to enum or simila
 	ConditionValue getRootConditionValue(QUERY query, int conditionIdx);
 	
 	EClauseOperator getRootConditionOperator(QUERY query, int conditionIdx);
+	
+	int getRootConditionNumFunctions(QUERY query, int conditionIdx);
+
+	FunctionBase getRootConditionFunction(QUERY query, int conditionIdx, int functionIdx);
 	
 	public default Method getForDebugRootConditionLhsMethod(QUERY query, int conditionIdx) {
 		return getRootConditionLhs(query, conditionIdx).getGetter().getGetterMethod();
@@ -375,6 +380,10 @@ interface ExecutableQuery<QUERY> {
 	CompiledFieldReference getConditionLhs(QUERY query, int level, int [] conditionIndices);
 
 	ConditionValue getConditionValue(QUERY query, int level, int [] conditionIndices);
+
+	int getConditionNumFunctions(QUERY query, int level, int [] conditionIndices);
+
+	FunctionBase getConditionFunction(QUERY query, int level, int [] conditionIndices, int functionIdx);
 	
 	Method getForDebugConditionLhsMethod(QUERY query, int level, int [] conditionIndices);
 	

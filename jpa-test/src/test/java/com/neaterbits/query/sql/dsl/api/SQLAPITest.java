@@ -24,6 +24,7 @@ import com.neaterbits.query.jpatest.model.Employee;
 import com.neaterbits.query.jpatest.model.Person;
 import com.neaterbits.query.jpatest.model.Role;
 import com.neaterbits.query.sql.dsl.api.entity.QueryMetaModel;
+import com.neaterbits.query.sql.dsl.api.helper.jpa.QueryTestDSJPANative;
 import com.neaterbits.query.sql.dsl.api.helper.jpa.QueryTestDSJPQL;
 import com.neaterbits.query.sql.dsl.api.testhelper.BaseSQLAPITest;
 import com.neaterbits.query.sql.dsl.api.testhelper.QueryTestDSBuilder;
@@ -92,7 +93,7 @@ public class SQLAPITest extends BaseSQLAPITest {
 	@Test
     public void testNameBasedFunctions() {
 
-		final Company acme = new Company(-1, "Acme");
+		final Company acme = new Company(-1, " Acme");
 		final Company foo = new Company(-1, "Foo");
 
         final SingleQuery<CompanyResultVO> startsWithAc =
@@ -102,8 +103,8 @@ public class SQLAPITest extends BaseSQLAPITest {
         	
         	.from(Company.class)
 
-        	.where(Company::getName).startsWith("Ac")
-        	.  and().lower().trim(Company::getName).endsWith("cme")
+        	.where().lower() .trim(Company::getName).isEqualTo("acme")
+        	.  and()        .upper(Company::getName).endsWith("CME")
 
         	.compile();
 		

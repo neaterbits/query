@@ -56,6 +56,19 @@ final class CompiledConditionComparison extends CompiledCondition {
 		return value;
 	}
 
+	int getNumFunctions() {
+		final CollectedFunctions functions = original.getFunctions();
+		
+		return functions == null ? 0 : functions.getFunctions().size();
+	}
+	
+	FunctionBase getFunctionAt(int functionIdx) {
+		final CollectedFunctions functions = original.getFunctions();
+
+		return functions.getFunctions().get(functionIdx);
+	}
+
+	
 	ScalarType getScalarType() {
 		return scalarType;
 	}
@@ -64,4 +77,6 @@ final class CompiledConditionComparison extends CompiledCondition {
 	int getSourceIdx() {
 		return lhs.getSource().getIdx();
 	}
+	
+	
 }

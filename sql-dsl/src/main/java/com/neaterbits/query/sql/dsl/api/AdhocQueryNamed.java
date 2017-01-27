@@ -31,7 +31,7 @@ abstract class AdhocQueryNamed<MODEL, RESULT>
 
 	private AdhocConditions<MODEL, RESULT, ?> conditions;
 
-	private int curSource; 
+	private int curSource;
 	
 	private Collection<?> [] sources;
 	private int numSources;
@@ -286,6 +286,16 @@ abstract class AdhocQueryNamed<MODEL, RESULT>
 	public final boolean evaluateRootCondition(AdhocQueryNamed<MODEL, RESULT> query, Object instance, int conditionIdx, ConditionValuesScratch scratch) {
 		return conditions.evaluate(instance, conditionIdx, this);
 	}
+	
+	@Override
+	public int getRootConditionNumFunctions(AdhocQueryNamed<MODEL, RESULT> query, int conditionIdx) {
+		throw new UnsupportedOperationException("TODO");
+	}
+
+	@Override
+	public FunctionBase getRootConditionFunction(AdhocQueryNamed<MODEL, RESULT> query, int conditionIdx, int functionIdx) {
+		throw new UnsupportedOperationException("TODO");
+	}
 
 	@Override
 	public Method getForDebugRootConditionLhsMethod(AdhocQueryNamed<MODEL, RESULT> query, int conditionIdx) {
@@ -353,7 +363,19 @@ abstract class AdhocQueryNamed<MODEL, RESULT>
 	public final int getConditionsMaxDepth(AdhocQueryNamed<MODEL, RESULT> query) {
 		return conditions == null ? -1 : conditions.getMaxDepth();
 	}
+
 	
+	
+	@Override
+	public int getConditionNumFunctions(AdhocQueryNamed<MODEL, RESULT> query, int level, int[] conditionIndices) {
+		throw new UnsupportedOperationException("TODO");
+	}
+
+	@Override
+	public FunctionBase getConditionFunction(AdhocQueryNamed<MODEL, RESULT> query, int level, int[] conditionIndices, int functionIdx) {
+		throw new UnsupportedOperationException("TODO");
+	}
+
 	@Override
 	public Method getForDebugConditionLhsMethod(AdhocQueryNamed<MODEL, RESULT> query, int level, int[] conditionIndices) {
 		return conditions.getForDebugConditionLhsMethod(level, conditionIndices, getForDebugSourceClasses());

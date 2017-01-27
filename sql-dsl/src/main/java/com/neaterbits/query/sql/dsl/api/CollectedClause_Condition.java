@@ -47,7 +47,17 @@ class CollectedClause_Condition<MODEL, RESULT, R, L extends ISharedLogicalClause
 		return new ConditionValue_Getter(CollectedClauses.makeGetter(value));
 	}
 
-	final L addCondition(CollectedCondition condition) {
+	final L addCondition(CollectedCondition_NonNested condition) {
+		
+		// Call setter to pass on functions
+		if (functions != null) {
+			condition.setFunctions(functions);
+		}
+
+		return addConditionInt(condition);
+	}
+	
+	final L addConditionInt(CollectedCondition condition) {
 		if (condition == null) {
 			throw new IllegalArgumentException("condition == null");
 		}

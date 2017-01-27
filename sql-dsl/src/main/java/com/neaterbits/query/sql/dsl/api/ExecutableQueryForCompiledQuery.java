@@ -412,6 +412,18 @@ final class ExecutableQueryForCompiledQuery implements ExecutableQuery<CompiledQ
 
 		return getRootComparisonCondition(query, conditionIdx).getValue();
 	}
+	
+
+	@Override
+	public int getRootConditionNumFunctions(CompiledQuery query, int conditionIdx) {
+		return getRootComparisonCondition(query, conditionIdx).getNumFunctions();
+	}
+
+
+	@Override
+	public FunctionBase getRootConditionFunction(CompiledQuery query, int conditionIdx, int functionIdx) {
+		return getRootComparisonCondition(query, conditionIdx).getFunctionAt(functionIdx);
+	}
 
 	@Override
 	public ConditionsType getRootConditionsType(CompiledQuery query) {
@@ -588,6 +600,17 @@ final class ExecutableQueryForCompiledQuery implements ExecutableQuery<CompiledQ
 		return getComparisonCondition(query, level, conditionIndices).getValue();
 	}
 
+	@Override
+	public int getConditionNumFunctions(CompiledQuery query, int level, int[] conditionIndices) {
+		return getComparisonCondition(query, level, conditionIndices).getNumFunctions();
+	}
+
+
+	@Override
+	public FunctionBase getConditionFunction(CompiledQuery query, int level, int[] conditionIndices, int functionIdx) {
+		return getComparisonCondition(query, level, conditionIndices).getFunctionAt(functionIdx);
+	}
+	
 	@Override
 	public boolean evaluateCondition(CompiledQuery query, int level, int[] conditionIndices, Object instance, ConditionValuesScratch scratch) {
 		
