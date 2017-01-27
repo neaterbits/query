@@ -17,7 +17,7 @@ abstract class AdhocQueryNamed<MODEL, RESULT>
 			IAdhocEndClauseBase<MODEL, RESULT>,
 			
 			
-			ISharedLogicalClauses<MODEL, RESULT>,
+			ISharedLogical_Base<MODEL, RESULT>,
 			
 			
 			ExecuteQueryPOJOsInput {
@@ -457,21 +457,21 @@ abstract class AdhocQueryNamed<MODEL, RESULT>
 	@SuppressWarnings("rawtypes")
 	final <R extends Comparable<R>, AND_OR extends IAdhocAndOrLogicalClauses<MODEL, Object, Object>>
 	
-		ISharedClauseComparableCommonValue // <MODEL, Object, R, AND_OR>
+		ISharedCondition_Comparable_Common_Value // <MODEL, Object, R, AND_OR>
 				addComparativeWhere(Function<?, ?> function) {
 		
-		return (ISharedClauseComparableCommonValue)addWhere(function);
+		return (ISharedCondition_Comparable_Common_Value)addWhere(function);
 	}
 	
 
 	@SuppressWarnings("rawtypes")
 	final <R extends Comparable<R>, AND_OR extends IAdhocAndOrLogicalClauses<MODEL, Object, Object>>
 	
-		ISharedClauseConditionValue // <MODEL, Object, R, AND_OR>
+		ISharedCondition_Equality_Value // <MODEL, Object, R, AND_OR>
 	
 			addConditionWhere(Function<?, ?> function) {
 
-		return (ISharedClauseConditionValue)addWhere(function);
+		return (ISharedCondition_Equality_Value)addWhere(function);
 	}
 
 	

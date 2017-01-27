@@ -11,12 +11,12 @@ package com.neaterbits.query.sql.dsl.api;
  */
 
 public interface IClassicWhereClauseBuilderNamed<MODEL, RESULT>
-		extends ISharedWhereClauseBuilderNamedAll<
+		extends ISharedLogical_Where_Named_All<
 			MODEL,
 			RESULT,
 			IClassicAndOrLogicalClausesNamed<MODEL, RESULT>,
 			
-			ISharedClauseComparableCommonAll_Compilable<MODEL, RESULT, ? extends Comparable<?>, IClassicAndOrLogicalClausesNamed<MODEL, RESULT>>,
-			ISharedClauseComparableStringAll_Compilable<MODEL, RESULT, IClassicAndOrLogicalClausesNamed<MODEL, RESULT>>> {
+			ISharedCondition_Comparable_Common_All_Compilable<MODEL, RESULT, ? extends Comparable<?>, IClassicAndOrLogicalClausesNamed<MODEL, RESULT>>,
+			ISharedCondition_Comparable_String_All_Compilable<MODEL, RESULT, IClassicAndOrLogicalClausesNamed<MODEL, RESULT>>> {
 
 }

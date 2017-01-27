@@ -7,6 +7,6 @@ public interface ISharedSelectSourceBuilderAliasAlias<MODEL, RESULT> extends ISh
      * @param aliases
      */
     
-    ISharedWhereClauseBuilder<MODEL, RESULT> from(Alias<?> ... aliases);
+    ISharedLogical_Where<MODEL, RESULT> from(Alias<?> ... aliases);
 	
 }

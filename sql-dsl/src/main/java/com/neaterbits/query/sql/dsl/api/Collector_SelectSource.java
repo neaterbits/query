@@ -26,13 +26,13 @@ abstract class Collector_SelectSource<MODEL, RESULT> extends BaseQueryEntity<MOD
 		
 		getQueryCollector().setSources(new CollectedSelectSource_Named(classes));
 		
-		final ClassicWhereOrJoinClauseBuilder<MODEL, RESULT> ret =  new ClassicWhereOrJoinClauseBuilder<MODEL, RESULT>(this);
+		final Classic_Collector_Where_Or_Join<MODEL, RESULT> ret =  new Classic_Collector_Where_Or_Join<MODEL, RESULT>(this);
 		
 		return ret;
 	}
 
 	@Override
-	public final ISharedWhereClauseBuilder<MODEL, RESULT> from(Alias<?> ... aliases) {
+	public final ISharedLogical_Where<MODEL, RESULT> from(Alias<?> ... aliases) {
 //		if (classes.length == 0) {
 //			throw new IllegalArgumentException("no classes");
 //		}
@@ -42,7 +42,7 @@ abstract class Collector_SelectSource<MODEL, RESULT> extends BaseQueryEntity<MOD
 
 		getQueryCollector().setSources(new CollectedSelectSource_AliasAliases(aliases));
 
-		final ClassicWhereOrJoinClauseBuilder<MODEL, RESULT> ret = new ClassicWhereOrJoinClauseBuilder<MODEL, RESULT>(this);
+		final Classic_Collector_Where_Or_Join<MODEL, RESULT> ret = new Classic_Collector_Where_Or_Join<MODEL, RESULT>(this);
 		
 		return ret;
 	}
@@ -56,7 +56,7 @@ abstract class Collector_SelectSource<MODEL, RESULT> extends BaseQueryEntity<MOD
 		
 		getQueryCollector().setSources(new CollectedSelectSource_Aliases(aliases));
 
-		final ClassicWhereOrJoinClauseBuilder<MODEL, RESULT> ret = new ClassicWhereOrJoinClauseBuilder<MODEL, RESULT>(this);
+		final Classic_Collector_Where_Or_Join<MODEL, RESULT> ret = new Classic_Collector_Where_Or_Join<MODEL, RESULT>(this);
 		
 		return ret;
 	}

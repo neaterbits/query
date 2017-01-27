@@ -3,7 +3,7 @@ package com.neaterbits.query.sql.dsl.api;
 import java.util.function.Function;
 
 final class ClassicSingleNamedResult<MODEL, RESULT>
-	extends CollectedClauses_Initial<MODEL, RESULT> 
+	extends Collector_Conditions_Initial<MODEL, RESULT> 
 		implements
 			IClassicSingleWhereClauseBuilderNamed<MODEL, RESULT>,
 			IClassicSingleAndOrLogicalClausesNamed<MODEL, RESULT>
@@ -27,54 +27,54 @@ final class ClassicSingleNamedResult<MODEL, RESULT>
 
 
 	@Override
-	public <RR> ISharedClauseConditionAll<MODEL, RESULT, RR, IClassicSingleAndOrLogicalClausesNamed<MODEL, RESULT>>
+	public <RR> ISharedCondition_Equality_All<MODEL, RESULT, RR, IClassicSingleAndOrLogicalClausesNamed<MODEL, RESULT>>
 			where(Function<RESULT, RR> func) {
 
-		return new CollectedClause_Condition<MODEL, RESULT, RR, IClassicSingleAndOrLogicalClausesNamed<MODEL,RESULT>>(this, makeGetter(func));
+		return new Collector_Condition_Equality<MODEL, RESULT, RR, IClassicSingleAndOrLogicalClausesNamed<MODEL,RESULT>>(this, makeGetter(func));
 	}
 
 	@Override
-	public ISharedClauseComparableStringAll<MODEL, RESULT, IClassicSingleAndOrLogicalClausesNamed<MODEL, RESULT>>
+	public ISharedCondition_Comparable_String_All<MODEL, RESULT, IClassicSingleAndOrLogicalClausesNamed<MODEL, RESULT>>
 			where(StringFunction<RESULT> func) {
 
-		return new CollectedClause_String<MODEL, RESULT, IClassicSingleAndOrLogicalClausesNamed<MODEL,RESULT>>(this, makeGetter(func));
+		return new Collector_Condition_String<MODEL, RESULT, IClassicSingleAndOrLogicalClausesNamed<MODEL,RESULT>>(this, makeGetter(func));
 	}
 
 	// ------------------------  AND ------------------------
 	@Override
-	public ISharedClauseConditionNamed<MODEL, RESULT, Integer, IClassicSingleAndClausesNamed<MODEL, RESULT>>
+	public ISharedCondition_Equality_Named<MODEL, RESULT, Integer, IClassicSingleAndClausesNamed<MODEL, RESULT>>
 			and(IFunctionInteger<RESULT> getter) {
 		
-		final ClassicCollectedAndClauses_Named_Single<MODEL, RESULT> andClauses = new ClassicCollectedAndClauses_Named_Single<>(this);
+		final Classic_Collector_And_Named_Single<MODEL, RESULT> andClauses = new Classic_Collector_And_Named_Single<>(this);
 		
-		return new CollectedClause_Condition<MODEL, RESULT, Integer, IClassicSingleAndClausesNamed<MODEL,RESULT>>(andClauses, makeGetter(getter));
+		return new Collector_Condition_Equality<MODEL, RESULT, Integer, IClassicSingleAndClausesNamed<MODEL,RESULT>>(andClauses, makeGetter(getter));
 	}
 
 	@Override
-	public ISharedClauseComparableStringAll<MODEL, RESULT, IClassicSingleAndClausesNamed<MODEL, RESULT>>
+	public ISharedCondition_Comparable_String_All<MODEL, RESULT, IClassicSingleAndClausesNamed<MODEL, RESULT>>
 			and(StringFunction<RESULT> getter) {
 
-		final ClassicCollectedAndClauses_Named_Single<MODEL, RESULT> andClauses = new ClassicCollectedAndClauses_Named_Single<>(this);
+		final Classic_Collector_And_Named_Single<MODEL, RESULT> andClauses = new Classic_Collector_And_Named_Single<>(this);
 		
-		return new CollectedClause_String<MODEL, RESULT, IClassicSingleAndClausesNamed<MODEL,RESULT>>(andClauses, makeGetter(getter));
+		return new Collector_Condition_String<MODEL, RESULT, IClassicSingleAndClausesNamed<MODEL,RESULT>>(andClauses, makeGetter(getter));
 	}
 	
 	// ------------------------  OR ------------------------
 	@Override
-	public ISharedClauseConditionAll<MODEL, RESULT, Integer, IClassicSingleOrClausesNamed<MODEL, RESULT>>
+	public ISharedCondition_Equality_All<MODEL, RESULT, Integer, IClassicSingleOrClausesNamed<MODEL, RESULT>>
 			or(IFunctionInteger<RESULT> getter) {
 
-		final ClassicCollectedOrClauses_Named_Single<MODEL, RESULT> orClauses = new ClassicCollectedOrClauses_Named_Single<>(this);
+		final Classic_Collector_Or_Named_Single<MODEL, RESULT> orClauses = new Classic_Collector_Or_Named_Single<>(this);
 		
-		return new CollectedClause_Condition<MODEL, RESULT, Integer, IClassicSingleOrClausesNamed<MODEL,RESULT>>(orClauses, makeGetter(getter));
+		return new Collector_Condition_Equality<MODEL, RESULT, Integer, IClassicSingleOrClausesNamed<MODEL,RESULT>>(orClauses, makeGetter(getter));
 	}
 
 	@Override
-	public ISharedClauseComparableStringAll<MODEL, RESULT, IClassicSingleOrClausesNamed<MODEL, RESULT>>
+	public ISharedCondition_Comparable_String_All<MODEL, RESULT, IClassicSingleOrClausesNamed<MODEL, RESULT>>
 			or(StringFunction<RESULT> getter) {
 
-		final ClassicCollectedOrClauses_Named_Single<MODEL, RESULT> orClauses = new ClassicCollectedOrClauses_Named_Single<>(this);
+		final Classic_Collector_Or_Named_Single<MODEL, RESULT> orClauses = new Classic_Collector_Or_Named_Single<>(this);
 
-		return new CollectedClause_String<MODEL, RESULT, IClassicSingleOrClausesNamed<MODEL,RESULT>>(orClauses, makeGetter(getter));
+		return new Collector_Condition_String<MODEL, RESULT, IClassicSingleOrClausesNamed<MODEL,RESULT>>(orClauses, makeGetter(getter));
 	}
 }

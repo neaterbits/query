@@ -2,10 +2,10 @@ package com.neaterbits.query.sql.dsl.api;
 
 import java.util.function.Function;
 
-public interface IClassicSingleWhereClauseBuilderNamed<MODEL, RESULT> extends ISharedWhereClauseBuilder<MODEL, RESULT> {
+public interface IClassicSingleWhereClauseBuilderNamed<MODEL, RESULT> extends ISharedLogical_Where<MODEL, RESULT> {
 
-	<R> ISharedClauseConditionAll<MODEL, RESULT, R, IClassicSingleAndOrLogicalClausesNamed<MODEL, RESULT>> where(Function<RESULT, R> func);
+	<R> ISharedCondition_Equality_All<MODEL, RESULT, R, IClassicSingleAndOrLogicalClausesNamed<MODEL, RESULT>> where(Function<RESULT, R> func);
 	
-    ISharedClauseComparableStringAll<MODEL, RESULT, IClassicSingleAndOrLogicalClausesNamed<MODEL, RESULT>> where(StringFunction<RESULT> func);
+    ISharedCondition_Comparable_String_All<MODEL, RESULT, IClassicSingleAndOrLogicalClausesNamed<MODEL, RESULT>> where(StringFunction<RESULT> func);
 	
 }

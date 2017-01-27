@@ -37,29 +37,29 @@ final class AdhocQueryNamed_List<MODEL>
 	
 	@SuppressWarnings("unchecked")
 	@Override
-	public ISharedClauseComparableCommonValue<MODEL, List<Object>, Integer, IAdhocAndOrLogicalClausesList<MODEL, Object, List<Object>>> where(IFunctionInteger<Object> func) {
+	public ISharedCondition_Comparable_Common_Value<MODEL, List<Object>, Integer, IAdhocAndOrLogicalClausesList<MODEL, Object, List<Object>>> where(IFunctionInteger<Object> func) {
 		return addComparativeWhere(func);
 	}
 
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public <E extends Enum<E>> ISharedClauseConditionValue<MODEL, List<Object>, E, IAdhocAndOrLogicalClausesList<MODEL, Object, List<Object>>> where(IFunctionEnum<Object, E> func) {
+	public <E extends Enum<E>> ISharedCondition_Equality_Value<MODEL, List<Object>, E, IAdhocAndOrLogicalClausesList<MODEL, Object, List<Object>>> where(IFunctionEnum<Object, E> func) {
 		return addConditionWhere(func);
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public ISharedClauseComparableCommonValue<MODEL, List<Object>, BigDecimal, IAdhocAndOrLogicalClausesList<MODEL, Object, List<Object>>> where(IFunctionBigDecimal<Object> func) {
+	public ISharedCondition_Comparable_Common_Value<MODEL, List<Object>, BigDecimal, IAdhocAndOrLogicalClausesList<MODEL, Object, List<Object>>> where(IFunctionBigDecimal<Object> func) {
 		return addComparativeWhere(func);
 	}
 
 	@Override
 	@SuppressWarnings({"unchecked", "rawtypes"})
-	public ISharedClauseComparableStringValue<MODEL, List<Object>, IAdhocAndOrLogicalClausesList<MODEL, Object, List<Object>>>
+	public ISharedCondition_Comparable_String_Value<MODEL, List<Object>, IAdhocAndOrLogicalClausesList<MODEL, Object, List<Object>>>
 					where(StringFunction<Object> func) {
 
-		return (ISharedClauseComparableStringValue)addWhere(func);
+		return (ISharedCondition_Comparable_String_Value)addWhere(func);
 	}
 	
 	
