@@ -7,5 +7,9 @@ public class Function_String_Lower extends Function_String {
 	private Function_String_Lower() {
 		
 	}
-	
+
+	@Override
+	<T, R> R visit(FunctionVisitor<T, R> visitor, T param) {
+		return visitor.onStringLower(this, param);
+	}
 }

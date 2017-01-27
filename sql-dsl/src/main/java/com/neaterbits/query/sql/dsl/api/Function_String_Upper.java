@@ -7,5 +7,9 @@ final class Function_String_Upper extends Function_String {
 	private Function_String_Upper() {
 		
 	}
-	
+
+	@Override
+	<T, R> R visit(FunctionVisitor<T, R> visitor, T param) {
+		return visitor.onStringUpper(this, param);
+	}
 }

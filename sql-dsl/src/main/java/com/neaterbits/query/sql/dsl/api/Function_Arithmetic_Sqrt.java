@@ -7,4 +7,9 @@ final class Function_Arithmetic_Sqrt extends Function_Arithmetic {
 	private Function_Arithmetic_Sqrt() {
 		
 	}
+
+	@Override
+	<T, R> R visit(FunctionVisitor<T, R> visitor, T param) {
+		return visitor.onArithmeticSqrt(this, param);
+	}
 }

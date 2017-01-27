@@ -7,5 +7,9 @@ final class Function_Arithmetic_Abs extends Function_Arithmetic {
 	private Function_Arithmetic_Abs() {
 		
 	}
-	
+
+	@Override
+	<T, R> R visit(FunctionVisitor<T, R> visitor, T param) {
+		return visitor.onArithmeticAbs(this, param);
+	}
 }

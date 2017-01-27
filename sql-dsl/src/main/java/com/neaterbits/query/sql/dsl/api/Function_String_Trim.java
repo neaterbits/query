@@ -7,4 +7,9 @@ final class Function_String_Trim extends Function_String {
 	private Function_String_Trim() {
 		
 	}
+
+	@Override
+	<T, R> R visit(FunctionVisitor<T, R> visitor, T param) {
+		return visitor.onStringTrim(this, param);
+	}
 }
