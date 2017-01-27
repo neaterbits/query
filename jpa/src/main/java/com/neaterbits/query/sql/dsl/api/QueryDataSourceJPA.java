@@ -52,7 +52,7 @@ public abstract class QueryDataSourceJPA extends QueryDataSource_ORM<
 
 	
 	@Override
-	final <QUERY> PreparedQueryComparisonRHS convertConditions(ExecutableQuery<QUERY> q, QUERY query, EClauseOperator operator, ConditionValue value, ConditionStringBuilder sb) {
+	final <QUERY> PreparedQueryComparisonRHS convertCondition(ExecutableQuery<QUERY> q, QUERY query, EClauseOperator operator, ConditionValue value, ConditionStringBuilder sb) {
 		return conditionToOperator.convert(q, query, operator, value, sb);
 	}
 

@@ -3,6 +3,9 @@ package com.neaterbits.query.sql.dsl.api;
 import java.lang.reflect.Method;
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 import com.neaterbits.query.sql.dsl.api.entity.OneToManyJoinConditionResolver;
 import com.neaterbits.query.sql.dsl.api.entity.QueryMetaModel;
@@ -18,7 +21,7 @@ import com.neaterbits.query.sql.dsl.api.entity.QueryMetaModel;
 
 interface ExecutableQuery<QUERY> {
 
-	public default EJoinConditionType getJoinConditionType(QUERY query, int joinIdx) {
+	default EJoinConditionType getJoinConditionType(QUERY query, int joinIdx) {
 		
 		final int numConditions = getJoinConditionCount(query, joinIdx);
 		
@@ -55,12 +58,12 @@ interface ExecutableQuery<QUERY> {
 		return found;
 	}
 	
-	public default QueryParametersDistinct getDistinctParams(QUERY query) {
+	default QueryParametersDistinct getDistinctParams(QUERY query) {
 		return new QueryParametersDistinct(QueryHelper.getConditionParamRefs(this, query, true));
 	}
 	
 	
-	public default PreparedQueryMetaData makeMetaData(QUERY query) {
+	default PreparedQueryMetaData makeMetaData(QUERY query) {
 
 		// Figure whether requires parameters by recursing downwards 
 		final boolean hasParams = QueryHelper.hasConditionParams(this, query);
@@ -68,7 +71,7 @@ interface ExecutableQuery<QUERY> {
 		return new PreparedQueryMetaData(hasParams);
 	}
 	
-	public default int getNumResultParts(QUERY query) {
+	default int getNumResultParts(QUERY query) {
 		
 		final int numResultParts;
 		final EQueryResultGathering gathering = getGathering(query);
@@ -124,7 +127,7 @@ interface ExecutableQuery<QUERY> {
 	}
 	
 	
-	public default Object getAggregateDefault(QUERY query) {
+	default Object getAggregateDefault(QUERY query) {
 
 		final  EAggregateFunction function = getAggregateResultFunction(query);
 		final  ENumericType numericOutputType = getAggregateNumericInputType(query);
@@ -151,11 +154,11 @@ interface ExecutableQuery<QUERY> {
 	}
 	
 	
-	public default boolean hasJoins(QUERY query) {
+	default boolean hasJoins(QUERY query) {
 		return getJoinCount(query) != 0;
 	}
 	
-	public default boolean joinHasConditions(QUERY query, int joinIdx) {
+	default boolean joinHasConditions(QUERY query, int joinIdx) {
 		return getJoinConditionCount(query, joinIdx) != 0;
 	}
 	
@@ -328,11 +331,37 @@ interface ExecutableQuery<QUERY> {
 
 	FunctionBase getRootConditionFunction(QUERY query, int conditionIdx, int functionIdx);
 	
-	public default Method getForDebugRootConditionLhsMethod(QUERY query, int conditionIdx) {
+	default List<FunctionBase> getRootConditionFunctions(QUERY query, int conditionIdx) {
+		final int numFunctions = getRootConditionNumFunctions(query, conditionIdx);
+		
+		final List<FunctionBase> ret;
+		
+		if (numFunctions == 0) {
+			ret = null;
+		}
+		else {
+			ret = new ArrayList<>(numFunctions);
+		
+			for (int i = 0; i < numFunctions; ++ i) {
+				
+				final FunctionBase function = getRootConditionFunction(query, conditionIdx, i);
+				
+				if (function == null) {
+					throw new IllegalStateException("function == null");
+				}
+	
+				ret.add(function);
+			}
+		}
+		
+		return ret;
+	}
+	
+	default Method getForDebugRootConditionLhsMethod(QUERY query, int conditionIdx) {
 		return getRootConditionLhs(query, conditionIdx).getGetter().getGetterMethod();
 	}
 
-	public default String getForDebugRootConditionValue(QUERY query, int conditionIdx) {
+	default String getForDebugRootConditionValue(QUERY query, int conditionIdx) {
 		return getRootConditionValue(query, conditionIdx).toString();
 	}
 	
@@ -384,6 +413,34 @@ interface ExecutableQuery<QUERY> {
 	int getConditionNumFunctions(QUERY query, int level, int [] conditionIndices);
 
 	FunctionBase getConditionFunction(QUERY query, int level, int [] conditionIndices, int functionIdx);
+
+	default List<FunctionBase> getConditionFunctions(QUERY query, int level, int [] conditionIndices) {
+		final int numFunctions = getConditionNumFunctions(query, level, conditionIndices);
+		
+		final List<FunctionBase> ret;
+		
+		if (numFunctions == 0) {
+			ret = null;
+		}
+		else {
+		
+			ret = new ArrayList<>(numFunctions);
+			
+			for (int i = 0; i < numFunctions; ++ i) {
+				
+				final FunctionBase function = getConditionFunction(query, level, conditionIndices, i);
+				
+				if (function == null) {
+					throw new IllegalStateException("function == null");
+				}
+	
+				ret.add(function);
+			}
+		}
+		
+		return ret;
+		
+	}
 	
 	Method getForDebugConditionLhsMethod(QUERY query, int level, int [] conditionIndices);
 	

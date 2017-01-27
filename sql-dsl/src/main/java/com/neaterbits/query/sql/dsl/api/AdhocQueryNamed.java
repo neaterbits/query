@@ -3,6 +3,7 @@ package com.neaterbits.query.sql.dsl.api;
 import java.lang.reflect.Method;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
@@ -297,6 +298,12 @@ abstract class AdhocQueryNamed<MODEL, RESULT>
 		throw new UnsupportedOperationException("TODO");
 	}
 
+	
+	@Override
+	public List<FunctionBase> getRootConditionFunctions(AdhocQueryNamed<MODEL, RESULT> query, int conditionIdx) {
+		throw new UnsupportedOperationException("TODO");
+	}
+
 	@Override
 	public Method getForDebugRootConditionLhsMethod(AdhocQueryNamed<MODEL, RESULT> query, int conditionIdx) {
 		return getForDebugConditionLhsMethod(query, 0, new int[] { conditionIdx });
@@ -376,6 +383,12 @@ abstract class AdhocQueryNamed<MODEL, RESULT>
 		throw new UnsupportedOperationException("TODO");
 	}
 
+	@Override
+	public List<FunctionBase> getConditionFunctions(AdhocQueryNamed<MODEL, RESULT> query, int level, int[] conditionIndices) {
+		throw new UnsupportedOperationException("TODO");
+	}
+
+	
 	@Override
 	public Method getForDebugConditionLhsMethod(AdhocQueryNamed<MODEL, RESULT> query, int level, int[] conditionIndices) {
 		return conditions.getForDebugConditionLhsMethod(level, conditionIndices, getForDebugSourceClasses());

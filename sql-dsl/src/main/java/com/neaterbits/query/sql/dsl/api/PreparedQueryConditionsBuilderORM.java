@@ -1,5 +1,9 @@
 package com.neaterbits.query.sql.dsl.api;
 
+import java.util.Collection;
+import java.util.List;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
 
 /**
  * Common base class for ORM queries / native ANSI SQL due to commonalities
@@ -87,6 +91,8 @@ abstract class PreparedQueryConditionsBuilderORM extends PreparedQueryConditions
 
 		return os;
 	}
+	
+	abstract void resolveFunction(FunctionBase function, int idx, StringBuilder sb, BiConsumer<Integer, StringBuilder> appendNext);
 
 	@Override
 	final void resolveFromParams(StringBuilder sb, ParamValueResolver resolver) {
@@ -131,7 +137,19 @@ abstract class PreparedQueryConditionsBuilderORM extends PreparedQueryConditions
 				// comparison
 				final PreparedQueryConditionComparison comparison = (PreparedQueryConditionComparison)condition;
 
-				appendFieldReference(sb, comparison.getLhs());
+				// We must add any functions
+				final List<FunctionBase> funcs = comparison.getLhsFunctions();
+				
+				if (funcs != null) {
+					// recursively resolve so that we nest output
+					resolveFunction(funcs.get(0), 0, sb, new AppendNextFunction(funcs, comparison));
+				}
+				else {
+					// Must add any functions before 
+					appendFieldReference(sb, comparison.getLhs());
+					
+				}
+				
 				
 				sb.append(' ');
 
@@ -139,6 +157,53 @@ abstract class PreparedQueryConditionsBuilderORM extends PreparedQueryConditions
 			}
 			else {
 				throw new UnsupportedOperationException("Unknown condition type " + condition.getClass().getSimpleName());
+			}
+		}
+	}
+
+	protected class AppendNextFunction implements BiConsumer<Integer, StringBuilder> {
+
+		private final List<FunctionBase> funcs;
+		private final PreparedQueryConditionComparison comparison;
+		private final int num;
+		
+		AppendNextFunction(List<FunctionBase> funcs, PreparedQueryConditionComparison comparison) {
+
+			if (funcs == null) {
+				throw new IllegalArgumentException("funcs == null");
+			}
+			
+			if (comparison == null) {
+				throw new IllegalArgumentException("comparison == null");
+			}
+			
+			this.funcs = funcs;
+			this.comparison = comparison;
+			this.num = funcs.size();
+		 }
+
+
+		@Override
+		public void accept(Integer idx, StringBuilder sb) {
+			
+			if (idx < 0) {
+				throw new IllegalArgumentException("idx < 0");
+			}
+			else if (idx == num - 1) {
+				// at last idx, return getter
+				appendFieldReference(sb, comparison.getLhs());
+			}
+			else if (idx < num - 1) {
+				// resolve next
+				final int nextIdx = idx + 1;
+				
+				final FunctionBase func = funcs.get(nextIdx);
+				
+				// resolve next call
+				resolveFunction(func, nextIdx, sb, this);
+			}
+			else {
+				throw new IllegalStateException("idx out of range");
 			}
 		}
 	}

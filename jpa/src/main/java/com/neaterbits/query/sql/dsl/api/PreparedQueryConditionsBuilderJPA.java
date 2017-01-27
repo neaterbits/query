@@ -1,5 +1,6 @@
 package com.neaterbits.query.sql.dsl.api;
 
+import java.util.function.BiConsumer;
 
 final class PreparedQueryConditionsBuilderJPA extends PreparedQueryConditionsBuilderORM {
 
@@ -15,4 +16,45 @@ final class PreparedQueryConditionsBuilderJPA extends PreparedQueryConditionsBui
 	PreparedQueryConditionsBuilder createConditionsBuilder(boolean atRoot) {
 		return new PreparedQueryConditionsBuilderJPA(queryBuilderORM, atRoot);
 	}
+
+	@Override
+	void resolveFunction(FunctionBase function, int idx, StringBuilder sb, BiConsumer<Integer, StringBuilder> appendNext) {
+		
+		final String functionName = function.visit(functionToNameVisitor, null);
+		
+		sb.append(functionName).append('(');
+		
+		// recursively append
+		appendNext.accept(idx, sb);
+		
+		sb.append(')');
+	}
+	
+	private static final FunctionVisitor<Void, String> functionToNameVisitor = new FunctionVisitor<Void, String>() {
+		
+		@Override
+		public String onStringUpper(Function_String_Upper function, Void param) {
+			return "upper";
+		}
+		
+		@Override
+		public String onStringTrim(Function_String_Trim function, Void param) {
+			return "trim";
+		}
+		
+		@Override
+		public String onStringLower(Function_String_Lower function, Void param) {
+			return "lower";
+		}
+		
+		@Override
+		public String onArithmeticSqrt(Function_Arithmetic_Sqrt function, Void param) {
+			return "sqrt";
+		}
+		
+		@Override
+		public String onArithmeticAbs(Function_Arithmetic_Abs function, Void param) {
+			return "abs";
+		}
+	};
 }

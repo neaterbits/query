@@ -19,7 +19,7 @@ abstract class QueryDataSource_ORM<ORM_QUERY, MANAGED, EMBEDDED, IDENTIFIABLE, A
 	
 	abstract String getColumnNameForGetter(TypeMapSource source, CompiledGetter getter);
 	
-	abstract <QUERY> PreparedQueryComparisonRHS convertConditions(ExecutableQuery<QUERY> q, QUERY query, EClauseOperator operator, ConditionValue value, ConditionStringBuilder sb);
+	abstract <QUERY> PreparedQueryComparisonRHS convertCondition(ExecutableQuery<QUERY> q, QUERY query, EClauseOperator operator, ConditionValue value, ConditionStringBuilder sb);
 	
 	abstract PreparedQueryConditionsBuilder createConditionsBuilder(PreparedQueryBuilderORM queryBuilderORM, boolean atRoot);
 	
@@ -495,6 +495,7 @@ abstract class QueryDataSource_ORM<ORM_QUERY, MANAGED, EMBEDDED, IDENTIFIABLE, A
 
 		return os;
 	}
+
 	
 	
 	private <QUERY> List<PreparedQueryConditionComparison> prepareRootConditions(ExecutableQuery<QUERY> q, QUERY query, ConditionsType original, PreparedQueryConditionsBuilder sub, ConditionStringBuilder conditionSB) {
@@ -510,12 +511,13 @@ abstract class QueryDataSource_ORM<ORM_QUERY, MANAGED, EMBEDDED, IDENTIFIABLE, A
 			final EClauseOperator operator = q.getRootConditionOperator(query, conditionIdx);
 
 			final FieldReference left = prepareFieldReference(q, query, lhs);
-			
+			final List<FunctionBase> lhsFunctions = q.getRootConditionFunctions(query, conditionIdx);
+					
 
 			// Operator and value
-			final PreparedQueryComparisonRHS preparedCondition = convertConditions(q, query, operator, value, conditionSB);
+			final PreparedQueryComparisonRHS preparedCondition = convertCondition(q, query, operator, value, conditionSB);
 
-			final PreparedQueryConditionComparison prepared = new PreparedQueryConditionComparison(left, preparedCondition);
+			final PreparedQueryConditionComparison prepared = new PreparedQueryConditionComparison(lhsFunctions, left, preparedCondition);
 
 			sub.addComparisonCondition(original, prepared);
 			
@@ -561,11 +563,13 @@ abstract class QueryDataSource_ORM<ORM_QUERY, MANAGED, EMBEDDED, IDENTIFIABLE, A
 				
 				final FieldReference left = prepareFieldReference(q, query, lhs);
 				
+				final List<FunctionBase> lhsFunctions = q.getConditionFunctions(query, level, conditionIndices);
+				
 
 				// Operator and value
-				final PreparedQueryComparisonRHS preparedCondition = convertConditions(q, query, operator, value, conditionSB);
+				final PreparedQueryComparisonRHS preparedCondition = convertCondition(q, query, operator, value, conditionSB);
 
-				final PreparedQueryConditionComparison prepared = new PreparedQueryConditionComparison(left, preparedCondition);
+				final PreparedQueryConditionComparison prepared = new PreparedQueryConditionComparison(lhsFunctions, left, preparedCondition);
 
 				sub.addComparisonCondition(original, prepared);
 				
