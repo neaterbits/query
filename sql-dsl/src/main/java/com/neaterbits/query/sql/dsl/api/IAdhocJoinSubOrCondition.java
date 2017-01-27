@@ -16,7 +16,7 @@ package com.neaterbits.query.sql.dsl.api;
 public interface IAdhocJoinSubOrCondition<MODEL, RESULT, LEFT, RIGHT>
 		extends IAdhocJoinSub<MODEL, RESULT, LEFT, RIGHT>,
 
-				IAdhocWhereOrJoin<MODEL, RESULT, RIGHT, IAdhocAndOrLogicalClauses<MODEL,RESULT, RIGHT>,
+				IAdhoc_Where_Or_Join<MODEL, RESULT, RIGHT, IAdhocLogical_And_Or<MODEL,RESULT, RIGHT>,
 				IAdhocWhereOrJoinSub<MODEL,RESULT, RIGHT>> {
 	
 	

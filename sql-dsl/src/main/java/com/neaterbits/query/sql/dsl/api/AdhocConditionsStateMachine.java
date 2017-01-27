@@ -85,7 +85,7 @@ abstract class AdhocConditionsStateMachine<MODEL, RESULT, CONDITIONS extends Adh
 		intAddOperator(operator, value, sourceIdx);
 	}
 	
-	final <QUERY extends AdhocQueryNamed<MODEL, RESULT>>
+	final <QUERY extends AdhocQuery_Named<MODEL, RESULT>>
 			CONDITIONS intAddCondition(ConditionsType conditionsType, Function<?, ?> function, Consumer<?> nestedBuilder) {
 
 		if (function == null && nestedBuilder == null) {

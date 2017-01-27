@@ -2,7 +2,7 @@ package com.neaterbits.query.sql.dsl.api;
 
 import java.math.BigDecimal;
 
-public interface IAdhocWhere<MODEL, RESULT, T, AND_OR_CLAUSES extends IAdhocAndOrLogicalClauses<MODEL,RESULT, T>
+public interface IAdhocWhere<MODEL, RESULT, T, AND_OR_CLAUSES extends IAdhocLogical_And_Or<MODEL,RESULT, T>
 		
 		> {
 

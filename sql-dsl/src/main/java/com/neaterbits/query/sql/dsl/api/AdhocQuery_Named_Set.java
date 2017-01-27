@@ -6,13 +6,13 @@ import java.util.Set;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
-final class AdhocQueryNamed_Set<MODEL>
-		extends AdhocQueryNamed_Collection<MODEL, Set<Object>>
+final class AdhocQuery_Named_Set<MODEL>
+		extends AdhocQuery_Named_Collection<MODEL, Set<Object>>
 
 		implements IAdhocWhereOrJoinSet<MODEL, Object, Set<Object>>,
-				   IAdhocEndClauseSet<MODEL, Object, Set<Object>> {
+				   IAdhocEnd_Set<MODEL, Object, Set<Object>> {
 
-	AdhocQueryNamed_Set(Collection<?> coll) {
+	AdhocQuery_Named_Set(Collection<?> coll) {
 		super(ECollectionType.SET, coll);
 	}
 
@@ -35,25 +35,25 @@ final class AdhocQueryNamed_Set<MODEL>
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public ISharedCondition_Comparable_Common_Value<MODEL, Set<Object>, Integer, IAdhocAndOrLogicalClausesSet<MODEL, Object, Set<Object>>> where(IFunctionInteger<Object> func) {
+	public ISharedCondition_Comparable_Common_Value<MODEL, Set<Object>, Integer, IAdhocLogical_And_Or_Set<MODEL, Object, Set<Object>>> where(IFunctionInteger<Object> func) {
 		return addComparativeWhere(func);
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public <E extends Enum<E>> ISharedCondition_Equality_Value<MODEL, Set<Object>, E, IAdhocAndOrLogicalClausesSet<MODEL, Object, Set<Object>>> where(IFunctionEnum<Object, E> func) {
+	public <E extends Enum<E>> ISharedCondition_Equality_Value<MODEL, Set<Object>, E, IAdhocLogical_And_Or_Set<MODEL, Object, Set<Object>>> where(IFunctionEnum<Object, E> func) {
 		return addConditionWhere(func);
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public ISharedCondition_Comparable_Common_Value<MODEL, Set<Object>, BigDecimal, IAdhocAndOrLogicalClausesSet<MODEL, Object, Set<Object>>> where(IFunctionBigDecimal<Object> func) {
+	public ISharedCondition_Comparable_Common_Value<MODEL, Set<Object>, BigDecimal, IAdhocLogical_And_Or_Set<MODEL, Object, Set<Object>>> where(IFunctionBigDecimal<Object> func) {
 		return addComparativeWhere(func);
 	}
 
 	@Override
 	@SuppressWarnings({ "unchecked", "rawtypes" })
-	public ISharedCondition_Comparable_String_Value<MODEL, Set<Object>, IAdhocAndOrLogicalClausesSet<MODEL, Object, Set<Object>>> where(StringFunction<Object> func) {
+	public ISharedCondition_Comparable_String_Value<MODEL, Set<Object>, IAdhocLogical_And_Or_Set<MODEL, Object, Set<Object>>> where(StringFunction<Object> func) {
 
 		return (ISharedCondition_Comparable_String_Value)addWhere(func);
 	}

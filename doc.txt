@@ -530,7 +530,10 @@ W - parametere
    * adhoc
 
  - subselects
+ - fikse nøsta and/or slik at ikke har mulighet for .compile()
 
+ - group by?
+ - having?
  
 
 - !!! for halway queries (startsWith/endsWith/in for native), fortsatt parametrisere for å unngå at logger verdier !!!
@@ -538,11 +541,15 @@ W - parametere
  * fortsatt resolved/unresolved men unresolved også må kunne resolve via parametre, egen abstract-metode for det noe sted.
  * bør også kunne resolve alt til konkrete parametre om ønsker.
 
- - dialekter, dvs statisk begrense muligheter (kun ANSI joins? kun samme-type rekursjon?)
+ * OBS! skille ut alt target-spesifikt i eget *Target hierarki for SQL genereringen, uavhengg av datasource (sinden kan kjøre native queries mot JPA f.eks)
+
+ - dialekter, dvs statisk begrense muligheter (kun ANSI joins? kun samme-type rekursjon? strict, short, classic)
+
+
  - query ut fra context variabel
    * forenklede queries uten from eller join sources. Trenger ikke from/implisitt join om kun ANSI joins
      siden from er der for cartesian product.
- - subselects
+
 
  - mere tester
  - unit tester rett på JPAModel og utils for å sjekke at henter ut relations riktig, attributt kolonner mm på rett vis.

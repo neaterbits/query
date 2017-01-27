@@ -6,14 +6,14 @@ import java.util.List;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
-final class AdhocQueryNamed_List<MODEL>
+final class AdhocQuery_Named_List<MODEL>
 
-		extends AdhocQueryNamed_Collection<MODEL, List<Object>>
+		extends AdhocQuery_Named_Collection<MODEL, List<Object>>
 
 		implements IAdhocWhereOrJoinList<MODEL, Object, List<Object>>,
-		IAdhocEndClauseList<MODEL, Object, List<Object>> {
+		IAdhocEnd_List<MODEL, Object, List<Object>> {
 
-	AdhocQueryNamed_List(Collection<?> coll) {
+	AdhocQuery_Named_List(Collection<?> coll) {
 		super(ECollectionType.LIST, coll);
 	}
 	
@@ -27,7 +27,7 @@ final class AdhocQueryNamed_List<MODEL>
 
 	@Override
 	AdhocConditions<MODEL, List<Object>, ?> createConditions(int level) {
-		return new AdhocConditionsList<>(this, level);
+		return new AdhocConditions_List<>(this, level);
 	}
 
 	/**************************************************************************
@@ -37,26 +37,26 @@ final class AdhocQueryNamed_List<MODEL>
 	
 	@SuppressWarnings("unchecked")
 	@Override
-	public ISharedCondition_Comparable_Common_Value<MODEL, List<Object>, Integer, IAdhocAndOrLogicalClausesList<MODEL, Object, List<Object>>> where(IFunctionInteger<Object> func) {
+	public ISharedCondition_Comparable_Common_Value<MODEL, List<Object>, Integer, IAdhocLogical_And_Or_List<MODEL, Object, List<Object>>> where(IFunctionInteger<Object> func) {
 		return addComparativeWhere(func);
 	}
 
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public <E extends Enum<E>> ISharedCondition_Equality_Value<MODEL, List<Object>, E, IAdhocAndOrLogicalClausesList<MODEL, Object, List<Object>>> where(IFunctionEnum<Object, E> func) {
+	public <E extends Enum<E>> ISharedCondition_Equality_Value<MODEL, List<Object>, E, IAdhocLogical_And_Or_List<MODEL, Object, List<Object>>> where(IFunctionEnum<Object, E> func) {
 		return addConditionWhere(func);
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public ISharedCondition_Comparable_Common_Value<MODEL, List<Object>, BigDecimal, IAdhocAndOrLogicalClausesList<MODEL, Object, List<Object>>> where(IFunctionBigDecimal<Object> func) {
+	public ISharedCondition_Comparable_Common_Value<MODEL, List<Object>, BigDecimal, IAdhocLogical_And_Or_List<MODEL, Object, List<Object>>> where(IFunctionBigDecimal<Object> func) {
 		return addComparativeWhere(func);
 	}
 
 	@Override
 	@SuppressWarnings({"unchecked", "rawtypes"})
-	public ISharedCondition_Comparable_String_Value<MODEL, List<Object>, IAdhocAndOrLogicalClausesList<MODEL, Object, List<Object>>>
+	public ISharedCondition_Comparable_String_Value<MODEL, List<Object>, IAdhocLogical_And_Or_List<MODEL, Object, List<Object>>>
 					where(StringFunction<Object> func) {
 
 		return (ISharedCondition_Comparable_String_Value)addWhere(func);
