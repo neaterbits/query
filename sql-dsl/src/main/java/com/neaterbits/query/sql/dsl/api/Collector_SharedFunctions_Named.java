@@ -1,7 +1,5 @@
 package com.neaterbits.query.sql.dsl.api;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.function.Function;
 
 /**
@@ -15,7 +13,7 @@ import java.util.function.Function;
  * @param <STRING_CLAUSE>
  */
 
-final class Collector_SharedFunctions<
+final class Collector_SharedFunctions_Named<
 				MODEL,
 				RESULT,
 				RET extends ISharedLogical_Base<MODEL, RESULT>,
@@ -23,43 +21,35 @@ final class Collector_SharedFunctions<
 				COMPARABLE_CLAUSE extends ISharedCondition_Comparable_Common_Base<MODEL, RESULT, ?, RET>,
 				STRING_CLAUSE extends ISharedCondition_Comparable_String_Base<MODEL, RESULT, RET>>
 
+	extends Collector_SharedFunctions_Base<MODEL, RESULT, RET>
+
 	implements ISharedFunctions_Named_Initial<MODEL, RESULT, RET, COMPARABLE_CLAUSE, STRING_CLAUSE> {
 		
-	private final Collector_Functions_Callback<MODEL, RESULT, RET> func;
-	private final List<FunctionBase> functions;
+	private final ISharedCollector_Functions_Callback_Named<MODEL, RESULT, RET> func;
 	
 	
-	
-	Collector_SharedFunctions(Collector_Functions_Callback<MODEL, RESULT, RET> func) {
+	Collector_SharedFunctions_Named(ISharedCollector_Functions_Callback_Named<MODEL, RESULT, RET> func) {
 		
 		if (func == null) {
 			throw new IllegalArgumentException("func == null");
 		}
 		
 		this.func = func;
-		this.functions = new ArrayList<>();
 	}
 	
-	private void add(FunctionBase function) {
-		if (function == null) {
-			throw new IllegalArgumentException("function == null");
-		}
-		
-		functions.add(function);
-	}
 	
 	private ISharedCondition_Comparable_Common_Base<MODEL, RESULT, Comparable<?>, RET> addAndReturnComparable(Function_Arithmetic function, Function<?, ? extends Comparable<?>> getter) {
 		
 		add(function);
 
-		return func.onComparable(new CollectedFunctions(functions), getter);
+		return func.onComparable(collect(), getter);
 	}
 	
 	private ISharedCondition_Comparable_String_Base<MODEL, RESULT, RET> addAndReturnString(Function_String function, StringFunction<?> getter) {
 		
 		add(function);
 
-		return func.onString(new CollectedFunctions(functions), getter);
+		return func.onString(collect(), getter);
 	}
 	
 

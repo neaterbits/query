@@ -8,7 +8,7 @@ public interface ISharedLogical_And_Single_Named<
 
 	extends ISharedLogical_Base<MODEL, RESULT> {
 
-    ISharedCondition_Equality_Named<MODEL, RESULT, Integer, AND_CLAUSES> and(IFunctionInteger<RESULT> getter);
+    ISharedCondition_Comparable_Common_All<MODEL, RESULT, Integer, AND_CLAUSES> and(IFunctionInteger<RESULT> getter);
 
     ISharedCondition_Comparable_String_All<MODEL, RESULT, AND_CLAUSES> and(StringFunction<RESULT> getter);
 	

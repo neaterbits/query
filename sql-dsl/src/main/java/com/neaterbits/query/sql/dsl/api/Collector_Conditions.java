@@ -4,7 +4,10 @@ import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
-abstract class Collector_Conditions<MODEL, RESULT>
+abstract class Collector_Conditions<MODEL, RESULT,
+		NESTED_AND extends Collector_Conditions<MODEL, RESULT, NESTED_AND, NESTED_OR>,
+		NESTED_OR  extends Collector_Conditions<MODEL, RESULT, NESTED_AND, NESTED_OR>>
+		
 	extends BaseQueryEntity<MODEL>
 	implements ISharedLogical_Base<MODEL, RESULT>, ISharedCompileEndClause<MODEL> {
 
@@ -19,7 +22,7 @@ abstract class Collector_Conditions<MODEL, RESULT>
 	}
 
 	
-	Collector_Conditions(Collector_Conditions_Initial<MODEL, RESULT> last, ConditionsType newConditionsType) {
+	Collector_Conditions(Collector_Conditions_Initial<MODEL, RESULT, NESTED_AND, NESTED_OR> last, ConditionsType newConditionsType) {
 		super(last);
 		
 		if (last.clauseCollector.getConditionsType() != ConditionsType.SINGLE) {
@@ -43,7 +46,7 @@ abstract class Collector_Conditions<MODEL, RESULT>
 	}
 
 	@SuppressWarnings("unchecked")
-	final <T extends ISharedLogical_Or<MODEL, RESULT>, IMPL extends Collector_Conditions<MODEL, RESULT>>
+	final <T extends ISharedLogical_Or<MODEL, RESULT>, IMPL extends Collector_Conditions<MODEL, RESULT, NESTED_AND, NESTED_OR>>
 		void addNestedOrImpl(Consumer<T> orBuilder, IMPL subOrImpl) {
 		
 		
@@ -54,7 +57,7 @@ abstract class Collector_Conditions<MODEL, RESULT>
 	}
 
 	@SuppressWarnings("unchecked")
-	final <T extends ISharedLogical_And<MODEL, RESULT>, IMPL extends Collector_Conditions<MODEL, RESULT>>
+	final <T extends ISharedLogical_And<MODEL, RESULT>, IMPL extends Collector_Conditions<MODEL, RESULT, NESTED_AND, NESTED_OR>>
 	
 		void addNestedAndImpl(Consumer<T> orBuilder, IMPL subAndImpl) {
 		

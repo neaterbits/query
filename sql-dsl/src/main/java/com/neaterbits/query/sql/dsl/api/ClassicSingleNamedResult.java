@@ -3,7 +3,7 @@ package com.neaterbits.query.sql.dsl.api;
 import java.util.function.Function;
 
 final class ClassicSingleNamedResult<MODEL, RESULT>
-	extends Collector_Conditions_Initial<MODEL, RESULT> 
+	extends Collector_Conditions_Initial<MODEL, RESULT, Classic_Collector_And_Named_Single<MODEL, RESULT>, Classic_Collector_Or_Named_Single<MODEL, RESULT>> 
 		implements
 			IClassicSingleWhereClauseBuilderNamed<MODEL, RESULT>,
 			IClassicSingleAndOrLogicalClausesNamed<MODEL, RESULT>
@@ -27,10 +27,10 @@ final class ClassicSingleNamedResult<MODEL, RESULT>
 
 
 	@Override
-	public <RR> ISharedCondition_Equality_All<MODEL, RESULT, RR, IClassicSingleAndOrLogicalClausesNamed<MODEL, RESULT>>
+	public <RR extends Comparable<RR>> ISharedCondition_Equality_All<MODEL, RESULT, RR, IClassicSingleAndOrLogicalClausesNamed<MODEL, RESULT>>
 			where(Function<RESULT, RR> func) {
 
-		return new Collector_Condition_Equality<MODEL, RESULT, RR, IClassicSingleAndOrLogicalClausesNamed<MODEL,RESULT>>(this, makeGetter(func));
+		return new Collector_Condition_Comparative<MODEL, RESULT, RR, IClassicSingleAndOrLogicalClausesNamed<MODEL,RESULT>>(this, makeGetter(func));
 	}
 
 	@Override
@@ -42,12 +42,12 @@ final class ClassicSingleNamedResult<MODEL, RESULT>
 
 	// ------------------------  AND ------------------------
 	@Override
-	public ISharedCondition_Equality_Named<MODEL, RESULT, Integer, IClassicSingleAndClausesNamed<MODEL, RESULT>>
+	public ISharedCondition_Comparable_Common_All<MODEL, RESULT, Integer, IClassicSingleAndClausesNamed<MODEL, RESULT>>
 			and(IFunctionInteger<RESULT> getter) {
 		
 		final Classic_Collector_And_Named_Single<MODEL, RESULT> andClauses = new Classic_Collector_And_Named_Single<>(this);
 		
-		return new Collector_Condition_Equality<MODEL, RESULT, Integer, IClassicSingleAndClausesNamed<MODEL,RESULT>>(andClauses, makeGetter(getter));
+		return new Collector_Condition_Comparative<MODEL, RESULT, Integer, IClassicSingleAndClausesNamed<MODEL,RESULT>>(andClauses, makeGetter(getter));
 	}
 
 	@Override
@@ -61,12 +61,12 @@ final class ClassicSingleNamedResult<MODEL, RESULT>
 	
 	// ------------------------  OR ------------------------
 	@Override
-	public ISharedCondition_Equality_All<MODEL, RESULT, Integer, IClassicSingleOrClausesNamed<MODEL, RESULT>>
+	public ISharedCondition_Comparable_Common_All<MODEL, RESULT, Integer, IClassicSingleOrClausesNamed<MODEL, RESULT>>
 			or(IFunctionInteger<RESULT> getter) {
 
 		final Classic_Collector_Or_Named_Single<MODEL, RESULT> orClauses = new Classic_Collector_Or_Named_Single<>(this);
 		
-		return new Collector_Condition_Equality<MODEL, RESULT, Integer, IClassicSingleOrClausesNamed<MODEL,RESULT>>(orClauses, makeGetter(getter));
+		return new Collector_Condition_Comparative<MODEL, RESULT, Integer, IClassicSingleOrClausesNamed<MODEL,RESULT>>(orClauses, makeGetter(getter));
 	}
 
 	@Override

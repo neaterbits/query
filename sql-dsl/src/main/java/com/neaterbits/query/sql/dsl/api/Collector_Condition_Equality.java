@@ -4,19 +4,19 @@ import java.util.Arrays;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
-class Collector_Condition_Equality<MODEL, RESULT, R, L extends ISharedLogical_Base<MODEL, RESULT>>
+abstract class Collector_Condition_Equality<MODEL, RESULT, R, L extends ISharedLogical_Base<MODEL, RESULT>>
 	implements ISharedCondition_Equality_Named<MODEL, RESULT, R, L>,
 			   ISharedCondition_Equality_Alias<MODEL, RESULT, R, L> {
 
-	private final Collector_Conditions<MODEL, RESULT> clause;
+	private final Collector_Conditions<MODEL, RESULT, ?, ?> clause;
 	final CollectedFunctions functions;
 	final Getter getter;
 
-	Collector_Condition_Equality(Collector_Conditions<MODEL, RESULT> clause, Getter getter) {
+	Collector_Condition_Equality(Collector_Conditions<MODEL, RESULT, ?, ?> clause, Getter getter) {
 		this(clause, null, getter);
 	}
 
-	Collector_Condition_Equality(Collector_Conditions<MODEL, RESULT> clause, CollectedFunctions functions, Getter getter) {
+	Collector_Condition_Equality(Collector_Conditions<MODEL, RESULT, ?, ?> clause, CollectedFunctions functions, Getter getter) {
 
 		if (clause == null) {
 			throw new IllegalArgumentException("clause == null");

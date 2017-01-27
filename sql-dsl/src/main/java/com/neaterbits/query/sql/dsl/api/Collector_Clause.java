@@ -24,7 +24,7 @@ final class Collector_Clause {
 		}
 		
 		if (whereClauses.conditions.size() != 1) {
-			throw new IllegalArgumentException("expected exactly one condition collected");
+			throw new IllegalArgumentException("expected exactly one condition collected, got " + whereClauses.conditions.size());
 		}
 		
 		this.conditionsType = newConditionsType;

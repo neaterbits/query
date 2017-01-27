@@ -3,7 +3,13 @@ package com.neaterbits.query.sql.dsl.api;
 
 // The "where" clause
 
-abstract class Collector_Conditions_Initial<MODEL, RESULT> extends Collector_Conditions<MODEL, RESULT> {
+abstract class Collector_Conditions_Initial<
+			MODEL,
+			RESULT,
+
+			NESTED_AND extends Collector_Conditions<MODEL, RESULT, NESTED_AND, NESTED_OR>,
+			NESTED_OR  extends Collector_Conditions <MODEL, RESULT, NESTED_AND, NESTED_OR>
+		> extends Collector_Conditions<MODEL, RESULT, NESTED_AND, NESTED_OR> {
 
 	Collector_Conditions_Initial(BaseQueryEntity<MODEL> last) {
 		super(last, new Collector_Clause(ConditionsType.SINGLE));

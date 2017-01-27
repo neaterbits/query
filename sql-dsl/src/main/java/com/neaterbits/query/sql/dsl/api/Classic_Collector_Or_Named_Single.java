@@ -1,15 +1,18 @@
 package com.neaterbits.query.sql.dsl.api;
 
-final class Classic_Collector_Or_Named_Single<MODEL, RESULT> extends Collector_Conditions<MODEL, RESULT>
+final class Classic_Collector_Or_Named_Single<MODEL, RESULT>
+
+		extends Classic_Collector_Or<MODEL, RESULT, Classic_Collector_And_Named_Single<MODEL, RESULT>, Classic_Collector_Or_Named_Single<MODEL, RESULT>>
+
 		implements IClassicSingleOrClausesNamed<MODEL, RESULT> {
 	
-	Classic_Collector_Or_Named_Single(Collector_Conditions_Initial<MODEL, RESULT> last) {
-		super(last, ConditionsType.OR);
+	Classic_Collector_Or_Named_Single(ClassicSingleNamedResult<MODEL, RESULT> last) {
+		super(last);
 	}
 
 	@Override
-	public ISharedCondition_Equality_All<MODEL, RESULT, Integer, IClassicSingleOrClausesNamed<MODEL, RESULT>> or(IFunctionInteger<RESULT> getter) {
-		return new Collector_Condition_Equality<MODEL, RESULT, Integer, IClassicSingleOrClausesNamed<MODEL,RESULT>>(this, makeGetter(getter));
+	public ISharedCondition_Comparable_Common_All<MODEL, RESULT, Integer, IClassicSingleOrClausesNamed<MODEL, RESULT>> or(IFunctionInteger<RESULT> getter) {
+		return new Collector_Condition_Comparative<MODEL, RESULT, Integer, IClassicSingleOrClausesNamed<MODEL,RESULT>>(this, makeGetter(getter));
 	}
 
 	@Override

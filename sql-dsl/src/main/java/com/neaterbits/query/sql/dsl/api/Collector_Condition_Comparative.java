@@ -4,11 +4,11 @@ class Collector_Condition_Comparative<MODEL, RESULT, R extends Comparable<R>, L 
 	extends Collector_Condition_Equality<MODEL, RESULT, R, L>
 	implements ISharedCondition_Comparable_Common_All_Compilable<MODEL, RESULT, R, L> {
 
-	Collector_Condition_Comparative(Collector_Conditions<MODEL, RESULT> clause, Getter getter) {
+	Collector_Condition_Comparative(Collector_Conditions<MODEL, RESULT, ?, ?> clause, Getter getter) {
 		super(clause, getter);
 	}
 
-	Collector_Condition_Comparative(Collector_Conditions<MODEL, RESULT> clause, CollectedFunctions functions, Getter getter) {
+	Collector_Condition_Comparative(Collector_Conditions<MODEL, RESULT, ?, ?> clause, CollectedFunctions functions, Getter getter) {
 		super(clause, functions, getter);
 	}
 

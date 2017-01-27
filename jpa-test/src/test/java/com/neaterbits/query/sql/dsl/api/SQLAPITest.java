@@ -42,8 +42,8 @@ public class SQLAPITest extends BaseSQLAPITest {
 		
 		return new QueryTestDSCombined(
 				
-				//() -> new QueryTestDSJPQL("query-jpa-test"),
-				() -> new QueryTestDSJPANative("query-jpa-test"),
+				() -> new QueryTestDSJPQL("query-jpa-test"),
+				//() -> new QueryTestDSJPANative("query-jpa-test"),
 				
 				() -> new QueryTestDSInMemory(jpaQueryMetaModel)
 				)
@@ -93,7 +93,7 @@ public class SQLAPITest extends BaseSQLAPITest {
 	@Test
     public void testNameBasedFunctions() {
 
-		final Company acme = new Company(-1, "Acme ");
+		final Company acme = new Company(-1, "Acme");
 		final Company foo = new Company(-1, "Foo");
 
         final SingleQuery<CompanyResultVO> startsWithAc =
@@ -103,7 +103,7 @@ public class SQLAPITest extends BaseSQLAPITest {
         	
         	.from(Company.class)
 
-        	.where().trim(Company::getName).isEqualTo("Acme")
+        	.where().lower(Company::getName).isEqualTo("acme")
         	
         	//.  and()        .upper(Company::getName).endsWith("CME")
 
