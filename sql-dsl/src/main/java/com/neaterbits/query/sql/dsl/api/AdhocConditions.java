@@ -281,29 +281,6 @@ abstract class AdhocConditions<MODEL, RESULT, QUERY extends AdhocQuery_Named<MOD
 		return (ISharedCondition_Comparable_String_Base)this;
 	}
 	
-	@SuppressWarnings("unchecked")
-	private void addFunctions(AdhocFunctions<MODEL, RESULT, ?, ?, ?, ?> functions) {
-		
-		if (functions == null) {
-			throw new IllegalArgumentException("functions == null");
-		}
-
-		// allocate condition functions if not yet allocated
-		if (this.conditionFunctions == null) {
-			this.conditionFunctions = new AdhocFunctions[conditions.length];
-		}
-		
-		// verify that can add to current
-		checkSizes(numConditions);
-		
-		
-		if (conditionFunctions[numConditions] != null) {
-			throw new IllegalStateException("condition functions already set at " + numConditions);
-		}
-		
-		// AdhocFunctions contain all functions 
-		conditionFunctions[numConditions] = functions;
-	}
 	
 	
 	/**************************************************************************
@@ -317,12 +294,28 @@ abstract class AdhocConditions<MODEL, RESULT, QUERY extends AdhocQuery_Named<MOD
 
 
 	
+	@SuppressWarnings("unchecked")
 	@Override
 	final void intAddConditionToArray(AdhocFunctions<MODEL, RESULT, ?, ?, ?, ?> functions, Function<?, ?> function) {
+
+		if (functions != null) {
+			// allocate condition functions if not yet allocated
+			if (this.conditionFunctions == null) {
+				this.conditionFunctions = new AdhocFunctions[conditions.length];
+			}
+		}
+		
 		checkSizes(numConditions);
 
-		addFunctions(functions);
-		
+		if (functions != null) {
+			if (conditionFunctions[numConditions] != null) {
+				throw new IllegalStateException("condition functions already set at " + numConditions);
+			}
+			
+			// AdhocFunctions contain all functions 
+			conditionFunctions[numConditions] = functions;
+		}
+
 		this.conditions[numConditions] = function;
 	}
 
