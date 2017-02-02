@@ -400,11 +400,20 @@ abstract class AdhocConditions<MODEL, RESULT, QUERY extends AdhocQuery_Named<MOD
 		}
 
 		@SuppressWarnings("unchecked")
-		final Object instanceValue = conditions[conditionIdx].apply(instance);
+		Object instanceValue = conditions[conditionIdx].apply(instance);
 		final Object compareValue = values[conditionIdx];
 
-		scratch.initConditionScratchValues(instanceValue, compareValue);
+		if (conditionFunctions != null) {
+			// Must apply any functions
+			if (conditionFunctions[conditionIdx] != null) {
+				
+				// re-compute value using function
+				instanceValue = conditionFunctions[conditionIdx].applyTo(instanceValue);
+			}
+		}
 
+		scratch.initConditionScratchValues(instanceValue, compareValue);
+		
 		switch (operator) {
 		case IS_EQUAL:
 			ret = conditionValueComparable.onEqualTo(null, scratch);

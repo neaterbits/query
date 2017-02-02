@@ -186,7 +186,7 @@ public class SQLAdhocAPITest {
 
 		final Foo foo1 = new Foo(1, 2, new BigDecimal("3.1"));
 		final Foo foo2 = new Foo(3, 1, new BigDecimal("4.8"));
-		final Foo foo3 = new Foo(2, 16, new BigDecimal("2.4"));
+		final Foo foo3 = new Foo(2, 16, new BigDecimal("3.9"));
 
 		fooList.add(foo1);
 		fooList.add(foo2);
@@ -197,9 +197,18 @@ public class SQLAdhocAPITest {
 								.or().sqrt(Foo::getValue2).isEqualTo(4)
 								.get();
 
+		
 		assertThat(foos.size()).isEqualTo(2);
 		assertThat(foos.contains(foo1)).isTrue();
-		assertThat(foos.contains(foo2)).isTrue();
+		assertThat(foos.contains(foo3)).isTrue();
+
+		final List<Foo> foo2s = Adhoc.list(fooList)
+				.where().sqrt(Foo::getValue2).isEqualTo(4)
+					.get();
+		
+		assertThat(foo2s.size()).isEqualTo(1);
+		assertThat(foo2s.contains(foo3)).isTrue();
+		
 	}
 	
 	@Test

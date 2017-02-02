@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Function;
 
+import com.neaterbits.query.sql.dsl.api.entity.ScalarType;
+
 final class AdhocFunctions<
 		MODEL,
 		RESULT,
@@ -22,11 +24,11 @@ final class AdhocFunctions<
 				   
 				   
 	private final ConditionsType conditionsType;
+	private ScalarType scalarType; 
 	private final IAdhocFunctions_Callback<MODEL, RESULT, ?> listener;
 		
 	private final List<FunctionBase> functions;
-	
-	
+
 
 	AdhocFunctions(ConditionsType conditionsType, IAdhocFunctions_Callback<MODEL, RESULT, ?> listener) {
 
@@ -41,6 +43,31 @@ final class AdhocFunctions<
 		this.conditionsType = conditionsType;
 		this.listener = listener;
 		this.functions = new ArrayList<>();
+	}
+	
+	private void setScalarType(ScalarType scalarType) {
+		if (scalarType == null) {
+			throw new IllegalArgumentException("scalarType == null");
+		}
+		
+		if (this.scalarType != null && this.scalarType != scalarType) {
+			throw new IllegalArgumentException("scalar type changed from " + this.scalarType + " to " + scalarType);
+		}
+
+		this.scalarType = scalarType;
+	}
+
+	/**************************************************************************
+	** Apply
+	**************************************************************************/
+	
+	Object applyTo(Object value) {
+		
+		for (FunctionBase function : functions) {
+			value = function.applyTo(scalarType, value);
+		}
+		
+		return value;
 	}
 
 	
@@ -65,6 +92,8 @@ final class AdhocFunctions<
 		if (function == null) {
 			throw new IllegalArgumentException("function == null");
 		}
+
+		functions.add(function);
 	}
 
 	@SuppressWarnings("unchecked")
@@ -90,11 +119,16 @@ final class AdhocFunctions<
 	
 	@Override
 	public INTEGER_CLAUSE abs(IFunctionInteger<ENTITY> getter) {
+		
+		setScalarType(ScalarType.INTEGER);
+		
 		return onComparable(Function_Arithmetic_Abs.INSTANCE, getter);
 	}
 
 	@Override
 	public LONG_CLAUSE abs(IFunctionLong<ENTITY> getter) {
+		setScalarType(ScalarType.LONG);
+
 		return onComparable(Function_Arithmetic_Abs.INSTANCE, getter);
 	}
 
@@ -108,12 +142,14 @@ final class AdhocFunctions<
 
 	@Override
 	public INTEGER_CLAUSE sqrt(IFunctionInteger<ENTITY> getter) {
+		setScalarType(ScalarType.INTEGER);
 
 		return onComparable(Function_Arithmetic_Sqrt.INSTANCE, getter);
 	}
 
 	@Override
 	public LONG_CLAUSE sqrt(IFunctionLong<ENTITY> getter) {
+		setScalarType(ScalarType.LONG);
 
 		return onComparable(Function_Arithmetic_Sqrt.INSTANCE, getter);
 	}
@@ -138,6 +174,7 @@ final class AdhocFunctions<
 
 	@Override
 	public IAdhocFunctions_String<MODEL, RESULT, ENTITY, RET, STRING_CLAUSE> lower() {
+		setScalarType(ScalarType.STRING);
 		
 		add(Function_String_Lower.INSTANCE);
 		
@@ -146,13 +183,15 @@ final class AdhocFunctions<
 
 	@Override
 	public STRING_CLAUSE upper(StringFunction<ENTITY> getter) {
+		setScalarType(ScalarType.STRING);
 		
 		return onString(Function_String_Upper.INSTANCE, getter);
 	}
 
 	@Override
 	public IAdhocFunctions_String<MODEL, RESULT, ENTITY, RET, STRING_CLAUSE> upper() {
-		
+		setScalarType(ScalarType.STRING);
+
 		add(Function_String_Upper.INSTANCE);
 		
 		return this;
@@ -160,12 +199,14 @@ final class AdhocFunctions<
 
 	@Override
 	public STRING_CLAUSE trim(StringFunction<ENTITY> getter) {
+		setScalarType(ScalarType.STRING);
 
 		return onString(Function_String_Trim.INSTANCE, getter);
 	}
 
 	@Override
 	public IAdhocFunctions_String<MODEL, RESULT, ENTITY, RET, STRING_CLAUSE> trim() {
+		setScalarType(ScalarType.STRING);
 		
 		add(Function_String_Trim.INSTANCE);
 		
