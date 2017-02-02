@@ -279,7 +279,7 @@ abstract class AdhocQuery_Named<MODEL, RESULT>
 	}
 
 	@Override
-	public EClauseOperator getRootConditionOperator(AdhocQuery_Named<MODEL, RESULT> query, int conditionIdx) {
+	public final EClauseOperator getRootConditionOperator(AdhocQuery_Named<MODEL, RESULT> query, int conditionIdx) {
 		return conditions.operators[conditionIdx];
 	}
 
@@ -289,28 +289,28 @@ abstract class AdhocQuery_Named<MODEL, RESULT>
 	}
 	
 	@Override
-	public int getRootConditionNumFunctions(AdhocQuery_Named<MODEL, RESULT> query, int conditionIdx) {
+	public final int getRootConditionNumFunctions(AdhocQuery_Named<MODEL, RESULT> query, int conditionIdx) {
 		throw new UnsupportedOperationException("TODO");
 	}
 
 	@Override
-	public FunctionBase getRootConditionFunction(AdhocQuery_Named<MODEL, RESULT> query, int conditionIdx, int functionIdx) {
+	public final FunctionBase getRootConditionFunction(AdhocQuery_Named<MODEL, RESULT> query, int conditionIdx, int functionIdx) {
 		throw new UnsupportedOperationException("TODO");
 	}
 
 	
 	@Override
-	public List<FunctionBase> getRootConditionFunctions(AdhocQuery_Named<MODEL, RESULT> query, int conditionIdx) {
+	public final List<FunctionBase> getRootConditionFunctions(AdhocQuery_Named<MODEL, RESULT> query, int conditionIdx) {
 		throw new UnsupportedOperationException("TODO");
 	}
 
 	@Override
-	public Method getForDebugRootConditionLhsMethod(AdhocQuery_Named<MODEL, RESULT> query, int conditionIdx) {
+	public final Method getForDebugRootConditionLhsMethod(AdhocQuery_Named<MODEL, RESULT> query, int conditionIdx) {
 		return getForDebugConditionLhsMethod(query, 0, new int[] { conditionIdx });
 	}
 
 	@Override
-	public String getForDebugRootConditionValue(AdhocQuery_Named<MODEL, RESULT> query, int conditionIdx) {
+	public final String getForDebugRootConditionValue(AdhocQuery_Named<MODEL, RESULT> query, int conditionIdx) {
 		return getForDebugConditionValue(query, 0, new int[] { conditionIdx });
 	}
 
@@ -371,40 +371,38 @@ abstract class AdhocQuery_Named<MODEL, RESULT>
 		return conditions == null ? -1 : conditions.getMaxDepth();
 	}
 
-	
-	
 	@Override
-	public int getConditionNumFunctions(AdhocQuery_Named<MODEL, RESULT> query, int level, int[] conditionIndices) {
+	public final int getConditionNumFunctions(AdhocQuery_Named<MODEL, RESULT> query, int level, int[] conditionIndices) {
 		throw new UnsupportedOperationException("TODO");
 	}
 
 	@Override
-	public FunctionBase getConditionFunction(AdhocQuery_Named<MODEL, RESULT> query, int level, int[] conditionIndices, int functionIdx) {
+	public final FunctionBase getConditionFunction(AdhocQuery_Named<MODEL, RESULT> query, int level, int[] conditionIndices, int functionIdx) {
 		throw new UnsupportedOperationException("TODO");
 	}
 
 	@Override
-	public List<FunctionBase> getConditionFunctions(AdhocQuery_Named<MODEL, RESULT> query, int level, int[] conditionIndices) {
+	public final List<FunctionBase> getConditionFunctions(AdhocQuery_Named<MODEL, RESULT> query, int level, int[] conditionIndices) {
 		throw new UnsupportedOperationException("TODO");
 	}
 
 	
 	@Override
-	public Method getForDebugConditionLhsMethod(AdhocQuery_Named<MODEL, RESULT> query, int level, int[] conditionIndices) {
+	public final Method getForDebugConditionLhsMethod(AdhocQuery_Named<MODEL, RESULT> query, int level, int[] conditionIndices) {
 		return conditions.getForDebugConditionLhsMethod(level, conditionIndices, getForDebugSourceClasses());
 	}
 
 	@Override
-	public String getForDebugConditionValue(AdhocQuery_Named<MODEL, RESULT> query, int level, int[] conditionIndices) {
+	public final String getForDebugConditionValue(AdhocQuery_Named<MODEL, RESULT> query, int level, int[] conditionIndices) {
 		return conditions.getForDebugConditionValue(level, conditionIndices).toString();
 	}
 	
 	@Override
-	public int getEntityResultSourceIdx(AdhocQuery_Named<MODEL, RESULT> query) {
+	public final int getEntityResultSourceIdx(AdhocQuery_Named<MODEL, RESULT> query) {
 		throw new UnsupportedOperationException("TODO");
 	}
 
-	private Class<?> [] getForDebugSourceClasses() {
+	private final Class<?> [] getForDebugSourceClasses() {
 		
 		final Class<?> [] ret = new Class<?>[numSources];
 		
