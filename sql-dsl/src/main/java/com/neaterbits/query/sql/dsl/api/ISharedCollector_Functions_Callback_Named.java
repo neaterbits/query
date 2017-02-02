@@ -1,10 +1,7 @@
 package com.neaterbits.query.sql.dsl.api;
 
-import java.util.function.Function;
 
-interface ISharedCollector_Functions_Callback_Named<MODEL, RESULT, RET extends ISharedLogical_Base<MODEL, RESULT>> {
+interface ISharedCollector_Functions_Callback_Named<MODEL, RESULT, RET extends ISharedLogical_Base<MODEL, RESULT>>
+	extends ISharedFunctions_Callback_Named<MODEL, RESULT, RET, CollectedFunctions>{
 
-	ISharedCondition_Comparable_Common_Base<MODEL, RESULT, Comparable<?>, RET> onComparable(CollectedFunctions functions, Function<?, ? extends Comparable<?>> getter);
-	
-	ISharedCondition_Comparable_String_Base<MODEL, RESULT, RET> onString(CollectedFunctions functions, StringFunction<?> getter);
 }

@@ -15,19 +15,20 @@ abstract class AdhocConditionsStateMachine<MODEL, RESULT, CONDITIONS extends Adh
 	private EAdhocConditionsState state;
 
 
-	abstract void intAddConditionToArray(Function<?, ?> function);
+	abstract void intAddConditionToArray(AdhocFunctions<MODEL, RESULT, ?, ?, ?, ?> functions, Function<?, ?> function);
 
 	abstract void intAddSub(CONDITIONS sub);
 	
 	abstract void intAddOperator(EClauseOperator operator, Object value, int sourceIdx);
 
 	abstract void intMoveLastToSubAndAddSub(CONDITIONS sub);
-	
+
 	abstract boolean hasSubConditions();
 	
 	abstract CONDITIONS createConditions(int level);
 	
 	abstract int getLevel();
+	
 	
 
 	AdhocConditionsStateMachine() {
@@ -86,14 +87,22 @@ abstract class AdhocConditionsStateMachine<MODEL, RESULT, CONDITIONS extends Adh
 	}
 	
 	final <QUERY extends AdhocQuery_Named<MODEL, RESULT>>
-			CONDITIONS intAddCondition(ConditionsType conditionsType, Function<?, ?> function, Consumer<?> nestedBuilder) {
+			CONDITIONS addCondition(
+					ConditionsType conditionsType,
+					AdhocFunctions<MODEL, RESULT, ?, ?, ?, ?> functions,
+					Function<?, ?> getter,
+					Consumer<?> nestedBuilder) {
 
-		if (function == null && nestedBuilder == null) {
-			throw new IllegalArgumentException("function == null && nested == null");
+		if (getter == null && nestedBuilder == null) {
+			throw new IllegalArgumentException("getter == null && nested == null");
 		}
 
-		if (function != null && nestedBuilder != null) {
-			throw new IllegalArgumentException("function != null && nested != null");
+		if (getter != null && nestedBuilder != null) {
+			throw new IllegalArgumentException("getter != null && nested != null");
+		}
+		
+		if (functions != null && nestedBuilder != null) {
+			throw new IllegalArgumentException("Should never have both nested and functions");
 		}
 		
 
@@ -170,7 +179,7 @@ abstract class AdhocConditionsStateMachine<MODEL, RESULT, CONDITIONS extends Adh
 				final CONDITIONS sub = createConditions(level + 1);
 
 				// Remove last conditions and move to new sub OR-condition ?
-				sub.intSplitIntoSubOrs(getThis(), function, nestedBuilder);
+				sub.intSplitIntoSubOrs(getThis(), functions, getter, nestedBuilder);
 				added = true;
 				
 				ret = sub;
@@ -188,9 +197,9 @@ abstract class AdhocConditionsStateMachine<MODEL, RESULT, CONDITIONS extends Adh
 		}
 
 		if (!added) {
-			if (function != null) {
-				// If function, just call subclass to add to subclass specific storage (may be multiple implementations for trying to optimize for allocations) 
-				intAddConditionToArray(function);
+			if (getter != null) {
+				// If function, just call subclass to add to subclass specific storage (may be multiple implementations for trying to optimize for allocations)
+				intAddConditionToArray(functions, getter);
 			}
 			else if (nestedBuilder != null) {
 				// add nested as sub-condition in current
@@ -262,7 +271,8 @@ abstract class AdhocConditionsStateMachine<MODEL, RESULT, CONDITIONS extends Adh
 	// may take either a function, or nested-info if the first or at outer level was a nested one
 	final void intSplitIntoSubOrs(
 			CONDITIONS c,
-			Function<?, ?> function,
+			AdhocFunctions<MODEL, RESULT, ?, ?, ?, ?> functions,
+			Function<?, ?> getter,
 			Consumer<?> nestedBuilder) {
 
 		final EAdhocConditionsState newState;
@@ -274,8 +284,9 @@ abstract class AdhocConditionsStateMachine<MODEL, RESULT, CONDITIONS extends Adh
 			// Move last from c to this
 			c.intMoveLastToSubAndAddSub(getThis());
 			
-			if (function != null) {
-				intAddConditionToArray(function);
+			if (getter != null) {
+				
+				intAddConditionToArray(functions, getter);
 			}
 			else if (nestedBuilder != null) {
 				
@@ -310,7 +321,7 @@ abstract class AdhocConditionsStateMachine<MODEL, RESULT, CONDITIONS extends Adh
 	}
 	*/
 
-	final void addFromOuterWhere(Function<?, ?> whereFunction) {
+	final void addFromOuterWhere(AdhocFunctions<MODEL, RESULT, ?, ?, ?, ?> functions, Function<?, ?> whereGetter) {
 
 		final EAdhocConditionsState newState;
 
@@ -331,7 +342,7 @@ abstract class AdhocConditionsStateMachine<MODEL, RESULT, CONDITIONS extends Adh
 			throw new IllegalStateException("Unexpected state " + state);
 		}
 
-		intAddConditionToArray(whereFunction);
+		intAddConditionToArray(functions, whereGetter);
 
 		setState(newState, -1, null, null);
 	}
@@ -355,9 +366,11 @@ abstract class AdhocConditionsStateMachine<MODEL, RESULT, CONDITIONS extends Adh
 
 	@SuppressWarnings("unchecked")
 	final CONDITIONS mergeJoinComparison(
-			Function<?, ?> whereFunction, EClauseOperator whereOperator, Object whereValue,
+			AdhocFunctions<MODEL, RESULT, ?, ?, ?, ?> whereFunctions,
+			Function<?, ?> whereGetter, EClauseOperator whereOperator, Object whereValue,
 			int sourceIdx,
-			ConditionsType type, Function<?, ?> nextFunction) {
+			ConditionsType type,
+			AdhocFunctions<MODEL, RESULT, ?, ?, ?, ?> nextFunctions, Function<?, ?> nextGetter) {
 
 		final CONDITIONS ret;
 		
@@ -371,7 +384,7 @@ abstract class AdhocConditionsStateMachine<MODEL, RESULT, CONDITIONS extends Adh
 				// Too complex to add OR at this level so upper state becomes AND
 				final CONDITIONS subConditions = createConditions(1);
 	
-				subConditions.addWhereAndFunctionFromJoin(whereFunction, whereOperator, whereValue, sourceIdx, type, nextFunction);
+				subConditions.addWhereAndFunctionFromJoin(whereFunctions, whereGetter, whereOperator, whereValue, sourceIdx, type, nextFunctions, nextGetter);
 	
 				intAddSub(subConditions);
 	
@@ -380,7 +393,7 @@ abstract class AdhocConditionsStateMachine<MODEL, RESULT, CONDITIONS extends Adh
 
 			case AND:
 				// Add to existing conditions
-				addWhereAndFunctionFromJoin(whereFunction, whereOperator, whereValue, sourceIdx, type, nextFunction);
+				addWhereAndFunctionFromJoin(whereFunctions, whereGetter, whereOperator, whereValue, sourceIdx, type, nextFunctions, nextGetter);
 	
 				ret = (CONDITIONS)this;
 				break;
@@ -400,12 +413,15 @@ abstract class AdhocConditionsStateMachine<MODEL, RESULT, CONDITIONS extends Adh
 	}
 	
 	final void addWhereAndFunctionFromJoin(
-			Function<?, ?> whereFunction, EClauseOperator whereOperator, Object whereValue,
+			AdhocFunctions<MODEL, RESULT, ?, ?, ?, ?> whereFunctions,
+			Function<?, ?> whereGetter, EClauseOperator whereOperator, Object whereValue,
 			int sourceIdx,
-			ConditionsType type, Function<?, ?> nextFunction) {
+			ConditionsType type,
+			
+			AdhocFunctions<MODEL, RESULT, ?, ?, ?, ?> nextFunctions, Function<?, ?> nextGetter) {
 
-		if (whereFunction == null) {
-			throw new IllegalArgumentException("whereFunction == null");
+		if (whereGetter == null) {
+			throw new IllegalArgumentException("whereGetter == null");
 		}
 		
 		if (whereOperator == null) {
@@ -417,8 +433,8 @@ abstract class AdhocConditionsStateMachine<MODEL, RESULT, CONDITIONS extends Adh
 		}
 		
 		
-		if (nextFunction == null) {
-			throw new IllegalArgumentException("nextFunction == null");
+		if (nextGetter == null) {
+			throw new IllegalArgumentException("nextGetter == null");
 		}
 
 		if (type == null) {
@@ -451,15 +467,21 @@ abstract class AdhocConditionsStateMachine<MODEL, RESULT, CONDITIONS extends Adh
 		
 		setState(newState, sourceIdx, whereOperator, whereValue);
 		
-		intAddConditionToArray(whereFunction);
+		intAddConditionToArray(whereFunctions, whereGetter);
 		addOperator(whereOperator, whereValue, sourceIdx);
 		
-		intAddConditionToArray(nextFunction);
+		intAddConditionToArray(nextFunctions, nextGetter);
 	}
 
-	final void addWhereFromJoin(Function<?, ?> whereFunction, EClauseOperator whereOperator, Object whereValue, int sourceIdx) {
-		if (whereFunction == null) {
-			throw new IllegalArgumentException("whereFunction == null");
+	final void addWhereFromJoin(
+						AdhocFunctions<MODEL, RESULT, ?, ?, ?, ?> whereFunctions,
+						Function<?, ?> whereGetter,
+						EClauseOperator whereOperator,
+						Object whereValue,
+						int sourceIdx) {
+
+		if (whereGetter == null) {
+			throw new IllegalArgumentException("whereGetter == null");
 		}
 
 		if (whereOperator == null) {
@@ -484,7 +506,7 @@ abstract class AdhocConditionsStateMachine<MODEL, RESULT, CONDITIONS extends Adh
 
 		setState(newState, sourceIdx, whereOperator, whereValue);
 
-		intAddConditionToArray(whereFunction);
+		intAddConditionToArray(whereFunctions, whereGetter);
 		addOperator(whereOperator, whereValue, sourceIdx);
 	}
 }

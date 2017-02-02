@@ -45,7 +45,7 @@ abstract class AdhocQuery_Named_Singular<MODEL> extends AdhocQuery_Named<MODEL, 
 	@SuppressWarnings({"unchecked", "rawtypes"})
 	public ISharedCondition_Comparable_String_Value<MODEL, Object, IAdhocLogical_And_Or_Singular<MODEL, Object, Object>> where(StringFunction<Object> func) {
 
-		addWhere(func);
+		addWhereGetter(func);
 		
 		return (ISharedCondition_Comparable_String_Value)this;
 	}

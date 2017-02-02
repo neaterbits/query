@@ -181,6 +181,28 @@ public class SQLAdhocAPITest {
 	}
 
 	@Test
+	public void testAdhocListFunction() {
+		final List<Foo> fooList = new ArrayList<>();
+
+		final Foo foo1 = new Foo(1, 2, new BigDecimal("3.1"));
+		final Foo foo2 = new Foo(3, 1, new BigDecimal("4.8"));
+		final Foo foo3 = new Foo(2, 7, new BigDecimal("16"));
+
+		fooList.add(foo1);
+		fooList.add(foo2);
+		fooList.add(foo3);
+
+		final List<Foo> foos = Adhoc.list(fooList)
+							.where(Foo::getDecimal).isLessThan(new BigDecimal("3.5"))
+								.or().sqrt(Foo::getValue).isEqualTo(new BigDecimal("4"))
+								.get();
+
+		assertThat(foos.size()).isEqualTo(2);
+		assertThat(foos.contains(foo1)).isTrue();
+		assertThat(foos.contains(foo2)).isTrue();
+	}
+	
+	@Test
 	public void testAdhocListOrWithNestedAnd() {
 		final List<Foo> fooList = new ArrayList<>();
 

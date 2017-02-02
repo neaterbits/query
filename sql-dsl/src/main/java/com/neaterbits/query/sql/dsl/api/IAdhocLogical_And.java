@@ -19,7 +19,16 @@ public interface IAdhocLogical_And<MODEL, RESULT, ENTITY>
 	ISharedCondition_Comparable_String_Value<MODEL, RESULT, IAdhocLogical_And<MODEL, RESULT, ENTITY>>
 			and(StringFunction<ENTITY> getter);
 
-	//IAdhocAndClauses<MODEL, RESULT, ENTITY> andNest(Consumer<IAdhocNestedOr<MODEL, RESULT, ENTITY>> orBuilder);
+    IAdhocFunctions_Initial<
+    		MODEL,
+    		RESULT,
+    		ENTITY,
+    		IAdhocLogical_And<MODEL, RESULT, ENTITY>,
+    		
+    		ISharedCondition_Comparable_Common_Value<MODEL, RESULT, BigDecimal, IAdhocLogical_And<MODEL, RESULT, ENTITY>>,
+    		ISharedCondition_Comparable_String_Value<MODEL, RESULT, IAdhocLogical_And<MODEL, RESULT, ENTITY>>
+    		
+    		> and();
 	
 	IAdhocLogical_And<MODEL, RESULT, ENTITY> andNest(Consumer<IAdhocLogical_Or<MODEL, RESULT, ENTITY>> orBuilder);
 

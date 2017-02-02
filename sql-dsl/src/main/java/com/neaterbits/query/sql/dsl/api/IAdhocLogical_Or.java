@@ -20,6 +20,18 @@ public interface IAdhocLogical_Or<MODEL, RESULT, ENTITY>
 	ISharedCondition_Comparable_String_Value<MODEL, RESULT, IAdhocLogical_Or<MODEL, RESULT, ENTITY>>
 			or(StringFunction<ENTITY> getter);
 
+    IAdhocFunctions_Initial<
+			MODEL,
+			RESULT,
+			ENTITY,
+			IAdhocLogical_Or<MODEL, RESULT, ENTITY>,
+			
+			ISharedCondition_Comparable_Common_Value<MODEL, RESULT, BigDecimal, IAdhocLogical_Or<MODEL, RESULT, ENTITY>>,
+			ISharedCondition_Comparable_String_Value<MODEL, RESULT, IAdhocLogical_Or<MODEL, RESULT, ENTITY>>
+	
+    	> or();
+    
+	
 	//IAdhocAndClauses<MODEL, RESULT, ENTITY> orNest(Consumer<IAdhocNestedAnd<MODEL, RESULT, ENTITY>> andBuilder);
 	IAdhocLogical_And<MODEL, RESULT, ENTITY> orNest(Consumer<IAdhocLogical_And<MODEL, RESULT, ENTITY>> andBuilder);
 }

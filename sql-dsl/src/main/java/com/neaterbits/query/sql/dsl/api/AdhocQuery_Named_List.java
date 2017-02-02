@@ -59,10 +59,16 @@ final class AdhocQuery_Named_List<MODEL>
 	public ISharedCondition_Comparable_String_Value<MODEL, List<Object>, IAdhocLogical_And_Or_List<MODEL, Object, List<Object>>>
 					where(StringFunction<Object> func) {
 
-		return (ISharedCondition_Comparable_String_Value)addWhere(func);
+		return (ISharedCondition_Comparable_String_Value)addWhereGetter(func);
 	}
 	
+	@Override
+	public IAdhocFunctions_Initial<MODEL, List<Object>, Object, IAdhocLogical_And_Or<MODEL, List<Object>, Object>, ISharedCondition_Comparable_Common_Value<MODEL, List<Object>, ? extends Comparable<?>, IAdhocLogical_And_Or<MODEL, List<Object>, Object>>, ISharedCondition_Comparable_String_Value<MODEL, List<Object>, IAdhocLogical_And_Or<MODEL, List<Object>, Object>>>
 	
+			where() {
+		
+		return addWhere();
+	}
 
 	/**************************************************************************
 	 ** IAdhocJoin

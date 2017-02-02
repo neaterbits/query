@@ -17,9 +17,9 @@ abstract class AdhocQuery_Named<MODEL, RESULT>
 
 			IAdhocEnd_Base<MODEL, RESULT>,
 			
-			
 			ISharedLogical_Base<MODEL, RESULT>,
 			
+			IAdhocFunctions_Callback<MODEL, RESULT, ISharedLogical_Base<MODEL,RESULT>>,
 			
 			ExecuteQueryPOJOsInput {
 
@@ -456,13 +456,23 @@ abstract class AdhocQuery_Named<MODEL, RESULT>
 	/**************************************************************************
 	** IAdhocWhere
 	**************************************************************************/
-	final AdhocConditions<MODEL, RESULT, ?> addWhere(Function<?, ?> function) {
+	final AdhocConditions<MODEL, RESULT, ?> addWhereGetter(Function<?, ?> getter) {
+		
+		return addWhere(null, getter);
+		
+	}
+	
+	private AdhocConditions<MODEL, RESULT, ?> addWhere(AdhocFunctions<MODEL, RESULT, ?, ?, ?, ?> functions, Function<?, ?> getter) {
+
+		if (getter == null) {
+			throw new IllegalArgumentException("getter == null");
+		}
 
 		if (this.conditions == null) {
 			this.conditions = createConditions(0);
 		}
 
-		this.conditions.addFromOuterWhere(function);
+		this.conditions.addFromOuterWhere(functions, getter);
 
 		return conditions;
 	}
@@ -473,7 +483,7 @@ abstract class AdhocQuery_Named<MODEL, RESULT>
 		ISharedCondition_Comparable_Common_Value // <MODEL, Object, R, AND_OR>
 				addComparativeWhere(Function<?, ?> function) {
 		
-		return (ISharedCondition_Comparable_Common_Value)addWhere(function);
+		return (ISharedCondition_Comparable_Common_Value)addWhereGetter(function);
 	}
 	
 
@@ -484,16 +494,48 @@ abstract class AdhocQuery_Named<MODEL, RESULT>
 	
 			addConditionWhere(Function<?, ?> function) {
 
-		return (ISharedCondition_Equality_Value)addWhere(function);
+		return (ISharedCondition_Equality_Value)addWhereGetter(function);
+	}
+	
+	final 
+		<
+		ENTITY,
+		RET extends ISharedLogical_Base<MODEL, RESULT>,
+
+		COMPARABLE_CLAUSE extends ISharedCondition_Comparable_Common_Value<MODEL, RESULT, ?, RET>,
+		STRING_CLAUSE extends ISharedCondition_Comparable_String_Value<MODEL, RESULT, RET>>
+	
+	IAdhocFunctions_Initial<MODEL, RESULT, ENTITY, RET, COMPARABLE_CLAUSE, STRING_CLAUSE> addWhere() {
+		
+		return new AdhocFunctions<MODEL, RESULT, ENTITY, RET, COMPARABLE_CLAUSE, STRING_CLAUSE>(ConditionsType.SINGLE, this);
+		
+	}
+	
+	
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	@Override
+	public final ISharedCondition_Comparable_Common_Base<MODEL, RESULT, Comparable<?>, ISharedLogical_Base<MODEL, RESULT>> onComparable(
+			AdhocFunctions<MODEL, RESULT, ?, ?, ?, ?> functions, Function<?, ? extends Comparable<?>> getter) {
+		return (ISharedCondition_Comparable_Common_Base)addWhere(functions, getter);
 	}
 
-	
+	@Override
+	public final ISharedCondition_Comparable_String_Base<MODEL, RESULT, ISharedLogical_Base<MODEL, RESULT>> onString(
+			AdhocFunctions<MODEL, RESULT, ?, ?, ?, ?> functions, StringFunction<?> getter) {
+		return addWhere(functions, getter);
+	}
+
+
+
+
+
 	/**************************************************************************
 	** IAdhocJoin
 	**************************************************************************/
 
 	private static final int JOIN_INCR = 2;
 	
+	// Compile the sub-join into an AdhocJoin
 	private <LEFT, RIGHT> AdhocJoin<MODEL, RESULT> compileJoin(EJoinType joinType, Collection<RIGHT> joinTo, Consumer<IAdhocJoinSub<MODEL, RESULT, LEFT, RIGHT>> consumer) {
 
 		if (joinTo == null) {
@@ -526,7 +568,7 @@ abstract class AdhocQuery_Named<MODEL, RESULT>
 			throw new IllegalStateException("curSourceIdx != leftSourceIdx");
 		}
 		
-		// Anything added within join should be added to rightSourceId
+		// Anything added within join should be added to rightSourceIdx
 		setCurSource(rightSourceIdx);
 		
 		// Run join statement, this may recurse if there are nested joins
@@ -553,7 +595,7 @@ abstract class AdhocQuery_Named<MODEL, RESULT>
 			}
 
 			// Add where-clause from the join onto root query
-			conditions.addWhereFromJoin(join.whereCondition, join.whereOperator, join.whereValue, join.rightSourceIdx);
+			conditions.addWhereFromJoin(join.whereFunctions, join.whereGetter, join.whereOperator, join.whereValue, join.rightSourceIdx);
 			break;
 
 		case AND:
@@ -578,17 +620,17 @@ abstract class AdhocQuery_Named<MODEL, RESULT>
 	}
 
 	AdhocConditions<MODEL, RESULT, ?> mergeJoinComparison(
-			Function<?, ?> whereFunction, EClauseOperator whereOperator, Object whereValue,
+			AdhocFunctions<MODEL, RESULT, ?, ?, ?, ?> whereFunctions,
+			Function<?, ?> whereGetter, EClauseOperator whereOperator, Object whereValue,
 			int sourceIdx,
-			ConditionsType type, Function<?, ?> nextFunction) {
-		
-		final AdhocConditions<MODEL, RESULT, ?> ret;
+			ConditionsType type,
+			AdhocFunctions<MODEL, RESULT, ?, ?, ?, ?> nextFunctions, Function<?, ?> nextGetter) {
 		
 		if (this.conditions == null) {
 			this.conditions = createConditions(0);
 		}
 		
-		return conditions.mergeJoinComparison(whereFunction, whereOperator, whereValue, sourceIdx, type, nextFunction);
+		return conditions.mergeJoinComparison(whereFunctions, whereGetter, whereOperator, whereValue, sourceIdx, type, nextFunctions, nextGetter);
 	}
 }
 

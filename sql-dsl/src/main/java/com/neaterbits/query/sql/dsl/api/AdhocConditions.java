@@ -18,7 +18,9 @@ abstract class AdhocConditions<MODEL, RESULT, QUERY extends AdhocQuery_Named<MOD
 
 		IAdhocLogical_And<MODEL, RESULT, Object>,
 		IAdhocLogical_Or<MODEL, RESULT, Object>,
-		IAdhocLogical_And_Or<MODEL, RESULT, Object> {
+		IAdhocLogical_And_Or<MODEL, RESULT, Object>,
+		
+		IAdhocFunctions_Callback<MODEL, RESULT, AdhocConditions<MODEL, RESULT, QUERY>>{
 
 	private static final int INITIAL_CONDITIONS = 10;
 
@@ -32,6 +34,9 @@ abstract class AdhocConditions<MODEL, RESULT, QUERY extends AdhocQuery_Named<MOD
 	private Object [] values;
 
 	private AdhocConditions<MODEL, RESULT, QUERY> [] subConditions;
+
+	// functions for conditions
+	private AdhocFunctions<MODEL, RESULT, ?, ?, ?, ?> [] conditionFunctions;
 
 	int numConditions;
 
@@ -48,6 +53,8 @@ abstract class AdhocConditions<MODEL, RESULT, QUERY extends AdhocQuery_Named<MOD
 		this.operators 				= new EClauseOperator[INITIAL_CONDITIONS];
 		this.values 				= new Object		 [INITIAL_CONDITIONS];
 		this.conditionToSourceIdx 	= new int			 [INITIAL_CONDITIONS];
+		
+		this.conditionFunctions = null;
 	}
 
 	@Override
@@ -141,12 +148,12 @@ abstract class AdhocConditions<MODEL, RESULT, QUERY extends AdhocQuery_Named<MOD
 	
 	@SuppressWarnings({"unchecked", "rawtypes"})
 	private <T extends Comparable<?>> ISharedCondition_Comparable_Common_Value<MODEL, RESULT, T, IAdhocLogical_And<MODEL, RESULT, Object>>  addAndClause(Function<?, T> getter) {
-		return (ISharedCondition_Comparable_Common_Value)intAddCondition(ConditionsType.AND, getter, null);
+		return (ISharedCondition_Comparable_Common_Value)addCondition(ConditionsType.AND, null, getter, null);
 	}
 
 	@SuppressWarnings({"unchecked", "rawtypes"})
 	private <T extends Comparable<?>> ISharedCondition_Comparable_Common_Value<MODEL, RESULT, T, IAdhocLogical_Or<MODEL, RESULT, Object>>  addOrClause(Function<?, T> getter) {
-		return (ISharedCondition_Comparable_Common_Value)intAddCondition(ConditionsType.OR, getter, null);
+		return (ISharedCondition_Comparable_Common_Value)addCondition(ConditionsType.OR, null, getter, null);
 	}
 	
 	@Override
@@ -167,9 +174,25 @@ abstract class AdhocConditions<MODEL, RESULT, QUERY extends AdhocQuery_Named<MOD
 	@Override
 	@SuppressWarnings({"unchecked", "rawtypes"})
 	public final ISharedCondition_Comparable_String_Value<MODEL, RESULT, IAdhocLogical_Or<MODEL, RESULT, Object>> or(StringFunction<Object> getter) {
-		return (ISharedCondition_Comparable_String_Value)intAddCondition(ConditionsType.OR, getter, null);
+		return (ISharedCondition_Comparable_String_Value)addCondition(ConditionsType.OR, null, getter, null);
 	}
 
+	@Override
+	public final IAdhocFunctions_Initial<
+			MODEL,
+			RESULT,
+			Object,
+			IAdhocLogical_Or<MODEL, RESULT, Object>,
+			ISharedCondition_Comparable_Common_Value<MODEL, RESULT, BigDecimal, IAdhocLogical_Or<MODEL, RESULT, Object>>,
+			ISharedCondition_Comparable_String_Value<MODEL, RESULT, IAdhocLogical_Or<MODEL, RESULT, Object>>>
+	
+	
+		or() {
+		
+		
+		return new AdhocFunctions<>(ConditionsType.OR, this);
+	}
+	
 	@Override
 	public final IAdhocLogical_And<MODEL, RESULT, Object> orNest(Consumer<IAdhocLogical_And<MODEL, RESULT, Object>> andBuilder) {
 
@@ -177,7 +200,7 @@ abstract class AdhocConditions<MODEL, RESULT, QUERY extends AdhocQuery_Named<MOD
 			throw new IllegalArgumentException("andBuilder == null");
 		}
 
-		intAddCondition(ConditionsType.OR, null, andBuilder);
+		addCondition(ConditionsType.OR, null, null, andBuilder);
 
 		return this;
 	}
@@ -201,7 +224,23 @@ abstract class AdhocConditions<MODEL, RESULT, QUERY extends AdhocQuery_Named<MOD
 	@Override
 	@SuppressWarnings({"unchecked", "rawtypes"})
 	public final ISharedCondition_Comparable_String_Value<MODEL, RESULT, IAdhocLogical_And<MODEL, RESULT, Object>> and(StringFunction<Object> getter) {
-		return (ISharedCondition_Comparable_String_Value)intAddCondition(ConditionsType.AND, getter, null);
+		return (ISharedCondition_Comparable_String_Value)addCondition(ConditionsType.AND, null, getter, null);
+	}
+	
+	@Override
+	public final IAdhocFunctions_Initial<
+			MODEL,
+			RESULT,
+			Object,
+			IAdhocLogical_And<MODEL, RESULT, Object>,
+			ISharedCondition_Comparable_Common_Value<MODEL, RESULT, BigDecimal, IAdhocLogical_And<MODEL, RESULT, Object>>,
+			ISharedCondition_Comparable_String_Value<MODEL, RESULT, IAdhocLogical_And<MODEL, RESULT, Object>>>
+	
+	
+		and() {
+		
+		
+		return new AdhocFunctions<>(ConditionsType.AND, this);
 	}
 
 	@Override
@@ -210,23 +249,84 @@ abstract class AdhocConditions<MODEL, RESULT, QUERY extends AdhocQuery_Named<MOD
 			throw new IllegalArgumentException("orBuilder == null");
 		}
 
-		intAddCondition(ConditionsType.AND, null, orBuilder);
+		addCondition(ConditionsType.AND, null, null, orBuilder);
 
 		return this;
 	}
 
+
+	/**************************************************************************
+	** IAdhoc functions callback
+	**************************************************************************/
+
+	@Override
+	@SuppressWarnings({"unchecked", "rawtypes"})
+	public ISharedCondition_Comparable_Common_Base<MODEL, RESULT, Comparable<?>, AdhocConditions<MODEL, RESULT, QUERY>> onComparable(
+			AdhocFunctions<MODEL, RESULT, ?, ?, ?, ?> functions, Function<?, ? extends Comparable<?>> getter) {
+
+		
+		addCondition(functions.getConditionsType(), functions, getter, null);
+
+		return (ISharedCondition_Comparable_Common_Base)this;
+	}
+
+	@Override
+	@SuppressWarnings({"unchecked", "rawtypes"})
+	public ISharedCondition_Comparable_String_Base<MODEL, RESULT, AdhocConditions<MODEL, RESULT, QUERY>>
+	
+			onString(AdhocFunctions<MODEL, RESULT, ?, ?, ?, ?> functions, StringFunction<?> getter) {
+
+		addCondition(functions.getConditionsType(), functions, getter, null);
+
+		return (ISharedCondition_Comparable_String_Base)this;
+	}
+	
+	@SuppressWarnings("unchecked")
+	private void addFunctions(AdhocFunctions<MODEL, RESULT, ?, ?, ?, ?> functions) {
+		
+		if (functions == null) {
+			throw new IllegalArgumentException("functions == null");
+		}
+
+		// allocate condition functions if not yet allocated
+		if (this.conditionFunctions == null) {
+			this.conditionFunctions = new AdhocFunctions[conditions.length];
+		}
+		
+		// verify that can add to current
+		checkSizes(numConditions);
+		
+		
+		if (conditionFunctions[numConditions] != null) {
+			throw new IllegalStateException("condition functions already set at " + numConditions);
+		}
+		
+		// AdhocFunctions contain all functions 
+		conditionFunctions[numConditions] = functions;
+	}
+	
+	
+	/**************************************************************************
+	** Overrides
+	**************************************************************************/
+	
 	@Override
 	final int getLevel() {
 		return conditionsLevel;
 	}
 
+
+	
 	@Override
-	final void intAddConditionToArray(Function<?, ?> function) {
+	final void intAddConditionToArray(AdhocFunctions<MODEL, RESULT, ?, ?, ?, ?> functions, Function<?, ?> function) {
 		checkSizes(numConditions);
 
+		addFunctions(functions);
+		
 		this.conditions[numConditions] = function;
 	}
 
+	
 	@Override
 	final void intAddOperator(EClauseOperator operator, Object value, int sourceIdx) {
 		
@@ -372,6 +472,10 @@ abstract class AdhocConditions<MODEL, RESULT, QUERY extends AdhocQuery_Named<MOD
 	AdhocConditions<MODEL, RESULT, QUERY> createConditions(int level) {
 		return (AdhocConditions)query.createConditions(level);
 	}
+	
+	/**************************************************************************
+	** Utilities
+	**************************************************************************/
 
 	final ConditionsType getConditionsType(int level, int [] conditionIndices) {
 		
@@ -509,6 +613,11 @@ abstract class AdhocConditions<MODEL, RESULT, QUERY extends AdhocQuery_Named<MOD
 			if (subConditions != null) {
 				this.subConditions = Arrays.copyOf(subConditions, subConditions.length * 2);
 			}
+			
+			if (conditionFunctions != null) {
+				this.conditionFunctions = Arrays.copyOf(conditionFunctions, conditionFunctions.length * 2);
+			}
+			
 		}
 		else if (num > conditions.length) {
 			throw new IllegalStateException("Never to be called with larger than num");

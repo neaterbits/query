@@ -30,7 +30,7 @@ final class AdhocQuery_Named_Set<MODEL>
 
 
 	/**************************************************************************
-	 ** IAdhocWhereOrJoinList
+	 ** IAdhocWhereOrJoinSet
 	 **************************************************************************/
 
 	@SuppressWarnings("unchecked")
@@ -55,9 +55,13 @@ final class AdhocQuery_Named_Set<MODEL>
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public ISharedCondition_Comparable_String_Value<MODEL, Set<Object>, IAdhocLogical_And_Or_Set<MODEL, Object, Set<Object>>> where(StringFunction<Object> func) {
 
-		return (ISharedCondition_Comparable_String_Value)addWhere(func);
+		return (ISharedCondition_Comparable_String_Value)addWhereGetter(func);
 	}
-
+	
+	@Override
+	public IAdhocFunctions_Initial<MODEL, Set<Object>, Object, IAdhocLogical_And_Or<MODEL, Set<Object>, Object>, ISharedCondition_Comparable_Common_Value<MODEL, Set<Object>, ? extends Comparable<?>, IAdhocLogical_And_Or<MODEL, Set<Object>, Object>>, ISharedCondition_Comparable_String_Value<MODEL, Set<Object>, IAdhocLogical_And_Or<MODEL, Set<Object>, Object>>> where() {
+		return addWhere();
+	}
 
 	/**************************************************************************
 	 ** IAdhocJoin

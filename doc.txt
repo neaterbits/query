@@ -531,6 +531,7 @@ W - parametere
 
  - subselects
  - fikse nøsta and/or slik at ikke har mulighet for .compile()
+ - fikse adhoc join-and/or slik at ikke har mulighet for .compile()
 
  - group by?
  - having?
