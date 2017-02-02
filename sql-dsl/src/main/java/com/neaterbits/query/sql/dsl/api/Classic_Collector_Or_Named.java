@@ -61,7 +61,8 @@ final class Classic_Collector_Or_Named<MODEL, RESULT> extends Classic_Collector_
 				MODEL,
 				RESULT,
 				IClassicOrClausesNamed<MODEL, RESULT>,
-				ISharedCondition_Comparable_Common_Base<MODEL, RESULT, ?, IClassicOrClausesNamed<MODEL, RESULT>>,
+				ISharedCondition_Comparable_Common_All<MODEL, RESULT, Integer, IClassicOrClausesNamed<MODEL, RESULT>>,
+				ISharedCondition_Comparable_Common_All<MODEL, RESULT, Long, IClassicOrClausesNamed<MODEL, RESULT>>,
 				ISharedCondition_Comparable_String_All<MODEL, RESULT, IClassicOrClausesNamed<MODEL, RESULT>>
 			>
 			or() {

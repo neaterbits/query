@@ -26,7 +26,8 @@ public interface IAdhocLogical_Or<MODEL, RESULT, ENTITY>
 			ENTITY,
 			IAdhocLogical_Or<MODEL, RESULT, ENTITY>,
 			
-			ISharedCondition_Comparable_Common_Value<MODEL, RESULT, BigDecimal, IAdhocLogical_Or<MODEL, RESULT, ENTITY>>,
+			ISharedCondition_Comparable_Common_Value<MODEL, RESULT, Integer, IAdhocLogical_Or<MODEL, RESULT, ENTITY>>,
+			ISharedCondition_Comparable_Common_Value<MODEL, RESULT, Long, IAdhocLogical_Or<MODEL, RESULT, ENTITY>>,
 			ISharedCondition_Comparable_String_Value<MODEL, RESULT, IAdhocLogical_Or<MODEL, RESULT, ENTITY>>
 	
     	> or();

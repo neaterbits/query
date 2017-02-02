@@ -16,7 +16,8 @@ public interface IClassicWhereClauseBuilderNamed<MODEL, RESULT>
 			RESULT,
 			IClassicAndOrLogicalClausesNamed<MODEL, RESULT>,
 			
-			ISharedCondition_Comparable_Common_All_Compilable<MODEL, RESULT, ? extends Comparable<?>, IClassicAndOrLogicalClausesNamed<MODEL, RESULT>>,
+			ISharedCondition_Comparable_Common_All_Compilable<MODEL, RESULT, Integer, IClassicAndOrLogicalClausesNamed<MODEL, RESULT>>,
+			ISharedCondition_Comparable_Common_All_Compilable<MODEL, RESULT, Long, IClassicAndOrLogicalClausesNamed<MODEL, RESULT>>,
 			ISharedCondition_Comparable_String_All_Compilable<MODEL, RESULT, IClassicAndOrLogicalClausesNamed<MODEL, RESULT>>> {
 
 }

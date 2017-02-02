@@ -10,12 +10,13 @@ final class AdhocFunctions<
 		ENTITY,
 		RET extends ISharedLogical_Base<MODEL, RESULT>,
 
-		COMPARABLE_CLAUSE extends ISharedCondition_Comparable_Common_Value<MODEL, RESULT, ?, RET>,
+		INTEGER_CLAUSE extends ISharedCondition_Comparable_Common_Value<MODEL, RESULT, Integer, RET>,
+		LONG_CLAUSE extends ISharedCondition_Comparable_Common_Value<MODEL, RESULT, Long, RET>,
 		STRING_CLAUSE extends ISharedCondition_Comparable_String_Value<MODEL, RESULT, RET>>
 
-	implements IAdhocFunctions_Arithmetic<MODEL, RESULT, ENTITY, RET, COMPARABLE_CLAUSE>,
+	implements IAdhocFunctions_Arithmetic<MODEL, RESULT, ENTITY, RET, INTEGER_CLAUSE, LONG_CLAUSE>,
 			   IAdhocFunctions_String<MODEL, RESULT, ENTITY, RET, STRING_CLAUSE>,
-			   IAdhocFunctions_Initial<MODEL, RESULT, ENTITY, RET, COMPARABLE_CLAUSE, STRING_CLAUSE> {
+			   IAdhocFunctions_Initial<MODEL, RESULT, ENTITY, RET, INTEGER_CLAUSE, LONG_CLAUSE, STRING_CLAUSE> {
 
 				  
 				   
@@ -67,10 +68,13 @@ final class AdhocFunctions<
 	}
 
 	@SuppressWarnings("unchecked")
-	private COMPARABLE_CLAUSE onComparable(Function_Arithmetic f, Function<?, ? extends Comparable<?>> getter) {
+	private <VALUE extends Comparable<?>,
+			CLAUSE extends ISharedCondition_Comparable_Common_Value<MODEL, RESULT, VALUE, RET>>
+	
+			CLAUSE onComparable(Function_Arithmetic f, Function<?, ? extends Comparable<?>> getter) {
 		add(f);
 		
-		return (COMPARABLE_CLAUSE)listener.onComparable(this, getter);
+		return (CLAUSE)listener.onComparable(this, getter);
 	}
 		
 	@SuppressWarnings("unchecked")
@@ -85,17 +89,17 @@ final class AdhocFunctions<
 	**************************************************************************/
 	
 	@Override
-	public COMPARABLE_CLAUSE abs(IFunctionInteger<ENTITY> getter) {
+	public INTEGER_CLAUSE abs(IFunctionInteger<ENTITY> getter) {
 		return onComparable(Function_Arithmetic_Abs.INSTANCE, getter);
 	}
 
 	@Override
-	public COMPARABLE_CLAUSE abs(IFunctionLong<ENTITY> getter) {
+	public LONG_CLAUSE abs(IFunctionLong<ENTITY> getter) {
 		return onComparable(Function_Arithmetic_Abs.INSTANCE, getter);
 	}
 
 	@Override
-	public IAdhocFunctions_Arithmetic<MODEL, RESULT, ENTITY, RET, COMPARABLE_CLAUSE> abs() {
+	public IAdhocFunctions_Arithmetic<MODEL, RESULT, ENTITY, RET, INTEGER_CLAUSE, LONG_CLAUSE> abs() {
 		
 		add(Function_Arithmetic_Abs.INSTANCE);
 		
@@ -103,19 +107,19 @@ final class AdhocFunctions<
 	}
 
 	@Override
-	public COMPARABLE_CLAUSE sqrt(IFunctionInteger<ENTITY> getter) {
+	public INTEGER_CLAUSE sqrt(IFunctionInteger<ENTITY> getter) {
 
 		return onComparable(Function_Arithmetic_Sqrt.INSTANCE, getter);
 	}
 
 	@Override
-	public COMPARABLE_CLAUSE sqrt(IFunctionLong<ENTITY> getter) {
+	public LONG_CLAUSE sqrt(IFunctionLong<ENTITY> getter) {
 
 		return onComparable(Function_Arithmetic_Sqrt.INSTANCE, getter);
 	}
 
 	@Override
-	public IAdhocFunctions_Arithmetic<MODEL, RESULT, ENTITY, RET, COMPARABLE_CLAUSE> sqrt() {
+	public IAdhocFunctions_Arithmetic<MODEL, RESULT, ENTITY, RET, INTEGER_CLAUSE, LONG_CLAUSE> sqrt() {
 
 		add(Function_Arithmetic_Sqrt.INSTANCE);
 

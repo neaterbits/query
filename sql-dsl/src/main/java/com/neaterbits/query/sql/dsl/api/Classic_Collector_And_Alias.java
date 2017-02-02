@@ -72,7 +72,8 @@ final class Classic_Collector_And_Alias<MODEL, RESULT> extends Classic_Collector
 				MODEL,
 				RESULT,
 				IClassicAndClausesAlias<MODEL, RESULT>,
-				ISharedCondition_Comparable_Common_Base<MODEL, RESULT, ?, IClassicAndClausesAlias<MODEL, RESULT>>,
+				ISharedCondition_Comparable_Common_All<MODEL, RESULT, Integer, IClassicAndClausesAlias<MODEL, RESULT>>,
+				ISharedCondition_Comparable_Common_All<MODEL, RESULT, Long, IClassicAndClausesAlias<MODEL, RESULT>>,
 				ISharedCondition_Comparable_String_All<MODEL, RESULT, IClassicAndClausesAlias<MODEL, RESULT>>> and() {
 
 		@SuppressWarnings({"unchecked", "rawtypes"})
@@ -96,6 +97,4 @@ final class Classic_Collector_And_Alias<MODEL, RESULT> extends Classic_Collector
 
 		return new Collector_SharedFunctions_Alias<>(cb);
 	}
-	
-	
 }

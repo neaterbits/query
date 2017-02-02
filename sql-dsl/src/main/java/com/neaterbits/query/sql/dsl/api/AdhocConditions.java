@@ -36,7 +36,7 @@ abstract class AdhocConditions<MODEL, RESULT, QUERY extends AdhocQuery_Named<MOD
 	private AdhocConditions<MODEL, RESULT, QUERY> [] subConditions;
 
 	// functions for conditions
-	private AdhocFunctions<MODEL, RESULT, ?, ?, ?, ?> [] conditionFunctions;
+	private AdhocFunctions<MODEL, RESULT, ?, ?, ?, ?, ?> [] conditionFunctions;
 
 	int numConditions;
 
@@ -183,7 +183,8 @@ abstract class AdhocConditions<MODEL, RESULT, QUERY extends AdhocQuery_Named<MOD
 			RESULT,
 			Object,
 			IAdhocLogical_Or<MODEL, RESULT, Object>,
-			ISharedCondition_Comparable_Common_Value<MODEL, RESULT, BigDecimal, IAdhocLogical_Or<MODEL, RESULT, Object>>,
+			ISharedCondition_Comparable_Common_Value<MODEL, RESULT, Integer, IAdhocLogical_Or<MODEL, RESULT, Object>>,
+			ISharedCondition_Comparable_Common_Value<MODEL, RESULT, Long, IAdhocLogical_Or<MODEL, RESULT, Object>>,
 			ISharedCondition_Comparable_String_Value<MODEL, RESULT, IAdhocLogical_Or<MODEL, RESULT, Object>>>
 	
 	
@@ -233,7 +234,8 @@ abstract class AdhocConditions<MODEL, RESULT, QUERY extends AdhocQuery_Named<MOD
 			RESULT,
 			Object,
 			IAdhocLogical_And<MODEL, RESULT, Object>,
-			ISharedCondition_Comparable_Common_Value<MODEL, RESULT, BigDecimal, IAdhocLogical_And<MODEL, RESULT, Object>>,
+			ISharedCondition_Comparable_Common_Value<MODEL, RESULT, Integer, IAdhocLogical_And<MODEL, RESULT, Object>>,
+			ISharedCondition_Comparable_Common_Value<MODEL, RESULT, Long, IAdhocLogical_And<MODEL, RESULT, Object>>,
 			ISharedCondition_Comparable_String_Value<MODEL, RESULT, IAdhocLogical_And<MODEL, RESULT, Object>>>
 	
 	
@@ -262,7 +264,7 @@ abstract class AdhocConditions<MODEL, RESULT, QUERY extends AdhocQuery_Named<MOD
 	@Override
 	@SuppressWarnings({"unchecked", "rawtypes"})
 	public ISharedCondition_Comparable_Common_Base<MODEL, RESULT, Comparable<?>, AdhocConditions<MODEL, RESULT, QUERY>> onComparable(
-			AdhocFunctions<MODEL, RESULT, ?, ?, ?, ?> functions, Function<?, ? extends Comparable<?>> getter) {
+			AdhocFunctions<MODEL, RESULT, ?, ?, ?, ?, ?> functions, Function<?, ? extends Comparable<?>> getter) {
 
 		
 		addCondition(functions.getConditionsType(), functions, getter, null);
@@ -274,7 +276,7 @@ abstract class AdhocConditions<MODEL, RESULT, QUERY extends AdhocQuery_Named<MOD
 	@SuppressWarnings({"unchecked", "rawtypes"})
 	public ISharedCondition_Comparable_String_Base<MODEL, RESULT, AdhocConditions<MODEL, RESULT, QUERY>>
 	
-			onString(AdhocFunctions<MODEL, RESULT, ?, ?, ?, ?> functions, StringFunction<?> getter) {
+			onString(AdhocFunctions<MODEL, RESULT, ?, ?, ?, ?, ?> functions, StringFunction<?> getter) {
 
 		addCondition(functions.getConditionsType(), functions, getter, null);
 
@@ -296,7 +298,7 @@ abstract class AdhocConditions<MODEL, RESULT, QUERY extends AdhocQuery_Named<MOD
 	
 	@SuppressWarnings("unchecked")
 	@Override
-	final void intAddConditionToArray(AdhocFunctions<MODEL, RESULT, ?, ?, ?, ?> functions, Function<?, ?> function) {
+	final void intAddConditionToArray(AdhocFunctions<MODEL, RESULT, ?, ?, ?, ?, ?> functions, Function<?, ?> function) {
 
 		if (functions != null) {
 			// allocate condition functions if not yet allocated

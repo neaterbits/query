@@ -59,7 +59,15 @@ final class AdhocQuery_Named_Set<MODEL>
 	}
 	
 	@Override
-	public IAdhocFunctions_Initial<MODEL, Set<Object>, Object, IAdhocLogical_And_Or<MODEL, Set<Object>, Object>, ISharedCondition_Comparable_Common_Value<MODEL, Set<Object>, ? extends Comparable<?>, IAdhocLogical_And_Or<MODEL, Set<Object>, Object>>, ISharedCondition_Comparable_String_Value<MODEL, Set<Object>, IAdhocLogical_And_Or<MODEL, Set<Object>, Object>>> where() {
+	public IAdhocFunctions_Initial<
+			MODEL,
+			Set<Object>,
+			Object,
+			IAdhocLogical_And_Or<MODEL, Set<Object>, Object>,
+			ISharedCondition_Comparable_Common_Value<MODEL, Set<Object>, Integer, IAdhocLogical_And_Or<MODEL, Set<Object>, Object>>,
+					ISharedCondition_Comparable_Common_Value<MODEL, Set<Object>, Long, IAdhocLogical_And_Or<MODEL, Set<Object>, Object>>,
+			ISharedCondition_Comparable_String_Value<MODEL, Set<Object>, IAdhocLogical_And_Or<MODEL, Set<Object>, Object>>> where() {
+		
 		return addWhere();
 	}
 

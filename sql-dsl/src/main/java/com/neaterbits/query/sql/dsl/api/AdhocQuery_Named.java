@@ -460,7 +460,7 @@ abstract class AdhocQuery_Named<MODEL, RESULT>
 		
 	}
 	
-	private AdhocConditions<MODEL, RESULT, ?> addWhere(AdhocFunctions<MODEL, RESULT, ?, ?, ?, ?> functions, Function<?, ?> getter) {
+	private AdhocConditions<MODEL, RESULT, ?> addWhere(AdhocFunctions<MODEL, RESULT, ?, ?, ?, ?, ?> functions, Function<?, ?> getter) {
 
 		if (getter == null) {
 			throw new IllegalArgumentException("getter == null");
@@ -500,12 +500,13 @@ abstract class AdhocQuery_Named<MODEL, RESULT>
 		ENTITY,
 		RET extends ISharedLogical_Base<MODEL, RESULT>,
 
-		COMPARABLE_CLAUSE extends ISharedCondition_Comparable_Common_Value<MODEL, RESULT, ?, RET>,
+		INTEGER_CLAUSE extends ISharedCondition_Comparable_Common_Value<MODEL, RESULT, Integer, RET>,
+		LONG_CLAUSE extends ISharedCondition_Comparable_Common_Value<MODEL, RESULT, Long, RET>,
 		STRING_CLAUSE extends ISharedCondition_Comparable_String_Value<MODEL, RESULT, RET>>
 	
-	IAdhocFunctions_Initial<MODEL, RESULT, ENTITY, RET, COMPARABLE_CLAUSE, STRING_CLAUSE> addWhere() {
+	IAdhocFunctions_Initial<MODEL, RESULT, ENTITY, RET, INTEGER_CLAUSE, LONG_CLAUSE, STRING_CLAUSE> addWhere() {
 		
-		return new AdhocFunctions<MODEL, RESULT, ENTITY, RET, COMPARABLE_CLAUSE, STRING_CLAUSE>(ConditionsType.SINGLE, this);
+		return new AdhocFunctions<MODEL, RESULT, ENTITY, RET, INTEGER_CLAUSE, LONG_CLAUSE, STRING_CLAUSE>(ConditionsType.SINGLE, this);
 		
 	}
 	
@@ -513,13 +514,13 @@ abstract class AdhocQuery_Named<MODEL, RESULT>
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Override
 	public final ISharedCondition_Comparable_Common_Base<MODEL, RESULT, Comparable<?>, ISharedLogical_Base<MODEL, RESULT>> onComparable(
-			AdhocFunctions<MODEL, RESULT, ?, ?, ?, ?> functions, Function<?, ? extends Comparable<?>> getter) {
+			AdhocFunctions<MODEL, RESULT, ?, ?, ?, ?, ?> functions, Function<?, ? extends Comparable<?>> getter) {
 		return (ISharedCondition_Comparable_Common_Base)addWhere(functions, getter);
 	}
 
 	@Override
 	public final ISharedCondition_Comparable_String_Base<MODEL, RESULT, ISharedLogical_Base<MODEL, RESULT>> onString(
-			AdhocFunctions<MODEL, RESULT, ?, ?, ?, ?> functions, StringFunction<?> getter) {
+			AdhocFunctions<MODEL, RESULT, ?, ?, ?, ?, ?> functions, StringFunction<?> getter) {
 		return addWhere(functions, getter);
 	}
 
@@ -618,11 +619,11 @@ abstract class AdhocQuery_Named<MODEL, RESULT>
 	}
 
 	AdhocConditions<MODEL, RESULT, ?> mergeJoinComparison(
-			AdhocFunctions<MODEL, RESULT, ?, ?, ?, ?> whereFunctions,
+			AdhocFunctions<MODEL, RESULT, ?, ?, ?, ?, ?> whereFunctions,
 			Function<?, ?> whereGetter, EClauseOperator whereOperator, Object whereValue,
 			int sourceIdx,
 			ConditionsType type,
-			AdhocFunctions<MODEL, RESULT, ?, ?, ?, ?> nextFunctions, Function<?, ?> nextGetter) {
+			AdhocFunctions<MODEL, RESULT, ?, ?, ?, ?, ?> nextFunctions, Function<?, ?> nextGetter) {
 		
 		if (this.conditions == null) {
 			this.conditions = createConditions(0);

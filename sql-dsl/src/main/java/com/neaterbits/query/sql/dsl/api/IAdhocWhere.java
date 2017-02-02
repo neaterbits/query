@@ -20,7 +20,8 @@ public interface IAdhocWhere<MODEL, RESULT, ENTITY, AND_OR_CLAUSES extends IAdho
 			ENTITY,
 			IAdhocLogical_And_Or<MODEL, RESULT, ENTITY>,
 			
-			ISharedCondition_Comparable_Common_Value<MODEL, RESULT, ? extends Comparable<?>, IAdhocLogical_And_Or<MODEL, RESULT, ENTITY>>,
+			ISharedCondition_Comparable_Common_Value<MODEL, RESULT, Integer, IAdhocLogical_And_Or<MODEL, RESULT, ENTITY>>,
+			ISharedCondition_Comparable_Common_Value<MODEL, RESULT, Long, IAdhocLogical_And_Or<MODEL, RESULT, ENTITY>>,
 			ISharedCondition_Comparable_String_Value<MODEL, RESULT, IAdhocLogical_And_Or<MODEL, RESULT, ENTITY>>
 	
 		> where();

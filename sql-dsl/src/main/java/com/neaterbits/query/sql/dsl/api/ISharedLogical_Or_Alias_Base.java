@@ -17,7 +17,8 @@ public interface ISharedLogical_Or_Alias_Base<
 		MODEL,
 		RESULT,
 		OR_CLAUSES,
-		ISharedCondition_Comparable_Common_Base<MODEL, RESULT, ?, OR_CLAUSES>,
+		ISharedCondition_Comparable_Common_All<MODEL, RESULT, Integer, OR_CLAUSES>,
+		ISharedCondition_Comparable_Common_All<MODEL, RESULT, Long, OR_CLAUSES>,
 		ISharedCondition_Comparable_String_All<MODEL, RESULT, OR_CLAUSES>>
 	
 		or();

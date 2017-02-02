@@ -25,7 +25,8 @@ public interface IAdhocLogical_And<MODEL, RESULT, ENTITY>
     		ENTITY,
     		IAdhocLogical_And<MODEL, RESULT, ENTITY>,
     		
-    		ISharedCondition_Comparable_Common_Value<MODEL, RESULT, BigDecimal, IAdhocLogical_And<MODEL, RESULT, ENTITY>>,
+    		ISharedCondition_Comparable_Common_Value<MODEL, RESULT, Integer, IAdhocLogical_And<MODEL, RESULT, ENTITY>>,
+    		ISharedCondition_Comparable_Common_Value<MODEL, RESULT, Long, IAdhocLogical_And<MODEL, RESULT, ENTITY>>,
     		ISharedCondition_Comparable_String_Value<MODEL, RESULT, IAdhocLogical_And<MODEL, RESULT, ENTITY>>
     		
     		> and();

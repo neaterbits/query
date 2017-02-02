@@ -19,7 +19,7 @@ public interface ISharedLogical_Or_Named_Base<
 
     <T> STRING_CLAUSE or(StringFunction<T> getter);
     
-    ISharedFunctions_Named_Initial<MODEL, RESULT, OR_CLAUSES, ISharedCondition_Comparable_Common_Base<MODEL, RESULT, ?, OR_CLAUSES>, STRING_CLAUSE> or();
+    ISharedFunctions_Named_Initial<MODEL, RESULT, OR_CLAUSES, INTEGER_CLAUSE, LONG_CLAUSE, STRING_CLAUSE> or();
     
 	OR_CLAUSES orNest(ISharedNestedAndConsumerNamed<MODEL, RESULT, NESTED_AND_CLAUSES> andBuilder);
     

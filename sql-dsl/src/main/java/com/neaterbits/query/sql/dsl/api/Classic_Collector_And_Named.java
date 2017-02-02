@@ -81,7 +81,8 @@ final class Classic_Collector_And_Named<MODEL, RESULT>
 				MODEL,
 				RESULT,
 				IClassicAndClausesNamed<MODEL, RESULT>,
-				ISharedCondition_Comparable_Common_Base<MODEL, RESULT, ?, IClassicAndClausesNamed<MODEL, RESULT>>,
+				ISharedCondition_Comparable_Common_All<MODEL, RESULT, Integer, IClassicAndClausesNamed<MODEL, RESULT>>,
+				ISharedCondition_Comparable_Common_All<MODEL, RESULT, Long, IClassicAndClausesNamed<MODEL, RESULT>>,
 				ISharedCondition_Comparable_String_All<MODEL, RESULT, IClassicAndClausesNamed<MODEL, RESULT>>
 			>
 			and() {

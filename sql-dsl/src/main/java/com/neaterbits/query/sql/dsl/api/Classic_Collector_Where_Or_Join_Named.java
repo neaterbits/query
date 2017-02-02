@@ -122,8 +122,9 @@ final class Classic_Collector_Where_Or_Join_Named<MODEL, RESULT>
 			MODEL, RESULT,
 			IClassicAndOrLogicalClausesNamed<MODEL, RESULT>,
 			
-			ISharedCondition_Comparable_Common_All_Compilable<MODEL, RESULT, ? extends Comparable<?>, IClassicAndOrLogicalClausesNamed<MODEL, RESULT>>,
-					ISharedCondition_Comparable_String_All_Compilable<MODEL, RESULT, IClassicAndOrLogicalClausesNamed<MODEL, RESULT>>> 
+			ISharedCondition_Comparable_Common_All_Compilable<MODEL, RESULT, Integer, IClassicAndOrLogicalClausesNamed<MODEL, RESULT>>,
+			ISharedCondition_Comparable_Common_All_Compilable<MODEL, RESULT, Long, IClassicAndOrLogicalClausesNamed<MODEL, RESULT>>,
+			ISharedCondition_Comparable_String_All_Compilable<MODEL, RESULT, IClassicAndOrLogicalClausesNamed<MODEL, RESULT>>> 
 	
 			where() {
 		
@@ -172,7 +173,8 @@ final class Classic_Collector_Where_Or_Join_Named<MODEL, RESULT>
 		MODEL,
 		RESULT,
 		IClassicAndClausesNamed<MODEL, RESULT>,
-		ISharedCondition_Comparable_Common_Base<MODEL, RESULT, ?, IClassicAndClausesNamed<MODEL, RESULT>>,
+		ISharedCondition_Comparable_Common_All<MODEL, RESULT, Integer, IClassicAndClausesNamed<MODEL, RESULT>>,
+		ISharedCondition_Comparable_Common_All<MODEL, RESULT, Long, IClassicAndClausesNamed<MODEL, RESULT>>,
 		ISharedCondition_Comparable_String_All<MODEL, RESULT, IClassicAndClausesNamed<MODEL, RESULT>>
 	>
 		and() {
@@ -225,7 +227,8 @@ final class Classic_Collector_Where_Or_Join_Named<MODEL, RESULT>
 		MODEL,
 		RESULT,
 		IClassicOrClausesNamed<MODEL, RESULT>,
-		ISharedCondition_Comparable_Common_Base<MODEL, RESULT, ?, IClassicOrClausesNamed<MODEL, RESULT>>,
+		ISharedCondition_Comparable_Common_All<MODEL, RESULT, Integer, IClassicOrClausesNamed<MODEL, RESULT>>,
+		ISharedCondition_Comparable_Common_All<MODEL, RESULT, Long, IClassicOrClausesNamed<MODEL, RESULT>>,
 		ISharedCondition_Comparable_String_All<MODEL, RESULT, IClassicOrClausesNamed<MODEL, RESULT>>
 	>
 		or() {

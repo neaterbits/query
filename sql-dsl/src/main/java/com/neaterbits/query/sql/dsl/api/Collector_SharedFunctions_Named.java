@@ -18,12 +18,13 @@ final class Collector_SharedFunctions_Named<
 				RESULT,
 				RET extends ISharedLogical_Base<MODEL, RESULT>,
 	
-				COMPARABLE_CLAUSE extends ISharedCondition_Comparable_Common_Base<MODEL, RESULT, ?, RET>,
+				INTEGER_CLAUSE extends ISharedCondition_Comparable_Common_Base<MODEL, RESULT, Integer, RET>,
+				LONG_CLAUSE extends ISharedCondition_Comparable_Common_Base<MODEL, RESULT, Long, RET>,
 				STRING_CLAUSE extends ISharedCondition_Comparable_String_Base<MODEL, RESULT, RET>>
 
 	extends Collector_SharedFunctions_Base<MODEL, RESULT, RET>
 
-	implements ISharedFunctions_Named_Initial<MODEL, RESULT, RET, COMPARABLE_CLAUSE, STRING_CLAUSE> {
+	implements ISharedFunctions_Named_Initial<MODEL, RESULT, RET, INTEGER_CLAUSE, LONG_CLAUSE, STRING_CLAUSE> {
 		
 	private final ISharedCollector_Functions_Callback_Named<MODEL, RESULT, RET> func;
 	
@@ -38,11 +39,15 @@ final class Collector_SharedFunctions_Named<
 	}
 	
 	
-	private ISharedCondition_Comparable_Common_Base<MODEL, RESULT, Comparable<?>, RET> addAndReturnComparable(Function_Arithmetic function, Function<?, ? extends Comparable<?>> getter) {
+	@SuppressWarnings("unchecked")
+	private
+		<VAL extends Comparable<?>, CLAUSE extends ISharedCondition_Comparable_Common_Base<MODEL, RESULT, VAL, RET>>
+	
+		 CLAUSE addAndReturnComparable(Function_Arithmetic function, Function<?, ? extends Comparable<?>> getter) {
 		
 		add(function);
 
-		return func.onComparable(collect(), getter);
+		return (CLAUSE)func.onComparable(collect(), getter);
 	}
 	
 	private ISharedCondition_Comparable_String_Base<MODEL, RESULT, RET> addAndReturnString(Function_String function, StringFunction<?> getter) {
@@ -93,38 +98,34 @@ final class Collector_SharedFunctions_Named<
 	}
 
 	@Override
-	@SuppressWarnings("unchecked")
-	public <T> COMPARABLE_CLAUSE abs(IFunctionInteger<T> getter) {
-		return (COMPARABLE_CLAUSE)addAndReturnComparable(Function_Arithmetic_Abs.INSTANCE, getter);
+	public <T> INTEGER_CLAUSE abs(IFunctionInteger<T> getter) {
+		return addAndReturnComparable(Function_Arithmetic_Abs.INSTANCE, getter);
 	}
 
 	@Override
-	@SuppressWarnings("unchecked")
-	public <T> COMPARABLE_CLAUSE abs(IFunctionLong<T> getter) {
-		return (COMPARABLE_CLAUSE)addAndReturnComparable(Function_Arithmetic_Abs.INSTANCE, getter);
+	public <T> LONG_CLAUSE abs(IFunctionLong<T> getter) {
+		return addAndReturnComparable(Function_Arithmetic_Abs.INSTANCE, getter);
 	}
 
 	@Override
-	public ISharedFunctions_Named_Arithmetic<MODEL, RESULT, RET, COMPARABLE_CLAUSE> abs() {
+	public ISharedFunctions_Named_Arithmetic<MODEL, RESULT, RET, INTEGER_CLAUSE, LONG_CLAUSE> abs() {
 		add(Function_Arithmetic_Abs.INSTANCE);
 
 		return this;
 	}
 
 	@Override
-	@SuppressWarnings("unchecked")
-	public <T> COMPARABLE_CLAUSE sqrt(IFunctionInteger<T> getter) {
-		return (COMPARABLE_CLAUSE)addAndReturnComparable(Function_Arithmetic_Sqrt.INSTANCE, getter);
+	public <T> INTEGER_CLAUSE sqrt(IFunctionInteger<T> getter) {
+		return addAndReturnComparable(Function_Arithmetic_Sqrt.INSTANCE, getter);
 	}
 
 	@Override
-	@SuppressWarnings("unchecked")
-	public <T> COMPARABLE_CLAUSE sqrt(IFunctionLong<T> getter) {
-		return (COMPARABLE_CLAUSE)addAndReturnComparable(Function_Arithmetic_Sqrt.INSTANCE, getter);
+	public <T> LONG_CLAUSE sqrt(IFunctionLong<T> getter) {
+		return addAndReturnComparable(Function_Arithmetic_Sqrt.INSTANCE, getter);
 	}
 
 	@Override
-	public ISharedFunctions_Named_Arithmetic<MODEL, RESULT, RET, COMPARABLE_CLAUSE> sqrt() {
+	public ISharedFunctions_Named_Arithmetic<MODEL, RESULT, RET, INTEGER_CLAUSE, LONG_CLAUSE> sqrt() {
 		add(Function_Arithmetic_Sqrt.INSTANCE);
 
 		return this;

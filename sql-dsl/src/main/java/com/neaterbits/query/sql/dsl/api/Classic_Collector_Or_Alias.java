@@ -67,7 +67,13 @@ final class Classic_Collector_Or_Alias<MODEL, RESULT>
 	}
 
 	@Override
-	public ISharedFunctions_Alias_Initial<MODEL, RESULT, IClassicOrClausesAlias<MODEL, RESULT>, ISharedCondition_Comparable_Common_Base<MODEL, RESULT, ?, IClassicOrClausesAlias<MODEL, RESULT>>, ISharedCondition_Comparable_String_All<MODEL, RESULT, IClassicOrClausesAlias<MODEL, RESULT>>> or() {
+	public ISharedFunctions_Alias_Initial<
+			MODEL,
+			RESULT,
+			IClassicOrClausesAlias<MODEL, RESULT>,
+			ISharedCondition_Comparable_Common_All<MODEL, RESULT, Integer, IClassicOrClausesAlias<MODEL, RESULT>>,
+			ISharedCondition_Comparable_Common_All<MODEL, RESULT, Long, IClassicOrClausesAlias<MODEL, RESULT>>,
+			ISharedCondition_Comparable_String_All<MODEL, RESULT, IClassicOrClausesAlias<MODEL, RESULT>>> or() {
 
 		@SuppressWarnings({ "unchecked", "rawtypes" })
 		final ISharedCollector_Functions_Callback_Alias<MODEL, RESULT, IClassicOrClausesAlias<MODEL, RESULT>> cb = new ISharedCollector_Functions_Callback_Alias<MODEL, RESULT, IClassicOrClausesAlias<MODEL, RESULT>>() {

@@ -52,7 +52,7 @@ final class AdhocJoin<MODEL, RESULT>
 	Function whereGetter;
 	EClauseOperator whereOperator;
 	Object whereValue;
-	AdhocFunctions<MODEL, RESULT, ?, ?, ?, ?> whereFunctions;
+	AdhocFunctions<MODEL, RESULT, ?, ?, ?, ?, ?> whereFunctions;
 
 	
 	
@@ -203,7 +203,8 @@ final class AdhocJoin<MODEL, RESULT>
 			RESULT,
 			Object,
 			IAdhocLogical_And_Or<MODEL, RESULT, Object>,
-			ISharedCondition_Comparable_Common_Value<MODEL, RESULT, ? extends Comparable<?>, IAdhocLogical_And_Or<MODEL, RESULT, Object>>,
+			ISharedCondition_Comparable_Common_Value<MODEL, RESULT, Integer, IAdhocLogical_And_Or<MODEL, RESULT, Object>>,
+			ISharedCondition_Comparable_Common_Value<MODEL, RESULT, Long, IAdhocLogical_And_Or<MODEL, RESULT, Object>>,
 		    ISharedCondition_Comparable_String_Value<MODEL, RESULT, IAdhocLogical_And_Or<MODEL, RESULT, Object>>>
 	
 	
@@ -213,7 +214,8 @@ final class AdhocJoin<MODEL, RESULT>
 				MODEL, RESULT,
 				Object,
 				IAdhocLogical_And_Or<MODEL, RESULT, Object>,
-				ISharedCondition_Comparable_Common_Value<MODEL, RESULT, ? extends Comparable<?>, IAdhocLogical_And_Or<MODEL, RESULT, Object>>,
+				ISharedCondition_Comparable_Common_Value<MODEL, RESULT, Integer, IAdhocLogical_And_Or<MODEL, RESULT, Object>>,
+				ISharedCondition_Comparable_Common_Value<MODEL, RESULT, Long, IAdhocLogical_And_Or<MODEL, RESULT, Object>>,
 				ISharedCondition_Comparable_String_Value<MODEL, RESULT, IAdhocLogical_And_Or<MODEL, RESULT, Object>>>
 		
 		
@@ -338,7 +340,7 @@ final class AdhocJoin<MODEL, RESULT>
 	**************************************************************************/
 	
 	
-	private AdhocConditions<MODEL, RESULT, ?> addConditionInt(ConditionsType conditionsType, AdhocFunctions<MODEL, RESULT, ?, ?, ?, ?> nextFunctions, Function<?, ?> getter) {
+	private AdhocConditions<MODEL, RESULT, ?> addConditionInt(ConditionsType conditionsType, AdhocFunctions<MODEL, RESULT, ?, ?, ?, ?, ?> nextFunctions, Function<?, ?> getter) {
 		
 		if (this.conditionsType != ConditionsType.SINGLE) {
 			throw new IllegalStateException("Expected single conditions type " + conditionsType);
@@ -350,7 +352,7 @@ final class AdhocJoin<MODEL, RESULT>
 		return query.mergeJoinComparison(whereFunctions, whereGetter, whereOperator, whereValue, rightSourceIdx, conditionsType, nextFunctions, getter);
 	}
 
-	private AdhocConditions<MODEL, RESULT, ?> addConditionCollectedFunctions(ConditionsType conditionsType, AdhocFunctions<MODEL, RESULT, ?, ?, ?, ?> nextFunctions, Function<?, ?> getter) {
+	private AdhocConditions<MODEL, RESULT, ?> addConditionCollectedFunctions(ConditionsType conditionsType, AdhocFunctions<MODEL, RESULT, ?, ?, ?, ?, ?> nextFunctions, Function<?, ?> getter) {
 		
 		final State newState;
 		
@@ -426,7 +428,8 @@ final class AdhocJoin<MODEL, RESULT>
 		RESULT,
 		Object,
 		IAdhocLogical_Or<MODEL, RESULT, Object>,
-		ISharedCondition_Comparable_Common_Value<MODEL, RESULT, BigDecimal, IAdhocLogical_Or<MODEL, RESULT, Object>>,
+		ISharedCondition_Comparable_Common_Value<MODEL, RESULT, Integer, IAdhocLogical_Or<MODEL, RESULT, Object>>,
+		ISharedCondition_Comparable_Common_Value<MODEL, RESULT, Long, IAdhocLogical_Or<MODEL, RESULT, Object>>,
 		ISharedCondition_Comparable_String_Value<MODEL, RESULT, IAdhocLogical_Or<MODEL, RESULT, Object>>>
 	
 			or() {
@@ -438,7 +441,8 @@ final class AdhocJoin<MODEL, RESULT>
 				RESULT,
 				Object,
 				IAdhocLogical_Or<MODEL, RESULT, Object>,
-				ISharedCondition_Comparable_Common_Value<MODEL, RESULT, BigDecimal, IAdhocLogical_Or<MODEL, RESULT, Object>>,
+				ISharedCondition_Comparable_Common_Value<MODEL, RESULT, Integer, IAdhocLogical_Or<MODEL, RESULT, Object>>,
+				ISharedCondition_Comparable_Common_Value<MODEL, RESULT, Long, IAdhocLogical_Or<MODEL, RESULT, Object>>,
 				ISharedCondition_Comparable_String_Value<MODEL, RESULT, IAdhocLogical_Or<MODEL, RESULT, Object>>> functions;
 		
 		
@@ -501,7 +505,8 @@ final class AdhocJoin<MODEL, RESULT>
 		RESULT,
 		Object,
 		IAdhocLogical_And<MODEL, RESULT, Object>,
-		ISharedCondition_Comparable_Common_Value<MODEL, RESULT, BigDecimal, IAdhocLogical_And<MODEL, RESULT, Object>>,
+		ISharedCondition_Comparable_Common_Value<MODEL, RESULT, Integer, IAdhocLogical_And<MODEL, RESULT, Object>>,
+		ISharedCondition_Comparable_Common_Value<MODEL, RESULT, Long, IAdhocLogical_And<MODEL, RESULT, Object>>,
 		ISharedCondition_Comparable_String_Value<MODEL, RESULT, IAdhocLogical_And<MODEL, RESULT, Object>>>
 	
 			and() {
@@ -513,7 +518,8 @@ final class AdhocJoin<MODEL, RESULT>
 				RESULT,
 				Object,
 				IAdhocLogical_And<MODEL, RESULT, Object>,
-				ISharedCondition_Comparable_Common_Value<MODEL, RESULT, BigDecimal, IAdhocLogical_And<MODEL, RESULT, Object>>,
+				ISharedCondition_Comparable_Common_Value<MODEL, RESULT, Integer, IAdhocLogical_And<MODEL, RESULT, Object>>,
+				ISharedCondition_Comparable_Common_Value<MODEL, RESULT, Long, IAdhocLogical_And<MODEL, RESULT, Object>>,
 				ISharedCondition_Comparable_String_Value<MODEL, RESULT, IAdhocLogical_And<MODEL, RESULT, Object>>> functions;
 		
 		
@@ -547,7 +553,7 @@ final class AdhocJoin<MODEL, RESULT>
 	@Override
 	public ISharedCondition_Comparable_Common_Base<MODEL, RESULT, Comparable<?>, ISharedLogical_Base<MODEL, RESULT>>
 	
-		onComparable(AdhocFunctions<MODEL, RESULT, ?, ?, ?, ?> functions, Function<?, ? extends Comparable<?>> getter) {
+		onComparable(AdhocFunctions<MODEL, RESULT, ?, ?, ?, ?, ?> functions, Function<?, ? extends Comparable<?>> getter) {
 
 		addConditionCollectedFunctions(functions.getConditionsType(), functions, getter);
 		
@@ -556,7 +562,7 @@ final class AdhocJoin<MODEL, RESULT>
 
 	@Override
 	public ISharedCondition_Comparable_String_Base<MODEL, RESULT, ISharedLogical_Base<MODEL, RESULT>> onString(
-			AdhocFunctions<MODEL, RESULT, ?, ?, ?, ?> functions, StringFunction<?> getter) {
+			AdhocFunctions<MODEL, RESULT, ?, ?, ?, ?, ?> functions, StringFunction<?> getter) {
 
 		addConditionCollectedFunctions(functions.getConditionsType(), functions, getter);
 		

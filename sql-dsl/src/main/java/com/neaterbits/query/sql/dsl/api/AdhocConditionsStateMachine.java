@@ -15,7 +15,7 @@ abstract class AdhocConditionsStateMachine<MODEL, RESULT, CONDITIONS extends Adh
 	private EAdhocConditionsState state;
 
 
-	abstract void intAddConditionToArray(AdhocFunctions<MODEL, RESULT, ?, ?, ?, ?> functions, Function<?, ?> function);
+	abstract void intAddConditionToArray(AdhocFunctions<MODEL, RESULT, ?, ?, ?, ?, ?> functions, Function<?, ?> function);
 
 	abstract void intAddSub(CONDITIONS sub);
 	
@@ -89,7 +89,7 @@ abstract class AdhocConditionsStateMachine<MODEL, RESULT, CONDITIONS extends Adh
 	final <QUERY extends AdhocQuery_Named<MODEL, RESULT>>
 			CONDITIONS addCondition(
 					ConditionsType conditionsType,
-					AdhocFunctions<MODEL, RESULT, ?, ?, ?, ?> functions,
+					AdhocFunctions<MODEL, RESULT, ?, ?, ?, ?, ?> functions,
 					Function<?, ?> getter,
 					Consumer<?> nestedBuilder) {
 
@@ -271,7 +271,7 @@ abstract class AdhocConditionsStateMachine<MODEL, RESULT, CONDITIONS extends Adh
 	// may take either a function, or nested-info if the first or at outer level was a nested one
 	final void intSplitIntoSubOrs(
 			CONDITIONS c,
-			AdhocFunctions<MODEL, RESULT, ?, ?, ?, ?> functions,
+			AdhocFunctions<MODEL, RESULT, ?, ?, ?, ?, ?> functions,
 			Function<?, ?> getter,
 			Consumer<?> nestedBuilder) {
 
@@ -321,7 +321,7 @@ abstract class AdhocConditionsStateMachine<MODEL, RESULT, CONDITIONS extends Adh
 	}
 	*/
 
-	final void addFromOuterWhere(AdhocFunctions<MODEL, RESULT, ?, ?, ?, ?> functions, Function<?, ?> whereGetter) {
+	final void addFromOuterWhere(AdhocFunctions<MODEL, RESULT, ?, ?, ?, ?, ?> functions, Function<?, ?> whereGetter) {
 
 		final EAdhocConditionsState newState;
 
@@ -366,11 +366,11 @@ abstract class AdhocConditionsStateMachine<MODEL, RESULT, CONDITIONS extends Adh
 
 	@SuppressWarnings("unchecked")
 	final CONDITIONS mergeJoinComparison(
-			AdhocFunctions<MODEL, RESULT, ?, ?, ?, ?> whereFunctions,
+			AdhocFunctions<MODEL, RESULT, ?, ?, ?, ?, ?> whereFunctions,
 			Function<?, ?> whereGetter, EClauseOperator whereOperator, Object whereValue,
 			int sourceIdx,
 			ConditionsType type,
-			AdhocFunctions<MODEL, RESULT, ?, ?, ?, ?> nextFunctions, Function<?, ?> nextGetter) {
+			AdhocFunctions<MODEL, RESULT, ?, ?, ?, ?, ?> nextFunctions, Function<?, ?> nextGetter) {
 
 		final CONDITIONS ret;
 		
@@ -413,12 +413,12 @@ abstract class AdhocConditionsStateMachine<MODEL, RESULT, CONDITIONS extends Adh
 	}
 	
 	final void addWhereAndFunctionFromJoin(
-			AdhocFunctions<MODEL, RESULT, ?, ?, ?, ?> whereFunctions,
+			AdhocFunctions<MODEL, RESULT, ?, ?, ?, ?, ?> whereFunctions,
 			Function<?, ?> whereGetter, EClauseOperator whereOperator, Object whereValue,
 			int sourceIdx,
 			ConditionsType type,
 			
-			AdhocFunctions<MODEL, RESULT, ?, ?, ?, ?> nextFunctions, Function<?, ?> nextGetter) {
+			AdhocFunctions<MODEL, RESULT, ?, ?, ?, ?, ?> nextFunctions, Function<?, ?> nextGetter) {
 
 		if (whereGetter == null) {
 			throw new IllegalArgumentException("whereGetter == null");
@@ -474,7 +474,7 @@ abstract class AdhocConditionsStateMachine<MODEL, RESULT, CONDITIONS extends Adh
 	}
 
 	final void addWhereFromJoin(
-						AdhocFunctions<MODEL, RESULT, ?, ?, ?, ?> whereFunctions,
+						AdhocFunctions<MODEL, RESULT, ?, ?, ?, ?, ?> whereFunctions,
 						Function<?, ?> whereGetter,
 						EClauseOperator whereOperator,
 						Object whereValue,

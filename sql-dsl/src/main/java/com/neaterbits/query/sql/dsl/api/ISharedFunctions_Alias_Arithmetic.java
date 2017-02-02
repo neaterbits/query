@@ -5,16 +5,17 @@ public interface ISharedFunctions_Alias_Arithmetic<
 		RESULT,
 		RET extends ISharedLogical_Base<MODEL, RESULT>,
 		
-		COMPARABLE_CLAUSE extends ISharedCondition_Comparable_Common_Base<MODEL, RESULT, ?, RET>> {
+		INTEGER_CLAUSE extends ISharedCondition_Comparable_Common_Base<MODEL, RESULT, Integer, RET>,
+		LONG_CLAUSE extends ISharedCondition_Comparable_Common_Base<MODEL, RESULT, Long, RET>> {
 
-	<T> COMPARABLE_CLAUSE abs(ISupplierInteger getter);
-	<T> COMPARABLE_CLAUSE abs(ISupplierLong getter);
-	ISharedFunctions_Alias_Arithmetic<MODEL, RESULT, RET, COMPARABLE_CLAUSE> abs();
+	<T> INTEGER_CLAUSE abs(ISupplierInteger getter);
+	<T> LONG_CLAUSE abs(ISupplierLong getter);
+	ISharedFunctions_Alias_Arithmetic<MODEL, RESULT, RET, INTEGER_CLAUSE, LONG_CLAUSE> abs();
 
 
-	<T> COMPARABLE_CLAUSE sqrt(ISupplierInteger getter);
-	<T> COMPARABLE_CLAUSE sqrt(ISupplierLong getter);
+	<T> INTEGER_CLAUSE sqrt(ISupplierInteger getter);
+	<T> LONG_CLAUSE sqrt(ISupplierLong getter);
 	
-	ISharedFunctions_Alias_Arithmetic<MODEL, RESULT, RET, COMPARABLE_CLAUSE> sqrt();
+	ISharedFunctions_Alias_Arithmetic<MODEL, RESULT, RET, INTEGER_CLAUSE, LONG_CLAUSE> sqrt();
 	
 }

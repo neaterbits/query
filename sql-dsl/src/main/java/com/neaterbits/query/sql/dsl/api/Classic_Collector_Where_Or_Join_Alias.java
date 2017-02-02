@@ -117,7 +117,8 @@ final class Classic_Collector_Where_Or_Join_Alias<MODEL, RESULT>
 			MODEL, RESULT,
 			IClassicAndOrLogicalClausesAlias<MODEL, RESULT>,
 			
-			ISharedCondition_Comparable_Common_All<MODEL, RESULT, ? extends Comparable<?>, IClassicAndOrLogicalClausesAlias<MODEL, RESULT>>,
+			ISharedCondition_Comparable_Common_All<MODEL, RESULT, Integer, IClassicAndOrLogicalClausesAlias<MODEL, RESULT>>,
+			ISharedCondition_Comparable_Common_All<MODEL, RESULT, Long, IClassicAndOrLogicalClausesAlias<MODEL, RESULT>>,
 			ISharedCondition_Comparable_String_All<MODEL, RESULT, IClassicAndOrLogicalClausesAlias<MODEL, RESULT>>
 	> 
 	
@@ -172,7 +173,8 @@ final class Classic_Collector_Where_Or_Join_Alias<MODEL, RESULT>
 		MODEL,
 		RESULT,
 		IClassicAndClausesAlias<MODEL, RESULT>,
-		ISharedCondition_Comparable_Common_Base<MODEL, RESULT, ?, IClassicAndClausesAlias<MODEL, RESULT>>,
+		ISharedCondition_Comparable_Common_All<MODEL, RESULT, Integer, IClassicAndClausesAlias<MODEL, RESULT>>,
+		ISharedCondition_Comparable_Common_All<MODEL, RESULT, Long, IClassicAndClausesAlias<MODEL, RESULT>>,
 		ISharedCondition_Comparable_String_All<MODEL, RESULT, IClassicAndClausesAlias<MODEL, RESULT>>
 	>
 		and() {
@@ -223,7 +225,8 @@ final class Classic_Collector_Where_Or_Join_Alias<MODEL, RESULT>
 		MODEL,
 		RESULT,
 		IClassicOrClausesAlias<MODEL, RESULT>,
-		ISharedCondition_Comparable_Common_Base<MODEL, RESULT, ?, IClassicOrClausesAlias<MODEL, RESULT>>,
+		ISharedCondition_Comparable_Common_All<MODEL, RESULT, Integer, IClassicOrClausesAlias<MODEL, RESULT>>,
+		ISharedCondition_Comparable_Common_All<MODEL, RESULT, Long, IClassicOrClausesAlias<MODEL, RESULT>>,
 		ISharedCondition_Comparable_String_All<MODEL, RESULT, IClassicOrClausesAlias<MODEL, RESULT>>
 	>
 		or() {
