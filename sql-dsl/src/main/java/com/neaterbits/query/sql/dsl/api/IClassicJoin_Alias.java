@@ -1,9 +1,14 @@
 package com.neaterbits.query.sql.dsl.api;
 
-public interface IClassicJoin_Alias<MODEL, RESULT> extends IShared_Join {
+public interface IClassicJoin_Alias<
+			MODEL,
+			RESULT,
+			JOIN_CONDITION extends IClassicJoin_Condition_Alias_Base<MODEL, RESULT, JOIN_CONDITION>>
 
-	IClassicJoin_Condition_Alias<MODEL, RESULT> innerJoin(Object left, Object right);
+		extends IShared_Join {
+
+	JOIN_CONDITION innerJoin(Object left, Object right);
 	
-	IClassicJoin_Condition_Alias<MODEL, RESULT> leftJoin(Object left, Object right);
+	JOIN_CONDITION leftJoin(Object left, Object right);
 	
 }

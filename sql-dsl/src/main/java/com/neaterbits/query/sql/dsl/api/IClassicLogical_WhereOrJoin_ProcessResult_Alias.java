@@ -4,6 +4,7 @@ public interface IClassicLogical_WhereOrJoin_ProcessResult_Alias<MODEL, RESULT>
 	extends IClassicLogical_WhereOrJoin_Alias_Base<MODEL, RESULT>, 
 
 		IClassicLogical_Where_ProcessResult_Alias<MODEL, RESULT>,
+		IClassicJoin_ProcessResult_Alias<MODEL, RESULT>,
 		IClassicProcessResult_Alias<MODEL, RESULT> {
 
 }

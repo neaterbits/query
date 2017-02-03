@@ -50,4 +50,14 @@ final class Collector_MapToResult_Multi<
 		
 		(getter, this);
 	}
+
+	@Override
+	IClassicLogical_WhereOrJoin_ProcessResult_Named<MODEL, RESULT> createWhereOrJoinForNamed() {
+		return new Classic_Collector_WhereOrJoin_ProcessResult_Named<>(this);
+	}
+
+	@Override
+	IClassicLogical_WhereOrJoin_ProcessResult_Alias<MODEL, RESULT> createWhereOrJoinForAlias() {
+		return new Classic_Collector_WhereOrJoin_ProcessResult_Alias<>(this);
+	}
 }

@@ -16,11 +16,13 @@ abstract class Collector_SelectSource<
 //	private Class<?> [] classes;
 //	private Alias<?> [] aliases;
 
+	abstract NAMED_WHERE_OR_JOIN createWhereOrJoinForNamed();
+	abstract ALIAS_WHERE_OR_JOIN createWhereOrJoinForAlias();
+					
 	Collector_SelectSource(CollectedQueryResult result, ModelCompiler<MODEL> modelCompiler) {
 		super(new QueryCollectorImpl(result), modelCompiler);
 	}
 	
-	@SuppressWarnings("unchecked")
 	@Override
 	public final NAMED_WHERE_OR_JOIN from(Class<?> ... classes) {
 		
@@ -33,9 +35,9 @@ abstract class Collector_SelectSource<
 		
 		getQueryCollector().setSources(new CollectedSelectSource_Named(classes));
 		
-		final Classic_Collector_Where_Or_Join_Named<MODEL, RESULT> ret =  new Classic_Collector_Where_Or_Join_Named<MODEL, RESULT>(this);
+		//final Classic_Collector_Where_Or_Join_Named<MODEL, RESULT> ret = new Classic_Collector_Where_Or_Join_Named<MODEL, RESULT>(this);
 		
-		return (NAMED_WHERE_OR_JOIN)ret;
+		return createWhereOrJoinForNamed();
 	}
 
 	@Override
@@ -49,12 +51,11 @@ abstract class Collector_SelectSource<
 
 		getQueryCollector().setSources(new CollectedSelectSource_AliasAliases(aliases));
 
-		final Classic_Collector_Where_Or_Join_Alias<MODEL, RESULT> ret = new Classic_Collector_Where_Or_Join_Alias<MODEL, RESULT>(this);
+		// final Classic_Collector_WhereOrJoin_Alias_Base<MODEL, RESULT, ?> ret = new Classic_Collector_WhereOrJoin_Alias_Base<MODEL, RESULT>(this);
 		
-		return ret;
+		return createWhereOrJoinForAlias();
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
 	public final ALIAS_WHERE_OR_JOIN from(Object... aliases) {
 		
@@ -64,9 +65,9 @@ abstract class Collector_SelectSource<
 		
 		getQueryCollector().setSources(new CollectedSelectSource_Aliases(aliases));
 
-		final Classic_Collector_Where_Or_Join_Alias<MODEL, RESULT> ret = new Classic_Collector_Where_Or_Join_Alias<MODEL, RESULT>(this);
+		// final Classic_Collector_WhereOrJoin_Alias_Base<MODEL, RESULT, ?> ret = new Classic_Collector_WhereOrJoin_Alias_Base<MODEL, RESULT>(this);
 		
-		return (ALIAS_WHERE_OR_JOIN)ret;
+		return createWhereOrJoinForAlias();
 	}
 	
 

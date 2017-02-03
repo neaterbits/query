@@ -93,4 +93,21 @@ abstract class Collector_Conditions<MODEL, RESULT,
 		return getModelCompiler().compile(compiledQuery);
 	}
 
+
+	// Overriden by interfaces further down in the hierarchy
+	public final <T, R> ISharedProcessResult_After_GroupBy_Or_List_Named<MODEL, RESULT> groupBy(Function<T, R> field) {
+		throw new UnsupportedOperationException("TODO");
+	}
+
+	public final ISharedProcessResult_After_GroupBy_Named<MODEL, RESULT> groupBy(int ... resultColumns) {
+		throw new UnsupportedOperationException("TODO");
+	}
+
+	public final <T, R> ISharedProcessResult_After_OrderBy_Or_List_Named<MODEL, RESULT> orderBy(Function<T, R> field) {
+		throw new UnsupportedOperationException("TODO");
+	}
+
+	public final ISharedCompileEndClause<MODEL> orderBy(int ... resultColumns) {
+		throw new UnsupportedOperationException("TODO");
+	}
 }

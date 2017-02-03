@@ -14,4 +14,14 @@ final class Classic_Collector_SingleTypeResult<MODEL, RESULT>
 	Classic_Collector_SingleTypeResult(SharedSelectSource selectSource, ModelCompiler<MODEL> modelCompiler) {
 		super(new CollectedQueryResult_Entity_Single(selectSource), modelCompiler);
 	}
+
+	@Override
+	IClassicLogical_WhereOrJoin_NonProcessResult_Named<MODEL, RESULT> createWhereOrJoinForNamed() {
+		return new Classic_Collector_WhereOrJoin_NonProcessResult_Named<>(this);
+	}
+
+	@Override
+	IClassicLogical_WhereOrJoin_NonProcessResult_Alias<MODEL, RESULT> createWhereOrJoinForAlias() {
+		return new Classic_Collector_WhereOrJoin_NonProcessResult_Alias<>(this);
+	}
 }

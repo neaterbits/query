@@ -3,15 +3,25 @@ package com.neaterbits.query.sql.dsl.api;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 
-final class Classic_Collector_Where_Or_Join_Alias<MODEL, RESULT>
-	extends Classic_Collector_Where_Or_Join<MODEL, RESULT, Classic_Collector_And_Alias<MODEL, RESULT>, Classic_Collector_Or_Alias<MODEL, RESULT>>
-	implements 
-		   IClassicLogical_WhereOrJoin_NonProcessResult_Alias<MODEL, RESULT>,
-		   IClassicLogical_And_Or_Alias<MODEL, RESULT>,
-		   
-		   IClassicJoin_Condition_Alias<MODEL, RESULT> {
+abstract class Classic_Collector_WhereOrJoin_Alias_Base<
 
-	Classic_Collector_Where_Or_Join_Alias(BaseQueryEntity<MODEL> last) {
+				MODEL,
+				RESULT,
+				JOIN_CONDITION extends IClassicJoin_Condition_Alias_Base<MODEL, RESULT, JOIN_CONDITION>>
+
+	extends Classic_Collector_Where_Or_Join<
+				MODEL,
+				RESULT,
+				Classic_Collector_And_Alias<MODEL, RESULT>,
+				Classic_Collector_Or_Alias<MODEL, RESULT>>
+
+
+	implements 
+		   IClassicLogical_WhereOrJoin_Alias_Base<MODEL, RESULT>,
+		   IClassicJoin_Alias<MODEL, RESULT, JOIN_CONDITION>,
+		   IClassicLogical_And_Or_Alias<MODEL, RESULT> {
+
+	Classic_Collector_WhereOrJoin_Alias_Base(BaseQueryEntity<MODEL> last) {
 		super(last);
 	}
 
@@ -35,13 +45,14 @@ final class Classic_Collector_Where_Or_Join_Alias<MODEL, RESULT>
 
 	// -- Alias  --
 	
-	private <LEFT, RIGHT> IClassicJoin_Condition_Alias<MODEL, RESULT> getJoinConditionAlias() {
-		return (IClassicJoin_Condition_Alias<MODEL, RESULT>)this;
+	@SuppressWarnings("unchecked")
+	private <LEFT, RIGHT> JOIN_CONDITION getJoinConditionAlias() {
+		return (JOIN_CONDITION)this;
 	}
 	
 	
 	@Override
-	public IClassicJoin_Condition_Alias<MODEL, RESULT> innerJoin(Object left, Object right) {
+	public final JOIN_CONDITION innerJoin(Object left, Object right) {
 	
 		final CollectedJoin_Alias collectedJoin = new CollectedJoin_Alias(EJoinType.INNER, (IAlias)left, (IAlias)right);
 		
@@ -51,7 +62,7 @@ final class Classic_Collector_Where_Or_Join_Alias<MODEL, RESULT>
 	}
 	
 	@Override
-	public IClassicJoin_Condition_Alias<MODEL, RESULT> leftJoin(Object left, Object right) {
+	public final JOIN_CONDITION leftJoin(Object left, Object right) {
 	
 		final CollectedJoin_Alias collectedJoin = new CollectedJoin_Alias(EJoinType.LEFT, (IAlias)left, (IAlias)right);
 		
@@ -60,7 +71,7 @@ final class Classic_Collector_Where_Or_Join_Alias<MODEL, RESULT>
 		return getJoinConditionAlias();
 	}
 	
-	private <R> IClassicJoin_Condition_Alias<MODEL, RESULT> compareAlias(Supplier<R> left, Supplier<R> right) {
+	private <R> JOIN_CONDITION compareAlias(Supplier<R> left, Supplier<R> right) {
 		
 		final SupplierGetter leftGetter = new SupplierGetter(left); 
 		final SupplierGetter rightGetter = new SupplierGetter(right); 
@@ -74,8 +85,8 @@ final class Classic_Collector_Where_Or_Join_Alias<MODEL, RESULT>
 		return getJoinConditionAlias();
 	}
 	
-	@Override
-	public IClassicJoin_Condition_Alias<MODEL, RESULT> on(ISupplierCollection joinCollection) {
+	// JoinCondition, markes as implemented in subclass
+	public final JOIN_CONDITION on(ISupplierCollection joinCollection) {
 		final SupplierGetter collectionGetter = new SupplierGetter(joinCollection); 
 		
 		final CollectedJoin curJoin = getQueryCollector().getJoins().getLast();
@@ -87,33 +98,39 @@ final class Classic_Collector_Where_Or_Join_Alias<MODEL, RESULT>
 		return getJoinConditionAlias();
 	}
 	
-	@Override
-	public IClassicJoin_Condition_Alias<MODEL, RESULT> compare(ISupplierInteger left, ISupplierInteger right) {
+	public final JOIN_CONDITION compare(ISupplierInteger left, ISupplierInteger right) {
 		return compareAlias(left, right);
 	}
-	
-	@Override
-	public IClassicJoin_Condition_Alias<MODEL, RESULT> compare(ISupplierLong left, ISupplierLong right) {
+
+	// JoinCondition, markes as implemented in subclass
+	public final JOIN_CONDITION compare(ISupplierLong left, ISupplierLong right) {
 		return compareAlias(left, right);
 	}
 
 	// ------------------------  WHERE ------------------------
 	
-	@Override
-	public ISharedCondition_Comparable_Common_All<MODEL, RESULT, Integer, IClassicLogical_And_Or_Alias<MODEL, RESULT>> where(ISupplierInteger func) {
+	//implemented in subclass @Override
+	public final ISharedCondition_Comparable_Common_All<
+				MODEL,
+				RESULT,
+				Integer,
+				IClassicLogical_And_Or_Alias<MODEL, RESULT>> where(ISupplierInteger func) {
 	
 		return new Collector_Condition_Comparative<MODEL, RESULT, Integer, IClassicLogical_And_Or_Alias<MODEL,RESULT>>(this, makeGetter(func));
 	}	
 	
-	@Override
-	public ISharedCondition_Comparable_String_All<MODEL, RESULT, IClassicLogical_And_Or_Alias<MODEL, RESULT>> where(ISupplierString supplier) {
+	// implemented in subclass @Override
+	public final ISharedCondition_Comparable_String_All<
+				MODEL,
+				RESULT,
+				IClassicLogical_And_Or_Alias<MODEL, RESULT>> where(ISupplierString supplier) {
 	
 		return new Collector_Condition_String<MODEL, RESULT, IClassicLogical_And_Or_Alias<MODEL,RESULT>>(this, makeGetter(supplier));
 	}
 
 
-	@Override
-	public ISharedFunctions_Alias_Initial<
+	// JoinCondition, markes as implemented in subclass
+	public final ISharedFunctions_Alias_Initial<
 			MODEL, RESULT,
 			IClassicLogical_And_Or_Alias<MODEL, RESULT>,
 			
@@ -139,7 +156,7 @@ final class Classic_Collector_Where_Or_Join_Alias<MODEL, RESULT>
 			public ISharedCondition_Comparable_String_Base<MODEL, RESULT, IClassicLogical_And_Or_Alias<MODEL, RESULT>>
 				onString(CollectedFunctions functions, ISupplierString getter) {
 				
-				return new Collector_Condition_String<MODEL, RESULT, IClassicLogical_And_Or_Alias<MODEL, RESULT>> (Classic_Collector_Where_Or_Join_Alias.this, functions, makeGetter(getter));
+				return new Collector_Condition_String<MODEL, RESULT, IClassicLogical_And_Or_Alias<MODEL, RESULT>> (Classic_Collector_WhereOrJoin_Alias_Base.this, functions, makeGetter(getter));
 			}
 		};
 	
@@ -150,17 +167,17 @@ final class Classic_Collector_Where_Or_Join_Alias<MODEL, RESULT>
 	
 	
 	@Override
-	public ISharedCondition_Comparable_Common_All<MODEL, RESULT, Integer, IClassicLogical_And_Alias<MODEL, RESULT>> and(ISupplierInteger getter) {
+	public final ISharedCondition_Comparable_Common_All<MODEL, RESULT, Integer, IClassicLogical_And_Alias<MODEL, RESULT>> and(ISupplierInteger getter) {
 		return andAliasImplComparable(getter);
 	}
 	
 	@Override
-	public ISharedCondition_Comparable_Common_All<MODEL, RESULT, Long, IClassicLogical_And_Alias<MODEL, RESULT>> and(ISupplierLong getter) {
+	public final ISharedCondition_Comparable_Common_All<MODEL, RESULT, Long, IClassicLogical_And_Alias<MODEL, RESULT>> and(ISupplierLong getter) {
 		return andAliasImplComparable(getter);
 	}
 	
 	@Override
-	public ISharedCondition_Comparable_String_All<MODEL, RESULT, IClassicLogical_And_Alias<MODEL, RESULT>> and(ISupplierString getter) {
+	public final ISharedCondition_Comparable_String_All<MODEL, RESULT, IClassicLogical_And_Alias<MODEL, RESULT>> and(ISupplierString getter) {
 	
 		final Classic_Collector_And_Alias<MODEL, RESULT> andClauses = new Classic_Collector_And_Alias<>(this);
 		
@@ -169,7 +186,7 @@ final class Classic_Collector_Where_Or_Join_Alias<MODEL, RESULT>
 
 
 	@Override
-	public ISharedFunctions_Alias_Initial<
+	public final ISharedFunctions_Alias_Initial<
 		MODEL,
 		RESULT,
 		IClassicLogical_And_Alias<MODEL, RESULT>,
@@ -205,23 +222,23 @@ final class Classic_Collector_Where_Or_Join_Alias<MODEL, RESULT>
 
 
 	@Override
-	public ISharedCondition_Comparable_Common_All<MODEL, RESULT, Integer, IClassicLogical_Or_Alias<MODEL, RESULT>> or(ISupplierInteger getter) {
+	public final ISharedCondition_Comparable_Common_All<MODEL, RESULT, Integer, IClassicLogical_Or_Alias<MODEL, RESULT>> or(ISupplierInteger getter) {
 		return orAliasImplComparable(getter);
 	}
 
 	@Override
-	public ISharedCondition_Comparable_Common_All<MODEL, RESULT, Long, IClassicLogical_Or_Alias<MODEL, RESULT>> or(ISupplierLong getter) {
+	public final ISharedCondition_Comparable_Common_All<MODEL, RESULT, Long, IClassicLogical_Or_Alias<MODEL, RESULT>> or(ISupplierLong getter) {
 		return orAliasImplComparable(getter);
 	}
 	
 	@Override
-	public ISharedCondition_Comparable_String_All<MODEL, RESULT, IClassicLogical_Or_Alias<MODEL, RESULT>> or(ISupplierString getter) {
+	public final ISharedCondition_Comparable_String_All<MODEL, RESULT, IClassicLogical_Or_Alias<MODEL, RESULT>> or(ISupplierString getter) {
 	
 		return orAliasImplString(null, getter);
 	}
 	
 	@Override
-	public ISharedFunctions_Alias_Initial<
+	public final ISharedFunctions_Alias_Initial<
 		MODEL,
 		RESULT,
 		IClassicLogical_Or_Alias<MODEL, RESULT>,
@@ -359,12 +376,12 @@ final class Classic_Collector_Where_Or_Join_Alias<MODEL, RESULT>
 	
 	
 	@Override
-	public IClassicLogical_And_Alias<MODEL, RESULT> andNest(ISharedNestedOrConsumerAlias<MODEL, RESULT, IClassicLogical_Or_Alias<MODEL, RESULT>> orBuilder) {
+	public final IClassicLogical_And_Alias<MODEL, RESULT> andNest(ISharedNestedOrConsumerAlias<MODEL, RESULT, IClassicLogical_Or_Alias<MODEL, RESULT>> orBuilder) {
 		return addNestedOrImpl(orBuilder);
 	}
 	
 	@Override
-	public IClassicLogical_Or_Alias<MODEL, RESULT> orNest(ISharedNestedAndConsumerAlias<MODEL, RESULT, IClassicLogical_And_Alias<MODEL, RESULT>> andBuilder) {
+	public final IClassicLogical_Or_Alias<MODEL, RESULT> orNest(ISharedNestedAndConsumerAlias<MODEL, RESULT, IClassicLogical_And_Alias<MODEL, RESULT>> andBuilder) {
 		return addNestedAndImpl(andBuilder);
 	}
 }

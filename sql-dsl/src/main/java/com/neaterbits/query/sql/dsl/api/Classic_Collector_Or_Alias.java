@@ -13,7 +13,7 @@ final class Classic_Collector_Or_Alias<MODEL, RESULT>
 		super(qe);
 	}
 
-	Classic_Collector_Or_Alias(Classic_Collector_Where_Or_Join_Alias<MODEL, RESULT> last) {
+	Classic_Collector_Or_Alias(Classic_Collector_WhereOrJoin_Alias_Base<MODEL, RESULT, ?> last) {
 		super(last);
 	}
 

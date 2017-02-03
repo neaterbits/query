@@ -14,4 +14,14 @@ final class Classic_Collector_MultiEntityResult<MODEL, RESULT>
 	Classic_Collector_MultiEntityResult(SharedSelectSource selectSource, ECollectionType collectionType, ModelCompiler<MODEL> modelCompiler) {
 		super(new CollectedQueryResult_Entity_Multi(selectSource, collectionType), modelCompiler);
 	}
+
+	@Override
+	IClassicLogical_WhereOrJoin_ProcessResult_Named<MODEL, RESULT> createWhereOrJoinForNamed() {
+		return new Classic_Collector_WhereOrJoin_ProcessResult_Named<>(this);
+	}
+
+	@Override
+	IClassicLogical_WhereOrJoin_ProcessResult_Alias<MODEL, RESULT> createWhereOrJoinForAlias() {
+		return new Classic_Collector_WhereOrJoin_ProcessResult_Alias<>(this);
+	}
 }

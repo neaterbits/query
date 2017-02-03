@@ -11,7 +11,7 @@ final class Classic_Collector_And_Alias<MODEL, RESULT> extends Classic_Collector
 		super(qe);
 	}
 
-	public Classic_Collector_And_Alias(Classic_Collector_Where_Or_Join_Alias<MODEL, RESULT> last) {
+	public Classic_Collector_And_Alias(Classic_Collector_WhereOrJoin_Alias_Base<MODEL, RESULT, ?> last) {
 		super(last);
 	}
 

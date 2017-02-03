@@ -15,4 +15,14 @@ final class Collector_AggregateNamedResult<TYPE>
 	Collector_AggregateNamedResult(QueryResultAggregate result, ModelCompiler<SingleQuery<TYPE>> modelCompiler) {
 		super(result, modelCompiler);
 	}
+
+	@Override
+	IClassicLogical_WhereOrJoin_NonProcessResult_Named<SingleQuery<TYPE>, TYPE> createWhereOrJoinForNamed() {
+		return new Classic_Collector_WhereOrJoin_NonProcessResult_Named<>(this);
+	}
+
+	@Override
+	IClassicLogical_WhereOrJoin_NonProcessResult_Alias<SingleQuery<TYPE>, TYPE> createWhereOrJoinForAlias() {
+		return new Classic_Collector_WhereOrJoin_NonProcessResult_Alias<SingleQuery<TYPE>, TYPE>(this);
+	}
 }
