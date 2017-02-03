@@ -12,6 +12,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import java.math.BigDecimal;
 import java.util.function.Consumer;
+import java.util.function.Function;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -608,6 +609,52 @@ public class SQLAPITest extends BaseSQLAPITest {
 		});
 	}
 
+	@Test
+    public void testNameBasedAggregation() {
+		assertThat(true).isEqualTo(false);;
+
+		final Company acme = new Company(-1, "Acme");
+		final Company foo = new Company(-1, "Foo");
+
+		final Function<?, ?> f = null;
+		
+        final SingleQuery<CompanyResultVO> startsWithAc =
+        		selectOneOrNull(CompanyResultVO.class)
+
+        	.map(Company::getName).to(CompanyResultVO::setName)
+        	
+        	.from(Company.class)
+        	
+        	/*
+        	.groupBy(Company::getName).and(Company::getStockPrice)
+        	.orderBy(Company::getName).and(Company::getStockPrice)
+        	
+
+        	.where(Company::getName).startsWith("Ac")
+        	.  and(Company::getName).endsWith("cme")
+*/
+        	.compile();
+		
+		store(s  -> s.add(acme)).
+		check(ds -> {
+	        checkSelectOneOrNull(
+	        		ds,
+	        		new CompanyResultVO(acme.getName()),
+	        		startsWithAc,
+	        		q -> q.execute());
+		});
+
+		// Search for foo as well, should return no matches
+		store(s  -> s.add(foo)).
+		check(ds -> {
+	        checkSelectOneOrNull(
+	        		ds,
+	        		null,
+	        		startsWithAc,
+	        		q -> q.execute());
+		});
+	}
+	
     //@Test
     public void testAliasBasedObsolete() {
     	EntityManager em = null;

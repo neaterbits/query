@@ -524,17 +524,39 @@ Renamed til Named
 # - bedre debugging av in-memory query eksekvering
 W - parametere
 
- - funksjoner lower(), trim() osv
-   * named
-   * alias
-   * adhoc
+# - funksjoner lower(), trim() osv
+#   * named
+#   * alias
+#   * adhoc
+   !! * parametre i funksjoner? substring(1,2).of(Foo::getClass) for parametriserte, så ikke blir så mange kombinasjoner
 
+ - query ut fra context variabel
+   * forenklede queries uten from eller join sources. Trenger ikke from/implisitt join om kun ANSI joins
+     siden from er der for cartesian product.
+
+ - result functions? dvs aggregates. count, etc
+
+  
  - subselects
+
  - fikse nøsta and/or slik at ikke har mulighet for .compile()
  - fikse adhoc join-and/or slik at ikke har mulighet for .compile()
 
- - group by?
+ - group by? innvirkning på traversering? traversering er separat
  - having?
+ - order by?
+
+ - group by, burde alltid etter where men også etter join? Kan
+trengs ikke alltid WHERE etter join om er kun join-resultatet vi er interessert i.
+OK, så vi må ha 3 interfaces:
+group by, having, order by.
+group by må være først, så having, så order by
+men de kan også fjenres, dvs having uten group by og order by uten noen av de.
+
+
+
+
+
  
 
 - !!! for halway queries (startsWith/endsWith/in for native), fortsatt parametrisere for å unngå at logger verdier !!!
@@ -547,9 +569,6 @@ W - parametere
  - dialekter, dvs statisk begrense muligheter (kun ANSI joins? kun samme-type rekursjon? strict, short, classic)
 
 
- - query ut fra context variabel
-   * forenklede queries uten from eller join sources. Trenger ikke from/implisitt join om kun ANSI joins
-     siden from er der for cartesian product.
 
 
  - mere tester
