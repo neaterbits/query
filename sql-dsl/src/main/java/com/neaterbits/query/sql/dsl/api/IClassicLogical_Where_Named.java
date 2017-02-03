@@ -11,13 +11,9 @@ package com.neaterbits.query.sql.dsl.api;
  */
 
 public interface IClassicLogical_Where_Named<MODEL, RESULT>
-		extends ISharedLogical_Where_Named_All<
+		extends IClassicLogical_Where_Named_Base<
 			MODEL,
 			RESULT,
-			IClassicLogical_And_Or_Named<MODEL, RESULT>,
-			
-			ISharedCondition_Comparable_Common_All_Compilable<MODEL, RESULT, Integer, IClassicLogical_And_Or_Named<MODEL, RESULT>>,
-			ISharedCondition_Comparable_Common_All_Compilable<MODEL, RESULT, Long, IClassicLogical_And_Or_Named<MODEL, RESULT>>,
-			ISharedCondition_Comparable_String_All_Compilable<MODEL, RESULT, IClassicLogical_And_Or_Named<MODEL, RESULT>>> {
+			IClassicLogical_And_Or_Named<MODEL, RESULT>> {
 
 }
