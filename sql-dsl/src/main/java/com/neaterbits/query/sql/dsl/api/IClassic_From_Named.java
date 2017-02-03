@@ -1,13 +1,7 @@
 package com.neaterbits.query.sql.dsl.api;
 
-public interface IClassic_From_Named<MODEL, RESULT> extends ISharedSelectSourceBuilder<MODEL, RESULT> {
+public interface IClassic_From_Named<MODEL, RESULT>
 
-	/**
-	 * Pure table search
-	 * @param tables
-	 */
-	
-	IClassicLogical_WhereOrJoin_Named<MODEL, RESULT> from(Class<?> ... tables);
-	
-	
+		extends IClassic_From_Named_Base<MODEL, RESULT, IClassicLogical_WhereOrJoin_NonProcessResult_Named<MODEL, RESULT>> {
+
 }

@@ -8,7 +8,7 @@ final class Classic_Collector_Where_Or_Join_Named<MODEL, RESULT>
 	extends Classic_Collector_Where_Or_Join<MODEL, RESULT, Classic_Collector_And_Named<MODEL, RESULT>, Classic_Collector_Or_Named<MODEL, RESULT>>
 	implements 
 	
-				IClassicLogical_WhereOrJoin_Named<MODEL, RESULT>,
+				IClassicLogical_WhereOrJoin_NonProcessResult_Named<MODEL, RESULT>,
 				IClassicLogical_And_Or_Named<MODEL, RESULT>,
 				IClassicJoinConditionNamed<MODEL, RESULT, Object, Object> {
 

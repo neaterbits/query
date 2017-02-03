@@ -1,6 +1,14 @@
 package com.neaterbits.query.sql.dsl.api;
 
-final class Classic_Collector_SingleTypeResult<MODEL, RESULT> extends Collector_EntityResult_Base<MODEL, RESULT> 
+final class Classic_Collector_SingleTypeResult<MODEL, RESULT>
+
+	extends Collector_EntityResult_Base<
+		MODEL,
+		RESULT,
+		IClassicLogical_WhereOrJoin_NonProcessResult_Named<MODEL, RESULT>,
+		IClassicLogical_WhereOrJoin_NonProcessResult_Alias<MODEL, RESULT>
+	>
+
 	implements IClassicResult_Entity_Single<MODEL, RESULT> {
 
 	Classic_Collector_SingleTypeResult(SharedSelectSource selectSource, ModelCompiler<MODEL> modelCompiler) {

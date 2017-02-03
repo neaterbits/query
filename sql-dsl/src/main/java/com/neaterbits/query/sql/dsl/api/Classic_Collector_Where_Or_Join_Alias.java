@@ -6,7 +6,7 @@ import java.util.function.Supplier;
 final class Classic_Collector_Where_Or_Join_Alias<MODEL, RESULT>
 	extends Classic_Collector_Where_Or_Join<MODEL, RESULT, Classic_Collector_And_Alias<MODEL, RESULT>, Classic_Collector_Or_Alias<MODEL, RESULT>>
 	implements 
-		   IClassicLogical_WhereOrJoin_Alias<MODEL, RESULT>,
+		   IClassicLogical_WhereOrJoin_NonProcessResult_Alias<MODEL, RESULT>,
 		   IClassicLogical_And_Or_Alias<MODEL, RESULT>,
 		   
 		   IClassicJoinConditionAlias<MODEL, RESULT> {

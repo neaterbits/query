@@ -1,10 +1,16 @@
 package com.neaterbits.query.sql.dsl.api;
 
 
-abstract class Collector_SelectSource<MODEL, RESULT> extends BaseQueryEntity<MODEL>
+abstract class Collector_SelectSource<
+				MODEL,
+				RESULT,
+				NAMED_WHERE_OR_JOIN extends IClassicLogical_WhereOrJoin_Named_Base<MODEL, RESULT>,
+				ALIAS_WHERE_OR_JOIN extends IClassicLogical_WhereOrJoin_Alias_Base<MODEL, RESULT>> 
+
+		extends BaseQueryEntity<MODEL>
 		implements 
-				IClassic_From_Named<MODEL, RESULT>,
-				IClassic_From_Alias<MODEL, RESULT>,
+				IClassic_From_Named_Base<MODEL, RESULT, NAMED_WHERE_OR_JOIN>,
+				IClassic_From_Alias_Base<MODEL, RESULT, ALIAS_WHERE_OR_JOIN>,
 				IShared_From_AliasAlias<MODEL, RESULT> {
 
 //	private Class<?> [] classes;
@@ -14,8 +20,9 @@ abstract class Collector_SelectSource<MODEL, RESULT> extends BaseQueryEntity<MOD
 		super(new QueryCollectorImpl(result), modelCompiler);
 	}
 	
+	@SuppressWarnings("unchecked")
 	@Override
-	public final IClassicLogical_WhereOrJoin_Named<MODEL, RESULT> from(Class<?> ... classes) {
+	public final NAMED_WHERE_OR_JOIN from(Class<?> ... classes) {
 		
 		if (classes.length == 0) {
 			throw new IllegalArgumentException("no classes");
@@ -28,7 +35,7 @@ abstract class Collector_SelectSource<MODEL, RESULT> extends BaseQueryEntity<MOD
 		
 		final Classic_Collector_Where_Or_Join_Named<MODEL, RESULT> ret =  new Classic_Collector_Where_Or_Join_Named<MODEL, RESULT>(this);
 		
-		return ret;
+		return (NAMED_WHERE_OR_JOIN)ret;
 	}
 
 	@Override
@@ -47,8 +54,9 @@ abstract class Collector_SelectSource<MODEL, RESULT> extends BaseQueryEntity<MOD
 		return ret;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
-	public final IClassicLogical_WhereOrJoin_Alias<MODEL, RESULT> from(Object... aliases) {
+	public final ALIAS_WHERE_OR_JOIN from(Object... aliases) {
 		
 		if (aliases.length == 0) {
 			throw new IllegalArgumentException("no aliases");
@@ -58,7 +66,7 @@ abstract class Collector_SelectSource<MODEL, RESULT> extends BaseQueryEntity<MOD
 
 		final Classic_Collector_Where_Or_Join_Alias<MODEL, RESULT> ret = new Classic_Collector_Where_Or_Join_Alias<MODEL, RESULT>(this);
 		
-		return ret;
+		return (ALIAS_WHERE_OR_JOIN)ret;
 	}
 	
 

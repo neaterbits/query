@@ -37,7 +37,7 @@ final class ClassicSelect implements IClassic {
 			throw new IllegalArgumentException("cl == null");
 		}
 
-		return new MultiMapToResultImpl<MultiQuery<MAPPED_RESULT>, MAPPED_RESULT>(cl, ECollectionType.LIST, multiQueryCompiler());
+		return new Collector_MapToResult_Multi<MultiQuery<MAPPED_RESULT>, MAPPED_RESULT>(cl, ECollectionType.LIST, multiQueryCompiler());
 	}
 
 	@Override

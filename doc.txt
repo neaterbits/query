@@ -552,6 +552,10 @@ OK, så vi må ha 3 interfaces:
 group by, having, order by.
 group by må være først, så having, så order by
 men de kan også fjenres, dvs having uten group by og order by uten noen av de.
+ 
+!! TODO: skiller mellom NonProcessResult og ProcesseResult i dag men burde skill ut OrderBy som egen
+siden ved liste av entiteter ("select * from" i praksis) så burde en ikke kunne gjøre group by eller having mens order by er OK.
+ 
 
 
 
@@ -881,7 +885,7 @@ og entity vs mapped.
 så om skulle sende all infoen så blir det 4 type interfaces som må sendes gjennom. Men siden er bare multi + mapped som gir mening å ha group by osv,
 så kan man altså klare seg med to utgaver, hvor den ene utgaven bare returnerer default mens den andre vil ende opp med ekstra-funksjoner.
 Dette er da fra WhereOrJoin utover.
-Men må vel ha egne typer for .
+Men må vel ha egne typer for Alias vs Named? 
 
 Alt kan implementeres i samme klasser evt, trenger ikke ha egne collectors for dette.
 

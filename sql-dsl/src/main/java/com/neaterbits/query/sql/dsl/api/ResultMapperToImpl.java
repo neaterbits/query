@@ -4,16 +4,24 @@ import java.util.function.BiConsumer;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
-final class ResultMapperToImpl<MODEL, RESULT, R, SOURCE extends ISharedSelectSourceBuilder<MODEL, RESULT>>
+final class ResultMapperToImpl<
+			MODEL,
+			RESULT,
+			R,
+			SOURCE extends ISharedSelectSourceBuilder<MODEL, RESULT>,
+			NAMED_WHERE_OR_JOIN extends IClassicLogical_WhereOrJoin_Named_Base<MODEL, RESULT>,
+			ALIAS_WHERE_OR_JOIN extends IClassicLogical_WhereOrJoin_Alias_Base<MODEL, RESULT>>
+
+
 		extends CollectedItem
 		implements ISharedResultMapperTo<MODEL, RESULT, R, SOURCE> {
 
 	private final Function<?, ?> fromGetter;
 	private final Supplier<?> fromSupplier;
 	
-	private final Collector_MapToResult_Base<MODEL, RESULT> impl;
+	private final Collector_MapToResult_Base<MODEL, RESULT, NAMED_WHERE_OR_JOIN, ALIAS_WHERE_OR_JOIN> impl;
 
-	ResultMapperToImpl(Function<?, ?> fromGetter, Collector_MapToResult_Base<MODEL, RESULT> impl) {
+	ResultMapperToImpl(Function<?, ?> fromGetter, Collector_MapToResult_Base<MODEL, RESULT, NAMED_WHERE_OR_JOIN, ALIAS_WHERE_OR_JOIN> impl) {
 		
 		if (fromGetter == null) {
 			throw new IllegalArgumentException("fromGetter == null");
@@ -29,7 +37,7 @@ final class ResultMapperToImpl<MODEL, RESULT, R, SOURCE extends ISharedSelectSou
 		this.impl = impl;
 	}
 
-	ResultMapperToImpl(Supplier<?> fromSupplier, Collector_MapToResult_Base<MODEL, RESULT> impl) {
+	ResultMapperToImpl(Supplier<?> fromSupplier, Collector_MapToResult_Base<MODEL, RESULT, NAMED_WHERE_OR_JOIN, ALIAS_WHERE_OR_JOIN> impl) {
 		
 		if (fromSupplier == null) {
 			throw new IllegalArgumentException("fromGetter == null");
