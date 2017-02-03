@@ -7,7 +7,7 @@ public interface IClassicSelectSourceBuilderNamed<MODEL, RESULT> extends IShared
 	 * @param tables
 	 */
 	
-	IClassicWhereOrJoinBuilderNamed<MODEL, RESULT> from(Class<?> ... tables);
+	IClassicLogical_WhereOrJoin_Named<MODEL, RESULT> from(Class<?> ... tables);
 	
 	
 }

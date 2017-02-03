@@ -7,7 +7,7 @@ final class Classic_Collector_And_Named<MODEL, RESULT>
 
 	extends Classic_Collector_And<MODEL, RESULT, Classic_Collector_And_Named<MODEL, RESULT>, Classic_Collector_Or_Named<MODEL, RESULT>>
 
-	implements IClassicAndClausesNamed<MODEL, RESULT> {
+	implements IClassicLogical_And_Named<MODEL, RESULT> {
 
 	Classic_Collector_And_Named(BaseQueryEntity<MODEL> qe) {
 		super(qe);
@@ -54,22 +54,22 @@ final class Classic_Collector_And_Named<MODEL, RESULT>
 	}
 
 	@Override
-	public <T> ISharedCondition_Comparable_Common_All<MODEL, RESULT, Integer, IClassicAndClausesNamed<MODEL, RESULT>> and(IFunctionInteger<T> getter) {
+	public <T> ISharedCondition_Comparable_Common_All<MODEL, RESULT, Integer, IClassicLogical_And_Named<MODEL, RESULT>> and(IFunctionInteger<T> getter) {
 		return andClassImplComparable(getter);
 	}
 
 	@Override
-	public <T> ISharedCondition_Comparable_Common_All<MODEL, RESULT, Long, IClassicAndClausesNamed<MODEL, RESULT>> and(IFunctionLong<T> getter) {
+	public <T> ISharedCondition_Comparable_Common_All<MODEL, RESULT, Long, IClassicLogical_And_Named<MODEL, RESULT>> and(IFunctionLong<T> getter) {
 		return andClassImplComparable(getter);
 	}
 
 	@Override
-	public <T> ISharedCondition_Comparable_String_All<MODEL, RESULT, IClassicAndClausesNamed<MODEL, RESULT>> and(StringFunction<T> getter) {
-		return new Collector_Condition_String<MODEL, RESULT, IClassicAndClausesNamed<MODEL,RESULT>>(this, makeGetter(getter));
+	public <T> ISharedCondition_Comparable_String_All<MODEL, RESULT, IClassicLogical_And_Named<MODEL, RESULT>> and(StringFunction<T> getter) {
+		return new Collector_Condition_String<MODEL, RESULT, IClassicLogical_And_Named<MODEL,RESULT>>(this, makeGetter(getter));
 	}
 
 	@Override
-	public IClassicAndClausesNamed<MODEL, RESULT> andNest(ISharedNestedOrConsumerNamed<MODEL, RESULT, IClassicOrClausesNamed<MODEL, RESULT>> orBuilder) {
+	public IClassicLogical_And_Named<MODEL, RESULT> andNest(ISharedNestedOrConsumerNamed<MODEL, RESULT, IClassicLogical_Or_Named<MODEL, RESULT>> orBuilder) {
 		
 		addNestedOrImpl(orBuilder);
 		
@@ -80,26 +80,26 @@ final class Classic_Collector_And_Named<MODEL, RESULT>
 	public ISharedFunctions_Named_Initial<
 				MODEL,
 				RESULT,
-				IClassicAndClausesNamed<MODEL, RESULT>,
-				ISharedCondition_Comparable_Common_All<MODEL, RESULT, Integer, IClassicAndClausesNamed<MODEL, RESULT>>,
-				ISharedCondition_Comparable_Common_All<MODEL, RESULT, Long, IClassicAndClausesNamed<MODEL, RESULT>>,
-				ISharedCondition_Comparable_String_All<MODEL, RESULT, IClassicAndClausesNamed<MODEL, RESULT>>
+				IClassicLogical_And_Named<MODEL, RESULT>,
+				ISharedCondition_Comparable_Common_All<MODEL, RESULT, Integer, IClassicLogical_And_Named<MODEL, RESULT>>,
+				ISharedCondition_Comparable_Common_All<MODEL, RESULT, Long, IClassicLogical_And_Named<MODEL, RESULT>>,
+				ISharedCondition_Comparable_String_All<MODEL, RESULT, IClassicLogical_And_Named<MODEL, RESULT>>
 			>
 			and() {
 		
 		@SuppressWarnings({"unchecked", "rawtypes"})
-		final ISharedCollector_Functions_Callback_Named<MODEL, RESULT, IClassicAndClausesNamed<MODEL, RESULT>> cb
-				= new ISharedCollector_Functions_Callback_Named<MODEL, RESULT, IClassicAndClausesNamed<MODEL, RESULT>>() {
+		final ISharedCollector_Functions_Callback_Named<MODEL, RESULT, IClassicLogical_And_Named<MODEL, RESULT>> cb
+				= new ISharedCollector_Functions_Callback_Named<MODEL, RESULT, IClassicLogical_And_Named<MODEL, RESULT>>() {
 
 			@Override
-			public ISharedCondition_Comparable_Common_Base<MODEL, RESULT, Comparable<?>, IClassicAndClausesNamed<MODEL, RESULT>>
+			public ISharedCondition_Comparable_Common_Base<MODEL, RESULT, Comparable<?>, IClassicLogical_And_Named<MODEL, RESULT>>
 				onComparable(CollectedFunctions functions, Function getter) {
 				
 				return andClassImplComparable(functions, (Function)getter);
 			}
 
 			@Override
-			public ISharedCondition_Comparable_String_Base<MODEL, RESULT, IClassicAndClausesNamed<MODEL, RESULT>>
+			public ISharedCondition_Comparable_String_Base<MODEL, RESULT, IClassicLogical_And_Named<MODEL, RESULT>>
 				onString(CollectedFunctions functions, StringFunction getter) {
 				
 				return andClassImplString(functions, getter);

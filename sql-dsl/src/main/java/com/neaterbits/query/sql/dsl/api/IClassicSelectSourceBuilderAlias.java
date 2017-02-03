@@ -8,7 +8,7 @@ public interface IClassicSelectSourceBuilderAlias<MODEL, RESULT> extends IShared
      * @param aliases
      */
     
-    IClassicWhereOrJoinBuilderAlias<MODEL, RESULT> from(Object ... aliases);
+    IClassicLogical_WhereOrJoin_Alias<MODEL, RESULT> from(Object ... aliases);
 
 	
 }

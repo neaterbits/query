@@ -15,7 +15,7 @@ abstract class Collector_SelectSource<MODEL, RESULT> extends BaseQueryEntity<MOD
 	}
 	
 	@Override
-	public final IClassicWhereOrJoinBuilderNamed<MODEL, RESULT> from(Class<?> ... classes) {
+	public final IClassicLogical_WhereOrJoin_Named<MODEL, RESULT> from(Class<?> ... classes) {
 		
 		if (classes.length == 0) {
 			throw new IllegalArgumentException("no classes");
@@ -48,7 +48,7 @@ abstract class Collector_SelectSource<MODEL, RESULT> extends BaseQueryEntity<MOD
 	}
 
 	@Override
-	public final IClassicWhereOrJoinBuilderAlias<MODEL, RESULT> from(Object... aliases) {
+	public final IClassicLogical_WhereOrJoin_Alias<MODEL, RESULT> from(Object... aliases) {
 		
 		if (aliases.length == 0) {
 			throw new IllegalArgumentException("no aliases");

@@ -8,8 +8,8 @@ final class Classic_Collector_Where_Or_Join_Named<MODEL, RESULT>
 	extends Classic_Collector_Where_Or_Join<MODEL, RESULT, Classic_Collector_And_Named<MODEL, RESULT>, Classic_Collector_Or_Named<MODEL, RESULT>>
 	implements 
 	
-				IClassicWhereOrJoinBuilderNamed<MODEL, RESULT>,
-				IClassicAndOrLogicalClausesNamed<MODEL, RESULT>,
+				IClassicLogical_WhereOrJoin_Named<MODEL, RESULT>,
+				IClassicLogical_And_Or_Named<MODEL, RESULT>,
 				IClassicJoinConditionNamed<MODEL, RESULT, Object, Object> {
 
 	Classic_Collector_Where_Or_Join_Named(BaseQueryEntity<MODEL> last) {
@@ -93,57 +93,57 @@ final class Classic_Collector_Where_Or_Join_Named<MODEL, RESULT>
 
 	// ------------------------  WHERE ------------------------
 	@Override
-	public <T> ISharedCondition_Comparable_Common_All_Compilable<MODEL, RESULT, Integer, IClassicAndOrLogicalClausesNamed<MODEL, RESULT>> where(IFunctionInteger<T> getter) {
+	public <T> ISharedCondition_Comparable_Common_All_Compilable<MODEL, RESULT, Integer, IClassicLogical_And_Or_Named<MODEL, RESULT>> where(IFunctionInteger<T> getter) {
 
-		return new Collector_Condition_Comparative<MODEL, RESULT, Integer, IClassicAndOrLogicalClausesNamed<MODEL,RESULT>>(this, makeGetter(getter));
+		return new Collector_Condition_Comparative<MODEL, RESULT, Integer, IClassicLogical_And_Or_Named<MODEL,RESULT>>(this, makeGetter(getter));
 	}
 	
 	@Override
-	public <T> ISharedCondition_Comparable_Common_All_Compilable<MODEL, RESULT, Long, IClassicAndOrLogicalClausesNamed<MODEL, RESULT>> where(IFunctionLong<T> getter) {
+	public <T> ISharedCondition_Comparable_Common_All_Compilable<MODEL, RESULT, Long, IClassicLogical_And_Or_Named<MODEL, RESULT>> where(IFunctionLong<T> getter) {
 
-		return new Collector_Condition_Comparative<MODEL, RESULT, Long, IClassicAndOrLogicalClausesNamed<MODEL,RESULT>>(this, makeGetter(getter));
+		return new Collector_Condition_Comparative<MODEL, RESULT, Long, IClassicLogical_And_Or_Named<MODEL,RESULT>>(this, makeGetter(getter));
 	}
 
 	@Override
-	public <T, E extends Enum<E>> ISharedCondition_Equality_All<MODEL, RESULT, E, IClassicAndOrLogicalClausesNamed<MODEL, RESULT>> where(IFunctionEnum<T, E> getter) {
+	public <T, E extends Enum<E>> ISharedCondition_Equality_All<MODEL, RESULT, E, IClassicLogical_And_Or_Named<MODEL, RESULT>> where(IFunctionEnum<T, E> getter) {
 
-		return new Collector_Condition_Comparative<MODEL, RESULT, E, IClassicAndOrLogicalClausesNamed<MODEL,RESULT>>(this, makeGetter(getter));
+		return new Collector_Condition_Comparative<MODEL, RESULT, E, IClassicLogical_And_Or_Named<MODEL,RESULT>>(this, makeGetter(getter));
 	}
 
 	@Override
-	public <T> ISharedCondition_Comparable_String_All_Compilable<MODEL, RESULT, IClassicAndOrLogicalClausesNamed<MODEL, RESULT>> where(StringFunction<T> getter) {
+	public <T> ISharedCondition_Comparable_String_All_Compilable<MODEL, RESULT, IClassicLogical_And_Or_Named<MODEL, RESULT>> where(StringFunction<T> getter) {
 		
-		return new Collector_Condition_String<MODEL, RESULT, IClassicAndOrLogicalClausesNamed<MODEL,RESULT>>(this, makeGetter(getter));
+		return new Collector_Condition_String<MODEL, RESULT, IClassicLogical_And_Or_Named<MODEL,RESULT>>(this, makeGetter(getter));
 	}
 	
 	
 	@Override
 	public ISharedFunctions_Named_Initial<
 			MODEL, RESULT,
-			IClassicAndOrLogicalClausesNamed<MODEL, RESULT>,
+			IClassicLogical_And_Or_Named<MODEL, RESULT>,
 			
-			ISharedCondition_Comparable_Common_All_Compilable<MODEL, RESULT, Integer, IClassicAndOrLogicalClausesNamed<MODEL, RESULT>>,
-			ISharedCondition_Comparable_Common_All_Compilable<MODEL, RESULT, Long, IClassicAndOrLogicalClausesNamed<MODEL, RESULT>>,
-			ISharedCondition_Comparable_String_All_Compilable<MODEL, RESULT, IClassicAndOrLogicalClausesNamed<MODEL, RESULT>>> 
+			ISharedCondition_Comparable_Common_All_Compilable<MODEL, RESULT, Integer, IClassicLogical_And_Or_Named<MODEL, RESULT>>,
+			ISharedCondition_Comparable_Common_All_Compilable<MODEL, RESULT, Long, IClassicLogical_And_Or_Named<MODEL, RESULT>>,
+			ISharedCondition_Comparable_String_All_Compilable<MODEL, RESULT, IClassicLogical_And_Or_Named<MODEL, RESULT>>> 
 	
 			where() {
 		
 		@SuppressWarnings({"unchecked", "rawtypes"})
-		final ISharedCollector_Functions_Callback_Named<MODEL, RESULT, IClassicAndOrLogicalClausesNamed<MODEL, RESULT>> cb
-				= new ISharedCollector_Functions_Callback_Named<MODEL, RESULT, IClassicAndOrLogicalClausesNamed<MODEL, RESULT>>() {
+		final ISharedCollector_Functions_Callback_Named<MODEL, RESULT, IClassicLogical_And_Or_Named<MODEL, RESULT>> cb
+				= new ISharedCollector_Functions_Callback_Named<MODEL, RESULT, IClassicLogical_And_Or_Named<MODEL, RESULT>>() {
 		
 			@Override
-			public ISharedCondition_Comparable_Common_Base<MODEL, RESULT, Comparable<?>, IClassicAndOrLogicalClausesNamed<MODEL, RESULT>>
+			public ISharedCondition_Comparable_Common_Base<MODEL, RESULT, Comparable<?>, IClassicLogical_And_Or_Named<MODEL, RESULT>>
 				onComparable(CollectedFunctions functions, Function getter) {
 				
 				return andClassImplComparable(functions, (Function)getter);
 			}
 		
 			@Override
-			public ISharedCondition_Comparable_String_Base<MODEL, RESULT, IClassicAndOrLogicalClausesNamed<MODEL, RESULT>>
+			public ISharedCondition_Comparable_String_Base<MODEL, RESULT, IClassicLogical_And_Or_Named<MODEL, RESULT>>
 				onString(CollectedFunctions functions, StringFunction getter) {
 				
-				return new Collector_Condition_String<MODEL, RESULT, IClassicAndOrLogicalClausesNamed<MODEL, RESULT>> (Classic_Collector_Where_Or_Join_Named.this, functions, makeGetter(getter));
+				return new Collector_Condition_String<MODEL, RESULT, IClassicLogical_And_Or_Named<MODEL, RESULT>> (Classic_Collector_Where_Or_Join_Named.this, functions, makeGetter(getter));
 			}
 		};
 
@@ -154,17 +154,17 @@ final class Classic_Collector_Where_Or_Join_Named<MODEL, RESULT>
 
 
 	@Override
-	public <T> ISharedCondition_Comparable_Common_All<MODEL, RESULT, Integer, IClassicAndClausesNamed<MODEL, RESULT>> and(IFunctionInteger<T> getter) {
+	public <T> ISharedCondition_Comparable_Common_All<MODEL, RESULT, Integer, IClassicLogical_And_Named<MODEL, RESULT>> and(IFunctionInteger<T> getter) {
 		return andClassImplComparative(getter);
 	}
 
 	@Override
-	public <T> ISharedCondition_Comparable_Common_All<MODEL, RESULT, Long, IClassicAndClausesNamed<MODEL, RESULT>> and(IFunctionLong<T> getter) {
+	public <T> ISharedCondition_Comparable_Common_All<MODEL, RESULT, Long, IClassicLogical_And_Named<MODEL, RESULT>> and(IFunctionLong<T> getter) {
 		return andClassImplComparative(getter);
 	}
 
 	@Override
-	public <T> ISharedCondition_Comparable_String_All<MODEL, RESULT, IClassicAndClausesNamed<MODEL, RESULT>> and(StringFunction<T> getter) {
+	public <T> ISharedCondition_Comparable_String_All<MODEL, RESULT, IClassicLogical_And_Named<MODEL, RESULT>> and(StringFunction<T> getter) {
 		return andClassImplString(null, getter);
 	}
 	
@@ -172,26 +172,26 @@ final class Classic_Collector_Where_Or_Join_Named<MODEL, RESULT>
 	public ISharedFunctions_Named_Initial<
 		MODEL,
 		RESULT,
-		IClassicAndClausesNamed<MODEL, RESULT>,
-		ISharedCondition_Comparable_Common_All<MODEL, RESULT, Integer, IClassicAndClausesNamed<MODEL, RESULT>>,
-		ISharedCondition_Comparable_Common_All<MODEL, RESULT, Long, IClassicAndClausesNamed<MODEL, RESULT>>,
-		ISharedCondition_Comparable_String_All<MODEL, RESULT, IClassicAndClausesNamed<MODEL, RESULT>>
+		IClassicLogical_And_Named<MODEL, RESULT>,
+		ISharedCondition_Comparable_Common_All<MODEL, RESULT, Integer, IClassicLogical_And_Named<MODEL, RESULT>>,
+		ISharedCondition_Comparable_Common_All<MODEL, RESULT, Long, IClassicLogical_And_Named<MODEL, RESULT>>,
+		ISharedCondition_Comparable_String_All<MODEL, RESULT, IClassicLogical_And_Named<MODEL, RESULT>>
 	>
 		and() {
 
 		@SuppressWarnings({"unchecked", "rawtypes"})
-		final ISharedCollector_Functions_Callback_Named<MODEL, RESULT, IClassicAndClausesNamed<MODEL, RESULT>> cb
-				= new ISharedCollector_Functions_Callback_Named<MODEL, RESULT, IClassicAndClausesNamed<MODEL, RESULT>>() {
+		final ISharedCollector_Functions_Callback_Named<MODEL, RESULT, IClassicLogical_And_Named<MODEL, RESULT>> cb
+				= new ISharedCollector_Functions_Callback_Named<MODEL, RESULT, IClassicLogical_And_Named<MODEL, RESULT>>() {
 		
 			@Override
-			public ISharedCondition_Comparable_Common_Base<MODEL, RESULT, Comparable<?>, IClassicAndClausesNamed<MODEL, RESULT>>
+			public ISharedCondition_Comparable_Common_Base<MODEL, RESULT, Comparable<?>, IClassicLogical_And_Named<MODEL, RESULT>>
 				onComparable(CollectedFunctions functions, Function getter) {
 				
 				return andClassImplComparable(functions, (Function)getter);
 			}
 		
 			@Override
-			public ISharedCondition_Comparable_String_Base<MODEL, RESULT, IClassicAndClausesNamed<MODEL, RESULT>>
+			public ISharedCondition_Comparable_String_Base<MODEL, RESULT, IClassicLogical_And_Named<MODEL, RESULT>>
 				onString(CollectedFunctions functions, StringFunction getter) {
 				
 				return andClassImplString(functions, getter);
@@ -205,19 +205,19 @@ final class Classic_Collector_Where_Or_Join_Named<MODEL, RESULT>
 
 
 	@Override
-	public <T> ISharedCondition_Comparable_Common_All<MODEL, RESULT, Integer, IClassicOrClausesNamed<MODEL, RESULT>> or(IFunctionInteger<T> getter) {
+	public <T> ISharedCondition_Comparable_Common_All<MODEL, RESULT, Integer, IClassicLogical_Or_Named<MODEL, RESULT>> or(IFunctionInteger<T> getter) {
 		return orClassImplComparable(getter);
 	}
 
 	
 	@Override
-	public <T> ISharedCondition_Comparable_Common_All<MODEL, RESULT, Long, IClassicOrClausesNamed<MODEL, RESULT>> or(IFunctionLong<T> getter) {
+	public <T> ISharedCondition_Comparable_Common_All<MODEL, RESULT, Long, IClassicLogical_Or_Named<MODEL, RESULT>> or(IFunctionLong<T> getter) {
 		return orClassImplComparable(getter);
 	}
 
 
 	@Override
-	public <T> ISharedCondition_Comparable_String_All<MODEL, RESULT, IClassicOrClausesNamed<MODEL, RESULT>> or(StringFunction<T> getter) {
+	public <T> ISharedCondition_Comparable_String_All<MODEL, RESULT, IClassicLogical_Or_Named<MODEL, RESULT>> or(StringFunction<T> getter) {
 		
 		return orClassImplString(null, getter);
 	}
@@ -226,26 +226,26 @@ final class Classic_Collector_Where_Or_Join_Named<MODEL, RESULT>
 	public ISharedFunctions_Named_Initial<
 		MODEL,
 		RESULT,
-		IClassicOrClausesNamed<MODEL, RESULT>,
-		ISharedCondition_Comparable_Common_All<MODEL, RESULT, Integer, IClassicOrClausesNamed<MODEL, RESULT>>,
-		ISharedCondition_Comparable_Common_All<MODEL, RESULT, Long, IClassicOrClausesNamed<MODEL, RESULT>>,
-		ISharedCondition_Comparable_String_All<MODEL, RESULT, IClassicOrClausesNamed<MODEL, RESULT>>
+		IClassicLogical_Or_Named<MODEL, RESULT>,
+		ISharedCondition_Comparable_Common_All<MODEL, RESULT, Integer, IClassicLogical_Or_Named<MODEL, RESULT>>,
+		ISharedCondition_Comparable_Common_All<MODEL, RESULT, Long, IClassicLogical_Or_Named<MODEL, RESULT>>,
+		ISharedCondition_Comparable_String_All<MODEL, RESULT, IClassicLogical_Or_Named<MODEL, RESULT>>
 	>
 		or() {
 
 		@SuppressWarnings({"unchecked", "rawtypes"})
-		final ISharedCollector_Functions_Callback_Named<MODEL, RESULT, IClassicOrClausesNamed<MODEL, RESULT>> cb
-				= new ISharedCollector_Functions_Callback_Named<MODEL, RESULT, IClassicOrClausesNamed<MODEL, RESULT>>() {
+		final ISharedCollector_Functions_Callback_Named<MODEL, RESULT, IClassicLogical_Or_Named<MODEL, RESULT>> cb
+				= new ISharedCollector_Functions_Callback_Named<MODEL, RESULT, IClassicLogical_Or_Named<MODEL, RESULT>>() {
 		
 			@Override
-			public ISharedCondition_Comparable_Common_Base<MODEL, RESULT, Comparable<?>, IClassicOrClausesNamed<MODEL, RESULT>>
+			public ISharedCondition_Comparable_Common_Base<MODEL, RESULT, Comparable<?>, IClassicLogical_Or_Named<MODEL, RESULT>>
 				onComparable(CollectedFunctions functions, Function getter) {
 				
 				return orClassImplComparable(functions, (Function)getter);
 			}
 		
 			@Override
-			public ISharedCondition_Comparable_String_Base<MODEL, RESULT, IClassicOrClausesNamed<MODEL, RESULT>> 
+			public ISharedCondition_Comparable_String_Base<MODEL, RESULT, IClassicLogical_Or_Named<MODEL, RESULT>> 
 				onString(CollectedFunctions functions, StringFunction getter) {
 				return orClassImplString(functions, getter);
 			}
@@ -358,12 +358,12 @@ final class Classic_Collector_Where_Or_Join_Named<MODEL, RESULT>
 	}
 
 	@Override
-	public IClassicAndClausesNamed<MODEL, RESULT> andNest(ISharedNestedOrConsumerNamed<MODEL, RESULT, IClassicOrClausesNamed<MODEL, RESULT>> orBuilder) {
+	public IClassicLogical_And_Named<MODEL, RESULT> andNest(ISharedNestedOrConsumerNamed<MODEL, RESULT, IClassicLogical_Or_Named<MODEL, RESULT>> orBuilder) {
 		return addNestedOrImpl(orBuilder);
 	}
 
 	@Override
-	public IClassicOrClausesNamed<MODEL, RESULT> orNest(ISharedNestedAndConsumerNamed<MODEL, RESULT, IClassicAndClausesNamed<MODEL, RESULT>> andBuilder) {
+	public IClassicLogical_Or_Named<MODEL, RESULT> orNest(ISharedNestedAndConsumerNamed<MODEL, RESULT, IClassicLogical_And_Named<MODEL, RESULT>> andBuilder) {
 		return addNestedAndImpl(andBuilder);
 	}
 }

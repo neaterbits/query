@@ -845,68 +845,55 @@ Det motsatte av alias er concrete kanskje, men tror satser på Entity
 ---
 
 
+adhoc queries og order-by etc?
+
+Dette er i grunnen relatert til result-set
+
+ - returnere en enkelt entitet type fa lista ? Gjøre group-by på resultat-typen ??
+
+   OBS!! Men egentlig ikke applicable siden er kun ved aggregeringer at er noe poeng å gjøre group by.
+   having kunne gitt mening men kan vel ses bort far i første omgang.
+   order by må vi ha for sortering av records.
+
+ - når vi mapper resultat så kan vi gjøre order-by på det nivået på KUN den typen.
+   Så da kan en faktisk også gjøre dette for vanlige queries, det er KUN resultat-typen en kan hente felter fra.
+
+Så da kan vi altså for adhoc-queries gjøre groupby/having/orderby med akkurat samme API siden er resultat-typen som har noe å si.
+
+Betyr vel også da at en egentlig ikke trenger alias her, det er alltid named, eller ??
+	Nja, det kan være to aliaser av samme type i resultatet. MEN!! da skal dette være mapped så da er det mapped-typen som gjelder.
+	Så ja, er alltid mapped.	
+
+Så ikke alle queries vil kunne ha group-by kun de som gjør mapping. Så da må vi nok dra med oss propertien på om er mappa, hele veien igjennom.
+Hvordan gjøre dette mest hensiktsmessig? Kan bli mange kombinasjoner av det, men kan ihvertfall sette kombinasjonene sammen av isolerte interfaces.
 
 
- 
+Må ende opp med en [IClassic|...]WhereOrJoinBuilder som da vet om den er mapped eller entity result.
 
+MEN: er også slik at for queries som returnerer bare en enkelt-entry så er det meningsløst å ha result aggregerings funksjoner, så vi kan bare kutte disse helt.
 
-@FunctionalInterface
-public interface ISharedSubOr<MODEL, RESULT, OR_CLAUSES extends ISharedOrClauses<MODEL, RESULT>> extends Consumer<OR_CLAUSES> {
+Så egentlige er det bare "aggregational" vs ikke som trengs å sendes videre av informasjon, er vel ikke andre grunner til at ønsker dette?
 
-}
+Er to akser:
+single vs multi
+og entity vs mapped.
 
+så om skulle sende all infoen så blir det 4 type interfaces som må sendes gjennom. Men siden er bare multi + mapped som gir mening å ha group by osv,
+så kan man altså klare seg med to utgaver, hvor den ene utgaven bare returnerer default mens den andre vil ende opp med ekstra-funksjoner.
+Dette er da fra WhereOrJoin utover.
+Men må vel ha egne typer for .
 
-
-
-
-
-	modified:   sql-dsl/src/main/java/com/neaterbits/query/sql/dsl/api/ISharedAndClausesAlias.java
-
-no changes added to commit (use "git add" and/or "git commit -a")
-nhl@nhl-SATELLITE-P50-A-11J:~/projects/all-neon/query$ git diff sql-dsl/src/main/java/com/neaterbits/query/sql/dsl/api/ISharedAndClausesAlias.java
-diff --git a/sql-dsl/src/main/java/com/neaterbits/query/sql/dsl/api/ISharedAndClausesAlias.java b/sql-dsl/src/main/java/com/neaterbits/query/sql/dsl/api/ISharedAndClausesAlias.java
-index 6114dd8..6bc7bf6 100644
---- a/sql-dsl/src/main/java/com/neaterbits/query/sql/dsl/api/ISharedAndClausesAlias.java
-+++ b/sql-dsl/src/main/java/com/neaterbits/query/sql/dsl/api/ISharedAndClausesAlias.java
-@@ -8,5 +8,8 @@ public interface ISharedAndClausesAlias<MODEL, RESULT, AND_CLAUSES extends IShar
-        ISharedConditionClauseAlias<MODEL, RESULT, Long, AND_CLAUSES> and(ISupplierLong getter);
- 
-     ISharedClauseComparableStringAll<MODEL, RESULT, AND_CLAUSES> and(ISupplierString getter);
-+    
-+    <SUB_OR_CLAUSES extends ISharedOrClausesAlias<MODEL, RESULT, SUB_OR_CLAUSES>>
-+               ISharedAndClausesAlias<MODEL, RESULT, AND_CLAUSES> and(ISharedSubOr<MODEL, RESULT, SUB_OR_CLAUSES> orBuilder);
- 
- }
+Alt kan implementeres i samme klasser evt, trenger ikke ha egne collectors for dette.
 
 
 
 
------
 
 
-
-package com.neaterbits.query.sql.dsl.api;
-
-public interface ISharedOrClausesNamedValues<MODEL, RESULT, OR_CLAUSES extends ISharedOrClausesNamedValues<MODEL, RESULT, OR_CLAUSES>>
-
-		extends ISharedOrClausesNamedBase<
-			MODEL,
-			RESULT,
-			OR_CLAUSES,
-			
-			ISharedClauseComparableCommonValue<MODEL, RESULT, Integer, OR_CLAUSES>,
-			ISharedClauseComparableCommonValue<MODEL, RESULT, Long, OR_CLAUSES>,
-			ISharedClauseComparableStringValue<MODEL, RESULT, OR_CLAUSES>> {
-
-}
 
 
 
 ----
-
-
-må ha liste over alle som er resolved, og er parameter, dvs de er parameter-resolved.
-
 
 
 

@@ -610,14 +610,12 @@ public class SQLAPITest extends BaseSQLAPITest {
 	}
 
 	@Test
-    public void testNameBasedAggregation() {
+    public void testNameBasedGrouping() {
 		assertThat(true).isEqualTo(false);;
 
 		final Company acme = new Company(-1, "Acme");
 		final Company foo = new Company(-1, "Foo");
 
-		final Function<?, ?> f = null;
-		
         final SingleQuery<CompanyResultVO> startsWithAc =
         		selectOneOrNull(CompanyResultVO.class)
 
