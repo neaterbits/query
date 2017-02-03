@@ -152,8 +152,8 @@ q.select(Foo::company)
 .leftJoin(Foo.class, Bar.class).
 .leftOuterJoin(Foo.class, Bar.class).
 .innerJoin(Foo.class, Bar.class)
-.where()
 
+.where()
 
 private static final Select q = select();
 
@@ -536,6 +536,11 @@ W - parametere
 
  - result functions? dvs aggregates. count, etc
 
+ - dialekter, dvs statisk begrense muligheter (kun ANSI joins? kun samme-type rekursjon? strict, short, classic)
+
+  * joins bør være nøsta, slik som for adhoc query
+    - viser letterer den logiske traverseringen mellom tabellene
+    - lettere å implementere API-messig også siden sub-joinene blir decoupled.
   
  - subselects
 
@@ -555,12 +560,8 @@ men de kan også fjenres, dvs having uten group by og order by uten noen av de.
  
 !! TODO: skiller mellom NonProcessResult og ProcesseResult i dag men burde skill ut OrderBy som egen
 siden ved liste av entiteter ("select * from" i praksis) så burde en ikke kunne gjøre group by eller having mens order by er OK.
+
  
-
-
-
-
-
  
 
 - !!! for halway queries (startsWith/endsWith/in for native), fortsatt parametrisere for å unngå at logger verdier !!!
@@ -570,7 +571,6 @@ siden ved liste av entiteter ("select * from" i praksis) så burde en ikke kunne
 
  * OBS! skille ut alt target-spesifikt i eget *Target hierarki for SQL genereringen, uavhengg av datasource (sinden kan kjøre native queries mot JPA f.eks)
 
- - dialekter, dvs statisk begrense muligheter (kun ANSI joins? kun samme-type rekursjon? strict, short, classic)
 
 
 
