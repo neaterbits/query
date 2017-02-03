@@ -1,9 +1,9 @@
 package com.neaterbits.query.sql.dsl.api;
 
-public interface ISharedJoinConditionNamed<
+public interface ISharedJoin_Condition_Named<
 							MODEL, RESULT,
 							LEFT, RIGHT,
-							CONDITION extends ISharedJoinConditionNamed<MODEL, RESULT, LEFT, RIGHT, CONDITION>> {
+							CONDITION extends ISharedJoin_Condition_Named<MODEL, RESULT, LEFT, RIGHT, CONDITION>> {
 
 
 	CONDITION on(CollectionFunction<LEFT, RIGHT>  joinCollection);

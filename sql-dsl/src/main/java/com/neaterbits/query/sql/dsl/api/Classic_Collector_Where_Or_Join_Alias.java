@@ -9,7 +9,7 @@ final class Classic_Collector_Where_Or_Join_Alias<MODEL, RESULT>
 		   IClassicLogical_WhereOrJoin_NonProcessResult_Alias<MODEL, RESULT>,
 		   IClassicLogical_And_Or_Alias<MODEL, RESULT>,
 		   
-		   IClassicJoinConditionAlias<MODEL, RESULT> {
+		   IClassicJoin_Condition_Alias<MODEL, RESULT> {
 
 	Classic_Collector_Where_Or_Join_Alias(BaseQueryEntity<MODEL> last) {
 		super(last);
@@ -35,13 +35,13 @@ final class Classic_Collector_Where_Or_Join_Alias<MODEL, RESULT>
 
 	// -- Alias  --
 	
-	private <LEFT, RIGHT> IClassicJoinConditionAlias<MODEL, RESULT> getJoinConditionAlias() {
-		return (IClassicJoinConditionAlias<MODEL, RESULT>)this;
+	private <LEFT, RIGHT> IClassicJoin_Condition_Alias<MODEL, RESULT> getJoinConditionAlias() {
+		return (IClassicJoin_Condition_Alias<MODEL, RESULT>)this;
 	}
 	
 	
 	@Override
-	public IClassicJoinConditionAlias<MODEL, RESULT> innerJoin(Object left, Object right) {
+	public IClassicJoin_Condition_Alias<MODEL, RESULT> innerJoin(Object left, Object right) {
 	
 		final CollectedJoin_Alias collectedJoin = new CollectedJoin_Alias(EJoinType.INNER, (IAlias)left, (IAlias)right);
 		
@@ -51,7 +51,7 @@ final class Classic_Collector_Where_Or_Join_Alias<MODEL, RESULT>
 	}
 	
 	@Override
-	public IClassicJoinConditionAlias<MODEL, RESULT> leftJoin(Object left, Object right) {
+	public IClassicJoin_Condition_Alias<MODEL, RESULT> leftJoin(Object left, Object right) {
 	
 		final CollectedJoin_Alias collectedJoin = new CollectedJoin_Alias(EJoinType.LEFT, (IAlias)left, (IAlias)right);
 		
@@ -60,7 +60,7 @@ final class Classic_Collector_Where_Or_Join_Alias<MODEL, RESULT>
 		return getJoinConditionAlias();
 	}
 	
-	private <R> IClassicJoinConditionAlias<MODEL, RESULT> compareAlias(Supplier<R> left, Supplier<R> right) {
+	private <R> IClassicJoin_Condition_Alias<MODEL, RESULT> compareAlias(Supplier<R> left, Supplier<R> right) {
 		
 		final SupplierGetter leftGetter = new SupplierGetter(left); 
 		final SupplierGetter rightGetter = new SupplierGetter(right); 
@@ -75,7 +75,7 @@ final class Classic_Collector_Where_Or_Join_Alias<MODEL, RESULT>
 	}
 	
 	@Override
-	public IClassicJoinConditionAlias<MODEL, RESULT> on(ISupplierCollection joinCollection) {
+	public IClassicJoin_Condition_Alias<MODEL, RESULT> on(ISupplierCollection joinCollection) {
 		final SupplierGetter collectionGetter = new SupplierGetter(joinCollection); 
 		
 		final CollectedJoin curJoin = getQueryCollector().getJoins().getLast();
@@ -88,12 +88,12 @@ final class Classic_Collector_Where_Or_Join_Alias<MODEL, RESULT>
 	}
 	
 	@Override
-	public IClassicJoinConditionAlias<MODEL, RESULT> compare(ISupplierInteger left, ISupplierInteger right) {
+	public IClassicJoin_Condition_Alias<MODEL, RESULT> compare(ISupplierInteger left, ISupplierInteger right) {
 		return compareAlias(left, right);
 	}
 	
 	@Override
-	public IClassicJoinConditionAlias<MODEL, RESULT> compare(ISupplierLong left, ISupplierLong right) {
+	public IClassicJoin_Condition_Alias<MODEL, RESULT> compare(ISupplierLong left, ISupplierLong right) {
 		return compareAlias(left, right);
 	}
 

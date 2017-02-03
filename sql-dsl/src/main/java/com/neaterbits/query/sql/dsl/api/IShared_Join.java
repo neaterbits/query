@@ -1,5 +1,5 @@
 package com.neaterbits.query.sql.dsl.api;
 
-public interface ISharedJoinClause {
+public interface IShared_Join {
 	
 }

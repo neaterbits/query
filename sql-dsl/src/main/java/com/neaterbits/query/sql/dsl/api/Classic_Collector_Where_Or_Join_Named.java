@@ -10,7 +10,7 @@ final class Classic_Collector_Where_Or_Join_Named<MODEL, RESULT>
 	
 				IClassicLogical_WhereOrJoin_NonProcessResult_Named<MODEL, RESULT>,
 				IClassicLogical_And_Or_Named<MODEL, RESULT>,
-				IClassicJoinConditionNamed<MODEL, RESULT, Object, Object> {
+				IClassicJoin_Condition_Named<MODEL, RESULT, Object, Object> {
 
 	Classic_Collector_Where_Or_Join_Named(BaseQueryEntity<MODEL> last) {
 		super(last);
@@ -36,12 +36,12 @@ final class Classic_Collector_Where_Or_Join_Named<MODEL, RESULT>
 	// -- Table -- 
 	
 	@SuppressWarnings("unchecked")
-	private <LEFT, RIGHT> IClassicJoinConditionNamed<MODEL, RESULT, LEFT, RIGHT> getJoinConditionTable() {
-		return (IClassicJoinConditionNamed<MODEL, RESULT, LEFT, RIGHT>)this;
+	private <LEFT, RIGHT> IClassicJoin_Condition_Named<MODEL, RESULT, LEFT, RIGHT> getJoinConditionTable() {
+		return (IClassicJoin_Condition_Named<MODEL, RESULT, LEFT, RIGHT>)this;
 	}
 	
 	@Override
-	public <LEFT, RIGHT> IClassicJoinConditionNamed<MODEL, RESULT, LEFT, RIGHT> innerJoin(Class<LEFT> leftType, Class<RIGHT> rightType) {
+	public <LEFT, RIGHT> IClassicJoin_Condition_Named<MODEL, RESULT, LEFT, RIGHT> innerJoin(Class<LEFT> leftType, Class<RIGHT> rightType) {
 
 		final CollectedJoin_Named collectedJoin = new CollectedJoin_Named(EJoinType.INNER, leftType, rightType);
 		
@@ -51,7 +51,7 @@ final class Classic_Collector_Where_Or_Join_Named<MODEL, RESULT>
 	}
 
 	@Override
-	public <LEFT, RIGHT> IClassicJoinConditionNamed<MODEL, RESULT, LEFT, RIGHT> leftJoin(Class<LEFT> leftType, Class<RIGHT> rightType) {
+	public <LEFT, RIGHT> IClassicJoin_Condition_Named<MODEL, RESULT, LEFT, RIGHT> leftJoin(Class<LEFT> leftType, Class<RIGHT> rightType) {
 
 		final CollectedJoin_Named collectedJoin = new CollectedJoin_Named(EJoinType.LEFT, leftType, rightType);
 		
@@ -62,7 +62,7 @@ final class Classic_Collector_Where_Or_Join_Named<MODEL, RESULT>
 
 	
 	@Override
-	public IClassicJoinConditionNamed<MODEL, RESULT, Object, Object> on(CollectionFunction<Object, Object> joinCollection) {
+	public IClassicJoin_Condition_Named<MODEL, RESULT, Object, Object> on(CollectionFunction<Object, Object> joinCollection) {
 		final FunctionGetter collectionGetter = new FunctionGetter(joinCollection); 
 
 		final CollectedJoin curJoin = getQueryCollector().getJoins().getLast();
@@ -75,7 +75,7 @@ final class Classic_Collector_Where_Or_Join_Named<MODEL, RESULT>
 	}
 
 	@Override
-	public IClassicJoinConditionNamed<MODEL, RESULT, Object, Object> compare(IFunctionInteger<Object> left, IFunctionInteger<Object> right) {
+	public IClassicJoin_Condition_Named<MODEL, RESULT, Object, Object> compare(IFunctionInteger<Object> left, IFunctionInteger<Object> right) {
 		
 		final FunctionGetter leftGetter = new FunctionGetter(left); 
 		final FunctionGetter rightGetter = new FunctionGetter(right); 

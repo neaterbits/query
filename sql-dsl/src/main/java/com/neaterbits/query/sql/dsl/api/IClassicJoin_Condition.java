@@ -1,5 +1,5 @@
 package com.neaterbits.query.sql.dsl.api;
 
-public interface IClassicJoinCondition {
+public interface IClassicJoin_Condition {
 
 }
