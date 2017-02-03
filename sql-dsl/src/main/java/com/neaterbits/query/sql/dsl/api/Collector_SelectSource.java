@@ -3,9 +3,9 @@ package com.neaterbits.query.sql.dsl.api;
 
 abstract class Collector_SelectSource<MODEL, RESULT> extends BaseQueryEntity<MODEL>
 		implements 
-				IClassicSelectSourceBuilderNamed<MODEL, RESULT>,
-				IClassicSelectSourceBuilderAlias<MODEL, RESULT>,
-				ISharedSelectSourceBuilderAliasAlias<MODEL, RESULT> {
+				IClassic_From_Named<MODEL, RESULT>,
+				IClassic_From_Alias<MODEL, RESULT>,
+				IShared_From_AliasAlias<MODEL, RESULT> {
 
 //	private Class<?> [] classes;
 //	private Alias<?> [] aliases;

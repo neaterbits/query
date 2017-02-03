@@ -1,6 +1,6 @@
 package com.neaterbits.query.sql.dsl.api;
 
-public interface ISharedSelectSourceBuilderAliasAlias<MODEL, RESULT> extends ISharedSelectSourceBuilder<MODEL, RESULT> {
+public interface IShared_From_AliasAlias<MODEL, RESULT> extends ISharedSelectSourceBuilder<MODEL, RESULT> {
 
     /**
      * Pure aliases search
