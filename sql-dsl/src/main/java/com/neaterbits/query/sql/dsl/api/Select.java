@@ -4,19 +4,19 @@ import java.math.BigDecimal;
 
 public interface Select {
 
-	public static <MAPPED_RESULT> IClassicSingleMapToResult<SingleQuery<MAPPED_RESULT>, MAPPED_RESULT> selectOneOrNull(Class<MAPPED_RESULT> cl) {
+	public static <MAPPED_RESULT> IClassicResult_Mapped_Single_All<SingleQuery<MAPPED_RESULT>, MAPPED_RESULT> selectOneOrNull(Class<MAPPED_RESULT> cl) {
 		return ClassicSelect.selectImpl.selectOneOrNull(cl);
 	}
 
-	public static <MAPPED_RESULT> IClassicMultiMapToResult<MultiQuery<MAPPED_RESULT>, MAPPED_RESULT> selectList(Class<MAPPED_RESULT> cl) {
+	public static <MAPPED_RESULT> IClassicResult_Mapped_Multi_All<MultiQuery<MAPPED_RESULT>, MAPPED_RESULT> selectList(Class<MAPPED_RESULT> cl) {
 		return ClassicSelect.selectImpl.selectList(cl);
 	}
 
-	public static <TYPE_RESULT> IClassicSingleEntityResult<SingleQuery<TYPE_RESULT>, TYPE_RESULT> selectOneFrom(Class<TYPE_RESULT> cl) {
+	public static <TYPE_RESULT> IClassicResult_Entity_Single<SingleQuery<TYPE_RESULT>, TYPE_RESULT> selectOneFrom(Class<TYPE_RESULT> cl) {
 		return ClassicSelect.selectImpl.selectOneFrom(cl);
 	}
 
-	public static <TYPE_RESULT> IClassicMultiEntityResult<MultiQuery<TYPE_RESULT>, TYPE_RESULT> selectListFrom(Class<TYPE_RESULT> cl) {
+	public static <TYPE_RESULT> IClassicResult_Entity_Multi<MultiQuery<TYPE_RESULT>, TYPE_RESULT> selectListFrom(Class<TYPE_RESULT> cl) {
 		return ClassicSelect.selectImpl.selectListFrom(cl);
 	}
 
@@ -36,19 +36,19 @@ public interface Select {
 		return ClassicSelect.selectImpl.aliasAlias(aliasType);
     }
 
-    public static <T> IClassicNumericNamedResult<Short> sum(IFunctionShort<T> field) {
+    public static <T> IClassicResult_Numeric_Named<Short> sum(IFunctionShort<T> field) {
     	return ClassicSelect.selectImpl.sum(field);
     }
 	
-    public static <T> IClassicNumericNamedResult<Integer> sum(IFunctionInteger<T> field) {
+    public static <T> IClassicResult_Numeric_Named<Integer> sum(IFunctionInteger<T> field) {
     	return ClassicSelect.selectImpl.sum(field);
     }
 
-    public static <T> IClassicNumericNamedResult<Long> sum(IFunctionLong<T> field) {
+    public static <T> IClassicResult_Numeric_Named<Long> sum(IFunctionLong<T> field) {
     	return ClassicSelect.selectImpl.sum(field);
     }
 
-    public static <T> IClassicNumericNamedResult<BigDecimal> sum(IFunctionBigDecimal<T> field) {
+    public static <T> IClassicResult_Numeric_Named<BigDecimal> sum(IFunctionBigDecimal<T> field) {
     	return ClassicSelect.selectImpl.sum(field);
     }
     

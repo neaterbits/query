@@ -23,7 +23,7 @@ final class ClassicSelect implements IClassic {
 	}
 	
 	@Override
-	public <MAPPED_RESULT> IClassicSingleMapToResult<SingleQuery<MAPPED_RESULT>, MAPPED_RESULT> selectOneOrNull(Class<MAPPED_RESULT> cl) {
+	public <MAPPED_RESULT> IClassicResult_Mapped_Single_All<SingleQuery<MAPPED_RESULT>, MAPPED_RESULT> selectOneOrNull(Class<MAPPED_RESULT> cl) {
 		if (cl == null) {
 			throw new IllegalArgumentException("cl == null");
 			}
@@ -32,7 +32,7 @@ final class ClassicSelect implements IClassic {
 	}
 
 	@Override
-	public <MAPPED_RESULT> IClassicMultiMapToResult<MultiQuery<MAPPED_RESULT>, MAPPED_RESULT> selectList(Class<MAPPED_RESULT> cl) {
+	public <MAPPED_RESULT> IClassicResult_Mapped_Multi_All<MultiQuery<MAPPED_RESULT>, MAPPED_RESULT> selectList(Class<MAPPED_RESULT> cl) {
 		if (cl == null) {
 			throw new IllegalArgumentException("cl == null");
 		}
@@ -41,7 +41,7 @@ final class ClassicSelect implements IClassic {
 	}
 
 	@Override
-	public <ENTITY_RESULT> IClassicSingleEntityResult<SingleQuery<ENTITY_RESULT>, ENTITY_RESULT> selectOneFrom(Class<ENTITY_RESULT> cl) {
+	public <ENTITY_RESULT> IClassicResult_Entity_Single<SingleQuery<ENTITY_RESULT>, ENTITY_RESULT> selectOneFrom(Class<ENTITY_RESULT> cl) {
 		if (cl == null) {
 			throw new IllegalArgumentException("cl == null");
 		}
@@ -52,7 +52,7 @@ final class ClassicSelect implements IClassic {
 	}
 
 	@Override
-	public <ENTITY_RESULT> IClassicMultiEntityResult<MultiQuery<ENTITY_RESULT>, ENTITY_RESULT> selectListFrom(Class<ENTITY_RESULT> cl) {
+	public <ENTITY_RESULT> IClassicResult_Entity_Multi<MultiQuery<ENTITY_RESULT>, ENTITY_RESULT> selectListFrom(Class<ENTITY_RESULT> cl) {
 		if (cl == null) {
 			throw new IllegalArgumentException("cl == null");
 		}
@@ -201,27 +201,27 @@ final class ClassicSelect implements IClassic {
 	// ------------------------ Sum ------------------------
 	
 
-	private <T, NUM> IClassicNumericNamedResult<NUM> sum(Function<T, NUM> field, Class<NUM> cl) {
+	private <T, NUM> IClassicResult_Numeric_Named<NUM> sum(Function<T, NUM> field, Class<NUM> cl) {
 		return new Collector_AggregateNamedResult<>(new QueryResultSum(cl, new FunctionGetter(field)), singleQueryCompiler());
 	}
 	
 	@Override
-	public <T> IClassicNumericNamedResult<Short> sum(IFunctionShort<T> field) {
+	public <T> IClassicResult_Numeric_Named<Short> sum(IFunctionShort<T> field) {
 		return sum(field, Short.class);
 	}
 
 	@Override
-	public <T> IClassicNumericNamedResult<Integer> sum(IFunctionInteger<T> field) {
+	public <T> IClassicResult_Numeric_Named<Integer> sum(IFunctionInteger<T> field) {
 		return sum(field, Integer.class);
 	}
 
 	@Override
-	public <T> IClassicNumericNamedResult<Long> sum(IFunctionLong<T> field) {
+	public <T> IClassicResult_Numeric_Named<Long> sum(IFunctionLong<T> field) {
 		return sum(field, Long.class);
 	}
 
 	@Override
-	public <T> IClassicNumericNamedResult<BigDecimal> sum(IFunctionBigDecimal<T> field) {
+	public <T> IClassicResult_Numeric_Named<BigDecimal> sum(IFunctionBigDecimal<T> field) {
 		return sum(field, BigDecimal.class);
 	}
 }

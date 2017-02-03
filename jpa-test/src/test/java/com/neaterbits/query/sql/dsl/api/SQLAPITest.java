@@ -12,7 +12,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import java.math.BigDecimal;
 import java.util.function.Consumer;
-import java.util.function.Function;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -25,7 +24,6 @@ import com.neaterbits.query.jpatest.model.Employee;
 import com.neaterbits.query.jpatest.model.Person;
 import com.neaterbits.query.jpatest.model.Role;
 import com.neaterbits.query.sql.dsl.api.entity.QueryMetaModel;
-import com.neaterbits.query.sql.dsl.api.helper.jpa.QueryTestDSJPANative;
 import com.neaterbits.query.sql.dsl.api.helper.jpa.QueryTestDSJPQL;
 import com.neaterbits.query.sql.dsl.api.testhelper.BaseSQLAPITest;
 import com.neaterbits.query.sql.dsl.api.testhelper.QueryTestDSBuilder;
