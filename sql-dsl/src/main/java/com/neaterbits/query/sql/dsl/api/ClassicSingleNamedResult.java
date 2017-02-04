@@ -3,7 +3,7 @@ package com.neaterbits.query.sql.dsl.api;
 import java.util.function.Function;
 
 final class ClassicSingleNamedResult<MODEL, RESULT>
-	extends Collector_Conditions_Initial<MODEL, RESULT, Classic_Collector_And_Named_Single<MODEL, RESULT>, Classic_Collector_Or_Named_Single<MODEL, RESULT>> 
+	extends Collector_Conditions_Initial<MODEL, RESULT> 
 		implements
 			IClassicSingleWhereClauseBuilderNamed<MODEL, RESULT>,
 			IClassicSingleAndOrLogicalClausesNamed<MODEL, RESULT>

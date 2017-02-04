@@ -3,7 +3,7 @@ package com.neaterbits.query.sql.dsl.api;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
-final class Classic_Collector_Or_Named<MODEL, RESULT> extends Classic_Collector_Or<MODEL, RESULT, Classic_Collector_And_Named<MODEL, RESULT>, Classic_Collector_Or_Named<MODEL, RESULT>>
+final class Classic_Collector_Or_Named<MODEL, RESULT> extends Classic_Collector_Or<MODEL, RESULT>
 			implements IClassicLogical_Or_Named<MODEL, RESULT> {
 
 	

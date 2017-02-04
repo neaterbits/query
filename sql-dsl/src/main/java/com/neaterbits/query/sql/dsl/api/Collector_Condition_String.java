@@ -4,11 +4,11 @@ final class Collector_Condition_String<MODEL, RESULT, L extends ISharedLogical_B
 		extends Collector_Condition_Comparative<MODEL, RESULT, String, L>
 		implements ISharedCondition_Comparable_String_All_Compilable<MODEL, RESULT, L> {
 
-	Collector_Condition_String(Collector_Conditions<MODEL, RESULT, ?, ?> clause, Getter getter) {
+	Collector_Condition_String(Collector_Conditions<MODEL, RESULT> clause, Getter getter) {
 		super(clause, getter);
 	}
 	
-	Collector_Condition_String(Collector_Conditions<MODEL, RESULT, ?, ?> clause, CollectedFunctions functions, Getter getter) {
+	Collector_Condition_String(Collector_Conditions<MODEL, RESULT> clause, CollectedFunctions functions, Getter getter) {
 		super(clause, functions, getter);
 	}
 

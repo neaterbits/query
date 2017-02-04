@@ -5,7 +5,7 @@ import java.util.function.Function;
 
 final class Classic_Collector_And_Named<MODEL, RESULT>
 
-	extends Classic_Collector_And<MODEL, RESULT, Classic_Collector_And_Named<MODEL, RESULT>, Classic_Collector_Or_Named<MODEL, RESULT>>
+	extends Classic_Collector_And<MODEL, RESULT>
 
 	implements IClassicLogical_And_Named<MODEL, RESULT> {
 
