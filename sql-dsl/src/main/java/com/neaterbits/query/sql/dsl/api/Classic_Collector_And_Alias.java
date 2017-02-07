@@ -52,23 +52,24 @@ abstract class Classic_Collector_And_Alias<
 	}
 		
 	@Override
-	public ISharedCondition_Comparable_Common_All<MODEL, RESULT, Integer, AND_CLAUSES> and(ISupplierInteger getter) {
+	public final ISharedCondition_Comparable_Common_All<MODEL, RESULT, Integer, AND_CLAUSES> and(ISupplierInteger getter) {
 		return andAliasImplComparable(getter);
 	}
 
 	@Override
-	public ISharedCondition_Comparable_Common_All<MODEL, RESULT, Long, AND_CLAUSES> and(ISupplierLong getter) {
+	public final ISharedCondition_Comparable_Common_All<MODEL, RESULT, Long, AND_CLAUSES> and(ISupplierLong getter) {
 		return andAliasImplComparable(getter);
 	}
 
 	@Override
-	public ISharedCondition_Comparable_String_All<MODEL, RESULT, AND_CLAUSES> and(ISupplierString getter) {
+	public final ISharedCondition_Comparable_String_All<MODEL, RESULT, AND_CLAUSES> and(ISupplierString getter) {
 		return andAliasImplString(null, getter);
 	}
 
 
+	@SuppressWarnings("unchecked")
 	@Override
-	public AND_CLAUSES andNest(ISharedNestedOrConsumerAlias<MODEL, RESULT, IClassicLogical_Or_NonProcessResult_Alias<MODEL, RESULT>> orBuilder) {
+	public final AND_CLAUSES andNest(ISharedNestedOrConsumerAlias<MODEL, RESULT, IClassicLogical_Or_NonProcessResult_Alias<MODEL, RESULT>> orBuilder) {
 	
 		addNestedOrImpl(orBuilder);
 	
@@ -76,7 +77,7 @@ abstract class Classic_Collector_And_Alias<
 	}
 	
 	@Override
-	public ISharedFunctions_Alias_Initial<
+	public final ISharedFunctions_Alias_Initial<
 				MODEL,
 				RESULT,
 				AND_CLAUSES,

@@ -12,7 +12,13 @@ abstract class Classic_Collector_WhereOrJoin_Alias_Base<
 				AND_CLAUSES extends ISharedLogical_And_Alias_Base<MODEL, RESULT, AND_CLAUSES, IClassicLogical_Or_NonProcessResult_Alias<MODEL, RESULT>>,
 				OR_CLAUSES  extends ISharedLogical_Or_Alias_Base <MODEL, RESULT, OR_CLAUSES,  IClassicLogical_And_NonProcessResult_Alias<MODEL, RESULT>>,
 
-				AND_OR extends ISharedLogical_And_Or_Alias<MODEL, RESULT, AND_CLAUSES, OR_CLAUSES, IClassicLogical_And_NonProcessResult_Alias<MODEL, RESULT>, IClassicLogical_Or_NonProcessResult_Alias<MODEL, RESULT>>>
+				AND_OR extends ISharedLogical_And_Or_Alias<
+							MODEL,
+							RESULT,
+							AND_CLAUSES,
+							OR_CLAUSES,
+							IClassicLogical_And_NonProcessResult_Alias<MODEL, RESULT>,
+							IClassicLogical_Or_NonProcessResult_Alias<MODEL, RESULT>>>
 
 	extends Classic_Collector_Where_Or_Join<MODEL, RESULT>
 
@@ -26,13 +32,15 @@ abstract class Classic_Collector_WhereOrJoin_Alias_Base<
     abstract Classic_Collector_Or_Alias<MODEL, RESULT, OR_CLAUSES> createOrCollector();
     abstract Classic_Collector_And_Alias<MODEL, RESULT, AND_CLAUSES> createAndCollector();
     
+    /*
 
     abstract Classic_Collector_And_Alias<MODEL, RESULT, IClassicLogical_And_NonProcessResult_Alias<MODEL, RESULT>>
     				createNestedAnd(Classic_Collector_Or_Alias<MODEL, RESULT, OR_CLAUSES> orClauses); 
     
     
     abstract Classic_Collector_Or_Alias<MODEL, RESULT, IClassicLogical_Or_NonProcessResult_Alias<MODEL, RESULT>>
-    				createNestedOr(Classic_Collector_And_Alias<MODEL, RESULT, AND_CLAUSES> andClauses); 
+    				createNestedOr(Classic_Collector_And_Alias<MODEL, RESULT, AND_CLAUSES> andClauses);
+	*/ 
 			   
 	Classic_Collector_WhereOrJoin_Alias_Base(BaseQueryEntity<MODEL> last) {
 		super(last);
@@ -368,7 +376,7 @@ abstract class Classic_Collector_WhereOrJoin_Alias_Base<
 				= createOrCollector(); // new Classic_Collector_Or_Alias<>(this);
 		
 		// Add to new OR
-		orClauses.addNestedAndImpl(orBuilder, createNestedAnd(orClauses)); //  new Classic_Collector_And_Alias<MODEL, RESULT>(orClauses));
+		orClauses.addNestedAndImpl(orBuilder, new Classic_Collector_And_NonProcessResult_Alias<>(orClauses));
 		
 		
 		return orClauses;
@@ -382,7 +390,7 @@ abstract class Classic_Collector_WhereOrJoin_Alias_Base<
 		final Classic_Collector_And_Alias<MODEL, RESULT, AND_CLAUSES> andClauses = createAndCollector(); // new Classic_Collector_And_Alias<>(this);
 	
 		// Add to new AND clause
-		andClauses.addNestedOrImpl(orBuilder, createNestedOr(andClauses)); //  new Classic_Collector_Or_Alias<MODEL, RESULT>(andClauses));
+		andClauses.addNestedOrImpl(orBuilder, new Classic_Collector_Or_NonProcessResult_Alias<>(andClauses));
 		
 		return andClauses;
 	}

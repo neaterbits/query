@@ -18,7 +18,7 @@ final class Collector_AggregateNamedResult<TYPE>
 
 	@Override
 	IClassicLogical_WhereOrJoin_NonProcessResult_Named<SingleQuery<TYPE>, TYPE> createWhereOrJoinForNamed() {
-		return new Classic_Collector_WhereOrJoin_NonProcessResult_Named<>(this);
+		return new Classic_Collector_WhereOrJoin_NonProcessResult_Named<SingleQuery<TYPE>, TYPE>(this);
 	}
 
 	@Override

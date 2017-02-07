@@ -27,18 +27,4 @@ final class Classic_Collector_WhereOrJoin_NonProcessResult_Alias<MODEL, RESULT>
 	Classic_Collector_And_Alias<MODEL, RESULT, IClassicLogical_And_NonProcessResult_Alias<MODEL, RESULT>> createAndCollector() {
 		return new Classic_Collector_And_NonProcessResult_Alias<>(this);
 	}
-
-	@Override
-	Classic_Collector_And_Alias<MODEL, RESULT, IClassicLogical_And_NonProcessResult_Alias<MODEL, RESULT>> createNestedAnd(
-			Classic_Collector_Or_Alias<MODEL, RESULT, IClassicLogical_Or_NonProcessResult_Alias<MODEL, RESULT>> orClauses) {
-		return new Classic_Collector_And_NonProcessResult_Alias<>(orClauses);
-	}
-
-	@Override
-	Classic_Collector_Or_Alias<MODEL, RESULT, IClassicLogical_Or_NonProcessResult_Alias<MODEL, RESULT>> createNestedOr(
-			Classic_Collector_And_Alias<MODEL, RESULT, IClassicLogical_And_NonProcessResult_Alias<MODEL, RESULT>> andClauses) {
-		return new Classic_Collector_Or_NonProcessResult_Alias<>(andClauses);
-	}
-
-	
 }

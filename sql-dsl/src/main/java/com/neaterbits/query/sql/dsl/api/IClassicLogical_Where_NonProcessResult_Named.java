@@ -14,6 +14,6 @@ public interface IClassicLogical_Where_NonProcessResult_Named<MODEL, RESULT>
 		extends IClassicLogical_Where_Named_Base<
 			MODEL,
 			RESULT,
-			IClassicLogical_And_Or_Named<MODEL, RESULT>> {
+			IClassicLogical_AndOr_NonProcessResult_Named<MODEL, RESULT>> {
 
 }
