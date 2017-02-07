@@ -99,13 +99,17 @@ abstract class Collector_Conditions<MODEL, RESULT>
 		return getModelCompiler().compile(compiledQuery);
 	}
 
+	private void checkGroupByNotAlreadySet() {
+		if (this.groupByCollector != null || groupByColumns != null) {
+			throw new IllegalStateException("groupBy already set");
+		}
+	}
+
 
 	// Overriden by interfaces further down in the hierarchy
 	public final <T, R> ISharedProcessResult_After_GroupBy_Or_List_Named<MODEL, RESULT> groupBy(Function<T, R> field) {
 		
-		if (this.groupByCollector == null || groupByColumns != null) {
-			throw new IllegalStateException("groupBy already set");
-		}
+		checkGroupByNotAlreadySet();
 		
 		this.groupByCollector = new Collector_GroupBy<>(field, this);;
 		
@@ -114,9 +118,8 @@ abstract class Collector_Conditions<MODEL, RESULT>
 
 	@SuppressWarnings("unchecked")
 	public final ISharedProcessResult_After_GroupBy_Named<MODEL, RESULT> groupBy(int ... resultColumns) {
-		if (this.groupByCollector == null || groupByColumns != null) {
-			throw new IllegalStateException("groupBy already set");
-		}
+
+		checkGroupByNotAlreadySet();
 
 		this.groupByColumns = Arrays.copyOf(resultColumns, resultColumns.length);
 		
@@ -126,11 +129,18 @@ abstract class Collector_Conditions<MODEL, RESULT>
 	public final ISharedProcessResult_OrderBy_Named<MODEL, RESULT> having() {
 		throw new UnsupportedOperationException("TODO");
 	}
-	
-	public final <T, R> ISharedProcessResult_After_OrderBy_Or_List_Named<MODEL, RESULT> orderBy(Function<T, R> field) {
-		if (this.orderByCollector == null || orderByColumns != null) {
+
+	private void checkOrderByNotAlreadySet() {
+
+		if (this.orderByCollector != null || orderByColumns != null) {
 			throw new IllegalStateException("orderBy already set");
 		}
+	}
+	
+
+	public final <T, R> ISharedProcessResult_After_OrderBy_Or_List_Named<MODEL, RESULT> orderBy(Function<T, R> field) {
+
+		checkOrderByNotAlreadySet();
 		
 		this.orderByCollector = new Collector_OrderBy<>(field, this);;
 		
@@ -139,10 +149,9 @@ abstract class Collector_Conditions<MODEL, RESULT>
 
 	
 	public final ISharedCompileEndClause<MODEL> orderBy(int ... resultColumns) {
-		if (this.orderByCollector == null || orderByColumns != null) {
-			throw new IllegalStateException("oderBy already set");
-		}
 
+		checkOrderByNotAlreadySet();
+		
 		this.orderByColumns = Arrays.copyOf(resultColumns, resultColumns.length);
 		
 		return this;

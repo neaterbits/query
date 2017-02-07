@@ -163,4 +163,24 @@ abstract class AdhocQueryBase<MODEL, QUERY extends AdhocQueryBase<MODEL, QUERY>>
 	public final ConditionValue getConditionValue(QUERY query, int level, int [] conditionIndices) {
 		throw new UnsupportedOperationException("TODO - not supported for Adhoc queries");
 	}
+	
+	@Override
+	public final int getGroupByFieldCount(QUERY query) {
+		throw new UnsupportedOperationException("TODO - not supported for Adhoc queries");
+	}
+
+	@Override
+	public final int getGroupByFieldIndex(QUERY query, int idx) {
+		throw new UnsupportedOperationException("TODO - not supported for Adhoc queries");
+	}
+
+	@Override
+	public final int getOrderByFieldCount(QUERY query) {
+		throw new UnsupportedOperationException("TODO - not supported for Adhoc queries");
+	}
+
+	@Override
+	public final int getOrderByFieldIndex(QUERY query, int idx) {
+		throw new UnsupportedOperationException("TODO - not supported for Adhoc queries");
+	}
 }

@@ -21,4 +21,8 @@ abstract class Collector_Fields {
 
 		getters.add(new FunctionGetter(function));
 	}
+	
+	FunctionGetter [] toArray() {
+		return getters.toArray(new FunctionGetter[getters.size()]);
+	}
 }

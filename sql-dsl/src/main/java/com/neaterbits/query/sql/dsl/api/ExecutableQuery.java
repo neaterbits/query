@@ -445,4 +445,18 @@ interface ExecutableQuery<QUERY> {
 	Method getForDebugConditionLhsMethod(QUERY query, int level, int [] conditionIndices);
 	
 	String getForDebugConditionValue(QUERY query, int level, int [] conditionIndices);
+	
+	
+	// result grouping, filtering and sorting
+	
+	int getGroupByFieldCount(QUERY query);
+
+	// returns index into selected fields, starting at 0 (not 1 as is the case with SQL)
+	int getGroupByFieldIndex(QUERY query, int idx);
+	
+
+	int getOrderByFieldCount(QUERY query);
+
+	// returns index into selected fields, starting at 0 (not 1 as is the case with SQL)
+	int getOrderByFieldIndex(QUERY query, int idx);
 }

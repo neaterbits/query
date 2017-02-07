@@ -676,4 +676,43 @@ final class ExecutableQueryForCompiledQuery implements ExecutableQuery<CompiledQ
 			return value.getValues();
 		}
 	};
+
+
+	// result processing
+	@Override
+	public int getGroupByFieldCount(CompiledQuery query) {
+		
+		
+		return query.getResultProcessing() == null
+				
+				? 0
+				: query.getResultProcessing().getGroupBy() == null
+					? 0
+					: query.getResultProcessing().getGroupBy().getIndicesStartingAtOne().length;
+	}
+
+
+	@Override
+	public int getGroupByFieldIndex(CompiledQuery query, int idx) {
+		return query.getResultProcessing().getGroupBy().getIndicesStartingAtOne()[idx] - 1;
+	}
+
+
+	@Override
+	public int getOrderByFieldCount(CompiledQuery query) {
+		return query.getResultProcessing() == null
+				
+				? 0
+				: query.getResultProcessing().getOrderBy() == null
+					? 0
+					: query.getResultProcessing().getOrderBy().getIndicesStartingAtOne().length;
+	}
+
+
+	@Override
+	public int getOrderByFieldIndex(CompiledQuery query, int idx) {
+		return query.getResultProcessing().getOrderBy().getIndicesStartingAtOne()[idx] - 1;
+	}
+
+	
 }

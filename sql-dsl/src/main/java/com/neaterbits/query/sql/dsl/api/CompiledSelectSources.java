@@ -1,6 +1,7 @@
 package com.neaterbits.query.sql.dsl.api;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -16,6 +17,9 @@ abstract class CompiledSelectSources<T extends CompiledSelectSource>
 	implements TypeMap {
 
 	private final List<T> sources;
+	
+	// Cache types
+	private final List<Class<?>> types;
 
 	abstract TypeMapSource getNamedSource(Class<?> type);
 	abstract TypeMapSource getAliasesSource(IAlias alias);
@@ -38,6 +42,12 @@ abstract class CompiledSelectSources<T extends CompiledSelectSource>
 		}
 
 		this.sources = Collections.unmodifiableList(new ArrayList<>(sources));
+		
+		this.types = Arrays.asList(original.getTypes());
+	}
+	
+	Iterable<Class<?>> getTypes() {
+		return types;
 	}
 
 	final List<T> getSources() {

@@ -22,6 +22,9 @@ final class QueryCollectorImpl {
 	// Select clauses
 	private Collector_Clause clauses;
 	
+	private Collected_Fields groupBy;
+	private Collected_Fields orderBy;
+	
 	QueryCollectorImpl(CollectedQueryResult result) {
 
 		if (result == null) {
@@ -108,7 +111,28 @@ final class QueryCollectorImpl {
 		this.clauses = clauses;
 	}
 	
-	
+	void setResultProcessing(Collected_Fields groupBy, Collected_Fields orderBy) {
+		this.groupBy = groupBy;
+		this.orderBy = orderBy;
+	}
+
+	Collected_Fields getGroupBy() {
+		return groupBy;
+	}
+
+	void setGroupBy(Collected_Fields groupBy) {
+		this.groupBy = groupBy;
+	}
+
+	public Collected_Fields getOrderBy() {
+		return orderBy;
+	}
+
+
+	public void setOrderBy(Collected_Fields orderBy) {
+		this.orderBy = orderBy;
+	}
+
 
 	void verify(VerificationErrorCollector collector) {
 		throw new UnsupportedOperationException("TODO");

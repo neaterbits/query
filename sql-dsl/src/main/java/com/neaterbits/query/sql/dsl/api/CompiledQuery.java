@@ -22,13 +22,16 @@ final class CompiledQuery {
 	
 	private final int conditionsMaxDepth;
 	
+	private final CompiledResultProcessing resultProcessing;
+	
 
 	private CompiledQuery(
 			CompiledQueryResult result,
 			CompiledSelectSources<?> selectSources,
 			CompiledJoins joins,
 			CompiledConditions conditions,
-			int conditionsMaxDepth) {
+			int conditionsMaxDepth,
+			CompiledResultProcessing resultProcessing) {
 
 		if (result == null) {
 			throw new IllegalArgumentException("result == null");
@@ -46,6 +49,7 @@ final class CompiledQuery {
 		
 		this.joins = joins;
 		this.conditionsMaxDepth = conditionsMaxDepth;
+		this.resultProcessing = resultProcessing;
 	}
 
 	EQueryResultDimension getResultMode() {
@@ -92,8 +96,12 @@ final class CompiledQuery {
 		return conditionsMaxDepth;
 	}
 
-	public CompiledJoins getJoins() {
+	CompiledJoins getJoins() {
 		return joins;
+	}
+	
+	CompiledResultProcessing getResultProcessing() {
+		return resultProcessing;
 	}
 
 	static CompiledQuery compile(QueryCollectorImpl collector) throws CompileException {
@@ -130,15 +138,123 @@ final class CompiledQuery {
 		else {
 			joins = null;
 		}
+		
+		final CompiledResultProcessing resultProcessing;
+		
+		if (compiledQueryResult instanceof CompiledQueryResult_Mapped) {
+			
+			// Can only do group-by etc for mapped result
+			resultProcessing = compileResultProcessing(
+				collector,
+				((CompiledQueryResult_Mapped)compiledQueryResult).getMappings(),
+				compiledSources,
+				cache);
+		}
+		else {
+			if (collector.getGroupBy() != null) {
+				throw new IllegalStateException("Can only fo group-by for queries that map the result");
+			}
+			
+			resultProcessing = null;
+		}
+		
 
 		return new CompiledQuery(
 				compiledQueryResult,
 				compiledSources,
 				joins,
 				compiledConditions,
-				conditionsMaxDepth);
+				conditionsMaxDepth,
+				resultProcessing);
+	}
+	
+	private static int getProcessingResultIndexStartingAtOne(CompiledMappings mappings, CompiledGetterFunction getter) {
+		
+		// Must compare with source-columns mapping
+		int idx = 1;
+		for (CompiledMapping mapping : mappings.getMappings()) {
+			// Get the field we have selected from  
+			final CompiledGetter mappingGetter = mapping.getField().getGetter();
+			
+			if (getter.equals(mappingGetter)) {
+				return idx;
+			}
+			
+			++ idx;
+		}
+		
+		throw new IllegalStateException("Could not find index in mappings from getter");
 	}
 
+	private static CompiledResultFields compileResultProcessingFields(
+			Collected_Fields fields,
+			CompiledMappings mappings,
+			CompiledSelectSources<?> sources,
+			CompiledGetterSetterCache cache) throws CompileException {
+		
+		final int [] columns;
+		final FunctionGetter [] getters;
+
+		if (fields.getFields() != null) {
+
+			getters = fields.getFields().toArray();
+			
+			
+			columns = new int[getters.length];
+			
+			for (int i = 0; i < getters.length; ++ i) {
+				final CompiledGetterFunction getter = (CompiledGetterFunction)cache.findGetterFromTypes(sources.getTypes(), getters[i].getter);
+				
+				columns[i] = getProcessingResultIndexStartingAtOne(mappings, getter);
+			}
+		}
+		else if (fields.getColumns() != null) {
+			columns = fields.getColumns();
+			getters = null;
+		}
+		else {
+			throw new IllegalStateException("neither fields not columns");
+		}
+
+		return new CompiledResultFields(columns, getters);
+	}
+	
+	private static CompiledResultProcessing compileResultProcessing(
+					QueryCollectorImpl collector,
+					CompiledMappings mappings,
+					CompiledSelectSources<?> sources,
+					CompiledGetterSetterCache cache) throws CompileException {
+
+		final CompiledResultProcessing ret;
+		
+		
+		final CompiledResultFields compiledGroupBy;
+		final CompiledResultFields compiledOrderBy;
+		
+		if (collector.getGroupBy() != null) {
+			compiledGroupBy = compileResultProcessingFields(collector.getGroupBy(), mappings, sources, cache);
+		}
+		else {
+			compiledGroupBy = null;
+		}
+		
+		if (collector.getOrderBy() != null) {
+			compiledOrderBy = compileResultProcessingFields(collector.getOrderBy(), mappings, sources, cache);
+		}
+		else {
+			compiledOrderBy = null;
+		}
+		
+		if (compiledGroupBy != null || compiledOrderBy != null) {
+			ret = new CompiledResultProcessing(compiledGroupBy, compiledOrderBy);
+		}
+		else {
+			ret = null;
+		}
+
+		return ret;
+	}
+	
 	
 	private static CompiledQueryResult compileQueryResult(QueryCollectorImpl collector, CompiledSelectSources<?> compiledSources, CompiledGetterSetterCache cache) throws CompileException {
 		

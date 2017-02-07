@@ -610,9 +610,9 @@ public class SQLAPITest extends BaseSQLAPITest {
 	@Test
     public void testNameBasedGrouping() {
 
-		final Company acme = new Company(-1, "Acme", new BigDecimal("184.2"));
-		final Company bar = new Company(-1, "Bar", new BigDecimal("134.1"));
-		final Company foo = new Company(-1, "Foo", new BigDecimal("184.2"));
+		final Company acme = new Company(1, "Acme", new BigDecimal("184.2"));
+		final Company bar = new Company(2, "Bar", new BigDecimal("134.1"));
+		final Company foo = new Company(3, "Foo", new BigDecimal("184.2"));
 
         final MultiQuery<CompanyResultVO> startsWithAc =
         		selectList(CompanyResultVO.class)
