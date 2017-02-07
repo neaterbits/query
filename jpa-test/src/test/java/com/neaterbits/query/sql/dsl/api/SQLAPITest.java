@@ -609,43 +609,40 @@ public class SQLAPITest extends BaseSQLAPITest {
 
 	@Test
     public void testNameBasedGrouping() {
-		assertThat(true).isEqualTo(false);;
 
-		final Company acme = new Company(-1, "Acme");
-		final Company foo = new Company(-1, "Foo");
+		final Company acme = new Company(-1, "Acme", new BigDecimal("184.2"));
+		final Company bar = new Company(-1, "Bar", new BigDecimal("134.1"));
+		final Company foo = new Company(-1, "Foo", new BigDecimal("184.2"));
 
-        final SingleQuery<CompanyResultVO> startsWithAc =
-        		selectOneOrNull(CompanyResultVO.class)
+        final MultiQuery<CompanyResultVO> startsWithAc =
+        		selectList(CompanyResultVO.class)
 
-        	.map(Company::getName).to(CompanyResultVO::setName)
+        	.map(Company::getStockPrice).to(CompanyResultVO::setStockPrice)
         	
         	.from(Company.class)
-        	
-        	/*
-        	.groupBy(Company::getName).and(Company::getStockPrice)
-        	.orderBy(Company::getName).and(Company::getStockPrice)
-        	
 
-        	.where(Company::getName).startsWith("Ac")
-        	.  and(Company::getName).endsWith("cme")
-*/
+        	.groupBy(Company::getStockPrice)
+        	//.orderBy(Company::getName).and(Company::getStockPrice)
+        	
+        	
         	.compile();
 		
-		store(s  -> s.add(acme)).
+		store(s  -> s.add(acme).add(bar).add(foo)).
 		check(ds -> {
-	        checkSelectOneOrNull(
+			checkSelectListUnordered(
 	        		ds,
-	        		new CompanyResultVO(acme.getName()),
 	        		startsWithAc,
-	        		q -> q.execute());
+	        		q -> q.execute(),
+	        		new CompanyResultVO("184.2"),
+	        		new CompanyResultVO("134.1"));
 		});
 
 		// Search for foo as well, should return no matches
+		
 		store(s  -> s.add(foo)).
 		check(ds -> {
-	        checkSelectOneOrNull(
+			checkSelectListUnordered(
 	        		ds,
-	        		null,
 	        		startsWithAc,
 	        		q -> q.execute());
 		});

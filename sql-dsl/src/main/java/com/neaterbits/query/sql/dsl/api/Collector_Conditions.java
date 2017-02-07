@@ -1,5 +1,6 @@
 package com.neaterbits.query.sql.dsl.api;
 
+import java.util.Arrays;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Supplier;
@@ -11,6 +12,12 @@ abstract class Collector_Conditions<MODEL, RESULT>
 	implements ISharedLogical_Base<MODEL, RESULT>, ISharedCompileEndClause<MODEL> {
 
 	final Collector_Clause clauseCollector;
+
+	private Collector_GroupBy<MODEL, RESULT> groupByCollector;
+	private int [] groupByColumns;
+
+	private Collector_OrderBy<MODEL, RESULT> orderByCollector;
+	private int [] orderByColumns;
 
 	static Getter makeGetter(Function<?, ?> getter) {
 		return new FunctionGetter(getter);
@@ -95,18 +102,49 @@ abstract class Collector_Conditions<MODEL, RESULT>
 
 	// Overriden by interfaces further down in the hierarchy
 	public final <T, R> ISharedProcessResult_After_GroupBy_Or_List_Named<MODEL, RESULT> groupBy(Function<T, R> field) {
-		throw new UnsupportedOperationException("TODO");
+		
+		if (this.groupByCollector == null || groupByColumns != null) {
+			throw new IllegalStateException("groupBy already set");
+		}
+		
+		this.groupByCollector = new Collector_GroupBy<>(field, this);;
+		
+		return groupByCollector;
 	}
 
+	@SuppressWarnings("unchecked")
 	public final ISharedProcessResult_After_GroupBy_Named<MODEL, RESULT> groupBy(int ... resultColumns) {
-		throw new UnsupportedOperationException("TODO");
+		if (this.groupByCollector == null || groupByColumns != null) {
+			throw new IllegalStateException("groupBy already set");
+		}
+
+		this.groupByColumns = Arrays.copyOf(resultColumns, resultColumns.length);
+		
+		return (ISharedProcessResult_After_GroupBy_Named<MODEL, RESULT>)this;
 	}
 
+	public final ISharedProcessResult_OrderBy_Named<MODEL, RESULT> having() {
+		throw new UnsupportedOperationException("TODO");
+	}
+	
 	public final <T, R> ISharedProcessResult_After_OrderBy_Or_List_Named<MODEL, RESULT> orderBy(Function<T, R> field) {
-		throw new UnsupportedOperationException("TODO");
+		if (this.orderByCollector == null || orderByColumns != null) {
+			throw new IllegalStateException("orderBy already set");
+		}
+		
+		this.orderByCollector = new Collector_OrderBy<>(field, this);;
+		
+		return orderByCollector;
 	}
 
+	
 	public final ISharedCompileEndClause<MODEL> orderBy(int ... resultColumns) {
-		throw new UnsupportedOperationException("TODO");
+		if (this.orderByCollector == null || orderByColumns != null) {
+			throw new IllegalStateException("oderBy already set");
+		}
+
+		this.orderByColumns = Arrays.copyOf(resultColumns, resultColumns.length);
+		
+		return this;
 	}
 }

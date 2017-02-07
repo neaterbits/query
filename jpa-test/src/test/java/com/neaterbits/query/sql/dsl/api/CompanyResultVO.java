@@ -1,9 +1,11 @@
 package com.neaterbits.query.sql.dsl.api;
 
+import java.math.BigDecimal;
+
 public class CompanyResultVO {
 
 	private String name;
-
+	private BigDecimal stockPrice;
 	
 	public CompanyResultVO() {
 		
@@ -13,6 +15,10 @@ public class CompanyResultVO {
 		this.name = name;
 	}
 
+	public CompanyResultVO(BigDecimal stockPrice) {
+		this.stockPrice = stockPrice;
+	}
+	
 	public String getName() {
 		return name;
 	}
@@ -20,12 +26,21 @@ public class CompanyResultVO {
 	public void setName(String name) {
 		this.name = name;
 	}
+	
+	public BigDecimal getStockPrice() {
+		return stockPrice;
+	}
+
+	public void setStockPrice(BigDecimal stockPrice) {
+		this.stockPrice = stockPrice;
+	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
+		result = prime * result + ((stockPrice == null) ? 0 : stockPrice.hashCode());
 		return result;
 	}
 
@@ -42,6 +57,11 @@ public class CompanyResultVO {
 			if (other.name != null)
 				return false;
 		} else if (!name.equals(other.name))
+			return false;
+		if (stockPrice == null) {
+			if (other.stockPrice != null)
+				return false;
+		} else if (!stockPrice.equals(other.stockPrice))
 			return false;
 		return true;
 	}

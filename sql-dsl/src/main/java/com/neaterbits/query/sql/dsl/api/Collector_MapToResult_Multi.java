@@ -14,6 +14,7 @@ final class Collector_MapToResult_Multi<
 			IClassicLogical_WhereOrJoin_ProcessResult_Alias<MODEL, RESULT>>
 
 		implements IClassicResult_Mapped_Multi_All<MODEL, RESULT>,
+				   IClassicResult_Mapped_Multi_Named<MODEL, RESULT>,
 		           IClassicResult_Mapped_Multi_Alias<MODEL, RESULT> {
 
 	Collector_MapToResult_Multi(Class<?> resultType, ECollectionType collectionType, ModelCompiler<MODEL> modelCompiler) {
