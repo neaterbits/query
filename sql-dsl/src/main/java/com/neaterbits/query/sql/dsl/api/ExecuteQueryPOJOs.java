@@ -1,10 +1,8 @@
 package com.neaterbits.query.sql.dsl.api;
 
 import java.lang.reflect.Method;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.HashSet;
 
 import com.neaterbits.query.sql.dsl.api.entity.QueryMetaModel;
 
@@ -115,6 +113,11 @@ final class ExecuteQueryPOJOs<QUERY> extends ExecutableQueryAggregateComputation
 				ret = q.getAggregateDefault(query);
 			}
 		}
+		else if (q.getDimension(query) == EQueryResultDimension.MULTI) {
+			// return result as processed collection
+			ret = ((ResultCollection)ret).asCollection();
+		}
+
 		}
 		finally {
 		
@@ -161,25 +164,73 @@ final class ExecuteQueryPOJOs<QUERY> extends ExecutableQueryAggregateComputation
 		return ret;
 	}
 	
-	private Collection<?> makeResultColl(QUERY query) {
+	private ResultCollection makeResultColl(QUERY query) {
 		// TODO:  Perhaps nested list of some sort for large result sets
 		
-		final Collection<?> ret;
+		final ResultCollection ret;
 		final ECollectionType resultType = q.getResultCollectionType(query);
+		final EQueryResultGathering gathering = q.getGathering(query);
 
-		switch (resultType) {
 
-		case LIST:
-			ret = new ArrayList<>();
+		final int numGroupBy = q.getGroupByFieldCount(query);
+		final int numOrderBy = q.getOrderByFieldCount(query);
+
+		switch (gathering) {
+		
+		case ENTITY:
+			
+			if (numGroupBy > 0) {
+				throw new IllegalStateException("group by combined with entity query");
+			}
+			
+			switch (resultType) {
+			case LIST:
+				if (numOrderBy > 0) {
+					// Must create an ordered list based on order-by criteria
+					ret = new ResultCollection_List_Entity_Ordered<>(q, query);
+				}
+				else {
+					ret = new ResultCollection_List();
+				}
+				break;
+	
+			case SET:
+				if (numOrderBy > 0) {
+					throw new UnsupportedOperationException("TODO - sets and order by > 0, does not make any sense as long as not a SortedSet"); 
+				}
+				
+				ret = new ResultCollection_Set();
+				break;
+	
+			default:
+				throw new IllegalArgumentException("Unknown result type " + resultType);
+			}
+			
 			break;
-
-		case SET:
-			ret = new HashSet<>();
+		
+		case MAPPED:
+			switch (resultType) {
+			case LIST:
+				// Adds to list, but with a mapping function
+				ret = new ResultCollection_List_GroupBy_OrderBy<>(q, query);
+				break;
+	
+			case SET:
+				if (numGroupBy > 0 || numOrderBy > 0) {
+					throw new UnsupportedOperationException("TODO - sets and gropBy > 0 or order by > 0, does not make any sense as long as not a SortedSet"); 
+				}
+				ret = new ResultCollection_Set();
+				break;
+	
+			default:
+				throw new IllegalArgumentException("Unknown result type " + resultType);
+			}
 			break;
 
 		default:
-			throw new IllegalArgumentException("Unknown result type " + resultType);
+			throw new UnsupportedOperationException("Unexpected collection gathering: " + gathering);
 		}
+		
 		
 		return ret;
 	}
@@ -247,14 +298,13 @@ final class ExecuteQueryPOJOs<QUERY> extends ExecutableQueryAggregateComputation
 		return ret;
 	}
 	
-	@SuppressWarnings({ "unchecked", "rawtypes" })
 	private Object addToColl(Object last, Object value) {
 		
 		if (value == null) {
 			throw new IllegalArgumentException("value == null");
 		}
 		
-		((Collection)last).add(value);
+		((ResultCollection)last).addResult(value);
 		
 		return last;
 	}
@@ -273,7 +323,21 @@ final class ExecuteQueryPOJOs<QUERY> extends ExecutableQueryAggregateComputation
 				break;
 				
 			case MULTI:
-				ret = addToColl(last, map(query, scratch));
+				
+				final Object toAdd;
+				
+				if (hasGroupByOrOrderBy(query)) {
+					
+					// Pass scratch-instance to particular collection that can do grouping and sorting operations
+					// by looking at the fields from the scratch instance, not at the entity
+					toAdd = scratch; 
+				}
+				else {
+					// no result processing so can just map right away and add to a regular collection
+					toAdd = map(query, scratch);
+				}
+
+				ret = addToColl(last, toAdd);
 				break;
 				
 			default:
@@ -283,6 +347,10 @@ final class ExecuteQueryPOJOs<QUERY> extends ExecutableQueryAggregateComputation
 		return ret;
 	}
 
+	private boolean hasGroupByOrOrderBy(QUERY query) {
+		return q.getGroupByFieldCount(query) > 0 || q.getOrderByFieldCount(query) > 0;
+	}
+	
 	private Object map(QUERY query, ExecuteQueryScratch scratch) {
 		return ExecuteQueryUtil.mapToOneMappedInstance(q, query, scratch);
 	}

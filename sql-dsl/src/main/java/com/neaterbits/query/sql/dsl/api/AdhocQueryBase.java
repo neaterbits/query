@@ -1,5 +1,6 @@
 package com.neaterbits.query.sql.dsl.api;
 
+import java.util.function.Function;
 
 /**
  * Fast adhoc query, eg. similar to Streams API but aims at far fewer allocations
@@ -181,6 +182,16 @@ abstract class AdhocQueryBase<MODEL, QUERY extends AdhocQueryBase<MODEL, QUERY>>
 
 	@Override
 	public final int getOrderByFieldIndex(QUERY query, int idx) {
+		throw new UnsupportedOperationException("TODO - not supported for Adhoc queries");
+	}
+
+	@Override
+	public ESortOrder getOrderBySortOrder(QUERY query, int idx) {
+		throw new UnsupportedOperationException("TODO - not supported for Adhoc queries");
+	}
+
+	@Override
+	public Function<?, ?> getEntityOrderByFieldGetter(QUERY query, int idx) {
 		throw new UnsupportedOperationException("TODO - not supported for Adhoc queries");
 	}
 }

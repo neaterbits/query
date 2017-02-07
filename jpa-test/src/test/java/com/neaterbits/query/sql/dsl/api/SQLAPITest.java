@@ -13,6 +13,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import java.math.BigDecimal;
 import java.util.function.Consumer;
 
+import javax.persistence.Entity;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
@@ -52,7 +53,6 @@ public class SQLAPITest extends BaseSQLAPITest {
 				.add(jpql)
 				
 				.add(inMemory)
-				
 				
 				.store(b);
 	}
@@ -647,6 +647,7 @@ public class SQLAPITest extends BaseSQLAPITest {
 		});
 
 		// Search for foo as well, should return no matches
+		/*
 		
 		store(s  -> s.add(foo)).
 		check(ds -> {
@@ -655,6 +656,7 @@ public class SQLAPITest extends BaseSQLAPITest {
 	        		startsWithAc,
 	        		q -> q.execute());
 		});
+		*/
 	}
 	
     //@Test

@@ -4,6 +4,7 @@ package com.neaterbits.query.sql.dsl.api;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Member;
 import java.lang.reflect.Method;
+import java.util.function.Function;
 
 import com.neaterbits.query.sql.dsl.api.entity.IEntityAttribute;
 import com.neaterbits.query.sql.dsl.api.entity.OneToManyJoinConditionResolver;
@@ -714,5 +715,17 @@ final class ExecutableQueryForCompiledQuery implements ExecutableQuery<CompiledQ
 		return query.getResultProcessing().getOrderBy().getIndicesStartingAtOne()[idx] - 1;
 	}
 
-	
+
+	@Override
+	public ESortOrder getOrderBySortOrder(CompiledQuery query, int idx) {
+		
+		System.err.println("### todo: descending sort order");
+		
+		return ESortOrder.ASCENDING; // only ascen
+	}
+
+	@Override
+	public Function<?, ?> getEntityOrderByFieldGetter(CompiledQuery query, int idx) {
+		throw new UnsupportedOperationException("TODO");
+	}
 }

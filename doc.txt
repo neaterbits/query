@@ -561,6 +561,26 @@ men de kan også fjenres, dvs having uten group by og order by uten noen av de.
 !! TODO: skiller mellom NonProcessResult og ProcesseResult i dag men burde skill ut OrderBy som egen
 siden ved liste av entiteter ("select * from" i praksis) så burde en ikke kunne gjøre group by eller having mens order by er OK.
 
+
+OBS!!
+	men order-by for entities, hvordan fikse?
+		
+	har ikke rekkefølge på feltene.
+	Hmmm.., betyr at vi er nødt å sende gjennom om er Entity,
+	så alle kobinasjonenene.
+
+	Slik at MultiEntity kun har order-by og da kun på felter, ikke på liste (1, 2, 3) siden ikke vet hva dette innebærer i entity.
+For adhoc er det alltid kun på felter? kan finne 1, 2, 3 der også ut fra mappings men for entity så må det være på felt.
+
+
+
+
+
+- TODO: er det rett å alltid sende inn named for order by/group by?
+Kan returnere rader fra alias av samme type og da bør en kunne velge hvilke av disse en skal gjøre order by på?
+Så fikse dette i CompiledQuery og API slik at for alias baserte query så er det alias som sendes inn.
+
+- TODO: for adhoc queries, hvis resultat er et vanlig Set<> så bør det ikke være mulighet å gjøre orderBy, måtte være sorted-set i så fall.
  
  
 
@@ -898,6 +918,49 @@ Alt kan implementeres i samme klasser evt, trenger ikke ha egne collectors for d
 
 
 ----
+
+POJO for group by/order by.
+
+Hver rad er Object [].
+Gjøre group-by fortløpende?
+
+
+Er da i addToColl() fikser dette antakelig.
+
+GroupBy? Må finne distinkte entries ut fra kolonnenene.
+order by? TreeSet eller annen ordering metode?
+
+Må kanskje abstrahere dette, men bør kunne gjøre begge deler.
+
+Så implementere en egen result-collection bare, og så blir det adda til denne,
+slik at kan ha forskjellige implementasjoner alt avhengig av.
+
+har addToMapped, hvor vi mapper scratch til instance.
+Må vel da gjøre om før den tid ?Dvs vi skal sortere på de nøklene som er i scratch-buffer, lettere enn å sortere på resulatet?
+Vi grupperer og sorterer jo på getterne.
+
+- Mapped => bruke indeksene for å finne rett verdi ut fra scratch buffer og sammenligne med mappa verdier?
+Gjøre begge deler i samme.
+
+- Entity => kun order-by, da må en gjøre order-by i collection som addes til med å sortere på getterne fra denne.
+
+Så sender inn egen collection basert på hva som er tilfelle.
+
+Men om mapped så bør en vel fikse dette i samme som mapper over resultatet, så da adder en scratch-greia i stedet og fikse mappinga der,
+så slipper en å gjøre unntak.
+
+
+Order-by på:
+
+ - flere felter? Må bare lage en array av disse som vi sammenligner.
+ 
+Group-by ?
+ - grupperer nedover, her er det enklest å bare lage instanser i første omgang så kan vi gjøre order by senere.
+
+
+
+!! OBS !! Må sammenligne CompiledFieldReference når finner indekser slik at alltid velger rett alias.
+Hmmm... men vi sender alltid inn named her.
 
 
 

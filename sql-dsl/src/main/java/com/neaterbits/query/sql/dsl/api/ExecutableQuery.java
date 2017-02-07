@@ -6,6 +6,7 @@ import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.function.Function;
 
 import com.neaterbits.query.sql.dsl.api.entity.OneToManyJoinConditionResolver;
 import com.neaterbits.query.sql.dsl.api.entity.QueryMetaModel;
@@ -459,4 +460,12 @@ interface ExecutableQuery<QUERY> {
 
 	// returns index into selected fields, starting at 0 (not 1 as is the case with SQL)
 	int getOrderByFieldIndex(QUERY query, int idx);
+
+	ESortOrder getOrderBySortOrder(QUERY query, int idx);
+	
+	// For POJO execution with order-by on entities, we require the Function
+	// TODO: perhaps change to executeEntityFieldGetter with an index?
+	Function<?, ?> getEntityOrderByFieldGetter(QUERY query, int idx);
+	
+	
 }
