@@ -7,6 +7,7 @@ import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.function.BiFunction;
 
 import com.neaterbits.query.sql.dsl.api.entity.EntityModel;
 import com.neaterbits.query.sql.dsl.api.entity.EntityModelUtil;
@@ -25,7 +26,7 @@ abstract class QueryDataSource_ORM<ORM_QUERY, MANAGED, EMBEDDED, IDENTIFIABLE, A
 	
 	abstract <QUERY> PreparedQuery_DB<QUERY, ORM_QUERY> makeCompletePreparedQuery(ExecutableQuery<QUERY> q, QUERY query, QueryParametersDistinct distinctParams, PreparedQueryBuilder sb);
 	
-	abstract <QUERY> PreparedQuery_DB<QUERY, ORM_QUERY> makeHalfwayPreparedQuery(ExecutableQuery<QUERY> queryAccess, QUERY query, QueryParametersDistinct distinctParams, String base, PreparedQueryConditionsBuilder conditions);
+	abstract <QUERY> PreparedQuery_DB<QUERY, ORM_QUERY> makeHalfwayPreparedQuery(ExecutableQuery<QUERY> queryAccess, QUERY query, QueryParametersDistinct distinctParams, PreparedQueryBuilder base, PreparedQueryConditionsBuilder conditions);
 
 	abstract ConditionStringBuilder makeConditionStringBuilder(QueryParametersDistinct distinctParams);
 	
@@ -87,19 +88,75 @@ abstract class QueryDataSource_ORM<ORM_QUERY, MANAGED, EMBEDDED, IDENTIFIABLE, A
 			prepareConditions(q, query, conditionsBuilder, addJoinToWhere, distinctParams);
 
 			if (conditionsBuilder.hasUnresolved()) {
-				ret = makeHalfwayPreparedQuery(q, query, distinctParams, sb.getQueryAsString(), conditionsBuilder);
+				ret = makeHalfwayPreparedQuery(q, query, distinctParams, sb, conditionsBuilder);
 			}
 			else {
 				sb.resolveFromParams(conditionsBuilder, null);
 
-				ret = makeCompletePreparedQuery(q, query, distinctParams, sb);
+				ret = makeCompleteQueryWithResultProcessing(q, query, distinctParams, sb);
 			}
 		}
 		else {
-			ret = makeCompletePreparedQuery(q, query, null, sb);
+			ret = makeCompleteQueryWithResultProcessing(q, query, null, sb);
 		}
 
 		return ret;
+	}
+
+	private static <QUERY> int [] getArray(QUERY query, int num, BiFunction<QUERY, Integer, Integer> getIndex) {
+		
+		final int [] ret = new int[num];
+
+		for (int i = 0; i < num; ++ i) {
+			ret[i] = getIndex.apply(query, i) + 1; // add one since API returns index start at 0
+		}
+
+		return ret;
+	}
+
+	private <QUERY> List<FieldReference> getFieldReferences(ExecutableQuery<QUERY> q, QUERY query, int num, BiFunction<QUERY, Integer, Integer> getIndex) {
+		
+		final List<FieldReference> ret = new ArrayList<>(num);
+		
+		for (int i = 0; i < num; ++ i) {
+			final int idx = getIndex.apply(query, i);
+			
+			final CompiledFieldReference compiledFieldRef = q.getMappingField(query, idx);
+			
+			ret.add(prepareFieldReference(q, query, compiledFieldRef));
+		}
+
+		return ret;
+	}
+	
+	final <QUERY> void addResultProcessing(ExecutableQuery<QUERY> q, QUERY query, PreparedQueryBuilder sb) {
+		// Check whether we should do result-processing and add that
+		
+		final int numGroupBy = q.getGroupByFieldCount(query);
+		
+		if (numGroupBy > 0) {
+			sb.appendGroupBy(
+					getFieldReferences(q, query, numGroupBy, q::getGroupByFieldIndex)
+					//getArray(query, numGroupBy, q::getGroupByFieldIndex)
+					);
+		}
+
+		final int numOrderBy = q.getOrderByFieldCount(query);
+		
+		if (numOrderBy > 0) {
+			sb.appendOrderBy(
+					getFieldReferences(q, query, numOrderBy, q::getOrderByFieldIndex)
+					// getArray(query, numOrderBy, q::getOrderByFieldIndex)
+			);
+		}
+	}
+	
+	
+	private <QUERY> PreparedQuery_DB<QUERY, ORM_QUERY> makeCompleteQueryWithResultProcessing(ExecutableQuery<QUERY> q, QUERY query, QueryParametersDistinct distinctParams, PreparedQueryBuilder sb) {
+
+		addResultProcessing(q, query, sb);
+
+		return makeCompletePreparedQuery(q, query, distinctParams, sb);
 	}
 	
 	private <QUERY> int [] getFromSelectSources(ExecutableQuery<QUERY> q, QUERY query) {

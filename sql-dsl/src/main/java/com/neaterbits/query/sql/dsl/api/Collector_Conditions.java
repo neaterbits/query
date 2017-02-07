@@ -86,6 +86,14 @@ abstract class Collector_Conditions<MODEL, RESULT>
 
 		// Now set clauses before compiling
 		queryCollector.setClauses(clauseCollector);
+
+		// Add group-by, order-by etc
+		final Collected_Fields groupBy = makeCollectedFields(this.groupByCollector, this.groupByColumns);
+		final Collected_Fields orderBy = makeCollectedFields(this.orderByCollector, this.orderByColumns);
+		
+		if (groupBy != null || orderBy != null) {
+			queryCollector.setResultProcessing(groupBy, orderBy);
+		}
 		
 		// Compile the collected query
 		CompiledQuery compiledQuery;
@@ -98,6 +106,27 @@ abstract class Collector_Conditions<MODEL, RESULT>
 		// Compile into model (better name for this operation?)
 		return getModelCompiler().compile(compiledQuery);
 	}
+	
+	private static Collected_Fields makeCollectedFields(Collector_Fields collector, int [] indices) {
+		
+		final Collected_Fields ret;
+		
+		if (collector != null && indices != null) {
+			throw new IllegalArgumentException("Have both fields and indices");
+		}
+		else if (collector != null) {
+			ret = new Collected_Fields(collector);
+		}
+		else if (indices != null) {
+			ret = new Collected_Fields(indices);
+		}
+		else {
+			ret = null;
+		}
+
+		return ret;
+	}
+	
 
 	private void checkGroupByNotAlreadySet() {
 		if (this.groupByCollector != null || groupByColumns != null) {

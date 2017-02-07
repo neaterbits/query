@@ -33,5 +33,30 @@ abstract class CompiledGetter {
 	final Method getGetterMethod() {
 		return getterMethod;
 	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((getterMethod == null) ? 0 : getterMethod.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		CompiledGetter other = (CompiledGetter) obj;
+		if (getterMethod == null) {
+			if (other.getterMethod != null)
+				return false;
+		} else if (!getterMethod.equals(other.getterMethod))
+			return false;
+		return true;
+	}
 }
 

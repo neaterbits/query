@@ -31,9 +31,6 @@ public abstract class QueryDataSourceJPA extends QueryDataSource_ORM<
 	
 	abstract Query createJPAQuery(String queryString);
 	
-	abstract <QUERY> PreparedQuery_DB<QUERY, Query> makeHalfwayPreparedQuery(ExecutableQuery<QUERY> queryAccess, QUERY query,
-			QueryParametersDistinct distinctParams, String base, PreparedQueryConditionsBuilder conditions);
-	
 
 	public QueryDataSourceJPA(EntityManager entityManager) {
 		super(new JPAEntityModelUtil(new JPAEntityModel(entityManager.getMetamodel())));

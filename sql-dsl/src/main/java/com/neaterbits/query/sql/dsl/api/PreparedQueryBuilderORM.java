@@ -20,9 +20,11 @@ abstract class PreparedQueryBuilderORM extends PreparedQueryBuilder implements P
 
 	@Override
 	final void addMappings(List<FieldReference> references) {
-		
-		
-		QueryStringUtil.commaSeparated(sb, references, (s, r) -> {
+		appendFieldReferences(sb, references);
+	}
+	
+	private void appendFieldReferences(StringBuilder sb,  List<FieldReference> fieldReferences) {
+		QueryStringUtil.commaSeparated(sb, fieldReferences, (s, r) -> {
 
 			appendFieldReference(s, r);
 			
@@ -54,5 +56,19 @@ abstract class PreparedQueryBuilderORM extends PreparedQueryBuilder implements P
 	@Override
 	final void resolveFromParams(PreparedQueryConditionsBuilder conditionsBuilder, ParamValueResolver paramValueResolver) {
 		conditionsBuilder.resolveFromParams(sb, paramValueResolver);
+	}
+
+	@Override
+	final void appendGroupBy(List<FieldReference> fieldReferences) {
+		sb.append("\nGROUP BY ");
+
+		appendFieldReferences(sb, fieldReferences);
+	}
+
+	@Override
+	final void appendOrderBy(List<FieldReference> fieldReferences) {
+		sb.append("\nORDER BY ");
+
+		appendFieldReferences(sb, fieldReferences);
 	}
 }

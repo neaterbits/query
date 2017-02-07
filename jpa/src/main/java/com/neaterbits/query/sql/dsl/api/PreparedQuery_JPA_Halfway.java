@@ -7,18 +7,24 @@ import javax.persistence.Query;
 
 abstract class PreparedQuery_JPA_Halfway<QUERY> extends PreparedQuery_JPA_Base<QUERY> {
 
-	private final String base;
+	private final PreparedQueryBuilder base;
 	private final PreparedQueryConditionsBuilderJPA conditions;
+
+	private final ExecutableQuery<QUERY> queryAccess;
+	private final QUERY query;
 	
-	PreparedQuery_JPA_Halfway(QueryDataSourceJPA dataSource, ExecutableQuery<QUERY> queryAccess, QUERY query, QueryParametersDistinct distinctParams, String base, PreparedQueryConditionsBuilderJPA conditions) {
+	PreparedQuery_JPA_Halfway(
+					QueryDataSourceJPA dataSource,
+					ExecutableQuery<QUERY> queryAccess,
+					QUERY query,
+					QueryParametersDistinct distinctParams,
+					PreparedQueryBuilder base,
+					PreparedQueryConditionsBuilderJPA conditions) {
+
 		super(dataSource, queryAccess, query, distinctParams);
 		
 		if (base == null) {
 			throw new IllegalArgumentException("base == null");
-		}
-		
-		if (base.trim().isEmpty()) {
-			throw new IllegalArgumentException("no base");
 		}
 		
 		if (conditions == null) {
@@ -33,9 +39,13 @@ abstract class PreparedQuery_JPA_Halfway<QUERY> extends PreparedQuery_JPA_Base<Q
 			throw new IllegalArgumentException("no op when conditions > 1");
 		}
 		
+
+		this.queryAccess = queryAccess;
+		this.query = query;
 		
 		this.base = base;
 		this.conditions = conditions;
+		
 	}
 
 	@Override
@@ -81,13 +91,18 @@ abstract class PreparedQuery_JPA_Halfway<QUERY> extends PreparedQuery_JPA_Base<Q
 	@Override
 	Object execute(ParamValueResolver collectedParams) {
 		
-		final StringBuilder sb = new StringBuilder(base);
+		base.resolveFromParams(conditions, collectedParams);
 
-		sb.append(" ");
+		// Must resolve any order-by or group-by as well
+		// since could not do that earlier on
+		
+		
+		final QueryDataSourceJPA ds = (QueryDataSourceJPA)getDataSource();
 
-		conditions.resolveFromParams(sb, collectedParams);
-
-		final String queryString = sb.toString();
+		// Add result-processing since could not do that earlier on
+		ds.addResultProcessing(queryAccess, query, base);
+		
+		final String queryString = base.toString();
 		
 		System.out.println("## execute halfway-query: " + queryString);
 

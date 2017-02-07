@@ -27,5 +27,12 @@ abstract class PreparedQueryBuilder {
 	abstract void resolveFromParams(PreparedQueryConditionsBuilder conditionsBuilder, ParamValueResolver paramValueResolver);
 	
 	abstract String getQueryAsString();
+	
+	
+	// indices starting at 1
+	abstract void appendGroupBy(List<FieldReference> fieldReferences);
+	
+	// indices starting at 1
+	abstract void appendOrderBy(List<FieldReference> fieldReferences);  
 }
 

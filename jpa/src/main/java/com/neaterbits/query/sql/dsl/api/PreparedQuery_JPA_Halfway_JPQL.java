@@ -5,7 +5,7 @@ import javax.persistence.Query;
 final class PreparedQuery_JPA_Halfway_JPQL<QUERY> extends PreparedQuery_JPA_Halfway<QUERY> {
 
 	PreparedQuery_JPA_Halfway_JPQL(QueryDataSourceJPA dataSource, ExecutableQuery<QUERY> queryAccess,
-			QUERY query, QueryParametersDistinct distinctParams, String base,
+			QUERY query, QueryParametersDistinct distinctParams, PreparedQueryBuilder base,
 			PreparedQueryConditionsBuilderJPA conditions) {
 		super(dataSource, queryAccess, query, distinctParams, base, conditions);
 	}

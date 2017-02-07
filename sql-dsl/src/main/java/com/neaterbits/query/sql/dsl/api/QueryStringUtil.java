@@ -1,5 +1,7 @@
 package com.neaterbits.query.sql.dsl.api;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.function.BiConsumer;
 
 final class QueryStringUtil {
@@ -8,7 +10,17 @@ final class QueryStringUtil {
 		separated(sb, iter, ", ", c);
 	}
 
+	static <T> void commaSeparated(StringBuilder sb, int [] indices) {
+		
+		final Collection<Integer> intList = new ArrayList<>(indices.length);
+		
+		for (int i : indices) {
+			intList.add(i);
+		}
 
+		commaSeparated(sb, intList, (StringBuilder s, Integer i) -> s.append(String.valueOf(i)));
+	}
+	
 	static <T> void separated(StringBuilder sb, Iterable<T> iter, String separator, BiConsumer<StringBuilder, T> c) {
 		
 		boolean first = true;

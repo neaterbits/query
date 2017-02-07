@@ -40,7 +40,7 @@ public class CompanyResultVO {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
-		result = prime * result + ((stockPrice == null) ? 0 : stockPrice.hashCode());
+		//result = prime * result + ((stockPrice == null) ? 0 : stockPrice.hashCode());
 		return result;
 	}
 
@@ -61,8 +61,13 @@ public class CompanyResultVO {
 		if (stockPrice == null) {
 			if (other.stockPrice != null)
 				return false;
-		} else if (!stockPrice.equals(other.stockPrice))
+		} else if (stockPrice.compareTo(other.stockPrice) != 0)
 			return false;
 		return true;
+	}
+
+	@Override
+	public String toString() {
+		return "CompanyResultVO [name=" + name + ", stockPrice=" + stockPrice + "]";
 	}
 }

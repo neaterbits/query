@@ -24,12 +24,14 @@ import com.neaterbits.query.jpatest.model.Employee;
 import com.neaterbits.query.jpatest.model.Person;
 import com.neaterbits.query.jpatest.model.Role;
 import com.neaterbits.query.sql.dsl.api.entity.QueryMetaModel;
+import com.neaterbits.query.sql.dsl.api.helper.jpa.QueryTestDSJPANative;
 import com.neaterbits.query.sql.dsl.api.helper.jpa.QueryTestDSJPQL;
 import com.neaterbits.query.sql.dsl.api.testhelper.BaseSQLAPITest;
 import com.neaterbits.query.sql.dsl.api.testhelper.QueryTestDSBuilder;
 import com.neaterbits.query.sql.dsl.api.testhelper.QueryTestDSCheck;
 import com.neaterbits.query.sql.dsl.api.testhelper.QueryTestDSCombined;
 import com.neaterbits.query.sql.dsl.api.testhelper.QueryTestDSInMemory;
+import com.neaterbits.query.sql.dsl.api.testhelper.QueryTestDSStore;
 
 public class SQLAPITest extends BaseSQLAPITest {
 
@@ -37,15 +39,20 @@ public class SQLAPITest extends BaseSQLAPITest {
 
 	private static final QueryMetaModel jpaQueryMetaModel = new JPAQueryMetaModel(emf.getMetamodel());
 
+	private static final QueryTestDSStore nativeDS = new QueryTestDSJPANative("query-jpa-test");
+	private static final QueryTestDSStore jpql = new QueryTestDSJPQL("query-jpa-test");
+	private static final QueryTestDSStore inMemory = new QueryTestDSInMemory(jpaQueryMetaModel);
+	
 	private static QueryTestDSCheck store(Consumer<QueryTestDSBuilder> b) {
 		
-		return new QueryTestDSCombined(
+		
+		return new QueryTestDSCombined()
 				
-				() -> new QueryTestDSJPQL("query-jpa-test"),
-				//() -> new QueryTestDSJPANative("query-jpa-test"),
+				//.add(nativeDS)
+				.add(jpql)
 				
-				() -> new QueryTestDSInMemory(jpaQueryMetaModel)
-				)
+				.add(inMemory)
+				
 				
 				.store(b);
 	}
@@ -622,19 +629,21 @@ public class SQLAPITest extends BaseSQLAPITest {
         	.from(Company.class)
 
         	.groupBy(Company::getStockPrice)
-        	//.orderBy(Company::getName).and(Company::getStockPrice)
-        	
-        	
+        	.orderBy(Company::getStockPrice)
+
         	.compile();
 		
 		store(s  -> s.add(acme).add(bar).add(foo)).
 		check(ds -> {
-			checkSelectListUnordered(
+			checkSelectListOrdered(
 	        		ds,
 	        		startsWithAc,
 	        		q -> q.execute(),
-	        		new CompanyResultVO("184.2"),
-	        		new CompanyResultVO("134.1"));
+	        		
+	        		// ascending order
+	        		new CompanyResultVO(new BigDecimal("134.1")),
+	        		new CompanyResultVO(new BigDecimal("184.2"))
+    		);
 		});
 
 		// Search for foo as well, should return no matches

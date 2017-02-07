@@ -40,7 +40,7 @@ public final class QueryDataSourceJPANative extends QueryDataSourceJPA {
 	
 	@Override
 	final <QUERY> PreparedQuery_DB<QUERY, Query> makeHalfwayPreparedQuery(ExecutableQuery<QUERY> queryAccess, QUERY query,
-			QueryParametersDistinct distinctParams, String base, PreparedQueryConditionsBuilder conditions) {
+			QueryParametersDistinct distinctParams, PreparedQueryBuilder base, PreparedQueryConditionsBuilder conditions) {
 		
 		return new PreparedQuery_JPA_Halfway_Native<QUERY>(this, queryAccess, query, distinctParams, base, (PreparedQueryConditionsBuilderJPA)conditions);
 	}

@@ -11,6 +11,27 @@ import com.neaterbits.query.sql.dsl.api.QueryDataSource;
 public class QueryTestDSCombined extends QueryTestDS {
 
 	private final List<Supplier<QueryTestDSStore>> suppliers; 
+
+	public QueryTestDSCombined() {
+		suppliers = new ArrayList<>();
+	}
+
+	public QueryTestDSCombined add(QueryTestDSStore store) {
+		add(() -> store);
+		
+		return this;
+	}
+	
+	public QueryTestDSCombined add(Supplier<QueryTestDSStore> supplier) {
+
+		if (supplier == null) {
+			throw new IllegalArgumentException("supplier == null");
+		}
+
+		suppliers.add(supplier);
+		
+		return this;
+	}
 	
 	@SafeVarargs
 	public QueryTestDSCombined(Supplier<QueryTestDSStore> ... suppliers) {

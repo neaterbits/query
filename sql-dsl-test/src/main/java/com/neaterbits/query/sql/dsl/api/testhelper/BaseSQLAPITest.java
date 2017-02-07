@@ -43,6 +43,19 @@ public abstract class BaseSQLAPITest {
 		
 		assertThat(resultMap).isEqualTo(expectedMap);
 	}
+
+	protected final <T> void checkSelectListOrdered(QueryDataSource ds, MultiQuery<T> query, Function<ISharedPreparedQueryOps<List<T>>, List<T>> execute, @SuppressWarnings("unchecked") T ... expected) {
+
+		final List<T> ret = checkSelectListCommon(ds, query, execute, expected);
+		
+		// Check that contains the same number of items as the expected
+		// and in order
+		assertThat(ret.size()).isEqualTo(expected.length);
+		
+		for (int i = 0; i < expected.length; ++ i) {
+			assertThat(ret.get(i)).isEqualTo(expected[i]);
+		}
+	}
 	
 	private <T> List<T> checkSelectListCommon(QueryDataSource ds, MultiQuery<T> query, Function<ISharedPreparedQueryOps<List<T>>, List<T>> execute, @SuppressWarnings("unchecked") T ... expected) {
 		ISharedPreparedQueryOps<List<T>> ops = query.prepare(ds);
