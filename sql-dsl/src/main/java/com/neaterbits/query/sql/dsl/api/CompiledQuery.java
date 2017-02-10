@@ -183,14 +183,23 @@ final class CompiledQuery {
 			++ idx;
 		}
 		
-		throw new IllegalStateException("Could not find index in mappings from getter");
+		throw new IllegalStateException("Could not find index in mappings from getter: " + getter.getGetterMethod());
 	}
+	
+	interface ResultProcessingFieldsCtor<T extends Collected_Fields, R extends CompiledResultFields> {
+		
+		R create(T fields, int [] indicesStartingAtOne, FunctionGetter[] getters);
+		
+	}
+	
 
-	private static CompiledResultFields compileResultProcessingFields(
-			Collected_Fields fields,
+	private static <T extends Collected_Fields, R extends CompiledResultFields> 
+		R compileResultProcessingFields(
+			T fields,
 			CompiledMappings mappings,
 			CompiledSelectSources<?> sources,
-			CompiledGetterSetterCache cache) throws CompileException {
+			CompiledGetterSetterCache cache,
+			ResultProcessingFieldsCtor<T, R> ctor) throws CompileException {
 		
 		final int [] columns;
 		final FunctionGetter [] getters;
@@ -216,7 +225,8 @@ final class CompiledQuery {
 			throw new IllegalStateException("neither fields not columns");
 		}
 
-		return new CompiledResultFields(columns, getters);
+		
+		return ctor.create(fields, columns, getters);
 	}
 	
 	private static CompiledResultProcessing compileResultProcessing(
@@ -228,18 +238,19 @@ final class CompiledQuery {
 		final CompiledResultProcessing ret;
 		
 		
-		final CompiledResultFields compiledGroupBy;
-		final CompiledResultFields compiledOrderBy;
+		final CompiledGroupBy compiledGroupBy;
+		final CompiledOrderBy compiledOrderBy;
 		
 		if (collector.getGroupBy() != null) {
-			compiledGroupBy = compileResultProcessingFields(collector.getGroupBy(), mappings, sources, cache);
+			compiledGroupBy = compileResultProcessingFields(collector.getGroupBy(), mappings, sources, cache, (fields, indices, getters) -> new CompiledGroupBy(indices, getters) );
 		}
 		else {
 			compiledGroupBy = null;
 		}
 		
 		if (collector.getOrderBy() != null) {
-			compiledOrderBy = compileResultProcessingFields(collector.getOrderBy(), mappings, sources, cache);
+			
+			compiledOrderBy = compileResultProcessingFields(collector.getOrderBy(), mappings, sources, cache, (fields, indices, getters) -> new CompiledOrderBy(indices, getters, fields.getSortOrders()));
 		}
 		else {
 			compiledOrderBy = null;

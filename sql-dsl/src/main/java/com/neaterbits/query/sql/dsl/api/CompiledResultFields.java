@@ -1,6 +1,6 @@
 package com.neaterbits.query.sql.dsl.api;
 
-final class CompiledResultFields {
+abstract class CompiledResultFields {
 
 	// Should always have indices
 	private int [] indicesStartingAtOne;
@@ -26,16 +26,16 @@ final class CompiledResultFields {
 	}
 
 
-	int[] getIndicesStartingAtOne() {
+	final int[] getIndicesStartingAtOne() {
 		return indicesStartingAtOne;
 	}
 
 
-	void setIndicesStartingAtOne(int[] indicesStartingAtOne) {
+	final void setIndicesStartingAtOne(int[] indicesStartingAtOne) {
 		this.indicesStartingAtOne = indicesStartingAtOne;
 	}
 
-	FunctionGetter[] getOptionalGetters() {
+	final FunctionGetter[] getOptionalGetters() {
 		return optionalGetters;
 	}
 }

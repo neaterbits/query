@@ -144,10 +144,20 @@ abstract class QueryDataSource_ORM<ORM_QUERY, MANAGED, EMBEDDED, IDENTIFIABLE, A
 		final int numOrderBy = q.getOrderByFieldCount(query);
 		
 		if (numOrderBy > 0) {
-			sb.appendOrderBy(
-					getFieldReferences(q, query, numOrderBy, q::getOrderByFieldIndex)
-					// getArray(query, numOrderBy, q::getOrderByFieldIndex)
-			);
+			
+			final List<FieldReference> fieldReferences = getFieldReferences(q, query, numOrderBy, q::getOrderByFieldIndex);
+			
+			
+			final List<OrderByReference> orderByReferences = new ArrayList<>(numOrderBy);
+			
+			for (int i = 0; i < numOrderBy; ++ i) {
+				
+				final ESortOrder sortOrder = q.getOrderBySortOrder(query, i);
+				
+				orderByReferences.add(new OrderByReference(fieldReferences.get(i), sortOrder));
+			}
+			
+			sb.appendOrderBy(orderByReferences);
 		}
 	}
 	

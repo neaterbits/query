@@ -44,7 +44,7 @@ final class Collector_GroupBy<MODEL, RESULT>
 	}
 
 	@Override
-	public <T, R> ISharedProcessResult_After_OrderBy_Or_List_Named<MODEL, RESULT> orderBy(Function<T, R> field) {
+	public <T, R> ISharedProcessResult_OrderBy_AfterSortOrder_Named<MODEL, RESULT> orderBy(Function<T, R> field) {
 		return collectorConditions.orderBy(field);
 	}
 

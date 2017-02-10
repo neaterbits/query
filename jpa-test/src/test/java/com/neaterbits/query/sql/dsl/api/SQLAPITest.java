@@ -627,8 +627,8 @@ public class SQLAPITest extends BaseSQLAPITest {
         	
         	.from(Company.class)
 
-        	.groupBy(Company::getStockPrice).and(Company::getName)
-        	.orderBy(Company::getStockPrice)
+        	.groupBy(Company::getStockPrice)
+        	.orderBy(Company::getStockPrice).desc()
 
         	.compile();
 		
@@ -640,8 +640,8 @@ public class SQLAPITest extends BaseSQLAPITest {
 	        		q -> q.execute(),
 	        		
 	        		// ascending order
-	        		new CompanyResultVO(new BigDecimal("134.1")),
-	        		new CompanyResultVO(new BigDecimal("184.2"))
+	        		new CompanyResultVO(new BigDecimal("184.2")),
+	        		new CompanyResultVO(new BigDecimal("134.1"))
     		);
 		});
 

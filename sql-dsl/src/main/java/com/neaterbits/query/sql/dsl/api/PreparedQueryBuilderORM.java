@@ -66,9 +66,16 @@ abstract class PreparedQueryBuilderORM extends PreparedQueryBuilder implements P
 	}
 
 	@Override
-	final void appendOrderBy(List<FieldReference> fieldReferences) {
+	final void appendOrderBy(List<OrderByReference> orderByReferences) {
 		sb.append("\nORDER BY ");
 
-		appendFieldReferences(sb, fieldReferences);
+		QueryStringUtil.commaSeparated(sb, orderByReferences, (s, r) -> {
+
+			appendFieldReference(s, r.getField());
+			
+			if (r.getSortOrder() != null) {
+				s.append(' ').append(r.getSortOrder() == ESortOrder.ASCENDING ? "asc" : "desc");
+			}
+		});
 	}
 }

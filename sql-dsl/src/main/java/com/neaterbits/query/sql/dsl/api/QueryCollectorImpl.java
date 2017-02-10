@@ -22,8 +22,8 @@ final class QueryCollectorImpl {
 	// Select clauses
 	private Collector_Clause clauses;
 	
-	private Collected_Fields groupBy;
-	private Collected_Fields orderBy;
+	private Collected_GroupBy groupBy;
+	private Collected_OrderBy orderBy;
 	
 	QueryCollectorImpl(CollectedQueryResult result) {
 
@@ -111,27 +111,31 @@ final class QueryCollectorImpl {
 		this.clauses = clauses;
 	}
 	
-	void setResultProcessing(Collected_Fields groupBy, Collected_Fields orderBy) {
+	void setResultProcessing(Collected_GroupBy groupBy, Collected_OrderBy orderBy) {
 		this.groupBy = groupBy;
 		this.orderBy = orderBy;
 	}
 
-	Collected_Fields getGroupBy() {
+	Collected_GroupBy getGroupBy() {
 		return groupBy;
 	}
 
-	void setGroupBy(Collected_Fields groupBy) {
+	/*
+	void setGroupBy(Collected_GroupBy groupBy) {
 		this.groupBy = groupBy;
 	}
+	*/
 
-	public Collected_Fields getOrderBy() {
+	public Collected_OrderBy getOrderBy() {
 		return orderBy;
 	}
 
 
-	public void setOrderBy(Collected_Fields orderBy) {
+	/*
+	public void setOrderBy(Collected_OrderBy orderBy) {
 		this.orderBy = orderBy;
 	}
+	*/
 
 
 	void verify(VerificationErrorCollector collector) {

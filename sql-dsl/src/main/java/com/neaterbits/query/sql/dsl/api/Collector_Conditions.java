@@ -88,8 +88,13 @@ abstract class Collector_Conditions<MODEL, RESULT>
 		queryCollector.setClauses(clauseCollector);
 
 		// Add group-by, order-by etc
-		final Collected_Fields groupBy = makeCollectedFields(this.groupByCollector, this.groupByColumns);
-		final Collected_Fields orderBy = makeCollectedFields(this.orderByCollector, this.orderByColumns);
+		final Collected_GroupBy groupBy = makeCollectedFields(this.groupByCollector, this.groupByColumns,
+															  Collected_GroupBy::new, Collected_GroupBy::new);
+		
+		final Collected_OrderBy orderBy = makeCollectedFields(this.orderByCollector, this.orderByColumns,
+				
+															collector -> new Collected_OrderBy(collector, collector.getSortOrders()), 
+															indices -> new Collected_OrderBy(indices));
 		
 		if (groupBy != null || orderBy != null) {
 			queryCollector.setResultProcessing(groupBy, orderBy);
@@ -107,18 +112,18 @@ abstract class Collector_Conditions<MODEL, RESULT>
 		return getModelCompiler().compile(compiledQuery);
 	}
 	
-	private static Collected_Fields makeCollectedFields(Collector_Fields collector, int [] indices) {
+	private static <T extends Collector_Fields, R extends Collected_Fields> R makeCollectedFields(T collector, int [] indices, Function<T, R> ctor1, Function<int [], R> ctor2) {
 		
-		final Collected_Fields ret;
+		final R ret;
 		
 		if (collector != null && indices != null) {
 			throw new IllegalArgumentException("Have both fields and indices");
 		}
 		else if (collector != null) {
-			ret = new Collected_Fields(collector);
+			ret = ctor1.apply(collector);
 		}
 		else if (indices != null) {
-			ret = new Collected_Fields(indices);
+			ret = ctor2.apply(indices);
 		}
 		else {
 			ret = null;
@@ -167,7 +172,7 @@ abstract class Collector_Conditions<MODEL, RESULT>
 	}
 	
 
-	public final <T, R> ISharedProcessResult_After_OrderBy_Or_List_Named<MODEL, RESULT> orderBy(Function<T, R> field) {
+	public final <T, R> ISharedProcessResult_OrderBy_AfterSortOrder_Named<MODEL, RESULT> orderBy(Function<T, R> field) {
 
 		checkOrderByNotAlreadySet();
 		

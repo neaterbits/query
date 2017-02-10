@@ -33,6 +33,6 @@ abstract class PreparedQueryBuilder {
 	abstract void appendGroupBy(List<FieldReference> fieldReferences);
 	
 	// indices starting at 1
-	abstract void appendOrderBy(List<FieldReference> fieldReferences);  
+	abstract void appendOrderBy(List<OrderByReference> fieldReferences);  
 }
 

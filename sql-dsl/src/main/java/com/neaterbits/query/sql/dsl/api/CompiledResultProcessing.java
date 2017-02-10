@@ -2,10 +2,10 @@ package com.neaterbits.query.sql.dsl.api;
 
 final class CompiledResultProcessing {
 
-	private final CompiledResultFields groupBy;
-	private final CompiledResultFields orderBy;
+	private final CompiledGroupBy groupBy;
+	private final CompiledOrderBy orderBy;
 
-	CompiledResultProcessing(CompiledResultFields groupBy, CompiledResultFields orderBy) {
+	CompiledResultProcessing(CompiledGroupBy groupBy, CompiledOrderBy orderBy) {
 		
 		if (groupBy == null && orderBy == null) {
 			throw new IllegalArgumentException("No input");
@@ -15,11 +15,11 @@ final class CompiledResultProcessing {
 		this.orderBy = orderBy;
 	}
 
-	CompiledResultFields getGroupBy() {
+	CompiledGroupBy getGroupBy() {
 		return groupBy;
 	}
 
-	CompiledResultFields getOrderBy() {
+	CompiledOrderBy getOrderBy() {
 		return orderBy;
 	}
 }

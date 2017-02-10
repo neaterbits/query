@@ -718,10 +718,7 @@ final class ExecutableQueryForCompiledQuery implements ExecutableQuery<CompiledQ
 
 	@Override
 	public ESortOrder getOrderBySortOrder(CompiledQuery query, int idx) {
-		
-		System.err.println("### todo: descending sort order");
-		
-		return ESortOrder.ASCENDING; // only ascen
+		return query.getResultProcessing().getOrderBy().getSortOrders()[idx];
 	}
 
 	@Override
