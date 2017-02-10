@@ -20,7 +20,7 @@ abstract class Classic_Collector_WhereOrJoin_Alias_Base<
 							IClassicLogical_And_NonProcessResult_Alias<MODEL, RESULT>,
 							IClassicLogical_Or_NonProcessResult_Alias<MODEL, RESULT>>>
 
-	extends Classic_Collector_Where_Or_Join<MODEL, RESULT>
+	extends Classic_Collector_Where_Or_Join<MODEL, RESULT, ISharedProcessResult_After_GroupBy_Alias<MODEL, RESULT>>
 
 
 	implements 

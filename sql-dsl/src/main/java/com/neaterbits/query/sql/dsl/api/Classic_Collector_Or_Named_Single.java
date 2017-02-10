@@ -2,7 +2,7 @@ package com.neaterbits.query.sql.dsl.api;
 
 final class Classic_Collector_Or_Named_Single<MODEL, RESULT>
 
-		extends Classic_Collector_Or<MODEL, RESULT>
+		extends Classic_Collector_Or<MODEL, RESULT, Void>
 
 		implements IClassicSingleOrClausesNamed<MODEL, RESULT> {
 	

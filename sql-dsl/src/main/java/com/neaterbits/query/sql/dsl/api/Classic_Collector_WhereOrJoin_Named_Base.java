@@ -21,7 +21,7 @@ abstract class Classic_Collector_WhereOrJoin_Named_Base<
 							IClassicLogical_And_NonProcessResult_Named<MODEL, RESULT>,
 							IClassicLogical_Or_NonProcessResult_Named<MODEL, RESULT>> */>
 
-	extends Classic_Collector_Where_Or_Join<MODEL, RESULT>
+	extends Classic_Collector_Where_Or_Join<MODEL, RESULT, ISharedProcessResult_After_GroupBy_Named<MODEL, RESULT>>
 	implements 
 	
 				IClassicLogical_WhereOrJoin_Named_Base<MODEL, RESULT>,

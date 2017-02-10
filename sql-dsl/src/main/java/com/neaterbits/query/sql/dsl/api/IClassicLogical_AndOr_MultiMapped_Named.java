@@ -14,6 +14,7 @@ public interface IClassicLogical_AndOr_MultiMapped_Named<MODEL, RESULT>
 			IClassicLogical_Or_NonProcessResult_Named<MODEL, RESULT>
 			>,
 	
+	ISharedProcessResult_All_Named<MODEL, RESULT>,			
 	ISharedCompileEndClause<MODEL> {
 
 }

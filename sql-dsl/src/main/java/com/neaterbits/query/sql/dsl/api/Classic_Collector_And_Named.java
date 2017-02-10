@@ -8,7 +8,7 @@ abstract class Classic_Collector_And_Named<
 				RESULT,
 				AND_CLAUSES extends ISharedLogical_And_Named_All<MODEL,RESULT, AND_CLAUSES, IClassicLogical_Or_NonProcessResult_Named<MODEL, RESULT>>>
 
-	extends Classic_Collector_And<MODEL, RESULT>
+	extends Classic_Collector_And<MODEL, RESULT, ISharedProcessResult_After_GroupBy_Named<MODEL, RESULT>>
 
 	implements ISharedLogical_And_Named_All<MODEL, RESULT, AND_CLAUSES, IClassicLogical_Or_NonProcessResult_Named<MODEL, RESULT>> {
 

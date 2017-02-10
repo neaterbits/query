@@ -1,12 +1,12 @@
 package com.neaterbits.query.sql.dsl.api;
 
 
-abstract class Classic_Collector_And<MODEL, RESULT>
+abstract class Classic_Collector_And<MODEL, RESULT, AFTER_GROUP_BY>
 			
 			
-			extends Collector_Conditions<MODEL, RESULT> {
+			extends Collector_Conditions<MODEL, RESULT, AFTER_GROUP_BY> {
 
-	Classic_Collector_And(Collector_Conditions_Initial<MODEL, RESULT> last) {
+	Classic_Collector_And(Collector_Conditions_Initial<MODEL, RESULT, AFTER_GROUP_BY> last) {
 		super(last, ConditionsType.AND);
 	}
 	

@@ -5,7 +5,7 @@ import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
-abstract class Collector_Conditions<MODEL, RESULT>
+abstract class Collector_Conditions<MODEL, RESULT, AFTER_GROUP_BY>
 	
 	extends BaseQueryEntity<MODEL>
 
@@ -28,7 +28,7 @@ abstract class Collector_Conditions<MODEL, RESULT>
 	}
 
 	
-	Collector_Conditions(Collector_Conditions_Initial<MODEL, RESULT> last, ConditionsType newConditionsType) {
+	Collector_Conditions(Collector_Conditions_Initial<MODEL, RESULT, AFTER_GROUP_BY> last, ConditionsType newConditionsType) {
 		super(last);
 		
 		if (last.clauseCollector.getConditionsType() != ConditionsType.SINGLE) {
@@ -52,7 +52,7 @@ abstract class Collector_Conditions<MODEL, RESULT>
 	}
 
 	@SuppressWarnings("unchecked")
-	final <T extends ISharedLogical_Or<MODEL, RESULT>, IMPL extends Collector_Conditions<MODEL, RESULT>>
+	final <T extends ISharedLogical_Or<MODEL, RESULT>, IMPL extends Collector_Conditions<MODEL, RESULT, AFTER_GROUP_BY>>
 		void addNestedOrImpl(Consumer<T> orBuilder, IMPL subOrImpl) {
 		
 		
@@ -63,7 +63,7 @@ abstract class Collector_Conditions<MODEL, RESULT>
 	}
 
 	@SuppressWarnings("unchecked")
-	final <T extends ISharedLogical_And<MODEL, RESULT>, IMPL extends Collector_Conditions<MODEL, RESULT>>
+	final <T extends ISharedLogical_And<MODEL, RESULT>, IMPL extends Collector_Conditions<MODEL, RESULT, AFTER_GROUP_BY>>
 	
 		void addNestedAndImpl(Consumer<T> orBuilder, IMPL subAndImpl) {
 		
@@ -145,22 +145,35 @@ abstract class Collector_Conditions<MODEL, RESULT>
 		
 		checkGroupByNotAlreadySet();
 		
-		this.groupByCollector = new Collector_GroupBy<>(field, this);;
+		this.groupByCollector = new Collector_GroupBy<>(new FunctionGetter(field), this);
 		
 		return groupByCollector;
 	}
 
+	public final <R> ISharedProcessResult_After_GroupBy_Or_List_Alias<MODEL, RESULT> groupBy(Supplier<R> field) {
+		
+		checkGroupByNotAlreadySet();
+		
+		this.groupByCollector = new Collector_GroupBy<>(new SupplierGetter(field), this);
+		
+		return groupByCollector;
+	}
+	
 	@SuppressWarnings("unchecked")
-	public final ISharedProcessResult_After_GroupBy_Named<MODEL, RESULT> groupBy(int ... resultColumns) {
+	public final AFTER_GROUP_BY groupBy(int ... resultColumns) {
 
 		checkGroupByNotAlreadySet();
 
 		this.groupByColumns = Arrays.copyOf(resultColumns, resultColumns.length);
 		
-		return (ISharedProcessResult_After_GroupBy_Named<MODEL, RESULT>)this;
+		return (AFTER_GROUP_BY)this;
 	}
 
-	public final ISharedProcessResult_OrderBy_Named<MODEL, RESULT> having() {
+	public final ISharedProcessResult_OrderBy_Named<MODEL, RESULT> having(int foo) {
+		throw new UnsupportedOperationException("TODO");
+	}
+
+	public final ISharedProcessResult_OrderBy_Alias<MODEL, RESULT> having(String bar) {
 		throw new UnsupportedOperationException("TODO");
 	}
 
@@ -176,7 +189,16 @@ abstract class Collector_Conditions<MODEL, RESULT>
 
 		checkOrderByNotAlreadySet();
 		
-		this.orderByCollector = new Collector_OrderBy<>(field, this);;
+		this.orderByCollector = new Collector_OrderBy<>(new FunctionGetter(field), this);
+		
+		return orderByCollector;
+	}
+
+	public final <R> ISharedProcessResult_OrderBy_AfterSortOrder_Alias<MODEL, RESULT> orderBy(Supplier<R> field) {
+
+		checkOrderByNotAlreadySet();
+		
+		this.orderByCollector = new Collector_OrderBy<>(new SupplierGetter(field), this);
 		
 		return orderByCollector;
 	}

@@ -13,5 +13,6 @@ public interface IClassicLogical_AndOr_MultiMapped_Alias<MODEL, RESULT>
 			IClassicLogical_Or_NonProcessResult_Alias<MODEL, RESULT>
 			>,
 	
+    ISharedProcessResult_All_Alias<MODEL, RESULT>,
 	ISharedCompileEndClause<MODEL> {
 }

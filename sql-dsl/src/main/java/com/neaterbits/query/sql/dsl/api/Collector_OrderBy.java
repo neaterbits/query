@@ -3,15 +3,17 @@ package com.neaterbits.query.sql.dsl.api;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Function;
+import java.util.function.Supplier;
 
 final class Collector_OrderBy<MODEL, RESULT>
 		extends Collector_Fields
 
-		implements ISharedProcessResult_OrderBy_AfterSortOrder_Named<MODEL, RESULT> {
+		implements ISharedProcessResult_OrderBy_AfterSortOrder_Named<MODEL, RESULT>,
+				   ISharedProcessResult_OrderBy_AfterSortOrder_Alias<MODEL, RESULT>{
 
 	static final ESortOrder DEFAULT_SORT_ORDER = ESortOrder.ASCENDING;
 		
-	private final Collector_Conditions<MODEL, RESULT> collectorConditions;
+	private final Collector_Conditions<MODEL, RESULT, ?> collectorConditions;
 	
 	// Keep state-variable on whether sort-order was added for last
 	private ESortOrder sortOrderToAdd;
@@ -21,7 +23,7 @@ final class Collector_OrderBy<MODEL, RESULT>
 	
 	
 	
-	Collector_OrderBy(Function<?, ?> initial, Collector_Conditions<MODEL, RESULT> collectorConditions) {
+	Collector_OrderBy(Getter initial, Collector_Conditions<MODEL, RESULT, ?> collectorConditions) {
 		
 		if (initial == null) {
 			throw new IllegalArgumentException("initial == null");
@@ -50,12 +52,22 @@ final class Collector_OrderBy<MODEL, RESULT>
 
 		addLastSortOrder();
 		
-		
-		super.add(function);
+		super.add(new FunctionGetter(function));
 		
 		return this;
 	}
 	
+	
+	@Override
+	public <R> ISharedProcessResult_OrderBy_AfterSortOrder_Named<MODEL, RESULT> and(Supplier<R> function) {
+		
+		addLastSortOrder();
+		
+		super.add(new SupplierGetter(function));
+		
+		return this;
+	}
+
 	@Override
 	public MODEL compile() {
 

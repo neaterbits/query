@@ -2,24 +2,23 @@ package com.neaterbits.query.sql.dsl.api;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.Function;
 
 // Collect fields, for order by and group by
 abstract class Collector_Fields {
 
-	private final List<FunctionGetter> getters;
+	private final List<Getter> getters;
 
 	Collector_Fields() {
 		this.getters = new ArrayList<>();
 	}
 
-	final <T, R> void add(Function<T, R> function) {
+	final <T, R> void add(Getter getter) {
 		
-		if (function == null) {
-			throw new IllegalArgumentException("function == null");
+		if (getter == null) {
+			throw new IllegalArgumentException("getter == null");
 		}
 
-		getters.add(new FunctionGetter(function));
+		getters.add(getter);
 	}
 	
 	FunctionGetter [] toArray() {

@@ -626,7 +626,6 @@ public class SQLAPITest extends BaseSQLAPITest {
         	.map(Company::getStockPrice).to(CompanyResultVO::setStockPrice)
         	
         	.from(Company.class)
-
         	.groupBy(Company::getStockPrice)
         	.orderBy(Company::getStockPrice).desc()
 

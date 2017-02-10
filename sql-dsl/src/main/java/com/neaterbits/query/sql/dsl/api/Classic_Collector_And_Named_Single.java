@@ -4,7 +4,7 @@ package com.neaterbits.query.sql.dsl.api;
 final class Classic_Collector_And_Named_Single<
 		MODEL, 
 		RESULT>
-		extends Classic_Collector_And<MODEL, RESULT>
+		extends Classic_Collector_And<MODEL, RESULT, Void>
 	implements IClassicSingleAndClausesNamed<MODEL, RESULT> {
 
 	Classic_Collector_And_Named_Single(ClassicSingleNamedResult<MODEL, RESULT> last) {

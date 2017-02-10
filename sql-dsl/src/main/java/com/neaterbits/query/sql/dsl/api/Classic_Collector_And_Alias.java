@@ -9,7 +9,7 @@ abstract class Classic_Collector_And_Alias<
 				
 				AND_CLAUSES extends ISharedLogical_And_Alias_Base<MODEL,RESULT, AND_CLAUSES, IClassicLogical_Or_NonProcessResult_Alias<MODEL, RESULT>>>
 				
-		extends Classic_Collector_And<MODEL, RESULT>
+		extends Classic_Collector_And<MODEL, RESULT, ISharedProcessResult_After_GroupBy_Alias<MODEL, RESULT>>
 
 
 		implements ISharedLogical_And_Alias_Base<MODEL, RESULT, AND_CLAUSES, IClassicLogical_Or_NonProcessResult_Alias<MODEL, RESULT>> {

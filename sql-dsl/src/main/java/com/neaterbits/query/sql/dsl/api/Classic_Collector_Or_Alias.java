@@ -8,7 +8,7 @@ abstract class Classic_Collector_Or_Alias<
 				RESULT,
 				OR_CLAUSES extends ISharedLogical_Or_Alias_Base<MODEL, RESULT, OR_CLAUSES, IClassicLogical_And_NonProcessResult_Alias<MODEL, RESULT>>>
 
-		extends Classic_Collector_Or<MODEL, RESULT>
+		extends Classic_Collector_Or<MODEL, RESULT, ISharedProcessResult_After_GroupBy_Alias<MODEL, RESULT>>
 
 		implements ISharedLogical_Or_Alias_Base<MODEL, RESULT, OR_CLAUSES, IClassicLogical_And_NonProcessResult_Alias<MODEL, RESULT>> {
 

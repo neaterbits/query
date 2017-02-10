@@ -2,9 +2,9 @@ package com.neaterbits.query.sql.dsl.api;
 
 final class CollectedCondition_Nested extends CollectedCondition {
 	
-	private final Collector_Conditions<?, ?> collected;
+	private final Collector_Conditions<?, ?, ?> collected;
 
-	CollectedCondition_Nested(Collector_Conditions<?, ?> collected) {
+	CollectedCondition_Nested(Collector_Conditions<?, ?, ?> collected) {
 
 		if (collected == null) {
 			throw new IllegalArgumentException("collected == null");
@@ -13,7 +13,7 @@ final class CollectedCondition_Nested extends CollectedCondition {
 		this.collected = collected;
 	}
 
-	Collector_Conditions<?, ?> getCollected() {
+	Collector_Conditions<?, ?, ?> getCollected() {
 		return collected;
 	}
 

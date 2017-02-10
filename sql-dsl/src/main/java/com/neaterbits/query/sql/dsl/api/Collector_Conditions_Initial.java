@@ -5,9 +5,10 @@ package com.neaterbits.query.sql.dsl.api;
 
 abstract class Collector_Conditions_Initial<
 			MODEL,
-			RESULT
+			RESULT,
+			AFTER_GROUP_BY
 
-		> extends Collector_Conditions<MODEL, RESULT> {
+		> extends Collector_Conditions<MODEL, RESULT, AFTER_GROUP_BY> {
 
 	Collector_Conditions_Initial(BaseQueryEntity<MODEL> last) {
 		super(last, new Collector_Clause(ConditionsType.SINGLE));
