@@ -3,7 +3,6 @@ package com.neaterbits.query.sql.dsl.api;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.Comparator;
 import java.util.List;
 
 final class ResultCollection_List_GroupBy_OrderBy<QUERY> extends ArrayList<Object> implements ResultCollection {
@@ -98,6 +97,38 @@ final class ResultCollection_List_GroupBy_OrderBy<QUERY> extends ArrayList<Objec
 		super.add(toAdd);
 	}
 
+	@SuppressWarnings({"unchecked", "rawtypes"})
+	private int compareWithNull(Comparable c1, Comparable c2, ESortOrder sortOrder) {
+
+		int val;
+		
+		if (c1 == null) {
+			if (c2 == null) {
+				val = 0;
+			}
+			else {
+				// null sorts before values
+				val = -1;
+			}
+		}
+		else {
+			if (c2 == null) {
+				// null sorts before values
+				val = 1;
+			}
+			else {
+				val = c1.compareTo(c2);
+			}
+		}
+		
+		if (val != 0 && sortOrder != ESortOrder.ASCENDING) {
+			val = - val;
+		}
+		
+		return val;
+		
+	}
+	
 	@Override
 	public Collection<Object> asCollection() {
 		// Must sort the results before returning
@@ -137,7 +168,7 @@ final class ResultCollection_List_GroupBy_OrderBy<QUERY> extends ArrayList<Objec
 		return ret;
 	}
 	
-	@SuppressWarnings({"unchecked", "rawtypes"})
+	@SuppressWarnings("rawtypes")
 	private List<Object> orderSingleMapping(Collection<Object> input) {
 		// The fields are stored directly in the array, just sort them in whatever order.
 		
@@ -162,9 +193,7 @@ final class ResultCollection_List_GroupBy_OrderBy<QUERY> extends ArrayList<Objec
 			final Comparable c1 = (Comparable)o1;
 			final Comparable c2 = (Comparable)o2;
 
-			final int val = c1.compareTo(c2);
-			
-			return order == ESortOrder.ASCENDING ? val : - val;
+			return compareWithNull(c1, c2, order);
 		}); 
 		
 		
@@ -177,49 +206,23 @@ final class ResultCollection_List_GroupBy_OrderBy<QUERY> extends ArrayList<Objec
 			Comparable last = null;
 			
 			for (Object o : this) {
-				
-				Comparable c;
-				
-				fortsett
-				
-				 - null sjekker for tilsvarende i multi-mapping
-				 - null sjekker i alle sorteringene. OBS! Er null først eller sist i sortert rekkefølge?
-				    
-				
+
 				if (elementNo > 0) {
+					final Comparable next = checkSameValueAsLast(last, o);
 					
-					if (last == null) {
-						if (o == null) {
-							// both null, skip to next
-							continue;
-						}
-						else {
-							// next one is non-null, 
-							c = (Comparable)o;
-						}
+					if (next != last) { // new entry, update last
+						last = next;
 					}
 					else {
-						if (o == null) {
-							// add this one as last
-							c = null;
-						}
-						else {
-							c = (Comparable)o;
-							
-							if (c.compareTo(last) == 0) {
-								// same value skip
-								continue;
-							}
-						}
+						continue;
 					}
-
-					// new value, update last
-					last = c;
 				}
-
+				else {
+					last = (Comparable)o;
+				}
+				
 				// different value, add to array
 				ret.add(ExecuteQueryUtil.mapSingleFromFieldValue(q, query, o));
-				
 				++ elementNo;
 			}
 		}
@@ -232,7 +235,39 @@ final class ResultCollection_List_GroupBy_OrderBy<QUERY> extends ArrayList<Objec
 
 		return ret;
 	}
-	
+
+	@SuppressWarnings({"unchecked", "rawtypes"})
+	private static Comparable checkSameValueAsLast(Comparable last, Object o) {
+		Comparable c;
+	    
+		if (last == null) {
+			if (o == null) {
+				// both null, skip to next
+				c = null;
+			}
+			else {
+				// next one is non-null, 
+				c = (Comparable<?>)o;
+			}
+		}
+		else {
+			if (o == null) {
+				// add this one as last
+				c = null;
+			}
+			else {
+				c = (Comparable<?>)o;
+				
+				if (c.compareTo(last) == 0) {
+					// same value skip
+					c = last;
+				}
+			}
+		}
+
+		return c;
+	}
+
 	@SuppressWarnings({"unchecked", "rawtypes"})
 	private List<Object> orderMultipleMappings(Collection<Object> input) {
 		// more than one mapping, we have to sort
@@ -319,11 +354,12 @@ final class ResultCollection_List_GroupBy_OrderBy<QUERY> extends ArrayList<Objec
 			for (int i = 0; i < numSortIndices; ++ i) {
 				
 				final int sortIdx = sortIndices[i];
+			
 				
-				final int val = a1[sortIdx].compareTo(a2[sortIdx]);
+				final int val = compareWithNull(a1[sortIdx], a2[sortIdx], sortOrders[i]);
 				
 				if (val != 0) {
-					return sortOrders[i] == ESortOrder.ASCENDING ? val : - val;
+					return val;
 				}
 			}
 			
@@ -331,40 +367,33 @@ final class ResultCollection_List_GroupBy_OrderBy<QUERY> extends ArrayList<Objec
 		});
 
 		// OK, done with grouping and sorting.
-		// If we had group-by, we have to consilidate equal entries
+		// If we had group-by, we have to consolidate equal entries
 
 		final ArrayList<Object> ret = new ArrayList<>(input.size());
 
 		if (numGroupBy > 0) {
 			
-			// Skip like entrues
+			// Skip like entries
 			int elementNo = 0;
 			Comparable [] last = null;
-			
+
 			for (Object o : input) {
+				
 				final Comparable [] a = (Comparable[])o;
 				
 				if (elementNo > 0) {
-					
-					boolean alike = true;
-					
-					// see if is the same instance, by looping over all entries in group-by set
-					for (int i = 0; i < sortIndices.length; ++ i) {
-						final int sortIdx = sortIndices[i];
-						
-						if (a[sortIdx].compareTo(last[sortIdx]) != 0) {
-							alike = false;
-							break;
-						}
-						
-					}
-					
+				
+					final boolean alike = checkSameValueAsLast(sortIndices, last, a);
+	
 					if (alike) {
-						// same value skip
+						// exactly same value, and we're ordered so can just skip this linec
 						continue;
 					}
-					
-					// new value, update last
+					else {
+						last = a;
+					}
+				}
+				else {
 					last = a;
 				}
 				
@@ -384,4 +413,38 @@ final class ResultCollection_List_GroupBy_OrderBy<QUERY> extends ArrayList<Objec
 		
 		return ret;
 	}
+
+	@SuppressWarnings({"unchecked", "rawtypes"})
+	private static boolean checkSameValueAsLast(int [] sortIndices, Comparable [] last, Comparable [] a) {
+
+		boolean alike = true;
+			
+		// see if is the same instance, by looping over all entries in group-by set
+		for (int i = 0; i < sortIndices.length; ++ i) {
+			final int sortIdx = sortIndices[i];
+			
+			final Comparable cLast = last[sortIdx];
+			final Comparable cCur = a[sortIdx];
+
+			if (cLast != null) {
+				if (cCur != null) {
+					alike = cLast.compareTo(cCur) == 0;
+				}
+				else {
+					alike = false;
+				}
+			}
+			else {
+				alike = cCur == null;
+			}
+		}
+		
+		// new value, update last
+		if (!alike) {
+			last = a;
+		}
+
+		return alike;
+	}
+
 }

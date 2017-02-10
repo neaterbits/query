@@ -573,7 +573,19 @@ OBS!!
 For adhoc er det alltid kun på felter? kan finne 1, 2, 3 der også ut fra mappings men for entity så må det være på felt.
 
 
+Hva er da kombinasjonene?
+Single/Multi? Vi burde alltid sende med om single og multi.
+Er en fordel å vite om mapped og select-criteia er jo mappinga å vi burde også vide dette på det tidspunktet.
+Så hva blir det da? Tre varianter så lang, så får en se om må splittes mere.
 
+
+Single
+MultiMapped
+MultiEntity
+
+Så NonProcessResult er da? Kun Single det, så 
+NonProcessResult => Single
+ProcessResult => MultiMapped
 
 
 - TODO: er det rett å alltid sende inn named for order by/group by?
@@ -961,6 +973,12 @@ Group-by ?
 
 !! OBS !! Må sammenligne CompiledFieldReference når finner indekser slik at alltid velger rett alias.
 Hmmm... men vi sender alltid inn named her.
+
+
+
+
+---------------
+
 
 
 

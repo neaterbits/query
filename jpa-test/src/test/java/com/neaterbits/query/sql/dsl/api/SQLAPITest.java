@@ -712,4 +712,14 @@ public class SQLAPITest extends BaseSQLAPITest {
     		}
     	}
     }
-}
+
+    @Test
+    public void testOrderByNullIsFirstOrLast() {
+    	assertThat(true).isEqualTo(false);
+    }
+
+    @Test
+    public void testVariousCombinationsOfGroupByAndOrderByWithNullValues() {
+    	assertThat(true).isEqualTo(false);
+    }
+}	
