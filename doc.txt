@@ -594,6 +594,11 @@ Så fikse dette i CompiledQuery og API slik at for alias baserte query så er de
 
 - TODO: for adhoc queries, hvis resultat er et vanlig Set<> så bør det ikke være mulighet å gjøre orderBy, måtte være sorted-set i så fall.
  
+
+- TODO: list entities - må velge alias eller named på noe vis når ikke er mapped.
+ kan velge i .from() men fungerer ikke om skal kutte from, så må da velge i første where.
+
+
  
 
 - !!! for halway queries (startsWith/endsWith/in for native), fortsatt parametrisere for å unngå at logger verdier !!!

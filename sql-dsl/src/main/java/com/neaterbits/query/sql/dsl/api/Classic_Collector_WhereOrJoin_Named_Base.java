@@ -71,10 +71,6 @@ abstract class Classic_Collector_WhereOrJoin_Named_Base<
 	
 	// -- Table -- 
 	
-	@SuppressWarnings("unchecked")
-	private <LEFT, RIGHT> IClassicJoin_Condition_Named_Base<MODEL, RESULT, LEFT, RIGHT, ?> getJoinConditionTable() {
-		return (IClassicJoin_Condition_Named_Base<MODEL, RESULT, LEFT, RIGHT, ?>)this;
-	}
 
 	@SuppressWarnings("unchecked")
 	private JOIN_CONDITION getJoinCondition() {
@@ -82,22 +78,22 @@ abstract class Classic_Collector_WhereOrJoin_Named_Base<
 	}
 	
 	
-	final <LEFT, RIGHT> IClassicJoin_Condition_Named_Base<MODEL, RESULT, LEFT, RIGHT, ?> innerJoin(Class<LEFT> leftType, Class<RIGHT> rightType) {
+	final <LEFT, RIGHT> JOIN_CONDITION innerJoinUtil(Class<LEFT> leftType, Class<RIGHT> rightType) {
 
 		final CollectedJoin_Named collectedJoin = new CollectedJoin_Named(EJoinType.INNER, leftType, rightType);
 		
 		addJoin(collectedJoin);
 		
-		return getJoinConditionTable();
+		return getJoinCondition();
 	}
 
-	final <LEFT, RIGHT> IClassicJoin_Condition_Named_Base<MODEL, RESULT, LEFT, RIGHT, ?> leftJoin(Class<LEFT> leftType, Class<RIGHT> rightType) {
+	final <LEFT, RIGHT> JOIN_CONDITION leftJoinUtil(Class<LEFT> leftType, Class<RIGHT> rightType) {
 
 		final CollectedJoin_Named collectedJoin = new CollectedJoin_Named(EJoinType.LEFT, leftType, rightType);
 		
 		addJoin(collectedJoin);
 		
-		return getJoinConditionTable();
+		return getJoinCondition();
 	}
 
 	

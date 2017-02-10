@@ -28,4 +28,23 @@ final class Classic_Collector_WhereOrJoin_MultiMapped_Named<MODEL, RESULT>
 	Classic_Collector_And_Named<MODEL, RESULT, IClassicLogical_And_MultiMapped_Named<MODEL, RESULT>> createAndCollector() {
 		return new Classic_Collector_And_MultiMapped_Named<>(this);
 	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public <LEFT, RIGHT> IClassicJoin_Condition_MultiMapped_Named<MODEL, RESULT, LEFT, RIGHT>
+	
+			innerJoin(Class<LEFT> leftType, Class<RIGHT> rightType) {
+
+		return (IClassicJoin_Condition_MultiMapped_Named<MODEL, RESULT, LEFT, RIGHT>)super.innerJoinUtil(leftType, rightType);
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public <LEFT, RIGHT> IClassicJoin_Condition_MultiMapped_Named<MODEL, RESULT, LEFT, RIGHT>
+		leftJoin(Class<LEFT> leftType, Class<RIGHT> rightType) {
+		
+		
+		return (IClassicJoin_Condition_MultiMapped_Named<MODEL, RESULT, LEFT, RIGHT>)super.leftJoinUtil(leftType, rightType);
+	}
+	
 }

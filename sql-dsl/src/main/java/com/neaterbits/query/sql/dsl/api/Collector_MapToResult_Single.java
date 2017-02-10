@@ -10,8 +10,8 @@ final class Collector_MapToResult_Single<MODEL, RESULT>
 		RESULT,
 		
 		// single-entry so non result processing
-		IClassicLogical_WhereOrJoin_NonProcessResult_Named<MODEL, RESULT>,
-		IClassicLogical_WhereOrJoin_NonProcessResult_Alias<MODEL, RESULT>
+		IClassicLogical_WhereOrJoin_SingleResult_Named<MODEL, RESULT>,
+		IClassicLogical_WhereOrJoin_SingleResult_Alias<MODEL, RESULT>
 	>
 
 
@@ -32,8 +32,8 @@ final class Collector_MapToResult_Single<MODEL, RESULT>
 				RESULT,
 				R,
 				IClassicResult_Mapped_Single_Named<MODEL, RESULT>,
-				IClassicLogical_WhereOrJoin_NonProcessResult_Named<MODEL, RESULT>,
-				IClassicLogical_WhereOrJoin_NonProcessResult_Alias<MODEL, RESULT>
+				IClassicLogical_WhereOrJoin_SingleResult_Named<MODEL, RESULT>,
+				IClassicLogical_WhereOrJoin_SingleResult_Alias<MODEL, RESULT>
 		
 			>(getter, this);
 	}
@@ -46,19 +46,19 @@ final class Collector_MapToResult_Single<MODEL, RESULT>
 				RESULT,
 				R,
 				IClassicResult_Mapped_Single_Alias<MODEL, RESULT>,
-				IClassicLogical_WhereOrJoin_NonProcessResult_Named<MODEL, RESULT>,
-				IClassicLogical_WhereOrJoin_NonProcessResult_Alias<MODEL, RESULT>
+				IClassicLogical_WhereOrJoin_SingleResult_Named<MODEL, RESULT>,
+				IClassicLogical_WhereOrJoin_SingleResult_Alias<MODEL, RESULT>
 		
 			>(getter, this);
 	}
 
 	@Override
-	IClassicLogical_WhereOrJoin_NonProcessResult_Named<MODEL, RESULT> createWhereOrJoinForNamed() {
-		return new Classic_Collector_WhereOrJoin_NonProcessResult_Named<>(this);
+	IClassicLogical_WhereOrJoin_SingleResult_Named<MODEL, RESULT> createWhereOrJoinForNamed() {
+		return new Classic_Collector_WhereOrJoin_SingleResult_Named<>(this);
 	}
 
 	@Override
-	IClassicLogical_WhereOrJoin_NonProcessResult_Alias<MODEL, RESULT> createWhereOrJoinForAlias() {
-		return new Classic_Collector_WhereOrJoin_NonProcessResult_Alias<>(this);
+	IClassicLogical_WhereOrJoin_SingleResult_Alias<MODEL, RESULT> createWhereOrJoinForAlias() {
+		return new Classic_Collector_WhereOrJoin_SingleResult_Alias<>(this);
 	}
 }

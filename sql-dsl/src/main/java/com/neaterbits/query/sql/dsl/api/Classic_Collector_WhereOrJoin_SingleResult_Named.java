@@ -1,21 +1,21 @@
 package com.neaterbits.query.sql.dsl.api;
 
-final class Classic_Collector_WhereOrJoin_NonProcessResult_Named<MODEL, RESULT>
+final class Classic_Collector_WhereOrJoin_SingleResult_Named<MODEL, RESULT>
 
 	extends Classic_Collector_WhereOrJoin_Named_Base<
 				MODEL,
 				RESULT,
-				IClassicJoin_Condition_NonProcessResult_Named<MODEL, RESULT, Object, Object>,
+				IClassicJoin_Condition_SingleResult_Named<MODEL, RESULT, Object, Object>,
 				
 	
 				IClassicLogical_And_NonProcessResult_Named<MODEL, RESULT>,
 				IClassicLogical_Or_NonProcessResult_Named<MODEL, RESULT>,
-				IClassicLogical_AndOr_NonProcessResult_Named<MODEL, RESULT>
+				IClassicLogical_AndOr_SingleResult_Named<MODEL, RESULT>
 				> 
 
-		implements IClassicLogical_WhereOrJoin_NonProcessResult_Named<MODEL, RESULT> {
+		implements IClassicLogical_WhereOrJoin_SingleResult_Named<MODEL, RESULT> {
 
-	Classic_Collector_WhereOrJoin_NonProcessResult_Named(BaseQueryEntity<MODEL> last) {
+	Classic_Collector_WhereOrJoin_SingleResult_Named(BaseQueryEntity<MODEL> last) {
 		super(last);
 	}
 

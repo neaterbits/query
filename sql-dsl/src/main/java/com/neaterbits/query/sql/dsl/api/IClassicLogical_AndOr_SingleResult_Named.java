@@ -1,6 +1,6 @@
 package com.neaterbits.query.sql.dsl.api;
 
-public interface IClassicLogical_AndOr_NonProcessResult_Named<MODEL, RESULT>
+public interface IClassicLogical_AndOr_SingleResult_Named<MODEL, RESULT>
 	extends
 		ISharedLogical_And_Or_Named_All<
 				MODEL, 

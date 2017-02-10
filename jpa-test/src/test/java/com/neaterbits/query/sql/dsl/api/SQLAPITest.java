@@ -1,12 +1,12 @@
 package com.neaterbits.query.sql.dsl.api;
 
-
 import static com.neaterbits.query.sql.dsl.api.Select.alias;
 import static com.neaterbits.query.sql.dsl.api.Select.intParam;
 import static com.neaterbits.query.sql.dsl.api.Select.selectOneOrNull;
 import static com.neaterbits.query.sql.dsl.api.Select.selectList;
 import static com.neaterbits.query.sql.dsl.api.Select.oneFrom;
 import static com.neaterbits.query.sql.dsl.api.Select.listFrom;
+import static com.neaterbits.query.sql.dsl.api.Select.selectListFrom;
 import static com.neaterbits.query.sql.dsl.api.Select.sum;
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -712,6 +712,41 @@ public class SQLAPITest extends BaseSQLAPITest {
     	}
     }
 
+	@Test
+    public void testMultiEntity() {
+    	
+		final Company acme = new Company(-1, "Acme");
+		final Company foo = new Company(-1, "Foo");
+
+		
+        final MultiQuery<Company> startsWithAc =
+        		selectListFrom(Company.class)
+        		.from(Company.class)
+        		
+        	.where(Company::getName).startsWith("Ac")
+
+        	.compile();
+		
+		store(s  -> s.add(acme)).
+		check(ds -> {
+	        checkSelectListUnordered(
+	        		ds,
+	        		startsWithAc,
+	        		q -> q.execute(),
+	        		new Company(acme.getId(), acme.getName()));
+		});
+
+		// Search for foo as well, should return no matches
+		store(s  -> s.add(foo)).
+		check(ds -> {
+	        checkSelectListUnordered(
+	        		ds,
+	        		startsWithAc,
+	        		q -> q.execute());
+		});
+	}
+
+    
     @Test
     public void testOrderByNullIsFirstOrLast() {
     	assertThat(true).isEqualTo(false);

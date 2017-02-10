@@ -10,10 +10,10 @@ package com.neaterbits.query.sql.dsl.api;
  * @param <RESULT> query result type
  */
 
-public interface IClassicLogical_Where_NonProcessResult_Named<MODEL, RESULT>
+public interface IClassicLogical_Where_SingleResult_Named<MODEL, RESULT>
 		extends IClassicLogical_Where_Named_Base<
 			MODEL,
 			RESULT,
-			IClassicLogical_AndOr_NonProcessResult_Named<MODEL, RESULT>> {
+			IClassicLogical_AndOr_SingleResult_Named<MODEL, RESULT>> {
 
 }
