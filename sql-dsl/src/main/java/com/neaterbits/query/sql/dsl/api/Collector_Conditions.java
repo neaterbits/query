@@ -169,11 +169,11 @@ abstract class Collector_Conditions<MODEL, RESULT, AFTER_GROUP_BY>
 		return (AFTER_GROUP_BY)this;
 	}
 
-	public final ISharedProcessResult_OrderBy_Named<MODEL, RESULT> having(int foo) {
+	public final ISharedProcessResult_OrderBy_Mapped_Named<MODEL, RESULT> having(int foo) {
 		throw new UnsupportedOperationException("TODO");
 	}
 
-	public final ISharedProcessResult_OrderBy_Alias<MODEL, RESULT> having(String bar) {
+	public final ISharedProcessResult_OrderBy_Mapped_Alias<MODEL, RESULT> having(String bar) {
 		throw new UnsupportedOperationException("TODO");
 	}
 

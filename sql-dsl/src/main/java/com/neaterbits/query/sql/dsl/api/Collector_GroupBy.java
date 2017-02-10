@@ -44,18 +44,19 @@ final class Collector_GroupBy<MODEL, RESULT>
 		return this;
 	}
 
+
 	@Override
 	public MODEL compile() {
 		return collectorConditions.compile();
 	}
 
 	@Override
-	public ISharedProcessResult_OrderBy_Named<MODEL, RESULT> having(int foo) {
+	public ISharedProcessResult_OrderBy_Mapped_Named<MODEL, RESULT> having(int foo) {
 		return collectorConditions.having(foo);
 	}
 
 	@Override
-	public ISharedProcessResult_OrderBy_Alias<MODEL, RESULT> having(String bar) {
+	public ISharedProcessResult_OrderBy_Mapped_Alias<MODEL, RESULT> having(String bar) {
 		return collectorConditions.having(bar);
 	}
 
