@@ -180,13 +180,21 @@ final class ResultCollection_List_GroupBy_OrderBy<QUERY> extends ArrayList<Objec
 				
 				Comparable c;
 				
+				fortsett
+				
+				 - null sjekker for tilsvarende i multi-mapping
+				 - null sjekker i alle sorteringene. OBS! Er null først eller sist i sortert rekkefølge?
+				    
+				
 				if (elementNo > 0) {
 					
 					if (last == null) {
 						if (o == null) {
+							// both null, skip to next
 							continue;
 						}
 						else {
+							// next one is non-null, 
 							c = (Comparable)o;
 						}
 					}
