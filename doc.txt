@@ -985,5 +985,15 @@ Hmmm... men vi sender alltid inn named her.
 ---------------
 
 
+aggregate functions:
+
+ .map(foo::bar).to(baz::baz)
+ .sum(foo:baz).to()..
+
+Så mapperen må arve fra disse.
+
+
+
+--
 
 

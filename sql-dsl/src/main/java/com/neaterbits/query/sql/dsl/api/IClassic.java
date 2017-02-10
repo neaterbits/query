@@ -3,9 +3,11 @@ package com.neaterbits.query.sql.dsl.api;
 import java.math.BigDecimal;
 
 public interface IClassic 
-	extends SumFunction<
+	extends IShared_Aggregate_Sum_Named_All<
+	/*<
 				IClassicResult_Numeric_Named<Short>,
 				IClassicResult_Numeric_Named<Integer>,
+			*/
 				IClassicResult_Numeric_Named<Long>,
 				IClassicResult_Numeric_Named<BigDecimal>>
 

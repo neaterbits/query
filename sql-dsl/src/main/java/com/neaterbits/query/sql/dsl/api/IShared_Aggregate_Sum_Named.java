@@ -1,7 +1,7 @@
 package com.neaterbits.query.sql.dsl.api;
 
 
-public interface SumFunction<SHORT_RET, INT_RET, LONG_RET, BIGDECIMAL_RET> {
+public interface IShared_Aggregate_Sum_Named<SHORT_RET, INT_RET, LONG_RET, BIGDECIMAL_RET> {
 
     <T> SHORT_RET sum(IFunctionShort<T> field);
 	

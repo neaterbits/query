@@ -201,27 +201,28 @@ final class ClassicSelect implements IClassic {
 	// ------------------------ Sum ------------------------
 	
 
-	private <T, NUM> IClassicResult_Numeric_Named<NUM> sum(Function<T, NUM> field, Class<NUM> cl) {
-		return new Collector_AggregateNamedResult<>(new QueryResultSum(cl, new FunctionGetter(field)), singleQueryCompiler());
+	private <T, NUM, RESULT> IClassicResult_Numeric_Named<RESULT> sum(Function<T, NUM> field, Class<NUM> numCl, Class<RESULT> resultCl) {
+		return new Collector_AggregateNamedResult<>(new QueryResultSum(resultCl, new FunctionGetter(field)), singleQueryCompiler());
+	}
+
+
+	@Override
+	public <T> IClassicResult_Numeric_Named<Long> sum(IFunctionShort<T> field) {
+		return sum(field, Short.class, Long.class);
+	}
+
+	@Override
+	public <T> IClassicResult_Numeric_Named<Long> sum(IFunctionInteger<T> field) {
+		return sum(field, Integer.class, Long.class);
 	}
 	
 	@Override
-	public <T> IClassicResult_Numeric_Named<Short> sum(IFunctionShort<T> field) {
-		return sum(field, Short.class);
-	}
-
-	@Override
-	public <T> IClassicResult_Numeric_Named<Integer> sum(IFunctionInteger<T> field) {
-		return sum(field, Integer.class);
-	}
-
-	@Override
 	public <T> IClassicResult_Numeric_Named<Long> sum(IFunctionLong<T> field) {
-		return sum(field, Long.class);
+		return sum(field, Long.class, Long.class);
 	}
 
 	@Override
 	public <T> IClassicResult_Numeric_Named<BigDecimal> sum(IFunctionBigDecimal<T> field) {
-		return sum(field, BigDecimal.class);
+		return sum(field, BigDecimal.class, BigDecimal.class);
 	}
 }

@@ -36,11 +36,11 @@ public interface Select {
 		return ClassicSelect.selectImpl.aliasAlias(aliasType);
     }
 
-    public static <T> IClassicResult_Numeric_Named<Short> sum(IFunctionShort<T> field) {
+    public static <T> IClassicResult_Numeric_Named<Long> sum(IFunctionShort<T> field) {
     	return ClassicSelect.selectImpl.sum(field);
     }
 	
-    public static <T> IClassicResult_Numeric_Named<Integer> sum(IFunctionInteger<T> field) {
+    public static <T> IClassicResult_Numeric_Named<Long> sum(IFunctionInteger<T> field) {
     	return ClassicSelect.selectImpl.sum(field);
     }
 
