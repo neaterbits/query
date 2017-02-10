@@ -6,8 +6,8 @@ final class Classic_Collector_MultiEntityResult<MODEL, RESULT>
 			MODEL,
 			RESULT,
 			
-			IClassicLogical_WhereOrJoin_ProcessResult_Named<MODEL, RESULT>,
-			IClassicLogical_WhereOrJoin_ProcessResult_Alias<MODEL, RESULT>
+			IClassicLogical_WhereOrJoin_MultiMapped_Named<MODEL, RESULT>,
+			IClassicLogical_WhereOrJoin_MultiMapped_Alias<MODEL, RESULT>
 			>
 	implements IClassicResult_Entity_Multi<MODEL, RESULT> {
 
@@ -16,12 +16,12 @@ final class Classic_Collector_MultiEntityResult<MODEL, RESULT>
 	}
 
 	@Override
-	IClassicLogical_WhereOrJoin_ProcessResult_Named<MODEL, RESULT> createWhereOrJoinForNamed() {
-		return new Classic_Collector_WhereOrJoin_ProcessResult_Named<>(this);
+	IClassicLogical_WhereOrJoin_MultiMapped_Named<MODEL, RESULT> createWhereOrJoinForNamed() {
+		return new Classic_Collector_WhereOrJoin_MultiMapped_Named<>(this);
 	}
 
 	@Override
-	IClassicLogical_WhereOrJoin_ProcessResult_Alias<MODEL, RESULT> createWhereOrJoinForAlias() {
-		return new Classic_Collector_WhereOrJoin_ProcessResult_Alias<>(this);
+	IClassicLogical_WhereOrJoin_MultiMapped_Alias<MODEL, RESULT> createWhereOrJoinForAlias() {
+		return new Classic_Collector_WhereOrJoin_MultiMapped_Alias<>(this);
 	}
 }
