@@ -13,7 +13,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import java.math.BigDecimal;
 import java.util.function.Consumer;
 
-import javax.persistence.Entity;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
@@ -628,7 +627,7 @@ public class SQLAPITest extends BaseSQLAPITest {
         	
         	.from(Company.class)
 
-        	.groupBy(Company::getStockPrice)
+        	.groupBy(Company::getStockPrice).and(Company::getName)
         	.orderBy(Company::getStockPrice)
 
         	.compile();

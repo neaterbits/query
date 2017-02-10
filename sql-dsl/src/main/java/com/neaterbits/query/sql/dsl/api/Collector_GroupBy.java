@@ -25,12 +25,13 @@ final class Collector_GroupBy<MODEL, RESULT>
 	}
 
 	@Override
-	public <T, R> ISharedProcessResult_After_GroupBy_Named<MODEL, RESULT> and(Function<T, R> function) {
+	public <T, R> ISharedProcessResult_After_GroupBy_Or_List_Named<MODEL, RESULT> and(Function<T, R> function) {
 		
 		super.add(function);
 		
 		return this;
 	}
+	
 
 	@Override
 	public MODEL compile() {

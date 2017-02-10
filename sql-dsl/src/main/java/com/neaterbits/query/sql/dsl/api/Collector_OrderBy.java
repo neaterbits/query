@@ -5,7 +5,7 @@ import java.util.function.Function;
 final class Collector_OrderBy<MODEL, RESULT>
 		extends Collector_Fields
 
-		implements ISharedProcessResult_After_OrderBy_Or_List_Named<MODEL, RESULT> {
+		implements ISharedProcessResult_OrderBy_AfterSortOrder_Named<MODEL, RESULT> {
 
 	private final Collector_Conditions<MODEL, RESULT> collectorConditions;
 	
@@ -25,7 +25,7 @@ final class Collector_OrderBy<MODEL, RESULT>
 	}
 	
 	@Override
-	public <T, R> ISharedProcessResult_After_OrderBy_Or_List_Named<MODEL, RESULT> and(Function<T, R> function) {
+	public <T, R> ISharedProcessResult_OrderBy_AfterSortOrder_Named<MODEL, RESULT> and(Function<T, R> function) {
 		
 		super.add(function);
 		
@@ -35,5 +35,15 @@ final class Collector_OrderBy<MODEL, RESULT>
 	@Override
 	public MODEL compile() {
 		return collectorConditions.compile();
+	}
+
+	@Override
+	public ISharedProcessResult_After_OrderBy_Or_List_Named<MODEL, RESULT> asc() {
+		throw new UnsupportedOperationException("TODO");
+	}
+
+	@Override
+	public ISharedProcessResult_After_OrderBy_Or_List_Named<MODEL, RESULT> desc() {
+		throw new UnsupportedOperationException("TODO");
 	}
 }
