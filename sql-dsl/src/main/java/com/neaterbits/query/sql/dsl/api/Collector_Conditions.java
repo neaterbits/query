@@ -141,22 +141,24 @@ abstract class Collector_Conditions<MODEL, RESULT, AFTER_GROUP_BY>
 
 
 	// Overriden by interfaces further down in the hierarchy
+	@SuppressWarnings("unchecked")
 	public final <T, R> ISharedProcessResult_After_GroupBy_Or_List_Named<MODEL, RESULT> groupBy(Function<T, R> field) {
 		
 		checkGroupByNotAlreadySet();
 		
-		this.groupByCollector = new Collector_GroupBy<>(new FunctionGetter(field), this);
+		this.groupByCollector = new Collector_GroupBy_Named<>(new FunctionGetter(field), this);
 		
-		return groupByCollector;
+		return (ISharedProcessResult_After_GroupBy_Or_List_Named<MODEL, RESULT>)groupByCollector;
 	}
 
+	@SuppressWarnings("unchecked")
 	public final <R> ISharedProcessResult_After_GroupBy_Or_List_Alias<MODEL, RESULT> groupBy(Supplier<R> field) {
 		
 		checkGroupByNotAlreadySet();
 		
-		this.groupByCollector = new Collector_GroupBy<>(new SupplierGetter(field), this);
+		this.groupByCollector = new Collector_GroupBy_Alias<>(new SupplierGetter(field), this);
 		
-		return groupByCollector;
+		return (ISharedProcessResult_After_GroupBy_Or_List_Alias<MODEL, RESULT>)groupByCollector;
 	}
 	
 	@SuppressWarnings("unchecked")

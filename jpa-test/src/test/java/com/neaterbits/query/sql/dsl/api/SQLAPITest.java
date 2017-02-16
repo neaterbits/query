@@ -626,7 +626,15 @@ public class SQLAPITest extends BaseSQLAPITest {
         	.map(Company::getStockPrice).to(CompanyResultVO::setStockPrice)
         	
         	.from(Company.class)
+        	
         	.groupBy(Company::getStockPrice)
+
+        	.having().sum(Company::getStockPrice).isEqualTo(new BigDecimal("1.2"))
+        		.or(Company::getId).isEqualTo(2L)
+        	    .or(Company::getName).startsWith("Acme")
+        	    .orNest(o -> o.and(Company::getName).contains("foo"))
+        	    
+        	    
         	.orderBy(Company::getStockPrice).desc()
 
         	.compile();

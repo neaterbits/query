@@ -1,14 +1,19 @@
 package com.neaterbits.query.sql.dsl.api;
 
+import java.math.BigDecimal;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
-final class Collector_GroupBy<MODEL, RESULT>
+abstract class Collector_GroupBy<MODEL, RESULT>
 
 		extends Collector_Fields
 		implements
-			ISharedProcessResult_After_GroupBy_Or_List_Named<MODEL, RESULT>,
-			ISharedProcessResult_After_GroupBy_Or_List_Alias<MODEL, RESULT>{
+		ISharedProcessResult_List_Named<MODEL, RESULT, ISharedProcessResult_After_GroupBy_Or_List_Named<MODEL, RESULT>>,
+		ISharedProcessResult_OrderBy_Mapped_Named<MODEL, RESULT>,
+		ISharedProcessResult_List_Alias<MODEL, RESULT, ISharedProcessResult_After_GroupBy_Or_List_Alias<MODEL, RESULT>>,
+		ISharedProcessResult_OrderBy_Mapped_Alias<MODEL, RESULT>
+
+ 	{
 
 	private final Collector_Conditions<MODEL, RESULT, ?> collectorConditions;
 
@@ -29,49 +34,41 @@ final class Collector_GroupBy<MODEL, RESULT>
 	}
 
 	@Override
-	public <T, R> ISharedProcessResult_After_GroupBy_Or_List_Named<MODEL, RESULT> and(Function<T, R> function) {
+	@SuppressWarnings("unchecked")
+	public final <T, R> ISharedProcessResult_After_GroupBy_Or_List_Named<MODEL, RESULT> and(Function<T, R> function) {
 		
 		super.add(new FunctionGetter(function));
 		
-		return this;
+		return (ISharedProcessResult_After_GroupBy_Or_List_Named<MODEL, RESULT>)this;
 	}
 
 	@Override
-	public <R> ISharedProcessResult_After_GroupBy_Or_List_Alias<MODEL, RESULT> and(Supplier<R> function) {
+	@SuppressWarnings("unchecked")
+	public final <R> ISharedProcessResult_After_GroupBy_Or_List_Alias<MODEL, RESULT> and(Supplier<R> function) {
 
 		super.add(new SupplierGetter(function));
 		
-		return this;
+		return (ISharedProcessResult_After_GroupBy_Or_List_Alias<MODEL, RESULT>)this;
 	}
 
 
 	@Override
-	public MODEL compile() {
+	public final MODEL compile() {
 		return collectorConditions.compile();
 	}
 
 	@Override
-	public ISharedProcessResult_OrderBy_Mapped_Named<MODEL, RESULT> having(int foo) {
-		return collectorConditions.having(foo);
-	}
-
-	@Override
-	public ISharedProcessResult_OrderBy_Mapped_Alias<MODEL, RESULT> having(String bar) {
-		return collectorConditions.having(bar);
-	}
-
-	@Override
-	public <T, R> ISharedProcessResult_OrderBy_AfterSortOrder_Named<MODEL, RESULT> orderBy(Function<T, R> field) {
+	public final <T, R> ISharedProcessResult_OrderBy_AfterSortOrder_Named<MODEL, RESULT> orderBy(Function<T, R> field) {
 		return collectorConditions.orderBy(field);
 	}
 	
 	@Override
-	public <R> ISharedProcessResult_OrderBy_AfterSortOrder_Alias<MODEL, RESULT> orderBy(Supplier<R> field) {
+	public final <R> ISharedProcessResult_OrderBy_AfterSortOrder_Alias<MODEL, RESULT> orderBy(Supplier<R> field) {
 		return collectorConditions.orderBy(field);
 	}
 
 	@Override
-	public ISharedCompileEndClause<MODEL> orderBy(int... resultColumns) {
+	public final ISharedCompileEndClause<MODEL> orderBy(int... resultColumns) {
 		return collectorConditions.orderBy(resultColumns);
 	}
 }
