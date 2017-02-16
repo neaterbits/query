@@ -3,13 +3,15 @@ package com.neaterbits.query.sql.dsl.api;
 import java.math.BigDecimal;
 
 public interface IClassic 
-	extends IShared_Aggregate_Sum_Named_All<
-	/*<
+	extends IShared_Aggregate_All_Named<
+				IClassicResult_Numeric_Named<Long>,
+				IClassicResult_Numeric_Named<Long>,
+				
 				IClassicResult_Numeric_Named<Short>,
 				IClassicResult_Numeric_Named<Integer>,
-			*/
 				IClassicResult_Numeric_Named<Long>,
-				IClassicResult_Numeric_Named<BigDecimal>>
+				IClassicResult_Numeric_Named<BigDecimal>
+				>
 
 {
 	<MAPPED_RESULT> IClassicResult_Mapped_Single_All<SingleQuery<MAPPED_RESULT>, MAPPED_RESULT> selectOneOrNull(Class<MAPPED_RESULT> cl);

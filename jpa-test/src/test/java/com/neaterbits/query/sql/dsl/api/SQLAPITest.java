@@ -110,7 +110,7 @@ public class SQLAPITest extends BaseSQLAPITest {
 
         	.where().lower(Company::getName).isEqualTo("acme")
         	
-        	//.  and()        .upper(Company::getName).endsWith("CME")
+        	.  and()        .upper(Company::getName).endsWith("CME")
 
         	.compile();
 		

@@ -225,4 +225,114 @@ final class ClassicSelect implements IClassic {
 	public <T> IClassicResult_Numeric_Named<BigDecimal> sum(IFunctionBigDecimal<T> field) {
 		return sum(field, BigDecimal.class, BigDecimal.class);
 	}
+
+
+	// ------------------------ Max ------------------------
+	
+	private <T, NUM, RESULT> IClassicResult_Numeric_Named<RESULT> max(Function<T, NUM> field, Class<NUM> numCl, Class<RESULT> resultCl) {
+		return new Collector_AggregateNamedResult<>(new QueryResultMax(resultCl, new FunctionGetter(field)), singleQueryCompiler());
+	}
+
+
+	@Override
+	public <T> IClassicResult_Numeric_Named<Short> max(IFunctionShort<T> field) {
+		return max(field, Short.class, Short.class);
+	}
+
+	@Override
+	public <T> IClassicResult_Numeric_Named<Integer> max(IFunctionInteger<T> field) {
+		return max(field, Integer.class, Integer.class);
+	}
+	
+	@Override
+	public <T> IClassicResult_Numeric_Named<Long> max(IFunctionLong<T> field) {
+		return max(field, Long.class, Long.class);
+	}
+
+	@Override
+	public <T> IClassicResult_Numeric_Named<BigDecimal> max(IFunctionBigDecimal<T> field) {
+		return max(field, BigDecimal.class, BigDecimal.class);
+	}
+		
+	
+	// ------------------------ Max ------------------------
+	
+	private <T, NUM, RESULT> IClassicResult_Numeric_Named<RESULT> min(Function<T, NUM> field, Class<NUM> numCl, Class<RESULT> resultCl) {
+		return new Collector_AggregateNamedResult<>(new QueryResultMin(resultCl, new FunctionGetter(field)), singleQueryCompiler());
+	}
+
+
+	@Override
+	public <T> IClassicResult_Numeric_Named<Short> min(IFunctionShort<T> field) {
+		return min(field, Short.class, Short.class);
+	}
+
+	@Override
+	public <T> IClassicResult_Numeric_Named<Integer> min(IFunctionInteger<T> field) {
+		return min(field, Integer.class, Integer.class);
+	}
+	
+	@Override
+	public <T> IClassicResult_Numeric_Named<Long> min(IFunctionLong<T> field) {
+		return min(field, Long.class, Long.class);
+	}
+
+	@Override
+	public <T> IClassicResult_Numeric_Named<BigDecimal> min(IFunctionBigDecimal<T> field) {
+		return min(field, BigDecimal.class, BigDecimal.class);
+	}
+
+	// ------------------------ Avg ------------------------
+	
+	private <T, NUM, RESULT> IClassicResult_Numeric_Named<RESULT> avg(Function<T, NUM> field, Class<NUM> numCl, Class<RESULT> resultCl) {
+		return new Collector_AggregateNamedResult<>(new QueryResultAvg(resultCl, new FunctionGetter(field)), singleQueryCompiler());
+	}
+
+
+	@Override
+	public <T> IClassicResult_Numeric_Named<Short> avg(IFunctionShort<T> field) {
+		return avg(field, Short.class, Short.class);
+	}
+
+	@Override
+	public <T> IClassicResult_Numeric_Named<Integer> avg(IFunctionInteger<T> field) {
+		return avg(field, Integer.class, Integer.class);
+	}
+	
+	@Override
+	public <T> IClassicResult_Numeric_Named<Long> avg(IFunctionLong<T> field) {
+		return avg(field, Long.class, Long.class);
+	}
+
+	@Override
+	public <T> IClassicResult_Numeric_Named<BigDecimal> avg(IFunctionBigDecimal<T> field) {
+		return avg(field, BigDecimal.class, BigDecimal.class);
+	}
+
+	// ------------------------ Count ------------------------
+	
+	private <T, NUM, RESULT> IClassicResult_Numeric_Named<RESULT> count(Function<T, NUM> field, Class<NUM> numCl, Class<RESULT> resultCl) {
+		return new Collector_AggregateNamedResult<>(new QueryResultCount(resultCl, new FunctionGetter(field)), singleQueryCompiler());
+	}
+
+
+	@Override
+	public <T> IClassicResult_Numeric_Named<Long> count(IFunctionShort<T> field) {
+		return count(field, Short.class, Long.class);
+	}
+
+	@Override
+	public <T> IClassicResult_Numeric_Named<Long> count(IFunctionInteger<T> field) {
+		return count(field, Integer.class, Long.class);
+	}
+	
+	@Override
+	public <T> IClassicResult_Numeric_Named<Long> count(IFunctionLong<T> field) {
+		return count(field, Long.class, Long.class);
+	}
+
+	@Override
+	public <T> IClassicResult_Numeric_Named<Long> count(IFunctionBigDecimal<T> field) {
+		return count(field, BigDecimal.class, Long.class);
+	}
 }

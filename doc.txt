@@ -997,3 +997,15 @@ Så mapperen må arve fra disse.
 --
 
 
+
+	
+	hmmm.. vanskelig å returnere noe generisk her pga T, som må være med i retur-verdien.
+	men vi  har T som en return i where-clauses og denne må da returnere bare noe som også er T
+			
+			
+	men i en annen type, så det er da INTEGER_RESULT osv,
+	
+	Så for vanlige queries så blir det ikke like mange.
+			
+			
+
