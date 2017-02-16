@@ -549,6 +549,7 @@ W - parametere
 
  - group by? innvirkning på traversering? traversering er separat
  - having?
+   !! TODO having: må kunne sjekke mot aggregate-functions i and() og or(), så må kansje parameterisere functions som er retur-verdi her.!!
  - order by?
 
  - group by, burde alltid etter where men også etter join? Kan
@@ -558,39 +559,48 @@ group by, having, order by.
 group by må være først, så having, så order by
 men de kan også fjenres, dvs having uten group by og order by uten noen av de.
  
-!! TODO: skiller mellom NonProcessResult og ProcesseResult i dag men burde skill ut OrderBy som egen
-siden ved liste av entiteter ("select * from" i praksis) så burde en ikke kunne gjøre group by eller having mens order by er OK.
+# !! TODO: skiller mellom NonProcessResult og ProcesseResult i dag men burde skill ut OrderBy som egen
+# siden ved liste av entiteter ("select * from" i praksis) så burde en ikke kunne gjøre group by eller having mens order by er OK.
+
+!! TODO !! 
+Flytte i generisk Collector_And_Or/Collector_And_Or_Named/Collector_And_Or_ALias og fjerne Classic_Collector_Where_Or_Join, heller implementere ISharedLogical_Where
+i *Classic* interfacene, slik at vi får gjenbrukt baseklassen i having.
+
+Hva med having().sum() ?? Blir tilsvarende where-clause i WhereOrJoin.
 
 
-OBS!!
-	men order-by for entities, hvordan fikse?
+
+#OBS!!
+#	men order-by for entities, hvordan fikse?
 		
-	har ikke rekkefølge på feltene.
-	Hmmm.., betyr at vi er nødt å sende gjennom om er Entity,
-	så alle kobinasjonenene.
+#	har ikke rekkefølge på feltene.
+#	Hmmm.., betyr at vi er nødt å sende gjennom om er Entity,
+#	så alle kobinasjonenene.
 
-	Slik at MultiEntity kun har order-by og da kun på felter, ikke på liste (1, 2, 3) siden ikke vet hva dette innebærer i entity.
+#	Slik at MultiEntity kun har order-by og da kun på felter, ikke på liste (1, 2, 3) siden ikke vet hva dette innebærer i entity.
+
+
 For adhoc er det alltid kun på felter? kan finne 1, 2, 3 der også ut fra mappings men for entity så må det være på felt.
 
 
-Hva er da kombinasjonene?
-Single/Multi? Vi burde alltid sende med om single og multi.
-Er en fordel å vite om mapped og select-criteia er jo mappinga å vi burde også vide dette på det tidspunktet.
-Så hva blir det da? Tre varianter så lang, så får en se om må splittes mere.
+#Hva er da kombinasjonene?
+#Single/Multi? Vi burde alltid sende med om single og multi.
+#Er en fordel å vite om mapped og select-criteia er jo mappinga å vi burde også vide dette på det tidspunktet.
+#Så hva blir det da? Tre varianter så lang, så får en se om må splittes mere.
 
 
-Single
-MultiMapped
-MultiEntity
+#Single
+#MultiMapped
+#MultiEntity
 
-Så NonProcessResult er da? Kun Single det, så 
-NonProcessResult => Single
-ProcessResult => MultiMapped
+#Så NonProcessResult er da? Kun Single det, så 
+#NonProcessResult => Single
+#ProcessResult => MultiMapped
 
 
-- TODO: er det rett å alltid sende inn named for order by/group by?
-Kan returnere rader fra alias av samme type og da bør en kunne velge hvilke av disse en skal gjøre order by på?
-Så fikse dette i CompiledQuery og API slik at for alias baserte query så er det alias som sendes inn.
+#- TODO: er det rett å alltid sende inn named for order by/group by?
+#Kan returnere rader fra alias av samme type og da bør en kunne velge hvilke av disse en skal gjøre order by på?
+#Så fikse dette i CompiledQuery og API slik at for alias baserte query så er det alias som sendes inn.
 
 - TODO: for adhoc queries, hvis resultat er et vanlig Set<> så bør det ikke være mulighet å gjøre orderBy, måtte være sorted-set i så fall.
  

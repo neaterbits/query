@@ -16,8 +16,8 @@ final class Collector_GroupBy_Alias<MODEL, RESULT> extends Collector_GroupBy<MOD
 	}
 	
 	@Override
-	public final ISharedCondition_Comparable_Common_All<MODEL, RESULT, Integer, ISharedProcessResult_Having_And_Or_Alias<MODEL, RESULT>> having(
-			ISupplierInteger getter) {
+	public final ISharedCondition_Comparable_Common_All<MODEL, RESULT, Integer, ISharedProcessResult_Having_And_Or_Alias<MODEL, RESULT>>
+		having(ISupplierInteger getter) {
 		throw new UnsupportedOperationException("TODO");
 	}
 

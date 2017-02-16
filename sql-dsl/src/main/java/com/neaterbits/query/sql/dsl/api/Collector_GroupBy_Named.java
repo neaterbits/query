@@ -27,7 +27,7 @@ final class Collector_GroupBy_Named<MODEL, RESULT> extends Collector_GroupBy<MOD
 	@Override
 	public final <T> ISharedCondition_Comparable_Common_All<MODEL, RESULT, BigDecimal, ISharedProcessResult_Having_And_Or_Named<MODEL, RESULT>>
 			having(IFunctionBigDecimal<T> getter) {
-		throw new UnsupportedOperationException("TODO");
+		throw new UnsupportedOperationException("TODO");	
 	}
 
 	@Override

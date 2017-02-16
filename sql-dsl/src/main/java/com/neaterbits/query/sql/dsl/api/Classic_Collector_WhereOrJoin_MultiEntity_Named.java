@@ -17,12 +17,12 @@ public class Classic_Collector_WhereOrJoin_MultiEntity_Named<MODEL, RESULT>
 	}
 
 	@Override
-	Classic_Collector_Or_Named<MODEL, RESULT, IClassicLogical_Or_MultiEntity_Named<MODEL, RESULT>> createOrCollector() {
+	Collector_Or_Named<MODEL, RESULT, IClassicLogical_Or_MultiEntity_Named<MODEL, RESULT>, IClassicLogical_And_NonProcessResult_Named<MODEL, RESULT>, IClassicLogical_Or_NonProcessResult_Named<MODEL, RESULT>, ISharedProcessResult_After_GroupBy_Named<MODEL, RESULT>> createOrCollector() {
 		return new Classic_Collector_Or_MultiEntity_Named<>(this);
 	}
 
 	@Override
-	Classic_Collector_And_Named<MODEL, RESULT, IClassicLogical_And_MultiEntity_Named<MODEL, RESULT>> createAndCollector() {
+	Collector_And_Named<MODEL, RESULT, IClassicLogical_And_MultiEntity_Named<MODEL, RESULT>, IClassicLogical_And_NonProcessResult_Named<MODEL, RESULT>, IClassicLogical_Or_NonProcessResult_Named<MODEL, RESULT>, ISharedProcessResult_After_GroupBy_Named<MODEL, RESULT>> createAndCollector() {
 		return new Classic_Collector_And_MultiEntity_Named<>(this);
 	}
 

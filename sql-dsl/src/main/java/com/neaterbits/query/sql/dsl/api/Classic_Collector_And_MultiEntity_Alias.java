@@ -13,4 +13,5 @@ final class Classic_Collector_And_MultiEntity_Alias<MODEL, RESULT>
 	Classic_Collector_And_MultiEntity_Alias(BaseQueryEntity<MODEL> qe) {
 		super(qe);
 	}
+
 }

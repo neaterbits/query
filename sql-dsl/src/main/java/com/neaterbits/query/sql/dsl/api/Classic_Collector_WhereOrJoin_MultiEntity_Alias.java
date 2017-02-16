@@ -16,12 +16,30 @@ final class Classic_Collector_WhereOrJoin_MultiEntity_Alias<MODEL, RESULT>
 	}
 
 	@Override
-	Classic_Collector_Or_Alias<MODEL, RESULT, IClassicLogical_Or_MultiEntity_Alias<MODEL, RESULT>> createOrCollector() {
+	Collector_Or_Alias<
+		MODEL,
+		RESULT,
+		IClassicLogical_Or_MultiEntity_Alias<MODEL, RESULT>,
+		IClassicLogical_And_NonProcessResult_Alias<MODEL, RESULT>,
+		IClassicLogical_Or_NonProcessResult_Alias<MODEL, RESULT>,
+		ISharedProcessResult_After_GroupBy_Alias<MODEL, RESULT>>
+	
+		createOrCollector() {
+		
 		return new Classic_Collector_Or_MultiEntity_Alias<>(this);
 	}
 
 	@Override
-	Classic_Collector_And_Alias<MODEL, RESULT, IClassicLogical_And_MultiEntity_Alias<MODEL, RESULT>> createAndCollector() {
+	Collector_And_Alias<
+		MODEL,
+		RESULT,
+		IClassicLogical_And_MultiEntity_Alias<MODEL, RESULT>,
+		IClassicLogical_And_NonProcessResult_Alias<MODEL, RESULT>,
+		IClassicLogical_Or_NonProcessResult_Alias<MODEL, RESULT>,
+		ISharedProcessResult_After_GroupBy_Alias<MODEL, RESULT>>
+	
+		createAndCollector() {
+		
 		return new Classic_Collector_And_MultiEntity_Alias<>(this);
 	}
 }

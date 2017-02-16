@@ -1,7 +1,5 @@
 package com.neaterbits.query.sql.dsl.api;
 
-import java.util.function.Consumer;
-import java.util.function.Supplier;
 
 abstract class Classic_Collector_And_Alias<
 				MODEL,
@@ -9,101 +7,42 @@ abstract class Classic_Collector_And_Alias<
 				
 				AND_CLAUSES extends ISharedLogical_And_Alias_Base<MODEL,RESULT, AND_CLAUSES, IClassicLogical_Or_NonProcessResult_Alias<MODEL, RESULT>>>
 				
-		extends Classic_Collector_And<MODEL, RESULT, ISharedProcessResult_After_GroupBy_Alias<MODEL, RESULT>>
-
-
-		implements ISharedLogical_And_Alias_Base<MODEL, RESULT, AND_CLAUSES, IClassicLogical_Or_NonProcessResult_Alias<MODEL, RESULT>> {
-
-	
-	public Classic_Collector_And_Alias(BaseQueryEntity<MODEL> qe) {
-		super(qe);
-	}
-
-	public Classic_Collector_And_Alias(Classic_Collector_WhereOrJoin_Alias_Base<MODEL, RESULT, ?, ?, ?, ?> last) {
-		super(last);
-	}
-
-	final <T extends ISharedLogical_Or<MODEL, RESULT>> void addNestedOrImpl(Consumer<T> orBuilder) {
-		super.addNestedOrImpl(orBuilder, new Classic_Collector_Or_NonProcessResult_Alias<MODEL, RESULT>(this));
-	}
-	
-	private <RR extends Comparable<RR>,
-			M_AND_CLAUSES extends ISharedLogical_And_Alias_Base<MODEL, RESULT, M_AND_CLAUSES, NESTED_OR_CLAUSES>,
-			NESTED_OR_CLAUSES extends ISharedLogical_Or_Alias<MODEL, RESULT>>
-		
-			ISharedCondition_Comparable_Common_All<MODEL, RESULT, RR, M_AND_CLAUSES> andAliasImplComparable(Supplier<RR> getter) {
-		
-		return andAliasImplComparable(null, getter);
-	}
-
-	private <RR extends Comparable<RR>,
-		M_AND_CLAUSES extends ISharedLogical_And_Alias_Base<MODEL, RESULT, M_AND_CLAUSES, NESTED_OR_CLAUSES>,
-		NESTED_OR_CLAUSES extends ISharedLogical_Or_Alias<MODEL, RESULT>>
-		
-		ISharedCondition_Comparable_Common_All<MODEL, RESULT, RR, M_AND_CLAUSES> andAliasImplComparable(CollectedFunctions functions, Supplier<RR> getter) {
-	
-			return new Collector_Condition_Comparative<MODEL, RESULT, RR, M_AND_CLAUSES>(this, functions, makeGetter(getter));
-	}
-
-	private ISharedCondition_Comparable_String_All<MODEL, RESULT, AND_CLAUSES>
-		andAliasImplString(CollectedFunctions functions, ISupplierString getter) {
-		
-		return new Collector_Condition_String<MODEL, RESULT, AND_CLAUSES>(this, functions, makeGetter(getter));
-	}
-		
-	@Override
-	public final ISharedCondition_Comparable_Common_All<MODEL, RESULT, Integer, AND_CLAUSES> and(ISupplierInteger getter) {
-		return andAliasImplComparable(getter);
-	}
-
-	@Override
-	public final ISharedCondition_Comparable_Common_All<MODEL, RESULT, Long, AND_CLAUSES> and(ISupplierLong getter) {
-		return andAliasImplComparable(getter);
-	}
-
-	@Override
-	public final ISharedCondition_Comparable_String_All<MODEL, RESULT, AND_CLAUSES> and(ISupplierString getter) {
-		return andAliasImplString(null, getter);
-	}
-
-
-	@SuppressWarnings("unchecked")
-	@Override
-	public final AND_CLAUSES andNest(ISharedNestedOrConsumerAlias<MODEL, RESULT, IClassicLogical_Or_NonProcessResult_Alias<MODEL, RESULT>> orBuilder) {
-	
-		addNestedOrImpl(orBuilder);
-	
-		return (AND_CLAUSES)this;
-	}
-	
-	@Override
-	public final ISharedFunctions_Alias_Initial<
+		extends Collector_And_Alias<
 				MODEL,
 				RESULT,
 				AND_CLAUSES,
-				ISharedCondition_Comparable_Common_All<MODEL, RESULT, Integer, AND_CLAUSES>,
-				ISharedCondition_Comparable_Common_All<MODEL, RESULT, Long, AND_CLAUSES>,
-				ISharedCondition_Comparable_String_All<MODEL, RESULT, AND_CLAUSES>> and() {
+				IClassicLogical_And_NonProcessResult_Alias<MODEL, RESULT>,
+				IClassicLogical_Or_NonProcessResult_Alias<MODEL, RESULT>,
+				ISharedProcessResult_After_GroupBy_Alias<MODEL, RESULT>> {
 
-		@SuppressWarnings({"unchecked", "rawtypes"})
-		final ISharedCollector_Functions_Callback_Alias<MODEL, RESULT, AND_CLAUSES> cb
-				= new ISharedCollector_Functions_Callback_Alias<MODEL, RESULT, AND_CLAUSES>() {
+	
+	Classic_Collector_And_Alias(BaseQueryEntity<MODEL> qe) {
+		super(qe);
+	}
 
-			@Override
-			public ISharedCondition_Comparable_Common_Base<MODEL, RESULT, Comparable<?>, AND_CLAUSES>
-				onComparable(CollectedFunctions functions, Supplier getter) {
-				
-				return andAliasImplComparable(functions, (Supplier)getter);
-			}
-
-			@Override
-			public ISharedCondition_Comparable_String_Base<MODEL, RESULT, AND_CLAUSES>
-				onString(CollectedFunctions functions, ISupplierString getter) {
-				
-				return andAliasImplString(functions, getter);
-			}
-		};
-
-		return new Collector_SharedFunctions_Alias<>(cb);
+	Classic_Collector_And_Alias(Classic_Collector_WhereOrJoin_Alias_Base<MODEL, RESULT, ?, ?, ?, ?> last) {
+		super(last);
+	}
+	
+	@Override
+	final Collector_Or_Alias<
+				MODEL,
+				RESULT,
+				IClassicLogical_Or_NonProcessResult_Alias<MODEL, RESULT>,
+				IClassicLogical_And_NonProcessResult_Alias<MODEL, RESULT>,
+				IClassicLogical_Or_NonProcessResult_Alias<MODEL, RESULT>,
+				ISharedProcessResult_After_GroupBy_Alias<MODEL, RESULT>> 
+	
+	
+		createNestedOrCollector(
+				Collector_And_Alias<
+					MODEL,
+					RESULT,
+					AND_CLAUSES,
+					IClassicLogical_And_NonProcessResult_Alias<MODEL, RESULT>,
+					IClassicLogical_Or_NonProcessResult_Alias<MODEL, RESULT>,
+					ISharedProcessResult_After_GroupBy_Alias<MODEL, RESULT>> andClauses) {
+		
+		return new Classic_Collector_Or_NonProcessResult_Alias<MODEL, RESULT>(andClauses);
 	}
 }
