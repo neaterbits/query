@@ -26,5 +26,4 @@ final class Collector_Having_Or_Alias<MODEL, RESULT> extends Collector_Or_Alias<
 		
 		return new Collector_Having_And_Nested_Alias<>(this);
 	}
-	
 }
