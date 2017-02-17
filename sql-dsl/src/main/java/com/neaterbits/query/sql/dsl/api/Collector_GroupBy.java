@@ -13,9 +13,14 @@ abstract class Collector_GroupBy<MODEL, RESULT>
 		ISharedProcessResult_OrderBy_Mapped_Alias<MODEL, RESULT>
 
  	{
+	
+	abstract Collector_Clause getHaving();
 
+	private final int [] groupByColumns;
+	
 	private final Collector_Conditions<MODEL, RESULT, ?> collectorConditions;
 	
+			
 	Collector_GroupBy(Collector_Base<MODEL> last, Getter initial, Collector_Conditions<MODEL, RESULT, ?> collectorConditions) {
 		super(last);
 
@@ -30,6 +35,22 @@ abstract class Collector_GroupBy<MODEL, RESULT>
 		}
 
 		this.collectorConditions = collectorConditions;
+		this.groupByColumns = null;
+	}
+	
+	Collector_GroupBy(Collector_Base<MODEL> last, int [] groupByColumns, Collector_Conditions<MODEL, RESULT, ?> collectorConditions) {
+		super(last);
+
+		if (groupByColumns == null) {
+			throw new IllegalArgumentException("groupByColumns == null");
+		}
+		
+		this.collectorConditions = collectorConditions;
+		this.groupByColumns = groupByColumns;
+	}
+	
+	final int[] getGroupByColumns() {
+		return groupByColumns;
 	}
 
 	@Override

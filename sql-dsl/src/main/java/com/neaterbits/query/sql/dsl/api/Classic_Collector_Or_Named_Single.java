@@ -19,4 +19,10 @@ final class Classic_Collector_Or_Named_Single<MODEL, RESULT>
 	public ISharedCondition_Comparable_String_All<MODEL, RESULT, IClassicSingleOrClausesNamed<MODEL, RESULT>> or(StringFunction<RESULT> getter) {
 		return new Collector_Condition_String<MODEL, RESULT, IClassicSingleOrClausesNamed<MODEL,RESULT>>(this, makeGetter(getter));
 	}
+	@Override
+
+	final Collector_GroupBy<MODEL, RESULT> createGroupByCollector(Collector_Base<MODEL> last, int[] groupByColumns,
+			Collector_Conditions<MODEL, RESULT, ?> collectorConditions) {
+		return new Collector_GroupBy_Named<>(last, groupByColumns, collectorConditions);
+	}
 }

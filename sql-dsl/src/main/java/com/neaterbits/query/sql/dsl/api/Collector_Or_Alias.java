@@ -101,4 +101,10 @@ abstract class Collector_Or_Alias<
 
 		return new Collector_SharedFunctions_Alias<>(cb);
 	}
+
+	@Override
+	final Collector_GroupBy<MODEL, RESULT> createGroupByCollector(Collector_Base<MODEL> last, int[] groupByColumns,
+			Collector_Conditions<MODEL, RESULT, ?> collectorConditions) {
+		return new Collector_GroupBy_Alias<>(last, groupByColumns, collectorConditions);
+	}
 }

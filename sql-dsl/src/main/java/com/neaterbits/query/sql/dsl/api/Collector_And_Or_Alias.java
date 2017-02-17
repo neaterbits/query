@@ -261,4 +261,11 @@ abstract class Collector_And_Or_Alias<
 	public final OR_CLAUSES orNest(ISharedNestedAndConsumerAlias<MODEL, RESULT, NESTED_AND_CLAUSES> andBuilder) {
 		return (OR_CLAUSES)addNestedAndImpl(andBuilder);
 	}
+
+	@Override
+	final Collector_GroupBy<MODEL, RESULT> createGroupByCollector(Collector_Base<MODEL> last, int[] groupByColumns,
+			Collector_Conditions<MODEL, RESULT, ?> collectorConditions) {
+		return new Collector_GroupBy_Alias<>(last, groupByColumns, collectorConditions);
+	}
 }
+	

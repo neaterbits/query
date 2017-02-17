@@ -13,8 +13,18 @@ abstract class Collector_Conditions<MODEL, RESULT, AFTER_GROUP_BY>
 
 	final Collector_Clause clauseCollector;
 
+	/* 
+	 * Group by and order by handled in baseclass, even if not applicable to all subclasses (eg. nested conditions and having)
+	 * This is for simplicity, uses cannot set these for nested instances anyway since they do not implement those
+	 * interfaces within the subclasses.
+	 * 
+	 *  
+	 */
+	
 	private Collector_GroupBy<MODEL, RESULT> groupByCollector;
-	private int [] groupByColumns;
+
+	// moved to groupByCollector for common collection of 'having' clause  
+	//private int [] groupByColumns;
 
 	private Collector_OrderBy<MODEL, RESULT> orderByCollector;
 	private int [] orderByColumns;
@@ -27,6 +37,7 @@ abstract class Collector_Conditions<MODEL, RESULT, AFTER_GROUP_BY>
 		return new SupplierGetter(getter);
 	}
 
+	abstract Collector_GroupBy<MODEL, RESULT> createGroupByCollector(Collector_Base<MODEL> last, int [] groupByColumns, Collector_Conditions<MODEL, RESULT, ?> collectorConditions);
 	
 	Collector_Conditions(Collector_Conditions_Initial<MODEL, RESULT, AFTER_GROUP_BY> last, ConditionsType newConditionsType) {
 		super(last);
@@ -87,9 +98,12 @@ abstract class Collector_Conditions<MODEL, RESULT, AFTER_GROUP_BY>
 		// Now set clauses before compiling
 		queryCollector.setClauses(clauseCollector);
 
+		final int [] groupByColumns = this.groupByCollector != null ? this.groupByCollector.getGroupByColumns() : null;
+		
+		
 		// Add group-by, order-by etc
-		final Collected_GroupBy groupBy = makeCollectedFields(this.groupByCollector, this.groupByColumns,
-															  Collected_GroupBy::new, Collected_GroupBy::new);
+		final Collected_GroupBy groupBy = makeCollectedFields(this.groupByCollector, groupByColumns,
+															  Collected_GroupBy::new, indices -> new Collected_GroupBy(indices, groupByCollector.getHaving()));
 		
 		final Collected_OrderBy orderBy = makeCollectedFields(this.orderByCollector, this.orderByColumns,
 				
@@ -112,7 +126,7 @@ abstract class Collector_Conditions<MODEL, RESULT, AFTER_GROUP_BY>
 		return getModelCompiler().compile(compiledQuery);
 	}
 	
-	private static <T extends Collector_Fields, R extends Collected_Fields> R makeCollectedFields(T collector, int [] indices, Function<T, R> ctor1, Function<int [], R> ctor2) {
+	private static <T extends Collector_Fields<?>, R extends Collected_Fields> R makeCollectedFields(T collector, int [] indices, Function<T, R> ctor1, Function<int [], R> ctor2) {
 		
 		final R ret;
 		
@@ -134,7 +148,7 @@ abstract class Collector_Conditions<MODEL, RESULT, AFTER_GROUP_BY>
 	
 
 	private void checkGroupByNotAlreadySet() {
-		if (this.groupByCollector != null || groupByColumns != null) {
+		if (this.groupByCollector != null) {
 			throw new IllegalStateException("groupBy already set");
 		}
 	}
@@ -166,17 +180,10 @@ abstract class Collector_Conditions<MODEL, RESULT, AFTER_GROUP_BY>
 
 		checkGroupByNotAlreadySet();
 
-		this.groupByColumns = Arrays.copyOf(resultColumns, resultColumns.length);
+		this.groupByCollector = createGroupByCollector(this, Arrays.copyOf(resultColumns, resultColumns.length), this);
+		//this.groupByColumns = Arrays.copyOf(resultColumns, resultColumns.length);
 		
 		return (AFTER_GROUP_BY)this;
-	}
-
-	public final ISharedProcessResult_OrderBy_Mapped_Named<MODEL, RESULT> having(int foo) {
-		throw new UnsupportedOperationException("TODO");
-	}
-
-	public final ISharedProcessResult_OrderBy_Mapped_Alias<MODEL, RESULT> having(String bar) {
-		throw new UnsupportedOperationException("TODO");
 	}
 
 	private void checkOrderByNotAlreadySet() {

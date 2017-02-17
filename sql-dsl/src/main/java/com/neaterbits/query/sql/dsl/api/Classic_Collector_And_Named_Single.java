@@ -20,4 +20,10 @@ final class Classic_Collector_And_Named_Single<
 	public ISharedCondition_Comparable_String_All<MODEL, RESULT, IClassicSingleAndClausesNamed<MODEL, RESULT>> and(StringFunction<RESULT> getter) {
 		return new Collector_Condition_String<MODEL, RESULT, IClassicSingleAndClausesNamed<MODEL,RESULT>>(this, makeGetter(getter));
 	}
+
+	@Override
+	final Collector_GroupBy<MODEL, RESULT> createGroupByCollector(Collector_Base<MODEL> last, int[] groupByColumns,
+			Collector_Conditions<MODEL, RESULT, ?> collectorConditions) {
+		return new Collector_GroupBy_Named<>(last, groupByColumns, collectorConditions);
+	}
 }

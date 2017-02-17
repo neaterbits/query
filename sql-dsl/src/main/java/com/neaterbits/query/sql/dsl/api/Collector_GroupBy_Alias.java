@@ -12,6 +12,11 @@ final class Collector_GroupBy_Alias<MODEL, RESULT> extends Collector_GroupBy<MOD
 	Collector_GroupBy_Alias(Collector_Base<MODEL> last, Getter initial, Collector_Conditions<MODEL, RESULT, ?> collectorConditions) {
 		super(last, initial, collectorConditions);
 	}
+	
+	Collector_GroupBy_Alias(Collector_Base<MODEL> last, int[] groupByColumns, Collector_Conditions<MODEL, RESULT, ?> collectorConditions) {
+		super(last, groupByColumns, collectorConditions);
+	}
+
 
 	private void instantiateHaving() {
 		if (this.having != null) {
@@ -21,6 +26,10 @@ final class Collector_GroupBy_Alias<MODEL, RESULT> extends Collector_GroupBy<MOD
 		this.having = new Collector_Having_Alias<>(this);
 	}
 	
+	@Override
+	Collector_Clause getHaving() {
+		return having != null ? having.clauseCollector : null;
+	}
 
 	private <R extends Comparable<R>> ISharedCondition_Comparable_Common_All<MODEL, RESULT, R, ISharedProcessResult_Having_And_Or_Alias<MODEL, RESULT>>
 		havingComparable(Supplier<R> supplier) {

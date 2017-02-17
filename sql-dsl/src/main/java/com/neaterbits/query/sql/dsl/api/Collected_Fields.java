@@ -4,10 +4,10 @@ package com.neaterbits.query.sql.dsl.api;
 // For group-by, order-by
 abstract class Collected_Fields {
 
-	private final Collector_Fields fields;
+	private final Collector_Fields<?> fields;
 	private final int [] columns;
 
-	Collected_Fields(Collector_Fields fields) {
+	Collected_Fields(Collector_Fields<?> fields) {
 
 		if (fields == null) {
 			throw new IllegalArgumentException("fields == null");
@@ -29,7 +29,7 @@ abstract class Collected_Fields {
 	}
 
 
-	final Collector_Fields getFields() {
+	final Collector_Fields<?> getFields() {
 		return fields;
 	}
 

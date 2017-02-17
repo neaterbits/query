@@ -77,4 +77,10 @@ final class ClassicSingleNamedResult<MODEL, RESULT>
 
 		return new Collector_Condition_String<MODEL, RESULT, IClassicSingleOrClausesNamed<MODEL,RESULT>>(orClauses, makeGetter(getter));
 	}
+
+	@Override
+	final Collector_GroupBy<MODEL, RESULT> createGroupByCollector(Collector_Base<MODEL> last, int[] groupByColumns,
+			Collector_Conditions<MODEL, RESULT, ?> collectorConditions) {
+		return new Collector_GroupBy_Named<>(last, groupByColumns, collectorConditions);
+	}
 }

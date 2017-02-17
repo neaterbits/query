@@ -11,10 +11,19 @@ final class Collector_GroupBy_Named<MODEL, RESULT> extends Collector_GroupBy<MOD
 	private Collector_Having_Named<MODEL, RESULT> having;
 
 	
+	@Override
+	Collector_Clause getHaving() {
+		return having != null ? having.clauseCollector : null;
+	}
+	
 	Collector_GroupBy_Named(Collector_Base<MODEL> last, Getter initial, Collector_Conditions<MODEL, RESULT, ?> collectorConditions) {
 		super(last, initial, collectorConditions);
 	}
-	
+
+	Collector_GroupBy_Named(Collector_Base<MODEL> last, int[] groupByColumns, Collector_Conditions<MODEL, RESULT, ?> collectorConditions) {
+		super(last, groupByColumns, collectorConditions);
+	}
+
 	private void instantiateHaving() {
 		if (this.having != null) {
 			throw new IllegalStateException("'having' already called");

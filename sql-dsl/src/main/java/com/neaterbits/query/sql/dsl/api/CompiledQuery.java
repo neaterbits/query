@@ -239,10 +239,20 @@ final class CompiledQuery {
 		
 		
 		final CompiledGroupBy compiledGroupBy;
+		CompiledHaving compiledHaving = null;
 		final CompiledOrderBy compiledOrderBy;
 		
 		if (collector.getGroupBy() != null) {
 			compiledGroupBy = compileResultProcessingFields(collector.getGroupBy(), mappings, sources, cache, (fields, indices, getters) -> new CompiledGroupBy(indices, getters) );
+
+			final Collector_Clause having = collector.getGroupBy().getHaving();
+			
+			if (having != null) {
+				final CompiledConditions havingConditions = compileConditions(having, sources, cache, 0);
+				
+				compiledHaving = new CompiledHaving(havingConditions);
+				
+			}
 		}
 		else {
 			compiledGroupBy = null;
@@ -257,7 +267,7 @@ final class CompiledQuery {
 		}
 		
 		if (compiledGroupBy != null || compiledOrderBy != null) {
-			ret = new CompiledResultProcessing(compiledGroupBy, compiledOrderBy);
+			ret = new CompiledResultProcessing(compiledGroupBy, compiledHaving, compiledOrderBy);
 		}
 		else {
 			ret = null;
