@@ -13,7 +13,7 @@ final class Classic_Collector_WhereOrJoin_MultiMapped_Alias<MODEL, RESULT>
 		
 		implements IClassicLogical_WhereOrJoin_MultiMapped_Alias<MODEL, RESULT> {
 		
-	Classic_Collector_WhereOrJoin_MultiMapped_Alias(BaseQueryEntity<MODEL> last) {
+	Classic_Collector_WhereOrJoin_MultiMapped_Alias(Collector_Base<MODEL> last) {
 		super(last);
 	}
 

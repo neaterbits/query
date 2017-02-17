@@ -23,7 +23,7 @@ final class Collector_OrderBy<MODEL, RESULT>
 	
 	
 	
-	Collector_OrderBy(BaseQueryEntity<MODEL> last, Getter initial, Collector_Conditions<MODEL, RESULT, ?> collectorConditions) {
+	Collector_OrderBy(Collector_Base<MODEL> last, Getter initial, Collector_Conditions<MODEL, RESULT, ?> collectorConditions) {
 		super(last);
 		
 		if (initial == null) {

@@ -7,7 +7,7 @@ abstract class Collector_SelectSource<
 				NAMED_WHERE_OR_JOIN extends IClassicLogical_WhereOrJoin_Named_Base<MODEL, RESULT>,
 				ALIAS_WHERE_OR_JOIN extends IClassicLogical_WhereOrJoin_Alias_Base<MODEL, RESULT>> 
 
-		extends BaseQueryEntity<MODEL>
+		extends Collector_Base<MODEL>
 		implements 
 				IClassic_From_Named_Base<MODEL, RESULT, NAMED_WHERE_OR_JOIN>,
 				IClassic_From_Alias_Base<MODEL, RESULT, ALIAS_WHERE_OR_JOIN>,

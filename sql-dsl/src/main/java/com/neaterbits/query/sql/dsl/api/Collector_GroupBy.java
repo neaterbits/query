@@ -16,7 +16,7 @@ abstract class Collector_GroupBy<MODEL, RESULT>
 
 	private final Collector_Conditions<MODEL, RESULT, ?> collectorConditions;
 	
-	Collector_GroupBy(BaseQueryEntity<MODEL> last, Getter initial, Collector_Conditions<MODEL, RESULT, ?> collectorConditions) {
+	Collector_GroupBy(Collector_Base<MODEL> last, Getter initial, Collector_Conditions<MODEL, RESULT, ?> collectorConditions) {
 		super(last);
 
 		if (initial == null) {

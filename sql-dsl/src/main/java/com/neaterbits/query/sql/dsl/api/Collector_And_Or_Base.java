@@ -4,7 +4,7 @@ abstract class Collector_And_Or_Base<MODEL, RESULT, AFTER_GROUP_BY>
 
 	extends Collector_Conditions_Initial<MODEL, RESULT, AFTER_GROUP_BY> {
 
-	Collector_And_Or_Base(BaseQueryEntity<MODEL> last) {
+	Collector_And_Or_Base(Collector_Base<MODEL> last) {
 		super(last);
 	}
 	

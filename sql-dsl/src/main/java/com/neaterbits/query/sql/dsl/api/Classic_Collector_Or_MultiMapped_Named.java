@@ -6,7 +6,7 @@ final class Classic_Collector_Or_MultiMapped_Named<MODEL, RESULT>
 	implements IClassicLogical_Or_MultiMapped_Named<MODEL, RESULT> {
 
 
-	Classic_Collector_Or_MultiMapped_Named(BaseQueryEntity<MODEL> qe) {
+	Classic_Collector_Or_MultiMapped_Named(Collector_Base<MODEL> qe) {
 		super(qe);
 	}
 

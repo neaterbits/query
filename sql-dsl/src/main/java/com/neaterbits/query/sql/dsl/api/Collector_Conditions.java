@@ -7,7 +7,7 @@ import java.util.function.Supplier;
 
 abstract class Collector_Conditions<MODEL, RESULT, AFTER_GROUP_BY>
 	
-	extends BaseQueryEntity<MODEL>
+	extends Collector_Base<MODEL>
 
 	implements ISharedLogical_Base<MODEL, RESULT>, ISharedCompileEndClause<MODEL> {
 
@@ -39,7 +39,7 @@ abstract class Collector_Conditions<MODEL, RESULT, AFTER_GROUP_BY>
 		this.clauseCollector = new Collector_Clause(last.clauseCollector, newConditionsType);
 	}
 	
-	Collector_Conditions(BaseQueryEntity<MODEL> last, Collector_Clause collector) {
+	Collector_Conditions(Collector_Base<MODEL> last, Collector_Clause collector) {
 		super(last);
 
 		this.clauseCollector = collector;

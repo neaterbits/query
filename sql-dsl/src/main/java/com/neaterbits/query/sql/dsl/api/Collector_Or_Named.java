@@ -20,7 +20,7 @@ abstract class Collector_Or_Named<
 	abstract Collector_And_Named<MODEL, RESULT, NESTED_AND_CLAUSES, NESTED_AND_CLAUSES, NESTED_OR_CLAUSES, AFTER_GROUP_BY>
 			createNestedAndCollector(Collector_Or_Named<MODEL, RESULT, OR_CLAUSES, NESTED_AND_CLAUSES, NESTED_OR_CLAUSES, AFTER_GROUP_BY> orClauses);
 			
-	Collector_Or_Named(BaseQueryEntity<MODEL> qe) {
+	Collector_Or_Named(Collector_Base<MODEL> qe) {
 		super(qe);
 	}
 

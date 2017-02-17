@@ -17,7 +17,7 @@ abstract class Collector_And_Alias<
 	abstract Collector_Or_Alias<MODEL, RESULT, NESTED_OR_CLAUSES, NESTED_AND_CLAUSES, NESTED_OR_CLAUSES, AFTER_GROUP_BY>
 		createNestedOrCollector(Collector_And_Alias<MODEL, RESULT, AND_CLAUSES, NESTED_AND_CLAUSES, NESTED_OR_CLAUSES, AFTER_GROUP_BY> andClauses);
 		
-	Collector_And_Alias(BaseQueryEntity<MODEL> qe) {
+	Collector_And_Alias(Collector_Base<MODEL> qe) {
 		super(qe);
 	}
 

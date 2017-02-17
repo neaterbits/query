@@ -15,7 +15,7 @@ final class Classic_Collector_WhereOrJoin_MultiMapped_Named<MODEL, RESULT>
 
 		implements IClassicLogical_WhereOrJoin_MultiMapped_Named<MODEL, RESULT> {
 
-	Classic_Collector_WhereOrJoin_MultiMapped_Named(BaseQueryEntity<MODEL> last) {
+	Classic_Collector_WhereOrJoin_MultiMapped_Named(Collector_Base<MODEL> last) {
 		super(last);
 	}
 

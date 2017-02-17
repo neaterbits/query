@@ -11,7 +11,7 @@ final class Collector_Having_Alias<MODEL, RESULT> extends Collector_And_Or_Alias
 
 	
 	
-	Collector_Having_Alias(BaseQueryEntity<MODEL> last) {
+	Collector_Having_Alias(Collector_Base<MODEL> last) {
 		super(last);
 	}
 

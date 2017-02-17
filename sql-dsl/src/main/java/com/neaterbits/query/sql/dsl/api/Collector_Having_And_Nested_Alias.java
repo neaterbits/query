@@ -10,7 +10,7 @@ final class Collector_Having_And_Nested_Alias<MODEL, RESULT> extends Collector_A
 
 	implements ISharedProcessResult_Having_And_Nested_Alias<MODEL, RESULT> {
 
-	Collector_Having_And_Nested_Alias(BaseQueryEntity<MODEL> qe) {
+	Collector_Having_And_Nested_Alias(Collector_Base<MODEL> qe) {
 		super(qe);
 	}
 

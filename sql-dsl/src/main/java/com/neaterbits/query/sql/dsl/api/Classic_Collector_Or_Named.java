@@ -14,7 +14,7 @@ abstract class Classic_Collector_Or_Named<
 					ISharedProcessResult_After_GroupBy_Named<MODEL, RESULT>> {
 
 
-	Classic_Collector_Or_Named(BaseQueryEntity<MODEL> qe) {
+	Classic_Collector_Or_Named(Collector_Base<MODEL> qe) {
 		super(qe);
 	}
 

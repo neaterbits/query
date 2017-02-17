@@ -36,7 +36,7 @@ abstract class Classic_Collector_WhereOrJoin_Named_Base<
     
 					
 
-	Classic_Collector_WhereOrJoin_Named_Base(BaseQueryEntity<MODEL> last) {
+	Classic_Collector_WhereOrJoin_Named_Base(Collector_Base<MODEL> last) {
 		super(last);
 	}
 

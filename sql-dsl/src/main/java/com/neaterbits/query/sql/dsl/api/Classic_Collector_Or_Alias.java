@@ -13,7 +13,7 @@ abstract class Classic_Collector_Or_Alias<
 				IClassicLogical_Or_NonProcessResult_Alias<MODEL, RESULT>,
 				ISharedProcessResult_After_GroupBy_Alias<MODEL, RESULT>> {
 
-	Classic_Collector_Or_Alias(BaseQueryEntity<MODEL> qe) {
+	Classic_Collector_Or_Alias(Collector_Base<MODEL> qe) {
 		super(qe);
 	}
 

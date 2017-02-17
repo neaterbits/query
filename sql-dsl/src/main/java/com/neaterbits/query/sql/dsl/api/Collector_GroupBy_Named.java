@@ -9,7 +9,7 @@ final class Collector_GroupBy_Named<MODEL, RESULT> extends Collector_GroupBy<MOD
 	//private Collector_Having_Named having;
 
 	
-	Collector_GroupBy_Named(BaseQueryEntity<MODEL> last, Getter initial, Collector_Conditions<MODEL, RESULT, ?> collectorConditions) {
+	Collector_GroupBy_Named(Collector_Base<MODEL> last, Getter initial, Collector_Conditions<MODEL, RESULT, ?> collectorConditions) {
 		super(last, initial, collectorConditions);
 	}
 	

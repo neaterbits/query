@@ -10,7 +10,7 @@ abstract class Collector_Conditions_Initial<
 
 		> extends Collector_Conditions<MODEL, RESULT, AFTER_GROUP_BY> {
 
-	Collector_Conditions_Initial(BaseQueryEntity<MODEL> last) {
+	Collector_Conditions_Initial(Collector_Base<MODEL> last) {
 		super(last, new Collector_Clause(ConditionsType.SINGLE));
 	}
 

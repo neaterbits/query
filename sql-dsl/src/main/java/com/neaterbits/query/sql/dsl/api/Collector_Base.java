@@ -1,15 +1,15 @@
 package com.neaterbits.query.sql.dsl.api;
 
-abstract class BaseQueryEntity<MODEL> extends CollectedItem {
+abstract class Collector_Base<MODEL> extends CollectedItem {
 
 	private final QueryCollectorImpl queryCollector;
 	private final ModelCompiler<MODEL> modelCompiler;
 
-	BaseQueryEntity(BaseQueryEntity<MODEL> last) {
+	Collector_Base(Collector_Base<MODEL> last) {
 		this(last.queryCollector, last.modelCompiler);
 	}
 
-	BaseQueryEntity(QueryCollectorImpl queryCollector, ModelCompiler<MODEL> modelCompiler) {
+	Collector_Base(QueryCollectorImpl queryCollector, ModelCompiler<MODEL> modelCompiler) {
 		
 		if (queryCollector == null) {
 			throw new IllegalArgumentException("queryCollector == null");

@@ -13,7 +13,7 @@ final class Collector_Having_And_Alias<MODEL, RESULT> extends Collector_And_Alia
 
 	implements ISharedProcessResult_Having_And_Alias<MODEL, RESULT> {
 
-	Collector_Having_And_Alias(BaseQueryEntity<MODEL> qe) {
+	Collector_Having_And_Alias(Collector_Base<MODEL> qe) {
 		super(qe);
 	}
 

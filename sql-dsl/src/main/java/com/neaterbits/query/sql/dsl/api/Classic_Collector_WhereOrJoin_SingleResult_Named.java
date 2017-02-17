@@ -15,7 +15,7 @@ final class Classic_Collector_WhereOrJoin_SingleResult_Named<MODEL, RESULT>
 
 		implements IClassicLogical_WhereOrJoin_SingleResult_Named<MODEL, RESULT> {
 
-	Classic_Collector_WhereOrJoin_SingleResult_Named(BaseQueryEntity<MODEL> last) {
+	Classic_Collector_WhereOrJoin_SingleResult_Named(Collector_Base<MODEL> last) {
 		super(last);
 	}
 

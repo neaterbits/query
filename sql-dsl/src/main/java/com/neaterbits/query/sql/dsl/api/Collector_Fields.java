@@ -4,11 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 // Collect fields, for order by and group by
-abstract class Collector_Fields<MODEL> extends BaseQueryEntity<MODEL> {
+abstract class Collector_Fields<MODEL> extends Collector_Base<MODEL> {
 
 	private final List<Getter> getters;
 
-	Collector_Fields(BaseQueryEntity<MODEL> last) {
+	Collector_Fields(Collector_Base<MODEL> last) {
 		super(last);
 
 		this.getters = new ArrayList<>();

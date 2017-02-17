@@ -10,7 +10,7 @@ final class Classic_Collector_And_MultiEntity_Named<MODEL, RESULT>
 		super(last);
 	}
 
-	Classic_Collector_And_MultiEntity_Named(BaseQueryEntity<MODEL> qe) {
+	Classic_Collector_And_MultiEntity_Named(Collector_Base<MODEL> qe) {
 		super(qe);
 	}
 }

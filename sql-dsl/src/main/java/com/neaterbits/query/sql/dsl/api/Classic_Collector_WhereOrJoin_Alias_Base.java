@@ -46,7 +46,7 @@ abstract class Classic_Collector_WhereOrJoin_Alias_Base<
     				createNestedOr(Classic_Collector_And_Alias<MODEL, RESULT, AND_CLAUSES> andClauses);
 	*/ 
 			   
-	Classic_Collector_WhereOrJoin_Alias_Base(BaseQueryEntity<MODEL> last) {
+	Classic_Collector_WhereOrJoin_Alias_Base(Collector_Base<MODEL> last) {
 		super(last);
 	}
 
