@@ -146,7 +146,7 @@ abstract class Collector_Conditions<MODEL, RESULT, AFTER_GROUP_BY>
 		
 		checkGroupByNotAlreadySet();
 		
-		this.groupByCollector = new Collector_GroupBy_Named<>(new FunctionGetter(field), this);
+		this.groupByCollector = new Collector_GroupBy_Named<>(this, new FunctionGetter(field), this);
 		
 		return (ISharedProcessResult_After_GroupBy_Or_List_Named<MODEL, RESULT>)groupByCollector;
 	}
@@ -156,7 +156,7 @@ abstract class Collector_Conditions<MODEL, RESULT, AFTER_GROUP_BY>
 		
 		checkGroupByNotAlreadySet();
 		
-		this.groupByCollector = new Collector_GroupBy_Alias<>(new SupplierGetter(field), this);
+		this.groupByCollector = new Collector_GroupBy_Alias<>(this, new SupplierGetter(field), this);
 		
 		return (ISharedProcessResult_After_GroupBy_Or_List_Alias<MODEL, RESULT>)groupByCollector;
 	}
@@ -191,7 +191,7 @@ abstract class Collector_Conditions<MODEL, RESULT, AFTER_GROUP_BY>
 
 		checkOrderByNotAlreadySet();
 		
-		this.orderByCollector = new Collector_OrderBy<>(new FunctionGetter(field), this);
+		this.orderByCollector = new Collector_OrderBy<>(this, new FunctionGetter(field), this);
 		
 		return orderByCollector;
 	}
@@ -200,7 +200,7 @@ abstract class Collector_Conditions<MODEL, RESULT, AFTER_GROUP_BY>
 
 		checkOrderByNotAlreadySet();
 		
-		this.orderByCollector = new Collector_OrderBy<>(new SupplierGetter(field), this);
+		this.orderByCollector = new Collector_OrderBy<>(this, new SupplierGetter(field), this);
 		
 		return orderByCollector;
 	}

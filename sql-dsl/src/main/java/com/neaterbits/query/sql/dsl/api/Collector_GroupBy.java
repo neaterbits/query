@@ -1,12 +1,11 @@
 package com.neaterbits.query.sql.dsl.api;
 
-import java.math.BigDecimal;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
 abstract class Collector_GroupBy<MODEL, RESULT>
 
-		extends Collector_Fields
+		extends Collector_Fields<MODEL>
 		implements
 		ISharedProcessResult_List_Named<MODEL, RESULT, ISharedProcessResult_After_GroupBy_Or_List_Named<MODEL, RESULT>>,
 		ISharedProcessResult_OrderBy_Mapped_Named<MODEL, RESULT>,
@@ -16,10 +15,10 @@ abstract class Collector_GroupBy<MODEL, RESULT>
  	{
 
 	private final Collector_Conditions<MODEL, RESULT, ?> collectorConditions;
-
 	
-	Collector_GroupBy(Getter initial, Collector_Conditions<MODEL, RESULT, ?> collectorConditions) {
-		
+	Collector_GroupBy(BaseQueryEntity<MODEL> last, Getter initial, Collector_Conditions<MODEL, RESULT, ?> collectorConditions) {
+		super(last);
+
 		if (initial == null) {
 			throw new IllegalArgumentException("initial == null");
 		}

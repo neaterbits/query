@@ -11,13 +11,13 @@ public interface ISharedProcessResult_Having_Alias<MODEL, RESULT>
 	ISharedCondition_Comparable_Common_All<MODEL, RESULT, Integer, ISharedProcessResult_Having_And_Or_Alias<MODEL, RESULT>>
 			having(ISupplierInteger getter);
 	
-	ISharedCondition_Comparable_Common_All<MODEL, RESULT, Integer, ISharedProcessResult_Having_And_Or_Alias<MODEL, RESULT>>
+	ISharedCondition_Comparable_Common_All<MODEL, RESULT, Long, ISharedProcessResult_Having_And_Or_Alias<MODEL, RESULT>>
 			having(ISupplierLong getter);
 	
 	
 	ISharedCondition_Comparable_Common_All<MODEL, RESULT, BigDecimal, ISharedProcessResult_Having_And_Or_Alias<MODEL, RESULT>>
 			having(ISupplierBigDecimal getter);
 	
-	ISharedCondition_Comparable_Common_All<MODEL, RESULT, Integer, ISharedProcessResult_Having_And_Or_Alias<MODEL, RESULT>>
+	ISharedCondition_Comparable_String_All<MODEL, RESULT, ISharedProcessResult_Having_And_Or_Alias<MODEL, RESULT>>
 			having(ISupplierString getter);
 }

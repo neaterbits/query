@@ -6,9 +6,14 @@ final class Collector_GroupBy_Named<MODEL, RESULT> extends Collector_GroupBy<MOD
 		
 	implements ISharedProcessResult_After_GroupBy_Or_List_Named<MODEL, RESULT> {
 
-	Collector_GroupBy_Named(Getter initial, Collector_Conditions<MODEL, RESULT, ?> collectorConditions) {
-		super(initial, collectorConditions);
+	//private Collector_Having_Named having;
+
+	
+	Collector_GroupBy_Named(BaseQueryEntity<MODEL> last, Getter initial, Collector_Conditions<MODEL, RESULT, ?> collectorConditions) {
+		super(last, initial, collectorConditions);
 	}
+	
+	
 
 	@Override
 	public final <T> ISharedCondition_Comparable_Common_All<MODEL, RESULT, Integer, ISharedProcessResult_Having_And_Or_Named<MODEL, RESULT>>

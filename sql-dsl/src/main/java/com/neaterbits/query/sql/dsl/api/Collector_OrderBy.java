@@ -6,7 +6,7 @@ import java.util.function.Function;
 import java.util.function.Supplier;
 
 final class Collector_OrderBy<MODEL, RESULT>
-		extends Collector_Fields
+		extends Collector_Fields<MODEL>
 
 		implements ISharedProcessResult_OrderBy_AfterSortOrder_Named<MODEL, RESULT>,
 				   ISharedProcessResult_OrderBy_AfterSortOrder_Alias<MODEL, RESULT>{
@@ -23,7 +23,8 @@ final class Collector_OrderBy<MODEL, RESULT>
 	
 	
 	
-	Collector_OrderBy(Getter initial, Collector_Conditions<MODEL, RESULT, ?> collectorConditions) {
+	Collector_OrderBy(BaseQueryEntity<MODEL> last, Getter initial, Collector_Conditions<MODEL, RESULT, ?> collectorConditions) {
+		super(last);
 		
 		if (initial == null) {
 			throw new IllegalArgumentException("initial == null");
