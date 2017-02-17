@@ -6,17 +6,17 @@ import java.util.List;
 
 final class QueryHelper {
 
-	static <QUERY> boolean hasConditionParams(ExecutableQuery<QUERY> q, QUERY query) {
+	static <QUERY> boolean hasConditionParams(ExecutableQuery<QUERY> q, ExecutableQueryConditions<QUERY> qc, QUERY query) {
 
 		final boolean hasParams;
 		
 		if (q.hasConditions(query)) {
 			// Loop through all conditions to figure whether has params
 			
-			final int maxDepth = q.getConditionsMaxDepth(query);
+			final int maxDepth = qc.getConditionsMaxDepth(query);
 			final int [] conditionIndices = new int [maxDepth];
 			
-			hasParams = hasConditionParams(q, query, 0, conditionIndices);
+			hasParams = hasConditionParams(qc, query, 0, conditionIndices);
 		}
 		else {
 			// No conditions so cannot have params
@@ -26,14 +26,14 @@ final class QueryHelper {
 		return hasParams;
 	}
 
-	static <QUERY> List<Param<?>> getConditionParamRefs(ExecutableQuery<QUERY> q, QUERY query, boolean unique) {
+	static <QUERY> List<Param<?>> getConditionParamRefs(ExecutableQuery<QUERY> q, ExecutableQueryConditions<QUERY> qc, QUERY query, boolean unique) {
 
 		final List<Param<?>> ret;
 
 		if (q.hasConditions(query)) {
 			final List<Param<?>> list = new ArrayList<>();
 			
-			getConditionParamRefs(q, query, 0, makeConditionIndices(q, query), list, unique);
+			getConditionParamRefs(qc, query, 0, makeConditionIndices(qc, query), list, unique);
 			
 			ret = Collections.unmodifiableList(list);
 		}
@@ -44,26 +44,26 @@ final class QueryHelper {
 		return ret;
 	}
 
-	private static <QUERY> int [] makeConditionIndices(ExecutableQuery<QUERY> q, QUERY query) {
+	private static <QUERY> int [] makeConditionIndices(ExecutableQueryConditions<QUERY> q, QUERY query) {
 		final int maxDepth = q.getConditionsMaxDepth(query);
 		final int [] conditionIndices = new int [maxDepth];
 
 		return conditionIndices;
 	}
 
-	private static <QUERY> void getConditionParamRefs(ExecutableQuery<QUERY> q, QUERY query, int level, int [] conditionIndices, List<Param<?>> list, boolean unique) {
+	private static <QUERY> void getConditionParamRefs(ExecutableQueryConditions<QUERY> qc, QUERY query, int level, int [] conditionIndices, List<Param<?>> list, boolean unique) {
 
-		final int conditionCount = q.getConditionsCount(query, level, conditionIndices);
+		final int conditionCount = qc.getConditionsCount(query, level, conditionIndices);
 
 		for (int conditionIdx = 0; conditionIdx < conditionCount; ++ conditionIdx) {
 
 			conditionIndices[level] = conditionIdx;
 
-			if (q.isSubCondition(query, level, conditionIndices)) {
-				getConditionParamRefs(q, query, level + 1, conditionIndices, list, unique);
+			if (qc.isSubCondition(query, level, conditionIndices)) {
+				getConditionParamRefs(qc, query, level + 1, conditionIndices, list, unique);
 			}
 			else {
-				final ConditionValue conditionValue = q.getConditionValue(query, level, conditionIndices);
+				final ConditionValue conditionValue = qc.getConditionValue(query, level, conditionIndices);
 
 				if (conditionValue.getType() == EConditionValue.PARAM) {
 					final ConditionValue_Param conditionValue_Param = (ConditionValue_Param)conditionValue;
@@ -89,7 +89,7 @@ final class QueryHelper {
 	}
 	
 
-	private static <QUERY> boolean hasConditionParams(ExecutableQuery<QUERY> q, QUERY query, int level, int [] conditionIndices) {
+	private static <QUERY> boolean hasConditionParams(ExecutableQueryConditions<QUERY> q, QUERY query, int level, int [] conditionIndices) {
 		
 		boolean hasParams = false;
 

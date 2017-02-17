@@ -12,14 +12,20 @@ import com.neaterbits.query.sql.dsl.api.entity.QueryMetaModel;
 import com.neaterbits.query.sql.dsl.api.entity.Relation;
 import com.neaterbits.query.sql.dsl.api.entity.ScalarType;
 
-final class ExecutableQueryForCompiledQuery implements ExecutableQuery<CompiledQuery> {
+final class ExecutableQueryForCompiledQuery extends ExecutableQueryForCompiledBase implements ExecutableQuery<CompiledQuery> {
 
+	private static final ExecutableQueryConditions_ForCompiledQuery_Conditions conditions
+				= new ExecutableQueryConditions_ForCompiledQuery_Conditions();
+	
+	private static final ExecutableQueryConditions_ForCompiledQuery_Having having
+				= new ExecutableQueryConditions_ForCompiledQuery_Having();
+	
 	@Override
 	public ExecuteQueryScratch createScratchArea(CompiledQuery query, QueryMetaModel queryMetaModel) {
 		final int numResultParts 	= getNumResultParts(query);
 		final int numSelectSources 	= getAllSourceCount(query);
 		final int numConditions	 	= getRootConditionCount(query);
-		final int maxDepth 			= getConditionsMaxDepth(query);
+		final int maxDepth 			= query.getConditionsMaxDepth();
 		
 		return new ExecuteQueryScratch(numResultParts, numSelectSources, numConditions, queryMetaModel, maxDepth);
 	}
@@ -94,6 +100,11 @@ final class ExecutableQueryForCompiledQuery implements ExecutableQuery<CompiledQ
 		final SharedSelectSource selectSource = ((CompiledQueryResult_Entity)query.getResult()).getSelectSource();
 		
 		return query.getSelectSources().getSourceIdx(selectSource);
+	}
+
+	@Override
+	public ExecutableQueryConditions<CompiledQuery> getExecutableQueryConditions() {
+		return conditions;
 	}
 
 
@@ -431,32 +442,8 @@ final class ExecutableQueryForCompiledQuery implements ExecutableQuery<CompiledQ
 		
 		final CompiledConditions conditions = query.getConditions();
 
-		return getConditionsType(conditions);
+		return ExecutableQueryForCompiledConditions.getConditionsType(conditions);
 	}
-	
-	private ConditionsType getConditionsType(CompiledConditions conditions) {
-		final ConditionsType ret;
-		
-		if (conditions == null) {
-			ret = ConditionsType.NONE;
-		}
-		else if (conditions instanceof CompiledConditions_And) {
-			ret = ConditionsType.AND;
-		}
-		else if (conditions instanceof CompiledConditions_Or) {
-			ret = ConditionsType.OR;
-		}
-		else if (conditions instanceof CompiledConditions_Single) {
-			ret = ConditionsType.SINGLE;
-		}
-		else {
-			throw new UnsupportedOperationException("Unknown condition type "
-							+ conditions.getClass().getSimpleName());
-		}
-
-		return ret;
-	}
-	
 
 	@Override
 	public final int getRootConditionSourceIdx(CompiledQuery query, int conditionIdx) {
@@ -471,36 +458,11 @@ final class ExecutableQueryForCompiledQuery implements ExecutableQuery<CompiledQ
 		return evaluateCondition(condition, instance, scratch);
 	}
 	
-	private boolean evaluateCondition(CompiledConditionComparison condition, Object instance, ConditionValuesScratch scratch) {
-		
-		// Must evaluate condition with params.
-		// First figure lhs
-		final Object lhs  = condition.getLhs().getValue(instance);
-
-		// Then figure rhs
-		final Object rhs = condition.getValue().visit(valueVisitor, scratch.getCollectedParams());
-		
-		// At last, evaluate
-		scratch.initConditionScratchValues(lhs, rhs);
-		
-		final ScalarType scalarType = condition.getScalarType();
-		
-		final boolean ret;
-		
-		if (scalarType == ScalarType.STRING) {
-			ret = condition.getOriginal().visit(stringEvaluator, scratch);
-		}
-		else {
-			ret = condition.getOriginal().visit(comparableEvaluator, scratch);
-		}
-
-		return ret;
-	}
 
 	@Override
 	public final boolean isRootConditionOnly(CompiledQuery query) {
 
-		final int maxDepth = getConditionsMaxDepth(query);
+		final int maxDepth = query.getConditionsMaxDepth();
 		final boolean ret;
 
 		switch (maxDepth) {
@@ -526,160 +488,12 @@ final class ExecutableQueryForCompiledQuery implements ExecutableQuery<CompiledQ
 		return ret;
 	}
 
-	@Override
-	public int getConditionsMaxDepth(CompiledQuery query) {
-		return query.getConditionsMaxDepth();
-	}
-
-	private CompiledCondition getCondition(CompiledQuery query, int level, int[] conditionIndices) {
-		// First find CompiledConditions
-		CompiledConditions conditions = getConditionsList(query, level, conditionIndices);
-		
-
-		return conditions.getConditions().get(conditionIndices[level]);
-	}
+	//-------------------------------------------------------------------
+	// Result processing
+	//-------------------------------------------------------------------
 	
-	private CompiledConditionComparison getComparisonCondition(CompiledQuery query, int level, int[] conditionIndices) {
-
-		final CompiledCondition condition = getCondition(query, level, conditionIndices);
-		
-		return (CompiledConditionComparison)condition;
-	}
-
-	private CompiledConditions getConditionsList(CompiledQuery query, int level, int[] conditionIndices) {
-		
-		CompiledConditions cur = query.getConditions();
-
-		// Must loop over all indices
-		for (int i = 0; i < level; ++ i) {
-			final CompiledConditionNested nested = ((CompiledConditionNested)cur.getConditions().get(conditionIndices[i]));
-			
-			cur = nested.getSub();
-		}
-
-		return cur;
-	}
+	// --------------------- group by --------------------- 
 	
-	@Override
-	public ConditionsType getConditionsType(CompiledQuery query, int level, int[] conditionIndices) {
-		
-		final CompiledConditions conditions = getConditionsList(query, level, conditionIndices);
-
-		return getConditionsType(conditions);
-	}
-
-	@Override
-	public int getConditionSourceIdx(CompiledQuery query, int level, int[] conditionIndices) {
-		return getCondition(query, level, conditionIndices).getSourceIdx();
-	}
-
-	@Override
-	public boolean isSubCondition(CompiledQuery query, int level, int[] conditionIndices) {
-
-		final CompiledCondition condition =  getCondition(query, level, conditionIndices);
-			
-		return condition instanceof CompiledConditionNested;
-	}
-
-	@Override
-	public int getConditionsCount(CompiledQuery query, int level, int[] conditionIndices) {
-		return getConditionsList(query, level, conditionIndices).getConditions().size();
-	}
-
-	@Override
-	public EClauseOperator getOperator(CompiledQuery query, int level, int[] conditionIndices) {
-		return getComparisonCondition(query, level, conditionIndices).getOperator();
-	}
-
-	@Override
-	public CompiledFieldReference getConditionLhs(CompiledQuery query, int level, int[] conditionIndices) {
-		return getComparisonCondition(query, level, conditionIndices).getLhs();
-	}
-
-	@Override
-	public ConditionValue getConditionValue(CompiledQuery query, int level, int[] conditionIndices) {
-		return getComparisonCondition(query, level, conditionIndices).getValue();
-	}
-
-	@Override
-	public int getConditionNumFunctions(CompiledQuery query, int level, int[] conditionIndices) {
-		return getComparisonCondition(query, level, conditionIndices).getNumFunctions();
-	}
-
-
-	@Override
-	public FunctionBase getConditionFunction(CompiledQuery query, int level, int[] conditionIndices, int functionIdx) {
-		return getComparisonCondition(query, level, conditionIndices).getFunctionAt(functionIdx);
-	}
-	
-	@Override
-	public boolean evaluateCondition(CompiledQuery query, int level, int[] conditionIndices, Object instance, ConditionValuesScratch scratch) {
-		
-		final CompiledConditionComparison comparison = getComparisonCondition(query, level, conditionIndices);
-		
-		return evaluateCondition(comparison, instance, scratch);
-	}
-	
-	@Override
-	public Method getForDebugConditionLhsMethod(CompiledQuery query, int level, int[] conditionIndices) {
-		return getComparisonCondition(query, level, conditionIndices).getLhs().getGetter().getGetterMethod();
-	}
-
-	@Override
-	public String getForDebugConditionValue(CompiledQuery query, int level, int[] conditionIndices) {
-		return getComparisonCondition(query, level, conditionIndices).getValue().toString();
-	}
-
-
-	private static final ConditionEvaluator_Comparable comparableEvaluator = new ConditionEvaluator_Comparable();
-	private static final ConditionEvaluator_Comparable_String stringEvaluator = new ConditionEvaluator_Comparable_String();
-	
-	
-	private static final ConditionValueVisitor<ParamValueResolver, Object> valueVisitor = new ConditionValueVisitor<ParamValueResolver, Object>() {
-		
-		@Override
-		public Object onParam(ConditionValue_Param value, ParamValueResolver paramValueResolver) {
-			
-			if (paramValueResolver == null) {
-				throw new IllegalArgumentException("paramValueResolver == null");
-			}
-			
-			return paramValueResolver.resolveParam(value.getParam());
-		}
-		
-		@Override
-		public Object onLiteralString(ConditionValue_Literal_String value, ParamValueResolver param) {
-			return value.getLiteral();
-		}
-		
-		@Override
-		public Object onLiteralAny(ConditionValue_Literal_Any<?> value, ParamValueResolver param) {
-			return value.getLiteral();
-		}
-		
-		@Override
-		public Object onGetter(ConditionValue_Getter value, ParamValueResolver param) {
-			throw new UnsupportedOperationException("Should only call getters in joins");
-		}
-		
-		@Override
-		public Object onFieldReference(ConditionValue_FieldRerefence value, ParamValueResolver param) {
-			throw new UnsupportedOperationException("Should only call getters in joins");
-		}
-		
-		@Override
-		public Object onArray(ConditionValue_Array value, ParamValueResolver param) {
-			return value.getValues();
-		}
-
-		@Override
-		public Object onList(ConditionValue_List value, ParamValueResolver param) {
-			return value.getValues();
-		}
-	};
-
-
-	// result processing
 	@Override
 	public int getGroupByFieldCount(CompiledQuery query) {
 		
@@ -698,7 +512,33 @@ final class ExecutableQueryForCompiledQuery implements ExecutableQuery<CompiledQ
 		return query.getResultProcessing().getGroupBy().getIndicesStartingAtOne()[idx] - 1;
 	}
 
+	// --------------------- having ---------------------
+	/*
+	
+	private CompiledConditionComparison getComparisonHaving(CompiledQuery query, int level, int[] conditionIndices) {
 
+		final CompiledCondition condition = getHaving(query, level, conditionIndices);
+		
+		return (CompiledConditionComparison)condition;
+	}
+
+	
+	private CompiledCondition getHaving(CompiledQuery query, int level, int[] conditionIndices) {
+		// First find CompiledConditions
+		CompiledConditions conditions = getHavingList(query, level, conditionIndices);
+
+		return conditions.getConditions().get(conditionIndices[level]);
+	}
+	
+
+	private CompiledConditions getHavingList(CompiledQuery query, int level, int[] conditionIndices) {
+		return getConditionsList(query.getResultProcessing().getHaving().getConditions(), level, conditionIndices);
+	}
+	*/
+
+
+	// --------------------- order by ---------------------
+	
 	@Override
 	public int getOrderByFieldCount(CompiledQuery query) {
 		return query.getResultProcessing() == null
@@ -709,7 +549,7 @@ final class ExecutableQueryForCompiledQuery implements ExecutableQuery<CompiledQ
 					: query.getResultProcessing().getOrderBy().getIndicesStartingAtOne().length;
 	}
 
-
+	
 	@Override
 	public int getOrderByFieldIndex(CompiledQuery query, int idx) {
 		return query.getResultProcessing().getOrderBy().getIndicesStartingAtOne()[idx] - 1;

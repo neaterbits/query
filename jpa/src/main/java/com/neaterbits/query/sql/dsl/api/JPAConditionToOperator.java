@@ -6,7 +6,7 @@ import java.util.function.Function;
 
 final class JPAConditionToOperator {
 
-	<QUERY> PreparedQueryComparisonRHS convert(ExecutableQuery<QUERY> q, QUERY query, EClauseOperator operator, ConditionValue value, ConditionStringBuilder builder) {
+	<QUERY> PreparedQueryComparisonRHS convert(EClauseOperator operator, ConditionValue value, ConditionStringBuilder builder) {
 		
 		final PreparedQueryComparisonRHS ret;
 		

@@ -104,6 +104,10 @@ final class CompiledQuery {
 		return resultProcessing;
 	}
 
+	CompiledConditions getHaving() {
+		return resultProcessing.getHaving().getConditions();
+	}
+
 	static CompiledQuery compile(QueryCollectorImpl collector) throws CompileException {
 		if (collector == null) {
 			throw new IllegalArgumentException("collector == null");

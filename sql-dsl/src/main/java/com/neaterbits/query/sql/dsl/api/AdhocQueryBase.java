@@ -13,7 +13,8 @@ abstract class AdhocQueryBase<MODEL, QUERY extends AdhocQueryBase<MODEL, QUERY>>
 			implements 
 				IAdhocNumericNamedResult<MODEL, Object, Object>,
 
-				ExecutableQuery<QUERY> {
+				ExecutableQuery<QUERY>,
+				ExecutableQueryConditions<QUERY> {
 
 	private final EQueryResultDimension dimension;
 	private final EQueryResultGathering gathering;
@@ -105,6 +106,11 @@ abstract class AdhocQueryBase<MODEL, QUERY extends AdhocQueryBase<MODEL, QUERY>>
 	@Override
 	public final ENumericType getAggregateNumericOutputType(QUERY query) {
 		return aggregateNumericOutputType;
+	}
+
+	@Override
+	public final ExecutableQueryConditions<QUERY> getExecutableQueryConditions() {
+		return this;
 	}
 
 	@Override

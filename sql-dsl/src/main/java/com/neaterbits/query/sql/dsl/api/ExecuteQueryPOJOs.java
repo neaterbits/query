@@ -418,7 +418,7 @@ final class ExecuteQueryPOJOs<QUERY> extends ExecutableQueryAggregateComputation
 
 				if (scratch.hasConditions()) {
 					
-					final EMatch matches = matches(query, sourceIdx, o, scratch, debug);
+					final EMatch matches = matchesConditions(query, sourceIdx, o, scratch, debug);
 
 					if (debug != null) {
 						debug.debug("condition match " + matches + " for " + o);
@@ -594,7 +594,7 @@ final class ExecuteQueryPOJOs<QUERY> extends ExecutableQueryAggregateComputation
 			// Loop over conditions to see if should be added
 			if (scratch.hasConditions()) {
 
-				final EMatch matches = matches(query, sourceIdx, o, scratch, debug);
+				final EMatch matches = matchesConditions(query, sourceIdx, o, scratch, debug);
 
 				if (matches == EMatch.NO) {
 					// Definite none-match, skip
@@ -626,7 +626,7 @@ final class ExecuteQueryPOJOs<QUERY> extends ExecutableQueryAggregateComputation
 		return result;
 	}
 	
-	private EMatch matches(QUERY query, int sourceIdx, Object instance, ExecuteQueryScratch scratch, StructuredDebug debug) {
+	private EMatch matchesConditions(QUERY query, int sourceIdx, Object instance, ExecuteQueryScratch scratch, StructuredDebug debug) {
 
 		final EMatch ret;
 
@@ -637,13 +637,13 @@ final class ExecuteQueryPOJOs<QUERY> extends ExecutableQueryAggregateComputation
 			// Does not only match on root, we need to evaluate nested subs as well
 			final int [] conditionIndices = scratch.assureConditionIndices();
 			
-			ret = recursiveMatches(query, sourceIdx, instance, 0, conditionIndices, scratch, debug);
+			ret = recursiveMatches(q.getExecutableQueryConditions(), query, sourceIdx, instance, 0, conditionIndices, scratch, debug);
 		}
 
 		return ret;
 	}
 
-	private EMatch recursiveMatches(QUERY query, int sourceIdx, Object instance, int level, int [] conditionIndices, ConditionValuesScratch scratch, StructuredDebug debug) {
+	private EMatch recursiveMatches(ExecutableQueryConditions<QUERY> qc, QUERY query, int sourceIdx, Object instance, int level, int [] conditionIndices, ConditionValuesScratch scratch, StructuredDebug debug) {
 
 		if (debug != null) {
 			debug.addIndent("recursiveMatches");
@@ -652,7 +652,7 @@ final class ExecuteQueryPOJOs<QUERY> extends ExecutableQueryAggregateComputation
 		
 		// Finding recursively everything that matches for a particular source
 
-		final ConditionsType type = q.getConditionsType(query, level, conditionIndices);
+		final ConditionsType type = qc.getConditionsType(query, level, conditionIndices);
 
 		final EMatch ret;
 		
@@ -663,15 +663,15 @@ final class ExecuteQueryPOJOs<QUERY> extends ExecutableQueryAggregateComputation
 		
 		switch (type) {
 			case SINGLE:
-				ret = recursiveMatchSingle(query, sourceIdx, instance, level, conditionIndices, 0, scratch, debug);
+				ret = recursiveMatchSingle(qc, query, sourceIdx, instance, level, conditionIndices, 0, scratch, debug);
 				break;
 				
 			case AND:
-				ret = recursiveMatchAnd(query, sourceIdx, instance, level, conditionIndices, scratch, debug);
+				ret = recursiveMatchAnd(qc, query, sourceIdx, instance, level, conditionIndices, scratch, debug);
 				break;
 				
 			case OR:
-				ret = recursiveMatchOr(query, sourceIdx, instance, level, conditionIndices, scratch, debug);
+				ret = recursiveMatchOr(qc, query, sourceIdx, instance, level, conditionIndices, scratch, debug);
 				break;
 				
 			default:
@@ -690,13 +690,13 @@ final class ExecuteQueryPOJOs<QUERY> extends ExecutableQueryAggregateComputation
 		return ret;
 	}
 
-	private EMatch recursiveMatchSingle(QUERY query, int sourceIdx, Object instance, int level, int [] conditionIndices, int conditionIdx, ConditionValuesScratch scratch, StructuredDebug debug) {
+	private EMatch recursiveMatchSingle(ExecutableQueryConditions<QUERY> qc, QUERY query, int sourceIdx, Object instance, int level, int [] conditionIndices, int conditionIdx, ConditionValuesScratch scratch, StructuredDebug debug) {
 		
 		final EMatch ret;
 		
 		conditionIndices[level] = conditionIdx;
 
-		final int conditionSourceIdx = q.getConditionSourceIdx(query, level, conditionIndices);
+		final int conditionSourceIdx = qc.getConditionSourceIdx(query, level, conditionIndices);
 		
 		if (debug != null) {
 			debug.addIndent("recursiveMatchSingle sourceIdx=" + sourceIdx  + " level=" + level);
@@ -704,11 +704,11 @@ final class ExecuteQueryPOJOs<QUERY> extends ExecutableQueryAggregateComputation
 		
 		
 		if (conditionSourceIdx == sourceIdx) {
-			if (q.isSubCondition(query, level, conditionIndices)) {
-				ret = recursiveMatches(query, sourceIdx, instance, level + 1, conditionIndices, scratch, debug);
+			if (qc.isSubCondition(query, level, conditionIndices)) {
+				ret = recursiveMatches(qc, query, sourceIdx, instance, level + 1, conditionIndices, scratch, debug);
 			}
 			else {
-				ret = q.evaluateCondition(query, level, conditionIndices, instance, scratch)
+				ret = qc.evaluateCondition(query, level, conditionIndices, instance, scratch)
 					
 					? EMatch.YES  // Definite match
 					: EMatch.NO;  // Definite mismatch
@@ -720,7 +720,7 @@ final class ExecuteQueryPOJOs<QUERY> extends ExecutableQueryAggregateComputation
 		
 		if (debug != null) {
 			
-			debugMatch(query, level, conditionIndices, ret, debug);
+			debugMatch(qc, query, level, conditionIndices, ret, debug);
 			
 			debug.subIndent();
 		}
@@ -749,17 +749,17 @@ final class ExecuteQueryPOJOs<QUERY> extends ExecutableQueryAggregateComputation
 		}
 	}
 	
-	private ConditionDebug getConditionDebug(QUERY query, int level, int [] conditionIndices) {
-		final EClauseOperator operator = q.getOperator(query, level, conditionIndices);
-		final Method lhsMethod = q.getForDebugConditionLhsMethod(query, level, conditionIndices);
-		final String value = q.getForDebugConditionValue(query, level, conditionIndices);
+	private ConditionDebug getConditionDebug(ExecutableQueryConditions<QUERY> qc, QUERY query, int level, int [] conditionIndices) {
+		final EClauseOperator operator = qc.getOperator(query, level, conditionIndices);
+		final Method lhsMethod = qc.getForDebugConditionLhsMethod(query, level, conditionIndices);
+		final String value = qc.getForDebugConditionValue(query, level, conditionIndices);
 
 		return new ConditionDebug(operator, lhsMethod, value);
 	}
 	
-	private void debugMatch(QUERY query, int level, int [] conditionIndices, EMatch ret, StructuredDebug debug) {
+	private void debugMatch(ExecutableQueryConditions<QUERY> qc, QUERY query, int level, int [] conditionIndices, EMatch ret, StructuredDebug debug) {
 		
-		final ConditionDebug conditionDebug = getConditionDebug(query, level, conditionIndices);
+		final ConditionDebug conditionDebug = getConditionDebug(qc, query, level, conditionIndices);
 		
 		debugMatch(conditionDebug, ret, debug);
 	}
@@ -782,11 +782,11 @@ final class ExecuteQueryPOJOs<QUERY> extends ExecutableQueryAggregateComputation
 	}
 
 
-	private EMatch recursiveMatchAnd(QUERY query, int sourceIdx, Object instance, int level, int [] conditionIndices, ConditionValuesScratch scratch, StructuredDebug debug) {
+	private EMatch recursiveMatchAnd(ExecutableQueryConditions<QUERY> qc, QUERY query, int sourceIdx, Object instance, int level, int [] conditionIndices, ConditionValuesScratch scratch, StructuredDebug debug) {
 
 		int numFromThisSource = 0;
 
-		final int numConditions = q.getConditionsCount(query, level, conditionIndices);
+		final int numConditions = qc.getConditionsCount(query, level, conditionIndices);
 
 		if (debug != null) {
 			debug.addIndent("recursiveMatchAnd sourceIdx=" + sourceIdx  + " level=" + level);
@@ -796,8 +796,8 @@ final class ExecuteQueryPOJOs<QUERY> extends ExecutableQueryAggregateComputation
 			
 			conditionIndices[level] = conditionIdx;
 			
-			if (q.isSubCondition(query, level, conditionIndices)) {
-				final EMatch subMatch = recursiveMatches(query, sourceIdx, instance, level + 1, conditionIndices, scratch, debug);
+			if (qc.isSubCondition(query, level, conditionIndices)) {
+				final EMatch subMatch = recursiveMatches(qc, query, sourceIdx, instance, level + 1, conditionIndices, scratch, debug);
 				
 				switch (subMatch){
 				case YES:
@@ -806,7 +806,7 @@ final class ExecuteQueryPOJOs<QUERY> extends ExecutableQueryAggregateComputation
 					
 				case NO:
 					if (debug != null) {
-						final EClauseOperator operator = q.getOperator(query, level, conditionIndices);
+						final EClauseOperator operator = qc.getOperator(query, level, conditionIndices);
 						
 						debug.debug("sub MISMATCH conditionIdx " + conditionIdx + ", op=" + operator);
 						
@@ -828,13 +828,13 @@ final class ExecuteQueryPOJOs<QUERY> extends ExecutableQueryAggregateComputation
 				}
 			}
 			else { 
-				final int conditionSourceIdx = q.getConditionSourceIdx(query, level, conditionIndices);
+				final int conditionSourceIdx = qc.getConditionSourceIdx(query, level, conditionIndices);
 
 				if (conditionSourceIdx == sourceIdx) {
 				
-					if (!q.evaluateCondition(query, level, conditionIndices, instance, scratch)) {
+					if (!qc.evaluateCondition(query, level, conditionIndices, instance, scratch)) {
 						if (debug != null) {
-							final EClauseOperator operator = q.getOperator(query, level, conditionIndices);
+							final EClauseOperator operator = qc.getOperator(query, level, conditionIndices);
 
 							debug.debug("MISMATCH conditionIdx " + conditionIdx + ", op=" + operator);
 							
@@ -861,13 +861,13 @@ final class ExecuteQueryPOJOs<QUERY> extends ExecutableQueryAggregateComputation
 		return ret;
 	}
 
-	private EMatch recursiveMatchOr(QUERY query, int sourceIdx, Object instance, int level, int [] conditionIndices, ConditionValuesScratch scratch, StructuredDebug debug) {
+	private EMatch recursiveMatchOr(ExecutableQueryConditions<QUERY> qc, QUERY query, int sourceIdx, Object instance, int level, int [] conditionIndices, ConditionValuesScratch scratch, StructuredDebug debug) {
 		
 		if (debug != null) {
 			debug.addIndent("recursiveMatchOr sourceIdx=" + sourceIdx + " level=" + level);
 		}
 		
-		final int numConditions = q.getConditionsCount(query, level, conditionIndices);
+		final int numConditions = qc.getConditionsCount(query, level, conditionIndices);
 
 		int numFromThisSource = 0;
 
@@ -876,13 +876,13 @@ final class ExecuteQueryPOJOs<QUERY> extends ExecutableQueryAggregateComputation
 			conditionIndices[level] = conditionIdx;
 			
 				
-			if (q.isSubCondition(query, level, conditionIndices)) {
-				final EMatch subMatch = recursiveMatches(query, sourceIdx, instance, level + 1, conditionIndices, scratch, debug);
+			if (qc.isSubCondition(query, level, conditionIndices)) {
+				final EMatch subMatch = recursiveMatches(qc, query, sourceIdx, instance, level + 1, conditionIndices, scratch, debug);
 				
 				switch (subMatch){
 				case YES:
 					if (debug != null) {
-						final EClauseOperator operator = q.getOperator(query, level, conditionIndices);
+						final EClauseOperator operator = qc.getOperator(query, level, conditionIndices);
 						
 						debug.debug("sub MATCH conditionIdx " + conditionIdx + ", op=" + operator);
 						
@@ -911,7 +911,7 @@ final class ExecuteQueryPOJOs<QUERY> extends ExecutableQueryAggregateComputation
 			}
 			else {
 				
-				final int conditionSourceIdx = q.getConditionSourceIdx(query, level, conditionIndices);
+				final int conditionSourceIdx = qc.getConditionSourceIdx(query, level, conditionIndices);
 				
 				System.out.println("## got source idx " + conditionSourceIdx + " for level " + level + ", indices: " + Arrays.toString(conditionIndices));
 				
@@ -922,10 +922,10 @@ final class ExecuteQueryPOJOs<QUERY> extends ExecutableQueryAggregateComputation
 						debug.debug("evaluating this-level condition level " + level + ", source " + sourceIdx + " on indices " + Arrays.toString(conditionIndices));
 					}
 				
-					if (q.evaluateCondition(query, level, conditionIndices, instance, scratch)) {
+					if (qc.evaluateCondition(query, level, conditionIndices, instance, scratch)) {
 	
 						if (debug != null) {
-							final EClauseOperator operator = q.getOperator(query, level, conditionIndices);
+							final EClauseOperator operator = qc.getOperator(query, level, conditionIndices);
 
 							debug.debug("MATCH conditionIdx " + conditionIdx + ", op=" + operator);
 

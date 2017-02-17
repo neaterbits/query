@@ -4,7 +4,6 @@ import java.lang.reflect.Method;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import java.util.function.Function;
 
@@ -60,14 +59,14 @@ interface ExecutableQuery<QUERY> {
 	}
 	
 	default QueryParametersDistinct getDistinctParams(QUERY query) {
-		return new QueryParametersDistinct(QueryHelper.getConditionParamRefs(this, query, true));
+		return new QueryParametersDistinct(QueryHelper.getConditionParamRefs(this, getExecutableQueryConditions(), query, true));
 	}
 	
 	
 	default PreparedQueryMetaData makeMetaData(QUERY query) {
 
 		// Figure whether requires parameters by recursing downwards 
-		final boolean hasParams = QueryHelper.hasConditionParams(this, query);
+		final boolean hasParams = QueryHelper.hasConditionParams(this, getExecutableQueryConditions(), query);
 		
 		return new PreparedQueryMetaData(hasParams);
 	}
@@ -162,6 +161,9 @@ interface ExecutableQuery<QUERY> {
 	default boolean joinHasConditions(QUERY query, int joinIdx) {
 		return getJoinConditionCount(query, joinIdx) != 0;
 	}
+	
+	ExecutableQueryConditions<QUERY> getExecutableQueryConditions();
+	
 	
 	ExecuteQueryScratch createScratchArea(QUERY query, QueryMetaModel queryMetaModel);
 	
@@ -377,76 +379,7 @@ interface ExecutableQuery<QUERY> {
 	int getRootConditionSourceIdx(QUERY query, int conditionIdx);
 
 	boolean evaluateRootCondition(QUERY query, Object instance, int conditionIdx, ConditionValuesScratch scratch);
-	
-	/**
-	 * Get max depth of dub conditions
-	 * @param query query to get max depth for
-	 * 
-	 *  - returns -1 if has no conditions at all
-	 *  - 0 should never occur
-	 *  - returns 1 if only has conditions at the root level
-	 *  - returns 2+ if eg. has a nested or inside where-and at the topmost level, etc 
-	 *  
-	 * @return max depth
-	 */
 
-	int getConditionsMaxDepth(QUERY query);
-	
-	
-	// Generic nested-condition evaluation
-	ConditionsType getConditionsType(QUERY query, int level, int [] conditionIndices);
-
-	int getConditionSourceIdx(QUERY query, int level, int [] conditionIndices);
-
-	boolean evaluateCondition(QUERY query, int level, int [] conditionIndices, Object instance, ConditionValuesScratch scratch);
-	
-	boolean isSubCondition(QUERY query, int level, int [] conditionIndices);
-	
-	int getConditionsCount(QUERY query, int level, int [] conditionIndices);
-
-	EClauseOperator getOperator(QUERY query, int level, int [] conditionIndices);
-
-	// for compiled-queries only?
-	CompiledFieldReference getConditionLhs(QUERY query, int level, int [] conditionIndices);
-
-	ConditionValue getConditionValue(QUERY query, int level, int [] conditionIndices);
-
-	int getConditionNumFunctions(QUERY query, int level, int [] conditionIndices);
-
-	FunctionBase getConditionFunction(QUERY query, int level, int [] conditionIndices, int functionIdx);
-
-	default List<FunctionBase> getConditionFunctions(QUERY query, int level, int [] conditionIndices) {
-		final int numFunctions = getConditionNumFunctions(query, level, conditionIndices);
-		
-		final List<FunctionBase> ret;
-		
-		if (numFunctions == 0) {
-			ret = null;
-		}
-		else {
-		
-			ret = new ArrayList<>(numFunctions);
-			
-			for (int i = 0; i < numFunctions; ++ i) {
-				
-				final FunctionBase function = getConditionFunction(query, level, conditionIndices, i);
-				
-				if (function == null) {
-					throw new IllegalStateException("function == null");
-				}
-	
-				ret.add(function);
-			}
-		}
-		
-		return ret;
-		
-	}
-	
-	Method getForDebugConditionLhsMethod(QUERY query, int level, int [] conditionIndices);
-	
-	String getForDebugConditionValue(QUERY query, int level, int [] conditionIndices);
-	
 	
 	// result grouping, filtering and sorting
 	
@@ -466,6 +399,5 @@ interface ExecutableQuery<QUERY> {
 	// For POJO execution with order-by on entities, we require the Function
 	// TODO: perhaps change to executeEntityFieldGetter with an index?
 	Function<?, ?> getEntityOrderByFieldGetter(QUERY query, int idx);
-	
 	
 }
