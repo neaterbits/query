@@ -533,6 +533,8 @@ W - parametere
  - query ut fra context variabel
    * forenklede queries uten from eller join sources. Trenger ikke from/implisitt join om kun ANSI joins
      siden from er der for cartesian product.
+   * datasource må da oppgis først, slik at kompilering kan skje statisk.
+
 
  - result functions? dvs aggregates. count, etc
 
@@ -543,6 +545,8 @@ W - parametere
     - lettere å implementere API-messig også siden sub-joinene blir decoupled.
   
  - subselects
+   * exists/not exists
+   * any?
 
  - fikse nøsta and/or slik at ikke har mulighet for .compile()
  - fikse adhoc join-and/or slik at ikke har mulighet for .compile()
@@ -550,21 +554,27 @@ W - parametere
  - group by? innvirkning på traversering? traversering er separat
  - having?
    !! TODO having: må kunne sjekke mot aggregate-functions i and() og or(), så må kansje parameterisere functions som er retur-verdi her.!!
- - order by?
 
- - group by, burde alltid etter where men også etter join? Kan
-trengs ikke alltid WHERE etter join om er kun join-resultatet vi er interessert i.
-OK, så vi må ha 3 interfaces:
-group by, having, order by.
-group by må være først, så having, så order by
-men de kan også fjenres, dvs having uten group by og order by uten noen av de.
+- casting? ustandard.
+- limit/offset - ustandard, men støttes av fleste databaser.
+
+- databasespesifikke dialekter APIet? Mye jobb å teste og vedlikeholde så antakelig helst ikke.
+
+# - order by?
+
+#- group by, burde alltid etter where men også etter join? Kan
+#trengs ikke alltid WHERE etter join om er kun join-resultatet vi er interessert i.
+#OK, så vi må ha 3 interfaces:
+#group by, having, order by.
+#group by må være først, så having, så order by
+#men de kan også fjenres, dvs having uten group by og order by uten noen av de.
  
 # !! TODO: skiller mellom NonProcessResult og ProcesseResult i dag men burde skill ut OrderBy som egen
 # siden ved liste av entiteter ("select * from" i praksis) så burde en ikke kunne gjøre group by eller having mens order by er OK.
 
-!! TODO !! 
-Flytte i generisk Collector_And_Or/Collector_And_Or_Named/Collector_And_Or_ALias og fjerne Classic_Collector_Where_Or_Join, heller implementere ISharedLogical_Where
-i *Classic* interfacene, slik at vi får gjenbrukt baseklassen i having.
+#!! TODO !! 
+#Flytte i generisk Collector_And_Or/Collector_And_Or_Named/Collector_And_Or_ALias og fjerne Classic_Collector_Where_Or_Join, heller implementere ISharedLogical_Where
+#i *Classic* interfacene, slik at vi får gjenbrukt baseklassen i having.
 
 Hva med having().sum() ?? Blir tilsvarende where-clause i WhereOrJoin.
 
@@ -1018,4 +1028,37 @@ Så mapperen må arve fra disse.
 	Så for vanlige queries så blir det ikke like mange.
 			
 			
+
+----------------------------------------------------------------------------------------------------
+
+Rydding i kode:
+
+For having-clause må vi sørge for at havner i rett Collector_Clause, eller nærmere bestemt havner i having-clauses i QueryCollectorImpl
+og ikke noe annet sted.
+
+For å fikse dette bør QueryCollector kalles fortløpende etterhvert som vi switcher fra en fase til en annen i query collection,
+f.eks i GroupBy, når vi enten kalles med orderBy() eller having() så collecter vi group-by clausen over, og tilsvarende for having().
+Dette betyr da at vi slipper å passe igjennom alle disse parameterne hele tiden, det er kun dette ene collector-interfacet (eller klassen).
+Da spiller det ikke lengre noen rolle hvor få eller mange instanser vi lager på veien, så lenge vi bare lagrer i collector'en der vi går over fra en fase til en annen.
+
+
+Vi må også rydde i mekanismen som gjør query-generering => få dette ut av datasource osv. Dette fordi:
+ - enklere å skille ut varianter og sub-varianter.
+ - datasource er egentlig uavhengig av query, DS er Hibernate/JPA/JDBC ol hvor man kan gjøre native queries mot div database som krever forskjellige typer query-generering helt uavhengig.
+ - slipper subklasser i PreparedQueryBuilder og Conditions-Builder. Disse vil bare bry seg om basis-strukturen. Kan hende at er noen forskjeller mellom .
+ - kan rydde i disse half-way greiene slik at blir mindre error prone, ved at finner ut tidlig om er half-way og da separere alt før/etter where evt bare gi blanke i half-way og generere hele smæla om ikke kan resolve på en gang, da er det samme koden som kjører på alle parameterne og blir enklere å forholde seg til.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 

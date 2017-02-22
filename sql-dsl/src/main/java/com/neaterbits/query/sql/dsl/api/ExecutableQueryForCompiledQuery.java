@@ -10,7 +10,6 @@ import com.neaterbits.query.sql.dsl.api.entity.IEntityAttribute;
 import com.neaterbits.query.sql.dsl.api.entity.OneToManyJoinConditionResolver;
 import com.neaterbits.query.sql.dsl.api.entity.QueryMetaModel;
 import com.neaterbits.query.sql.dsl.api.entity.Relation;
-import com.neaterbits.query.sql.dsl.api.entity.ScalarType;
 
 final class ExecutableQueryForCompiledQuery extends ExecutableQueryForCompiledBase implements ExecutableQuery<CompiledQuery> {
 
@@ -513,6 +512,9 @@ final class ExecutableQueryForCompiledQuery extends ExecutableQueryForCompiledBa
 	}
 
 	// --------------------- having ---------------------
+	
+	
+	
 	/*
 	
 	private CompiledConditionComparison getComparisonHaving(CompiledQuery query, int level, int[] conditionIndices) {
@@ -536,7 +538,17 @@ final class ExecutableQueryForCompiledQuery extends ExecutableQueryForCompiledBa
 	}
 	*/
 
+	@Override
+	public ExecutableQueryConditions<CompiledQuery> getExecutableQueryHaving() {
+		return having;
+	}
 
+
+	@Override
+	public boolean hasHaving(CompiledQuery query) {
+		return query.getResultProcessing() != null && query.getResultProcessing().getHaving() != null;
+	}
+	
 	// --------------------- order by ---------------------
 	
 	@Override
@@ -549,7 +561,7 @@ final class ExecutableQueryForCompiledQuery extends ExecutableQueryForCompiledBa
 					: query.getResultProcessing().getOrderBy().getIndicesStartingAtOne().length;
 	}
 
-	
+
 	@Override
 	public int getOrderByFieldIndex(CompiledQuery query, int idx) {
 		return query.getResultProcessing().getOrderBy().getIndicesStartingAtOne()[idx] - 1;

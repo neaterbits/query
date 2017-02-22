@@ -7,7 +7,9 @@ final class Collector_Having_Alias<MODEL, RESULT> extends Collector_And_Or_Alias
 		ISharedProcessResult_Having_Or_Alias<MODEL, RESULT>,
 		ISharedProcessResult_Having_And_Nested_Alias<MODEL, RESULT>,
 		ISharedProcessResult_Having_Or_Nested_Alias<MODEL, RESULT>,
-		Void>	 {
+		Void>	 
+
+		implements ISharedProcessResult_Having_And_Or_Alias<MODEL, RESULT> {
 
 	
 	

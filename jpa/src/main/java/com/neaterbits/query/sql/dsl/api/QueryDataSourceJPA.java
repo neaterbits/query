@@ -41,8 +41,8 @@ public abstract class QueryDataSourceJPA extends QueryDataSource_ORM<
 	
 
 	@Override
-	final PreparedQueryConditionsBuilder createConditionsBuilder(PreparedQueryBuilderORM queryBuilderORM, boolean atRoot) {
-		return new PreparedQueryConditionsBuilderJPA(queryBuilderORM, atRoot);
+	final PreparedQueryConditionsBuilder createConditionsBuilder(PreparedQueryBuilderORM queryBuilderORM, EConditionsClause conditionsClause, boolean atRoot) {
+		return new PreparedQueryConditionsBuilderJPA(queryBuilderORM, conditionsClause, atRoot);
 	}
 
 	private static final JPAConditionToOperator conditionToOperator = new JPAConditionToOperator();

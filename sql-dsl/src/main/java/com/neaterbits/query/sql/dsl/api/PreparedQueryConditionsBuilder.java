@@ -9,24 +9,36 @@ import com.neaterbits.query.util.java8.Coll8;
 
 abstract class PreparedQueryConditionsBuilder {
 
+	
 	abstract void addJoinCondition(ConditionsType type, FieldReference left, EClauseOperator operator, FieldReference right);
 
 	abstract void resolveFromParams(StringBuilder sb, ParamValueResolver resolver);
 	
-	abstract PreparedQueryConditionsBuilder createConditionsBuilder(boolean atRoot);
+	abstract PreparedQueryConditionsBuilder createConditionsBuilder(EConditionsClause conditionsClause, boolean atRoot);
 	
 
+	private final EConditionsClause conditionsClause;
 	private final boolean atRoot;
 	private ConditionsType joinType;
 	private ConditionsType comparisonType;
 	private List<PreparedQueryCondition> conditions;
 	
-	PreparedQueryConditionsBuilder(boolean atRoot) {
+	PreparedQueryConditionsBuilder(EConditionsClause conditionsClause, boolean atRoot) {
+		if (conditionsClause == null) {
+			throw new IllegalArgumentException("conditionsClause == null");
+		}
+		
+		this.conditionsClause = conditionsClause;
 		this.atRoot = atRoot;
 		this.joinType = null;
 		this.comparisonType = null;
 		this.conditions = new ArrayList<>();
 	}
+	
+	final EConditionsClause getConditionsClause() {
+		return conditionsClause;
+	}
+
 	
 	final PreparedQueryConditionsBuilder addNestedForJoin(ConditionsType type) {
 
@@ -45,7 +57,7 @@ abstract class PreparedQueryConditionsBuilder {
 			throw new IllegalArgumentException("type == null");
 		}
 		
-		final PreparedQueryConditionsBuilder sub = createConditionsBuilder(false);
+		final PreparedQueryConditionsBuilder sub = createConditionsBuilder(conditionsClause, false);
 
 		conditions.add(new PreparedQueryConditionNested(sub));
 		

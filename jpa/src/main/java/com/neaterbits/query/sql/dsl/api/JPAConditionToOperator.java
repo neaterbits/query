@@ -1,5 +1,6 @@
 package com.neaterbits.query.sql.dsl.api;
 
+import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.List;
 import java.util.function.Function;
@@ -222,6 +223,8 @@ final class JPAConditionToOperator {
 			appendStringLiteral((String) literal, append);
 		} else if (literal instanceof Integer) {
 			append.apply(String.valueOf((Integer) literal));
+		} else if (literal instanceof BigDecimal) {
+			append.apply("'" + ((BigDecimal)literal).toString() + "'"); // TODO
 		} else {
 			throw new UnsupportedOperationException("Unknown literal of type " + literal.getClass().getName());
 		}

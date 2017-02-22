@@ -387,6 +387,10 @@ interface ExecutableQuery<QUERY> {
 
 	// returns index into selected fields, starting at 0 (not 1 as is the case with SQL)
 	int getGroupByFieldIndex(QUERY query, int idx);
+
+	ExecutableQueryConditions<QUERY> getExecutableQueryHaving();
+
+	boolean hasHaving(QUERY query);
 	
 
 	int getOrderByFieldCount(QUERY query);

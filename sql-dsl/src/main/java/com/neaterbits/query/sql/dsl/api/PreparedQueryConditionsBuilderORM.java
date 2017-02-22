@@ -1,9 +1,7 @@
 package com.neaterbits.query.sql.dsl.api;
 
-import java.util.Collection;
 import java.util.List;
 import java.util.function.BiConsumer;
-import java.util.function.Function;
 
 /**
  * Common base class for ORM queries / native ANSI SQL due to commonalities
@@ -17,8 +15,9 @@ abstract class PreparedQueryConditionsBuilderORM extends PreparedQueryConditions
 	private final PrepareQueryFieldReferenceBuilder fieldReferenceBuilder;
 	private final StringBuilder sb;
 	
-	public PreparedQueryConditionsBuilderORM(PrepareQueryFieldReferenceBuilder fieldReferenceBuilder, boolean atRoot) {
-		super(atRoot);
+	
+	PreparedQueryConditionsBuilderORM(PrepareQueryFieldReferenceBuilder fieldReferenceBuilder, EConditionsClause conditionsClause, boolean atRoot) {
+		super(conditionsClause, atRoot);
 
 		if (fieldReferenceBuilder == null) {
 			throw new IllegalArgumentException("fieldReferenceBuilder == null");
@@ -45,7 +44,7 @@ abstract class PreparedQueryConditionsBuilderORM extends PreparedQueryConditions
 
 		final ConditionsType lastJoinType = updateJoinType(type);
 
-		final String os = getConditionsString(lastJoinType == null ? ConditionsType.SINGLE : type);
+		final String os = getConditionsString(lastJoinType == null ? ConditionsType.SINGLE : type, getConditionsClause());
 
 		sb.append(os).append(' ');
 		
@@ -64,7 +63,7 @@ abstract class PreparedQueryConditionsBuilderORM extends PreparedQueryConditions
 	
 	
 
-	private static final String getConditionsString(ConditionsType type) {
+	private static final String getConditionsString(ConditionsType type, EConditionsClause conditionsClause) {
 		
 		if (type == null) {
 			throw new IllegalArgumentException("type == null");
@@ -74,7 +73,18 @@ abstract class PreparedQueryConditionsBuilderORM extends PreparedQueryConditions
 		
 		switch (type) {
 		case SINGLE:
-			os = "WHERE";
+			switch (conditionsClause) {
+			case WHERE:
+				os = "WHERE";
+				break;
+
+			case HAVING:
+				os = "HAVING";
+				break;
+
+			default:
+				throw new UnsupportedOperationException("Unknown conditions clause " + conditionsClause);
+			}
 			break;
 			
 		case AND:
@@ -114,14 +124,14 @@ abstract class PreparedQueryConditionsBuilderORM extends PreparedQueryConditions
 		
 			if (first) {
 				if (isAtRoot()) {
-					sb.append(' ').append("WHERE").append(' ');
+					sb.append(' ').append(getConditionsString(type, getConditionsClause())).append(' ');
 				}
 				
 				first = false;
 			}
 			else {
 				// 
-				sb.append(' ').append(getConditionsString(type)).append(' ');
+				sb.append(' ').append(getConditionsString(type, getConditionsClause())).append(' ');
 			}
 			
 			if (condition instanceof PreparedQueryConditionNested) {

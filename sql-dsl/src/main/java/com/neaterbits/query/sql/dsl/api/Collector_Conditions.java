@@ -46,13 +46,26 @@ abstract class Collector_Conditions<MODEL, RESULT, AFTER_GROUP_BY>
 			throw new IllegalArgumentException("Only call this constructor after WHERE");
 		}
 		
+		final Collector_Conditions<MODEL, RESULT, AFTER_GROUP_BY> l = (Collector_Conditions<MODEL, RESULT, AFTER_GROUP_BY>)last;
+
+		// Must transfer groupby-collector over to whatever is called compile on
+		if (l.groupByCollector != null) {
+			this.groupByCollector = l.groupByCollector;
+		}
 		
 		this.clauseCollector = new Collector_Clause(last.clauseCollector, newConditionsType);
 	}
-	
+
+	@SuppressWarnings("unchecked")
 	Collector_Conditions(Collector_Base<MODEL> last, Collector_Clause collector) {
 		super(last);
 
+		// Must transfer groupby-collector over to whatever is called compile on
+		// TODO: a bit of a hack but can be improved later.
+		if (last instanceof Collector_GroupBy) {
+			this.groupByCollector = (Collector_GroupBy<MODEL, RESULT>)last;
+		}
+		
 		this.clauseCollector = collector;
 	}
 	

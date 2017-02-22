@@ -51,7 +51,7 @@ public class SQLAPITest extends BaseSQLAPITest {
 				//.add(nativeDS)
 				.add(jpql)
 				
-				.add(inMemory)
+				//.add(inMemory)
 				
 				.store(b);
 	}
@@ -629,11 +629,14 @@ public class SQLAPITest extends BaseSQLAPITest {
         	
         	.groupBy(Company::getStockPrice)
 
-        	.having()
+        	.having(Company::getStockPrice).isEqualTo(new BigDecimal("184.2"))
+        		
+        	/*
         	   .sum(Company::getStockPrice).isEqualTo(new BigDecimal("1.2"))
         		.or(Company::getId)		   .isEqualTo(2L)
         	    .or(Company::getName)      .startsWith("Acme")
         	    .orNest(o -> o.and(Company::getName).contains("foo"))
+        	    */
         	    
         	    
         	.orderBy(Company::getStockPrice).desc()
@@ -648,8 +651,8 @@ public class SQLAPITest extends BaseSQLAPITest {
 	        		q -> q.execute(),
 	        		
 	        		// ascending order
-	        		new CompanyResultVO(new BigDecimal("184.2")),
-	        		new CompanyResultVO(new BigDecimal("134.1"))
+	        		new CompanyResultVO(new BigDecimal("184.2"))
+	        		//, new CompanyResultVO(new BigDecimal("134.1")) // due to "having"
     		);
 		});
 

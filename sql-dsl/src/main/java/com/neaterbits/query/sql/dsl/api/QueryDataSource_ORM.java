@@ -22,7 +22,7 @@ abstract class QueryDataSource_ORM<ORM_QUERY, MANAGED, EMBEDDED, IDENTIFIABLE, A
 	
 	abstract <QUERY> PreparedQueryComparisonRHS convertCondition(EClauseOperator operator, ConditionValue value, ConditionStringBuilder sb);
 	
-	abstract PreparedQueryConditionsBuilder createConditionsBuilder(PreparedQueryBuilderORM queryBuilderORM, boolean atRoot);
+	abstract PreparedQueryConditionsBuilder createConditionsBuilder(PreparedQueryBuilderORM queryBuilderORM, EConditionsClause conditionsClause, boolean atRoot);
 	
 	abstract <QUERY> PreparedQuery_DB<QUERY, ORM_QUERY> makeCompletePreparedQuery(ExecutableQuery<QUERY> q, QUERY query, QueryParametersDistinct distinctParams, PreparedQueryBuilder sb);
 	
@@ -83,7 +83,7 @@ abstract class QueryDataSource_ORM<ORM_QUERY, MANAGED, EMBEDDED, IDENTIFIABLE, A
 			
 			//final CompileConditionParam param = new CompileConditionParam(paramNameAssigner, em);
 
-			final PreparedQueryConditionsBuilder conditionsBuilder = createConditionsBuilder((PreparedQueryBuilderORM)sb, true);
+			final PreparedQueryConditionsBuilder conditionsBuilder = createConditionsBuilder((PreparedQueryBuilderORM)sb, EConditionsClause.WHERE, true);
 
 			prepareConditions(q, query, conditionsBuilder, addJoinToWhere, distinctParams);
 
@@ -129,7 +129,7 @@ abstract class QueryDataSource_ORM<ORM_QUERY, MANAGED, EMBEDDED, IDENTIFIABLE, A
 		return ret;
 	}
 	
-	final <QUERY> void addResultProcessing(ExecutableQuery<QUERY> q, QUERY query, PreparedQueryBuilder sb) {
+	final <QUERY> void addResultProcessing(ExecutableQuery<QUERY> q, QUERY query, PreparedQueryBuilder sb, QueryParametersDistinct distinctParams) {
 		// Check whether we should do result-processing and add that
 		
 		final int numGroupBy = q.getGroupByFieldCount(query);
@@ -140,14 +140,35 @@ abstract class QueryDataSource_ORM<ORM_QUERY, MANAGED, EMBEDDED, IDENTIFIABLE, A
 					//getArray(query, numGroupBy, q::getGroupByFieldIndex)
 					);
 		}
+		
+
+		if (q.hasHaving(query)) {
+			
+			// Create conditions 
+			final ExecutableQueryConditions<QUERY> qh = q.getExecutableQueryHaving();
+			
+	    	final int maxDepth = qh.getConditionsMaxDepth(query);
+	    	
+	    	final int [] conditionIndices = new int[maxDepth];
+
+			final PreparedQueryConditionsBuilder conditionsBuilder = createConditionsBuilder((PreparedQueryBuilderORM)sb, EConditionsClause.HAVING, true);
+
+			if (distinctParams == null) {
+				throw new IllegalStateException("distinctParams == null");
+			}
+
+			final ConditionStringBuilder conditionSB = makeConditionStringBuilder(distinctParams);
+			final ConditionsType conditionsType = qh.getConditionsType(query, 0, conditionIndices);
+			
+	    	prepareConditions(q, qh, query, conditionsType, conditionsBuilder, 0, conditionIndices, conditionSB);
+		}
+		
 
 		final int numOrderBy = q.getOrderByFieldCount(query);
 		
 		if (numOrderBy > 0) {
 			
 			final List<FieldReference> fieldReferences = getFieldReferences(q, query, numOrderBy, q::getOrderByFieldIndex);
-			
-			
 			final List<OrderByReference> orderByReferences = new ArrayList<>(numOrderBy);
 			
 			for (int i = 0; i < numOrderBy; ++ i) {
@@ -164,7 +185,7 @@ abstract class QueryDataSource_ORM<ORM_QUERY, MANAGED, EMBEDDED, IDENTIFIABLE, A
 	
 	private <QUERY> PreparedQuery_DB<QUERY, ORM_QUERY> makeCompleteQueryWithResultProcessing(ExecutableQuery<QUERY> q, QUERY query, QueryParametersDistinct distinctParams, PreparedQueryBuilder sb) {
 
-		addResultProcessing(q, query, sb);
+		addResultProcessing(q, query, sb, distinctParams);
 
 		return makeCompletePreparedQuery(q, query, distinctParams, sb);
 	}

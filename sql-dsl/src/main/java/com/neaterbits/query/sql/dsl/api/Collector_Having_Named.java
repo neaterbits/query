@@ -7,7 +7,9 @@ final class Collector_Having_Named<MODEL, RESULT> extends Collector_And_Or_Named
 		ISharedProcessResult_Having_Or_Named<MODEL, RESULT>,
 		ISharedProcessResult_Having_And_Nested_Named<MODEL, RESULT>,
 		ISharedProcessResult_Having_Or_Nested_Named<MODEL, RESULT>,
-		Void>	 {
+		Void>	
+
+	implements ISharedProcessResult_Having_And_Or_Named<MODEL, RESULT> {
 
 	
 	

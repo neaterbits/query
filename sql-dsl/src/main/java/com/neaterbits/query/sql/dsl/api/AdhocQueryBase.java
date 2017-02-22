@@ -200,4 +200,19 @@ abstract class AdhocQueryBase<MODEL, QUERY extends AdhocQueryBase<MODEL, QUERY>>
 	public Function<?, ?> getEntityOrderByFieldGetter(QUERY query, int idx) {
 		throw new UnsupportedOperationException("TODO - not supported for Adhoc queries");
 	}
+
+	@Override
+	public boolean hasConditions(QUERY query) {
+		throw new UnsupportedOperationException("TODO - not supported for Adhoc queries");
+	}
+
+	@Override
+	public ExecutableQueryConditions<QUERY> getExecutableQueryHaving() {
+		throw new UnsupportedOperationException("TODO - not supported for Adhoc queries");
+	}
+
+	@Override
+	public boolean hasHaving(QUERY query) {
+		throw new UnsupportedOperationException("TODO - not supported for Adhoc queries");
+	}
 }

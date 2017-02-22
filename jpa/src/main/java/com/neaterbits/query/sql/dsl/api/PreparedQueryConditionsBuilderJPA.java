@@ -6,15 +6,15 @@ final class PreparedQueryConditionsBuilderJPA extends PreparedQueryConditionsBui
 
 	private final PreparedQueryBuilderORM queryBuilderORM;
 	
-	PreparedQueryConditionsBuilderJPA(PreparedQueryBuilderORM queryBuilderORM, boolean atRoot) {
-		super(queryBuilderORM, atRoot);
+	PreparedQueryConditionsBuilderJPA(PreparedQueryBuilderORM queryBuilderORM, EConditionsClause conditionsClause, boolean atRoot) {
+		super(queryBuilderORM, conditionsClause, atRoot);
 
 		this.queryBuilderORM = queryBuilderORM;
 	}
 
 	@Override
-	PreparedQueryConditionsBuilder createConditionsBuilder(boolean atRoot) {
-		return new PreparedQueryConditionsBuilderJPA(queryBuilderORM, atRoot);
+	PreparedQueryConditionsBuilder createConditionsBuilder(EConditionsClause conditionsClause, boolean atRoot) {
+		return new PreparedQueryConditionsBuilderJPA(queryBuilderORM, conditionsClause, atRoot);
 	}
 
 	@Override
