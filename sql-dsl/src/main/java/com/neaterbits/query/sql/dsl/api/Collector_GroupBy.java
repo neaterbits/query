@@ -18,10 +18,10 @@ abstract class Collector_GroupBy<MODEL, RESULT>
 
 	private final int [] groupByColumns;
 	
-	private final Collector_Conditions<MODEL, RESULT, ?> collectorConditions;
+	private final Collector_Conditions_GroupBy<MODEL, RESULT, ?> collectorConditions;
 	
 			
-	Collector_GroupBy(Collector_Base<MODEL> last, Getter initial, Collector_Conditions<MODEL, RESULT, ?> collectorConditions) {
+	Collector_GroupBy(Collector_Base<MODEL> last, Getter initial, Collector_Conditions_GroupBy<MODEL, RESULT, ?> collectorConditions) {
 		super(last);
 
 		if (initial == null) {
@@ -38,7 +38,7 @@ abstract class Collector_GroupBy<MODEL, RESULT>
 		this.groupByColumns = null;
 	}
 	
-	Collector_GroupBy(Collector_Base<MODEL> last, int [] groupByColumns, Collector_Conditions<MODEL, RESULT, ?> collectorConditions) {
+	Collector_GroupBy(Collector_Base<MODEL> last, int [] groupByColumns, Collector_Conditions_GroupBy<MODEL, RESULT, ?> collectorConditions) {
 		super(last);
 
 		if (groupByColumns == null) {

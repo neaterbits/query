@@ -13,7 +13,7 @@ final class Collector_OrderBy<MODEL, RESULT>
 
 	static final ESortOrder DEFAULT_SORT_ORDER = ESortOrder.ASCENDING;
 		
-	private final Collector_Conditions<MODEL, RESULT, ?> collectorConditions;
+	private final Collector_Conditions_GroupBy<MODEL, RESULT, ?> collectorConditions;
 	
 	// Keep state-variable on whether sort-order was added for last
 	private ESortOrder sortOrderToAdd;
@@ -23,7 +23,7 @@ final class Collector_OrderBy<MODEL, RESULT>
 	
 	
 	
-	Collector_OrderBy(Collector_Base<MODEL> last, Getter initial, Collector_Conditions<MODEL, RESULT, ?> collectorConditions) {
+	Collector_OrderBy(Collector_Base<MODEL> last, Getter initial, Collector_Conditions_GroupBy<MODEL, RESULT, ?> collectorConditions) {
 		super(last);
 		
 		if (initial == null) {

@@ -5,18 +5,12 @@ import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
-abstract class Collector_Conditions<MODEL, RESULT, AFTER_GROUP_BY>
+abstract class Collector_Conditions_GroupBy<MODEL, RESULT, AFTER_GROUP_BY>
 	
-	extends Collector_Base<MODEL>
+	extends Collector_Conditions_Base<MODEL, RESULT>
 
 	implements ISharedLogical_Base<MODEL, RESULT>, ISharedCompileEndClause<MODEL> {
 
-
-	final Collector_Clause clauseCollector;
-
-	EConditionsClause getConditionsClause() {
-		return clauseCollector.getConditionsClause();
-	}
 	
 	/* 
 	 * Group by and order by handled in baseclass, even if not applicable to all subclasses (eg. nested conditions and having)
@@ -34,33 +28,22 @@ abstract class Collector_Conditions<MODEL, RESULT, AFTER_GROUP_BY>
 		return new SupplierGetter(getter);
 	}
 
-	abstract Collector_GroupBy<MODEL, RESULT> createGroupByCollector(Collector_Base<MODEL> last, int [] groupByColumns, Collector_Conditions<MODEL, RESULT, ?> collectorConditions);
+	abstract Collector_GroupBy<MODEL, RESULT> createGroupByCollector(Collector_Base<MODEL> last, int [] groupByColumns, Collector_Conditions_GroupBy<MODEL, RESULT, ?> collectorConditions);
 	
-	Collector_Conditions(Collector_Conditions_Initial<MODEL, RESULT, AFTER_GROUP_BY> last, ConditionsType newConditionsType) {
-		super(last);
-		
-		if (last.clauseCollector.getConditionsType() != ConditionsType.SINGLE) {
-			throw new IllegalArgumentException("Only call this constructor after WHERE");
-		}
-		
-		this.clauseCollector = new Collector_Clause(last.clauseCollector, newConditionsType);
+	Collector_Conditions_GroupBy(Collector_Conditions_Initial<MODEL, RESULT, AFTER_GROUP_BY> last, ConditionsType newConditionsType) {
+		super(last, newConditionsType);
+	}
+
+	Collector_Conditions_GroupBy(Collector_Base<MODEL> last, Collector_Clause collector) {
+		super(last, collector);
+	}
+	
+	Collector_Conditions_GroupBy(Collector_Query<MODEL> queryCollector, Collector_Clause collector) {
+		super(queryCollector, collector);
 	}
 
 	@SuppressWarnings("unchecked")
-	Collector_Conditions(Collector_Base<MODEL> last, Collector_Clause collector) {
-		super(last);
-
-		this.clauseCollector = collector;
-	}
-	
-	Collector_Conditions(Collector_Query<MODEL> queryCollector, Collector_Clause collector) {
-		super(queryCollector);
-		
-		this.clauseCollector = collector;
-	}
-
-	@SuppressWarnings("unchecked")
-	final <T extends ISharedLogical_Or<MODEL, RESULT>, IMPL extends Collector_Conditions<MODEL, RESULT, AFTER_GROUP_BY>>
+	final <T extends ISharedLogical_Or<MODEL, RESULT>, IMPL extends Collector_Conditions_GroupBy<MODEL, RESULT, AFTER_GROUP_BY>>
 		void addNestedOrImpl(Consumer<T> orBuilder, IMPL subOrImpl) {
 		
 		
@@ -71,7 +54,7 @@ abstract class Collector_Conditions<MODEL, RESULT, AFTER_GROUP_BY>
 	}
 
 	@SuppressWarnings("unchecked")
-	final <T extends ISharedLogical_And<MODEL, RESULT>, IMPL extends Collector_Conditions<MODEL, RESULT, AFTER_GROUP_BY>>
+	final <T extends ISharedLogical_And<MODEL, RESULT>, IMPL extends Collector_Conditions_GroupBy<MODEL, RESULT, AFTER_GROUP_BY>>
 	
 		void addNestedAndImpl(Consumer<T> orBuilder, IMPL subAndImpl) {
 		
@@ -109,7 +92,6 @@ abstract class Collector_Conditions<MODEL, RESULT, AFTER_GROUP_BY>
 	
 
 	// Overriden by interfaces further down in the hierarchy
-	@SuppressWarnings("unchecked")
 	public final <T, R> ISharedProcessResult_After_GroupBy_Or_List_Named<MODEL, RESULT> groupBy(Function<T, R> field) {
 		
 		final Collector_GroupBy_Named<MODEL, RESULT> groupByCollector = new Collector_GroupBy_Named<>(this, new FunctionGetter(field), this);
@@ -119,7 +101,6 @@ abstract class Collector_Conditions<MODEL, RESULT, AFTER_GROUP_BY>
 		return (ISharedProcessResult_After_GroupBy_Or_List_Named<MODEL, RESULT>)groupByCollector;
 	}
 
-	@SuppressWarnings("unchecked")
 	public final <R> ISharedProcessResult_After_GroupBy_Or_List_Alias<MODEL, RESULT> groupBy(Supplier<R> field) {
 		
 		final Collector_GroupBy_Alias<MODEL, RESULT> groupByCollector = new Collector_GroupBy_Alias<>(this, new SupplierGetter(field), this);

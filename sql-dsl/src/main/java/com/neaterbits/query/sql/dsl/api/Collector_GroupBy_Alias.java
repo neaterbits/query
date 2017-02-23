@@ -9,11 +9,11 @@ final class Collector_GroupBy_Alias<MODEL, RESULT> extends Collector_GroupBy<MOD
 
 	private Collector_Having_Alias<MODEL, RESULT> having;
 	
-	Collector_GroupBy_Alias(Collector_Base<MODEL> last, Getter initial, Collector_Conditions<MODEL, RESULT, ?> collectorConditions) {
+	Collector_GroupBy_Alias(Collector_Base<MODEL> last, Getter initial, Collector_Conditions_GroupBy<MODEL, RESULT, ?> collectorConditions) {
 		super(last, initial, collectorConditions);
 	}
 	
-	Collector_GroupBy_Alias(Collector_Base<MODEL> last, int[] groupByColumns, Collector_Conditions<MODEL, RESULT, ?> collectorConditions) {
+	Collector_GroupBy_Alias(Collector_Base<MODEL> last, int[] groupByColumns, Collector_Conditions_GroupBy<MODEL, RESULT, ?> collectorConditions) {
 		super(last, groupByColumns, collectorConditions);
 	}
 

@@ -16,11 +16,11 @@ final class Collector_GroupBy_Named<MODEL, RESULT> extends Collector_GroupBy<MOD
 		return having != null ? having.clauseCollector : null;
 	}
 	
-	Collector_GroupBy_Named(Collector_Base<MODEL> last, Getter initial, Collector_Conditions<MODEL, RESULT, ?> collectorConditions) {
+	Collector_GroupBy_Named(Collector_Base<MODEL> last, Getter initial, Collector_Conditions_GroupBy<MODEL, RESULT, ?> collectorConditions) {
 		super(last, initial, collectorConditions);
 	}
 
-	Collector_GroupBy_Named(Collector_Base<MODEL> last, int[] groupByColumns, Collector_Conditions<MODEL, RESULT, ?> collectorConditions) {
+	Collector_GroupBy_Named(Collector_Base<MODEL> last, int[] groupByColumns, Collector_Conditions_GroupBy<MODEL, RESULT, ?> collectorConditions) {
 		super(last, groupByColumns, collectorConditions);
 	}
 

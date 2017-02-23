@@ -8,15 +8,15 @@ abstract class Collector_Condition_Equality<MODEL, RESULT, R, L extends ISharedL
 	implements ISharedCondition_Equality_Named<MODEL, RESULT, R, L>,
 			   ISharedCondition_Equality_Alias<MODEL, RESULT, R, L> {
 
-	private final Collector_Conditions<MODEL, RESULT, ?> clause;
+	private final Collector_Conditions_GroupBy<MODEL, RESULT, ?> clause;
 	final CollectedFunctions functions;
 	final Getter getter;
 
-	Collector_Condition_Equality(Collector_Conditions<MODEL, RESULT, ?> clause, Getter getter) {
+	Collector_Condition_Equality(Collector_Conditions_GroupBy<MODEL, RESULT, ?> clause, Getter getter) {
 		this(clause, null, getter);
 	}
 
-	Collector_Condition_Equality(Collector_Conditions<MODEL, RESULT, ?> clause, CollectedFunctions functions, Getter getter) {
+	Collector_Condition_Equality(Collector_Conditions_GroupBy<MODEL, RESULT, ?> clause, CollectedFunctions functions, Getter getter) {
 
 		if (clause == null) {
 			throw new IllegalArgumentException("clause == null");
@@ -40,11 +40,11 @@ abstract class Collector_Condition_Equality<MODEL, RESULT, R, L extends ISharedL
 	}
 
 	final <V> ConditionValue_Getter makeGetterValue(Function<?, V> value) {
-		return new ConditionValue_Getter(Collector_Conditions.makeGetter(value));
+		return new ConditionValue_Getter(Collector_Conditions_GroupBy.makeGetter(value));
 	}
 
 	final <V> ConditionValue_Getter makeGetterValue(Supplier<V> value) {
-		return new ConditionValue_Getter(Collector_Conditions.makeGetter(value));
+		return new ConditionValue_Getter(Collector_Conditions_GroupBy.makeGetter(value));
 	}
 
 	final L addCondition(CollectedCondition_NonNested condition) {

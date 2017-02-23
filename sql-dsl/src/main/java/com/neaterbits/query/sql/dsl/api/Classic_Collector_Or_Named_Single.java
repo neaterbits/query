@@ -22,7 +22,7 @@ final class Classic_Collector_Or_Named_Single<MODEL, RESULT>
 	@Override
 
 	final Collector_GroupBy<MODEL, RESULT> createGroupByCollector(Collector_Base<MODEL> last, int[] groupByColumns,
-			Collector_Conditions<MODEL, RESULT, ?> collectorConditions) {
+			Collector_Conditions_GroupBy<MODEL, RESULT, ?> collectorConditions) {
 		return new Collector_GroupBy_Named<>(last, groupByColumns, collectorConditions);
 	}
 }

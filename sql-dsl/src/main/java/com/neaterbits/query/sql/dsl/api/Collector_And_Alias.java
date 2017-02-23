@@ -112,7 +112,7 @@ abstract class Collector_And_Alias<
 
 	@Override
 	final Collector_GroupBy<MODEL, RESULT> createGroupByCollector(Collector_Base<MODEL> last, int[] groupByColumns,
-			Collector_Conditions<MODEL, RESULT, ?> collectorConditions) {
+			Collector_Conditions_GroupBy<MODEL, RESULT, ?> collectorConditions) {
 		return new Collector_GroupBy_Alias<>(last, groupByColumns, collectorConditions);
 	}
 }
