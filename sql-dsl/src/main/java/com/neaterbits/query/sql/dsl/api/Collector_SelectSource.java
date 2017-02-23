@@ -20,7 +20,7 @@ abstract class Collector_SelectSource<
 	abstract ALIAS_WHERE_OR_JOIN createWhereOrJoinForAlias();
 					
 	Collector_SelectSource(CollectedQueryResult result, ModelCompiler<MODEL> modelCompiler) {
-		super(new QueryCollectorImpl(result), modelCompiler);
+		super(new QueryCollectorImpl<MODEL>(modelCompiler, result));
 	}
 	
 	@Override

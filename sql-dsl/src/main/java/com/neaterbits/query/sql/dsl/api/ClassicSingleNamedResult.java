@@ -10,13 +10,12 @@ final class ClassicSingleNamedResult<MODEL, RESULT>
 				  {
 	ClassicSingleNamedResult(CollectedQueryResult result, ModelCompiler<MODEL> modelCompiler) {
 		super(
-				makeCollector(result),
-				modelCompiler,
-				new Collector_Clause(ConditionsType.SINGLE));
+				makeCollector(modelCompiler, result),
+				new Collector_Clause(EConditionsClause.WHERE, ConditionsType.SINGLE));
 	}
 	
-	private static QueryCollectorImpl makeCollector(CollectedQueryResult result) {
-		final QueryCollectorImpl collector = new QueryCollectorImpl(result);
+	private static <M> Collector_Query<M> makeCollector(ModelCompiler<M> modelCompiler, CollectedQueryResult result) {
+		final Collector_Query<M> collector = new QueryCollectorImpl<>(modelCompiler, result);
 		
 		collector.setSources(new CollectedSelectSource_Named(new Class<?> [] { result.getType() }));
 		

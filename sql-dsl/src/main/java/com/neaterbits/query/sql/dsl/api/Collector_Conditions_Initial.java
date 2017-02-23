@@ -10,13 +10,12 @@ abstract class Collector_Conditions_Initial<
 
 		> extends Collector_Conditions<MODEL, RESULT, AFTER_GROUP_BY> {
 
-	Collector_Conditions_Initial(Collector_Base<MODEL> last) {
-		super(last, new Collector_Clause(ConditionsType.SINGLE));
+	Collector_Conditions_Initial(Collector_Base<MODEL> last, EConditionsClause conditionsClause) {
+		super(last, new Collector_Clause(conditionsClause, ConditionsType.SINGLE));
 	}
 
-	Collector_Conditions_Initial(QueryCollectorImpl queryCollector, ModelCompiler<MODEL> modelCompiler,
-			Collector_Clause collector) {
+	Collector_Conditions_Initial(Collector_Query<MODEL> queryCollector, Collector_Clause collector) {
 		
-		super(queryCollector, modelCompiler, collector);
+		super(queryCollector, collector);
 	}
 }

@@ -6,6 +6,6 @@ final class Classic_Collector_Or_MultiMapped_Alias<MODEL, RESULT>
 		implements IClassicLogical_Or_MultiMapped_Alias<MODEL, RESULT> {
 		
 	Classic_Collector_Or_MultiMapped_Alias(Collector_Base<MODEL> qe) {
-		super(qe);
+		super(qe, EConditionsClause.WHERE);
 	}
 }

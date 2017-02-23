@@ -108,7 +108,7 @@ final class CompiledQuery {
 		return resultProcessing.getHaving().getConditions();
 	}
 
-	static CompiledQuery compile(QueryCollectorImpl collector) throws CompileException {
+	static <MODEL> CompiledQuery compile(Collector_Query<MODEL> collector) throws CompileException {
 		if (collector == null) {
 			throw new IllegalArgumentException("collector == null");
 		}
@@ -233,8 +233,8 @@ final class CompiledQuery {
 		return ctor.create(fields, columns, getters);
 	}
 	
-	private static CompiledResultProcessing compileResultProcessing(
-					QueryCollectorImpl collector,
+	private static <MODEL> CompiledResultProcessing compileResultProcessing(
+					Collector_Query<MODEL> collector,
 					CompiledMappings mappings,
 					CompiledSelectSources<?> sources,
 					CompiledGetterSetterCache cache) throws CompileException {
@@ -281,7 +281,7 @@ final class CompiledQuery {
 	}
 	
 	
-	private static CompiledQueryResult compileQueryResult(QueryCollectorImpl collector, CompiledSelectSources<?> compiledSources, CompiledGetterSetterCache cache) throws CompileException {
+	private static <MODEL> CompiledQueryResult compileQueryResult(Collector_Query<MODEL> collector, CompiledSelectSources<?> compiledSources, CompiledGetterSetterCache cache) throws CompileException {
 		
 		final CompiledQueryResult ret;
 		

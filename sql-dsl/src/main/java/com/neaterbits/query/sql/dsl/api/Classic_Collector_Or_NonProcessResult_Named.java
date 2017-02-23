@@ -7,7 +7,7 @@ final class Classic_Collector_Or_NonProcessResult_Named<MODEL, RESULT>
 	implements IClassicLogical_Or_NonProcessResult_Named<MODEL, RESULT> {
 
 
-	Classic_Collector_Or_NonProcessResult_Named(Collector_Base<MODEL> qe) {
-		super(qe);
+	Classic_Collector_Or_NonProcessResult_Named(Collector_Base<MODEL> qe, EConditionsClause conditionsClause) {
+		super(qe, conditionsClause);
 	}
 }

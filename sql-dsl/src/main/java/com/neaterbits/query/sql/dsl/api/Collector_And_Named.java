@@ -20,15 +20,14 @@ abstract class Collector_And_Named<
 	abstract Collector_Or_Named<MODEL, RESULT, NESTED_OR_CLAUSES, NESTED_AND_CLAUSES, NESTED_OR_CLAUSES, AFTER_GROUP_BY>
 			createNestedOrCollector(Collector_And_Named<MODEL, RESULT, AND_CLAUSES, NESTED_AND_CLAUSES, NESTED_OR_CLAUSES, AFTER_GROUP_BY> andClauses);
 			
-	Collector_And_Named(Collector_Base<MODEL> qe) {
-		super(qe);
-	}
-
 	Collector_And_Named(Collector_Conditions_Initial<MODEL, RESULT, AFTER_GROUP_BY> last) {
 		super(last);
 	}
-
 	
+	Collector_And_Named(Collector_Base<MODEL> qe, EConditionsClause conditionsClause) {
+		super(qe, conditionsClause);
+	}
+
 	private final <T extends ISharedLogical_Or<MODEL, RESULT>> void addNestedOrImpl(Consumer<T> orBuilder) {
 		super.addNestedOrImpl(orBuilder, createNestedOrCollector(this)); // new Classic_Collector_Or_NonProcessResult_Named<MODEL, RESULT>(this));
 	}

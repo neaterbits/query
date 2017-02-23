@@ -11,7 +11,7 @@ final class Collector_Having_And_Nested_Alias<MODEL, RESULT> extends Collector_A
 	implements ISharedProcessResult_Having_And_Nested_Alias<MODEL, RESULT> {
 
 	Collector_Having_And_Nested_Alias(Collector_Base<MODEL> qe) {
-		super(qe);
+		super(qe, EConditionsClause.HAVING);
 	}
 
 	Collector_Having_And_Nested_Alias(Collector_Conditions_Initial<MODEL, RESULT, Void> last) {

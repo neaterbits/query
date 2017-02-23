@@ -8,8 +8,7 @@ abstract class Collector_Or<MODEL, RESULT, AFTER_GROUP_BY>
 		super(last, ConditionsType.OR);
 	}
 	
-	Collector_Or(Collector_Base<MODEL> qe) {
-		super(qe.getQueryCollector(), qe.getModelCompiler(), new Collector_Clause(ConditionsType.OR));
+	Collector_Or(Collector_Base<MODEL> qe, EConditionsClause conditionsClause) {
+		super(qe.getQueryCollector(), new Collector_Clause(conditionsClause, ConditionsType.OR));
 	}
-
 }

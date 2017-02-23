@@ -2,32 +2,22 @@ package com.neaterbits.query.sql.dsl.api;
 
 abstract class Collector_Base<MODEL> extends CollectedItem {
 
-	private final QueryCollectorImpl queryCollector;
-	private final ModelCompiler<MODEL> modelCompiler;
+	private final Collector_Query<MODEL> queryCollector;
 
 	Collector_Base(Collector_Base<MODEL> last) {
-		this(last.queryCollector, last.modelCompiler);
+		this(last.queryCollector);
 	}
 
-	Collector_Base(QueryCollectorImpl queryCollector, ModelCompiler<MODEL> modelCompiler) {
+	Collector_Base(Collector_Query<MODEL> queryCollector) {
 		
 		if (queryCollector == null) {
 			throw new IllegalArgumentException("queryCollector == null");
 		}
 		
-		if (modelCompiler == null) {
-			throw new IllegalArgumentException("modelCompiler == null");
-		}
-		
 		this.queryCollector = queryCollector;
-		this.modelCompiler = modelCompiler;
 	}
 
-	final QueryCollectorImpl getQueryCollector() {
+	final Collector_Query<MODEL> getQueryCollector() {
 		return queryCollector;
-	}
-
-	final ModelCompiler<MODEL> getModelCompiler() {
-		return modelCompiler;
 	}
 }

@@ -37,7 +37,7 @@ abstract class Classic_Collector_WhereOrJoin_Named_Base<
 					
 
 	Classic_Collector_WhereOrJoin_Named_Base(Collector_Base<MODEL> last) {
-		super(last);
+		super(last, EConditionsClause.WHERE);
 	}
 
 	// ------------------------  JOIN ------------------------
@@ -179,7 +179,7 @@ abstract class Classic_Collector_WhereOrJoin_Named_Base<
 	Collector_Or_Named<MODEL, RESULT, IClassicLogical_Or_NonProcessResult_Named<MODEL, RESULT>, IClassicLogical_And_NonProcessResult_Named<MODEL, RESULT>, IClassicLogical_Or_NonProcessResult_Named<MODEL, RESULT>, ISharedProcessResult_After_GroupBy_Named<MODEL, RESULT>> createNestedOrCollector(
 		Collector_And_Named<MODEL, RESULT, AND_CLAUSES, IClassicLogical_And_NonProcessResult_Named<MODEL, RESULT>, IClassicLogical_Or_NonProcessResult_Named<MODEL, RESULT>, ISharedProcessResult_After_GroupBy_Named<MODEL, RESULT>> andClauses) {
 
-		return new Classic_Collector_Or_NonProcessResult_Named<>(andClauses);
+		return new Classic_Collector_Or_NonProcessResult_Named<>(andClauses, andClauses.getConditionsClause());
 	}
 
 	@Override
@@ -188,7 +188,7 @@ abstract class Classic_Collector_WhereOrJoin_Named_Base<
 
 		createNestedAndCollector(
 			Collector_Or_Named<MODEL, RESULT, OR_CLAUSES, IClassicLogical_And_NonProcessResult_Named<MODEL, RESULT>, IClassicLogical_Or_NonProcessResult_Named<MODEL, RESULT>, ISharedProcessResult_After_GroupBy_Named<MODEL, RESULT>> orClauses) {
-		return new Classic_Collector_And_NonProcessResult_Named<>(orClauses);
+		return new Classic_Collector_And_NonProcessResult_Named<>(orClauses, orClauses.getConditionsClause());
 	}
 }
 

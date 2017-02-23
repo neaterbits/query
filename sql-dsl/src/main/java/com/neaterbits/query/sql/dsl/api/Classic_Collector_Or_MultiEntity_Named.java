@@ -6,8 +6,7 @@ public class Classic_Collector_Or_MultiEntity_Named<MODEL, RESULT>
 	
 	implements IClassicLogical_Or_MultiEntity_Named<MODEL, RESULT> {
 	
-	
-	Classic_Collector_Or_MultiEntity_Named(Collector_Base<MODEL> qe) {
-		super(qe);
+	Classic_Collector_Or_MultiEntity_Named(Classic_Collector_WhereOrJoin_Named_Base<MODEL, RESULT, ?, ?, ?, ?> last) {
+		super(last);
 	}
 }

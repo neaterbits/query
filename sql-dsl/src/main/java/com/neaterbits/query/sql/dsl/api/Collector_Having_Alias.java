@@ -14,11 +14,7 @@ final class Collector_Having_Alias<MODEL, RESULT> extends Collector_And_Or_Alias
 	
 	
 	Collector_Having_Alias(Collector_Base<MODEL> last) {
-		super(last);
-	}
-
-	Collector_Having_Alias(QueryCollectorImpl queryCollector, ModelCompiler<MODEL> modelCompiler, Collector_Clause collector) {
-		super(queryCollector, modelCompiler, collector);
+		super(last, EConditionsClause.HAVING);
 	}
 
 	@Override

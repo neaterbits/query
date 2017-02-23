@@ -124,7 +124,7 @@ abstract class PreparedQueryConditionsBuilderORM extends PreparedQueryConditions
 		
 			if (first) {
 				if (isAtRoot()) {
-					sb.append(' ').append(getConditionsString(type, getConditionsClause())).append(' ');
+					sb.append(' ').append("WHERE").append(' ');
 				}
 				
 				first = false;

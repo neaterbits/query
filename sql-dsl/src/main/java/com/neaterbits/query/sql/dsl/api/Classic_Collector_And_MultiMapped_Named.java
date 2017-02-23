@@ -9,8 +9,4 @@ final class Classic_Collector_And_MultiMapped_Named<MODEL, RESULT>
 	Classic_Collector_And_MultiMapped_Named(Classic_Collector_WhereOrJoin_Named_Base<MODEL, RESULT, ?, ?, ?, ?> last) {
 		super(last);
 	}
-	
-	Classic_Collector_And_MultiMapped_Named(Collector_Base<MODEL> qe) {
-		super(qe);
-	}
 }

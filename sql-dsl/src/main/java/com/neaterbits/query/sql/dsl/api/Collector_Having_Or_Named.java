@@ -13,7 +13,7 @@ final class Collector_Having_Or_Named<MODEL, RESULT> extends Collector_Or_Named<
 	
 	
 	Collector_Having_Or_Named(Collector_Base<MODEL> qe) {
-		super(qe);
+		super(qe, EConditionsClause.HAVING);
 	}
 	
 	Collector_Having_Or_Named(Collector_Conditions_Initial<MODEL, RESULT, Void> last) {

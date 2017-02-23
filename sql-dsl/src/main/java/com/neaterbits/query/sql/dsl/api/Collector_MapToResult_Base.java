@@ -9,18 +9,16 @@ abstract class Collector_MapToResult_Base<
 
 	extends Collector_SelectSource<MODEL, RESULT, NAMED_WHERE_OR_JOIN, ALIAS_WHERE_OR_JOIN> {
 
-	private final MappingCollector mappingCollector;
-
 	Collector_MapToResult_Base(CollectedQueryResult result, ModelCompiler<MODEL> modelCompiler) {
 		super(result, modelCompiler);
 
-		this.mappingCollector = new MappingCollector();
+		final MappingCollector mappingCollector = new MappingCollector();
 
 		// Collect mappings, should ever only create one of these
 		getQueryCollector().setMappings(mappingCollector);
 	}
 
 	final MappingCollector getMappingCollector() {
-		return mappingCollector;
+		return getQueryCollector().getMappings();
 	}
 }

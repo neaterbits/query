@@ -11,8 +11,13 @@ abstract class Collector_Conditions<MODEL, RESULT, AFTER_GROUP_BY>
 
 	implements ISharedLogical_Base<MODEL, RESULT>, ISharedCompileEndClause<MODEL> {
 
+
 	final Collector_Clause clauseCollector;
 
+	EConditionsClause getConditionsClause() {
+		return clauseCollector.getConditionsClause();
+	}
+	
 	/* 
 	 * Group by and order by handled in baseclass, even if not applicable to all subclasses (eg. nested conditions and having)
 	 * This is for simplicity, uses cannot set these for nested instances anyway since they do not implement those
@@ -20,14 +25,6 @@ abstract class Collector_Conditions<MODEL, RESULT, AFTER_GROUP_BY>
 	 * 
 	 *  
 	 */
-	
-	private Collector_GroupBy<MODEL, RESULT> groupByCollector;
-
-	// moved to groupByCollector for common collection of 'having' clause  
-	//private int [] groupByColumns;
-
-	private Collector_OrderBy<MODEL, RESULT> orderByCollector;
-	private int [] orderByColumns;
 
 	static Getter makeGetter(Function<?, ?> getter) {
 		return new FunctionGetter(getter);
@@ -46,13 +43,6 @@ abstract class Collector_Conditions<MODEL, RESULT, AFTER_GROUP_BY>
 			throw new IllegalArgumentException("Only call this constructor after WHERE");
 		}
 		
-		final Collector_Conditions<MODEL, RESULT, AFTER_GROUP_BY> l = (Collector_Conditions<MODEL, RESULT, AFTER_GROUP_BY>)last;
-
-		// Must transfer groupby-collector over to whatever is called compile on
-		if (l.groupByCollector != null) {
-			this.groupByCollector = l.groupByCollector;
-		}
-		
 		this.clauseCollector = new Collector_Clause(last.clauseCollector, newConditionsType);
 	}
 
@@ -60,17 +50,11 @@ abstract class Collector_Conditions<MODEL, RESULT, AFTER_GROUP_BY>
 	Collector_Conditions(Collector_Base<MODEL> last, Collector_Clause collector) {
 		super(last);
 
-		// Must transfer groupby-collector over to whatever is called compile on
-		// TODO: a bit of a hack but can be improved later.
-		if (last instanceof Collector_GroupBy) {
-			this.groupByCollector = (Collector_GroupBy<MODEL, RESULT>)last;
-		}
-		
 		this.clauseCollector = collector;
 	}
 	
-	Collector_Conditions(QueryCollectorImpl queryCollector, ModelCompiler<MODEL> modelCompiler, Collector_Clause collector) {
-		super(queryCollector, modelCompiler);
+	Collector_Conditions(Collector_Query<MODEL> queryCollector, Collector_Clause collector) {
+		super(queryCollector);
 		
 		this.clauseCollector = collector;
 	}
@@ -102,31 +86,14 @@ abstract class Collector_Conditions<MODEL, RESULT, AFTER_GROUP_BY>
 	public final MODEL compile() {
 		
 		// Get collected query
-		final QueryCollectorImpl queryCollector = getQueryCollector();
+		final Collector_Query<MODEL> queryCollector = getQueryCollector();
 		
-		if (queryCollector.getClauses() != null) {
-			throw new IllegalStateException("clauses already set");
-		}
-
 		// Now set clauses before compiling
-		queryCollector.setClauses(clauseCollector);
-
-		final int [] groupByColumns = this.groupByCollector != null ? this.groupByCollector.getGroupByColumns() : null;
 		
-		
-		// Add group-by, order-by etc
-		final Collected_GroupBy groupBy = makeCollectedFields(this.groupByCollector, groupByColumns,
-															  Collected_GroupBy::new, indices -> new Collected_GroupBy(indices, groupByCollector.getHaving()));
-		
-		final Collected_OrderBy orderBy = makeCollectedFields(this.orderByCollector, this.orderByColumns,
-				
-															collector -> new Collected_OrderBy(collector, collector.getSortOrders()), 
-															indices -> new Collected_OrderBy(indices));
-		
-		if (groupBy != null || orderBy != null) {
-			queryCollector.setResultProcessing(groupBy, orderBy);
+		if (clauseCollector.getConditionsClause() == EConditionsClause.WHERE) {
+			queryCollector.setClauses(clauseCollector);
 		}
-		
+
 		// Compile the collected query
 		CompiledQuery compiledQuery;
 		try {
@@ -136,44 +103,18 @@ abstract class Collector_Conditions<MODEL, RESULT, AFTER_GROUP_BY>
 		}
 		
 		// Compile into model (better name for this operation?)
-		return getModelCompiler().compile(compiledQuery);
+		return queryCollector.getModelCompiler().compile(compiledQuery);
 	}
 	
-	private static <T extends Collector_Fields<?>, R extends Collected_Fields> R makeCollectedFields(T collector, int [] indices, Function<T, R> ctor1, Function<int [], R> ctor2) {
-		
-		final R ret;
-		
-		if (collector != null && indices != null) {
-			throw new IllegalArgumentException("Have both fields and indices");
-		}
-		else if (collector != null) {
-			ret = ctor1.apply(collector);
-		}
-		else if (indices != null) {
-			ret = ctor2.apply(indices);
-		}
-		else {
-			ret = null;
-		}
-
-		return ret;
-	}
 	
-
-	private void checkGroupByNotAlreadySet() {
-		if (this.groupByCollector != null) {
-			throw new IllegalStateException("groupBy already set");
-		}
-	}
-
 
 	// Overriden by interfaces further down in the hierarchy
 	@SuppressWarnings("unchecked")
 	public final <T, R> ISharedProcessResult_After_GroupBy_Or_List_Named<MODEL, RESULT> groupBy(Function<T, R> field) {
 		
-		checkGroupByNotAlreadySet();
+		final Collector_GroupBy_Named<MODEL, RESULT> groupByCollector = new Collector_GroupBy_Named<>(this, new FunctionGetter(field), this);
 		
-		this.groupByCollector = new Collector_GroupBy_Named<>(this, new FunctionGetter(field), this);
+		getQueryCollector().setGroupBy(groupByCollector);
 		
 		return (ISharedProcessResult_After_GroupBy_Or_List_Named<MODEL, RESULT>)groupByCollector;
 	}
@@ -181,9 +122,9 @@ abstract class Collector_Conditions<MODEL, RESULT, AFTER_GROUP_BY>
 	@SuppressWarnings("unchecked")
 	public final <R> ISharedProcessResult_After_GroupBy_Or_List_Alias<MODEL, RESULT> groupBy(Supplier<R> field) {
 		
-		checkGroupByNotAlreadySet();
+		final Collector_GroupBy_Alias<MODEL, RESULT> groupByCollector = new Collector_GroupBy_Alias<>(this, new SupplierGetter(field), this);
 		
-		this.groupByCollector = new Collector_GroupBy_Alias<>(this, new SupplierGetter(field), this);
+		getQueryCollector().setGroupBy(groupByCollector);
 		
 		return (ISharedProcessResult_After_GroupBy_Or_List_Alias<MODEL, RESULT>)groupByCollector;
 	}
@@ -191,46 +132,42 @@ abstract class Collector_Conditions<MODEL, RESULT, AFTER_GROUP_BY>
 	@SuppressWarnings("unchecked")
 	public final AFTER_GROUP_BY groupBy(int ... resultColumns) {
 
-		checkGroupByNotAlreadySet();
+		final Collector_GroupBy<MODEL, RESULT> groupByCollector = createGroupByCollector(this, Arrays.copyOf(resultColumns, resultColumns.length), this);;
 
-		this.groupByCollector = createGroupByCollector(this, Arrays.copyOf(resultColumns, resultColumns.length), this);
-		//this.groupByColumns = Arrays.copyOf(resultColumns, resultColumns.length);
-		
+		getQueryCollector().setGroupBy(groupByCollector);
+
 		return (AFTER_GROUP_BY)this;
 	}
 
-	private void checkOrderByNotAlreadySet() {
-
-		if (this.orderByCollector != null || orderByColumns != null) {
-			throw new IllegalStateException("orderBy already set");
-		}
-	}
 	
 
 	public final <T, R> ISharedProcessResult_OrderBy_AfterSortOrder_Named<MODEL, RESULT> orderBy(Function<T, R> field) {
 
-		checkOrderByNotAlreadySet();
+		final Collector_OrderBy<MODEL, RESULT> orderByCollector = new Collector_OrderBy<>(this, new FunctionGetter(field), this);
 		
-		this.orderByCollector = new Collector_OrderBy<>(this, new FunctionGetter(field), this);
+		getQueryCollector().setOrderBy(orderByCollector);
 		
 		return orderByCollector;
 	}
 
 	public final <R> ISharedProcessResult_OrderBy_AfterSortOrder_Alias<MODEL, RESULT> orderBy(Supplier<R> field) {
 
-		checkOrderByNotAlreadySet();
+		final Collector_OrderBy<MODEL, RESULT> orderByCollector = new Collector_OrderBy<>(this, new SupplierGetter(field), this);
 		
-		this.orderByCollector = new Collector_OrderBy<>(this, new SupplierGetter(field), this);
-		
+		getQueryCollector().setOrderBy(orderByCollector);
+
 		return orderByCollector;
 	}
 
 	
 	public final ISharedCompileEndClause<MODEL> orderBy(int ... resultColumns) {
 
-		checkOrderByNotAlreadySet();
 		
-		this.orderByColumns = Arrays.copyOf(resultColumns, resultColumns.length);
+		
+		final int [] orderByColumns = Arrays.copyOf(resultColumns, resultColumns.length);
+		
+		getQueryCollector().setOrderBy(orderByColumns);
+		
 		
 		return this;
 	}

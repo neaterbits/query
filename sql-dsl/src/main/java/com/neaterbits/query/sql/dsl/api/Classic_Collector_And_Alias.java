@@ -15,15 +15,15 @@ abstract class Classic_Collector_And_Alias<
 				IClassicLogical_Or_NonProcessResult_Alias<MODEL, RESULT>,
 				ISharedProcessResult_After_GroupBy_Alias<MODEL, RESULT>> {
 
-	
-	Classic_Collector_And_Alias(Collector_Base<MODEL> qe) {
-		super(qe);
-	}
-
 	Classic_Collector_And_Alias(Classic_Collector_WhereOrJoin_Alias_Base<MODEL, RESULT, ?, ?, ?, ?> last) {
 		super(last);
 	}
 	
+	Classic_Collector_And_Alias(Collector_Base<MODEL> qe, EConditionsClause conditionsClause) {
+		super(qe, conditionsClause);
+	}
+
+
 	@Override
 	final Collector_Or_Alias<
 				MODEL,
@@ -43,6 +43,6 @@ abstract class Classic_Collector_And_Alias<
 					IClassicLogical_Or_NonProcessResult_Alias<MODEL, RESULT>,
 					ISharedProcessResult_After_GroupBy_Alias<MODEL, RESULT>> andClauses) {
 		
-		return new Classic_Collector_Or_NonProcessResult_Alias<MODEL, RESULT>(andClauses);
+		return new Classic_Collector_Or_NonProcessResult_Alias<MODEL, RESULT>(andClauses, andClauses.getConditionsClause());
 	}
 }

@@ -26,7 +26,7 @@ final class Classic_Collector_WhereOrJoin_MultiEntity_Alias<MODEL, RESULT>
 	
 		createOrCollector() {
 		
-		return new Classic_Collector_Or_MultiEntity_Alias<>(this);
+		return new Classic_Collector_Or_MultiEntity_Alias<>(this, getConditionsClause());
 	}
 
 	@Override

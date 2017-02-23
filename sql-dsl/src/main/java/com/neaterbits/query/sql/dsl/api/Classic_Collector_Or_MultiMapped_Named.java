@@ -5,9 +5,7 @@ final class Classic_Collector_Or_MultiMapped_Named<MODEL, RESULT>
 
 	implements IClassicLogical_Or_MultiMapped_Named<MODEL, RESULT> {
 
-
-	Classic_Collector_Or_MultiMapped_Named(Collector_Base<MODEL> qe) {
-		super(qe);
+	Classic_Collector_Or_MultiMapped_Named(Classic_Collector_WhereOrJoin_Named_Base<MODEL, RESULT, ?, ?, ?, ?> last) {
+		super(last);
 	}
-
 }

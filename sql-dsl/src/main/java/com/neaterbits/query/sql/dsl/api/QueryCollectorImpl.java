@@ -1,12 +1,13 @@
 package com.neaterbits.query.sql.dsl.api;
 
+import java.util.function.Function;
+
 /**
  * Contains the main collected code of a query
  *
  */
 
-final class QueryCollectorImpl {
-
+class QueryCollectorImpl<MODEL> extends Collector_Query<MODEL> {
 	
 	// The expected result type
 	private final CollectedQueryResult result;
@@ -22,11 +23,24 @@ final class QueryCollectorImpl {
 	// Select clauses
 	private Collector_Clause clauses;
 	
+	/*
 	private Collected_GroupBy groupBy;
 	private Collected_OrderBy orderBy;
+	*/
 	
-	QueryCollectorImpl(CollectedQueryResult result) {
+	
+	private Collector_GroupBy<MODEL, ?> groupByCollector;
 
+	// moved to groupByCollector for common collection of 'having' clause  
+	//private int [] groupByColumns;
+
+	private Collector_OrderBy<MODEL, ?> orderByCollector;
+	private int [] orderByColumns;
+	
+	
+	QueryCollectorImpl(ModelCompiler<MODEL> modelCompiler, CollectedQueryResult result) {
+		super(modelCompiler);
+		
 		if (result == null) {
 			throw new IllegalArgumentException("result == null");
 		}
@@ -43,11 +57,14 @@ final class QueryCollectorImpl {
 		return result;
 	}
 
+	@Override
 	MappingCollector getMappings() {
 		return mappings;
 	}
 
-	void setMappings(MappingCollector mappings) {
+	
+	@Override
+	final void setMappings(MappingCollector mappings) {
 		
 		if (mappings == null) {
 			throw new IllegalArgumentException("mappings == null");
@@ -64,6 +81,7 @@ final class QueryCollectorImpl {
 		return sources;
 	}
 
+	@Override
 	void setSources(CollectedSelectSource sources) {
 		
 		if (sources == null) {
@@ -81,6 +99,7 @@ final class QueryCollectorImpl {
 		return joins;
 	}
 
+	@Override
 	void setJoins(Collector_Joins joins) {
 
 		if (joins == null) {
@@ -94,10 +113,12 @@ final class QueryCollectorImpl {
 		this.joins = joins;
 	}
 
+	@Override
 	Collector_Clause getClauses() {
 		return clauses;
 	}
 
+	@Override
 	void setClauses(Collector_Clause clauses) {
 		
 		if (clauses == null) {
@@ -111,34 +132,98 @@ final class QueryCollectorImpl {
 		this.clauses = clauses;
 	}
 	
-	void setResultProcessing(Collected_GroupBy groupBy, Collected_OrderBy orderBy) {
-		this.groupBy = groupBy;
-		this.orderBy = orderBy;
-	}
-
+	@Override
 	Collected_GroupBy getGroupBy() {
+		final int [] groupByColumns = this.groupByCollector != null ? this.groupByCollector.getGroupByColumns() : null;
+		
+		
+		// Add group-by, order-by etc
+		final Collected_GroupBy groupBy = makeCollectedFields(this.groupByCollector, groupByColumns,
+															  Collected_GroupBy::new, indices -> new Collected_GroupBy(indices, groupByCollector.getHaving()));
+		
 		return groupBy;
 	}
 
-	/*
-	void setGroupBy(Collected_GroupBy groupBy) {
-		this.groupBy = groupBy;
-	}
-	*/
 
-	public Collected_OrderBy getOrderBy() {
+	@Override
+	Collected_OrderBy getOrderBy() {
+		final Collected_OrderBy orderBy = makeCollectedFields(this.orderByCollector, this.orderByColumns,
+				
+				collector -> new Collected_OrderBy(collector, collector.getSortOrders()), 
+				indices -> new Collected_OrderBy(indices));
+		
 		return orderBy;
 	}
 
 
-	/*
-	public void setOrderBy(Collected_OrderBy orderBy) {
-		this.orderBy = orderBy;
+	@Override
+	void setGroupBy(Collector_GroupBy<MODEL, ?> groupBy) {
+		if (this.groupByCollector != null) {
+			throw new IllegalStateException("groupBy alread set");
+		}
+
+		if (groupBy == null) {
+			throw new IllegalArgumentException("groupBy == null");
+		}
+		
+		this.groupByCollector = groupBy;
 	}
-	*/
+
+
+	@Override
+	void setOrderBy(Collector_OrderBy<MODEL, ?> orderBy) {
+		checkOrderByNotAlreadySet();
+		
+		if (orderBy == null) {
+			throw new IllegalArgumentException("orderBy == null");
+		}
+		
+		this.orderByCollector = orderBy;
+	}
+
+
+	@Override
+	void setOrderBy(int[] resultColumns) {
+		// TODO Auto-generated method stub
+		
+		checkOrderByNotAlreadySet();
+		
+		if (resultColumns == null) {
+			throw new IllegalArgumentException("resultColumns == null");
+		}
+		
+		this.orderByColumns = resultColumns;
+	}
 
 
 	void verify(VerificationErrorCollector collector) {
 		throw new UnsupportedOperationException("TODO");
+	}
+	
+	private void checkOrderByNotAlreadySet() {
+
+		if (this.orderByCollector != null || orderByColumns != null) {
+			throw new IllegalStateException("orderBy already set");
+		}
+	}
+
+	private static <T extends Collector_Fields<?>, R extends Collected_Fields> R makeCollectedFields(T collector, int [] indices, Function<T, R> ctor1, Function<int [], R> ctor2) {
+		
+		final R ret;
+		
+		if (collector != null && indices != null) {
+			throw new IllegalArgumentException("Have both fields and indices");
+		}
+		else if (collector != null) {
+			ret = ctor1.apply(collector);
+		}
+		else if (indices != null) {
+			ret = ctor2.apply(indices);
+		}
+		else {
+			ret = null;
+		}
+
+		return ret;
 	}
 }

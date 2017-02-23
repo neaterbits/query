@@ -21,7 +21,7 @@ final class Classic_Collector_WhereOrJoin_SingleResult_Named<MODEL, RESULT>
 
 	@Override
 	Classic_Collector_Or_Named<MODEL, RESULT, IClassicLogical_Or_NonProcessResult_Named<MODEL, RESULT>> createOrCollector() {
-		return new Classic_Collector_Or_NonProcessResult_Named<>(this);
+		return new Classic_Collector_Or_NonProcessResult_Named<>(this, getConditionsClause());
 	}
 
 	@Override
