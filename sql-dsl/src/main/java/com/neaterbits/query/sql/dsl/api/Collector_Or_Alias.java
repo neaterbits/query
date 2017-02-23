@@ -18,8 +18,8 @@ abstract class Collector_Or_Alias<
 	abstract Collector_And_Alias<MODEL, RESULT, NESTED_AND_CLAUSES, NESTED_AND_CLAUSES, NESTED_OR_CLAUSES, AFTER_GROUP_BY>
 		createNestedAndCollector(Collector_Or_Alias<MODEL, RESULT, OR_CLAUSES, NESTED_AND_CLAUSES, NESTED_OR_CLAUSES, AFTER_GROUP_BY> orClauses);
 		
-	Collector_Or_Alias(Collector_Base<MODEL> qe, EConditionsClause conditionsClause) {
-		super(qe, conditionsClause);
+	Collector_Or_Alias(Collector_Conditions_Base<MODEL, RESULT> qe) {
+		super(qe);
 	}
 
 	Collector_Or_Alias(Collector_Conditions_Initial<MODEL, RESULT, AFTER_GROUP_BY> last) {

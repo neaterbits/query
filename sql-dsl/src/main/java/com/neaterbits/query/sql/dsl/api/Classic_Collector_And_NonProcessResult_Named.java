@@ -10,7 +10,7 @@ final class Classic_Collector_And_NonProcessResult_Named<MODEL, RESULT>
 		super(last);
 	}
 
-	Classic_Collector_And_NonProcessResult_Named(Collector_Base<MODEL> qe, EConditionsClause conditionsClause) {
-		super(qe, conditionsClause);
+	Classic_Collector_And_NonProcessResult_Named(Collector_Conditions_Base<MODEL, RESULT> qe) {
+		super(qe);
 	}
 }

@@ -20,7 +20,7 @@ final class Classic_Collector_WhereOrJoin_SingleResult_Alias<MODEL, RESULT>
 
 	@Override
 	Classic_Collector_Or_Alias<MODEL, RESULT, IClassicLogical_Or_NonProcessResult_Alias<MODEL, RESULT>> createOrCollector() {
-		return new Classic_Collector_Or_NonProcessResult_Alias<>(this, getConditionsClause());
+		return new Classic_Collector_Or_NonProcessResult_Alias<>(this);
 	}
 
 	@Override

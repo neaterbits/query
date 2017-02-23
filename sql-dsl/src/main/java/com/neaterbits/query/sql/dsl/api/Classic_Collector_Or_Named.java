@@ -14,8 +14,8 @@ abstract class Classic_Collector_Or_Named<
 					ISharedProcessResult_After_GroupBy_Named<MODEL, RESULT>> {
 
 
-	Classic_Collector_Or_Named(Collector_Base<MODEL> qe, EConditionsClause conditionsClause) {
-		super(qe, conditionsClause);
+	Classic_Collector_Or_Named(Collector_Conditions_Base<MODEL, RESULT> qe) {
+		super(qe);
 	}
 
 	Classic_Collector_Or_Named(Classic_Collector_WhereOrJoin_Named_Base<MODEL, RESULT, ?, ?, ?, ?> last) {
@@ -26,6 +26,6 @@ abstract class Classic_Collector_Or_Named<
 	final Collector_And_Named<MODEL, RESULT, IClassicLogical_And_NonProcessResult_Named<MODEL, RESULT>, IClassicLogical_And_NonProcessResult_Named<MODEL, RESULT>, IClassicLogical_Or_NonProcessResult_Named<MODEL, RESULT>, ISharedProcessResult_After_GroupBy_Named<MODEL, RESULT>> createNestedAndCollector(
 			Collector_Or_Named<MODEL, RESULT, OR_CLAUSES, IClassicLogical_And_NonProcessResult_Named<MODEL, RESULT>, IClassicLogical_Or_NonProcessResult_Named<MODEL, RESULT>, ISharedProcessResult_After_GroupBy_Named<MODEL, RESULT>> andClauses) {
 
-		return new Classic_Collector_And_NonProcessResult_Named<MODEL, RESULT>(andClauses, andClauses.getConditionsClause());
+		return new Classic_Collector_And_NonProcessResult_Named<MODEL, RESULT>(andClauses);
 	}
 }

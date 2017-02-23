@@ -5,11 +5,8 @@ final class Classic_Collector_Or_NonProcessResult_Alias<MODEL, RESULT>
 		extends Classic_Collector_Or_Alias<MODEL, RESULT, IClassicLogical_Or_NonProcessResult_Alias<MODEL, RESULT>>
 
 		implements IClassicLogical_Or_NonProcessResult_Alias<MODEL, RESULT> {
-	
-	
-	
 
-	Classic_Collector_Or_NonProcessResult_Alias(Collector_Base<MODEL> qe, EConditionsClause conditionsClause) {
-		super(qe, conditionsClause);
+	Classic_Collector_Or_NonProcessResult_Alias(Collector_Conditions_Base<MODEL, RESULT> qe) {
+		super(qe);
 	}
 }

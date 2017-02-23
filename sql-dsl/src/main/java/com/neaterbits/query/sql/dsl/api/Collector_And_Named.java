@@ -24,8 +24,8 @@ abstract class Collector_And_Named<
 		super(last);
 	}
 	
-	Collector_And_Named(Collector_Base<MODEL> qe, EConditionsClause conditionsClause) {
-		super(qe, conditionsClause);
+	Collector_And_Named(Collector_Conditions_Base<MODEL, RESULT> qe) {
+		super(qe);
 	}
 
 	private final <T extends ISharedLogical_Or<MODEL, RESULT>> void addNestedOrImpl(Consumer<T> orBuilder) {

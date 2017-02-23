@@ -19,7 +19,6 @@ abstract class Collector_Conditions_Base<MODEL, RESULT> extends Collector_Base<M
 		this.clauseCollector = new Collector_Clause(last.clauseCollector, newConditionsType);
 	}
 
-	@SuppressWarnings("unchecked")
 	Collector_Conditions_Base(Collector_Base<MODEL> last, Collector_Clause collector) {
 		super(last);
 

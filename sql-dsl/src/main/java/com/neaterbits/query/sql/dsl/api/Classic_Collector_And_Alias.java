@@ -19,8 +19,8 @@ abstract class Classic_Collector_And_Alias<
 		super(last);
 	}
 	
-	Classic_Collector_And_Alias(Collector_Base<MODEL> qe, EConditionsClause conditionsClause) {
-		super(qe, conditionsClause);
+	Classic_Collector_And_Alias(Collector_Conditions_Base<MODEL, RESULT> qe) {
+		super(qe);
 	}
 
 
@@ -43,6 +43,6 @@ abstract class Classic_Collector_And_Alias<
 					IClassicLogical_Or_NonProcessResult_Alias<MODEL, RESULT>,
 					ISharedProcessResult_After_GroupBy_Alias<MODEL, RESULT>> andClauses) {
 		
-		return new Classic_Collector_Or_NonProcessResult_Alias<MODEL, RESULT>(andClauses, andClauses.getConditionsClause());
+		return new Classic_Collector_Or_NonProcessResult_Alias<MODEL, RESULT>(andClauses);
 	}
 }

@@ -208,7 +208,7 @@ abstract class Classic_Collector_WhereOrJoin_Alias_Base<
 					
 				ISharedProcessResult_After_GroupBy_Alias<MODEL, RESULT>> andClauses) {
 		
-		return new Classic_Collector_Or_NonProcessResult_Alias<>(andClauses, andClauses.getConditionsClause());
+		return new Classic_Collector_Or_NonProcessResult_Alias<>(andClauses);
 	}
 
 	@Override
@@ -229,7 +229,7 @@ abstract class Classic_Collector_WhereOrJoin_Alias_Base<
 				IClassicLogical_Or_NonProcessResult_Alias<MODEL, RESULT>,
 				ISharedProcessResult_After_GroupBy_Alias<MODEL, RESULT>> orClauses) {
 
-		return new Classic_Collector_And_NonProcessResult_Alias<>(orClauses, orClauses.getConditionsClause());
+		return new Classic_Collector_And_NonProcessResult_Alias<>(orClauses);
 	}
 }
 

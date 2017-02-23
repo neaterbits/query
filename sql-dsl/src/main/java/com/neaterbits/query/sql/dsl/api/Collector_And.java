@@ -9,7 +9,7 @@ abstract class Collector_And<MODEL, RESULT, AFTER_GROUP_BY>
 		super(last, ConditionsType.AND);
 	}
 	
-	Collector_And(Collector_Base<MODEL> qe, EConditionsClause conditionsClause) {
-		super(qe.getQueryCollector(), new Collector_Clause(conditionsClause, ConditionsType.AND));
+	Collector_And(Collector_Conditions_Base<MODEL, RESULT> qe) {
+		super(qe.getQueryCollector(), new Collector_Clause(qe.getConditionsClause(), ConditionsType.AND));
 	}
 }
