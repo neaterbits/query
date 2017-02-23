@@ -17,7 +17,7 @@ final class QueryCollectorImpl {
 	// Select sources (tables or aliases)
 	private CollectedSelectSource sources;
 
-	private JoinCollector joins;
+	private Collector_Joins joins;
 
 	// Select clauses
 	private Collector_Clause clauses;
@@ -77,11 +77,11 @@ final class QueryCollectorImpl {
 		this.sources = sources;
 	}
 
-	JoinCollector getJoins() {
+	Collector_Joins getJoins() {
 		return joins;
 	}
 
-	void setJoins(JoinCollector joins) {
+	void setJoins(Collector_Joins joins) {
 
 		if (joins == null) {
 			throw new IllegalArgumentException("joins == null");

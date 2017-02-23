@@ -430,7 +430,7 @@ final class CompiledQuery {
 		return compiled;
 	}
 
-	private static CompiledJoins compileJoins(JoinCollector collector, CompiledSelectSources<?> sources, CompiledGetterSetterCache cache) throws CompileException {
+	private static CompiledJoins compileJoins(Collector_Joins collector, CompiledSelectSources<?> sources, CompiledGetterSetterCache cache) throws CompileException {
 		
 		final List<CollectedJoin> collected = collector.getJoins();
 		

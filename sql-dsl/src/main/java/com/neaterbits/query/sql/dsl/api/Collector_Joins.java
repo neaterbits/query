@@ -3,11 +3,11 @@ package com.neaterbits.query.sql.dsl.api;
 import java.util.ArrayList;
 import java.util.List;
 
-final class JoinCollector {
+final class Collector_Joins {
 
 	private final List<CollectedJoin> joins;
 
-	JoinCollector() {
+	Collector_Joins() {
 		
 		this.joins = new ArrayList<>();
 	}

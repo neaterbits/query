@@ -43,12 +43,12 @@ abstract class Classic_Collector_WhereOrJoin_Named_Base<
 	// ------------------------  JOIN ------------------------
 	
 	
-	private JoinCollector addJoin(CollectedJoin collectedJoin) {
+	private Collector_Joins addJoin(CollectedJoin collectedJoin) {
 
-		JoinCollector joinCollector = getQueryCollector().getJoins();
+		Collector_Joins joinCollector = getQueryCollector().getJoins();
 		
 		if (joinCollector == null) {
-			joinCollector = new JoinCollector();
+			joinCollector = new Collector_Joins();
 			getQueryCollector().setJoins(joinCollector);
 		}
 
