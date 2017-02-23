@@ -1049,15 +1049,15 @@ Vi må også rydde i mekanismen som gjør query-generering => få dette ut av da
  - kan rydde i disse half-way greiene slik at blir mindre error prone, ved at finner ut tidlig om er half-way og da separere alt før/etter where evt bare gi blanke i half-way og generere hele smæla om ikke kan resolve på en gang, da er det samme koden som kjører på alle parameterne og blir enklere å forholde seg til.
 
 
+-------------------
 
 
+Hvordan splitte i query generator? Kalle det QueryDialect? Kanskje grei den, for å være konsekvent.
 
+Må lage en abstract-klasse for disse og så metoder som emitter de forskjellige.
 
-
-
-
-
-
+Er PreparedQueryBuilder treet vi kvitter oss med da. Men kan fortsatt ha PreparedQueryBuilder ut i fra struktut, men med noen abstracts
+i QueryDialect for å skille mellom basis-forskjeller som om er TOP() eller LIMIT og OFFSET.
 
 
 

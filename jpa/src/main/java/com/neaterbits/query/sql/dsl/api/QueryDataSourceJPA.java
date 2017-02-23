@@ -1,17 +1,13 @@
 package com.neaterbits.query.sql.dsl.api;
 
-import java.lang.reflect.Member;
-import java.lang.reflect.Method;
 import java.util.Set;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import javax.persistence.metamodel.Attribute;
 import javax.persistence.metamodel.EmbeddableType;
-import javax.persistence.metamodel.EntityType;
 import javax.persistence.metamodel.IdentifiableType;
 import javax.persistence.metamodel.ManagedType;
-import javax.persistence.metamodel.Metamodel;
 
 /**
  * Query data source implementation for JPA
@@ -36,65 +32,6 @@ public abstract class QueryDataSourceJPA extends QueryDataSource_ORM<
 		super(new JPAEntityModelUtil(new JPAEntityModel(entityManager.getMetamodel())));
 
 		this.em = entityManager;
-	}
-	
-	
-
-	@Override
-	final PreparedQueryConditionsBuilder createConditionsBuilder(PreparedQueryBuilderORM queryBuilderORM, EConditionsClause conditionsClause, boolean atRoot) {
-		return new PreparedQueryConditionsBuilderJPA(queryBuilderORM, conditionsClause, atRoot);
-	}
-
-	private static final JPAConditionToOperator conditionToOperator = new JPAConditionToOperator();
-
-	
-	@Override
-	final <QUERY> PreparedQueryComparisonRHS convertCondition(EClauseOperator operator, ConditionValue value, ConditionStringBuilder sb) {
-		return conditionToOperator.convert(operator, value, sb);
-	}
-
-
-	@Override
-	final String getColumnNameForGetter(TypeMapSource source, CompiledGetter getter) {
-
-		// Look up in entity manager
-		
-		final Metamodel metaModel = em.getEntityManagerFactory().getMetamodel();
-				final EntityType<?> entityType = metaModel.entity(source.getType());
-
-		if (entityType == null) {
-			throw new IllegalStateException("No entity type for " + source.getType());
-		}
-
-		final Attribute<?, ?> attr = findAttr(entityType, getter.getGetterMethod());
-		
-		if (attr == null) {
-			throw new IllegalArgumentException("No attribute for getter " + getter);
-		}
-
-		return attr.getName();
-	}
-
-	private static Attribute<?, ?> findAttr(EntityType<?> entityType, Method getterMethod) {
-		Attribute<?, ?> found = null;
-		
-		// Find attribute
-		for (Attribute<?, ?> attr : entityType.getAttributes()) {
-			final Member m  = attr.getJavaMember();
-
-			if (m instanceof Method) {
-				final Method method = (Method)m;
-				
-				if (method.equals(getterMethod)) {
-					found = attr;
-				}
-			}
-			else {
-				throw new UnsupportedOperationException("Does not support field members for now");
-			}
-		}
-
-		return found;
 	}
 }
 

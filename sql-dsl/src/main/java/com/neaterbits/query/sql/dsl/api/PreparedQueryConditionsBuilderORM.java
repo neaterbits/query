@@ -13,7 +13,8 @@ import java.util.function.BiConsumer;
 abstract class PreparedQueryConditionsBuilderORM extends PreparedQueryConditionsBuilder {
 
 	private final PrepareQueryFieldReferenceBuilder fieldReferenceBuilder;
-	private final StringBuilder sb;
+	private final QueryBuilder sb;
+	
 	
 	
 	PreparedQueryConditionsBuilderORM(PrepareQueryFieldReferenceBuilder fieldReferenceBuilder, EConditionsClause conditionsClause, boolean atRoot) {
@@ -24,10 +25,10 @@ abstract class PreparedQueryConditionsBuilderORM extends PreparedQueryConditions
 		}
 
 		this.fieldReferenceBuilder = fieldReferenceBuilder;
-		this.sb = new StringBuilder();
+		this.sb = new QueryBuilder();
 	}
 	
-	final void appendFieldReference(StringBuilder s ,FieldReference r) {
+	final void appendFieldReference(QueryBuilder s, FieldReference r) {
 		if (r instanceof FieldReferenceAlias) {
 			fieldReferenceBuilder.appendAliasFieldReference(s, (FieldReferenceAlias)r);
 		}
@@ -102,16 +103,16 @@ abstract class PreparedQueryConditionsBuilderORM extends PreparedQueryConditions
 		return os;
 	}
 	
-	abstract void resolveFunction(FunctionBase function, int idx, StringBuilder sb, BiConsumer<Integer, StringBuilder> appendNext);
+	abstract void resolveFunction(FunctionBase function, int idx, QueryBuilder sb, BiConsumer<Integer, QueryBuilder> appendNext);
 
 	@Override
-	final void resolveFromParams(StringBuilder sb, ParamValueResolver resolver) {
+	final void resolveFromParams(QueryBuilder sb, ParamValueResolver resolver) {
 
 		final ConditionsType type = getType();
 		
 		boolean first;
 
-		if (this.sb.length() == 0) {
+		if (this.sb.isEmpty()) {
 			first = true;
 		}
 		else {
@@ -171,7 +172,7 @@ abstract class PreparedQueryConditionsBuilderORM extends PreparedQueryConditions
 		}
 	}
 
-	protected class AppendNextFunction implements BiConsumer<Integer, StringBuilder> {
+	protected class AppendNextFunction implements BiConsumer<Integer, QueryBuilder> {
 
 		private final List<FunctionBase> funcs;
 		private final PreparedQueryConditionComparison comparison;
@@ -194,7 +195,7 @@ abstract class PreparedQueryConditionsBuilderORM extends PreparedQueryConditions
 
 
 		@Override
-		public void accept(Integer idx, StringBuilder sb) {
+		public void accept(Integer idx, QueryBuilder sb) {
 			
 			if (idx < 0) {
 				throw new IllegalArgumentException("idx < 0");

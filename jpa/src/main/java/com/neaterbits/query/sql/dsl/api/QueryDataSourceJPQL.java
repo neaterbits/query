@@ -13,7 +13,7 @@ public final class QueryDataSourceJPQL extends QueryDataSourceJPA {
 	
 	@Override
 	PreparedQueryBuilder createBuilder() {
-		return new PreparedQueryBuilderJPQL();
+		return new PreparedQueryBuilderJPQL<>(getEntityModelUtil(), em);
 	}
 	
 	@Override
@@ -63,15 +63,5 @@ public final class QueryDataSourceJPQL extends QueryDataSourceJPA {
 	@SuppressWarnings("unchecked")
 	<QUERY> List<Object> mapMultipleEntitities(ExecutableQuery<QUERY> q, QUERY query, List<?> input) {
 		return (List<Object>)input;
-	}
-
-	@Override
-	boolean supportsNonRelationJoins() {
-		return false;
-	}
-	
-	@Override
-	final ConditionStringBuilder makeConditionStringBuilder(QueryParametersDistinct distinctParams) {
-		return new ConditionStringBuilder_JPQL(distinctParams);
 	}
 }

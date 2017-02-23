@@ -17,7 +17,7 @@ final class JPAConditionNativeInUnresolved extends JPAConditionUnresolved {
 	}
 
 	@Override
-	void resolve(StringBuilder sb, ParamValueResolver paramValueResolver) {
+	void resolve(QueryBuilder sb, ParamValueResolver paramValueResolver) {
 		
 		final Object value = paramValueResolver.resolveParam(param);
 		

@@ -12,7 +12,7 @@ abstract class PreparedQueryConditionsBuilder {
 	
 	abstract void addJoinCondition(ConditionsType type, FieldReference left, EClauseOperator operator, FieldReference right);
 
-	abstract void resolveFromParams(StringBuilder sb, ParamValueResolver resolver);
+	abstract void resolveFromParams(QueryBuilder sb, ParamValueResolver resolver);
 	
 	abstract PreparedQueryConditionsBuilder createConditionsBuilder(EConditionsClause conditionsClause, boolean atRoot);
 	
@@ -165,6 +165,4 @@ abstract class PreparedQueryConditionsBuilder {
 			this.comparisonType = type;
 		}
 	}
-	
-	
 }

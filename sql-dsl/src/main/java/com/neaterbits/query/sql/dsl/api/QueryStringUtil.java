@@ -6,6 +6,10 @@ import java.util.function.BiConsumer;
 
 final class QueryStringUtil {
 
+	static <T> void commaSeparated(QueryBuilder sb, Iterable<T> iter, BiConsumer<QueryBuilder, T> c) {
+		separated(sb, sb.sb, iter, ", ", c);
+	}
+	
 	static <T> void commaSeparated(StringBuilder sb, Iterable<T> iter, BiConsumer<StringBuilder, T> c) {
 		separated(sb, iter, ", ", c);
 	}
@@ -21,7 +25,11 @@ final class QueryStringUtil {
 		commaSeparated(sb, intList, (StringBuilder s, Integer i) -> s.append(String.valueOf(i)));
 	}
 	
-	static <T> void separated(StringBuilder sb, Iterable<T> iter, String separator, BiConsumer<StringBuilder, T> c) {
+	static <T, BUILDER> void separated(StringBuilder sb, Iterable<T> iter, String separator, BiConsumer<StringBuilder, T> c) {
+		separated(sb, sb, iter, separator, c);
+	}
+
+    private static <T, BUILDER> void separated(BUILDER b, StringBuilder sb, Iterable<T> iter, String separator, BiConsumer<BUILDER, T> c) {
 		
 		boolean first = true;
 
@@ -34,7 +42,7 @@ final class QueryStringUtil {
 				first = false;
 			}
 
-			c.accept(sb, t);
+			c.accept(b, t);
 		}
 	}
 }

@@ -23,7 +23,7 @@ public final class QueryDataSourceJPANative extends QueryDataSourceJPA {
 
 	@Override
 	PreparedQueryBuilder createBuilder() {
-		return new PreparedQueryBuilderANSISQL<>(getEntityModelUtil());
+		return new PreparedQueryBuilderANSISQL<>(getEntityModelUtil(), em);
 	}
 	
 	@Override
@@ -157,15 +157,6 @@ public final class QueryDataSourceJPANative extends QueryDataSourceJPA {
 		
 		return entity;
 	}
-
-	@Override
-	final ConditionStringBuilder makeConditionStringBuilder(QueryParametersDistinct distinctParams) {
-		return new ConditionStringBuilder_Native(distinctParams);
-	}
 	
-	@Override
-	boolean supportsNonRelationJoins() {
-		return true;
-	}
 }
 

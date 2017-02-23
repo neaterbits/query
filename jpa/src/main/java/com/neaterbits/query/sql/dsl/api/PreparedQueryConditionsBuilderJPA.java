@@ -18,7 +18,7 @@ final class PreparedQueryConditionsBuilderJPA extends PreparedQueryConditionsBui
 	}
 
 	@Override
-	void resolveFunction(FunctionBase function, int idx, StringBuilder sb, BiConsumer<Integer, StringBuilder> appendNext) {
+	void resolveFunction(FunctionBase function, int idx, QueryBuilder sb, BiConsumer<Integer, QueryBuilder> appendNext) {
 		
 		final String functionName = function.visit(functionToNameVisitor, null);
 		

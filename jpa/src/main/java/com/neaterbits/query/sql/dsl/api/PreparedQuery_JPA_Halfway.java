@@ -100,7 +100,7 @@ abstract class PreparedQuery_JPA_Halfway<QUERY> extends PreparedQuery_JPA_Base<Q
 		final QueryDataSourceJPA ds = (QueryDataSourceJPA)getDataSource();
 
 		// Add result-processing since could not do that earlier on
-		ds.addResultProcessing(queryAccess, query, base, null);
+		((PreparedQueryBuilderORM)base).addResultProcessing(queryAccess, query, null);
 		
 		final String queryString = base.toString();
 		

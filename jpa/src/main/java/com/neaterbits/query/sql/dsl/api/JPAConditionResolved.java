@@ -16,7 +16,7 @@ final class JPAConditionResolved extends JPACondition {
 	}
 
 	@Override
-	void resolve(StringBuilder sb, ParamValueResolver resolver) {
+	void resolve(QueryBuilder sb, ParamValueResolver resolver) {
 		sb.append(getConditionResolvedPrefix());
 	}
 
