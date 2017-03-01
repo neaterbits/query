@@ -24,8 +24,8 @@ abstract class PreparedQueryBuilderJPA<MANAGED, EMBEDDED, IDENTIFIABLE, ATTRIBUT
 	}
 
 	@Override
-	final PreparedQueryConditionsBuilder createConditionsBuilder(PreparedQueryBuilderORM queryBuilderORM, EConditionsClause conditionsClause, boolean atRoot) {
-		return new PreparedQueryConditionsBuilderJPA(queryBuilderORM, conditionsClause, atRoot);
+	final PreparedQueryConditionsBuilder createConditionsBuilder(QueryDialect_SQL dialect, EConditionsClause conditionsClause, boolean atRoot) {
+		return new PreparedQueryConditionsBuilderORM(dialect, conditionsClause, atRoot);
 	}
 
 	private static final JPAConditionToOperator conditionToOperator = new JPAConditionToOperator();

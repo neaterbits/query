@@ -8,7 +8,7 @@ import javax.persistence.Query;
 abstract class PreparedQuery_JPA_Halfway<QUERY> extends PreparedQuery_JPA_Base<QUERY> {
 
 	private final PreparedQueryBuilder base;
-	private final PreparedQueryConditionsBuilderJPA conditions;
+	private final PreparedQueryConditionsBuilderORM conditions;
 
 	private final ExecutableQuery<QUERY> queryAccess;
 	private final QUERY query;
@@ -19,7 +19,7 @@ abstract class PreparedQuery_JPA_Halfway<QUERY> extends PreparedQuery_JPA_Base<Q
 					QUERY query,
 					QueryParametersDistinct distinctParams,
 					PreparedQueryBuilder base,
-					PreparedQueryConditionsBuilderJPA conditions) {
+					PreparedQueryConditionsBuilderORM conditions) {
 
 		super(dataSource, queryAccess, query, distinctParams);
 		

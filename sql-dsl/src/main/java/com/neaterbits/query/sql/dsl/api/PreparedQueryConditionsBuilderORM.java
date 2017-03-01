@@ -10,34 +10,51 @@ import java.util.function.BiConsumer;
  *
  */
 
-abstract class PreparedQueryConditionsBuilderORM extends PreparedQueryConditionsBuilder {
+final class PreparedQueryConditionsBuilderORM extends PreparedQueryConditionsBuilder {
 
-	private final PrepareQueryFieldReferenceBuilder fieldReferenceBuilder;
+	private final QueryDialect_SQL dialect;
 	private final QueryBuilder sb;
 	
 	
-	
-	PreparedQueryConditionsBuilderORM(PrepareQueryFieldReferenceBuilder fieldReferenceBuilder, EConditionsClause conditionsClause, boolean atRoot) {
+	PreparedQueryConditionsBuilderORM(QueryDialect_SQL dialect, EConditionsClause conditionsClause, boolean atRoot) {
 		super(conditionsClause, atRoot);
 
-		if (fieldReferenceBuilder == null) {
-			throw new IllegalArgumentException("fieldReferenceBuilder == null");
+		if (dialect == null) {
+			throw new IllegalArgumentException("dialect == null");
 		}
+		
 
-		this.fieldReferenceBuilder = fieldReferenceBuilder;
+		this.dialect = dialect;
 		this.sb = new QueryBuilder();
 	}
 	
 	final void appendFieldReference(QueryBuilder s, FieldReference r) {
 		if (r instanceof FieldReferenceAlias) {
-			fieldReferenceBuilder.appendAliasFieldReference(s, (FieldReferenceAlias)r);
+			dialect.appendAliasFieldReference(s, (FieldReferenceAlias)r);
 		}
 		else if (r instanceof FieldReferenceEntity) {
-			fieldReferenceBuilder.appendEntityFieldReference(s, (FieldReferenceEntity)r);
+			dialect.appendEntityFieldReference(s, (FieldReferenceEntity)r);
 		}
 		else {
 			throw new UnsupportedOperationException("Unknown field reference type " + r.getClass().getName());
 		}
+	}
+	
+	@Override
+	PreparedQueryConditionsBuilder createConditionsBuilder(EConditionsClause conditionsClause, boolean atRoot) {
+		return new PreparedQueryConditionsBuilderORM(dialect, conditionsClause, atRoot);
+	}
+
+	private void resolveFunction(FunctionBase function, int idx, QueryBuilder sb, BiConsumer<Integer, QueryBuilder> appendNext) {
+		
+		final String functionName = dialect.getFunctionName(function);
+		
+		sb.append(functionName).append('(');
+		
+		// recursively append
+		appendNext.accept(idx, sb);
+		
+		sb.append(')');
 	}
 	
 	@Override
@@ -103,7 +120,6 @@ abstract class PreparedQueryConditionsBuilderORM extends PreparedQueryConditions
 		return os;
 	}
 	
-	abstract void resolveFunction(FunctionBase function, int idx, QueryBuilder sb, BiConsumer<Integer, QueryBuilder> appendNext);
 
 	@Override
 	final void resolveFromParams(QueryBuilder sb, ParamValueResolver resolver) {

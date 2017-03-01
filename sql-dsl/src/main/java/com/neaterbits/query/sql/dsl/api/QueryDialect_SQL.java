@@ -4,8 +4,12 @@ import java.util.List;
 
 import com.neaterbits.query.sql.dsl.api.entity.Relation;
 
-abstract class QueryDialect_SQL extends QueryDialect_Base  implements PrepareQueryFieldReferenceBuilder {
+abstract class QueryDialect_SQL extends QueryDialect_Base {
 
+	abstract void appendAliasFieldReference(QueryBuilder sb, FieldReferenceAlias ref);
+
+	abstract void appendEntityFieldReference(QueryBuilder sb, FieldReferenceEntity ref);
+	
 	
 	/**
 	 * Whether supports join fields natively, ie. ON table1.somefield = table2.somefiled.
@@ -34,6 +38,20 @@ abstract class QueryDialect_SQL extends QueryDialect_Base  implements PrepareQue
 	abstract void appendJoinStatement(QueryBuilder sb, EJoinType joinType);
 
 	abstract void addSelectSource(QueryBuilder sb, FieldReferenceType fieldReferenceType, SourceReference ref);
+	
+	
+	// **************************** Some abstract methods conditions ****************************
+	
+	/**
+	 * Get name of function as appears in query string
+	 * @return
+	 */
+	String getFunctionName(FunctionBase function) {
+		// default function names
+		return function.visit(functionToNameVisitor, null);
+	}
+	
+	
 	
 	// indices starting at 1
 	// abstract void appendGroupBy(List<FieldReference> fieldReferences);
@@ -98,4 +116,33 @@ abstract class QueryDialect_SQL extends QueryDialect_Base  implements PrepareQue
 			}
 		});
 	}
+
+	private static final FunctionVisitor<Void, String> functionToNameVisitor = new FunctionVisitor<Void, String>() {
+		
+		@Override
+		public String onStringUpper(Function_String_Upper function, Void param) {
+			return "upper";
+		}
+		
+		@Override
+		public String onStringTrim(Function_String_Trim function, Void param) {
+			return "trim";
+		}
+		
+		@Override
+		public String onStringLower(Function_String_Lower function, Void param) {
+			return "lower";
+		}
+		
+		@Override
+		public String onArithmeticSqrt(Function_Arithmetic_Sqrt function, Void param) {
+			return "sqrt";
+		}
+		
+		@Override
+		public String onArithmeticAbs(Function_Arithmetic_Abs function, Void param) {
+			return "abs";
+		}
+	};
+	
 }

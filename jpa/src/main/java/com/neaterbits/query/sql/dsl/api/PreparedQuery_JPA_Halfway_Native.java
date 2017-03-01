@@ -6,7 +6,7 @@ final class PreparedQuery_JPA_Halfway_Native<QUERY> extends PreparedQuery_JPA_Ha
 
 	PreparedQuery_JPA_Halfway_Native(QueryDataSourceJPA dataSource, ExecutableQuery<QUERY> queryAccess,
 			QUERY query, QueryParametersDistinct distinctParams, PreparedQueryBuilder base,
-			PreparedQueryConditionsBuilderJPA conditions) {
+			PreparedQueryConditionsBuilderORM conditions) {
 		super(dataSource, queryAccess, query, distinctParams, base, conditions);
 	}
 

@@ -33,7 +33,7 @@ abstract class QueryDataSource_ORM<ORM_QUERY, MANAGED, EMBEDDED, IDENTIFIABLE, A
 	}
 
 	@Override
-	final <QUERY> PreparedQuery_DS<QueryDataSource_DB> prepare(PreparedQueryBuilder builder, ExecutableQuery<QUERY> q, QUERY query) {
+	final <QUERY> PreparedQuery_DS<QueryDataSource_DB> prepare(PreparedQueryBuilder builder, QueryDialect_SQL dialect, ExecutableQuery<QUERY> q, QUERY query) {
 	
 		final PreparedQueryBuilderORM sb = (PreparedQueryBuilderORM)builder;
 
@@ -48,7 +48,7 @@ abstract class QueryDataSource_ORM<ORM_QUERY, MANAGED, EMBEDDED, IDENTIFIABLE, A
 			
 			//final CompileConditionParam param = new CompileConditionParam(paramNameAssigner, em);
 
-			final PreparedQueryConditionsBuilder conditionsBuilder = sb.createConditionsBuilder((PreparedQueryBuilderORM)sb, EConditionsClause.WHERE, true);
+			final PreparedQueryConditionsBuilder conditionsBuilder = sb.createConditionsBuilder(dialect, EConditionsClause.WHERE, true);
 
 			sb.prepareConditions(q, query, conditionsBuilder, addJoinToWhere, distinctParams);
 

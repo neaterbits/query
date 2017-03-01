@@ -13,18 +13,13 @@ import com.neaterbits.query.sql.dsl.api.entity.EntityModelUtil;
 import com.neaterbits.query.sql.dsl.api.entity.Relation;
 
 abstract class PreparedQueryBuilderORM<MANAGED, EMBEDDED, IDENTIFIABLE, ATTRIBUTE, COLL extends Collection<ATTRIBUTE>>
-			extends PreparedQueryBuilder
-			implements PrepareQueryFieldReferenceBuilder // TODO remove, conditions builders should call dialects directly
-
-
-
-		/* implements PrepareQueryFieldReferenceBuilder */ {
+			extends PreparedQueryBuilder {
 
 	abstract String getColumnNameForGetter(TypeMapSource source, CompiledGetter getter);
 	
 	abstract <QUERY> PreparedQueryComparisonRHS convertCondition(EClauseOperator operator, ConditionValue value, ConditionStringBuilder sb);
 	
-	abstract PreparedQueryConditionsBuilder createConditionsBuilder(PreparedQueryBuilderORM queryBuilderORM, EConditionsClause conditionsClause, boolean atRoot);
+	abstract PreparedQueryConditionsBuilder createConditionsBuilder(QueryDialect_SQL dialect, EConditionsClause conditionsClause, boolean atRoot);
 
 	abstract ConditionStringBuilder makeConditionStringBuilder(QueryParametersDistinct distinctParams);
 	
@@ -36,16 +31,6 @@ abstract class PreparedQueryBuilderORM<MANAGED, EMBEDDED, IDENTIFIABLE, ATTRIBUT
 	private final EntityModelUtil<MANAGED, EMBEDDED, IDENTIFIABLE, ATTRIBUTE, COLL> entityModelUtil;
 	
 	
-	@Override
-	public void appendAliasFieldReference(QueryBuilder sb, FieldReferenceAlias ref) {
-		this.dialect.appendAliasFieldReference(sb, ref);
-	}
-
-	@Override
-	public void appendEntityFieldReference(QueryBuilder sb, FieldReferenceEntity ref) {
-		this.dialect.appendEntityFieldReference(sb, ref);
-	}
-
 	PreparedQueryBuilderORM(EntityModelUtil<MANAGED, EMBEDDED, IDENTIFIABLE, ATTRIBUTE, COLL> entityModelUtil, QueryDialect_SQL dialect) {
 		this.s = new QueryBuilder();
 		this.dialect = dialect;
@@ -198,7 +183,7 @@ abstract class PreparedQueryBuilderORM<MANAGED, EMBEDDED, IDENTIFIABLE, ATTRIBUT
 	    	
 	    	final int [] conditionIndices = new int[maxDepth];
 
-			final PreparedQueryConditionsBuilder conditionsBuilder = createConditionsBuilder(this, EConditionsClause.HAVING, true);
+			final PreparedQueryConditionsBuilder conditionsBuilder = createConditionsBuilder(dialect, EConditionsClause.HAVING, true);
 
 			if (distinctParams == null) {
 				throw new IllegalStateException("distinctParams == null");

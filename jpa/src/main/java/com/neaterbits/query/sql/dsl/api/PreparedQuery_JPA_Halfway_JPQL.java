@@ -6,7 +6,7 @@ final class PreparedQuery_JPA_Halfway_JPQL<QUERY> extends PreparedQuery_JPA_Half
 
 	PreparedQuery_JPA_Halfway_JPQL(QueryDataSourceJPA dataSource, ExecutableQuery<QUERY> queryAccess,
 			QUERY query, QueryParametersDistinct distinctParams, PreparedQueryBuilder base,
-			PreparedQueryConditionsBuilderJPA conditions) {
+			PreparedQueryConditionsBuilderORM conditions) {
 		super(dataSource, queryAccess, query, distinctParams, base, conditions);
 	}
 

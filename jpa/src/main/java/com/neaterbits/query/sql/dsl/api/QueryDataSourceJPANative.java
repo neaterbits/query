@@ -42,7 +42,7 @@ public final class QueryDataSourceJPANative extends QueryDataSourceJPA {
 	final <QUERY> PreparedQuery_DB<QUERY, Query> makeHalfwayPreparedQuery(ExecutableQuery<QUERY> queryAccess, QUERY query,
 			QueryParametersDistinct distinctParams, PreparedQueryBuilder base, PreparedQueryConditionsBuilder conditions) {
 		
-		return new PreparedQuery_JPA_Halfway_Native<QUERY>(this, queryAccess, query, distinctParams, base, (PreparedQueryConditionsBuilderJPA)conditions);
+		return new PreparedQuery_JPA_Halfway_Native<QUERY>(this, queryAccess, query, distinctParams, base, (PreparedQueryConditionsBuilderORM)conditions);
 	}
 	
 	/*
@@ -157,6 +157,10 @@ public final class QueryDataSourceJPANative extends QueryDataSourceJPA {
 		
 		return entity;
 	}
-	
+
+	@Override
+	protected QueryDialect_SQL getDialect() {
+		return new QueryDialect_ANSI_SQL<>(getEntityModelUtil());
+	}
 }
 
