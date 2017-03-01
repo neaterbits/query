@@ -3,7 +3,6 @@ package com.neaterbits.query.sql.dsl.api;
 import java.util.List;
 
 import javax.persistence.EntityManager;
-import javax.persistence.Query;
 
 public final class QueryDataSourceJPQL extends QueryDataSourceJPA {
 
@@ -17,33 +16,33 @@ public final class QueryDataSourceJPQL extends QueryDataSourceJPA {
 	}
 	
 	@Override
-	final <QUERY> PreparedQuery_DB<QUERY, Query> makeHalfwayPreparedQuery(ExecutableQuery<QUERY> queryAccess, QUERY query,
+	final <QUERY> PreparedQuery_DB<QUERY> makeHalfwayPreparedQuery(ExecutableQuery<QUERY> queryAccess, QUERY query,
 			QueryParametersDistinct distinctParams, PreparedQueryBuilder base, PreparedQueryConditionsBuilder conditions) {
 		
-		return new PreparedQuery_JPA_Halfway_JPQL<QUERY>(this, queryAccess, query, distinctParams, base, (PreparedQueryConditionsBuilderORM)conditions);
+		return new PreparedQuery_DB_Halfway<QUERY>(this, queryAccess, query, distinctParams, base, (PreparedQueryConditionsBuilderORM)conditions);
 	}
 	
 
 	@Override
-	<QUERY> PreparedQuery_DB<QUERY, javax.persistence.Query> makeCompletePreparedQuery(ExecutableQuery<QUERY> q, QUERY query, QueryParametersDistinct distinctParams, PreparedQueryBuilder sb) {
+	<QUERY> PreparedQuery_DB<QUERY> makeCompletePreparedQuery(ExecutableQuery<QUERY> q, QUERY query, QueryParametersDistinct distinctParams, PreparedQueryBuilder sb) {
 		final String jpql = sb.toString();
 		
 		System.out.println("## jpql:\n" + jpql);
 		
-		final javax.persistence.Query jpaQuery = createJPAQuery(jpql);
+		final QueryRunner_JPA queryRunner = createQueryRunner(jpql);
 
-		return new PreparedQuery_JPA_Complete_JPQL<QUERY>(
+		return new PreparedQuery_DB_Complete<QUERY>(
 				this,
+				queryRunner,
 				q,
 				query,
-				distinctParams,
-				jpaQuery);
+				distinctParams);
 	}
 	
 
 	@Override
-	Query createJPAQuery(String queryString) {
-		return em.createQuery(queryString);
+	QueryRunner_JPA createQueryRunner(String queryString) {
+		return new QueryRunner_JPA_JPQL(em.createQuery(queryString));
 	}
 
 	@Override

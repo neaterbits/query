@@ -10,20 +10,20 @@ import java.util.List;
  *
  */
 
-abstract class PreparedQuery_DB<QUERY, ORM_QUERY> extends PreparedQuery_DS<QueryDataSource_DB> {
+abstract class PreparedQuery_DB<QUERY> extends PreparedQuery_DS<QueryDataSource_DB> {
 
 	private final ExecutableQuery<QUERY> q;
 	private final QUERY query;
 	
-	abstract void initParams(ORM_QUERY ormQuery, ParamValueResolver paramCollector);
+	final QueryParametersDistinct distinctParams;
+
+	
+	abstract void initParams(QueryRunner query, ParamValueResolver paramCollector);
 	
 	// return null if not found
-	abstract Object executeForSingleResult(ORM_QUERY ormQuery);
-	
-	abstract List<?> executeForMultiResult(ORM_QUERY ormQuery);
 	
 	
-	PreparedQuery_DB(QueryDataSource_DB dataSource, ExecutableQuery<QUERY> q, QUERY query) {
+	PreparedQuery_DB(QueryDataSource_DB dataSource, ExecutableQuery<QUERY> q, QUERY query, QueryParametersDistinct distinctParams) {
 		
 		super(dataSource, q.makeMetaData(query));
 
@@ -31,14 +31,16 @@ abstract class PreparedQuery_DB<QUERY, ORM_QUERY> extends PreparedQuery_DS<Query
 			throw new IllegalArgumentException("queryMode == null");
 		}
 
+		this.distinctParams = distinctParams;
 		this.q = q;
 		this.query = query;
 	}
 
 	
-	final Object executeWithParams(ORM_QUERY ormQuery, ParamValueResolver paramCollector) {
+	
+	final Object executeWithParams(QueryRunner queryRunner, ParamValueResolver paramCollector) {
 		
-		initParams(ormQuery, paramCollector);
+		initParams(queryRunner, paramCollector);
 
 		Object ret;
 
@@ -46,12 +48,12 @@ abstract class PreparedQuery_DB<QUERY, ORM_QUERY> extends PreparedQuery_DS<Query
 		
 		switch (resultDimension) {
 		case SINGLE:
-			final Object ormRet = executeForSingleResult(ormQuery);
+			final Object ormRet = queryRunner.executeForSingleResult();
 			ret = ormRet == null ? null : mapSingle(ormRet);
 			break;
 
 		case MULTI:
-			final List<?> ormList = executeForMultiResult(ormQuery);
+			final List<?> ormList = queryRunner.executeForMultiResult();
 			ret = mapMultiple(ormList);
 			break;
 

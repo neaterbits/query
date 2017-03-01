@@ -7,15 +7,15 @@ import com.neaterbits.query.sql.dsl.api.PreparedQueryBuilderORM.JoinConditionId;
 import com.neaterbits.query.sql.dsl.api.entity.EntityModel;
 import com.neaterbits.query.sql.dsl.api.entity.EntityModelUtil;
 
-abstract class QueryDataSource_ORM<ORM_QUERY, MANAGED, EMBEDDED, IDENTIFIABLE, ATTRIBUTE, COLL extends Collection<ATTRIBUTE>> extends QueryDataSource_GenBase {
+abstract class QueryDataSource_ORM<MANAGED, EMBEDDED, IDENTIFIABLE, ATTRIBUTE, COLL extends Collection<ATTRIBUTE>> extends QueryDataSource_GenBase {
 
 	private final EntityModel<MANAGED, EMBEDDED, IDENTIFIABLE, ATTRIBUTE, COLL> entityModel;
 	private final EntityModelUtil<MANAGED, EMBEDDED, IDENTIFIABLE, ATTRIBUTE, COLL> entityModelUtil;
 	
 	
-	abstract <QUERY> PreparedQuery_DB<QUERY, ORM_QUERY> makeCompletePreparedQuery(ExecutableQuery<QUERY> q, QUERY query, QueryParametersDistinct distinctParams, PreparedQueryBuilder sb);
+	abstract <QUERY> PreparedQuery_DB<QUERY> makeCompletePreparedQuery(ExecutableQuery<QUERY> q, QUERY query, QueryParametersDistinct distinctParams, PreparedQueryBuilder sb);
 	
-	abstract <QUERY> PreparedQuery_DB<QUERY, ORM_QUERY> makeHalfwayPreparedQuery(ExecutableQuery<QUERY> queryAccess, QUERY query, QueryParametersDistinct distinctParams, PreparedQueryBuilder base, PreparedQueryConditionsBuilder conditions);
+	abstract <QUERY> PreparedQuery_DB<QUERY> makeHalfwayPreparedQuery(ExecutableQuery<QUERY> queryAccess, QUERY query, QueryParametersDistinct distinctParams, PreparedQueryBuilder base, PreparedQueryConditionsBuilder conditions);
 
 	
 	QueryDataSource_ORM(EntityModelUtil<MANAGED, EMBEDDED, IDENTIFIABLE, ATTRIBUTE, COLL> modelUtil) {
@@ -40,7 +40,7 @@ abstract class QueryDataSource_ORM<ORM_QUERY, MANAGED, EMBEDDED, IDENTIFIABLE, A
 		final List<JoinConditionId> addJoinToWhere = sb.prepareInitial(q, query);
 		
 		// Prepare conditions if present
-		final PreparedQuery_DB<QUERY, ORM_QUERY> ret;
+		final PreparedQuery_DB<QUERY> ret;
 		
 		if (q.hasConditions(query)) {
 			
@@ -68,7 +68,7 @@ abstract class QueryDataSource_ORM<ORM_QUERY, MANAGED, EMBEDDED, IDENTIFIABLE, A
 		return ret;
 	}
 	
-	private <QUERY> PreparedQuery_DB<QUERY, ORM_QUERY> makeCompleteQueryWithResultProcessing(ExecutableQuery<QUERY> q, QUERY query, QueryParametersDistinct distinctParams, PreparedQueryBuilderORM sb) {
+	private <QUERY> PreparedQuery_DB<QUERY> makeCompleteQueryWithResultProcessing(ExecutableQuery<QUERY> q, QUERY query, QueryParametersDistinct distinctParams, PreparedQueryBuilderORM sb) {
 
 		sb.addResultProcessing(q, query, distinctParams);
 

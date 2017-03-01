@@ -16,7 +16,6 @@ import javax.persistence.metamodel.ManagedType;
  */
 
 public abstract class QueryDataSourceJPA extends QueryDataSource_ORM<
-									javax.persistence.Query,
 									ManagedType<?>,
 									EmbeddableType<?>,
 									IdentifiableType<?>,
@@ -24,8 +23,6 @@ public abstract class QueryDataSourceJPA extends QueryDataSource_ORM<
 									Set<Attribute<?, ?>>> {
 	
 	final EntityManager em;
-	
-	abstract Query createJPAQuery(String queryString);
 	
 
 	public QueryDataSourceJPA(EntityManager entityManager) {

@@ -27,22 +27,22 @@ public final class QueryDataSourceJPANative extends QueryDataSourceJPA {
 	}
 	
 	@Override
-	final <QUERY> PreparedQuery_DB<QUERY, javax.persistence.Query> makeCompletePreparedQuery(ExecutableQuery<QUERY> q, QUERY query, QueryParametersDistinct distinctParams, PreparedQueryBuilder sb) {
+	final <QUERY> PreparedQuery_DB<QUERY> makeCompletePreparedQuery(ExecutableQuery<QUERY> q, QUERY query, QueryParametersDistinct distinctParams, PreparedQueryBuilder sb) {
 		final String ansiSQL = sb.getQueryAsString();
 		
 		System.out.println("## native:\n" + ansiSQL);
 		
-		final javax.persistence.Query jpaQuery = createJPAQuery(ansiSQL);
+		final QueryRunner_JPA queryRunner = createQueryRunner(ansiSQL);
 
-		return new PreparedQuery_JPA_Complete_Native<QUERY>(this, q, query, distinctParams, jpaQuery);
+		return new PreparedQuery_DB_Complete<QUERY>(this, queryRunner, q, query, distinctParams);
 	}
 	
 	
 	@Override
-	final <QUERY> PreparedQuery_DB<QUERY, Query> makeHalfwayPreparedQuery(ExecutableQuery<QUERY> queryAccess, QUERY query,
+	final <QUERY> PreparedQuery_DB<QUERY> makeHalfwayPreparedQuery(ExecutableQuery<QUERY> queryAccess, QUERY query,
 			QueryParametersDistinct distinctParams, PreparedQueryBuilder base, PreparedQueryConditionsBuilder conditions) {
 		
-		return new PreparedQuery_JPA_Halfway_Native<QUERY>(this, queryAccess, query, distinctParams, base, (PreparedQueryConditionsBuilderORM)conditions);
+		return new PreparedQuery_DB_Halfway<QUERY>(this, queryAccess, query, distinctParams, base, (PreparedQueryConditionsBuilderORM)conditions);
 	}
 	
 	/*
@@ -53,8 +53,11 @@ public final class QueryDataSourceJPANative extends QueryDataSourceJPA {
 	
 	
 	@Override
-	Query createJPAQuery(String queryString) {
-		return em.createNativeQuery(queryString);
+	QueryRunner_JPA createQueryRunner(String queryString) {
+		
+		final javax.persistence.Query jpaQuery = em.createNativeQuery(queryString);
+		
+		return new QueryRunner_JPA_Native(jpaQuery);
 	}
 
 	static void forEachResultColumn(IEntity entity, EntityEachAttribute each) {

@@ -11,6 +11,8 @@ abstract class QueryDataSource_GenBase extends QueryDataSource_DB {
 	
 	abstract <QUERY> PreparedQuery_DS<QueryDataSource_DB> prepare(PreparedQueryBuilder sb, QueryDialect_SQL dialect, ExecutableQuery<QUERY> q, QUERY query);
 
+	abstract QueryRunner createQueryRunner(String queryString);
+	
 	@Override
 	<QUERY> PreparedQuery_DS<QueryDataSource_DB> prepareSingleQuery(ExecutableQuery<QUERY> q, QUERY query) {
 

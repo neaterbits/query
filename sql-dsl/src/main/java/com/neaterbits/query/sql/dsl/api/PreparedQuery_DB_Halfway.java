@@ -3,9 +3,7 @@ package com.neaterbits.query.sql.dsl.api;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.Query;
-
-abstract class PreparedQuery_JPA_Halfway<QUERY> extends PreparedQuery_JPA_Base<QUERY> {
+final class PreparedQuery_DB_Halfway<QUERY> extends PreparedQuery_DB<QUERY> {
 
 	private final PreparedQueryBuilder base;
 	private final PreparedQueryConditionsBuilderORM conditions;
@@ -13,8 +11,8 @@ abstract class PreparedQuery_JPA_Halfway<QUERY> extends PreparedQuery_JPA_Base<Q
 	private final ExecutableQuery<QUERY> queryAccess;
 	private final QUERY query;
 	
-	PreparedQuery_JPA_Halfway(
-					QueryDataSourceJPA dataSource,
+	PreparedQuery_DB_Halfway(
+					QueryDataSource_DB dataSource,
 					ExecutableQuery<QUERY> queryAccess,
 					QUERY query,
 					QueryParametersDistinct distinctParams,
@@ -49,7 +47,7 @@ abstract class PreparedQuery_JPA_Halfway<QUERY> extends PreparedQuery_JPA_Base<Q
 	}
 
 	@Override
-	final void initParams(Query jpaQuery, ParamValueResolver paramCollector) {
+	final void initParams(QueryRunner queryRunner, ParamValueResolver paramCollector) {
 		
 		// Since this is a completely resolved query, that means that all parameters could be resolved to a :paramXyz
 		// thus we can iterate over all params
@@ -76,7 +74,7 @@ abstract class PreparedQuery_JPA_Halfway<QUERY> extends PreparedQuery_JPA_Base<Q
 		
 		// Got list of all params that were resolved to query parameters, now add them to query 
 		for (Param<?> param : paramsThatWereResolved) {
-			final int idx = distincParams.getIndexOf(param);
+			final int idx = distinctParams.getIndexOf(param);
 
 			if (idx < 0) {
 				throw new IllegalStateException("param not found");
@@ -84,7 +82,7 @@ abstract class PreparedQuery_JPA_Halfway<QUERY> extends PreparedQuery_JPA_Base<Q
 			
 			final Object value = paramCollector.resolveParam(param);
 			
-			setParam(jpaQuery, (BaseParamImpl<?>)param, idx, value);
+			queryRunner.setParam((BaseParamImpl<?>)param, idx, value);
 		}
 	}
 	
@@ -97,7 +95,7 @@ abstract class PreparedQuery_JPA_Halfway<QUERY> extends PreparedQuery_JPA_Base<Q
 		// since could not do that earlier on
 		
 		
-		final QueryDataSourceJPA ds = (QueryDataSourceJPA)getDataSource();
+		final QueryDataSource_DB ds = getDataSource();
 
 		// Add result-processing since could not do that earlier on
 		((PreparedQueryBuilderORM)base).addResultProcessing(queryAccess, query, null);
@@ -106,7 +104,7 @@ abstract class PreparedQuery_JPA_Halfway<QUERY> extends PreparedQuery_JPA_Base<Q
 		
 		System.out.println("## execute halfway-query: " + queryString);
 
-		final Query jpaQuery = ((QueryDataSourceJPA)getDataSource()).createJPAQuery(queryString); 
+		final QueryRunner jpaQuery = ((QueryDataSource_GenBase)getDataSource()).createQueryRunner(queryString);
 
 		return executeWithParams(jpaQuery, collectedParams); 
 	}
