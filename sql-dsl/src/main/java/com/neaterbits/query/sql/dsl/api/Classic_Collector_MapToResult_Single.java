@@ -3,9 +3,9 @@ package com.neaterbits.query.sql.dsl.api;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
-final class Collector_MapToResult_Single<MODEL, RESULT>
+final class Classic_Collector_MapToResult_Single<MODEL, RESULT>
 
-	extends Collector_MapToResult_Base<
+	extends Classic_Collector_MapToResult_Base<
 		MODEL,
 		RESULT,
 		
@@ -19,7 +19,7 @@ final class Collector_MapToResult_Single<MODEL, RESULT>
 			   IClassicResult_Mapped_Single_Named<MODEL, RESULT>,
 			   IClassicResult_Mapped_Single_Alias<MODEL, RESULT> {
 
-	Collector_MapToResult_Single(Class<?> resultType, ModelCompiler<MODEL> modelCompiler) {
+	Classic_Collector_MapToResult_Single(Class<?> resultType, ModelCompiler<MODEL> modelCompiler) {
 		super(new CollectedQueryResult_Mapped_Single(resultType), modelCompiler);
 	}
 
@@ -60,5 +60,10 @@ final class Collector_MapToResult_Single<MODEL, RESULT>
 	@Override
 	ISQLLogical_WhereOrJoin_SingleResult_Alias<MODEL, RESULT> createWhereOrJoinForAlias() {
 		return new SQL_Collector_WhereOrJoin_SingleResult_Alias<>(this);
+	}
+
+	@Override
+	CollectedQueryResult getCollectedQueryResult() {
+		throw new UnsupportedOperationException("Should never be invoked since passes " + CollectedQueryResult.class.getSimpleName() + "  in constructor");
 	}
 }

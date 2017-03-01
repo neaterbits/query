@@ -10,7 +10,7 @@ import java.util.function.Function;
 class QueryCollectorImpl<MODEL> extends Collector_Query<MODEL> {
 	
 	// The expected result type
-	private final CollectedQueryResult result;
+	private CollectedQueryResult result;
 	
 	// Optional mappings to map result to result type
 	private MappingCollector mappings;
@@ -40,15 +40,25 @@ class QueryCollectorImpl<MODEL> extends Collector_Query<MODEL> {
 	
 	QueryCollectorImpl(ModelCompiler<MODEL> modelCompiler, CollectedQueryResult result) {
 		super(modelCompiler);
-		
+
+		if (result != null) {
+			setResult(result);
+		}
+	}
+	
+	@Override
+	void setResult(CollectedQueryResult result) {
 		if (result == null) {
 			throw new IllegalArgumentException("result == null");
 		}
 
+		if (this.result != null) {
+			throw new IllegalStateException("result already set");
+		}
+
 		this.result = result;
 	}
-	
-	
+
 	Class<?> getResultType() {
 		return result.getType();
 	}

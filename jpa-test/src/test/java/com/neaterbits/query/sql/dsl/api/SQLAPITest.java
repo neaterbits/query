@@ -1,13 +1,12 @@
 package com.neaterbits.query.sql.dsl.api;
-
 import static com.neaterbits.query.sql.dsl.api.Select.alias;
 import static com.neaterbits.query.sql.dsl.api.Select.intParam;
-import static com.neaterbits.query.sql.dsl.api.Select.selectOneOrNull;
-import static com.neaterbits.query.sql.dsl.api.Select.selectList;
 import static com.neaterbits.query.sql.dsl.api.Select.oneFrom;
 import static com.neaterbits.query.sql.dsl.api.Select.listFrom;
-import static com.neaterbits.query.sql.dsl.api.Select.selectListFrom;
 import static com.neaterbits.query.sql.dsl.api.Select.sum;
+import static com.neaterbits.query.sql.dsl.api.Select.list;
+import static com.neaterbits.query.sql.dsl.api.Select.one;
+import static com.neaterbits.query.sql.dsl.api.Select.oneOrNull;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.math.BigDecimal;
@@ -64,7 +63,7 @@ public class SQLAPITest extends BaseSQLAPITest {
 		final Company foo = new Company(-1, "Foo");
 
         final SingleQuery<CompanyResultVO> startsWithAc =
-        		selectOneOrNull(CompanyResultVO.class)
+        		oneOrNull(CompanyResultVO.class)
 
         	.map(Company::getName).to(CompanyResultVO::setName)
         	
@@ -102,7 +101,7 @@ public class SQLAPITest extends BaseSQLAPITest {
 		final Company foo = new Company(-1, "Foo");
 
         final SingleQuery<CompanyResultVO> startsWithAc =
-        		selectOneOrNull(CompanyResultVO.class)
+        		oneOrNull(CompanyResultVO.class)
 
         	.map(Company::getName).to(CompanyResultVO::setName)
         	
@@ -142,7 +141,7 @@ public class SQLAPITest extends BaseSQLAPITest {
 		final Company foo = new Company(-1, "Foo");
 
         final SingleQuery<CompanyResultVO> startsWithAc =
-        		selectOneOrNull(CompanyResultVO.class)
+        		oneOrNull(CompanyResultVO.class)
 
         	.map(Company::getName).to(CompanyResultVO::setName)
         	
@@ -181,7 +180,7 @@ public class SQLAPITest extends BaseSQLAPITest {
 		
 
         final SingleQuery<CompanyResultVO> startsWithAc =
-        		selectOneOrNull(CompanyResultVO.class)
+        		oneOrNull(CompanyResultVO.class)
 
         	.map(Company::getName).to(CompanyResultVO::setName)
         	
@@ -220,7 +219,7 @@ public class SQLAPITest extends BaseSQLAPITest {
 		final Company foo = new Company(-1, "Foo");
 
         final SingleQuery<CompanyResultVO> startsWithAc =
-        		selectOneOrNull(CompanyResultVO.class)
+        		oneOrNull(CompanyResultVO.class)
 
         	.map(Company::getName).to(CompanyResultVO::setName)
         	.from(Company.class)
@@ -317,7 +316,7 @@ public class SQLAPITest extends BaseSQLAPITest {
 		
 		
         final SingleQuery<CompanyResultVO> startsWithAc =
-        		selectOneOrNull(CompanyResultVO.class)
+        		oneOrNull(CompanyResultVO.class)
 
         	.map(Company::getName).to(CompanyResultVO::setName)
         	
@@ -358,7 +357,7 @@ public class SQLAPITest extends BaseSQLAPITest {
 		final ValParam<String> eqParam = Select.stringParam();
 		
         final SingleQuery<CompanyResultVO> startsWithAc =
-        		selectOneOrNull(CompanyResultVO.class)
+        		one(CompanyResultVO.class)
 
         	.map(Company::getName).to(CompanyResultVO::setName)
         	
@@ -401,7 +400,7 @@ public class SQLAPITest extends BaseSQLAPITest {
 		
 		
         final SingleQuery<CompanyResultVO> startsWithAc =
-        		selectOneOrNull(CompanyResultVO.class)
+        		oneOrNull(CompanyResultVO.class)
 
         	.map(Company::getName).to(CompanyResultVO::setName)
         	
@@ -464,7 +463,7 @@ public class SQLAPITest extends BaseSQLAPITest {
 		final Company foo = new Company(-1, "Foo");
 
         final SingleQuery<CompanyResultVO> startsWithAc =
-        		selectOneOrNull(CompanyResultVO.class)
+        		oneOrNull(CompanyResultVO.class)
 
         	.map(Company::getName).to(CompanyResultVO::setName)
         	
@@ -509,7 +508,7 @@ public class SQLAPITest extends BaseSQLAPITest {
 
 		
         final SingleQuery<CompanyResultVO> startsWithAc =
-        		selectOneOrNull(CompanyResultVO.class)
+        		oneOrNull(CompanyResultVO.class)
 
         	.map(company::getName).to(CompanyResultVO::setName)
         	
@@ -536,6 +535,16 @@ public class SQLAPITest extends BaseSQLAPITest {
 	        		startsWithAc,
 	        		q -> q.execute());
 		});
+	}
+	
+	@Test
+	public void testMultipleEntities() {
+		final MultiQuery<Company> startsWithFoo =
+				list(Company.class)
+				 .from(Company.class)
+			     .where(Company::getName).startsWith("foo").compile();
+
+		assertThat(true).isEqualTo(false);
 	}
 
 	@Test
@@ -564,7 +573,7 @@ public class SQLAPITest extends BaseSQLAPITest {
 		final Employee fooEmp2 = new Employee(fooEmployeeId2, foo, fooPerson2.getId());
 		
         final MultiQuery<CompanyPersonResultVO> startsWithFoo =
-        		selectList(CompanyPersonResultVO.class)
+        		list(CompanyPersonResultVO.class)
 
         	.map(company::getId)      .to(CompanyPersonResultVO::setCompanyId)
         	.map(person::getId)       .to(CompanyPersonResultVO::setPersonId)
@@ -621,7 +630,7 @@ public class SQLAPITest extends BaseSQLAPITest {
 		final Company foo = new Company(3, "Foo", new BigDecimal("184.2"));
 
         final MultiQuery<CompanyResultVO> startsWithAc =
-        		selectList(CompanyResultVO.class)
+        		list(CompanyResultVO.class)
 
         	.map(Company::getStockPrice).to(CompanyResultVO::setStockPrice)
         	
@@ -687,7 +696,7 @@ public class SQLAPITest extends BaseSQLAPITest {
 	    	
 	    	
 	        final SingleQuery<ResultVO > query =
-	        		selectOneOrNull(ResultVO.class)
+	        		oneOrNull(ResultVO.class)
 	
 	        	.map(company::getId)		.to(ResultVO::setCompanyId)
 	        	.map(person::getId)		   	.to(ResultVO::setPersonId)
@@ -731,7 +740,7 @@ public class SQLAPITest extends BaseSQLAPITest {
 
 		
         final MultiQuery<Company> startsWithAc =
-        		selectListFrom(Company.class)
+        		list(Company.class)
         		.from(Company.class)
         		
         	.where(Company::getName).startsWith("Ac")

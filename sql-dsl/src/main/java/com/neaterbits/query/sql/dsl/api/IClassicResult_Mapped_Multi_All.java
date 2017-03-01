@@ -1,6 +1,5 @@
 package com.neaterbits.query.sql.dsl.api;
 
-@Deprecated // useful?
 public interface IClassicResult_Mapped_Multi_All<MODEL, RESULT>
 	extends 
 		IClassicMultiSelectSourceBuilder<MODEL, RESULT>,

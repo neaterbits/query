@@ -1,7 +1,7 @@
 package com.neaterbits.query.sql.dsl.api;
 
 
-abstract class Collector_SelectSource<
+abstract class Classic_Collector_SelectSource<
 				MODEL,
 				RESULT,
 				NAMED_WHERE_OR_JOIN extends ISQLLogical_WhereOrJoin_Named_Base<MODEL, RESULT>,
@@ -18,9 +18,22 @@ abstract class Collector_SelectSource<
 
 	abstract NAMED_WHERE_OR_JOIN createWhereOrJoinForNamed();
 	abstract ALIAS_WHERE_OR_JOIN createWhereOrJoinForAlias();
+	
+	
+	// abstract-method to call whenever collected-result is available at a later time
+	// (do not know whether mapped or entity beforehand) 
+	abstract CollectedQueryResult getCollectedQueryResult();
 					
-	Collector_SelectSource(CollectedQueryResult result, ModelCompiler<MODEL> modelCompiler) {
+	Classic_Collector_SelectSource(CollectedQueryResult result, ModelCompiler<MODEL> modelCompiler) {
 		super(new QueryCollectorImpl<MODEL>(modelCompiler, result));
+	}
+	
+	
+	
+	private void assureCollectedResult() {
+		if (getQueryCollector().getResult() == null) {
+			final CollectedQueryResult collectedResult = getCollectedQueryResult();
+		}
 	}
 	
 	@Override
@@ -32,6 +45,8 @@ abstract class Collector_SelectSource<
 		
 //		this.classes = classes;
 //		this.aliases = null;
+
+		assureCollectedResult();
 		
 		getQueryCollector().setSources(new CollectedSelectSource_Named(classes));
 		
@@ -49,6 +64,8 @@ abstract class Collector_SelectSource<
 //		this.classes = null;
 //		this.aliases = aliases;
 
+		assureCollectedResult();
+
 		getQueryCollector().setSources(new CollectedSelectSource_AliasAliases(aliases));
 
 		// final Classic_Collector_WhereOrJoin_Alias_Base<MODEL, RESULT, ?> ret = new Classic_Collector_WhereOrJoin_Alias_Base<MODEL, RESULT>(this);
@@ -58,6 +75,8 @@ abstract class Collector_SelectSource<
 
 	@Override
 	public final ALIAS_WHERE_OR_JOIN from(Object... aliases) {
+		
+		assureCollectedResult();
 		
 		if (aliases.length == 0) {
 			throw new IllegalArgumentException("no aliases");

@@ -1,6 +1,7 @@
 package com.neaterbits.query.sql.dsl.api;
 
-abstract class Collector_AggregateResult<
+@Deprecated // for now
+abstract class Classic_Collector_AggregateResult<
 			MODEL,
 			RESULT,
 
@@ -9,14 +10,14 @@ abstract class Collector_AggregateResult<
 			ALIAS_WHERE_OR_JOIN extends ISQLLogical_WhereOrJoin_SingleResult_Alias<MODEL, RESULT> 
 		>
 
-	extends Collector_SelectSource<
+	extends Classic_Collector_SelectSource<
 			MODEL,
 			RESULT,
 			NAMED_WHERE_OR_JOIN,
 			ALIAS_WHERE_OR_JOIN
 			> {
 
-	Collector_AggregateResult(CollectedQueryResult result, ModelCompiler<MODEL> modelCompiler) {
+	Classic_Collector_AggregateResult(CollectedQueryResult result, ModelCompiler<MODEL> modelCompiler) {
 		super(result, modelCompiler);
 	}
 }

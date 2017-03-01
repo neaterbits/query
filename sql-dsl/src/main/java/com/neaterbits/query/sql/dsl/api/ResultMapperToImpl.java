@@ -19,9 +19,9 @@ final class ResultMapperToImpl<
 	private final Function<?, ?> fromGetter;
 	private final Supplier<?> fromSupplier;
 	
-	private final Collector_MapToResult_Base<MODEL, RESULT, NAMED_WHERE_OR_JOIN, ALIAS_WHERE_OR_JOIN> impl;
+	private final Classic_Collector_MapToResult_Base<MODEL, RESULT, NAMED_WHERE_OR_JOIN, ALIAS_WHERE_OR_JOIN> impl;
 
-	ResultMapperToImpl(Function<?, ?> fromGetter, Collector_MapToResult_Base<MODEL, RESULT, NAMED_WHERE_OR_JOIN, ALIAS_WHERE_OR_JOIN> impl) {
+	ResultMapperToImpl(Function<?, ?> fromGetter, Classic_Collector_MapToResult_Base<MODEL, RESULT, NAMED_WHERE_OR_JOIN, ALIAS_WHERE_OR_JOIN> impl) {
 		
 		if (fromGetter == null) {
 			throw new IllegalArgumentException("fromGetter == null");
@@ -37,7 +37,7 @@ final class ResultMapperToImpl<
 		this.impl = impl;
 	}
 
-	ResultMapperToImpl(Supplier<?> fromSupplier, Collector_MapToResult_Base<MODEL, RESULT, NAMED_WHERE_OR_JOIN, ALIAS_WHERE_OR_JOIN> impl) {
+	ResultMapperToImpl(Supplier<?> fromSupplier, Classic_Collector_MapToResult_Base<MODEL, RESULT, NAMED_WHERE_OR_JOIN, ALIAS_WHERE_OR_JOIN> impl) {
 		
 		if (fromSupplier == null) {
 			throw new IllegalArgumentException("fromGetter == null");

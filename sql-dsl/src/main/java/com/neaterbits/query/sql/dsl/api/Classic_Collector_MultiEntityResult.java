@@ -1,8 +1,9 @@
 package com.neaterbits.query.sql.dsl.api;
 
-final class SQL_Collector_MultiEntityResult<MODEL, RESULT> 
+@Deprecated
+final class Classic_Collector_MultiEntityResult<MODEL, RESULT> 
 
-	extends Collector_EntityResult_Base<
+	extends Classic_Collector_EntityResult_Base<
 			MODEL,
 			RESULT,
 			
@@ -11,7 +12,7 @@ final class SQL_Collector_MultiEntityResult<MODEL, RESULT>
 			>
 	implements IClassicResult_Entity_Multi<MODEL, RESULT> {
 
-	SQL_Collector_MultiEntityResult(SharedSelectSource selectSource, ECollectionType collectionType, ModelCompiler<MODEL> modelCompiler) {
+	Classic_Collector_MultiEntityResult(SharedSelectSource selectSource, ECollectionType collectionType, ModelCompiler<MODEL> modelCompiler) {
 		super(new CollectedQueryResult_Entity_Multi(selectSource, collectionType), modelCompiler);
 	}
 
@@ -23,5 +24,10 @@ final class SQL_Collector_MultiEntityResult<MODEL, RESULT>
 	@Override
 	ISQLLogical_WhereOrJoin_MultiEntity_Alias<MODEL, RESULT> createWhereOrJoinForAlias() {
 		return new SQL_Collector_WhereOrJoin_MultiEntity_Alias<>(this);
+	}
+
+	@Override
+	CollectedQueryResult getCollectedQueryResult() {
+		throw new UnsupportedOperationException("Should already have passed query-result to constructor");
 	}
 }

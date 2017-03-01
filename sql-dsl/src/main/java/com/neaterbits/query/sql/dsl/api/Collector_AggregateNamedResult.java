@@ -1,9 +1,10 @@
 package com.neaterbits.query.sql.dsl.api;
 
+@Deprecated // for now
 final class Collector_AggregateNamedResult<TYPE>
 
 
-		extends Collector_AggregateResult<
+		extends Classic_Collector_AggregateResult<
 			SingleQuery<TYPE>,
 			TYPE,
 			ISQLLogical_WhereOrJoin_SingleResult_Named<SingleQuery<TYPE>, TYPE>,
@@ -24,5 +25,10 @@ final class Collector_AggregateNamedResult<TYPE>
 	@Override
 	ISQLLogical_WhereOrJoin_SingleResult_Alias<SingleQuery<TYPE>, TYPE> createWhereOrJoinForAlias() {
 		return new SQL_Collector_WhereOrJoin_SingleResult_Alias<SingleQuery<TYPE>, TYPE>(this);
+	}
+
+	@Override
+	CollectedQueryResult getCollectedQueryResult() {
+		throw new UnsupportedOperationException("TODO - entity/single?");
 	}
 }

@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 
 public interface Select {
 
+	/*
 	public static <MAPPED_RESULT> IClassicResult_Mapped_Single_All<SingleQuery<MAPPED_RESULT>, MAPPED_RESULT> selectOneOrNull(Class<MAPPED_RESULT> cl) {
 		return ClassicSelect.selectImpl.selectOneOrNull(cl);
 	}
@@ -18,6 +19,19 @@ public interface Select {
 
 	public static <TYPE_RESULT> IClassicResult_Entity_Multi<MultiQuery<TYPE_RESULT>, TYPE_RESULT> selectListFrom(Class<TYPE_RESULT> cl) {
 		return ClassicSelect.selectImpl.selectListFrom(cl);
+	}
+	*/
+
+	public static <MAPPED_RESULT> IClassicResult_Multi<MultiQuery<MAPPED_RESULT>, MAPPED_RESULT> list(Class<MAPPED_RESULT> cl) {
+		return ClassicSelect.selectImpl.list(cl);
+	}
+
+	public static <TYPE_RESULT> IClassicResult_Single<SingleQuery<TYPE_RESULT>, TYPE_RESULT> one(Class<TYPE_RESULT> cl) {
+		return ClassicSelect.selectImpl.one(cl);
+	}
+
+	public static <TYPE_RESULT> IClassicResult_Single<SingleQuery<TYPE_RESULT>, TYPE_RESULT> oneOrNull(Class<TYPE_RESULT> cl) {
+		return ClassicSelect.selectImpl.oneOrNull(cl);
 	}
 
 	public static <TYPE_RESULT> IClassicSingleWhereClauseBuilderNamed<SingleQuery<TYPE_RESULT>, TYPE_RESULT> oneFrom(Class<TYPE_RESULT> cl) {

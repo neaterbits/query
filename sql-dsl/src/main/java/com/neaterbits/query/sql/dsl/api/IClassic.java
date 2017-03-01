@@ -3,7 +3,7 @@ package com.neaterbits.query.sql.dsl.api;
 import java.math.BigDecimal;
 
 public interface IClassic 
-	extends IShared_Aggregate_All_Named<
+	extends ISQL<
 				IClassicResult_Numeric_Named<Long>,
 				IClassicResult_Numeric_Named<Long>,
 				
@@ -14,6 +14,7 @@ public interface IClassic
 				>
 
 {
+	/*
 	<MAPPED_RESULT> IClassicResult_Mapped_Single_All<SingleQuery<MAPPED_RESULT>, MAPPED_RESULT> selectOneOrNull(Class<MAPPED_RESULT> cl);
 
 	<MAPPED_RESULT> IClassicResult_Mapped_Multi_All<MultiQuery<MAPPED_RESULT>, MAPPED_RESULT> selectList(Class<MAPPED_RESULT> cl);
@@ -21,6 +22,16 @@ public interface IClassic
 	<TYPE_RESULT> IClassicResult_Entity_Single<SingleQuery<TYPE_RESULT>, TYPE_RESULT> selectOneFrom(Class<TYPE_RESULT> cl);
 
 	<TYPE_RESULT> IClassicResult_Entity_Multi<MultiQuery<TYPE_RESULT>, TYPE_RESULT> selectListFrom(Class<TYPE_RESULT> cl);
+
+	 */
+	
+	<TYPE_RESULT> IClassicResult_Single<SingleQuery<TYPE_RESULT>, TYPE_RESULT> one(Class<TYPE_RESULT> cl);
+
+	<TYPE_RESULT> IClassicResult_Single<SingleQuery<TYPE_RESULT>, TYPE_RESULT> oneOrNull(Class<TYPE_RESULT> cl);
+
+	<TYPE_RESULT> IClassicResult_Multi<MultiQuery<TYPE_RESULT>, TYPE_RESULT> list(Class<TYPE_RESULT> cl);
+	
+
 
 	<TYPE_RESULT> IClassicSingleWhereClauseBuilderNamed<SingleQuery<TYPE_RESULT>, TYPE_RESULT> oneFrom(Class<TYPE_RESULT> cl);
 

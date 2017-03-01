@@ -14,6 +14,8 @@ abstract class Collector_Query<MODEL> {
 
 	abstract CollectedQueryResult getResult();
 	
+	abstract void setResult(CollectedQueryResult result);
+	
 	abstract MappingCollector getMappings();
 	
 	abstract void setMappings(MappingCollector mappings);
