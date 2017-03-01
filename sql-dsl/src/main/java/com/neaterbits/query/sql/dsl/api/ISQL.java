@@ -16,15 +16,28 @@ public interface ISQL<
 		BIGDECIMAL_RET>
 
 		extends IShared_Aggregate_All_Named<
-			IClassicResult_Numeric_Named<Long>,
-			IClassicResult_Numeric_Named<Long>,
+			SUM_LONG_RET,
+			COUNT_RET,
 			
-			IClassicResult_Numeric_Named<Short>,
-			IClassicResult_Numeric_Named<Integer>,
-			IClassicResult_Numeric_Named<Long>,
-			IClassicResult_Numeric_Named<BigDecimal>
+			SHORT_RET,
+			INT_RET,
+			LONG_RET,
+			BIGDECIMAL_RET
 			>
 
 		{
 
+	<T> T alias(Class<T> aliasType);
+	
+    <T> Alias<T> aliasAlias(Class<T> aliasType);
+
+    <T> Param<T> param(Class<T> paramType);
+    
+    <T> InParam<T> inParam(Class<T> paramType);
+    
+    // Parameters. We only support known base types that support equals()/hashCode() 
+    Param<Integer> intParam();
+
+    Param<String> stringParam();
+			
 }

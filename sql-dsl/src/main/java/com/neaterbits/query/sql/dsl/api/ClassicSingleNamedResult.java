@@ -2,6 +2,7 @@ package com.neaterbits.query.sql.dsl.api;
 
 import java.util.function.Function;
 
+@Deprecated // should use regular named one
 final class ClassicSingleNamedResult<MODEL, RESULT>
 	extends Collector_Conditions_Initial<MODEL, RESULT, Void> 
 		implements

@@ -30,23 +30,9 @@ public interface IClassic
 	<TYPE_RESULT> IClassicResult_Single<SingleQuery<TYPE_RESULT>, TYPE_RESULT> oneOrNull(Class<TYPE_RESULT> cl);
 
 	<TYPE_RESULT> IClassicResult_Multi<MultiQuery<TYPE_RESULT>, TYPE_RESULT> list(Class<TYPE_RESULT> cl);
-	
 
-
+	// return single-type, that is we do not require from-type
 	<TYPE_RESULT> IClassicSingleWhereClauseBuilderNamed<SingleQuery<TYPE_RESULT>, TYPE_RESULT> oneFrom(Class<TYPE_RESULT> cl);
 
 	<TYPE_RESULT> IClassicSingleWhereClauseBuilderNamed<MultiQuery<TYPE_RESULT>, TYPE_RESULT> listFrom(Class<TYPE_RESULT> cl);
-    
-	<T> T alias(Class<T> aliasType);
-	
-    <T> Alias<T> aliasAlias(Class<T> aliasType);
-
-    <T> Param<T> param(Class<T> paramType);
-    
-    <T> InParam<T> inParam(Class<T> paramType);
-    
-    // Parameters. We only support known base types that support equals()/hashCode() 
-    Param<Integer> intParam();
-
-    Param<String> stringParam();
 }

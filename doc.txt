@@ -1086,3 +1086,27 @@ Fordel med å skippe 'from': slipper cartesian product feil, er alltid ANSI join
 Kan hende også ikke behøver disse Multi osv kombinasjonene lengre? Vi er bare interesser it GROUP_BY clausen.
 
 
+-------------
+
+short-queries:
+
+list(Company.class).where(foo::get)
+
+
+vet ikke om er named eller ikke før er i where-clause.
+
+Så må wære where-or-join på begge.
+Men dette gjelder også for short-utgaven, så lenge ikke er mapping.
+
+
+
+
+Hvordan blir API? Blir fortsatt one() og list() men kan kalle where() og join()
+uten noe annet.
+Så må wrappe where-funksjonaliteten i så fall.
+
+
+
+
+
+

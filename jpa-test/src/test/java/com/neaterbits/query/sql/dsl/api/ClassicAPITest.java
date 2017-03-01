@@ -1,12 +1,12 @@
 package com.neaterbits.query.sql.dsl.api;
-import static com.neaterbits.query.sql.dsl.api.Select.alias;
-import static com.neaterbits.query.sql.dsl.api.Select.intParam;
-import static com.neaterbits.query.sql.dsl.api.Select.oneFrom;
-import static com.neaterbits.query.sql.dsl.api.Select.listFrom;
-import static com.neaterbits.query.sql.dsl.api.Select.sum;
-import static com.neaterbits.query.sql.dsl.api.Select.list;
-import static com.neaterbits.query.sql.dsl.api.Select.one;
-import static com.neaterbits.query.sql.dsl.api.Select.oneOrNull;
+import static com.neaterbits.query.sql.dsl.api.IClassicSelect.alias;
+import static com.neaterbits.query.sql.dsl.api.IClassicSelect.intParam;
+import static com.neaterbits.query.sql.dsl.api.IClassicSelect.oneFrom;
+import static com.neaterbits.query.sql.dsl.api.IClassicSelect.listFrom;
+import static com.neaterbits.query.sql.dsl.api.IClassicSelect.sum;
+import static com.neaterbits.query.sql.dsl.api.IClassicSelect.list;
+import static com.neaterbits.query.sql.dsl.api.IClassicSelect.one;
+import static com.neaterbits.query.sql.dsl.api.IClassicSelect.oneOrNull;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.math.BigDecimal;
@@ -32,7 +32,7 @@ import com.neaterbits.query.sql.dsl.api.testhelper.QueryTestDSCombined;
 import com.neaterbits.query.sql.dsl.api.testhelper.QueryTestDSInMemory;
 import com.neaterbits.query.sql.dsl.api.testhelper.QueryTestDSStore;
 
-public class SQLAPITest extends BaseSQLAPITest {
+public class ClassicAPITest extends BaseSQLAPITest {
 
 	private static final EntityManagerFactory emf = Persistence.createEntityManagerFactory("query-jpa-test");
 
@@ -176,7 +176,7 @@ public class SQLAPITest extends BaseSQLAPITest {
 		final Company acme = new Company(-1, "Acme");
 		final Company foo = new Company(-1, "Foo");
 		
-		final InParam<String> inParam = Select.inParam(String.class);
+		final InParam<String> inParam = IClassicSelect.inParam(String.class);
 		
 
         final SingleQuery<CompanyResultVO> startsWithAc =
@@ -312,7 +312,7 @@ public class SQLAPITest extends BaseSQLAPITest {
 		final Company acme = new Company(-1, "Acme");
 		final Company foo = new Company(-1, "Foo");
 
-		final ValParam<String> endParam = Select.stringParam();
+		final ValParam<String> endParam = IClassicSelect.stringParam();
 		
 		
         final SingleQuery<CompanyResultVO> startsWithAc =
@@ -354,7 +354,7 @@ public class SQLAPITest extends BaseSQLAPITest {
 		final Company acme = new Company(-1, "Acme");
 		final Company foo = new Company(-1, "Foo");
 
-		final ValParam<String> eqParam = Select.stringParam();
+		final ValParam<String> eqParam = IClassicSelect.stringParam();
 		
         final SingleQuery<CompanyResultVO> startsWithAc =
         		one(CompanyResultVO.class)
@@ -394,8 +394,8 @@ public class SQLAPITest extends BaseSQLAPITest {
 		final Company acme = new Company(-1, "Acme");
 		final Company foo = new Company(-1, "Foo");
 
-		final ValParam<String> eqParam = Select.stringParam();
-		final ValParam<String> endParam = Select.stringParam();
+		final ValParam<String> eqParam = IClassicSelect.stringParam();
+		final ValParam<String> endParam = IClassicSelect.stringParam();
 		
 		
 		
