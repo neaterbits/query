@@ -48,7 +48,7 @@ final class ClassicSelect implements IClassic {
 
 		final SharedSelectSource selectSource = new SharedSelectSource_Named(cl);
 
-		return new Classic_Collector_SingleTypeResult<SingleQuery<ENTITY_RESULT>, ENTITY_RESULT>(selectSource, singleQueryCompiler());
+		return new SQL_Collector_SingleTypeResult<SingleQuery<ENTITY_RESULT>, ENTITY_RESULT>(selectSource, singleQueryCompiler());
 	}
 
 	@Override
@@ -59,7 +59,7 @@ final class ClassicSelect implements IClassic {
 		
 		final SharedSelectSource selectSource = new SharedSelectSource_Named(cl);
 
-		return new Classic_Collector_MultiEntityResult<MultiQuery<ENTITY_RESULT>, ENTITY_RESULT>(selectSource, ECollectionType.LIST, multiQueryCompiler());
+		return new SQL_Collector_MultiEntityResult<MultiQuery<ENTITY_RESULT>, ENTITY_RESULT>(selectSource, ECollectionType.LIST, multiQueryCompiler());
 	}
 
 	@Override

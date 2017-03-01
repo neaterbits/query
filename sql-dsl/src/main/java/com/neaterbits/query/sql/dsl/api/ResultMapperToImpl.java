@@ -9,8 +9,8 @@ final class ResultMapperToImpl<
 			RESULT,
 			R,
 			SOURCE extends ISharedSelectSourceBuilder<MODEL, RESULT>,
-			NAMED_WHERE_OR_JOIN extends IClassicLogical_WhereOrJoin_Named_Base<MODEL, RESULT>,
-			ALIAS_WHERE_OR_JOIN extends IClassicLogical_WhereOrJoin_Alias_Base<MODEL, RESULT>>
+			NAMED_WHERE_OR_JOIN extends ISQLLogical_WhereOrJoin_Named_Base<MODEL, RESULT>,
+			ALIAS_WHERE_OR_JOIN extends ISQLLogical_WhereOrJoin_Alias_Base<MODEL, RESULT>>
 
 
 		extends CollectedItem

@@ -44,7 +44,7 @@ final class ClassicSingleNamedResult<MODEL, RESULT>
 	public ISharedCondition_Comparable_Common_All<MODEL, RESULT, Integer, IClassicSingleAndClausesNamed<MODEL, RESULT>>
 			and(IFunctionInteger<RESULT> getter) {
 		
-		final Classic_Collector_And_Named_Single<MODEL, RESULT> andClauses = new Classic_Collector_And_Named_Single<>(this);
+		final SQL_Collector_And_Named_Single<MODEL, RESULT> andClauses = new SQL_Collector_And_Named_Single<>(this);
 		
 		return new Collector_Condition_Comparative<MODEL, RESULT, Integer, IClassicSingleAndClausesNamed<MODEL,RESULT>>(andClauses, makeGetter(getter));
 	}
@@ -53,7 +53,7 @@ final class ClassicSingleNamedResult<MODEL, RESULT>
 	public ISharedCondition_Comparable_String_All<MODEL, RESULT, IClassicSingleAndClausesNamed<MODEL, RESULT>>
 			and(StringFunction<RESULT> getter) {
 
-		final Classic_Collector_And_Named_Single<MODEL, RESULT> andClauses = new Classic_Collector_And_Named_Single<>(this);
+		final SQL_Collector_And_Named_Single<MODEL, RESULT> andClauses = new SQL_Collector_And_Named_Single<>(this);
 		
 		return new Collector_Condition_String<MODEL, RESULT, IClassicSingleAndClausesNamed<MODEL,RESULT>>(andClauses, makeGetter(getter));
 	}

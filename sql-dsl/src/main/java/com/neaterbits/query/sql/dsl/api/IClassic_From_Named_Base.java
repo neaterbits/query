@@ -1,6 +1,6 @@
 package com.neaterbits.query.sql.dsl.api;
 
-public interface IClassic_From_Named_Base<MODEL, RESULT, WHERE_OR_JOIN extends IClassicLogical_WhereOrJoin_Named_Base<MODEL, RESULT>>
+public interface IClassic_From_Named_Base<MODEL, RESULT, WHERE_OR_JOIN extends ISQLLogical_WhereOrJoin_Named_Base<MODEL, RESULT>>
 		extends ISharedSelectSourceBuilder<MODEL, RESULT> {
 
 	/**

@@ -5,8 +5,8 @@ abstract class Collector_AggregateResult<
 			RESULT,
 
 			// always non result processing for aggregate queries
-			NAMED_WHERE_OR_JOIN extends IClassicLogical_WhereOrJoin_SingleResult_Named<MODEL, RESULT>,
-			ALIAS_WHERE_OR_JOIN extends IClassicLogical_WhereOrJoin_SingleResult_Alias<MODEL, RESULT> 
+			NAMED_WHERE_OR_JOIN extends ISQLLogical_WhereOrJoin_SingleResult_Named<MODEL, RESULT>,
+			ALIAS_WHERE_OR_JOIN extends ISQLLogical_WhereOrJoin_SingleResult_Alias<MODEL, RESULT> 
 		>
 
 	extends Collector_SelectSource<

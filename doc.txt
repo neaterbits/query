@@ -1062,3 +1062,27 @@ i QueryDialect for å skille mellom basis-forskjeller som om er TOP() eller LIMI
 
 
 
+
+-------------
+mere generisk switch mellom query-deler for strict/classic/short og kunne gjenbruke/kombinere?
+
+ - single aggregate => from
+ - single scalar column => from
+ - single row => entity / mapped
+ - entity => from | where/join
+ - mapped => from | where/join
+ - from => where/jpoin
+ - mapped => where/join
+
+ - where/join => group by
+ - where/join => order by
+
+ - group by => having
+
+for 'short' så er alt like, bare skippe From. Så er ikke IClassic lengre, er ISQL.
+
+Fordel med å skippe 'from': slipper cartesian product feil, er alltid ANSI join.
+
+Kan hende også ikke behøver disse Multi osv kombinasjonene lengre? Vi er bare interesser it GROUP_BY clausen.
+
+

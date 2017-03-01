@@ -10,8 +10,8 @@ final class Collector_MapToResult_Multi<
 		extends Collector_MapToResult_Base<
 			MODEL,
 			RESULT,
-			IClassicLogical_WhereOrJoin_MultiMapped_Named<MODEL, RESULT>,
-			IClassicLogical_WhereOrJoin_MultiMapped_Alias<MODEL, RESULT>>
+			ISQLLogical_WhereOrJoin_MultiMapped_Named<MODEL, RESULT>,
+			ISQLLogical_WhereOrJoin_MultiMapped_Alias<MODEL, RESULT>>
 
 		implements IClassicResult_Mapped_Multi_All<MODEL, RESULT>,
 				   IClassicResult_Mapped_Multi_Named<MODEL, RESULT>,
@@ -30,8 +30,8 @@ final class Collector_MapToResult_Multi<
 					RESULT,
 					R,
 					IClassicResult_Mapped_Multi_Named<MODEL, RESULT>,
-					IClassicLogical_WhereOrJoin_MultiMapped_Named<MODEL, RESULT>,
-					IClassicLogical_WhereOrJoin_MultiMapped_Alias<MODEL, RESULT>
+					ISQLLogical_WhereOrJoin_MultiMapped_Named<MODEL, RESULT>,
+					ISQLLogical_WhereOrJoin_MultiMapped_Alias<MODEL, RESULT>
 					>
 		(getter, this);
 	}
@@ -45,20 +45,20 @@ final class Collector_MapToResult_Multi<
 						RESULT,
 						R,
 						IClassicResult_Mapped_Multi_Alias<MODEL, RESULT>,
-						IClassicLogical_WhereOrJoin_MultiMapped_Named<MODEL, RESULT>,
-						IClassicLogical_WhereOrJoin_MultiMapped_Alias<MODEL, RESULT>
+						ISQLLogical_WhereOrJoin_MultiMapped_Named<MODEL, RESULT>,
+						ISQLLogical_WhereOrJoin_MultiMapped_Alias<MODEL, RESULT>
 						>
 		
 		(getter, this);
 	}
 
 	@Override
-	IClassicLogical_WhereOrJoin_MultiMapped_Named<MODEL, RESULT> createWhereOrJoinForNamed() {
-		return new Classic_Collector_WhereOrJoin_MultiMapped_Named<>(this);
+	ISQLLogical_WhereOrJoin_MultiMapped_Named<MODEL, RESULT> createWhereOrJoinForNamed() {
+		return new SQL_Collector_WhereOrJoin_MultiMapped_Named<>(this);
 	}
 
 	@Override
-	IClassicLogical_WhereOrJoin_MultiMapped_Alias<MODEL, RESULT> createWhereOrJoinForAlias() {
-		return new Classic_Collector_WhereOrJoin_MultiMapped_Alias<>(this);
+	ISQLLogical_WhereOrJoin_MultiMapped_Alias<MODEL, RESULT> createWhereOrJoinForAlias() {
+		return new SQL_Collector_WhereOrJoin_MultiMapped_Alias<>(this);
 	}
 }
