@@ -1,10 +1,16 @@
 package com.neaterbits.query.sql.dsl.api;
 
+import static com.neaterbits.query.sql.dsl.api.IShortSelect.oneOrNull;
+
 import java.util.function.Consumer;
 
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
+import org.junit.Test;
+import static org.assertj.core.api.Assertions.assertThat;
+
+import com.neaterbits.query.jpatest.model.Company;
 import com.neaterbits.query.sql.dsl.api.entity.QueryMetaModel;
 import com.neaterbits.query.sql.dsl.api.helper.jpa.QueryTestDSJPANative;
 import com.neaterbits.query.sql.dsl.api.helper.jpa.QueryTestDSJPQL;
@@ -38,6 +44,78 @@ public class ShortAPITest extends BaseSQLAPITest {
 	}
 
 	
+	@Test
+    public void testNameBasedMapped() {
+
+		final Company acme = new Company(-1, "Acme");
+		final Company foo = new Company(-1, "Foo");
+
+        final SingleQuery<CompanyResultVO> startsWithAc =
+        		oneOrNull(CompanyResultVO.class)
+
+        	.map(Company::getName).to(CompanyResultVO::setName)
+
+        	.where(Company::getName).startsWith("Ac")
+        	.  and(Company::getName).endsWith("cme")
+
+        	.compile();
+		
+		store(s  -> s.add(acme)).
+		check(ds -> {
+	        checkSelectOneOrNull(
+	        		ds,
+	        		new CompanyResultVO(acme.getName()),
+	        		startsWithAc,
+	        		q -> q.execute());
+		});
+
+		// Search for foo as well, should return no matches
+		store(s  -> s.add(foo)).
+		check(ds -> {
+	        checkSelectOneOrNull(
+	        		ds,
+	        		null,
+	        		startsWithAc,
+	        		q -> q.execute());
+		});
+	}
 	
+	@Test
+    public void testSingleNameBasedEntity() {
+		
+		assertThat(true).isEqualTo(false);
+
+		/*
+		final Company acme = new Company(-1, "Acme");
+		final Company foo = new Company(-1, "Foo");
+
+        final SingleQuery<Company> startsWithAc =
+        		oneOrNull(Company.class)
+
+        	.where(Company::getName).startsWith("Ac")
+        	.  and(Company::getName).endsWith("cme")
+
+        	.compile();
+		
+		store(s  -> s.add(acme)).
+		check(ds -> {
+	        checkSelectOneOrNull(
+	        		ds,
+	        		acme,
+	        		startsWithAc,
+	        		q -> q.execute());
+		});
+
+		// Search for foo as well, should return no matches
+		store(s  -> s.add(foo)).
+		check(ds -> {
+	        checkSelectOneOrNull(
+	        		ds,
+	        		null,
+	        		startsWithAc,
+	        		q -> q.execute());
+		});
+		*/
+	}
 	
 }

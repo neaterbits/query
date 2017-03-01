@@ -8,9 +8,7 @@ final class ResultMapperToImpl<
 			MODEL,
 			RESULT,
 			R,
-			SOURCE extends ISharedSelectSourceBuilder<MODEL, RESULT>,
-			NAMED_WHERE_OR_JOIN extends ISQLLogical_WhereOrJoin_Named_Base<MODEL, RESULT>,
-			ALIAS_WHERE_OR_JOIN extends ISQLLogical_WhereOrJoin_Alias_Base<MODEL, RESULT>>
+			SOURCE extends ISharedSelectSourceBuilder<MODEL, RESULT>>
 
 
 		extends CollectedItem
@@ -19,9 +17,9 @@ final class ResultMapperToImpl<
 	private final Function<?, ?> fromGetter;
 	private final Supplier<?> fromSupplier;
 	
-	private final Classic_Collector_MapToResult_Base<MODEL, RESULT, NAMED_WHERE_OR_JOIN, ALIAS_WHERE_OR_JOIN> impl;
+	private final IMappingCollector<MODEL, RESULT> impl;
 
-	ResultMapperToImpl(Function<?, ?> fromGetter, Classic_Collector_MapToResult_Base<MODEL, RESULT, NAMED_WHERE_OR_JOIN, ALIAS_WHERE_OR_JOIN> impl) {
+	ResultMapperToImpl(Function<?, ?> fromGetter, IMappingCollector<MODEL, RESULT> impl) {
 		
 		if (fromGetter == null) {
 			throw new IllegalArgumentException("fromGetter == null");
@@ -37,7 +35,7 @@ final class ResultMapperToImpl<
 		this.impl = impl;
 	}
 
-	ResultMapperToImpl(Supplier<?> fromSupplier, Classic_Collector_MapToResult_Base<MODEL, RESULT, NAMED_WHERE_OR_JOIN, ALIAS_WHERE_OR_JOIN> impl) {
+	ResultMapperToImpl(Supplier<?> fromSupplier, IMappingCollector<MODEL, RESULT> impl) {
 		
 		if (fromSupplier == null) {
 			throw new IllegalArgumentException("fromGetter == null");

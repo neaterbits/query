@@ -19,13 +19,6 @@ final class ClassicSelect
 
 	static final ClassicSelect selectImpl = new ClassicSelect();
 	
-	private static <T> ModelCompiler<SingleQuery<T>> singleQueryCompiler() {
-		return compiledQuery -> new SharedQuery_Single<>(compiledQuery);
-	}
-
-	private static <T> ModelCompiler<MultiQuery<T>> multiQueryCompiler() {
-		return compiledQuery -> new SharedQuery_Multi<>(compiledQuery);
-	}
 	
 	/*
 	@Override

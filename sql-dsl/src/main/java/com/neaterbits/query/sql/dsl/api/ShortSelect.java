@@ -21,21 +21,36 @@ final class ShortSelect extends BaseSelect<
 	
 	// Aggregate helpers
 	@Override
-	public <TYPE_RESULT> IShortResult_Single<SingleQuery<TYPE_RESULT>, TYPE_RESULT> one(Class<TYPE_RESULT> cl) {
-		// TODO Auto-generated method stub
-		return null;
+	public <RESULT> IShortResult_Single<SingleQuery<RESULT>, RESULT> one(Class<RESULT> cl) {
+		if (cl == null) {
+			throw new IllegalArgumentException("cl == null");
+		}
+		
+		final SharedSelectSource selectSource = new SharedSelectSource_Named(cl);
+
+		return new Short_Collector_SingleResult<SingleQuery<RESULT>, RESULT>(selectSource, singleQueryCompiler());
 	}
 
 	@Override
-	public <TYPE_RESULT> IShortResult_Single<SingleQuery<TYPE_RESULT>, TYPE_RESULT> oneOrNull(Class<TYPE_RESULT> cl) {
-		// TODO Auto-generated method stub
-		return null;
+	public <RESULT> IShortResult_Single<SingleQuery<RESULT>, RESULT> oneOrNull(Class<RESULT> cl) {
+		if (cl == null) {
+			throw new IllegalArgumentException("cl == null");
+		}
+		
+		final SharedSelectSource selectSource = new SharedSelectSource_Named(cl);
+
+		return new Short_Collector_SingleResult<SingleQuery<RESULT>, RESULT>(selectSource, singleQueryCompiler());
 	}
 
 	@Override
-	public <TYPE_RESULT> IShortResult_Multi<MultiQuery<TYPE_RESULT>, TYPE_RESULT> list(Class<TYPE_RESULT> cl) {
-		// TODO Auto-generated method stub
-		return null;
+	public <RESULT> IShortResult_Multi<MultiQuery<RESULT>, RESULT> list(Class<RESULT> cl) {
+		if (cl == null) {
+			throw new IllegalArgumentException("cl == null");
+		}
+		
+		final SharedSelectSource selectSource = new SharedSelectSource_Named(cl);
+
+		return new Short_Collector_MultiResult<MultiQuery<RESULT>, RESULT>(selectSource, ECollectionType.LIST, multiQueryCompiler());
 	}
 
 	@Override

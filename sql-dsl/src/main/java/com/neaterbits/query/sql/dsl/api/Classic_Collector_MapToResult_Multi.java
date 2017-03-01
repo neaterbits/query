@@ -20,36 +20,20 @@ final class Classic_Collector_MapToResult_Multi<
 	Classic_Collector_MapToResult_Multi(Class<?> resultType, ECollectionType collectionType, ModelCompiler<MODEL> modelCompiler) {
 		super(new CollectedQueryResult_Mapped_Multi(resultType, collectionType), modelCompiler);
 	}
+	
 
 	@Override
 	public <T, R> ISharedResultMapperTo<MODEL, RESULT, R, IClassicResult_Mapped_Multi_Named<MODEL, RESULT>>
 				map(Function<T, R> getter) {
 
-		return new ResultMapperToImpl<
-					MODEL,
-					RESULT,
-					R,
-					IClassicResult_Mapped_Multi_Named<MODEL, RESULT>,
-					ISQLLogical_WhereOrJoin_MultiMapped_Named<MODEL, RESULT>,
-					ISQLLogical_WhereOrJoin_MultiMapped_Alias<MODEL, RESULT>
-					>
-		(getter, this);
+		return new ResultMapperToImpl<>(getter, this);
 	}
 
 	@Override
 	public <T, R> ISharedResultMapperTo<MODEL, RESULT, R, IClassicResult_Mapped_Multi_Alias<MODEL, RESULT>> map(
 			Supplier<R> getter) {
 
-		return new ResultMapperToImpl<
-						MODEL,
-						RESULT,
-						R,
-						IClassicResult_Mapped_Multi_Alias<MODEL, RESULT>,
-						ISQLLogical_WhereOrJoin_MultiMapped_Named<MODEL, RESULT>,
-						ISQLLogical_WhereOrJoin_MultiMapped_Alias<MODEL, RESULT>
-						>
-		
-		(getter, this);
+		return new ResultMapperToImpl<>(getter, this);
 	}
 
 	@Override

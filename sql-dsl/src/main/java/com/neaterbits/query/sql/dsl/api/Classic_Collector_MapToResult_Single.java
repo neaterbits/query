@@ -27,29 +27,13 @@ final class Classic_Collector_MapToResult_Single<MODEL, RESULT>
 	public <T, R> ISharedResultMapperTo<MODEL, RESULT, R, IClassicResult_Mapped_Single_Named<MODEL, RESULT>>
 				map(Function<T, R> getter) {
 
-		return new ResultMapperToImpl<
-				MODEL,
-				RESULT,
-				R,
-				IClassicResult_Mapped_Single_Named<MODEL, RESULT>,
-				ISQLLogical_WhereOrJoin_SingleResult_Named<MODEL, RESULT>,
-				ISQLLogical_WhereOrJoin_SingleResult_Alias<MODEL, RESULT>
-		
-			>(getter, this);
+		return new ResultMapperToImpl<>(getter, this);
 	}
 
 	@Override
 	public <T, R> ISharedResultMapperTo<MODEL, RESULT, R, IClassicResult_Mapped_Single_Alias<MODEL, RESULT>> map(Supplier<R> getter) {
 
-		return new ResultMapperToImpl<
-				MODEL,
-				RESULT,
-				R,
-				IClassicResult_Mapped_Single_Alias<MODEL, RESULT>,
-				ISQLLogical_WhereOrJoin_SingleResult_Named<MODEL, RESULT>,
-				ISQLLogical_WhereOrJoin_SingleResult_Alias<MODEL, RESULT>
-		
-			>(getter, this);
+		return new ResultMapperToImpl<>(getter, this);
 	}
 
 	@Override

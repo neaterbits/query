@@ -37,6 +37,14 @@ abstract class BaseSelect<
 	}
 	
 	
+	static <T> ModelCompiler<SingleQuery<T>> singleQueryCompiler() {
+		return compiledQuery -> new SharedQuery_Single<>(compiledQuery);
+	}
+
+	static <T> ModelCompiler<MultiQuery<T>> multiQueryCompiler() {
+		return compiledQuery -> new SharedQuery_Multi<>(compiledQuery);
+	}
+	
 	@Override
     public <T> T alias(Class<T> aliasType) {
 		if (aliasType == null) {

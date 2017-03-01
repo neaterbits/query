@@ -7,7 +7,10 @@ abstract class Classic_Collector_MapToResult_Base<
 	ALIAS_WHERE_OR_JOIN extends ISQLLogical_WhereOrJoin_Alias_Base<MODEL, RESULT>> 
 
 
-	extends Classic_Collector_SelectSource<MODEL, RESULT, NAMED_WHERE_OR_JOIN, ALIAS_WHERE_OR_JOIN> {
+	extends Classic_Collector_SelectSource<MODEL, RESULT, NAMED_WHERE_OR_JOIN, ALIAS_WHERE_OR_JOIN> 
+
+	implements IMappingCollector<MODEL, RESULT>
+{
 
 	Classic_Collector_MapToResult_Base(CollectedQueryResult result, ModelCompiler<MODEL> modelCompiler) {
 		super(result, modelCompiler);
@@ -18,7 +21,8 @@ abstract class Classic_Collector_MapToResult_Base<
 		getQueryCollector().setMappings(mappingCollector);
 	}
 
-	final MappingCollector getMappingCollector() {
+	@Override
+	public final MappingCollector getMappingCollector() {
 		return getQueryCollector().getMappings();
 	}
 }
