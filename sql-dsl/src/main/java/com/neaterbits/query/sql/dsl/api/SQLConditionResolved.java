@@ -1,10 +1,10 @@
 package com.neaterbits.query.sql.dsl.api;
 
-final class JPAConditionResolved extends JPACondition {
+final class SQLConditionResolved extends SQLCondition {
 
 	private final Param<?> anyResolvedParam;
 	
-	JPAConditionResolved(String prefix, Param<?> anyResolvedParam) {
+	SQLConditionResolved(String prefix, Param<?> anyResolvedParam) {
 		super(prefix);
 		
 		// may be null

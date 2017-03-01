@@ -6,6 +6,8 @@ import com.neaterbits.query.sql.dsl.api.entity.Relation;
 
 abstract class QueryDialect_SQL extends QueryDialect_Base {
 
+	abstract ConditionStringBuilder makeConditionStringBuilder(QueryParametersDistinct distinctParams);
+	
 	abstract void appendAliasFieldReference(QueryBuilder sb, FieldReferenceAlias ref);
 
 	abstract void appendEntityFieldReference(QueryBuilder sb, FieldReferenceEntity ref);

@@ -63,7 +63,7 @@ abstract class PreparedQuery_JPA_Halfway<QUERY> extends PreparedQuery_JPA_Base<Q
 				// still unresolved so is resolved into literal instead, skip
 			}
 			else {
-				final JPAConditionResolved condition = (JPAConditionResolved)comparison.getRhs();
+				final SQLConditionResolved condition = (SQLConditionResolved)comparison.getRhs();
 
 				final Param<?> param = condition.getAnyResolvedParam();
 				

@@ -1,12 +1,12 @@
 package com.neaterbits.query.sql.dsl.api;
 
-final class JPAConditionLikeWithParamUnresolved extends JPAConditionUnresolved {
+final class SQLConditionLikeWithParamUnresolved extends SQLConditionUnresolved {
 
 	private final boolean wildcardBefore;
 	private final boolean wildcardAfter;
 	private final Param<?> param;
 	
-	public JPAConditionLikeWithParamUnresolved(String prefix, boolean wildcardBefore, boolean wildcardAfter, Param<?> param) {
+	public SQLConditionLikeWithParamUnresolved(String prefix, boolean wildcardBefore, boolean wildcardAfter, Param<?> param) {
 		super(prefix);
 
 		if (param == null) {

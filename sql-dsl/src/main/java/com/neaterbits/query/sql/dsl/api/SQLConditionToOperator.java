@@ -5,7 +5,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.function.Function;
 
-final class JPAConditionToOperator {
+final class SQLConditionToOperator {
 
 	<QUERY> PreparedQueryComparisonRHS convert(EClauseOperator operator, ConditionValue value, ConditionStringBuilder builder) {
 		
@@ -39,7 +39,7 @@ final class JPAConditionToOperator {
 				
 				builder.append(')');
 				
-				ret = new JPAConditionResolved(builder.getBuiltString(), resolvedParam);
+				ret = new SQLConditionResolved(builder.getBuiltString(), resolvedParam);
 			}
 			break;
 
@@ -85,9 +85,9 @@ final class JPAConditionToOperator {
 		return ret;
 	}
 
-	private static JPACondition appendLike(boolean wildcardBefore, boolean wildcardAfter, ConditionValue value, ConditionStringBuilder builder) {
+	private static SQLCondition appendLike(boolean wildcardBefore, boolean wildcardAfter, ConditionValue value, ConditionStringBuilder builder) {
 
-		final JPACondition ret;
+		final SQLCondition ret;
 		
 		builder.append("LIKE ");
 
@@ -113,13 +113,13 @@ final class JPAConditionToOperator {
 
 			builder.append("'");
 
-			ret = new JPAConditionResolved(builder.getBuiltString(), null);
+			ret = new SQLConditionResolved(builder.getBuiltString(), null);
 
 		} else if (value instanceof ConditionValue_Param) {
 
 			final ConditionValue_Param conditionValueParam = (ConditionValue_Param) value;
 
-			ret = new JPAConditionLikeWithParamUnresolved(
+			ret = new SQLConditionLikeWithParamUnresolved(
 					builder.getBuiltString(),
 					wildcardBefore,
 					wildcardAfter,
@@ -132,13 +132,13 @@ final class JPAConditionToOperator {
 		return ret;
 	}
 
-	private static JPACondition appendOpAndValue(String op, ConditionValue value, ConditionStringBuilder sb) {
+	private static SQLCondition appendOpAndValue(String op, ConditionValue value, ConditionStringBuilder sb) {
 		sb.append(op).append(" ");
 
 		final Param<?> resolvedParam = value.visit(conditionValueVisitor, sb);
 
 		// new resolved condition
-		return new JPAConditionResolved(sb.getBuiltString(), resolvedParam);
+		return new SQLConditionResolved(sb.getBuiltString(), resolvedParam);
 	}
 
 	private static final ConditionValueVisitor<ConditionStringBuilder, Param<?>> conditionValueVisitor = new ConditionValueVisitor<ConditionStringBuilder, Param<?>>() {

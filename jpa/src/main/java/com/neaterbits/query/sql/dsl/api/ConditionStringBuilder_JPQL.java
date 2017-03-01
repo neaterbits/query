@@ -42,6 +42,6 @@ final class ConditionStringBuilder_JPQL extends ConditionStringBuilder {
 		// just add as regular param
 		appendParam(param);
 		
-		return new JPAConditionResolved(getBuiltString(), param);
+		return new SQLConditionResolved(getBuiltString(), param);
 	}
 }

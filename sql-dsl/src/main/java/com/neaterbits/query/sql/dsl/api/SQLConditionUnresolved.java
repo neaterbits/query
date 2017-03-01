@@ -1,8 +1,8 @@
 package com.neaterbits.query.sql.dsl.api;
 
-abstract class JPAConditionUnresolved extends JPACondition {
+abstract class SQLConditionUnresolved extends SQLCondition {
 
-	JPAConditionUnresolved(String conditionResolvedPrefix) {
+	SQLConditionUnresolved(String conditionResolvedPrefix) {
 		super(conditionResolvedPrefix);
 	}
 

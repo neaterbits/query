@@ -1,6 +1,7 @@
 package com.neaterbits.query.sql.dsl.api.entity;
 
 import java.lang.reflect.Member;
+import java.lang.reflect.Method;
 import java.util.Collection;
 
 public interface EntityModel<MANAGED, EMBEDDED, IDENTIFIABLE, ATTRIBUTE, ATTRIBUTE_COLL extends Collection<ATTRIBUTE>> {
@@ -48,5 +49,8 @@ public interface EntityModel<MANAGED, EMBEDDED, IDENTIFIABLE, ATTRIBUTE, ATTRIBU
 	Class<?> getAssociationTarget(ATTRIBUTE attribute);
 	
 	ATTRIBUTE getAssociationTargetAttribute(ATTRIBUTE attribute);
+	
+	// TODO: can be removed or refactored to pass MANAGED?
+	String getColumnNameForGetter(Class<?> type, Method getter);
 	
 }

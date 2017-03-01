@@ -101,6 +101,11 @@ final class QueryDialect_JPQL extends QueryDialect_SQL {
 		sb.append(entityName).append(' ').append(ref.getVarName());
 	}
 
+	@Override
+	final ConditionStringBuilder makeConditionStringBuilder(QueryParametersDistinct distinctParams) {
+		return new ConditionStringBuilder_JPQL(distinctParams);
+	}
+	
 	private String getSourceTypeName(Class<?> javaType) {
 		return javaType.getSimpleName();
 	}

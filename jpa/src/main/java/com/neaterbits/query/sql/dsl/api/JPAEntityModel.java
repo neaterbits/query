@@ -2,6 +2,7 @@ package com.neaterbits.query.sql.dsl.api;
 
 import java.lang.reflect.AccessibleObject;
 import java.lang.reflect.Member;
+import java.lang.reflect.Method;
 import java.util.Set;
 
 import javax.persistence.Column;
@@ -703,7 +704,50 @@ public class JPAEntityModel implements EntityModel<
 		
 		return entityName.toLowerCase();
 	}
-	
+
+
+
+	@Override
+	public String getColumnNameForGetter(Class<?> type, Method getter) {
+
+		// Look up in entity manager
+		
+		final EntityType<?> entityType = metamodel.entity(type);
+
+		if (entityType == null) {
+			throw new IllegalStateException("No entity type for " + type);
+		}
+
+		final Attribute<?, ?> attr = findAttr(entityType, getter);
+		
+		if (attr == null) {
+			throw new IllegalArgumentException("No attribute for getter " + getter);
+		}
+
+		return attr.getName();
+	}
+
+	private static Attribute<?, ?> findAttr(EntityType<?> entityType, Method getterMethod) {
+		Attribute<?, ?> found = null;
+		
+		// Find attribute
+		for (Attribute<?, ?> attr : entityType.getAttributes()) {
+			final Member m  = attr.getJavaMember();
+
+			if (m instanceof Method) {
+				final Method method = (Method)m;
+				
+				if (method.equals(getterMethod)) {
+					found = attr;
+				}
+			}
+			else {
+				throw new UnsupportedOperationException("Does not support field members for now");
+			}
+		}
+
+		return found;
+	}
 	
 }
 

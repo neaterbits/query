@@ -12,16 +12,10 @@ import java.util.function.BiFunction;
 import com.neaterbits.query.sql.dsl.api.entity.EntityModelUtil;
 import com.neaterbits.query.sql.dsl.api.entity.Relation;
 
-abstract class PreparedQueryBuilderORM<MANAGED, EMBEDDED, IDENTIFIABLE, ATTRIBUTE, COLL extends Collection<ATTRIBUTE>>
+final class PreparedQueryBuilderORM<MANAGED, EMBEDDED, IDENTIFIABLE, ATTRIBUTE, COLL extends Collection<ATTRIBUTE>>
 			extends PreparedQueryBuilder {
 
-	abstract String getColumnNameForGetter(TypeMapSource source, CompiledGetter getter);
-	
-	abstract <QUERY> PreparedQueryComparisonRHS convertCondition(EClauseOperator operator, ConditionValue value, ConditionStringBuilder sb);
-	
-	abstract PreparedQueryConditionsBuilder createConditionsBuilder(QueryDialect_SQL dialect, EConditionsClause conditionsClause, boolean atRoot);
 
-	abstract ConditionStringBuilder makeConditionStringBuilder(QueryParametersDistinct distinctParams);
 	
 	final QueryBuilder s;
 	private final QueryDialect_SQL dialect;
@@ -53,6 +47,16 @@ abstract class PreparedQueryBuilderORM<MANAGED, EMBEDDED, IDENTIFIABLE, ATTRIBUT
 		return getQueryAsString();
 	}
 	
+
+	final PreparedQueryConditionsBuilder createConditionsBuilder(QueryDialect_SQL dialect, EConditionsClause conditionsClause, boolean atRoot) {
+		return new PreparedQueryConditionsBuilderORM(dialect, conditionsClause, atRoot);
+	}
+
+	private static final SQLConditionToOperator conditionToOperator = new SQLConditionToOperator();
+	
+	private <QUERY> PreparedQueryComparisonRHS convertCondition(EClauseOperator operator, ConditionValue value, ConditionStringBuilder sb) {
+		return conditionToOperator.convert(operator, value, sb);
+	}
 	
 	@Override
 	final void resolveFromParams(PreparedQueryConditionsBuilder conditionsBuilder, ParamValueResolver paramValueResolver) {
@@ -189,7 +193,7 @@ abstract class PreparedQueryBuilderORM<MANAGED, EMBEDDED, IDENTIFIABLE, ATTRIBUT
 				throw new IllegalStateException("distinctParams == null");
 			}
 
-			final ConditionStringBuilder conditionSB = makeConditionStringBuilder(distinctParams);
+			final ConditionStringBuilder conditionSB = dialect.makeConditionStringBuilder(distinctParams);
 			final ConditionsType conditionsType = qh.getConditionsType(query, 0, conditionIndices);
 			
 	    	prepareConditions(q, qh, query, conditionsType, conditionsBuilder, 0, conditionIndices, conditionSB);
@@ -595,7 +599,7 @@ abstract class PreparedQueryBuilderORM<MANAGED, EMBEDDED, IDENTIFIABLE, ATTRIBUT
 				: conditionsBuilder;
 
 			
-		final ConditionStringBuilder conditionSB = makeConditionStringBuilder(distinctParams);
+		final ConditionStringBuilder conditionSB = dialect.makeConditionStringBuilder(distinctParams);
 				
 	    if (q.isRootConditionOnly(query)) {
 	    	prepareRootConditions(q, query, original, sub, conditionSB);
@@ -707,6 +711,9 @@ abstract class PreparedQueryBuilderORM<MANAGED, EMBEDDED, IDENTIFIABLE, ATTRIBUT
 		}
 	}
 	
+	private final String getColumnNameForGetter(TypeMapSource source, CompiledGetter getter) {
+		return entityModelUtil.getModel().getColumnNameForGetter(source.getType(), getter.getGetterMethod());
+	}
 	
 	/// From QueryDataSouceJPA, may move to somewhere else
 	

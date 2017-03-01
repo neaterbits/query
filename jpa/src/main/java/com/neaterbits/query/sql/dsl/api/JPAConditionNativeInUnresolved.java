@@ -2,7 +2,7 @@ package com.neaterbits.query.sql.dsl.api;
 
 import java.util.List;
 
-final class JPAConditionNativeInUnresolved extends JPAConditionUnresolved {
+final class JPAConditionNativeInUnresolved extends SQLConditionUnresolved {
 
 	private final BaseParamImpl<?> param;
 	
@@ -38,7 +38,7 @@ final class JPAConditionNativeInUnresolved extends JPAConditionUnresolved {
 				sb.append(',');
 			}
 
-			JPAConditionToOperator.appendLiteral(list.get(i), sb::append);
+			SQLConditionToOperator.appendLiteral(list.get(i), sb::append);
 		}
 		
 		sb.append(')');

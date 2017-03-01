@@ -281,6 +281,11 @@ final class QueryDialect_ANSI_SQL<MANAGED, EMBEDDED, IDENTIFIABLE, ATTRIBUTE, CO
 		
 		sb.append(tableName).append(".").append(r.getColumnName());
 	}
+
+	@Override
+	final ConditionStringBuilder makeConditionStringBuilder(QueryParametersDistinct distinctParams) {
+		return new ConditionStringBuilder_Native(distinctParams);
+	}
 	
 	private String getTableName(Class<?> javaType) {
 		final String tableName = entityModelUtil.getEntityInfo(javaType).getTableName();

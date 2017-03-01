@@ -23,7 +23,7 @@ public final class QueryDataSourceJPANative extends QueryDataSourceJPA {
 
 	@Override
 	PreparedQueryBuilder createBuilder() {
-		return new PreparedQueryBuilderANSISQL<>(getEntityModelUtil(), em);
+		return new PreparedQueryBuilderORM<>(getEntityModelUtil(), getDialect());
 	}
 	
 	@Override

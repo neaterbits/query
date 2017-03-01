@@ -1,10 +1,10 @@
 package com.neaterbits.query.sql.dsl.api;
 
-abstract class JPACondition extends PreparedQueryComparisonRHS {
+abstract class SQLCondition extends PreparedQueryComparisonRHS {
 
 	private final String conditionResolvedPrefix;
 
-	JPACondition(String conditionResolvedPrefix) {
+	SQLCondition(String conditionResolvedPrefix) {
 		
 		if (conditionResolvedPrefix == null) {
 			throw new IllegalArgumentException("conditionResolvedPrefix == null");

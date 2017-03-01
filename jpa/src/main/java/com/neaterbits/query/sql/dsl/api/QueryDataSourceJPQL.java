@@ -13,7 +13,7 @@ public final class QueryDataSourceJPQL extends QueryDataSourceJPA {
 	
 	@Override
 	PreparedQueryBuilder createBuilder() {
-		return new PreparedQueryBuilderJPQL<>(getEntityModelUtil(), em);
+		return new PreparedQueryBuilderORM<>(getEntityModelUtil(), getDialect());
 	}
 	
 	@Override
