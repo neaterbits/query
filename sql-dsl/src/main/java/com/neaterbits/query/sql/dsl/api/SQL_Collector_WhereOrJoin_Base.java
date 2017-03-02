@@ -1,5 +1,6 @@
 package com.neaterbits.query.sql.dsl.api;
 
+import java.util.function.Function;
 import java.util.function.Supplier;
 
 abstract class SQL_Collector_WhereOrJoin_Base<
@@ -21,6 +22,9 @@ abstract class SQL_Collector_WhereOrJoin_Base<
 		NAMED_OR_CLAUSES,
 		NAMED_NESTED_AND_CLAUSES,
 		NAMED_NESTED_OR_CLAUSES>,
+		
+	NAMED_AFTER_GROUP_BY,
+		
 	
 	ALIAS_AND_CLAUSES extends ISharedLogical_And_Alias_Base<MODEL, RESULT, ALIAS_AND_CLAUSES, ALIAS_NESTED_OR_CLAUSES>,
 	ALIAS_OR_CLAUSES  extends ISharedLogical_Or_Alias_Base <MODEL, RESULT, ALIAS_OR_CLAUSES,  ALIAS_NESTED_AND_CLAUSES>,
@@ -37,6 +41,8 @@ abstract class SQL_Collector_WhereOrJoin_Base<
 		ALIAS_OR_CLAUSES,
 		ALIAS_NESTED_AND_CLAUSES,
 		ALIAS_NESTED_OR_CLAUSES>,
+		
+	ALIAS_AFTER_GROUP_BY,
 	
 	AFTER_GROUP_BY>
 		
@@ -50,11 +56,13 @@ abstract class SQL_Collector_WhereOrJoin_Base<
 			NAMED_OR_CLAUSES,
 			NAMED_NESTED_AND_CLAUSES,
 			NAMED_NESTED_OR_CLAUSES,
+			NAMED_AFTER_GROUP_BY,
 
 			ALIAS_AND_CLAUSES,
 			ALIAS_OR_CLAUSES,
 			ALIAS_NESTED_AND_CLAUSES,
 			ALIAS_NESTED_OR_CLAUSES,
+			ALIAS_AFTER_GROUP_BY,
 			
 			AFTER_GROUP_BY>
 	
@@ -77,6 +85,7 @@ abstract class SQL_Collector_WhereOrJoin_Base<
 	SQL_Collector_WhereOrJoin_Base(Collector_Query<MODEL> queryCollector, Collector_Clause collector) {
 		super(queryCollector, collector);
 	}
+	
 			
 	/*********************************************************************************************
 	 * Named
@@ -156,6 +165,39 @@ abstract class SQL_Collector_WhereOrJoin_Base<
 	}
 	
 
+	final ISharedFunctions_Named_Initial<
+		MODEL,
+		RESULT,
+		NAMED_AND_OR,
+	
+		ISharedCondition_Comparable_Common_All_Compilable<MODEL, RESULT, Integer, NAMED_AND_OR>,
+		ISharedCondition_Comparable_Common_All_Compilable<MODEL, RESULT, Long, NAMED_AND_OR>,
+		ISharedCondition_Comparable_String_All_Compilable<MODEL, RESULT, NAMED_AND_OR>> 
+
+			whereNamed() {
+
+		@SuppressWarnings({"unchecked", "rawtypes"})
+		final ISharedCollector_Functions_Callback_Named<MODEL, RESULT, NAMED_AND_OR> cb
+				= new ISharedCollector_Functions_Callback_Named<MODEL, RESULT, NAMED_AND_OR>() {
+		
+			@Override
+			public ISharedCondition_Comparable_Common_Base<MODEL, RESULT, Comparable<?>, NAMED_AND_OR>
+				onComparable(CollectedFunctions functions, Function getter) {
+				
+				return andNamedClassImplComparable(functions, (Function)getter);
+			}
+		
+			@Override
+			public ISharedCondition_Comparable_String_Base<MODEL, RESULT, NAMED_AND_OR>
+				onString(CollectedFunctions functions, StringFunction getter) {
+				
+				return new Collector_Condition_String<MODEL, RESULT, NAMED_AND_OR> (SQL_Collector_WhereOrJoin_Base.this, functions, makeGetter(getter));
+			}
+		};
+		
+		return new Collector_SharedFunctions_Named<>(cb);
+	}
+	
 
 	// ------------------------  WHERE ------------------------
 	// implemented in subclass @Override
@@ -258,6 +300,39 @@ abstract class SQL_Collector_WhereOrJoin_Base<
 		return compareAlias(left, right);
 	}
 
+	// JoinCondition, marks this as implemented in subclass by implementing matching interface there
+	final ISharedFunctions_Alias_Initial<
+			MODEL, RESULT,
+			ALIAS_AND_OR,
+			
+			ISharedCondition_Comparable_Common_All<MODEL, RESULT, Integer, ALIAS_AND_OR>,
+			ISharedCondition_Comparable_Common_All<MODEL, RESULT, Long, ALIAS_AND_OR>,
+			ISharedCondition_Comparable_String_All<MODEL, RESULT, ALIAS_AND_OR>
+	> 
+	
+			whereAlias() {
+		
+		@SuppressWarnings({"unchecked", "rawtypes"})
+		final ISharedCollector_Functions_Callback_Alias<MODEL, RESULT, ALIAS_AND_OR> cb
+				= new ISharedCollector_Functions_Callback_Alias<MODEL, RESULT, ALIAS_AND_OR>() {
+		
+			@Override
+			public ISharedCondition_Comparable_Common_Base<MODEL, RESULT, Comparable<?>, ALIAS_AND_OR>
+				onComparable(CollectedFunctions functions, Supplier<? extends Comparable<?>> getter) {
+				
+				return andAliasImplComparable(functions, (Supplier)getter);
+			}
+		
+			@Override
+			public ISharedCondition_Comparable_String_Base<MODEL, RESULT, ALIAS_AND_OR>
+				onString(CollectedFunctions functions, ISupplierString getter) {
+				
+				return new Collector_Condition_String<MODEL, RESULT, ALIAS_AND_OR> (SQL_Collector_WhereOrJoin_Base.this, functions, makeGetter(getter));
+			}
+		};
+	
+		return new Collector_SharedFunctions_Alias<>(cb);
+	}
 	// ------------------------  WHERE ------------------------
 	
 	//implemented in subclass @Override

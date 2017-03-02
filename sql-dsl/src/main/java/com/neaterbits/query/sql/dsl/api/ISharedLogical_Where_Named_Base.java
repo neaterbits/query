@@ -17,6 +17,5 @@ public interface ISharedLogical_Where_Named_Base<
 
 	<T> STRING_CLAUSE where(StringFunction<T> func);
     
-	ISharedFunctions_Named_Initial<MODEL, RESULT, CONDITION_CLAUSE, INTEGER_CLAUSE, LONG_CLAUSE, STRING_CLAUSE> where();
 
 }

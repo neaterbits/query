@@ -10,8 +10,8 @@ final class Classic_Collector_MapToResult_Single<MODEL, RESULT>
 		RESULT,
 		
 		// single-entry so non result processing
-		ISQLLogical_WhereOrJoin_SingleResult_Named<MODEL, RESULT>,
-		ISQLLogical_WhereOrJoin_SingleResult_Alias<MODEL, RESULT>
+		ISQLLogical_WhereOrJoin_SingleResult_Named_And_Function<MODEL, RESULT>,
+		ISQLLogical_WhereOrJoin_SingleResult_Alias_And_Function<MODEL, RESULT>
 	>
 
 
@@ -37,12 +37,12 @@ final class Classic_Collector_MapToResult_Single<MODEL, RESULT>
 	}
 
 	@Override
-	ISQLLogical_WhereOrJoin_SingleResult_Named<MODEL, RESULT> createWhereOrJoinForNamed() {
+	ISQLLogical_WhereOrJoin_SingleResult_Named_And_Function<MODEL, RESULT> createWhereOrJoinForNamed() {
 		return new SQL_Collector_WhereOrJoin_SingleResult_Named<>(this);
 	}
 
 	@Override
-	ISQLLogical_WhereOrJoin_SingleResult_Alias<MODEL, RESULT> createWhereOrJoinForAlias() {
+	ISQLLogical_WhereOrJoin_SingleResult_Alias_And_Function<MODEL, RESULT> createWhereOrJoinForAlias() {
 		return new SQL_Collector_WhereOrJoin_SingleResult_Alias<>(this);
 	}
 

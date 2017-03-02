@@ -7,8 +7,8 @@ final class Collector_AggregateNamedResult<TYPE>
 		extends Classic_Collector_AggregateResult<
 			SingleQuery<TYPE>,
 			TYPE,
-			ISQLLogical_WhereOrJoin_SingleResult_Named<SingleQuery<TYPE>, TYPE>,
-			ISQLLogical_WhereOrJoin_SingleResult_Alias<SingleQuery<TYPE>, TYPE>>
+			ISQLLogical_WhereOrJoin_SingleResult_Named_And_Function<SingleQuery<TYPE>, TYPE>,
+			ISQLLogical_WhereOrJoin_SingleResult_Alias_And_Function<SingleQuery<TYPE>, TYPE>>
 
 
 		implements IClassicResult_Numeric_Named<TYPE> {
@@ -18,12 +18,12 @@ final class Collector_AggregateNamedResult<TYPE>
 	}
 
 	@Override
-	ISQLLogical_WhereOrJoin_SingleResult_Named<SingleQuery<TYPE>, TYPE> createWhereOrJoinForNamed() {
+	ISQLLogical_WhereOrJoin_SingleResult_Named_And_Function<SingleQuery<TYPE>, TYPE> createWhereOrJoinForNamed() {
 		return new SQL_Collector_WhereOrJoin_SingleResult_Named<SingleQuery<TYPE>, TYPE>(this);
 	}
 
 	@Override
-	ISQLLogical_WhereOrJoin_SingleResult_Alias<SingleQuery<TYPE>, TYPE> createWhereOrJoinForAlias() {
+	ISQLLogical_WhereOrJoin_SingleResult_Alias_And_Function<SingleQuery<TYPE>, TYPE> createWhereOrJoinForAlias() {
 		return new SQL_Collector_WhereOrJoin_SingleResult_Alias<SingleQuery<TYPE>, TYPE>(this);
 	}
 

@@ -11,7 +11,7 @@ public interface ISharedLogical_And_Or_Named_All<
 										
 		extends
 			ISharedLogical_And_Named_All_And_Function<MODEL, RESULT, AND_CLAUSES, NESTED_OR_CLAUSES>,
-			ISharedLogical_Or_Named_All<MODEL, RESULT, OR_CLAUSES, NESTED_AND_CLAUSES>,
+			ISharedLogical_Or_Named_All_And_Function<MODEL, RESULT, OR_CLAUSES, NESTED_AND_CLAUSES>,
 			ISharedLogical_Base<MODEL, RESULT> {
 
 }

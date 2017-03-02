@@ -83,9 +83,6 @@ public class ShortAPITest extends BaseSQLAPITest {
 	@Test
     public void testSingleNameBasedEntity() {
 		
-		assertThat(true).isEqualTo(false);
-
-		/*
 		final Company acme = new Company(-1, "Acme");
 		final Company foo = new Company(-1, "Foo");
 
@@ -115,7 +112,6 @@ public class ShortAPITest extends BaseSQLAPITest {
 	        		startsWithAc,
 	        		q -> q.execute());
 		});
-		*/
 	}
 	
 }

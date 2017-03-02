@@ -10,7 +10,7 @@ package com.neaterbits.query.sql.dsl.api;
  * @param <RESULT> query result type
  */
 
-public interface ISQLLogical_Where_SingleResult_Named<MODEL, RESULT>
+public interface ISQLLogical_Where_SingleResult_Named_Base<MODEL, RESULT>
 		extends ISQLLogical_Where_Named_Base<
 			MODEL,
 			RESULT,

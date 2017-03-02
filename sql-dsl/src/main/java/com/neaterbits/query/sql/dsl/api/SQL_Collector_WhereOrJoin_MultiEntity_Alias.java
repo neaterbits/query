@@ -14,7 +14,9 @@ final class SQL_Collector_WhereOrJoin_MultiEntity_Alias<MODEL, RESULT>
 
 				ISQLLogical_And_MultiEntity_Alias<MODEL, RESULT>,
 				ISQLLogical_Or_MultiEntity_Alias<MODEL, RESULT>,
-				ISQLLogical_AndOr_MultiEntity_Alias<MODEL, RESULT>>
+				ISQLLogical_AndOr_MultiEntity_Alias<MODEL, RESULT>,
+				
+				ISharedProcessResult_After_GroupBy_Alias<MODEL, RESULT>>
 
 		implements ISQLLogical_WhereOrJoin_MultiEntity_Alias<MODEL, RESULT> {
 

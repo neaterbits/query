@@ -1,6 +1,5 @@
 package com.neaterbits.query.sql.dsl.api;
 
-import java.util.function.Supplier;
 
 @Deprecated
 abstract class Collector_And_Or_Alias<
@@ -24,13 +23,15 @@ abstract class Collector_And_Or_Alias<
 			ISQLLogical_Or_NoOp_Named<MODEL, RESULT>,
 			ISQLLogical_And_NoOp_Named<MODEL, RESULT>,
 			ISQLLogical_Or_NoOp_Named<MODEL, RESULT>,
+			Void,
 			
 			AND_CLAUSES,
 			OR_CLAUSES,
 			NESTED_AND_CLAUSES,
 			NESTED_OR_CLAUSES,
+			AFTER_GROUP_BY,
 			
-			AFTER_GROUP_BY>
+			Void>
 	
 	implements ISharedLogical_And_Or_Alias<MODEL, RESULT, AND_CLAUSES, OR_CLAUSES, NESTED_AND_CLAUSES, NESTED_OR_CLAUSES>,
 			ISharedLogical_And_Alias_Function<MODEL, RESULT, AND_CLAUSES, NESTED_OR_CLAUSES>,
@@ -84,24 +85,24 @@ abstract class Collector_And_Or_Alias<
 	}
 
 	@Override
-	final Collector_Or_Named<MODEL, RESULT, ISQLLogical_Or_NoOp_Named<MODEL, RESULT>, ISQLLogical_And_NoOp_Named<MODEL, RESULT>, ISQLLogical_Or_NoOp_Named<MODEL, RESULT>, AFTER_GROUP_BY> createNamedOrCollector() {
+	final Collector_Or_Named<MODEL, RESULT, ISQLLogical_Or_NoOp_Named<MODEL, RESULT>, ISQLLogical_And_NoOp_Named<MODEL, RESULT>, ISQLLogical_Or_NoOp_Named<MODEL, RESULT>, Void> createNamedOrCollector() {
 		throw new UnsupportedOperationException("This is alias");
 	}
 
 	@Override
-	final Collector_And_Named<MODEL, RESULT, ISQLLogical_And_NoOp_Named<MODEL, RESULT>, ISQLLogical_And_NoOp_Named<MODEL, RESULT>, ISQLLogical_Or_NoOp_Named<MODEL, RESULT>, AFTER_GROUP_BY> createNamedAndCollector() {
+	final Collector_And_Named<MODEL, RESULT, ISQLLogical_And_NoOp_Named<MODEL, RESULT>, ISQLLogical_And_NoOp_Named<MODEL, RESULT>, ISQLLogical_Or_NoOp_Named<MODEL, RESULT>, Void> createNamedAndCollector() {
 		throw new UnsupportedOperationException("This is alias");
 	}
 
 	@Override
-	final Collector_Or_Named<MODEL, RESULT, ISQLLogical_Or_NoOp_Named<MODEL, RESULT>, ISQLLogical_And_NoOp_Named<MODEL, RESULT>, ISQLLogical_Or_NoOp_Named<MODEL, RESULT>, AFTER_GROUP_BY> createNamedNestedOrCollector(
-			Collector_And_Named<MODEL, RESULT, ISQLLogical_And_NoOp_Named<MODEL, RESULT>, ISQLLogical_And_NoOp_Named<MODEL, RESULT>, ISQLLogical_Or_NoOp_Named<MODEL, RESULT>, AFTER_GROUP_BY> andClauses) {
+	final Collector_Or_Named<MODEL, RESULT, ISQLLogical_Or_NoOp_Named<MODEL, RESULT>, ISQLLogical_And_NoOp_Named<MODEL, RESULT>, ISQLLogical_Or_NoOp_Named<MODEL, RESULT>, Void> createNamedNestedOrCollector(
+			Collector_And_Named<MODEL, RESULT, ISQLLogical_And_NoOp_Named<MODEL, RESULT>, ISQLLogical_And_NoOp_Named<MODEL, RESULT>, ISQLLogical_Or_NoOp_Named<MODEL, RESULT>, Void> andClauses) {
 		throw new UnsupportedOperationException("This is alias");
 	}
 
 	@Override
-	final Collector_And_Named<MODEL, RESULT, ISQLLogical_And_NoOp_Named<MODEL, RESULT>, ISQLLogical_And_NoOp_Named<MODEL, RESULT>, ISQLLogical_Or_NoOp_Named<MODEL, RESULT>, AFTER_GROUP_BY> createNamedNestedAndCollector(
-			Collector_Or_Named<MODEL, RESULT, ISQLLogical_Or_NoOp_Named<MODEL, RESULT>, ISQLLogical_And_NoOp_Named<MODEL, RESULT>, ISQLLogical_Or_NoOp_Named<MODEL, RESULT>, AFTER_GROUP_BY> orClauses) {
+	final Collector_And_Named<MODEL, RESULT, ISQLLogical_And_NoOp_Named<MODEL, RESULT>, ISQLLogical_And_NoOp_Named<MODEL, RESULT>, ISQLLogical_Or_NoOp_Named<MODEL, RESULT>, Void> createNamedNestedAndCollector(
+			Collector_Or_Named<MODEL, RESULT, ISQLLogical_Or_NoOp_Named<MODEL, RESULT>, ISQLLogical_And_NoOp_Named<MODEL, RESULT>, ISQLLogical_Or_NoOp_Named<MODEL, RESULT>, Void> orClauses) {
 
 		throw new UnsupportedOperationException("This is alias");
 	}

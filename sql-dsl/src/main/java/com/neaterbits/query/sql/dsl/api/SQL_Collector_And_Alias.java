@@ -15,7 +15,7 @@ abstract class SQL_Collector_And_Alias<
 				ISQLLogical_Or_NonProcessResult_Alias<MODEL, RESULT>,
 				ISharedProcessResult_After_GroupBy_Alias<MODEL, RESULT>> {
 
-	SQL_Collector_And_Alias(SQL_Collector_WhereOrJoin_Alias_Base<MODEL, RESULT, ?, ?, ?, ?, ?> last) {
+	SQL_Collector_And_Alias(SQL_Collector_WhereOrJoin_Alias_Base<MODEL, RESULT, ?, ?, ?, ?, ?, ?> last) {
 		super(last);
 	}
 	

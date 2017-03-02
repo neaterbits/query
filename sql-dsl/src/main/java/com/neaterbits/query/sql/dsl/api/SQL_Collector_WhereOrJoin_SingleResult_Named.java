@@ -15,7 +15,7 @@ final class SQL_Collector_WhereOrJoin_SingleResult_Named<MODEL, RESULT>
 				> 
 
 		implements 
-				ISQLLogical_WhereOrJoin_SingleResult_Named<MODEL, RESULT>,
+				ISQLLogical_WhereOrJoin_SingleResult_Named_And_Function<MODEL, RESULT>,
 				ISQLLogical_AndOr_SingleResult_Named<MODEL, RESULT>{
 
 	SQL_Collector_WhereOrJoin_SingleResult_Named(Collector_Base<MODEL> last) {
@@ -45,6 +45,20 @@ final class SQL_Collector_WhereOrJoin_SingleResult_Named<MODEL, RESULT>
 			and() {
 
 		return andNamed();
+	}
+
+	@Override
+	public ISharedFunctions_Named_Initial<
+			MODEL,
+			RESULT,
+			ISQLLogical_Or_NonProcessResult_Named<MODEL, RESULT>,
+			ISharedCondition_Comparable_Common_All<MODEL, RESULT, Integer, ISQLLogical_Or_NonProcessResult_Named<MODEL, RESULT>>,
+			ISharedCondition_Comparable_Common_All<MODEL, RESULT, Long, ISQLLogical_Or_NonProcessResult_Named<MODEL, RESULT>>,
+			ISharedCondition_Comparable_String_All<MODEL, RESULT, ISQLLogical_Or_NonProcessResult_Named<MODEL, RESULT>>>
+	
+			or() {
+
+		return orNamed();
 	}
 }
 

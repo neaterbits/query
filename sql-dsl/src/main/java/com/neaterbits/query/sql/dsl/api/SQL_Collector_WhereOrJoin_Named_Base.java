@@ -1,7 +1,5 @@
 package com.neaterbits.query.sql.dsl.api;
 
-import java.util.function.Function;
-
 abstract class SQL_Collector_WhereOrJoin_Named_Base<
 
 			MODEL,
@@ -37,6 +35,7 @@ abstract class SQL_Collector_WhereOrJoin_Named_Base<
 				
 				NAMED_JOIN_CONDITION,
 				AND_OR,
+				ISharedProcessResult_After_GroupBy_Named<MODEL, RESULT>,
 				
 				ISQLLogical_And_NoOp_Alias<MODEL, RESULT>,
 				ISQLLogical_Or_NoOp_Alias<MODEL, RESULT>,
@@ -51,6 +50,7 @@ abstract class SQL_Collector_WhereOrJoin_Named_Base<
 					ISQLLogical_And_NoOp_Alias<MODEL, RESULT>,
 					ISQLLogical_Or_NoOp_Alias<MODEL, RESULT>
 					>,
+				Void,
 
 				
 				
@@ -77,27 +77,8 @@ abstract class SQL_Collector_WhereOrJoin_Named_Base<
 			ISharedCondition_Comparable_String_All_Compilable<MODEL, RESULT, AND_OR>> 
 	
 			where() {
-		
-		@SuppressWarnings({"unchecked", "rawtypes"})
-		final ISharedCollector_Functions_Callback_Named<MODEL, RESULT, AND_OR> cb
-				= new ISharedCollector_Functions_Callback_Named<MODEL, RESULT, AND_OR>() {
-		
-			@Override
-			public ISharedCondition_Comparable_Common_Base<MODEL, RESULT, Comparable<?>, AND_OR>
-				onComparable(CollectedFunctions functions, Function getter) {
 				
-				return andNamedClassImplComparable(functions, (Function)getter);
-			}
-		
-			@Override
-			public ISharedCondition_Comparable_String_Base<MODEL, RESULT, AND_OR>
-				onString(CollectedFunctions functions, StringFunction getter) {
-				
-				return new Collector_Condition_String<MODEL, RESULT, AND_OR> (SQL_Collector_WhereOrJoin_Named_Base.this, functions, makeGetter(getter));
-			}
-		};
-
-		return new Collector_SharedFunctions_Named<>(cb);
+		return whereNamed();
 	}
 
 	// nested-instantiation
@@ -120,28 +101,28 @@ abstract class SQL_Collector_WhereOrJoin_Named_Base<
 
 
 	@Override
-	final Collector_Or_Alias<MODEL, RESULT, ISQLLogical_Or_NoOp_Alias<MODEL, RESULT>, ISQLLogical_And_NoOp_Alias<MODEL, RESULT>, ISQLLogical_Or_NoOp_Alias<MODEL, RESULT>, ISharedProcessResult_After_GroupBy_Named<MODEL, RESULT>> createAliasOrCollector() {
+	final Collector_Or_Alias<MODEL, RESULT, ISQLLogical_Or_NoOp_Alias<MODEL, RESULT>, ISQLLogical_And_NoOp_Alias<MODEL, RESULT>, ISQLLogical_Or_NoOp_Alias<MODEL, RESULT>, Void> createAliasOrCollector() {
 		throw new UnsupportedOperationException("Not alias");
 	}
 
 
 	@Override
-	final Collector_And_Alias<MODEL, RESULT, ISQLLogical_And_NoOp_Alias<MODEL, RESULT>, ISQLLogical_And_NoOp_Alias<MODEL, RESULT>, ISQLLogical_Or_NoOp_Alias<MODEL, RESULT>, ISharedProcessResult_After_GroupBy_Named<MODEL, RESULT>> createAliasAndCollector() {
+	final Collector_And_Alias<MODEL, RESULT, ISQLLogical_And_NoOp_Alias<MODEL, RESULT>, ISQLLogical_And_NoOp_Alias<MODEL, RESULT>, ISQLLogical_Or_NoOp_Alias<MODEL, RESULT>, Void> createAliasAndCollector() {
 		throw new UnsupportedOperationException("Not alias");
 	}
 
 
 	@Override
-	final Collector_Or_Alias<MODEL, RESULT, ISQLLogical_Or_NoOp_Alias<MODEL, RESULT>, ISQLLogical_And_NoOp_Alias<MODEL, RESULT>, ISQLLogical_Or_NoOp_Alias<MODEL, RESULT>, ISharedProcessResult_After_GroupBy_Named<MODEL, RESULT>> createAliasNestedOrCollector(
-			Collector_And_Alias<MODEL, RESULT, ISQLLogical_And_NoOp_Alias<MODEL, RESULT>, ISQLLogical_And_NoOp_Alias<MODEL, RESULT>, ISQLLogical_Or_NoOp_Alias<MODEL, RESULT>, ISharedProcessResult_After_GroupBy_Named<MODEL, RESULT>> andClauses) {
+	final Collector_Or_Alias<MODEL, RESULT, ISQLLogical_Or_NoOp_Alias<MODEL, RESULT>, ISQLLogical_And_NoOp_Alias<MODEL, RESULT>, ISQLLogical_Or_NoOp_Alias<MODEL, RESULT>, Void> createAliasNestedOrCollector(
+			Collector_And_Alias<MODEL, RESULT, ISQLLogical_And_NoOp_Alias<MODEL, RESULT>, ISQLLogical_And_NoOp_Alias<MODEL, RESULT>, ISQLLogical_Or_NoOp_Alias<MODEL, RESULT>, Void> andClauses) {
 		
 		throw new UnsupportedOperationException("Not alias");
 	}
 
 
 	@Override
-	final Collector_And_Alias<MODEL, RESULT, ISQLLogical_And_NoOp_Alias<MODEL, RESULT>, ISQLLogical_And_NoOp_Alias<MODEL, RESULT>, ISQLLogical_Or_NoOp_Alias<MODEL, RESULT>, ISharedProcessResult_After_GroupBy_Named<MODEL, RESULT>> createAliasNestedAndCollector(
-			Collector_Or_Alias<MODEL, RESULT, ISQLLogical_Or_NoOp_Alias<MODEL, RESULT>, ISQLLogical_And_NoOp_Alias<MODEL, RESULT>, ISQLLogical_Or_NoOp_Alias<MODEL, RESULT>, ISharedProcessResult_After_GroupBy_Named<MODEL, RESULT>> orClauses) {
+	final Collector_And_Alias<MODEL, RESULT, ISQLLogical_And_NoOp_Alias<MODEL, RESULT>, ISQLLogical_And_NoOp_Alias<MODEL, RESULT>, ISQLLogical_Or_NoOp_Alias<MODEL, RESULT>, Void> createAliasNestedAndCollector(
+			Collector_Or_Alias<MODEL, RESULT, ISQLLogical_Or_NoOp_Alias<MODEL, RESULT>, ISQLLogical_And_NoOp_Alias<MODEL, RESULT>, ISQLLogical_Or_NoOp_Alias<MODEL, RESULT>, Void> orClauses) {
 		throw new UnsupportedOperationException("Not alias");
 	}
 

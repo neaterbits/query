@@ -14,7 +14,9 @@ final class SQL_Collector_WhereOrJoin_MultiMapped_Alias<MODEL, RESULT>
 			
 			ISQLLogical_And_MultiMapped_Alias<MODEL, RESULT>,
 			ISQLLogical_Or_MultiMapped_Alias<MODEL, RESULT>,
-			ISQLLogical_AndOr_MultiMapped_Alias<MODEL, RESULT>>
+			ISQLLogical_AndOr_MultiMapped_Alias<MODEL, RESULT>,
+
+			ISharedProcessResult_After_GroupBy_Alias<MODEL, RESULT>>
 		
 		implements ISQLLogical_WhereOrJoin_MultiMapped_Alias<MODEL, RESULT> {
 		

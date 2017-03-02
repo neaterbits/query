@@ -21,16 +21,21 @@ abstract class Collector_And_Or_Named_And_Alias_Base<
 			NAMED_NESTED_AND_CLAUSES extends ISharedLogical_And_Named_All<MODEL, RESULT, NAMED_NESTED_AND_CLAUSES, NAMED_NESTED_OR_CLAUSES>,
 			NAMED_NESTED_OR_CLAUSES  extends ISharedLogical_Or_Named_All<MODEL, RESULT, NAMED_NESTED_OR_CLAUSES,  NAMED_NESTED_AND_CLAUSES>,			
 			
+			NAMED_AFTER_GROUP_BY,
+			
 			ALIAS_AND_CLAUSES extends ISharedLogical_And_Alias_Base<MODEL, RESULT, ALIAS_AND_CLAUSES, ALIAS_NESTED_OR_CLAUSES>,
 			ALIAS_OR_CLAUSES  extends ISharedLogical_Or_Alias_Base <MODEL, RESULT, ALIAS_OR_CLAUSES,  ALIAS_NESTED_AND_CLAUSES>,
 
 			ALIAS_NESTED_AND_CLAUSES extends ISharedLogical_And_Alias_Base<MODEL, RESULT, ALIAS_NESTED_AND_CLAUSES, ALIAS_NESTED_OR_CLAUSES>,
 			ALIAS_NESTED_OR_CLAUSES  extends ISharedLogical_Or_Alias_Base <MODEL, RESULT, ALIAS_NESTED_OR_CLAUSES,  ALIAS_NESTED_AND_CLAUSES>,			
 			
-			AFTER_GROUP_BY>
+			ALIAS_AFTER_GROUP_BY,
+			
+			
+			THIS_AFTER_GROUP_BY>
 
 
-	extends Collector_And_Or_Base<MODEL, RESULT, AFTER_GROUP_BY>
+	extends Collector_And_Or_Base<MODEL, RESULT, THIS_AFTER_GROUP_BY>
 
 	implements
 		ISharedLogical_And_Named_All<MODEL, RESULT, NAMED_AND_CLAUSES, NAMED_NESTED_OR_CLAUSES>,
@@ -59,14 +64,14 @@ abstract class Collector_And_Or_Named_And_Alias_Base<
 	 * Named
 	 ********************************************************************************************/
 
-	abstract Collector_Or_Named<MODEL, RESULT, NAMED_OR_CLAUSES, NAMED_NESTED_AND_CLAUSES, NAMED_NESTED_OR_CLAUSES, AFTER_GROUP_BY> createNamedOrCollector();
-    abstract Collector_And_Named<MODEL, RESULT, NAMED_AND_CLAUSES, NAMED_NESTED_AND_CLAUSES, NAMED_NESTED_OR_CLAUSES, AFTER_GROUP_BY> createNamedAndCollector();
+	abstract Collector_Or_Named<MODEL, RESULT, NAMED_OR_CLAUSES, NAMED_NESTED_AND_CLAUSES, NAMED_NESTED_OR_CLAUSES, NAMED_AFTER_GROUP_BY> createNamedOrCollector();
+    abstract Collector_And_Named<MODEL, RESULT, NAMED_AND_CLAUSES, NAMED_NESTED_AND_CLAUSES, NAMED_NESTED_OR_CLAUSES, NAMED_AFTER_GROUP_BY> createNamedAndCollector();
 	
-	abstract Collector_Or_Named<MODEL, RESULT, NAMED_NESTED_OR_CLAUSES, NAMED_NESTED_AND_CLAUSES, NAMED_NESTED_OR_CLAUSES, AFTER_GROUP_BY> createNamedNestedOrCollector(
-				Collector_And_Named<MODEL, RESULT, NAMED_AND_CLAUSES, NAMED_NESTED_AND_CLAUSES, NAMED_NESTED_OR_CLAUSES, AFTER_GROUP_BY> andClauses);
+	abstract Collector_Or_Named<MODEL, RESULT, NAMED_NESTED_OR_CLAUSES, NAMED_NESTED_AND_CLAUSES, NAMED_NESTED_OR_CLAUSES, NAMED_AFTER_GROUP_BY> createNamedNestedOrCollector(
+				Collector_And_Named<MODEL, RESULT, NAMED_AND_CLAUSES, NAMED_NESTED_AND_CLAUSES, NAMED_NESTED_OR_CLAUSES, NAMED_AFTER_GROUP_BY> andClauses);
 	
-    abstract Collector_And_Named<MODEL, RESULT, NAMED_NESTED_AND_CLAUSES, NAMED_NESTED_AND_CLAUSES, NAMED_NESTED_OR_CLAUSES, AFTER_GROUP_BY> createNamedNestedAndCollector(
-    			Collector_Or_Named<MODEL, RESULT, NAMED_OR_CLAUSES, NAMED_NESTED_AND_CLAUSES, NAMED_NESTED_OR_CLAUSES, AFTER_GROUP_BY> orClauses);
+    abstract Collector_And_Named<MODEL, RESULT, NAMED_NESTED_AND_CLAUSES, NAMED_NESTED_AND_CLAUSES, NAMED_NESTED_OR_CLAUSES, NAMED_AFTER_GROUP_BY> createNamedNestedAndCollector(
+    			Collector_Or_Named<MODEL, RESULT, NAMED_OR_CLAUSES, NAMED_NESTED_AND_CLAUSES, NAMED_NESTED_OR_CLAUSES, NAMED_AFTER_GROUP_BY> orClauses);
 	
 	// ------------------------  AND ------------------------
 
@@ -183,7 +188,7 @@ abstract class Collector_And_Or_Named_And_Alias_Base<
 		
 		ISharedCondition_Comparable_Common_All<MODEL, RESULT, RR, NAMED_AND_CLAUSES> andNamedClassImplComparable(CollectedFunctions functions, Function<T, RR> getter) {
 	
-		final Collector_And_Named<MODEL, RESULT, NAMED_AND_CLAUSES, NAMED_NESTED_AND_CLAUSES, NAMED_NESTED_OR_CLAUSES, AFTER_GROUP_BY> andClauses = createNamedAndCollector(); // new Classic_Collector_And_Named<>(this);
+		final Collector_And_Named<MODEL, RESULT, NAMED_AND_CLAUSES, NAMED_NESTED_AND_CLAUSES, NAMED_NESTED_OR_CLAUSES, NAMED_AFTER_GROUP_BY> andClauses = createNamedAndCollector(); // new Classic_Collector_And_Named<>(this);
 	
 		return new Collector_Condition_Comparative<MODEL, RESULT, RR, NAMED_AND_CLAUSES>(andClauses, functions, makeGetter(getter));
 	}
@@ -191,7 +196,7 @@ abstract class Collector_And_Or_Named_And_Alias_Base<
 		
 	final ISharedCondition_Comparable_String_All<MODEL, RESULT, NAMED_AND_CLAUSES> andNamedClassImplString(CollectedFunctions functions, StringFunction<?> getter) {
 		
-		final Collector_And_Named<MODEL, RESULT, NAMED_AND_CLAUSES, NAMED_NESTED_AND_CLAUSES, NAMED_NESTED_OR_CLAUSES, AFTER_GROUP_BY> andClauses = createNamedAndCollector(); // new Classic_Collector_And_Named<>(this);
+		final Collector_And_Named<MODEL, RESULT, NAMED_AND_CLAUSES, NAMED_NESTED_AND_CLAUSES, NAMED_NESTED_OR_CLAUSES, NAMED_AFTER_GROUP_BY> andClauses = createNamedAndCollector(); // new Classic_Collector_And_Named<>(this);
 		
 		return new Collector_Condition_String<MODEL, RESULT, NAMED_AND_CLAUSES>(andClauses, functions, makeGetter(getter));
 	}
@@ -206,7 +211,7 @@ abstract class Collector_And_Or_Named_And_Alias_Base<
 	final <T, RR extends Comparable<RR>>
 		ISharedCondition_Comparable_Common_All<MODEL, RESULT, RR, NAMED_OR_CLAUSES> orNamedClassImplComparable(CollectedFunctions functions, Function<T, RR> getter) {
 	
-		final Collector_Or_Named<MODEL, RESULT, NAMED_OR_CLAUSES, NAMED_NESTED_AND_CLAUSES, NAMED_NESTED_OR_CLAUSES, AFTER_GROUP_BY> orClauses = createNamedOrCollector(); // new Classic_Collector_Or_Named<>(this);
+		final Collector_Or_Named<MODEL, RESULT, NAMED_OR_CLAUSES, NAMED_NESTED_AND_CLAUSES, NAMED_NESTED_OR_CLAUSES, NAMED_AFTER_GROUP_BY> orClauses = createNamedOrCollector(); // new Classic_Collector_Or_Named<>(this);
 
 		return new Collector_Condition_Comparative<MODEL, RESULT, RR, NAMED_OR_CLAUSES>(orClauses, functions, makeGetter(getter));
 	}
@@ -214,7 +219,7 @@ abstract class Collector_And_Or_Named_And_Alias_Base<
 	final ISharedCondition_Comparable_String_All<MODEL, RESULT, NAMED_OR_CLAUSES>
 				orNamedClassImplString(CollectedFunctions functions, StringFunction<?> getter) {
 
-		final Collector_Or_Named<MODEL, RESULT, NAMED_OR_CLAUSES, NAMED_NESTED_AND_CLAUSES, NAMED_NESTED_OR_CLAUSES, AFTER_GROUP_BY> andClauses = createNamedOrCollector(); // new Classic_Collector_Or_Named<>(this);
+		final Collector_Or_Named<MODEL, RESULT, NAMED_OR_CLAUSES, NAMED_NESTED_AND_CLAUSES, NAMED_NESTED_OR_CLAUSES, NAMED_AFTER_GROUP_BY> andClauses = createNamedOrCollector(); // new Classic_Collector_Or_Named<>(this);
 
 		return new Collector_Condition_String<MODEL, RESULT, NAMED_OR_CLAUSES>(andClauses, functions, makeGetter(getter));
 	}
@@ -222,11 +227,11 @@ abstract class Collector_And_Or_Named_And_Alias_Base<
 
 	// ------------------------  OR helpers ------------------------
 	private final <T extends ISharedLogical_And<MODEL, RESULT>>
-		Collector_Or_Named<MODEL, RESULT, NAMED_OR_CLAUSES, NAMED_NESTED_AND_CLAUSES, NAMED_NESTED_OR_CLAUSES, AFTER_GROUP_BY>
+		Collector_Or_Named<MODEL, RESULT, NAMED_OR_CLAUSES, NAMED_NESTED_AND_CLAUSES, NAMED_NESTED_OR_CLAUSES, NAMED_AFTER_GROUP_BY>
 				addNamedNestedAndImpl(Consumer<T> orBuilder) {
 				
 	
-		final Collector_Or_Named<MODEL, RESULT, NAMED_OR_CLAUSES, NAMED_NESTED_AND_CLAUSES, NAMED_NESTED_OR_CLAUSES, AFTER_GROUP_BY> orClauses = createNamedOrCollector(); // new Classic_Collector_Or_Named<>(this);
+		final Collector_Or_Named<MODEL, RESULT, NAMED_OR_CLAUSES, NAMED_NESTED_AND_CLAUSES, NAMED_NESTED_OR_CLAUSES, NAMED_AFTER_GROUP_BY> orClauses = createNamedOrCollector(); // new Classic_Collector_Or_Named<>(this);
 		
 		// Add to new OR
 		orClauses.addNestedAndImpl(orBuilder, createNamedNestedAndCollector(orClauses)); // new Classic_Collector_And_NonProcessResult_Named<MODEL, RESULT>(orClauses));
@@ -235,10 +240,10 @@ abstract class Collector_And_Or_Named_And_Alias_Base<
 	}
 	
 	private final <T extends ISharedLogical_Or<MODEL, RESULT>>
-		Collector_And_Named<MODEL, RESULT, NAMED_AND_CLAUSES, NAMED_NESTED_AND_CLAUSES, NAMED_NESTED_OR_CLAUSES, AFTER_GROUP_BY>
+		Collector_And_Named<MODEL, RESULT, NAMED_AND_CLAUSES, NAMED_NESTED_AND_CLAUSES, NAMED_NESTED_OR_CLAUSES, NAMED_AFTER_GROUP_BY>
 				addNamedNestedOrImpl(Consumer<T> orBuilder) {
 
-		final Collector_And_Named<MODEL, RESULT, NAMED_AND_CLAUSES, NAMED_NESTED_AND_CLAUSES, NAMED_NESTED_OR_CLAUSES, AFTER_GROUP_BY> andClauses = createNamedAndCollector(); // new Classic_Collector_And_Named<>(this);
+		final Collector_And_Named<MODEL, RESULT, NAMED_AND_CLAUSES, NAMED_NESTED_AND_CLAUSES, NAMED_NESTED_OR_CLAUSES, NAMED_AFTER_GROUP_BY> andClauses = createNamedAndCollector(); // new Classic_Collector_And_Named<>(this);
 
 		// Add to new AND clause
 		andClauses.addNestedOrImpl(orBuilder, createNamedNestedOrCollector(andClauses)); // new Classic_Collector_Or_NonProcessResult_Named<MODEL, RESULT>(andClauses));
@@ -263,14 +268,14 @@ abstract class Collector_And_Or_Named_And_Alias_Base<
 	 * Alias
 	 ********************************************************************************************/
 
-	abstract Collector_Or_Alias<MODEL, RESULT, ALIAS_OR_CLAUSES, ALIAS_NESTED_AND_CLAUSES, ALIAS_NESTED_OR_CLAUSES, AFTER_GROUP_BY> createAliasOrCollector();
-    abstract Collector_And_Alias<MODEL, RESULT, ALIAS_AND_CLAUSES, ALIAS_NESTED_AND_CLAUSES, ALIAS_NESTED_OR_CLAUSES, AFTER_GROUP_BY> createAliasAndCollector();
+	abstract Collector_Or_Alias<MODEL, RESULT, ALIAS_OR_CLAUSES, ALIAS_NESTED_AND_CLAUSES, ALIAS_NESTED_OR_CLAUSES, ALIAS_AFTER_GROUP_BY> createAliasOrCollector();
+    abstract Collector_And_Alias<MODEL, RESULT, ALIAS_AND_CLAUSES, ALIAS_NESTED_AND_CLAUSES, ALIAS_NESTED_OR_CLAUSES, ALIAS_AFTER_GROUP_BY> createAliasAndCollector();
 
-	abstract Collector_Or_Alias<MODEL, RESULT, ALIAS_NESTED_OR_CLAUSES, ALIAS_NESTED_AND_CLAUSES, ALIAS_NESTED_OR_CLAUSES, AFTER_GROUP_BY>
-			createAliasNestedOrCollector(Collector_And_Alias<MODEL, RESULT, ALIAS_AND_CLAUSES, ALIAS_NESTED_AND_CLAUSES, ALIAS_NESTED_OR_CLAUSES, AFTER_GROUP_BY> andClauses);
+	abstract Collector_Or_Alias<MODEL, RESULT, ALIAS_NESTED_OR_CLAUSES, ALIAS_NESTED_AND_CLAUSES, ALIAS_NESTED_OR_CLAUSES, ALIAS_AFTER_GROUP_BY>
+			createAliasNestedOrCollector(Collector_And_Alias<MODEL, RESULT, ALIAS_AND_CLAUSES, ALIAS_NESTED_AND_CLAUSES, ALIAS_NESTED_OR_CLAUSES, ALIAS_AFTER_GROUP_BY> andClauses);
 			
-    abstract Collector_And_Alias<MODEL, RESULT, ALIAS_NESTED_AND_CLAUSES, ALIAS_NESTED_AND_CLAUSES, ALIAS_NESTED_OR_CLAUSES, AFTER_GROUP_BY>
-    		createAliasNestedAndCollector(Collector_Or_Alias<MODEL, RESULT, ALIAS_OR_CLAUSES, ALIAS_NESTED_AND_CLAUSES, ALIAS_NESTED_OR_CLAUSES, AFTER_GROUP_BY> orClauses);
+    abstract Collector_And_Alias<MODEL, RESULT, ALIAS_NESTED_AND_CLAUSES, ALIAS_NESTED_AND_CLAUSES, ALIAS_NESTED_OR_CLAUSES, ALIAS_AFTER_GROUP_BY>
+    		createAliasNestedAndCollector(Collector_Or_Alias<MODEL, RESULT, ALIAS_OR_CLAUSES, ALIAS_NESTED_AND_CLAUSES, ALIAS_NESTED_OR_CLAUSES, ALIAS_AFTER_GROUP_BY> orClauses);
 	
 	// ------------------------  AND ------------------------
 	
@@ -288,7 +293,7 @@ abstract class Collector_And_Or_Named_And_Alias_Base<
 	@Override
 	public final ISharedCondition_Comparable_String_All<MODEL, RESULT, ALIAS_AND_CLAUSES> and(ISupplierString getter) {
 	
-		final Collector_And_Alias<MODEL, RESULT, ALIAS_AND_CLAUSES, ALIAS_NESTED_AND_CLAUSES, ALIAS_NESTED_OR_CLAUSES, AFTER_GROUP_BY> andClauses = createAliasAndCollector();// new Classic_Collector_And_Alias<>(this);
+		final Collector_And_Alias<MODEL, RESULT, ALIAS_AND_CLAUSES, ALIAS_NESTED_AND_CLAUSES, ALIAS_NESTED_OR_CLAUSES, ALIAS_AFTER_GROUP_BY> andClauses = createAliasAndCollector();// new Classic_Collector_And_Alias<>(this);
 		
 		return new Collector_Condition_String<MODEL, RESULT, ALIAS_AND_CLAUSES>(andClauses, makeGetter(getter));
 	}
@@ -357,7 +362,7 @@ abstract class Collector_And_Or_Named_And_Alias_Base<
 		
 	ISharedCondition_Comparable_Common_All<MODEL, RESULT, RR, ALIAS_AND_CLAUSES> andAliasImplComparable(CollectedFunctions functions, Supplier<RR> getter) {
 	
-		final Collector_And_Alias<MODEL, RESULT, ALIAS_AND_CLAUSES, ALIAS_NESTED_AND_CLAUSES, ALIAS_NESTED_OR_CLAUSES, AFTER_GROUP_BY> andClauses = createAliasAndCollector();// new Classic_Collector_And_Alias<MODEL, RESULT>(this);
+		final Collector_And_Alias<MODEL, RESULT, ALIAS_AND_CLAUSES, ALIAS_NESTED_AND_CLAUSES, ALIAS_NESTED_OR_CLAUSES, ALIAS_AFTER_GROUP_BY> andClauses = createAliasAndCollector();// new Classic_Collector_And_Alias<MODEL, RESULT>(this);
 	
 		return new Collector_Condition_Comparative<MODEL, RESULT, RR, ALIAS_AND_CLAUSES>(andClauses, functions, makeGetter(getter));
 	}
@@ -368,7 +373,7 @@ abstract class Collector_And_Or_Named_And_Alias_Base<
 		ISharedCondition_Comparable_String_All<MODEL, RESULT, ALIAS_AND_CLAUSES>
 			andAliasImplString(CollectedFunctions functions, ISupplierString getter) {
 		
-		final Collector_And_Alias<MODEL, RESULT, ALIAS_AND_CLAUSES, ALIAS_NESTED_AND_CLAUSES, ALIAS_NESTED_OR_CLAUSES, AFTER_GROUP_BY> andClauses = createAliasAndCollector(); // new Classic_Collector_And_Alias<>(this);
+		final Collector_And_Alias<MODEL, RESULT, ALIAS_AND_CLAUSES, ALIAS_NESTED_AND_CLAUSES, ALIAS_NESTED_OR_CLAUSES, ALIAS_AFTER_GROUP_BY> andClauses = createAliasAndCollector(); // new Classic_Collector_And_Alias<>(this);
 		
 		return new Collector_Condition_String<MODEL, RESULT, ALIAS_AND_CLAUSES>(andClauses, functions, makeGetter(getter));
 	}
@@ -385,7 +390,7 @@ abstract class Collector_And_Or_Named_And_Alias_Base<
 	
 	ISharedCondition_Comparable_Common_All<MODEL, RESULT, RR, ALIAS_OR_CLAUSES> orAliasImplComparable(CollectedFunctions functions, Supplier<RR> getter) {
 	
-		final Collector_Or_Alias<MODEL, RESULT, ALIAS_OR_CLAUSES, ALIAS_NESTED_AND_CLAUSES, ALIAS_NESTED_OR_CLAUSES, AFTER_GROUP_BY> orClauses = createAliasOrCollector(); // new Classic_Collector_Or_Alias<>(this);
+		final Collector_Or_Alias<MODEL, RESULT, ALIAS_OR_CLAUSES, ALIAS_NESTED_AND_CLAUSES, ALIAS_NESTED_OR_CLAUSES, ALIAS_AFTER_GROUP_BY> orClauses = createAliasOrCollector(); // new Classic_Collector_Or_Alias<>(this);
 	
 		return new Collector_Condition_Comparative<MODEL, RESULT, RR, ALIAS_OR_CLAUSES>(orClauses, functions, makeGetter(getter));
 	}
@@ -393,7 +398,7 @@ abstract class Collector_And_Or_Named_And_Alias_Base<
 	final 
 		ISharedCondition_Comparable_String_All<MODEL, RESULT, ALIAS_OR_CLAUSES> orAliasImplString(CollectedFunctions functions, ISupplierString getter) {
 	
-		final Collector_Or_Alias<MODEL, RESULT, ALIAS_OR_CLAUSES, ALIAS_NESTED_AND_CLAUSES, ALIAS_NESTED_OR_CLAUSES, AFTER_GROUP_BY> orClauses = createAliasOrCollector(); // new Classic_Collector_Or_Alias<>(this);
+		final Collector_Or_Alias<MODEL, RESULT, ALIAS_OR_CLAUSES, ALIAS_NESTED_AND_CLAUSES, ALIAS_NESTED_OR_CLAUSES, ALIAS_AFTER_GROUP_BY> orClauses = createAliasOrCollector(); // new Classic_Collector_Or_Alias<>(this);
 	
 		return new Collector_Condition_String<MODEL, RESULT, ALIAS_OR_CLAUSES>(orClauses, functions, makeGetter(getter));
 	}
@@ -446,7 +451,7 @@ abstract class Collector_And_Or_Named_And_Alias_Base<
 
 	// ------------------------  OR helpers ------------------------
 	private final <T extends ISharedLogical_And<MODEL, RESULT>>
-		Collector_Or_Alias<MODEL, RESULT, ALIAS_OR_CLAUSES, ALIAS_NESTED_AND_CLAUSES, ALIAS_NESTED_OR_CLAUSES, AFTER_GROUP_BY>
+		Collector_Or_Alias<MODEL, RESULT, ALIAS_OR_CLAUSES, ALIAS_NESTED_AND_CLAUSES, ALIAS_NESTED_OR_CLAUSES, ALIAS_AFTER_GROUP_BY>
 		
 			addNestedAndImpl(Consumer<T> orBuilder) {
 	
@@ -456,7 +461,7 @@ abstract class Collector_And_Or_Named_And_Alias_Base<
 				ALIAS_OR_CLAUSES,
 				ALIAS_NESTED_AND_CLAUSES,
 				ALIAS_NESTED_OR_CLAUSES,
-				AFTER_GROUP_BY> orClauses
+				ALIAS_AFTER_GROUP_BY> orClauses
 					
 				
 				= createAliasOrCollector(); // new Classic_Collector_Or_Alias<>(this);
@@ -470,10 +475,10 @@ abstract class Collector_And_Or_Named_And_Alias_Base<
 
 	private final <T extends ISharedLogical_Or<MODEL, RESULT>>
 		
-		Collector_And_Alias<MODEL, RESULT, ALIAS_AND_CLAUSES, ALIAS_NESTED_AND_CLAUSES, ALIAS_NESTED_OR_CLAUSES, AFTER_GROUP_BY>
+		Collector_And_Alias<MODEL, RESULT, ALIAS_AND_CLAUSES, ALIAS_NESTED_AND_CLAUSES, ALIAS_NESTED_OR_CLAUSES, ALIAS_AFTER_GROUP_BY>
 			addNestedOrImpl(Consumer<T> orBuilder) {
 	
-		final Collector_And_Alias<MODEL, RESULT, ALIAS_AND_CLAUSES, ALIAS_NESTED_AND_CLAUSES, ALIAS_NESTED_OR_CLAUSES, AFTER_GROUP_BY> andClauses = createAliasAndCollector(); // new Classic_Collector_And_Alias<>(this);
+		final Collector_And_Alias<MODEL, RESULT, ALIAS_AND_CLAUSES, ALIAS_NESTED_AND_CLAUSES, ALIAS_NESTED_OR_CLAUSES, ALIAS_AFTER_GROUP_BY> andClauses = createAliasAndCollector(); // new Classic_Collector_And_Alias<>(this);
 	
 		// Add to new AND clause
 		andClauses.addNestedOrImpl(orBuilder, createAliasNestedOrCollector(andClauses));// new Classic_Collector_Or_NonProcessResult_Alias<>(andClauses));

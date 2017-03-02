@@ -5,6 +5,6 @@ public interface ISQLJoin_Condition_SingleResult_Named<MODEL, RESULT, LEFT, RIGH
 			extends ISQLJoin_Condition_Named_Base<MODEL, RESULT, LEFT, RIGHT, ISQLJoin_Condition_SingleResult_Named<MODEL, RESULT, LEFT, RIGHT>>,
 			
 			
-			ISQLLogical_Where_SingleResult_Named<MODEL, RESULT> {
+			ISQLLogical_Where_SingleResult_Named_Base<MODEL, RESULT> {
 
 }

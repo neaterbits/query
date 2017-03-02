@@ -4,7 +4,7 @@ public interface IShortResult_Mapped_Single_Alias<MODEL, RESULT>
 
 	extends ISharedSelectSourceBuilder<MODEL, RESULT>, // TODO: really select-source? needed for type-checking
 	
-	ISQLLogical_WhereOrJoin_SingleResult_Alias<MODEL, RESULT>
+	ISQLLogical_WhereOrJoin_SingleResult_Alias_And_Function<MODEL, RESULT>
 
 	{
 

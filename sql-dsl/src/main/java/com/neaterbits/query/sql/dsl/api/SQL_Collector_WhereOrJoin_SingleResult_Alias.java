@@ -13,11 +13,13 @@ final class SQL_Collector_WhereOrJoin_SingleResult_Alias<MODEL, RESULT>
 			
 			ISQLLogical_And_NonProcessResult_Alias<MODEL, RESULT>,
 			ISQLLogical_Or_NonProcessResult_Alias<MODEL, RESULT>,
-			ISQLLogical_AndOr_SingleResult_Alias<MODEL, RESULT>
+			ISQLLogical_AndOr_SingleResult_Alias<MODEL, RESULT>,
+			
+			ISharedProcessResult_After_GroupBy_Alias<MODEL, RESULT>
 			> 
 
 	implements
-		ISQLLogical_WhereOrJoin_SingleResult_Alias<MODEL, RESULT>,
+		ISQLLogical_WhereOrJoin_SingleResult_Alias_And_Function<MODEL, RESULT>,
 		ISQLLogical_AndOr_SingleResult_Alias<MODEL, RESULT> {
 
 	SQL_Collector_WhereOrJoin_SingleResult_Alias(Collector_Base<MODEL> last) {

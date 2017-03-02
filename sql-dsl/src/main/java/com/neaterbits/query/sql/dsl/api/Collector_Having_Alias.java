@@ -17,6 +17,7 @@ final class Collector_Having_Alias<MODEL, RESULT> extends Collector_And_Or_Alias
 		super(last, EConditionsClause.HAVING);
 	}
 
+	
 	@Override
 	Collector_Or_Alias<
 				MODEL,

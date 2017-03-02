@@ -1,6 +1,5 @@
 package com.neaterbits.query.sql.dsl.api;
 
-import java.util.function.Function;
 
 @Deprecated
 abstract class Collector_And_Or_Named<
@@ -22,14 +21,16 @@ abstract class Collector_And_Or_Named<
 		OR_CLAUSES,
 		NESTED_AND_CLAUSES,
 		NESTED_OR_CLAUSES,
+		AFTER_GROUP_BY,
 
 		// just no-ops for the alias-types
 		ISQLLogical_And_NoOp_Alias<MODEL, RESULT>,
 		ISQLLogical_Or_NoOp_Alias<MODEL, RESULT>,
 		ISQLLogical_And_NoOp_Alias<MODEL, RESULT>,
 		ISQLLogical_Or_NoOp_Alias<MODEL, RESULT>,
+		Void,
 
-		AFTER_GROUP_BY>
+		Void>
 		
 	implements
 	
@@ -108,24 +109,24 @@ abstract class Collector_And_Or_Named<
 
 
 	@Override
-	final Collector_Or_Alias<MODEL, RESULT, ISQLLogical_Or_NoOp_Alias<MODEL, RESULT>, ISQLLogical_And_NoOp_Alias<MODEL, RESULT>, ISQLLogical_Or_NoOp_Alias<MODEL, RESULT>, AFTER_GROUP_BY> createAliasOrCollector() {
+	final Collector_Or_Alias<MODEL, RESULT, ISQLLogical_Or_NoOp_Alias<MODEL, RESULT>, ISQLLogical_And_NoOp_Alias<MODEL, RESULT>, ISQLLogical_Or_NoOp_Alias<MODEL, RESULT>, Void> createAliasOrCollector() {
 		throw new UnsupportedOperationException("This is named");
 	}
 
 	@Override
-	final Collector_And_Alias<MODEL, RESULT, ISQLLogical_And_NoOp_Alias<MODEL, RESULT>, ISQLLogical_And_NoOp_Alias<MODEL, RESULT>, ISQLLogical_Or_NoOp_Alias<MODEL, RESULT>, AFTER_GROUP_BY> createAliasAndCollector() {
+	final Collector_And_Alias<MODEL, RESULT, ISQLLogical_And_NoOp_Alias<MODEL, RESULT>, ISQLLogical_And_NoOp_Alias<MODEL, RESULT>, ISQLLogical_Or_NoOp_Alias<MODEL, RESULT>, Void> createAliasAndCollector() {
 		throw new UnsupportedOperationException("This is named");
 	}
 
 	@Override
-	final Collector_Or_Alias<MODEL, RESULT, ISQLLogical_Or_NoOp_Alias<MODEL, RESULT>, ISQLLogical_And_NoOp_Alias<MODEL, RESULT>, ISQLLogical_Or_NoOp_Alias<MODEL, RESULT>, AFTER_GROUP_BY> createAliasNestedOrCollector(
-			Collector_And_Alias<MODEL, RESULT, ISQLLogical_And_NoOp_Alias<MODEL, RESULT>, ISQLLogical_And_NoOp_Alias<MODEL, RESULT>, ISQLLogical_Or_NoOp_Alias<MODEL, RESULT>, AFTER_GROUP_BY> andClauses) {
+	final Collector_Or_Alias<MODEL, RESULT, ISQLLogical_Or_NoOp_Alias<MODEL, RESULT>, ISQLLogical_And_NoOp_Alias<MODEL, RESULT>, ISQLLogical_Or_NoOp_Alias<MODEL, RESULT>, Void> createAliasNestedOrCollector(
+			Collector_And_Alias<MODEL, RESULT, ISQLLogical_And_NoOp_Alias<MODEL, RESULT>, ISQLLogical_And_NoOp_Alias<MODEL, RESULT>, ISQLLogical_Or_NoOp_Alias<MODEL, RESULT>, Void> andClauses) {
 		throw new UnsupportedOperationException("This is named");
 	}
 
 	@Override
-	final Collector_And_Alias<MODEL, RESULT, ISQLLogical_And_NoOp_Alias<MODEL, RESULT>, ISQLLogical_And_NoOp_Alias<MODEL, RESULT>, ISQLLogical_Or_NoOp_Alias<MODEL, RESULT>, AFTER_GROUP_BY> createAliasNestedAndCollector(
-			Collector_Or_Alias<MODEL, RESULT, ISQLLogical_Or_NoOp_Alias<MODEL, RESULT>, ISQLLogical_And_NoOp_Alias<MODEL, RESULT>, ISQLLogical_Or_NoOp_Alias<MODEL, RESULT>, AFTER_GROUP_BY> orClauses) {
+	final Collector_And_Alias<MODEL, RESULT, ISQLLogical_And_NoOp_Alias<MODEL, RESULT>, ISQLLogical_And_NoOp_Alias<MODEL, RESULT>, ISQLLogical_Or_NoOp_Alias<MODEL, RESULT>, Void> createAliasNestedAndCollector(
+			Collector_Or_Alias<MODEL, RESULT, ISQLLogical_Or_NoOp_Alias<MODEL, RESULT>, ISQLLogical_And_NoOp_Alias<MODEL, RESULT>, ISQLLogical_Or_NoOp_Alias<MODEL, RESULT>, Void> orClauses) {
 		throw new UnsupportedOperationException("This is named");
 	}
 }
