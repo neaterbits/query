@@ -13,7 +13,7 @@ abstract class SQL_Collector_And_Named<
 				ISQLLogical_Or_NonProcessResult_Named<MODEL, RESULT>,
 				ISharedProcessResult_After_GroupBy_Named<MODEL, RESULT>> {
 
-	SQL_Collector_And_Named(SQL_Collector_WhereOrJoin_Named_Base<MODEL, RESULT, ?, ?, ?, ?> last) {
+	SQL_Collector_And_Named(SQL_Collector_WhereOrJoin_Named_Base<MODEL, RESULT, ?, ?, ?, ?, ?> last) {
 		super(last);
 	}
 	

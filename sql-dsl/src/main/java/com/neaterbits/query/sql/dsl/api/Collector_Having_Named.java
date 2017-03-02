@@ -25,7 +25,7 @@ final class Collector_Having_Named<MODEL, RESULT> extends Collector_And_Or_Named
 				ISharedProcessResult_Having_And_Nested_Named<MODEL, RESULT>,
 				ISharedProcessResult_Having_Or_Nested_Named<MODEL, RESULT>, Void>
 	
-		createOrCollector() {
+		createNamedOrCollector() {
 		
 		return new Collector_Having_Or_Named<>(this);
 	}
@@ -38,7 +38,7 @@ final class Collector_Having_Named<MODEL, RESULT> extends Collector_And_Or_Named
 				ISharedProcessResult_Having_And_Nested_Named<MODEL, RESULT>,
 				ISharedProcessResult_Having_Or_Nested_Named<MODEL, RESULT>, Void>
 	
-		createAndCollector() {
+		createNamedAndCollector() {
 
 		return new Collector_Having_And_Named<>(this);
 	}
@@ -52,7 +52,7 @@ final class Collector_Having_Named<MODEL, RESULT> extends Collector_And_Or_Named
 				ISharedProcessResult_Having_Or_Nested_Named<MODEL, RESULT>,
 				Void>
 	
-		createNestedOrCollector(Collector_And_Named<MODEL, RESULT, ISharedProcessResult_Having_And_Named<MODEL, RESULT>, ISharedProcessResult_Having_And_Nested_Named<MODEL, RESULT>, ISharedProcessResult_Having_Or_Nested_Named<MODEL, RESULT>, Void> andClauses) {
+		createNamedNestedOrCollector(Collector_And_Named<MODEL, RESULT, ISharedProcessResult_Having_And_Named<MODEL, RESULT>, ISharedProcessResult_Having_And_Nested_Named<MODEL, RESULT>, ISharedProcessResult_Having_Or_Nested_Named<MODEL, RESULT>, Void> andClauses) {
 
 		return new Collector_Having_Or_Nested_Named<>(andClauses);
 	}
@@ -66,7 +66,7 @@ final class Collector_Having_Named<MODEL, RESULT> extends Collector_And_Or_Named
 				ISharedProcessResult_Having_Or_Nested_Named<MODEL, RESULT>,
 				Void>
 	
-		createNestedAndCollector(Collector_Or_Named<MODEL, RESULT, ISharedProcessResult_Having_Or_Named<MODEL, RESULT>, ISharedProcessResult_Having_And_Nested_Named<MODEL, RESULT>, ISharedProcessResult_Having_Or_Nested_Named<MODEL, RESULT>, Void> orClauses) {
+		createNamedNestedAndCollector(Collector_Or_Named<MODEL, RESULT, ISharedProcessResult_Having_Or_Named<MODEL, RESULT>, ISharedProcessResult_Having_And_Nested_Named<MODEL, RESULT>, ISharedProcessResult_Having_Or_Nested_Named<MODEL, RESULT>, Void> orClauses) {
 
 		return new Collector_Having_And_Nested_Named<>(orClauses);
 	}

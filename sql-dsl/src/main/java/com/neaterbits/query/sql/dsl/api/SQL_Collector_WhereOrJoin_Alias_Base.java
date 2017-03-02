@@ -6,7 +6,8 @@ abstract class SQL_Collector_WhereOrJoin_Alias_Base<
 
 				MODEL,
 				RESULT,
-				JOIN_CONDITION extends ISQLJoin_Condition_Alias_Base<MODEL, RESULT, JOIN_CONDITION>,
+				NAMED_JOIN_CONDITION extends ISQLJoin_Condition_Named_Base<MODEL, RESULT, Object, Object, NAMED_JOIN_CONDITION>,
+				ALIAS_JOIN_CONDITION extends ISQLJoin_Condition_Alias_Base<MODEL, RESULT, ALIAS_JOIN_CONDITION>,
 				
 				AND_CLAUSES extends ISharedLogical_And_Alias_Base<MODEL, RESULT, AND_CLAUSES, ISQLLogical_Or_NonProcessResult_Alias<MODEL, RESULT>>,
 				OR_CLAUSES  extends ISharedLogical_Or_Alias_Base <MODEL, RESULT, OR_CLAUSES,  ISQLLogical_And_NonProcessResult_Alias<MODEL, RESULT>>,
@@ -19,21 +20,41 @@ abstract class SQL_Collector_WhereOrJoin_Alias_Base<
 							ISQLLogical_And_NonProcessResult_Alias<MODEL, RESULT>,
 							ISQLLogical_Or_NonProcessResult_Alias<MODEL, RESULT>>>
 
-	extends Collector_And_Or_Alias<
+	extends SQL_Collector_WhereOrJoin_Base<
 			MODEL,
 			RESULT,
+
+			
+			ISQLLogical_And_NoOp_Named<MODEL, RESULT>,
+			ISQLLogical_Or_NoOp_Named<MODEL, RESULT>,
+			ISQLLogical_And_NoOp_Named<MODEL, RESULT>,
+			ISQLLogical_Or_NoOp_Named<MODEL, RESULT>,
+			NAMED_JOIN_CONDITION,
+			ISharedLogical_And_Or_Named_All<
+				MODEL,
+				RESULT,
+				ISQLLogical_And_NoOp_Named<MODEL, RESULT>,
+				ISQLLogical_Or_NoOp_Named<MODEL, RESULT>,
+				ISQLLogical_And_NoOp_Named<MODEL, RESULT>,
+				ISQLLogical_Or_NoOp_Named<MODEL, RESULT>
+				>,
+			
+
 			AND_CLAUSES,
 			OR_CLAUSES,
 			// nested
 			ISQLLogical_And_NonProcessResult_Alias<MODEL, RESULT>,
 			ISQLLogical_Or_NonProcessResult_Alias<MODEL, RESULT>,
+
+			ALIAS_JOIN_CONDITION,
+			AND_OR,
 			
 			ISharedProcessResult_After_GroupBy_Alias<MODEL, RESULT>>
 
 
 	implements 
 		   ISQLLogical_WhereOrJoin_Alias_Base<MODEL, RESULT>,
-		   ISQLJoin_Alias<MODEL, RESULT, JOIN_CONDITION> {
+		   ISQLJoin_Alias<MODEL, RESULT, ALIAS_JOIN_CONDITION> {
 			   
     
     /*
@@ -48,109 +69,6 @@ abstract class SQL_Collector_WhereOrJoin_Alias_Base<
 			   
 	SQL_Collector_WhereOrJoin_Alias_Base(Collector_Base<MODEL> last) {
 		super(last, EConditionsClause.WHERE);
-	}
-
-// ------------------------  JOIN ------------------------
-
-
-	private Collector_Joins addJoin(CollectedJoin collectedJoin) {
-
-		Collector_Joins joinCollector = getQueryCollector().getJoins();
-		
-		if (joinCollector == null) {
-			joinCollector = new Collector_Joins();
-			getQueryCollector().setJoins(joinCollector);
-		}
-	
-		joinCollector.addJoin(collectedJoin);
-		
-		return joinCollector;
-	}
-
-
-	// -- Alias  --
-	
-	@SuppressWarnings("unchecked")
-	private <LEFT, RIGHT> JOIN_CONDITION getJoinConditionAlias() {
-		return (JOIN_CONDITION)this;
-	}
-	
-	
-	@Override
-	public final JOIN_CONDITION innerJoin(Object left, Object right) {
-	
-		final CollectedJoin_Alias collectedJoin = new CollectedJoin_Alias(EJoinType.INNER, (IAlias)left, (IAlias)right);
-		
-		addJoin(collectedJoin);
-		
-		return getJoinConditionAlias();
-	}
-	
-	@Override
-	public final JOIN_CONDITION leftJoin(Object left, Object right) {
-	
-		final CollectedJoin_Alias collectedJoin = new CollectedJoin_Alias(EJoinType.LEFT, (IAlias)left, (IAlias)right);
-		
-		addJoin(collectedJoin);
-		
-		return getJoinConditionAlias();
-	}
-	
-	private <R> JOIN_CONDITION compareAlias(Supplier<R> left, Supplier<R> right) {
-		
-		final SupplierGetter leftGetter = new SupplierGetter(left); 
-		final SupplierGetter rightGetter = new SupplierGetter(right); 
-		
-		final CollectedJoin curJoin = getQueryCollector().getJoins().getLast();
-		
-		final CollectedJoinCondition joinCondition = new CollectedJoinCondition_Comparison_Alias(leftGetter, rightGetter);
-		
-		curJoin.addJoinCondition(joinCondition);
-		
-		return getJoinConditionAlias();
-	}
-	
-	// JoinCondition, markes as implemented in subclass
-	public final JOIN_CONDITION on(ISupplierCollection joinCollection) {
-		final SupplierGetter collectionGetter = new SupplierGetter(joinCollection); 
-		
-		final CollectedJoin curJoin = getQueryCollector().getJoins().getLast();
-		
-		final CollectedJoinCondition joinCondition = new CollectedJoinCondition_OneToMany_Alias(collectionGetter);
-		
-		curJoin.addJoinCondition(joinCondition);
-		
-		return getJoinConditionAlias();
-	}
-	
-	public final JOIN_CONDITION compare(ISupplierInteger left, ISupplierInteger right) {
-		return compareAlias(left, right);
-	}
-
-	// JoinCondition, markes as implemented in subclass
-	public final JOIN_CONDITION compare(ISupplierLong left, ISupplierLong right) {
-		return compareAlias(left, right);
-	}
-
-	// ------------------------  WHERE ------------------------
-	
-	//implemented in subclass @Override
-	public final ISharedCondition_Comparable_Common_All<
-				MODEL,
-				RESULT,
-				Integer,
-				AND_OR> where(ISupplierInteger func) {
-	
-		return new Collector_Condition_Comparative<MODEL, RESULT, Integer, AND_OR>(this, makeGetter(func));
-	}	
-	
-	// implemented in subclass @Override
-	public final ISharedCondition_Comparable_String_All<
-				MODEL,
-				RESULT,
-				AND_OR> where(ISupplierString supplier) {
-	
-		return new Collector_Condition_String<MODEL, RESULT, AND_OR>(this, makeGetter(supplier));
 	}
 
 
@@ -198,7 +116,7 @@ abstract class SQL_Collector_WhereOrJoin_Alias_Base<
 			
 			ISharedProcessResult_After_GroupBy_Alias<MODEL, RESULT>>
 	
-		createNestedOrCollector(
+		createAliasNestedOrCollector(
 			Collector_And_Alias<
 				MODEL,
 				RESULT,
@@ -220,7 +138,7 @@ abstract class SQL_Collector_WhereOrJoin_Alias_Base<
 			ISQLLogical_Or_NonProcessResult_Alias<MODEL, RESULT>,
 			ISharedProcessResult_After_GroupBy_Alias<MODEL, RESULT>>
 	
-		createNestedAndCollector(
+		createAliasNestedAndCollector(
 			Collector_Or_Alias<
 				MODEL,
 				RESULT,
@@ -230,6 +148,37 @@ abstract class SQL_Collector_WhereOrJoin_Alias_Base<
 				ISharedProcessResult_After_GroupBy_Alias<MODEL, RESULT>> orClauses) {
 
 		return new SQL_Collector_And_NonProcessResult_Alias<>(orClauses);
+	}
+
+	@Override
+	final Collector_GroupBy<MODEL, RESULT> createGroupByCollector(Collector_Base<MODEL> last, int[] groupByColumns,
+			Collector_Conditions_GroupBy<MODEL, RESULT, ?> collectorConditions) {
+		return new Collector_GroupBy_Alias<>(last, groupByColumns, collectorConditions);
+	}
+
+	@Override
+	final Collector_Or_Named<MODEL, RESULT, ISQLLogical_Or_NoOp_Named<MODEL, RESULT>, ISQLLogical_And_NoOp_Named<MODEL, RESULT>, ISQLLogical_Or_NoOp_Named<MODEL, RESULT>, ISharedProcessResult_After_GroupBy_Alias<MODEL, RESULT>> createNamedOrCollector() {
+		throw new UnsupportedOperationException("Not named");
+	}
+
+
+	@Override
+	final Collector_And_Named<MODEL, RESULT, ISQLLogical_And_NoOp_Named<MODEL, RESULT>, ISQLLogical_And_NoOp_Named<MODEL, RESULT>, ISQLLogical_Or_NoOp_Named<MODEL, RESULT>, ISharedProcessResult_After_GroupBy_Alias<MODEL, RESULT>> createNamedAndCollector() {
+		throw new UnsupportedOperationException("Not named");
+	}
+
+
+	@Override
+	final Collector_Or_Named<MODEL, RESULT, ISQLLogical_Or_NoOp_Named<MODEL, RESULT>, ISQLLogical_And_NoOp_Named<MODEL, RESULT>, ISQLLogical_Or_NoOp_Named<MODEL, RESULT>, ISharedProcessResult_After_GroupBy_Alias<MODEL, RESULT>> createNamedNestedOrCollector(
+			Collector_And_Named<MODEL, RESULT, ISQLLogical_And_NoOp_Named<MODEL, RESULT>, ISQLLogical_And_NoOp_Named<MODEL, RESULT>, ISQLLogical_Or_NoOp_Named<MODEL, RESULT>, ISharedProcessResult_After_GroupBy_Alias<MODEL, RESULT>> andClauses) {
+		throw new UnsupportedOperationException("Not named");
+	}
+
+
+	@Override
+	final Collector_And_Named<MODEL, RESULT, ISQLLogical_And_NoOp_Named<MODEL, RESULT>, ISQLLogical_And_NoOp_Named<MODEL, RESULT>, ISQLLogical_Or_NoOp_Named<MODEL, RESULT>, ISharedProcessResult_After_GroupBy_Alias<MODEL, RESULT>> createNamedNestedAndCollector(
+			Collector_Or_Named<MODEL, RESULT, ISQLLogical_Or_NoOp_Named<MODEL, RESULT>, ISQLLogical_And_NoOp_Named<MODEL, RESULT>, ISQLLogical_Or_NoOp_Named<MODEL, RESULT>, ISharedProcessResult_After_GroupBy_Alias<MODEL, RESULT>> orClauses) {
+		throw new UnsupportedOperationException("Not named");
 	}
 }
 

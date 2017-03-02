@@ -25,7 +25,7 @@ final class Collector_Having_Alias<MODEL, RESULT> extends Collector_And_Or_Alias
 				ISharedProcessResult_Having_And_Nested_Alias<MODEL, RESULT>,
 				ISharedProcessResult_Having_Or_Nested_Alias<MODEL, RESULT>, Void>
 	
-		createOrCollector() {
+		createAliasOrCollector() {
 		
 		return new Collector_Having_Or_Alias<>(this);
 	}
@@ -38,7 +38,7 @@ final class Collector_Having_Alias<MODEL, RESULT> extends Collector_And_Or_Alias
 				ISharedProcessResult_Having_And_Nested_Alias<MODEL, RESULT>,
 				ISharedProcessResult_Having_Or_Nested_Alias<MODEL, RESULT>, Void>
 	
-		createAndCollector() {
+		createAliasAndCollector() {
 
 		return new Collector_Having_And_Alias<>(this);
 	}
@@ -52,7 +52,7 @@ final class Collector_Having_Alias<MODEL, RESULT> extends Collector_And_Or_Alias
 				ISharedProcessResult_Having_Or_Nested_Alias<MODEL, RESULT>,
 				Void>
 	
-		createNestedOrCollector(Collector_And_Alias<MODEL, RESULT, ISharedProcessResult_Having_And_Alias<MODEL, RESULT>, ISharedProcessResult_Having_And_Nested_Alias<MODEL, RESULT>, ISharedProcessResult_Having_Or_Nested_Alias<MODEL, RESULT>, Void> andClauses) {
+		createAliasNestedOrCollector(Collector_And_Alias<MODEL, RESULT, ISharedProcessResult_Having_And_Alias<MODEL, RESULT>, ISharedProcessResult_Having_And_Nested_Alias<MODEL, RESULT>, ISharedProcessResult_Having_Or_Nested_Alias<MODEL, RESULT>, Void> andClauses) {
 
 		return new Collector_Having_Or_Nested_Alias<>(andClauses);
 	}
@@ -66,7 +66,7 @@ final class Collector_Having_Alias<MODEL, RESULT> extends Collector_And_Or_Alias
 				ISharedProcessResult_Having_Or_Nested_Alias<MODEL, RESULT>,
 				Void>
 	
-		createNestedAndCollector(Collector_Or_Alias<MODEL, RESULT, ISharedProcessResult_Having_Or_Alias<MODEL, RESULT>, ISharedProcessResult_Having_And_Nested_Alias<MODEL, RESULT>, ISharedProcessResult_Having_Or_Nested_Alias<MODEL, RESULT>, Void> orClauses) {
+		createAliasNestedAndCollector(Collector_Or_Alias<MODEL, RESULT, ISharedProcessResult_Having_Or_Alias<MODEL, RESULT>, ISharedProcessResult_Having_And_Nested_Alias<MODEL, RESULT>, ISharedProcessResult_Having_Or_Nested_Alias<MODEL, RESULT>, Void> orClauses) {
 
 		return new Collector_Having_And_Nested_Alias<>(orClauses);
 	}

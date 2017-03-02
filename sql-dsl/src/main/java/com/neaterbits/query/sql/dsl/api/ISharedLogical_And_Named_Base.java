@@ -19,8 +19,6 @@ public interface ISharedLogical_And_Named_Base<
 
     <T> STRING_CLAUSE and(StringFunction<T> getter);
 
-    ISharedFunctions_Named_Initial<MODEL, RESULT, AND_CLAUSES, INTEGER_CLAUSE, LONG_CLAUSE, STRING_CLAUSE> and();
-    
 	AND_CLAUSES andNest(ISharedNestedOrConsumerNamed<MODEL, RESULT, NESTED_OR_CLAUSES> orBuilder);
     
 }

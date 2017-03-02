@@ -5,6 +5,7 @@ public class SQL_Collector_WhereOrJoin_MultiEntity_Named<MODEL, RESULT>
 		extends SQL_Collector_WhereOrJoin_Named_Base<MODEL, RESULT,
 
 				ISQLJoin_Condition_MultiEntity_Named<MODEL, RESULT, Object, Object>,
+				ISQLJoin_Condition_MultiEntity_Alias<MODEL, RESULT>,
 
 				ISQLLogical_And_MultiEntity_Named<MODEL, RESULT>,
 				ISQLLogical_Or_MultiEntity_Named<MODEL, RESULT>,
@@ -17,12 +18,12 @@ public class SQL_Collector_WhereOrJoin_MultiEntity_Named<MODEL, RESULT>
 	}
 
 	@Override
-	Collector_Or_Named<MODEL, RESULT, ISQLLogical_Or_MultiEntity_Named<MODEL, RESULT>, ISQLLogical_And_NonProcessResult_Named<MODEL, RESULT>, ISQLLogical_Or_NonProcessResult_Named<MODEL, RESULT>, ISharedProcessResult_After_GroupBy_Named<MODEL, RESULT>> createOrCollector() {
+	Collector_Or_Named<MODEL, RESULT, ISQLLogical_Or_MultiEntity_Named<MODEL, RESULT>, ISQLLogical_And_NonProcessResult_Named<MODEL, RESULT>, ISQLLogical_Or_NonProcessResult_Named<MODEL, RESULT>, ISharedProcessResult_After_GroupBy_Named<MODEL, RESULT>> createNamedOrCollector() {
 		return new SQL_Collector_Or_MultiEntity_Named<>(this);
 	}
 
 	@Override
-	Collector_And_Named<MODEL, RESULT, ISQLLogical_And_MultiEntity_Named<MODEL, RESULT>, ISQLLogical_And_NonProcessResult_Named<MODEL, RESULT>, ISQLLogical_Or_NonProcessResult_Named<MODEL, RESULT>, ISharedProcessResult_After_GroupBy_Named<MODEL, RESULT>> createAndCollector() {
+	Collector_And_Named<MODEL, RESULT, ISQLLogical_And_MultiEntity_Named<MODEL, RESULT>, ISQLLogical_And_NonProcessResult_Named<MODEL, RESULT>, ISQLLogical_Or_NonProcessResult_Named<MODEL, RESULT>, ISharedProcessResult_After_GroupBy_Named<MODEL, RESULT>> createNamedAndCollector() {
 		return new SQL_Collector_And_MultiEntity_Named<>(this);
 	}
 
@@ -32,8 +33,7 @@ public class SQL_Collector_WhereOrJoin_MultiEntity_Named<MODEL, RESULT>
 
 			innerJoin(Class<LEFT> leftType, Class<RIGHT> rightType) {
 
-		return (ISQLJoin_Condition_MultiEntity_Named<MODEL, RESULT, LEFT, RIGHT>) super.innerJoinUtil(leftType,
-				rightType);
+		return (ISQLJoin_Condition_MultiEntity_Named<MODEL, RESULT, LEFT, RIGHT>) super.innerJoinUtil(leftType, rightType);
 	}
 
 	@SuppressWarnings("unchecked")
@@ -44,5 +44,4 @@ public class SQL_Collector_WhereOrJoin_MultiEntity_Named<MODEL, RESULT>
 		return (ISQLJoin_Condition_MultiEntity_Named<MODEL, RESULT, LEFT, RIGHT>) super.leftJoinUtil(leftType,
 				rightType);
 	}
-
 }

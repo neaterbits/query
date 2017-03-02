@@ -7,7 +7,7 @@ final class SQL_Collector_And_MultiMapped_Alias<MODEL, RESULT>
 	implements ISQLLogical_And_MultiMapped_Alias<MODEL, RESULT> {
 	
 	SQL_Collector_And_MultiMapped_Alias(
-		SQL_Collector_WhereOrJoin_Alias_Base<MODEL, RESULT, ?, ?, ?, ?> last) {
+		SQL_Collector_WhereOrJoin_Alias_Base<MODEL, RESULT, ?, ?, ?, ?, ?> last) {
 		super(last);
 	}
 }

@@ -17,7 +17,7 @@ abstract class SQL_Collector_Or_Alias<
 		super(qe);
 	}
 
-	SQL_Collector_Or_Alias(SQL_Collector_WhereOrJoin_Alias_Base<MODEL, RESULT, ?, ?, ?, ?> last) {
+	SQL_Collector_Or_Alias(SQL_Collector_WhereOrJoin_Alias_Base<MODEL, RESULT, ?, ?, ?, ?, ?> last) {
 		super(last);
 	}
 

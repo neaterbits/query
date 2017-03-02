@@ -8,7 +8,7 @@ abstract class Short_Collector_MapToResult_Base<
 
 
 	extends Collector_Base<MODEL>
-
+	
 	implements IMappingCollector<MODEL, RESULT>, ISharedSelectSourceBuilder<MODEL, RESULT>
 
 {

@@ -5,7 +5,7 @@ final class SQL_Collector_Or_MultiMapped_Named<MODEL, RESULT>
 
 	implements ISQLLogical_Or_MultiMapped_Named<MODEL, RESULT> {
 
-	SQL_Collector_Or_MultiMapped_Named(SQL_Collector_WhereOrJoin_Named_Base<MODEL, RESULT, ?, ?, ?, ?> last) {
+	SQL_Collector_Or_MultiMapped_Named(SQL_Collector_WhereOrJoin_Named_Base<MODEL, RESULT, ?, ?, ?, ?, ?> last) {
 		super(last);
 	}
 }

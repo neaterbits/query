@@ -18,7 +18,7 @@ abstract class SQL_Collector_Or_Named<
 		super(qe);
 	}
 
-	SQL_Collector_Or_Named(SQL_Collector_WhereOrJoin_Named_Base<MODEL, RESULT, ?, ?, ?, ?> last) {
+	SQL_Collector_Or_Named(SQL_Collector_WhereOrJoin_Named_Base<MODEL, RESULT, ?, ?, ?, ?, ?> last) {
 		super(last);
 	}
 

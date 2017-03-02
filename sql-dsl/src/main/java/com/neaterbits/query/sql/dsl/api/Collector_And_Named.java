@@ -15,7 +15,19 @@ abstract class Collector_And_Named<
 
 		extends Collector_And<MODEL, RESULT, AFTER_GROUP_BY>
 		
-		implements ISharedLogical_And_Named_All<MODEL, RESULT, AND_CLAUSES, NESTED_OR_CLAUSES> {
+		implements
+		
+			ISharedLogical_And_Named_All<MODEL, RESULT, AND_CLAUSES, NESTED_OR_CLAUSES>,
+			
+			ISharedLogical_And_Named_Function<
+				MODEL,
+				RESULT,
+				AND_CLAUSES,
+				NESTED_OR_CLAUSES /*,
+				ISharedCondition_Comparable_Common_All<MODEL, RESULT, Integer, AND_CLAUSES>,
+				ISharedCondition_Comparable_Common_All<MODEL, RESULT, Long, AND_CLAUSES>,
+				ISharedCondition_Comparable_String_All<MODEL, RESULT, AND_CLAUSES>*/> {
+			
 
 	abstract Collector_Or_Named<MODEL, RESULT, NESTED_OR_CLAUSES, NESTED_AND_CLAUSES, NESTED_OR_CLAUSES, AFTER_GROUP_BY>
 			createNestedOrCollector(Collector_And_Named<MODEL, RESULT, AND_CLAUSES, NESTED_AND_CLAUSES, NESTED_OR_CLAUSES, AFTER_GROUP_BY> andClauses);

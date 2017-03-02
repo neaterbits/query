@@ -7,6 +7,7 @@ final class SQL_Collector_WhereOrJoin_MultiMapped_Named<MODEL, RESULT>
 			RESULT,
 			
 			ISQLJoin_Condition_MultiMapped_Named<MODEL,RESULT,Object,Object>,
+			ISQLJoin_Condition_MultiMapped_Alias<MODEL,RESULT>,
 			
 			ISQLLogical_And_MultiMapped_Named<MODEL, RESULT>,
 			ISQLLogical_Or_MultiMapped_Named<MODEL, RESULT>,
@@ -20,12 +21,12 @@ final class SQL_Collector_WhereOrJoin_MultiMapped_Named<MODEL, RESULT>
 	}
 
 	@Override
-	SQL_Collector_Or_Named<MODEL, RESULT, ISQLLogical_Or_MultiMapped_Named<MODEL, RESULT>> createOrCollector() {
+	SQL_Collector_Or_Named<MODEL, RESULT, ISQLLogical_Or_MultiMapped_Named<MODEL, RESULT>> createNamedOrCollector() {
 		return new SQL_Collector_Or_MultiMapped_Named<>(this);
 	}
 
 	@Override
-	SQL_Collector_And_Named<MODEL, RESULT, ISQLLogical_And_MultiMapped_Named<MODEL, RESULT>> createAndCollector() {
+	SQL_Collector_And_Named<MODEL, RESULT, ISQLLogical_And_MultiMapped_Named<MODEL, RESULT>> createNamedAndCollector() {
 		return new SQL_Collector_And_MultiMapped_Named<>(this);
 	}
 

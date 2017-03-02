@@ -12,7 +12,10 @@ abstract class Collector_And_Alias<
 			AFTER_GROUP_BY>
 
 	extends Collector_And<MODEL, RESULT, AFTER_GROUP_BY>
-	implements ISharedLogical_And_Alias_Base<MODEL, RESULT, AND_CLAUSES, NESTED_OR_CLAUSES> {
+	implements 
+	
+		ISharedLogical_And_Alias_Base<MODEL, RESULT, AND_CLAUSES, NESTED_OR_CLAUSES>,
+		ISharedLogical_And_Alias_Function<MODEL, RESULT, AND_CLAUSES, NESTED_OR_CLAUSES> {
 
 	abstract Collector_Or_Alias<MODEL, RESULT, NESTED_OR_CLAUSES, NESTED_AND_CLAUSES, NESTED_OR_CLAUSES, AFTER_GROUP_BY>
 		createNestedOrCollector(Collector_And_Alias<MODEL, RESULT, AND_CLAUSES, NESTED_AND_CLAUSES, NESTED_OR_CLAUSES, AFTER_GROUP_BY> andClauses);
@@ -88,6 +91,7 @@ abstract class Collector_And_Alias<
 				ISharedCondition_Comparable_Common_All<MODEL, RESULT, Long, AND_CLAUSES>,
 				ISharedCondition_Comparable_String_All<MODEL, RESULT, AND_CLAUSES>> and() {
 
+					
 		@SuppressWarnings({"unchecked", "rawtypes"})
 		final ISharedCollector_Functions_Callback_Alias<MODEL, RESULT, AND_CLAUSES> cb
 				= new ISharedCollector_Functions_Callback_Alias<MODEL, RESULT, AND_CLAUSES>() {
