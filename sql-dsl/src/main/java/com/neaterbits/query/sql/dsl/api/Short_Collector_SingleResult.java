@@ -55,8 +55,29 @@ final class Short_Collector_SingleResult<MODEL, RESULT>
 		return new Short_Collector_MapToResult_Single_Alias<MODEL, RESULT>(collectedQueryResult, getModelCompiler());
 	}
 
+	
+	
+
+	// ******************* !!! IMPORTANT must switch to one that implements AndOr interface !!! *******************
+
+	@Override
+	Collector_Conditions_GroupBy<MODEL, RESULT, ?> getAfterWhereNamed() {
+		
+		// TODO: rename *MapToResult* here
+		final CollectedQueryResult_Entity_Single collectedQueryResult = new CollectedQueryResult_Entity_Single(getSelectSource());
+
+		return new Short_Collector_MapToResult_Single_Named<>(collectedQueryResult, getModelCompiler());
+	}
 
 
+	@Override
+	Collector_Conditions_GroupBy<MODEL, RESULT, ?> getAfterWhereAlias() {
+		// TODO: rename *MapToResult* here
+		final CollectedQueryResult_Entity_Single collectedQueryResult = new CollectedQueryResult_Entity_Single(getSelectSource());
+
+		return new Short_Collector_MapToResult_Single_Alias<>(collectedQueryResult, getModelCompiler());
+	}
+	
 	@Override
 	final Collector_Or_Named<
 			MODEL, 

@@ -39,14 +39,14 @@ abstract class Short_Collector_MapToResult_Single<MODEL, RESULT, AFTER_GROUP_BY>
 	
 
 	@Override
-	public <T, R> ISharedResultMapperTo<MODEL, RESULT, R, IShortResult_Mapped_Single_Named<MODEL, RESULT>>
+	public final <T, R> ISharedResultMapperTo<MODEL, RESULT, R, IShortResult_Mapped_Single_Named<MODEL, RESULT>>
 				map(Function<T, R> getter) {
 
 		return new ResultMapperToImpl<>(getter, this);
 	}
 
 	@Override
-	public <T, R> ISharedResultMapperTo<MODEL, RESULT, R, IShortResult_Mapped_Single_Alias<MODEL, RESULT>> map(Supplier<R> getter) {
+	public final <T, R> ISharedResultMapperTo<MODEL, RESULT, R, IShortResult_Mapped_Single_Alias<MODEL, RESULT>> map(Supplier<R> getter) {
 
 		return new ResultMapperToImpl<>(getter, this);
 	}

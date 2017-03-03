@@ -5,7 +5,7 @@ abstract class Collector_Conditions_Base<MODEL, RESULT> extends Collector_Base<M
 
 	final Collector_Clause clauseCollector;
 
-	EConditionsClause getConditionsClause() {
+	final EConditionsClause getConditionsClause() {
 		return clauseCollector.getConditionsClause();
 	}
 	

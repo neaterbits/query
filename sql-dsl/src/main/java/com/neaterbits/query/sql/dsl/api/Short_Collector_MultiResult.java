@@ -41,6 +41,26 @@ final class Short_Collector_MultiResult<MODEL, RESULT>
 
 		this.collectionType = collectionType;
 	}
+	
+	
+
+	@Override
+	Collector_Conditions_GroupBy<MODEL, RESULT, ?> getAfterWhereNamed() {
+		final CollectedQueryResult_Entity_Multi result = new CollectedQueryResult_Entity_Multi(getSelectSource(), collectionType);
+		
+		return new Short_Collector_MapToResult_Multi_Named<>(result, getModelCompiler());
+	}
+
+
+
+	@Override
+	Collector_Conditions_GroupBy<MODEL, RESULT, ?> getAfterWhereAlias() {
+		final CollectedQueryResult_Entity_Multi result = new CollectedQueryResult_Entity_Multi(getSelectSource(), collectionType);
+		
+		return new Short_Collector_MapToResult_Multi_Alias<>(result, getModelCompiler());
+	}
+
+
 
 	@Override
 	final IMappingCollector<MODEL, RESULT> getMapToResultNamed() {

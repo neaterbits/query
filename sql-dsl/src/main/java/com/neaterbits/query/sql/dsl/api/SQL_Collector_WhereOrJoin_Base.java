@@ -200,28 +200,35 @@ abstract class SQL_Collector_WhereOrJoin_Base<
 	
 
 	// ------------------------  WHERE ------------------------
+
+	// Allow swithcing to some other instance after initial where, when we know whether named or alias
+	Collector_Conditions_GroupBy<MODEL, RESULT, ?> getAfterWhereNamed() {
+		
+		return this;
+	}
+		
 	// implemented in subclass @Override
 	public final <T> ISharedCondition_Comparable_Common_All_Compilable<MODEL, RESULT, Integer, NAMED_AND_OR> where(IFunctionInteger<T> getter) {
 
-		return new Collector_Condition_Comparative<MODEL, RESULT, Integer, NAMED_AND_OR>(this, makeGetter(getter));
+		return new Collector_Condition_Comparative<MODEL, RESULT, Integer, NAMED_AND_OR>(getAfterWhereNamed(), makeGetter(getter));
 	}
 	
 	//implemented in subclass @Override
 	public final <T> ISharedCondition_Comparable_Common_All_Compilable<MODEL, RESULT, Long, NAMED_AND_OR> where(IFunctionLong<T> getter) {
 
-		return new Collector_Condition_Comparative<MODEL, RESULT, Long, NAMED_AND_OR>(this, makeGetter(getter));
+		return new Collector_Condition_Comparative<MODEL, RESULT, Long, NAMED_AND_OR>(getAfterWhereNamed(), makeGetter(getter));
 	}
 
 	// implemented in subclass @Override
 	public final <T, E extends Enum<E>> ISharedCondition_Equality_All<MODEL, RESULT, E, NAMED_AND_OR> where(IFunctionEnum<T, E> getter) {
 
-		return new Collector_Condition_Comparative<MODEL, RESULT, E, NAMED_AND_OR>(this, makeGetter(getter));
+		return new Collector_Condition_Comparative<MODEL, RESULT, E, NAMED_AND_OR>(getAfterWhereNamed(), makeGetter(getter));
 	}
 
 	// implemented in subclass @Override
 	public final <T> ISharedCondition_Comparable_String_All_Compilable<MODEL, RESULT, NAMED_AND_OR> where(StringFunction<T> getter) {
 		
-		return new Collector_Condition_String<MODEL, RESULT, NAMED_AND_OR>(this, makeGetter(getter));
+		return new Collector_Condition_String<MODEL, RESULT, NAMED_AND_OR>(getAfterWhereNamed(), makeGetter(getter));
 	}
 	
 			
@@ -334,7 +341,13 @@ abstract class SQL_Collector_WhereOrJoin_Base<
 		return new Collector_SharedFunctions_Alias<>(cb);
 	}
 	// ------------------------  WHERE ------------------------
-	
+
+	// Allow swithcing to some other instance after initial where, when we know whether named or alias
+	Collector_Conditions_GroupBy<MODEL, RESULT, ?> getAfterWhereAlias() {
+		
+		return this;
+	}
+			
 	//implemented in subclass @Override
 	public final ISharedCondition_Comparable_Common_All<
 				MODEL,
@@ -342,7 +355,7 @@ abstract class SQL_Collector_WhereOrJoin_Base<
 				Integer,
 				ALIAS_AND_OR> where(ISupplierInteger func) {
 	
-		return new Collector_Condition_Comparative<MODEL, RESULT, Integer, ALIAS_AND_OR>(this, makeGetter(func));
+		return new Collector_Condition_Comparative<MODEL, RESULT, Integer, ALIAS_AND_OR>(getAfterWhereAlias(), makeGetter(func));
 	}	
 	
 	// implemented in subclass @Override
@@ -351,7 +364,7 @@ abstract class SQL_Collector_WhereOrJoin_Base<
 				RESULT,
 				ALIAS_AND_OR> where(ISupplierString supplier) {
 	
-		return new Collector_Condition_String<MODEL, RESULT, ALIAS_AND_OR>(this, makeGetter(supplier));
+		return new Collector_Condition_String<MODEL, RESULT, ALIAS_AND_OR>(getAfterWhereAlias(), makeGetter(supplier));
 	}
 
 }
