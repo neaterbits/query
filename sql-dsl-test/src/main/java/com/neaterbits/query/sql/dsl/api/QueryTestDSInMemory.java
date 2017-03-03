@@ -1,10 +1,9 @@
-package com.neaterbits.query.sql.dsl.api.testhelper;
+package com.neaterbits.query.sql.dsl.api;
 
 import java.util.List;
 import java.util.function.Consumer;
 
 import com.neaterbits.query.sql.dsl.api.QueryDataSource;
-import com.neaterbits.query.sql.dsl.api.QueryDataSourcePojoWithList;
 import com.neaterbits.query.sql.dsl.api.entity.QueryMetaModel;
 
 public final class QueryTestDSInMemory extends QueryTestDS {

@@ -1,4 +1,4 @@
-package com.neaterbits.query.sql.dsl.api.testhelper;
+package com.neaterbits.query.sql.dsl.api;
 
 import java.util.HashMap;
 import java.util.Map;

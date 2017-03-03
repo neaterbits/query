@@ -1,4 +1,4 @@
-package com.neaterbits.query.sql.dsl.api.helper.jpa;
+package com.neaterbits.query.sql.dsl.api;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -7,17 +7,21 @@ import javax.persistence.Persistence;
 import javax.persistence.metamodel.EntityType;
 import javax.persistence.metamodel.Metamodel;
 
-import com.neaterbits.query.sql.dsl.api.testhelper.QueryTestDSBasePersistent;
+abstract class JPADataStore 
+		extends TransactionalDataStore<EntityManagerFactory, EntityManager, EntityTransaction> {
 
-public abstract class QueryTestDSJPABase extends QueryTestDSBasePersistent<EntityManagerFactory, EntityManager, EntityTransaction> {
-
-	public QueryTestDSJPABase(String persistenceUnitName) {
-		super(Persistence.createEntityManagerFactory(persistenceUnitName), (ctx, instance) -> ctx.getPersistenceUnitUtil().getIdentifier(instance));
+	public JPADataStore(String persistenceUnitName) {
+		super(Persistence.createEntityManagerFactory(persistenceUnitName));
 	}
 	
 	@Override
-	protected final EntityManager openEntities(EntityManagerFactory ctx) {
+	protected final EntityManager intOpenEntities(EntityManagerFactory ctx) {
 		return ctx.createEntityManager();
+	}
+
+	@Override
+	protected Object getPrimaryKey(Object instance) {
+		return getCtx().getPersistenceUnitUtil().getIdentifier(instance);
 	}
 
 	@Override

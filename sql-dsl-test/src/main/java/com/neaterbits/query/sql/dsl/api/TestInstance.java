@@ -1,4 +1,4 @@
-package com.neaterbits.query.sql.dsl.api.testhelper;
+package com.neaterbits.query.sql.dsl.api;
 
 final class TestInstance {
 	private final Object instance;

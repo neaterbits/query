@@ -13,14 +13,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import com.neaterbits.query.jpatest.model.Company;
 import com.neaterbits.query.sql.dsl.api.entity.QueryMetaModel;
-import com.neaterbits.query.sql.dsl.api.helper.jpa.QueryTestDSJPANative;
-import com.neaterbits.query.sql.dsl.api.helper.jpa.QueryTestDSJPQL;
-import com.neaterbits.query.sql.dsl.api.testhelper.BaseSQLAPITest;
-import com.neaterbits.query.sql.dsl.api.testhelper.QueryTestDSBuilder;
-import com.neaterbits.query.sql.dsl.api.testhelper.QueryTestDSCheck;
-import com.neaterbits.query.sql.dsl.api.testhelper.QueryTestDSCombined;
-import com.neaterbits.query.sql.dsl.api.testhelper.QueryTestDSInMemory;
-import com.neaterbits.query.sql.dsl.api.testhelper.QueryTestDSStore;
 
 public class ShortAPITest extends BaseSQLAPITest {
 	private static final EntityManagerFactory emf = Persistence.createEntityManagerFactory("query-jpa-test");
@@ -30,6 +22,9 @@ public class ShortAPITest extends BaseSQLAPITest {
 	private static final QueryTestDSStore nativeDS = new QueryTestDSJPANative("query-jpa-test");
 	private static final QueryTestDSStore jpql = new QueryTestDSJPQL("query-jpa-test");
 	private static final QueryTestDSStore inMemory = new QueryTestDSInMemory(jpaQueryMetaModel);
+	
+	private static final ShortSelect select = com.neaterbits.query.sql.dsl.api.IShortSelect.get();
+	
 	
 	private static QueryTestDSCheck store(Consumer<QueryTestDSBuilder> b) {
 		
@@ -152,7 +147,7 @@ public class ShortAPITest extends BaseSQLAPITest {
 
         final MultiQuery<Company> startsWithAc =
 
-        			 list(Company.class)
+        			 select.list(Company.class)
         			.orderBy(Company::getName)
         			.desc()
         			.compile();

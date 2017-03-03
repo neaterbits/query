@@ -4,6 +4,11 @@ import java.math.BigDecimal;
 
 public interface IShortSelect {
 
+
+	public static ShortSelect get() {
+		return ShortSelect.selectImpl;
+	}
+	
 	
 	public static <MAPPED_RESULT> IShortResult_Multi<MultiQuery<MAPPED_RESULT>, MAPPED_RESULT> list(Class<MAPPED_RESULT> cl) {
 		return ShortSelect.selectImpl.list(cl);

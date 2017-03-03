@@ -1,10 +1,10 @@
-package com.neaterbits.query.sql.dsl.api.helper.jpa;
+package com.neaterbits.query.sql.dsl.api;
 
 import javax.persistence.EntityManager;
 
-public abstract class QueryTestDSJPAManaged extends QueryTestDSJPABase {
-	
-	protected QueryTestDSJPAManaged(String persistenceUnitName) {
+abstract class ManagedJPADataStore extends JPADataStore {
+
+	ManagedJPADataStore(String persistenceUnitName) {
 		super(persistenceUnitName);
 	}
 
@@ -24,5 +24,5 @@ public abstract class QueryTestDSJPAManaged extends QueryTestDSJPABase {
 
 		em.remove(found);
 	}
-	
+
 }

@@ -560,6 +560,13 @@ W - parametere
 
 - databasespesifikke dialekter APIet? Mye jobb å teste og vedlikeholde så antakelig helst ikke.
 
+- TODO where() for functions i short-queries, litt vanskelig om ikke vet result typen (named/alias) allerede, dbs for entities, siden
+  må kunne finne denne rekursivt. altså list(SomeEntity.class).where().lower(SomeEntity.getName).isEqualTo("foo"))
+
+- ikke tillate aggregates på toppniv kun på joina typer? list(SomeEntity.class).where().sum(SomeEntity::getSomeMumber) ?
+  Gir ikke mening dette queryet.
+
+
 # - order by?
 
 #- group by, burde alltid etter where men også etter join? Kan
@@ -1093,20 +1100,71 @@ short-queries:
 list(Company.class).where(foo::get)
 
 
-vet ikke om er named eller ikke før er i where-clause.
+vet ikke om er namedøre eller ikke før er i where-clause."
 
 Så må wære where-or-join på begge.
 Men dette gjelder også for short-utgaven, så lenge ikke er mapping.
-
-
-
 
 Hvordan blir API? Blir fortsatt one() og list() men kan kalle where() og join()
 uten noe annet.
 Så må wrappe where-funksjonaliteten i så fall.
 
 
+Hvordan skal vi mappe til prepared?
+
+- compiled - har collecta query (m/eller uten å resolve til Method).
+ evt Collected 
+- prepared - knytta til datasource
+
+Kan lønne seg å skille internt mellom Collected og Compiled? Begge kan bli prepared v.hj.a datasource
+
+Men vi må altså ha to forskjellige utg punkt, datasource eller ikke.
+
+Kan være nyttig å preppe til slutt om skal kjøre query på multiple DSer.
+
+ - static, velger stil direkte med import-static.
+ - typed, velger stil direkte mot en variabel? Er bare å assigne variabelen til f.eks IShortSelect.get(), må preppes til slutt.
+
+ - med DS: style + DS. get(datasource)
 
 
+DataSource? 
+Merge test-greia inn i datasource slik at kan gjøre commit/rollback osv også, men er interne klasser.
+
+Må ha en factory-greie for DataSource, eller bare en constructor?
+Provider-pattern? Tungvindt? 
+  - new direkte på klassen? new QueryDataSourceJPA("persistence-unit")
+  - factory? Vanskelig siden multiple units.
+  - konfig-pattern, nok det beste 
+    * QueryDataSourceJPA() er konfig som sendes inn, en factory returnerer en implementasjon av datasourcen
+    * Kan bytte implementasjon for samme konfigen, konfigen over sier bare at baserer seg på JPA entity modell.
+
+      - kombinasjon JDBC kall/JPA entity modell? To forskjellige modeller? Kan være factoryen en kaller + konfigurasjon som sendes.
+     
+- !!OBS!! join-på-liste er kun når har en JPA-modell så bør være type-safe input parameter til factory-metoden som
+ avgjør hvilke egenskaper som er i entity-modellen. Her kan vi benytte oss av Type1 & Type2 generics for div kombinasjoner.
+
+Hva kalle dette?
+Er ikke Persistence siden er samme som JPA så greit og ikke blande, og er heller ikke persistent siden kan kjøres
+mot in-memory. Bare Data eller Query? Herer nå DataSource. Så kaskje bare ha en static DataSource?
+
+DataSource.init(DataSourceConfig config)
+Hva med query-styles? Er query-stylen som initialiserer.
+
+ShortSelect.init(DataSourceConfig config), så kan da legge datasource intialisering i baseklassen, men stylen blir med i query-resultat?
+Eller ihverfall i builderen.
+Om skulle bytte så måtte sendt inn interfacet som parameter, så bedre å bare passe configen
+
+
+
+
+
+
+
+
+
+
+
+------------------------------
 
 

@@ -23,14 +23,6 @@ import com.neaterbits.query.jpatest.model.Employee;
 import com.neaterbits.query.jpatest.model.Person;
 import com.neaterbits.query.jpatest.model.Role;
 import com.neaterbits.query.sql.dsl.api.entity.QueryMetaModel;
-import com.neaterbits.query.sql.dsl.api.helper.jpa.QueryTestDSJPANative;
-import com.neaterbits.query.sql.dsl.api.helper.jpa.QueryTestDSJPQL;
-import com.neaterbits.query.sql.dsl.api.testhelper.BaseSQLAPITest;
-import com.neaterbits.query.sql.dsl.api.testhelper.QueryTestDSBuilder;
-import com.neaterbits.query.sql.dsl.api.testhelper.QueryTestDSCheck;
-import com.neaterbits.query.sql.dsl.api.testhelper.QueryTestDSCombined;
-import com.neaterbits.query.sql.dsl.api.testhelper.QueryTestDSInMemory;
-import com.neaterbits.query.sql.dsl.api.testhelper.QueryTestDSStore;
 
 public class ClassicAPITest extends BaseSQLAPITest {
 
