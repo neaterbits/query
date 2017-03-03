@@ -143,4 +143,39 @@ public class ShortAPITest extends BaseSQLAPITest {
 	        		foo);
 		});
 	}
+
+	@Test
+    public void testListAllOrderByEntities() {
+		
+		final Company acme = new Company(-1, "Acme");
+		final Company foo = new Company(-1, "Foo");
+
+        final MultiQuery<Company> startsWithAc =
+
+        			 list(Company.class)
+        			.orderBy(Company::getName)
+        			.desc()
+        			.compile();
+		
+		store(s  -> s.add(acme)).
+		check(ds -> {
+	        checkSelectListUnordered(
+	        		ds,
+	        		startsWithAc,
+	        		q -> q.execute(),
+	        		acme,
+	        		foo);
+		});
+
+		// Search for foo as well, should return no matches
+		store(s  -> s.add(foo)).
+		check(ds -> {
+	        checkSelectListUnordered(
+	        		ds,
+	        		startsWithAc,
+	        		q -> q.execute(),
+	        		foo);
+		});
+	}
+	
 }
