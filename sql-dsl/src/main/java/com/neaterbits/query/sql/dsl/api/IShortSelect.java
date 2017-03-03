@@ -4,21 +4,19 @@ import java.math.BigDecimal;
 
 public interface IShortSelect {
 
-
 	public static ShortSelect get() {
 		return ShortSelect.selectImpl;
 	}
 	
-	
-	public static <MAPPED_RESULT> IShortResult_Multi<MultiQuery<MAPPED_RESULT>, MAPPED_RESULT> list(Class<MAPPED_RESULT> cl) {
+	public static <MAPPED_RESULT> IShortResult_Multi<MultiCompiled<MAPPED_RESULT>, MAPPED_RESULT> list(Class<MAPPED_RESULT> cl) {
 		return ShortSelect.selectImpl.list(cl);
 	}
 
-	public static <TYPE_RESULT> IShortResult_Single<SingleQuery<TYPE_RESULT>, TYPE_RESULT> one(Class<TYPE_RESULT> cl) {
+	public static <TYPE_RESULT> IShortResult_Single<SingleCompiled<TYPE_RESULT>, TYPE_RESULT> one(Class<TYPE_RESULT> cl) {
 		return ShortSelect.selectImpl.one(cl);
 	}
 
-	public static <TYPE_RESULT> IShortResult_Single<SingleQuery<TYPE_RESULT>, TYPE_RESULT> oneOrNull(Class<TYPE_RESULT> cl) {
+	public static <TYPE_RESULT> IShortResult_Single<SingleCompiled<TYPE_RESULT>, TYPE_RESULT> oneOrNull(Class<TYPE_RESULT> cl) {
 		return ShortSelect.selectImpl.oneOrNull(cl);
 	}
 	

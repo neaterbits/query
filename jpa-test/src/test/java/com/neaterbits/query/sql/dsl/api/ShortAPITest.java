@@ -1,6 +1,7 @@
 package com.neaterbits.query.sql.dsl.api;
 
 import static com.neaterbits.query.sql.dsl.api.IShortSelect.oneOrNull;
+import static com.neaterbits.query.sql.dsl.api.IShortSelect.one;
 import static com.neaterbits.query.sql.dsl.api.IShortSelect.list;
 
 import java.util.function.Consumer;
@@ -25,6 +26,8 @@ public class ShortAPITest extends BaseSQLAPITest {
 	
 	private static final ShortSelect select = com.neaterbits.query.sql.dsl.api.IShortSelect.get();
 	
+	private static final QueryDataSource jpqlDS = jpql.getDataSource();
+	
 	
 	private static QueryTestDSCheck store(Consumer<QueryTestDSBuilder> b) {
 		
@@ -39,6 +42,31 @@ public class ShortAPITest extends BaseSQLAPITest {
 				.store(b);
 	}
 
+	private static final IShortPrepared prepared = IShortPrepared.get(jpqlDS);
+
+	private static final SinglePrepared<Company>
+			acmeQuery = prepared
+					.one(Company.class)
+					.where(Company::getName).startsWith("Acme")
+					
+					.compile();
+
+	private static final SinglePrepared<Company>
+			acmeQuery2 = 
+			 one(Company.class)
+			.where(Company::getName).startsWith("Acme")
+			
+			.compile().prepare(jpqlDS);
+	
+	@Test
+    public void testPrepared() {
+		
+		final Company c =  acmeQuery.execute();
+		
+		
+		assertThat(c).isNull();
+		
+	}
 	
 	@Test
     public void testNameBasedMapped() {
@@ -46,7 +74,7 @@ public class ShortAPITest extends BaseSQLAPITest {
 		final Company acme = new Company(-1, "Acme");
 		final Company foo = new Company(-1, "Foo");
 
-        final SingleQuery<CompanyResultVO> startsWithAc =
+        final SingleCompiled<CompanyResultVO> startsWithAc =
         		oneOrNull(CompanyResultVO.class)
 
         	.map(Company::getName).to(CompanyResultVO::setName)
@@ -82,7 +110,7 @@ public class ShortAPITest extends BaseSQLAPITest {
 		final Company acme = new Company(-1, "Acme");
 		final Company foo = new Company(-1, "Foo");
 
-        final SingleQuery<Company> startsWithAc =
+        final SingleCompiled<Company> startsWithAc =
         		oneOrNull(Company.class)
 
         	.where(Company::getName).startsWith("Ac")
@@ -116,7 +144,7 @@ public class ShortAPITest extends BaseSQLAPITest {
 		final Company acme = new Company(-1, "Acme");
 		final Company foo = new Company(-1, "Foo");
 
-        final MultiQuery<Company> startsWithAc = list(Company.class).compile();
+        final MultiCompiled<Company> startsWithAc = list(Company.class).compile();
 		
 		store(s  -> s.add(acme)).
 		check(ds -> {
@@ -145,7 +173,7 @@ public class ShortAPITest extends BaseSQLAPITest {
 		final Company acme = new Company(-1, "Acme");
 		final Company foo = new Company(-1, "Foo");
 
-        final MultiQuery<Company> startsWithAc =
+        final MultiCompiled<Company> startsWithAc =
 
         			 select.list(Company.class)
         			.orderBy(Company::getName)

@@ -19,14 +19,14 @@ final class QueryResultGetterParamsBuilderImpl<RESULT_TYPE>
 	private final QueryParamCollector queryParamCollector;
 	private final QueryDataSource_Base<?> dataSource;
 	private final PreparedQuery_DS<?> dsQuery;
-	private final Builder_PreparedQuery_Base<RESULT_TYPE> query; 
+	private final Shared_PreparedQuery_Base<RESULT_TYPE> query; 
 	private Param<?> lastParam;
 
 	QueryResultGetterParamsBuilderImpl(
 			QueryParamCollector queryParamCollector,
 			QueryDataSource_Base<?> dataSource,
 			PreparedQuery_DS<?> dsQuery,
-			Builder_PreparedQuery_Base<RESULT_TYPE> query) {
+			Shared_PreparedQuery_Base<RESULT_TYPE> query) {
 
 		if (queryParamCollector == null) {
 			throw new IllegalArgumentException("queryParamCollector == null");

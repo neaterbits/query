@@ -39,4 +39,9 @@ public final class QueryTestDSInMemory extends QueryTestDS {
 			testBuilder.accept(dataSource);
 		}
 	}
+
+	@Override
+	public QueryDataSource getDataSource() {
+		throw new UnsupportedOperationException("TODO - POJOs");
+	}
 }

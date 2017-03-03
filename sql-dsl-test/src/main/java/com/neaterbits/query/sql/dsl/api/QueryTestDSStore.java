@@ -5,5 +5,8 @@ import java.util.function.Consumer;
 public interface QueryTestDSStore {
 
 	QueryTestDSCheck store(Consumer<QueryTestDSBuilder> dsBuilder);
+	
+	QueryDataSource getDataSource();
+	
 
 }

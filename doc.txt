@@ -1156,8 +1156,39 @@ Eller ihverfall i builderen.
 Om skulle bytte så måtte sendt inn interfacet som parameter, så bedre å bare passe configen
 
 
+Hvordan returnere annen type for get?
+
+ Bør være forskjellig prepare, alt etter som returnert. Men vi har compile() som base
+som er implementert i de forskjellige så ikke så lett å differensiere uten egne
+sub-interfacer for alle,l så tungvindt og mye arbeid.
 
 
+ .get() => hente verdier fra prepared-query
+
+Men først prepared.
+
+compiled? Er om vi cacher et query som ikke er kjent DS og som må prepares med DS først.
+
+Men om er med DS så blir det alltid prepared som kan gjøres executeWithParams() på.
+
+Men hvordan skille mellom compile(), prepare() og prepare(ds) ?
+Kunne vi prepare query etter-hvert, slik at alltid cast'er til PreparedQuery?
+Da måtte alle interfaces implementere dette og så for hvert steg gjøre partial compile i stedet for bare
+collect, dvs compile etter hver condition osv.
+Noe trøblete å få til siden må skjule dette i interfaces hele veien gjennom?
+Må bygge query på slutten. Men egentlig ikke værre typemessig enn det er om skal skille prepare() og prepareDS() siden dette uansett må skilles
+i retur-typen.
+
+Er ganske mange forskjellige siden blir kombinasjon med SingleResult/MultiEntity/MultiMapped og er mange interfaces som kan være siste-kriterie i query.
+
+Om alltid hadde et ekstra-nivå så hadde vært enklere siden bare hadde sendt gjennom en egen MODEL.
+Så alltid .build() , som returnerte prepared ellers, build().prepare(DS) om ikke. Dette er vel egentlig greit nok, at alltid må slenge på build() (== compile) på slutten?
+
+Kunne evt ha prepare(DS) i et query som allerede hadde DS og så fjerne kaste exception runtime på dette.
+Da måtte end-clausen ha get() men forvirrende.
+
+Greit med compile()/build() inntil videre, er fullt mulig å legge til bakover-kompatibilitet senere om gjør slik at ikke behøver build() men at 
+kompilerer etter hvert som query kjøres gjennom.
 
 
 

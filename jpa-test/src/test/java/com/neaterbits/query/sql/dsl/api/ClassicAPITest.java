@@ -54,7 +54,7 @@ public class ClassicAPITest extends BaseSQLAPITest {
 		final Company acme = new Company(-1, "Acme");
 		final Company foo = new Company(-1, "Foo");
 
-        final SingleQuery<CompanyResultVO> startsWithAc =
+        final SingleCompiled<CompanyResultVO> startsWithAc =
         		oneOrNull(CompanyResultVO.class)
 
         	.map(Company::getName).to(CompanyResultVO::setName)
@@ -92,7 +92,7 @@ public class ClassicAPITest extends BaseSQLAPITest {
 		final Company acme = new Company(-1, "Acme");
 		final Company foo = new Company(-1, "Foo");
 
-        final SingleQuery<CompanyResultVO> startsWithAc =
+        final SingleCompiled<CompanyResultVO> startsWithAc =
         		oneOrNull(CompanyResultVO.class)
 
         	.map(Company::getName).to(CompanyResultVO::setName)
@@ -132,7 +132,7 @@ public class ClassicAPITest extends BaseSQLAPITest {
 		final Company acme = new Company(-1, "Acme");
 		final Company foo = new Company(-1, "Foo");
 
-        final SingleQuery<CompanyResultVO> startsWithAc =
+        final SingleCompiled<CompanyResultVO> startsWithAc =
         		oneOrNull(CompanyResultVO.class)
 
         	.map(Company::getName).to(CompanyResultVO::setName)
@@ -171,7 +171,7 @@ public class ClassicAPITest extends BaseSQLAPITest {
 		final InParam<String> inParam = IClassicSelect.inParam(String.class);
 		
 
-        final SingleQuery<CompanyResultVO> startsWithAc =
+        final SingleCompiled<CompanyResultVO> startsWithAc =
         		oneOrNull(CompanyResultVO.class)
 
         	.map(Company::getName).to(CompanyResultVO::setName)
@@ -210,7 +210,7 @@ public class ClassicAPITest extends BaseSQLAPITest {
 		final Company acme = new Company(-1, "Acme");
 		final Company foo = new Company(-1, "Foo");
 
-        final SingleQuery<CompanyResultVO> startsWithAc =
+        final SingleCompiled<CompanyResultVO> startsWithAc =
         		oneOrNull(CompanyResultVO.class)
 
         	.map(Company::getName).to(CompanyResultVO::setName)
@@ -246,7 +246,7 @@ public class ClassicAPITest extends BaseSQLAPITest {
 		final Company acme = new Company(-1, "Acme");
 		final Company foo = new Company(-2, "Foo");
 
-        final SingleQuery<Company> startsWithAc =
+        final SingleCompiled<Company> startsWithAc =
         		oneFrom(Company.class)
         			.where(Company::getName).startsWith("Ac")
         			.compile();
@@ -279,7 +279,7 @@ public class ClassicAPITest extends BaseSQLAPITest {
 		final Company acme = new Company(-1, "Acme");
 		final Company foo = new Company(-2, "Foo");
 
-        final MultiQuery<Company> startsWithAcOrEndsWithoo =
+        final MultiCompiled<Company> startsWithAcOrEndsWithoo =
         		listFrom(Company.class)
         			.where(Company::getName).startsWith("Ac")
         			.   or(Company::getName).endsWith("oo")
@@ -307,7 +307,7 @@ public class ClassicAPITest extends BaseSQLAPITest {
 		final ValParam<String> endParam = IClassicSelect.stringParam();
 		
 		
-        final SingleQuery<CompanyResultVO> startsWithAc =
+        final SingleCompiled<CompanyResultVO> startsWithAc =
         		oneOrNull(CompanyResultVO.class)
 
         	.map(Company::getName).to(CompanyResultVO::setName)
@@ -348,7 +348,7 @@ public class ClassicAPITest extends BaseSQLAPITest {
 
 		final ValParam<String> eqParam = IClassicSelect.stringParam();
 		
-        final SingleQuery<CompanyResultVO> startsWithAc =
+        final SingleCompiled<CompanyResultVO> startsWithAc =
         		one(CompanyResultVO.class)
 
         	.map(Company::getName).to(CompanyResultVO::setName)
@@ -391,7 +391,7 @@ public class ClassicAPITest extends BaseSQLAPITest {
 		
 		
 		
-        final SingleQuery<CompanyResultVO> startsWithAc =
+        final SingleCompiled<CompanyResultVO> startsWithAc =
         		oneOrNull(CompanyResultVO.class)
 
         	.map(Company::getName).to(CompanyResultVO::setName)
@@ -430,7 +430,7 @@ public class ClassicAPITest extends BaseSQLAPITest {
 		final Company acme = new Company(-1, "Acme", new BigDecimal("100.90"));
 		final Company foo = new Company(-2, "Foo", new BigDecimal("75.49"));
 		
-		final SingleQuery<BigDecimal> query = 
+		final SingleCompiled<BigDecimal> query = 
 				sum(Company::getStockPrice).from(Company.class)
 				.compile();
 		
@@ -454,7 +454,7 @@ public class ClassicAPITest extends BaseSQLAPITest {
 		final Company acme = new Company(-1, "Acme");
 		final Company foo = new Company(-1, "Foo");
 
-        final SingleQuery<CompanyResultVO> startsWithAc =
+        final SingleCompiled<CompanyResultVO> startsWithAc =
         		oneOrNull(CompanyResultVO.class)
 
         	.map(Company::getName).to(CompanyResultVO::setName)
@@ -499,7 +499,7 @@ public class ClassicAPITest extends BaseSQLAPITest {
 		final Company foo = new Company(-1, "Foo");
 
 		
-        final SingleQuery<CompanyResultVO> startsWithAc =
+        final SingleCompiled<CompanyResultVO> startsWithAc =
         		oneOrNull(CompanyResultVO.class)
 
         	.map(company::getName).to(CompanyResultVO::setName)
@@ -531,7 +531,7 @@ public class ClassicAPITest extends BaseSQLAPITest {
 	
 	@Test
 	public void testMultipleEntities() {
-		final MultiQuery<Company> startsWithFoo =
+		final MultiCompiled<Company> startsWithFoo =
 				list(Company.class)
 				 .from(Company.class)
 			     .where(Company::getName).startsWith("foo").compile();
@@ -564,7 +564,7 @@ public class ClassicAPITest extends BaseSQLAPITest {
 		final Employee fooEmp1 = new Employee(fooEmployeeId1, foo, fooPerson1.getId());
 		final Employee fooEmp2 = new Employee(fooEmployeeId2, foo, fooPerson2.getId());
 		
-        final MultiQuery<CompanyPersonResultVO> startsWithFoo =
+        final MultiCompiled<CompanyPersonResultVO> startsWithFoo =
         		list(CompanyPersonResultVO.class)
 
         	.map(company::getId)      .to(CompanyPersonResultVO::setCompanyId)
@@ -621,7 +621,7 @@ public class ClassicAPITest extends BaseSQLAPITest {
 		final Company bar = new Company(2, "Bar", new BigDecimal("134.1"));
 		final Company foo = new Company(3, "Foo", new BigDecimal("184.2"));
 
-        final MultiQuery<CompanyResultVO> startsWithAc =
+        final MultiCompiled<CompanyResultVO> startsWithAc =
         		list(CompanyResultVO.class)
 
         	.map(Company::getStockPrice).to(CompanyResultVO::setStockPrice)
@@ -687,7 +687,7 @@ public class ClassicAPITest extends BaseSQLAPITest {
 	    	final ValParam<Integer> param2 = intParam();
 	    	
 	    	
-	        final SingleQuery<ResultVO > query =
+	        final SingleCompiled<ResultVO > query =
 	        		oneOrNull(ResultVO.class)
 	
 	        	.map(company::getId)		.to(ResultVO::setCompanyId)
@@ -731,7 +731,7 @@ public class ClassicAPITest extends BaseSQLAPITest {
 		final Company foo = new Company(-1, "Foo");
 
 		
-        final MultiQuery<Company> startsWithAc =
+        final MultiCompiled<Company> startsWithAc =
         		list(Company.class)
         		.from(Company.class)
         		

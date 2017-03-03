@@ -78,4 +78,9 @@ public class QueryTestDSCombined extends QueryTestDS {
 			}
 		}
 	}
+
+	@Override
+	public QueryDataSource getDataSource() {
+		throw new UnsupportedOperationException("Combined so no single datasource");
+	}
 }

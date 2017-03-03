@@ -25,14 +25,14 @@ public interface IClassic
 
 	 */
 	
-	<TYPE_RESULT> IClassicResult_Single<SingleQuery<TYPE_RESULT>, TYPE_RESULT> one(Class<TYPE_RESULT> cl);
+	<TYPE_RESULT> IClassicResult_Single<SingleCompiled<TYPE_RESULT>, TYPE_RESULT> one(Class<TYPE_RESULT> cl);
 
-	<TYPE_RESULT> IClassicResult_Single<SingleQuery<TYPE_RESULT>, TYPE_RESULT> oneOrNull(Class<TYPE_RESULT> cl);
+	<TYPE_RESULT> IClassicResult_Single<SingleCompiled<TYPE_RESULT>, TYPE_RESULT> oneOrNull(Class<TYPE_RESULT> cl);
 
-	<TYPE_RESULT> IClassicResult_Multi<MultiQuery<TYPE_RESULT>, TYPE_RESULT> list(Class<TYPE_RESULT> cl);
+	<TYPE_RESULT> IClassicResult_Multi<MultiCompiled<TYPE_RESULT>, TYPE_RESULT> list(Class<TYPE_RESULT> cl);
 
 	// return single-type, that is we do not require from-type
-	<TYPE_RESULT> IClassicSingleWhereClauseBuilderNamed<SingleQuery<TYPE_RESULT>, TYPE_RESULT> oneFrom(Class<TYPE_RESULT> cl);
+	<TYPE_RESULT> IClassicSingleWhereClauseBuilderNamed<SingleCompiled<TYPE_RESULT>, TYPE_RESULT> oneFrom(Class<TYPE_RESULT> cl);
 
-	<TYPE_RESULT> IClassicSingleWhereClauseBuilderNamed<MultiQuery<TYPE_RESULT>, TYPE_RESULT> listFrom(Class<TYPE_RESULT> cl);
+	<TYPE_RESULT> IClassicSingleWhereClauseBuilderNamed<MultiCompiled<TYPE_RESULT>, TYPE_RESULT> listFrom(Class<TYPE_RESULT> cl);
 }

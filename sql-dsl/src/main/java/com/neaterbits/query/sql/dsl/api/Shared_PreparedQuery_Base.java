@@ -2,12 +2,12 @@ package com.neaterbits.query.sql.dsl.api;
 
 import java.util.function.Function;
 
-abstract class Builder_PreparedQuery_Base<RESULT_TYPE> implements ISharedPreparedQueryOps<RESULT_TYPE> {
+abstract class Shared_PreparedQuery_Base<RESULT_TYPE> implements ISharedPreparedQueryOps<RESULT_TYPE> {
 
 	private final QueryDataSource_Base<?> dataSource;
 	private final PreparedQuery_DS<?> preparedQuery;
 
-	Builder_PreparedQuery_Base(QueryDataSource_Base<?> dataSource, PreparedQuery_DS<?> preparedQuery) {
+	Shared_PreparedQuery_Base(QueryDataSource_Base<?> dataSource, PreparedQuery_DS<?> preparedQuery) {
 
 		if (dataSource == null) {
 			throw new IllegalArgumentException("dataSource == null");

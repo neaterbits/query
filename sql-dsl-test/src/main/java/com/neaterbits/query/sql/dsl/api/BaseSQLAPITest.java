@@ -6,14 +6,14 @@ import java.util.function.Function;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import com.neaterbits.query.sql.dsl.api.MultiQuery;
+import com.neaterbits.query.sql.dsl.api.MultiCompiled;
 import com.neaterbits.query.sql.dsl.api.ISharedPreparedQueryOps;
 import com.neaterbits.query.sql.dsl.api.QueryDataSource;
-import com.neaterbits.query.sql.dsl.api.SingleQuery;
+import com.neaterbits.query.sql.dsl.api.SingleCompiled;
 
 public abstract class BaseSQLAPITest {
 
-	protected final <T> void checkSelectOneOrNull(QueryDataSource ds, T expected, SingleQuery<T> query, Function<ISharedPreparedQueryOps<T>, T> execute) {
+	protected final <T> void checkSelectOneOrNull(QueryDataSource ds, T expected, SingleCompiled<T> query, Function<ISharedPreparedQueryOps<T>, T> execute) {
 		
 		ISharedPreparedQueryOps<T> ops = query.prepare(ds);
 
@@ -31,7 +31,7 @@ public abstract class BaseSQLAPITest {
 	}
 
 
-	protected final <T> void checkSelectListUnordered(QueryDataSource ds, MultiQuery<T> query, Function<ISharedPreparedQueryOps<List<T>>, List<T>> execute, @SuppressWarnings("unchecked") T ... expected) {
+	protected final <T> void checkSelectListUnordered(QueryDataSource ds, MultiCompiled<T> query, Function<ISharedPreparedQueryOps<List<T>>, List<T>> execute, @SuppressWarnings("unchecked") T ... expected) {
 
 		final List<T> ret = checkSelectListCommon(ds, query, execute, expected);
 		
@@ -44,7 +44,7 @@ public abstract class BaseSQLAPITest {
 		assertThat(resultMap).isEqualTo(expectedMap);
 	}
 
-	protected final <T> void checkSelectListOrdered(QueryDataSource ds, MultiQuery<T> query, Function<ISharedPreparedQueryOps<List<T>>, List<T>> execute, @SuppressWarnings("unchecked") T ... expected) {
+	protected final <T> void checkSelectListOrdered(QueryDataSource ds, MultiCompiled<T> query, Function<ISharedPreparedQueryOps<List<T>>, List<T>> execute, @SuppressWarnings("unchecked") T ... expected) {
 
 		final List<T> ret = checkSelectListCommon(ds, query, execute, expected);
 		
@@ -57,7 +57,7 @@ public abstract class BaseSQLAPITest {
 		}
 	}
 	
-	private <T> List<T> checkSelectListCommon(QueryDataSource ds, MultiQuery<T> query, Function<ISharedPreparedQueryOps<List<T>>, List<T>> execute, @SuppressWarnings("unchecked") T ... expected) {
+	private <T> List<T> checkSelectListCommon(QueryDataSource ds, MultiCompiled<T> query, Function<ISharedPreparedQueryOps<List<T>>, List<T>> execute, @SuppressWarnings("unchecked") T ... expected) {
 		ISharedPreparedQueryOps<List<T>> ops = query.prepare(ds);
 
 		final List<T> result = execute.apply(ops);
