@@ -1,6 +1,7 @@
 package com.neaterbits.query.sql.dsl.api;
 
 import static com.neaterbits.query.sql.dsl.api.IShortSelect.oneOrNull;
+import static com.neaterbits.query.sql.dsl.api.IShortSelect.list;
 
 import java.util.function.Consumer;
 
@@ -114,4 +115,32 @@ public class ShortAPITest extends BaseSQLAPITest {
 		});
 	}
 	
+	@Test
+    public void testListAllEntities() {
+		
+		final Company acme = new Company(-1, "Acme");
+		final Company foo = new Company(-1, "Foo");
+
+        final MultiQuery<Company> startsWithAc = list(Company.class).compile();
+		
+		store(s  -> s.add(acme)).
+		check(ds -> {
+	        checkSelectListUnordered(
+	        		ds,
+	        		startsWithAc,
+	        		q -> q.execute(),
+	        		acme,
+	        		foo);
+		});
+
+		// Search for foo as well, should return no matches
+		store(s  -> s.add(foo)).
+		check(ds -> {
+	        checkSelectListUnordered(
+	        		ds,
+	        		startsWithAc,
+	        		q -> q.execute(),
+	        		foo);
+		});
+	}
 }
