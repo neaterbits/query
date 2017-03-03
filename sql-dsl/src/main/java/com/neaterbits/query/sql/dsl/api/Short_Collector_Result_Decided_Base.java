@@ -1,6 +1,6 @@
 package com.neaterbits.query.sql.dsl.api;
 
-abstract class Short_Collector_MapToResult_Base<
+abstract class Short_Collector_Result_Decided_Base<
 			MODEL, 
 			RESULT,
 			
@@ -58,17 +58,36 @@ abstract class Short_Collector_MapToResult_Base<
 	
 	implements IMappingCollector<MODEL, RESULT>, ISharedSelectSourceBuilder<MODEL, RESULT> {
 	
-	Short_Collector_MapToResult_Base(CollectedQueryResult result, ModelCompiler<MODEL> modelCompiler) {
+		
+	private final EQueryResultGathering gathering;
+		
+		
+	Short_Collector_Result_Decided_Base(CollectedQueryResult_Mapped result, ModelCompiler<MODEL> modelCompiler) {
 		super(new QueryCollectorImpl<MODEL>(modelCompiler, result), new Collector_Clause(EConditionsClause.WHERE, ConditionsType.SINGLE));
 
 		final MappingCollector mappingCollector = new MappingCollector();
 
 		// Collect mappings, should ever only create one of these
 		getQueryCollector().setMappings(mappingCollector);
+		
+		this.gathering = EQueryResultGathering.MAPPED;
+	}
+
+	Short_Collector_Result_Decided_Base(CollectedQueryResult_Entity result, ModelCompiler<MODEL> modelCompiler) {
+		super(new QueryCollectorImpl<MODEL>(modelCompiler, result), new Collector_Clause(EConditionsClause.WHERE, ConditionsType.SINGLE));
+		
+		// do not set mapping collector
+		
+		this.gathering = EQueryResultGathering.ENTITY;
 	}
 
 	@Override
 	public final MappingCollector getMappingCollector() {
+		
+		if (gathering != EQueryResultGathering.MAPPED) {
+			throw new IllegalStateException("Only to be called for mapped queries");
+		}
+
 		return getQueryCollector().getMappings();
 	}
 }

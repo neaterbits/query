@@ -3,7 +3,7 @@ package com.neaterbits.query.sql.dsl.api;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
-abstract class Short_Collector_Result<
+abstract class Short_Collector_Result_Undecided_Base<
 		MODEL,
 		RESULT,
 		
@@ -72,7 +72,7 @@ abstract class Short_Collector_Result<
 	private final SharedSelectSource selectSource;
 	private final ModelCompiler<MODEL> modelCompiler;
 
-	protected Short_Collector_Result(SharedSelectSource selectSource, ModelCompiler<MODEL> modelCompiler) {
+	protected Short_Collector_Result_Undecided_Base(SharedSelectSource selectSource, ModelCompiler<MODEL> modelCompiler) {
 		super(new QueryCollectorImpl<MODEL>(modelCompiler, null), new Collector_Clause(EConditionsClause.WHERE, ConditionsType.SINGLE));
 		
 		if (selectSource == null) {

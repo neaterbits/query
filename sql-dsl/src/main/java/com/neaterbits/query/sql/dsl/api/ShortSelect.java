@@ -28,7 +28,7 @@ final class ShortSelect extends BaseSelect<
 		
 		final SharedSelectSource selectSource = new SharedSelectSource_Named(cl);
 
-		return new Short_Collector_SingleResult<SingleQuery<RESULT>, RESULT>(selectSource, singleQueryCompiler());
+		return new Short_Collector_SingleResult_Undecided<SingleQuery<RESULT>, RESULT>(selectSource, singleQueryCompiler());
 	}
 
 	@Override
@@ -39,7 +39,7 @@ final class ShortSelect extends BaseSelect<
 		
 		final SharedSelectSource selectSource = new SharedSelectSource_Named(cl);
 
-		return new Short_Collector_SingleResult<SingleQuery<RESULT>, RESULT>(selectSource, singleQueryCompiler());
+		return new Short_Collector_SingleResult_Undecided<SingleQuery<RESULT>, RESULT>(selectSource, singleQueryCompiler());
 	}
 
 	@Override
@@ -50,7 +50,7 @@ final class ShortSelect extends BaseSelect<
 		
 		final SharedSelectSource selectSource = new SharedSelectSource_Named(cl);
 
-		return new Short_Collector_MultiResult<MultiQuery<RESULT>, RESULT>(selectSource, ECollectionType.LIST, multiQueryCompiler());
+		return new Short_Collector_MultiResult_Undecided<MultiQuery<RESULT>, RESULT>(selectSource, ECollectionType.LIST, multiQueryCompiler());
 	}
 
 	@Override

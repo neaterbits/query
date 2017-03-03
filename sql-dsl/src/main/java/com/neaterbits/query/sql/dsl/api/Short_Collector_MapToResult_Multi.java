@@ -1,7 +1,7 @@
 package com.neaterbits.query.sql.dsl.api;
 
 abstract class Short_Collector_MapToResult_Multi<MODEL, RESULT>
-	extends Short_Collector_MapToResult_Base<
+	extends Short_Collector_Result_Decided_Base<
 		MODEL,
 		RESULT,
 		ISQLLogical_WhereOrJoin_MultiMapped_Named<MODEL,RESULT>,
@@ -31,7 +31,11 @@ abstract class Short_Collector_MapToResult_Multi<MODEL, RESULT>
 		
 		> {
 
-	Short_Collector_MapToResult_Multi(CollectedQueryResult result, ModelCompiler<MODEL> modelCompiler) {
+	Short_Collector_MapToResult_Multi(CollectedQueryResult_Mapped result, ModelCompiler<MODEL> modelCompiler) {
+		super(result, modelCompiler);
+	}
+
+	Short_Collector_MapToResult_Multi(CollectedQueryResult_Entity result, ModelCompiler<MODEL> modelCompiler) {
 		super(result, modelCompiler);
 	}
 

@@ -1,9 +1,13 @@
 package com.neaterbits.query.sql.dsl.api;
 
-final class Short_Collector_MapToResult_Multi_Named<MODEL, RESULT>
+final class Short_Collector_MultiResult_Decided_Named<MODEL, RESULT>
 		extends Short_Collector_MapToResult_Multi<MODEL, RESULT> {
 
-	Short_Collector_MapToResult_Multi_Named(CollectedQueryResult result, ModelCompiler<MODEL> modelCompiler) {
+	Short_Collector_MultiResult_Decided_Named(CollectedQueryResult_Mapped_Multi result, ModelCompiler<MODEL> modelCompiler) {
+		super(result, modelCompiler);
+	}
+
+	Short_Collector_MultiResult_Decided_Named(CollectedQueryResult_Entity_Multi result, ModelCompiler<MODEL> modelCompiler) {
 		super(result, modelCompiler);
 	}
 

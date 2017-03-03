@@ -1,14 +1,18 @@
 package com.neaterbits.query.sql.dsl.api;
 
-final class Short_Collector_MapToResult_Single_Named<MODEL, RESULT>
-		extends Short_Collector_MapToResult_Single<MODEL, RESULT, ISharedProcessResult_After_GroupBy_Named<MODEL, RESULT>>
+final class Short_Collector_SingleResult_Decided_Named<MODEL, RESULT>
+		extends Short_Collector_SingleResult_Decided<MODEL, RESULT, ISharedProcessResult_After_GroupBy_Named<MODEL, RESULT>>
 
 		implements IShortResult_Mapped_Single_Named<MODEL, RESULT>,
 				
 				// when returned 'this' after where
 				ISQLLogical_AndOr_SingleResult_Named<MODEL, RESULT> {
 
-	Short_Collector_MapToResult_Single_Named(CollectedQueryResult result, ModelCompiler<MODEL> modelCompiler) {
+	Short_Collector_SingleResult_Decided_Named(CollectedQueryResult_Mapped_Single result, ModelCompiler<MODEL> modelCompiler) {
+		super(result, modelCompiler);
+	}
+
+	Short_Collector_SingleResult_Decided_Named(CollectedQueryResult_Entity_Single result, ModelCompiler<MODEL> modelCompiler) {
 		super(result, modelCompiler);
 	}
 

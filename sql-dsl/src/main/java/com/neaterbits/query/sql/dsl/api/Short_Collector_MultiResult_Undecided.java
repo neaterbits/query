@@ -1,7 +1,7 @@
 package com.neaterbits.query.sql.dsl.api;
 
-final class Short_Collector_MultiResult<MODEL, RESULT>
-	extends Short_Collector_Result<
+final class Short_Collector_MultiResult_Undecided<MODEL, RESULT>
+	extends Short_Collector_Result_Undecided_Base<
 			MODEL,
 			RESULT,
 			
@@ -32,7 +32,7 @@ final class Short_Collector_MultiResult<MODEL, RESULT>
 
 	private final ECollectionType collectionType;
 	
-	Short_Collector_MultiResult(SharedSelectSource selectSource, ECollectionType collectionType, ModelCompiler<MODEL> modelCompiler) {
+	Short_Collector_MultiResult_Undecided(SharedSelectSource selectSource, ECollectionType collectionType, ModelCompiler<MODEL> modelCompiler) {
 		super(selectSource, modelCompiler);
 		
 		if (collectionType == null) {
@@ -48,7 +48,7 @@ final class Short_Collector_MultiResult<MODEL, RESULT>
 	Collector_Conditions_GroupBy<MODEL, RESULT, ?> getAfterWhereNamed() {
 		final CollectedQueryResult_Entity_Multi result = new CollectedQueryResult_Entity_Multi(getSelectSource(), collectionType);
 		
-		return new Short_Collector_MapToResult_Multi_Named<>(result, getModelCompiler());
+		return new Short_Collector_MultiResult_Decided_Named<>(result, getModelCompiler());
 	}
 
 
@@ -57,7 +57,7 @@ final class Short_Collector_MultiResult<MODEL, RESULT>
 	Collector_Conditions_GroupBy<MODEL, RESULT, ?> getAfterWhereAlias() {
 		final CollectedQueryResult_Entity_Multi result = new CollectedQueryResult_Entity_Multi(getSelectSource(), collectionType);
 		
-		return new Short_Collector_MapToResult_Multi_Alias<>(result, getModelCompiler());
+		return new Short_Collector_MultiResult_Decided_Alias<>(result, getModelCompiler());
 	}
 
 
@@ -65,17 +65,17 @@ final class Short_Collector_MultiResult<MODEL, RESULT>
 	@Override
 	final IMappingCollector<MODEL, RESULT> getMapToResultNamed() {
 		
-		final CollectedQueryResult_Mapped collectedQueryResult = new CollectedQueryResult_Mapped_Single(getResultType());
+		final CollectedQueryResult_Mapped_Multi collectedQueryResult = new CollectedQueryResult_Mapped_Multi(getResultType(), collectionType);
 		
-		return new Short_Collector_MapToResult_Multi_Named<MODEL, RESULT>(collectedQueryResult, getModelCompiler());
+		return new Short_Collector_MultiResult_Decided_Named<MODEL, RESULT>(collectedQueryResult, getModelCompiler());
 	}
 
 
 	@Override
 	final IMappingCollector<MODEL, RESULT> getMapToResultAlias() {
-		final CollectedQueryResult_Mapped collectedQueryResult = new CollectedQueryResult_Mapped_Single(getResultType());
+		final CollectedQueryResult_Mapped_Multi collectedQueryResult = new CollectedQueryResult_Mapped_Multi(getResultType(), collectionType);
 
-		return new Short_Collector_MapToResult_Multi_Alias<MODEL, RESULT>(collectedQueryResult, getModelCompiler());
+		return new Short_Collector_MultiResult_Decided_Alias<MODEL, RESULT>(collectedQueryResult, getModelCompiler());
 	}
 
 	@Override

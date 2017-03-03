@@ -3,8 +3,8 @@ package com.neaterbits.query.sql.dsl.api;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
-abstract class Short_Collector_MapToResult_Single<MODEL, RESULT, AFTER_GROUP_BY> 
-	extends Short_Collector_MapToResult_Base<
+abstract class Short_Collector_SingleResult_Decided<MODEL, RESULT, AFTER_GROUP_BY> 
+	extends Short_Collector_Result_Decided_Base<
 			MODEL,
 			RESULT,
 			
@@ -33,7 +33,11 @@ abstract class Short_Collector_MapToResult_Single<MODEL, RESULT, AFTER_GROUP_BY>
 	implements IShortResult_Mapped_Single_All<MODEL, RESULT>
 			
 {
-	Short_Collector_MapToResult_Single(CollectedQueryResult result, ModelCompiler<MODEL> modelCompiler) {
+	Short_Collector_SingleResult_Decided(CollectedQueryResult_Mapped_Single result, ModelCompiler<MODEL> modelCompiler) {
+		super(result, modelCompiler);
+	}
+
+	Short_Collector_SingleResult_Decided(CollectedQueryResult_Entity_Single result, ModelCompiler<MODEL> modelCompiler) {
 		super(result, modelCompiler);
 	}
 	

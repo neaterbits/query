@@ -1,7 +1,7 @@
 package com.neaterbits.query.sql.dsl.api;
 
-final class Short_Collector_SingleResult<MODEL, RESULT>
-	extends Short_Collector_Result<
+final class Short_Collector_SingleResult_Undecided<MODEL, RESULT>
+	extends Short_Collector_Result_Undecided_Base<
 			MODEL,
 			RESULT,
 
@@ -34,7 +34,7 @@ final class Short_Collector_SingleResult<MODEL, RESULT>
 			
 			IShortResult_Single<MODEL, RESULT> {
 
-	Short_Collector_SingleResult(SharedSelectSource selectSource, ModelCompiler<MODEL> modelCompiler) {
+	Short_Collector_SingleResult_Undecided(SharedSelectSource selectSource, ModelCompiler<MODEL> modelCompiler) {
 		super(selectSource, modelCompiler);
 	}
 
@@ -42,17 +42,17 @@ final class Short_Collector_SingleResult<MODEL, RESULT>
 	@Override
 	final IMappingCollector<MODEL, RESULT> getMapToResultNamed() {
 		
-		final CollectedQueryResult_Mapped collectedQueryResult = new CollectedQueryResult_Mapped_Single(getResultType());
+		final CollectedQueryResult_Mapped_Single collectedQueryResult = new CollectedQueryResult_Mapped_Single(getResultType());
 		
-		return new Short_Collector_MapToResult_Single_Named<MODEL, RESULT>(collectedQueryResult, getModelCompiler());
+		return new Short_Collector_SingleResult_Decided_Named<MODEL, RESULT>(collectedQueryResult, getModelCompiler());
 	}
 
 
 	@Override
 	final IMappingCollector<MODEL, RESULT> getMapToResultAlias() {
-		final CollectedQueryResult_Mapped collectedQueryResult = new CollectedQueryResult_Mapped_Single(getResultType());
+		final CollectedQueryResult_Mapped_Single collectedQueryResult = new CollectedQueryResult_Mapped_Single(getResultType());
 
-		return new Short_Collector_MapToResult_Single_Alias<MODEL, RESULT>(collectedQueryResult, getModelCompiler());
+		return new Short_Collector_SingleResult_Entity_Alias<MODEL, RESULT>(collectedQueryResult, getModelCompiler());
 	}
 
 	
@@ -66,7 +66,7 @@ final class Short_Collector_SingleResult<MODEL, RESULT>
 		// TODO: rename *MapToResult* here
 		final CollectedQueryResult_Entity_Single collectedQueryResult = new CollectedQueryResult_Entity_Single(getSelectSource());
 
-		return new Short_Collector_MapToResult_Single_Named<>(collectedQueryResult, getModelCompiler());
+		return new Short_Collector_SingleResult_Decided_Named<>(collectedQueryResult, getModelCompiler());
 	}
 
 
@@ -75,7 +75,7 @@ final class Short_Collector_SingleResult<MODEL, RESULT>
 		// TODO: rename *MapToResult* here
 		final CollectedQueryResult_Entity_Single collectedQueryResult = new CollectedQueryResult_Entity_Single(getSelectSource());
 
-		return new Short_Collector_MapToResult_Single_Alias<>(collectedQueryResult, getModelCompiler());
+		return new Short_Collector_SingleResult_Entity_Alias<>(collectedQueryResult, getModelCompiler());
 	}
 	
 	@Override
