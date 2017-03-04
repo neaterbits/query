@@ -25,7 +25,7 @@ final class ShortSelect extends BaseShortSelect
 		
 		final SharedSelectSource selectSource = new SharedSelectSource_Named(cl);
 
-		return new Short_Collector_SingleResult_Undecided<SingleCompiled<RESULT>, RESULT>(this, selectSource, singleQueryCompiler());
+		return new Short_Collector_SingleResult_Undecided<SingleCompiled<RESULT>, RESULT>(this, selectSource, singleQueryCollected());
 	}
 
 	@Override
@@ -36,7 +36,7 @@ final class ShortSelect extends BaseShortSelect
 		
 		final SharedSelectSource selectSource = new SharedSelectSource_Named(cl);
 
-		return new Short_Collector_SingleResult_Undecided<SingleCompiled<RESULT>, RESULT>(this, selectSource, singleQueryCompiler());
+		return new Short_Collector_SingleResult_Undecided<SingleCompiled<RESULT>, RESULT>(this, selectSource, singleQueryCollected());
 	}
 
 	@Override
@@ -47,7 +47,7 @@ final class ShortSelect extends BaseShortSelect
 		
 		final SharedSelectSource selectSource = new SharedSelectSource_Named(cl);
 
-		return new Short_Collector_MultiResult_Undecided<MultiCompiled<RESULT>, RESULT>(this, selectSource, ECollectionType.LIST, multiQueryCompiler());
+		return new Short_Collector_MultiResult_Undecided<MultiCompiled<RESULT>, RESULT>(this, selectSource, ECollectionType.LIST, multiQueryCollected());
 	}
 
 	@Override

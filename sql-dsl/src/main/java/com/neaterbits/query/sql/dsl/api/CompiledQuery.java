@@ -15,6 +15,8 @@ import com.neaterbits.query.util.java8.Coll8;
 
 final class CompiledQuery {
 
+	static final ExecutableQueryForCompiledQuery q = new ExecutableQueryForCompiledQuery();
+	
 	private final CompiledQueryResult result;
 
 	private final CompiledSelectSources<?> selectSources;
@@ -111,7 +113,7 @@ final class CompiledQuery {
 		return resultProcessing.getHaving().getConditions();
 	}
 	
-	static <MODEL> CompiledQuery compile(Collector_Query<MODEL> collector) throws CompileException {
+	static <MODEL> CompiledQuery compile(Collector_Query<MODEL> collector, QueryMetaModel queryMetaModel) throws CompileException {
 		final CompiledQuery ret;
 
 		switch (collector.getQueryStyle()) {
@@ -120,7 +122,7 @@ final class CompiledQuery {
 			break;
 
 		case SHORT:
-			ret = compileShort(collector);
+			ret = compileShort(collector, queryMetaModel);
 			break;
 			
 		default:
@@ -141,10 +143,7 @@ final class CompiledQuery {
 	}
 
 	// short-model, we do not have the select-sources available, so we must look them up as we go
-	static <MODEL> CompiledQuery compileShort(Collector_Query<MODEL> collector) throws CompileException {
-
-		
-		final QueryMetaModel queryMetaModel = collector.getQueryMetaModel();
+	static <MODEL> CompiledQuery compileShort(Collector_Query<MODEL> collector, QueryMetaModel queryMetaModel) throws CompileException {
 	
 		
 		final SelectSourceLookup lookup = new ShortSelectSourceLookup(queryMetaModel.getAllManagedTypes(), collector.getAllAliases());

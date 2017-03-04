@@ -23,14 +23,36 @@ abstract class BaseQuery implements IQueryPreparation {
 		}
 	}
 	
-	
-	static <T> ModelCompiler<SingleCompiled<T>> singleQueryCompiler() {
-		return compiledQuery -> new SharedCompiled_Single<>(compiledQuery);
+	static <M> CompiledQuery compile(Collector_Query<M> collected, QueryMetaModel metaModel) {
+		// Compile the collected query
+
+		
+		CompiledQuery compiledQuery;
+		try {
+			compiledQuery = CompiledQuery.compile(collected, metaModel);
+		} catch (CompileException ex) {
+			throw new IllegalStateException("Failed to compile", ex);
+		}
+
+		return compiledQuery;
 	}
 
-	static <T> ModelCompiler<MultiCompiled<T>> multiQueryCompiler() {
-		return compiledQuery -> new SharedCompiled_Multi<>(compiledQuery);
+	static <T> ModelCompiler<SingleCompiled<T>> singleQueryCollected() {
+		return collectedQuery -> new SharedCollected_Single<>(collectedQuery);
 	}
+
+	static <T> ModelCompiler<MultiCompiled<T>> multiQueryCollected() {
+		return collectedQuery -> new SharedCollected_Multi<>(collectedQuery);
+	}
+	
+	static <T> ModelCompiler<SingleCompiled<T>> singleQueryCompiled() {
+		return collectedQuery -> new SharedCompiled_Single<>(compile(collectedQuery, null));
+	}
+
+	static <T> ModelCompiler<MultiCompiled<T>> multiQueryCompiled() {
+		return collectedQuery -> new SharedCompiled_Multi<>(compile(collectedQuery, null));
+	}
+	
 	
 	abstract EQueryStyle getQueryStyle();
 	

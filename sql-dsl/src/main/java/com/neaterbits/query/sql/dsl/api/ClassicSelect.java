@@ -81,7 +81,7 @@ final class ClassicSelect
 		
 		final SharedSelectSource selectSource = new SharedSelectSource_Named(cl);
 
-		return new Classic_Collector_SingleResult<SingleCompiled<RESULT>, RESULT>(this, selectSource, singleQueryCompiler());
+		return new Classic_Collector_SingleResult<SingleCompiled<RESULT>, RESULT>(this, selectSource, singleQueryCompiled());
 	}
 
 	@Override
@@ -92,7 +92,7 @@ final class ClassicSelect
 		
 		final SharedSelectSource selectSource = new SharedSelectSource_Named(cl);
 
-		return new Classic_Collector_SingleResult<SingleCompiled<RESULT>, RESULT>(this, selectSource, singleQueryCompiler());
+		return new Classic_Collector_SingleResult<SingleCompiled<RESULT>, RESULT>(this, selectSource, singleQueryCompiled());
 	}
 
 	@Override
@@ -103,7 +103,7 @@ final class ClassicSelect
 		
 		final SharedSelectSource selectSource = new SharedSelectSource_Named(cl);
 
-		return new Classic_Collector_MultiResult<MultiCompiled<RESULT>, RESULT>(this, selectSource, ECollectionType.LIST, multiQueryCompiler());
+		return new Classic_Collector_MultiResult<MultiCompiled<RESULT>, RESULT>(this, selectSource, ECollectionType.LIST, multiQueryCompiled());
 	}
 
 	@Override
@@ -114,7 +114,7 @@ final class ClassicSelect
 
 		final SharedSelectSource selectSource = new SharedSelectSource_Named(cl);
 		
-		return new ClassicSingleNamedResult<SingleCompiled<TYPE_RESULT>, TYPE_RESULT>(this, new CollectedQueryResult_Entity_Single(selectSource), singleQueryCompiler());
+		return new ClassicSingleNamedResult<SingleCompiled<TYPE_RESULT>, TYPE_RESULT>(this, new CollectedQueryResult_Entity_Single(selectSource), singleQueryCompiled());
 	}
 
 
@@ -128,7 +128,7 @@ final class ClassicSelect
 
 		final CollectedQueryResult_Entity_Multi result = new CollectedQueryResult_Entity_Multi(selectSource, ECollectionType.LIST);
 		
-		return new ClassicSingleNamedResult<MultiCompiled<TYPE_RESULT>, TYPE_RESULT>(this, result, multiQueryCompiler());
+		return new ClassicSingleNamedResult<MultiCompiled<TYPE_RESULT>, TYPE_RESULT>(this, result, multiQueryCompiled());
 	}
 
 
@@ -137,29 +137,29 @@ final class ClassicSelect
 	@Override
 	@SuppressWarnings("unchecked")
 	<T, NUM, RESULT, RET> RET sum(Function<T, NUM> field, Class<NUM> numCl, Class<RESULT> resultCl) {
-		return (RET)new Collector_AggregateNamedResult<>(this, new QueryResultSum(resultCl, new FunctionGetter(field)), singleQueryCompiler());
+		return (RET)new Collector_AggregateNamedResult<>(this, new QueryResultSum(resultCl, new FunctionGetter(field)), singleQueryCompiled());
 	}
 
 	@Override
 	@SuppressWarnings("unchecked")
 	<T, NUM, RESULT, RET> RET max(Function<T, NUM> field, Class<NUM> numCl, Class<RESULT> resultCl) {
-		return (RET)new Collector_AggregateNamedResult<>(this, new QueryResultMax(resultCl, new FunctionGetter(field)), singleQueryCompiler());
+		return (RET)new Collector_AggregateNamedResult<>(this, new QueryResultMax(resultCl, new FunctionGetter(field)), singleQueryCompiled());
 	}
 
 	@Override
 	@SuppressWarnings("unchecked")
 	<T, NUM, RESULT, RET> RET min(Function<T, NUM> field, Class<NUM> numCl, Class<RESULT> resultCl) {
-		return (RET)new Collector_AggregateNamedResult<>(this, new QueryResultMin(resultCl, new FunctionGetter(field)), singleQueryCompiler());
+		return (RET)new Collector_AggregateNamedResult<>(this, new QueryResultMin(resultCl, new FunctionGetter(field)), singleQueryCompiled());
 	}
 	
 	@Override
 	@SuppressWarnings("unchecked")
 	<T, NUM, RESULT, RET> RET avg(Function<T, NUM> field, Class<NUM> numCl, Class<RESULT> resultCl) {
-		return (RET)new Collector_AggregateNamedResult<>(this, new QueryResultAvg(resultCl, new FunctionGetter(field)), singleQueryCompiler());
+		return (RET)new Collector_AggregateNamedResult<>(this, new QueryResultAvg(resultCl, new FunctionGetter(field)), singleQueryCompiled());
 	}
 
 	@Override
 	<T, NUM, RESULT> IClassicResult_Numeric_Named<Long> count(Function<T, NUM> field, Class<NUM> numCl, Class<RESULT> resultCl) {
-		return new Collector_AggregateNamedResult<>(this, new QueryResultCount(resultCl, new FunctionGetter(field)), singleQueryCompiler());
+		return new Collector_AggregateNamedResult<>(this, new QueryResultCount(resultCl, new FunctionGetter(field)), singleQueryCompiled());
 	}
 }

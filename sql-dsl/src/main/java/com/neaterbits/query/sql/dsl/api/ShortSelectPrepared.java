@@ -32,8 +32,8 @@ final class ShortSelectPrepared extends BaseShortSelect
 	}
 
 	private <T> ModelCompiler<SinglePrepared<T>> singleQueryPreparer() {
-		return compiledQuery -> {
-			final PreparedQuery_DS<?> preparedQuery = dataSource.prepareSingleQuery(SharedQuery_Base.q, compiledQuery);
+		return collectedQuery -> {
+			final PreparedQuery_DS<?> preparedQuery = dataSource.prepareSingleQuery(CompiledQuery.q, compile(collectedQuery, collectedQuery.getQueryMetaModel()));
 			
 			return new Shared_PreparedQuery_Single<>(dataSource, preparedQuery);
 		};
@@ -41,8 +41,8 @@ final class ShortSelectPrepared extends BaseShortSelect
 
 	private <T> ModelCompiler<MultiPrepared<T>> multiQueryPreparer() {
 		
-		return compiledQuery ->  {
-			final PreparedQuery_DS<?> preparedQuery = dataSource.prepareMultiQuery(SharedQuery_Base.q, compiledQuery);
+		return collectedQuery ->  {
+			final PreparedQuery_DS<?> preparedQuery = dataSource.prepareMultiQuery(CompiledQuery.q, compile(collectedQuery, collectedQuery.getQueryMetaModel()));
 			
 			return new Shared_PreparedQuery_Multi<>(dataSource, preparedQuery);
 		};

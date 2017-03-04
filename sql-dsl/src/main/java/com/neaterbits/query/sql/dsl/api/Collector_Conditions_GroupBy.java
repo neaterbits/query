@@ -76,17 +76,9 @@ abstract class Collector_Conditions_GroupBy<MODEL, RESULT, AFTER_GROUP_BY>
 		if (clauseCollector.getConditionsClause() == EConditionsClause.WHERE) {
 			queryCollector.setClauses(clauseCollector);
 		}
-
-		// Compile the collected query
-		CompiledQuery compiledQuery;
-		try {
-			compiledQuery = CompiledQuery.compile(queryCollector);
-		} catch (CompileException ex) {
-			throw new IllegalStateException("Failed to compile", ex);
-		}
 		
 		// Compile into model (better name for this operation?)
-		return queryCollector.getModelCompiler().compile(compiledQuery);
+		return queryCollector.getModelCompiler().compile(queryCollector);
 	}
 	
 	
