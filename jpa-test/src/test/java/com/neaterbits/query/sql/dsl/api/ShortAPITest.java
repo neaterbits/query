@@ -16,10 +16,16 @@ import com.neaterbits.query.jpatest.model.Company;
 import com.neaterbits.query.sql.dsl.api.entity.QueryMetaModel;
 
 public class ShortAPITest extends BaseSQLAPITest {
-	private static final EntityManagerFactory emf = Persistence.createEntityManagerFactory("query-jpa-test");
+	
+	private static final String persistenceUnitName = "query-jpa-test";
+	
+	private static final EntityManagerFactory emf = Persistence.createEntityManagerFactory(persistenceUnitName);
 
 	private static final QueryMetaModel jpaQueryMetaModel = new JPAQueryMetaModel(emf.getMetamodel());
 
+	private static final DataConfig nativeJPA = new JPADataConfigNative(persistenceUnitName);
+	private static final DataConfig jpqlPA = new JPADataConfigJPQL(persistenceUnitName);
+	
 	private static final QueryTestDSStore nativeDS = new QueryTestDSJPANative("query-jpa-test");
 	private static final QueryTestDSStore jpql = new QueryTestDSJPQL("query-jpa-test");
 	private static final QueryTestDSStore inMemory = new QueryTestDSInMemory(jpaQueryMetaModel);

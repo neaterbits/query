@@ -1,7 +1,7 @@
 package com.neaterbits.query.sql.dsl.api;
 
 
-public abstract class TransactionalDataStore<CTX, ENTITIES, TRANSACTION> extends DataStore {
+public abstract class TransactionalDataStore<CTX, ENTITIES, TRANSACTION> extends DataStore<ENTITIES> {
 
 	private final CTX ctx;
 
@@ -12,10 +12,11 @@ public abstract class TransactionalDataStore<CTX, ENTITIES, TRANSACTION> extends
 	protected final ENTITIES openEntities() {
 		return intOpenEntities(ctx);
 	}
+
+	protected abstract ENTITIES intOpenEntities(CTX ctx);
 	
 	protected abstract Object getPrimaryKey(Object instance);
 	
-	protected abstract ENTITIES intOpenEntities(CTX ctx);
 	
 	protected abstract TRANSACTION beginTransaction(ENTITIES entities);
 
@@ -30,8 +31,6 @@ public abstract class TransactionalDataStore<CTX, ENTITIES, TRANSACTION> extends
 	protected abstract void rollbackTransaction(TRANSACTION transaction);
 	
 	protected abstract void closeEntities(ENTITIES entities);
-	
-	protected abstract QueryDataSource createDataSource(ENTITIES entities);
 
 	protected TransactionalDataStore(CTX ctx) {
 		this.ctx = ctx;
