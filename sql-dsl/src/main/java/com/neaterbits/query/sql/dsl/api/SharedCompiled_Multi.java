@@ -10,9 +10,12 @@ final class SharedCompiled_Multi<RESULT> extends SharedQuery_Base<List<RESULT>, 
 	}
 
 	@Override
-	public MultiPrepared<RESULT> prepare(QueryDataSource dataSource) {
+	public MultiPrepared<RESULT> prepare(DataConfig dataConfig) {
 
-		final QueryDataSource_Base<?> dataSourceBase = (QueryDataSource_Base<?>)dataSource;
+		@SuppressWarnings("rawtypes")
+		final QueryDataSource_Base<?> dataSourceBase = (QueryDataSource_Base<?>)
+				
+					((DataConfigBase)dataConfig).getDataSource();
 		
 		final PreparedQuery_DS<?> dsPrepared = dataSourceBase.prepareMultiQuery(q, getCompiledQuery());
 		

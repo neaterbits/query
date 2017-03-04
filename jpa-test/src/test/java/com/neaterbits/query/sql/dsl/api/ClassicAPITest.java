@@ -26,12 +26,19 @@ import com.neaterbits.query.sql.dsl.api.entity.QueryMetaModel;
 
 public class ClassicAPITest extends BaseSQLAPITest {
 
-	private static final EntityManagerFactory emf = Persistence.createEntityManagerFactory("query-jpa-test");
+	private static final String persistenceUnitName = "query-jpa-test";
+	
+	private static final EntityManagerFactory emf = Persistence.createEntityManagerFactory(persistenceUnitName);
 
 	private static final QueryMetaModel jpaQueryMetaModel = new JPAQueryMetaModel(emf.getMetamodel());
+	
+	private static final JPADataConfig nativeJPA = new JPADataConfigNative(persistenceUnitName);
+	private static final JPADataConfig jpqlJPA = new JPADataConfigJPQL(persistenceUnitName);
+	
 
-	private static final QueryTestDSStore nativeDS = new QueryTestDSJPANative("query-jpa-test");
-	private static final QueryTestDSStore jpql = new QueryTestDSJPQL("query-jpa-test");
+	private static final QueryTestDSStore nativeDS = new QueryTestDSJPA(nativeJPA);
+	private static final QueryTestDSStore jpql = new QueryTestDSJPA(jpqlJPA);
+	
 	private static final QueryTestDSStore inMemory = new QueryTestDSInMemory(jpaQueryMetaModel);
 	
 	private static QueryTestDSCheck store(Consumer<QueryTestDSBuilder> b) {
@@ -437,7 +444,7 @@ public class ClassicAPITest extends BaseSQLAPITest {
 		store(s  -> s.add(acme)
 				 .add(foo))
 		.check(ds -> {
-			final BigDecimal ret = query.prepare(ds).execute();
+			final BigDecimal ret = query.prepare(jpqlJPA).execute();
 			
 			assertThat(ret).isNotNull();
 			
@@ -702,7 +709,7 @@ public class ClassicAPITest extends BaseSQLAPITest {
 	
 	        	.compile();
 	
-	        	query.prepare(ds)
+	        	query.prepare(jpqlJPA)
 	        	 .executeWith(param1).setTo(123)
 	        	         .and(param2).setTo(345)
 	        	  .get();

@@ -14,7 +14,7 @@ final class ShortSelectPrepared extends BaseSelect<
 
 	implements IShortPrepared {
 	
-	static ShortSelectPrepared get(QueryDataSource dataSource) {
+	static ShortSelectPrepared get(DataConfig dataConfig) {
 		throw new UnsupportedOperationException("TODO");
 	}
 	

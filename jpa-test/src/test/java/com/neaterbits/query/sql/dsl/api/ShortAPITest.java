@@ -23,16 +23,16 @@ public class ShortAPITest extends BaseSQLAPITest {
 
 	private static final QueryMetaModel jpaQueryMetaModel = new JPAQueryMetaModel(emf.getMetamodel());
 
-	private static final DataConfig nativeJPA = new JPADataConfigNative(persistenceUnitName);
-	private static final DataConfig jpqlPA = new JPADataConfigJPQL(persistenceUnitName);
+	private static final JPADataConfig nativeJPA = new JPADataConfigNative(persistenceUnitName);
+	private static final JPADataConfig jpqlJPA = new JPADataConfigJPQL(persistenceUnitName);
 	
-	private static final QueryTestDSStore nativeDS = new QueryTestDSJPANative("query-jpa-test");
-	private static final QueryTestDSStore jpql = new QueryTestDSJPQL("query-jpa-test");
-	private static final QueryTestDSStore inMemory = new QueryTestDSInMemory(jpaQueryMetaModel);
+	private static final QueryTestDSJPA nativeDS = new QueryTestDSJPA(nativeJPA);
+	private static final QueryTestDSJPA jpqlDS = new QueryTestDSJPA(jpqlJPA);
+	private static final QueryTestDSInMemory inMemory = new QueryTestDSInMemory(jpaQueryMetaModel);
 	
 	private static final ShortSelect select = com.neaterbits.query.sql.dsl.api.IShortSelect.get();
 	
-	private static final QueryDataSource jpqlDS = jpql.getDataSource();
+	//private static final QueryDataSource jpqlDS = jpql.getDataSource();
 	
 	
 	private static QueryTestDSCheck store(Consumer<QueryTestDSBuilder> b) {
@@ -41,14 +41,14 @@ public class ShortAPITest extends BaseSQLAPITest {
 		return new QueryTestDSCombined()
 				
 				//.add(nativeDS)
-				.add(jpql)
+				.add(jpqlDS)
 				
 				//.add(inMemory)
 				
 				.store(b);
 	}
 
-	private static final IShortPrepared prepared = IShortPrepared.get(jpqlDS);
+	private static final IShortPrepared prepared = IShortPrepared.get(jpqlJPA);
 
 	private static final SinglePrepared<Company>
 			acmeQuery = prepared
@@ -62,7 +62,7 @@ public class ShortAPITest extends BaseSQLAPITest {
 			 one(Company.class)
 			.where(Company::getName).startsWith("Acme")
 			
-			.compile().prepare(jpqlDS);
+			.compile().prepare(jpqlJPA);
 	
 	@Test
     public void testPrepared() {

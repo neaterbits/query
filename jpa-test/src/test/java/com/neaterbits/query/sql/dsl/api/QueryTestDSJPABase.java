@@ -6,11 +6,7 @@ import javax.persistence.EntityTransaction;
 
 abstract class QueryTestDSJPABase extends QueryTestDSBasePersistent<EntityManagerFactory, EntityManager, EntityTransaction> {
 
-	private final JPADataStore dataStore;
-	
-	public QueryTestDSJPABase(JPADataStore dataStore) {
-		super(dataStore);
-		
-		this.dataStore = dataStore;
+	public QueryTestDSJPABase(JPADataConfig dataConfig, JPADataStore dataStore) {
+		super(dataConfig, dataStore);
 	}
 }

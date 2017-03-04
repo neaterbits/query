@@ -72,15 +72,10 @@ public class QueryTestDSCombined extends QueryTestDS {
 		}
 		
 		@Override
-		public void check(Consumer<QueryDataSource> testBuilder) {
+		public void check(Consumer<DataConfig> testBuilder) {
 			for (QueryTestDSCheck dsCheck : checks) {
 				dsCheck.check(testBuilder);
 			}
 		}
-	}
-
-	@Override
-	public QueryDataSource getDataSource() {
-		throw new UnsupportedOperationException("Combined so no single datasource");
 	}
 }

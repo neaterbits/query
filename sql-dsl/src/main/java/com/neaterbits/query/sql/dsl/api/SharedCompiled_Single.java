@@ -10,9 +10,12 @@ final class SharedCompiled_Single<RESULT>
 	}
 
 	@Override
-	public SinglePrepared<RESULT> prepare(QueryDataSource dataSource) {
+	public SinglePrepared<RESULT> prepare(DataConfig dataConfig) {
 		
-		final QueryDataSource_Base<?> dataSourceBase = (QueryDataSource_Base<?>)dataSource;
+		@SuppressWarnings("rawtypes")
+		final QueryDataSource_Base<?> dataSourceBase = (QueryDataSource_Base<?>)
+		
+			((DataConfigBase)dataConfig).getDataSource();
 		
 		final PreparedQuery_DS<?> dsPrepared = dataSourceBase.prepareSingleQuery(q, getCompiledQuery());
 		

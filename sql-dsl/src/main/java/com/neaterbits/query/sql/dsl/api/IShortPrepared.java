@@ -2,8 +2,8 @@ package com.neaterbits.query.sql.dsl.api;
 
 public interface IShortPrepared {
 	
-	public static IShortPrepared get(QueryDataSource dataSource) {
-		return ShortSelectPrepared.get(dataSource);
+	public static IShortPrepared get(DataConfig dataConfig) {
+		return ShortSelectPrepared.get(dataConfig);
 	}
 	
 	<TYPE_RESULT> IShortResult_Single<SinglePrepared<TYPE_RESULT>, TYPE_RESULT> one(Class<TYPE_RESULT> cl);

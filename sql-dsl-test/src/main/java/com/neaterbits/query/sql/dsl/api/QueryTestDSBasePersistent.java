@@ -4,20 +4,26 @@ import java.util.List;
 import java.util.function.BiFunction;
 import java.util.function.Consumer;
 
-import com.neaterbits.query.sql.dsl.api.QueryDataSource;
 import com.neaterbits.query.sql.dsl.api.TransactionalDataStore;
 
 public abstract class QueryTestDSBasePersistent<CTX, ENTITIES, TRANSACTION>
 
 		extends QueryTestDS {
 
+	private final DataConfig dataConfig;
 	private final TransactionalDataStore<CTX, ENTITIES, TRANSACTION> dataStore;
 
-	protected QueryTestDSBasePersistent(TransactionalDataStore<CTX, ENTITIES, TRANSACTION> dataStore) {
+	protected QueryTestDSBasePersistent(DataConfig dataConfig, TransactionalDataStore<CTX, ENTITIES, TRANSACTION> dataStore) {
+		
+		if (dataConfig == null) {
+			throw new IllegalArgumentException("dataConfig == null");
+		}
+
 		if (dataStore == null) {
 			throw new IllegalArgumentException("dataStore == null");
 		}
 
+		this.dataConfig = dataConfig;
 		this.dataStore = dataStore;
 	}
 
@@ -75,13 +81,12 @@ public abstract class QueryTestDSBasePersistent<CTX, ENTITIES, TRANSACTION>
 		}
 
 		@Override
-		public void check(Consumer<QueryDataSource> testBuilder) {
+		public void check(Consumer<DataConfig> testBuilder) {
 
 			final ENTITIES em = dataStore.openEntities();
-			final QueryDataSource dataSource = dataStore.createDataSource(em);
 
 			try {
-				testBuilder.accept(dataSource);
+				testBuilder.accept(dataConfig);
 			}
 			finally {
 				safelyDeleteInstances(em);

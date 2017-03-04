@@ -32,16 +32,13 @@ public final class QueryTestDSInMemory extends QueryTestDS {
 		}
 
 		@Override
-		public void check(Consumer<QueryDataSource> testBuilder) {
+		public void check(Consumer<DataConfig> testBuilder) {
 
-			final QueryDataSource dataSource = new QueryDataSourcePojoWithList(instances, queryMetaModel);
-
-			testBuilder.accept(dataSource);
+			//final QueryDataSource dataSource = new QueryDataSourcePojoWithList(instances, queryMetaModel);
+			
+			final PojoDataConfig pojoDataConfig = new ListPojoDataConfig(instances, queryMetaModel);
+			
+			testBuilder.accept(pojoDataConfig);
 		}
-	}
-
-	@Override
-	public QueryDataSource getDataSource() {
-		throw new UnsupportedOperationException("TODO - POJOs");
 	}
 }

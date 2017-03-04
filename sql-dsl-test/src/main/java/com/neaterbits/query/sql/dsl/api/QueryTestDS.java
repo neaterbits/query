@@ -1,6 +1,6 @@
 package com.neaterbits.query.sql.dsl.api;
 
 
-abstract class QueryTestDS implements QueryTestDSStore {
+public abstract class QueryTestDS implements QueryTestDSStore {
 	
 }
