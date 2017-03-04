@@ -17,7 +17,8 @@ public abstract class PojoDataConfig extends DataConfigBase<Void, Void, Void, Vo
 		this.queryMetaModel = queryMetaModel;
 	}
 
-	final QueryMetaModel getQueryMetaModel() {
+	@Override
+	protected final QueryMetaModel getQueryMetaModel() {
 		return queryMetaModel;
 	}
 }

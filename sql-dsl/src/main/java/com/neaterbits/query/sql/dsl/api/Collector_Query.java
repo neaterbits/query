@@ -1,5 +1,9 @@
 package com.neaterbits.query.sql.dsl.api;
 
+import java.util.List;
+
+import com.neaterbits.query.sql.dsl.api.entity.QueryMetaModel;
+
 /**
  * Abstract-class passed along the way of query collection
  * for collecting the various bits and parts as walks though builders,
@@ -11,7 +15,7 @@ package com.neaterbits.query.sql.dsl.api;
 
 abstract class Collector_Query<MODEL> {
 	
-	private final EQueryStyle queryStyle;
+	private final BaseQuery baseQuery;
 	private final ModelCompiler<MODEL> modelCompiler;
 
 	abstract CollectedQueryResult getResult();
@@ -45,10 +49,10 @@ abstract class Collector_Query<MODEL> {
 	abstract Collected_OrderBy getOrderBy();
 	
 	
-	Collector_Query(EQueryStyle queryStyle, ModelCompiler<MODEL> modelCompiler) {
+	Collector_Query(BaseQuery baseQuery, ModelCompiler<MODEL> modelCompiler) {
 		
-		if (queryStyle == null) {
-			throw new IllegalArgumentException("queryStyle == null");
+		if (baseQuery == null) {
+			throw new IllegalArgumentException("baseQuery == null");
 		}
 		
 		if (modelCompiler == null) {
@@ -56,15 +60,23 @@ abstract class Collector_Query<MODEL> {
 		}
 		
 
-		this.queryStyle = queryStyle;
+		this.baseQuery = baseQuery;
 		this.modelCompiler = modelCompiler;
 	}
 
 	final EQueryStyle getQueryStyle() {
-		return queryStyle;
+		return baseQuery.getQueryStyle();
 	}
 
 	final ModelCompiler<MODEL> getModelCompiler() {
 		return modelCompiler;
+	}
+	
+	final List<IAlias> getAllAliases() {
+		return baseQuery.getAliases();
+	}
+
+	final QueryMetaModel getQueryMetaModel() {
+		return baseQuery.getQueryMetaModel();
 	}
 }

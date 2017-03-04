@@ -9,14 +9,15 @@ final class ClassicSingleNamedResult<MODEL, RESULT>
 			IClassicSingleWhereClauseBuilderNamed<MODEL, RESULT>,
 			IClassicSingleAndOrLogicalClausesNamed<MODEL, RESULT>
 				  {
-	ClassicSingleNamedResult(CollectedQueryResult result, ModelCompiler<MODEL> modelCompiler) {
+	
+	ClassicSingleNamedResult(ClassicSelect select, CollectedQueryResult result, ModelCompiler<MODEL> modelCompiler) {
 		super(
-				makeCollector(modelCompiler, result),
+				makeCollector(select, modelCompiler, result),
 				new Collector_Clause(EConditionsClause.WHERE, ConditionsType.SINGLE));
 	}
 	
-	private static <M> Collector_Query<M> makeCollector(ModelCompiler<M> modelCompiler, CollectedQueryResult result) {
-		final Collector_Query<M> collector = new QueryCollectorImpl<>(EQueryStyle.CLASSIC, modelCompiler, result);
+	private static <M> Collector_Query<M> makeCollector(ClassicSelect select, ModelCompiler<M> modelCompiler, CollectedQueryResult result) {
+		final Collector_Query<M> collector = new QueryCollectorImpl<>(select, modelCompiler, result);
 		
 		collector.setSources(new CollectedSelectSource_Named(new Class<?> [] { result.getType() }));
 		

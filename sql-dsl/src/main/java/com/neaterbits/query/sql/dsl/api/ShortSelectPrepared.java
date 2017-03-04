@@ -3,24 +3,26 @@ package com.neaterbits.query.sql.dsl.api;
 import java.math.BigDecimal;
 import java.util.function.Function;
 
-final class ShortSelectPrepared extends BaseSelect<
-	IShortResult_Numeric_Named<Long>,
-	IShortResult_Numeric_Named<Long>,
-	
-	IShortResult_Numeric_Named<Short>,
-	IShortResult_Numeric_Named<Integer>,
-	IShortResult_Numeric_Named<Long>,
-	IShortResult_Numeric_Named<BigDecimal>> 
+import com.neaterbits.query.sql.dsl.api.entity.QueryMetaModel;
+
+final class ShortSelectPrepared extends BaseShortSelect
 
 	implements IShortPrepared {
 	
 	static ShortSelectPrepared get(DataConfig dataConfig) {
-		throw new UnsupportedOperationException("TODO");
+		
+		@SuppressWarnings("rawtypes")
+		final DataConfigBase baseConfig = (DataConfigBase)dataConfig;
+		
+		final QueryMetaModel metaModel = baseConfig.getQueryMetaModel();
+
+		return new ShortSelectPrepared(metaModel, (QueryDataSource_Base<?>)baseConfig.getDataSource());
 	}
 	
 	private final QueryDataSource_Base<?> dataSource;
 	
-	ShortSelectPrepared(QueryDataSource_Base<?> dataSource) {
+	private ShortSelectPrepared(QueryMetaModel metaModel, QueryDataSource_Base<?> dataSource) {
+		super(metaModel);
 		
 		if (dataSource == null) {
 			throw new IllegalArgumentException("dataSource == null");
@@ -54,7 +56,7 @@ final class ShortSelectPrepared extends BaseSelect<
 		
 		final SharedSelectSource selectSource = new SharedSelectSource_Named(cl);
 
-		return new Short_Collector_SingleResult_Undecided<SinglePrepared<TYPE_RESULT>, TYPE_RESULT>(selectSource, singleQueryPreparer());
+		return new Short_Collector_SingleResult_Undecided<SinglePrepared<TYPE_RESULT>, TYPE_RESULT>(this, selectSource, singleQueryPreparer());
 	}
 
 	@Override
@@ -65,7 +67,7 @@ final class ShortSelectPrepared extends BaseSelect<
 		
 		final SharedSelectSource selectSource = new SharedSelectSource_Named(cl);
 
-		return new Short_Collector_SingleResult_Undecided<SinglePrepared<TYPE_RESULT>, TYPE_RESULT>(selectSource, singleQueryPreparer());
+		return new Short_Collector_SingleResult_Undecided<SinglePrepared<TYPE_RESULT>, TYPE_RESULT>(this, selectSource, singleQueryPreparer());
 	}
 
 	@Override
@@ -76,7 +78,7 @@ final class ShortSelectPrepared extends BaseSelect<
 		
 		final SharedSelectSource selectSource = new SharedSelectSource_Named(cl);
 
-		return new Short_Collector_MultiResult_Undecided<MultiPrepared<TYPE_RESULT>, TYPE_RESULT>(selectSource, ECollectionType.LIST, multiQueryPreparer());
+		return new Short_Collector_MultiResult_Undecided<MultiPrepared<TYPE_RESULT>, TYPE_RESULT>(this, selectSource, ECollectionType.LIST, multiQueryPreparer());
 	}
 
 	@Override

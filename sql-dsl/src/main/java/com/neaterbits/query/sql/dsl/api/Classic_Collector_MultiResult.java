@@ -18,15 +18,17 @@ final class Classic_Collector_MultiResult<MODEL, RESULT>
 
 		implements IClassicResult_Multi<MODEL, RESULT> {
 
+	private final ClassicSelect select;
 	private final ECollectionType collectionType;
 	
-	Classic_Collector_MultiResult(SharedSelectSource selectSource, ECollectionType collectionType, ModelCompiler<MODEL> modelCompiler) {
-		super(selectSource, modelCompiler);
+	Classic_Collector_MultiResult(ClassicSelect select, SharedSelectSource selectSource, ECollectionType collectionType, ModelCompiler<MODEL> modelCompiler) {
+		super(select, selectSource, modelCompiler);
 		
 		if (collectionType == null) {
 			throw new IllegalArgumentException("collectionType == null");
 		}
 
+		this.select = select;
 		this.collectionType = collectionType;
 	}
 
@@ -43,7 +45,7 @@ final class Classic_Collector_MultiResult<MODEL, RESULT>
 	// For instantiating where or join when mapped
 	@Override
 	Classic_Collector_MapToResult_Base<MODEL, RESULT, ISQLLogical_WhereOrJoin_MultiMapped_Named<MODEL, RESULT>, ISQLLogical_WhereOrJoin_MultiMapped_Alias<MODEL, RESULT>> createMapToResult() {
-		return new Classic_Collector_MapToResult_Multi<MODEL, RESULT>(getResultType(), collectionType, getModelCompiler());
+		return new Classic_Collector_MapToResult_Multi<MODEL, RESULT>(select, getResultType(), collectionType, getModelCompiler());
 	}
 
 	@Override

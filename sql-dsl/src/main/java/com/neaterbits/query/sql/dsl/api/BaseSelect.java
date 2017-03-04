@@ -1,11 +1,9 @@
 package com.neaterbits.query.sql.dsl.api;
 
-import java.lang.reflect.InvocationHandler;
-import java.lang.reflect.Method;
 import java.math.BigDecimal;
 import java.util.function.Function;
 
-import com.neaterbits.query.util.java8.MethodFinder;
+import com.neaterbits.query.sql.dsl.api.entity.QueryMetaModel;
 
 abstract class BaseSelect<
 		// for sums, we return Long for short and int so must differentiate from other aggregate
@@ -19,129 +17,14 @@ abstract class BaseSelect<
 		INT_RET,
 		LONG_RET,
 		BIGDECIMAL_RET
-		> 
+		>
 
-	implements ISQL<SUM_LONG_RET, COUNT_RET, SHORT_RET, INT_RET, LONG_RET, BIGDECIMAL_RET> {
-		
-	private static final Method aliasGetTypeMethod;
-	private static final Method aliasGetLastInvokedMethod;
-		
-	static {
-		try {
-			aliasGetTypeMethod = IAlias.class.getMethod("getType");
-			aliasGetLastInvokedMethod = IAlias.class.getMethod("getLastInvokedMethod");
-			
-		} catch (NoSuchMethodException | SecurityException ex) {
-			throw new IllegalStateException("Failed to get IAlias method", ex);
-		}
-	}
+	extends BaseQuery
+
+	implements ISQL<SUM_LONG_RET, COUNT_RET, SHORT_RET, INT_RET, LONG_RET, BIGDECIMAL_RET> 
 	
-	
-	static <T> ModelCompiler<SingleCompiled<T>> singleQueryCompiler() {
-		return compiledQuery -> new SharedCompiled_Single<>(compiledQuery);
-	}
-
-	static <T> ModelCompiler<MultiCompiled<T>> multiQueryCompiler() {
-		return compiledQuery -> new SharedCompiled_Multi<>(compiledQuery);
-	}
-	
-	@Override
-    public <T> T alias(Class<T> aliasType) {
-		if (aliasType == null) {
-			throw new IllegalArgumentException("aliasType == null");
-		}
+	{
 		
-		// Create a dynamic-proxy for the aliased type
-		
-		final InvocationHandler handler = new AliasInvocationHandler(aliasType);
-		
-		return MethodFinder.enhance(aliasType, new Class<?> [] { IAlias.class }, handler);
-    }
-    
-    private static class AliasInvocationHandler implements InvocationHandler {
-
-    	private final Class<?> aliasType;
-    	
-    	private Method lastInvokedMethod;
-    	
-    	
-		AliasInvocationHandler(Class<?> aliasType) {
-			this.aliasType = aliasType;
-			this.lastInvokedMethod = null;
-		}
-
-
-		@Override
-		public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
-			final Object ret;
-			
-			if (method.getDeclaringClass().equals(IAlias.class)) {
-				if (method.equals(aliasGetTypeMethod)) {
-					ret = aliasType;
-				}
-				else if (method.equals(aliasGetLastInvokedMethod)) {
-					ret = lastInvokedMethod;
-					this.lastInvokedMethod = null;
-				}
-				else {
-					throw new IllegalArgumentException("Unknown IAlias method " + method.getName());
-				}
-			}
-			else {
-				// Store last invoked for later retrieval
-				lastInvokedMethod = method;
-				
-				ret = null;
-			}
-
-			return ret;
-		}
-    }
-    
-	
-	@Override
-    public final <T> Alias<T> aliasAlias(Class<T> aliasType) {
-		if (aliasType == null) {
-			throw new IllegalArgumentException("aliasType == null");
-		}
-
-		final AliasImpl<T> alias = new AliasImpl<T>(aliasType);
-
-		return alias;
-    }
-
-	@Override
-    public final <T> ValParam<T> param(Class<T> paramType) {
-		if (paramType == null) {
-			throw new IllegalArgumentException("paramType == null");
-		}
-
-		final ValParamImpl<T> param = new ValParamImpl<T>(paramType);
-
-		return param;
-    }
-
-	@Override
-    public final <T> InParam<T> inParam(Class<T> paramType) {
-		if (paramType == null) {
-			throw new IllegalArgumentException("paramType == null");
-		}
-
-		final InParamImpl<T> param = new InParamImpl<T>(paramType);
-
-		return param;
-    }
-    
-    // Parameters. We only support known base types that support equals()/hashCode() 
-	@Override
-    public final ValParam<Integer> intParam() {
-    	return param(Integer.class);
-    }
-
-	@Override
-    public final ValParam<String> stringParam() {
-    	return param(String.class);
-    }
 
 	// ======================== Aggregate functions ========================
 	
@@ -156,6 +39,12 @@ abstract class BaseSelect<
 	*/
 
 	abstract <T, NUM, RESULT, RET> RET sum(Function<T, NUM> field, Class<NUM> numCl, Class<RESULT> resultCl);
+	
+	BaseSelect(QueryMetaModel queryMetaModel) {
+		super(queryMetaModel);
+	}
+
+
 
 	@Override
 	public final <T> SUM_LONG_RET sum(IFunctionShort<T> field) {

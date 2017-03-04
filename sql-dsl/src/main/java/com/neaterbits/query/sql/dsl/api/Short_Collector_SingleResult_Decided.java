@@ -33,12 +33,12 @@ abstract class Short_Collector_SingleResult_Decided<MODEL, RESULT, AFTER_GROUP_B
 	implements IShortResult_Mapped_Single_All<MODEL, RESULT>
 			
 {
-	Short_Collector_SingleResult_Decided(CollectedQueryResult_Mapped_Single result, ModelCompiler<MODEL> modelCompiler) {
-		super(result, modelCompiler);
+	Short_Collector_SingleResult_Decided(BaseShortSelect select, CollectedQueryResult_Mapped_Single result, ModelCompiler<MODEL> modelCompiler) {
+		super(select, result, modelCompiler);
 	}
 
-	Short_Collector_SingleResult_Decided(CollectedQueryResult_Entity_Single result, ModelCompiler<MODEL> modelCompiler) {
-		super(result, modelCompiler);
+	Short_Collector_SingleResult_Decided(BaseShortSelect select, CollectedQueryResult_Entity_Single result, ModelCompiler<MODEL> modelCompiler) {
+		super(select, result, modelCompiler);
 	}
 	
 

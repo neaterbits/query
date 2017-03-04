@@ -62,8 +62,8 @@ abstract class Short_Collector_Result_Decided_Base<
 	private final EQueryResultGathering gathering;
 		
 		
-	Short_Collector_Result_Decided_Base(CollectedQueryResult_Mapped result, ModelCompiler<MODEL> modelCompiler) {
-		super(new QueryCollectorImpl<MODEL>(EQueryStyle.SHORT, modelCompiler, result), new Collector_Clause(EConditionsClause.WHERE, ConditionsType.SINGLE));
+	Short_Collector_Result_Decided_Base(BaseShortSelect select, CollectedQueryResult_Mapped result, ModelCompiler<MODEL> modelCompiler) {
+		super(new QueryCollectorImpl<MODEL>(select, modelCompiler, result), new Collector_Clause(EConditionsClause.WHERE, ConditionsType.SINGLE));
 
 		final MappingCollector mappingCollector = new MappingCollector();
 
@@ -73,8 +73,8 @@ abstract class Short_Collector_Result_Decided_Base<
 		this.gathering = EQueryResultGathering.MAPPED;
 	}
 
-	Short_Collector_Result_Decided_Base(CollectedQueryResult_Entity result, ModelCompiler<MODEL> modelCompiler) {
-		super(new QueryCollectorImpl<MODEL>(EQueryStyle.SHORT, modelCompiler, result), new Collector_Clause(EConditionsClause.WHERE, ConditionsType.SINGLE));
+	Short_Collector_Result_Decided_Base(BaseShortSelect select, CollectedQueryResult_Entity result, ModelCompiler<MODEL> modelCompiler) {
+		super(new QueryCollectorImpl<MODEL>(select, modelCompiler, result), new Collector_Clause(EConditionsClause.WHERE, ConditionsType.SINGLE));
 		
 		// do not set mapping collector
 		

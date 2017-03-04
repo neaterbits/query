@@ -535,6 +535,9 @@ W - parametere
      siden from er der for cartesian product.
    * datasource må da oppgis først, slik at kompilering kan skje statisk.
 
+ - fetch join
+   kombinere i samme metodekall? .fetchInnerJoin(Company::getEmployees) eller .innerJoin().fetch(Company::getEmployees) eller fetch().innerJoin(Company::getEmployees) ? 
+
 
  - result functions? dvs aggregates. count, etc
 

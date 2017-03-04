@@ -8,12 +8,12 @@ final class Short_Collector_SingleResult_Decided_Named<MODEL, RESULT>
 				// when returned 'this' after where
 				ISQLLogical_AndOr_SingleResult_Named<MODEL, RESULT> {
 
-	Short_Collector_SingleResult_Decided_Named(CollectedQueryResult_Mapped_Single result, ModelCompiler<MODEL> modelCompiler) {
-		super(result, modelCompiler);
+	Short_Collector_SingleResult_Decided_Named(BaseShortSelect select, CollectedQueryResult_Mapped_Single result, ModelCompiler<MODEL> modelCompiler) {
+		super(select, result, modelCompiler);
 	}
 
-	Short_Collector_SingleResult_Decided_Named(CollectedQueryResult_Entity_Single result, ModelCompiler<MODEL> modelCompiler) {
-		super(result, modelCompiler);
+	Short_Collector_SingleResult_Decided_Named(BaseShortSelect select, CollectedQueryResult_Entity_Single result, ModelCompiler<MODEL> modelCompiler) {
+		super(select, result, modelCompiler);
 	}
 
 	@Override

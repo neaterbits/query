@@ -19,8 +19,8 @@ final class Classic_Collector_MapToResult_Single<MODEL, RESULT>
 			   IClassicResult_Mapped_Single_Named<MODEL, RESULT>,
 			   IClassicResult_Mapped_Single_Alias<MODEL, RESULT> {
 
-	Classic_Collector_MapToResult_Single(Class<?> resultType, ModelCompiler<MODEL> modelCompiler) {
-		super(new CollectedQueryResult_Mapped_Single(resultType), modelCompiler);
+	Classic_Collector_MapToResult_Single(ClassicSelect select, Class<?> resultType, ModelCompiler<MODEL> modelCompiler) {
+		super(select, new CollectedQueryResult_Mapped_Single(resultType), modelCompiler);
 	}
 
 	@Override

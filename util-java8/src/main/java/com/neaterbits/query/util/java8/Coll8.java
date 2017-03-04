@@ -40,4 +40,15 @@ public class Coll8 {
 		
 		return dst;
 	}
+	
+	
+	public static <T> int idxOf(List<T> list, Predicate<T> predicate) {
+		for (int i = 0; i < list.size(); ++ i) {
+			if (predicate.test(list.get(i))) {
+				return i;
+			}
+		}
+		
+		return -1;
+	}
 }

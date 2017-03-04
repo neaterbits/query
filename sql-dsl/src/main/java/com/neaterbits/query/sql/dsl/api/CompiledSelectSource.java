@@ -26,7 +26,27 @@ abstract class CompiledSelectSource extends CompiledQueryElement<CollectedSelect
 		this.name = name;
 		this.idx = idx;
 	}
+	
+	CompiledSelectSource(Class<?> type, String name, int idx) {
+		super(null);
 
+		if (type == null) {
+			throw new IllegalArgumentException("type == null");
+		}
+		
+		if (name == null) {
+			throw new IllegalArgumentException("name == null");
+		}
+		
+		this.type = type;
+		this.name = name;
+		this.idx = idx;
+	}
+
+	static String getName(int aliasNo) {
+		return "al" + aliasNo;
+	}
+	
 	@Override
 	public final Class<?> getType() {
 		return type;

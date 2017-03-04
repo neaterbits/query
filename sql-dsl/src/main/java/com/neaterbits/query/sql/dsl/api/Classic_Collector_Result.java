@@ -30,8 +30,8 @@ abstract class Classic_Collector_Result<
 	private final SharedSelectSource selectSource;
 	private final ModelCompiler<MODEL> modelCompiler;
 	
-	Classic_Collector_Result(SharedSelectSource selectSource, ModelCompiler<MODEL> modelCompiler) {
-		super(null, modelCompiler);
+	Classic_Collector_Result(ClassicSelect classic, SharedSelectSource selectSource, ModelCompiler<MODEL> modelCompiler) {
+		super(classic, null, modelCompiler);
 		
 		if (selectSource == null) {
 			throw new IllegalArgumentException("selectSource == null");

@@ -10,6 +10,12 @@ final class CompiledSelectSource_Alias extends CompiledSelectSource {
 		this.alias = alias;
 	}
 
+	CompiledSelectSource_Alias(IAlias alias, String name, int idx) {
+		super(alias.getType(), name, idx);
+		
+		this.alias = alias;
+	}
+	
 	IAlias getAlias() {
 		return alias;
 	}

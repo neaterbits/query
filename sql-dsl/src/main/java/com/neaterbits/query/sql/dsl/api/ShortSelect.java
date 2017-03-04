@@ -1,23 +1,20 @@
 package com.neaterbits.query.sql.dsl.api;
 
-import java.math.BigDecimal;
 import java.util.function.Function;
 
-final class ShortSelect extends BaseSelect< 
-	IShortResult_Numeric_Named<Long>,
-	IShortResult_Numeric_Named<Long>,
-	
-	IShortResult_Numeric_Named<Short>,
-	IShortResult_Numeric_Named<Integer>,
-	IShortResult_Numeric_Named<Long>,
-	IShortResult_Numeric_Named<BigDecimal>>
-
+final class ShortSelect extends BaseShortSelect
 	
 	implements IShort
 
 {
 
 	static final ShortSelect selectImpl = new ShortSelect();
+	
+	
+	ShortSelect() {
+		super(null);
+	}
+	
 	
 	// Aggregate helpers
 	@Override
@@ -28,7 +25,7 @@ final class ShortSelect extends BaseSelect<
 		
 		final SharedSelectSource selectSource = new SharedSelectSource_Named(cl);
 
-		return new Short_Collector_SingleResult_Undecided<SingleCompiled<RESULT>, RESULT>(selectSource, singleQueryCompiler());
+		return new Short_Collector_SingleResult_Undecided<SingleCompiled<RESULT>, RESULT>(this, selectSource, singleQueryCompiler());
 	}
 
 	@Override
@@ -39,7 +36,7 @@ final class ShortSelect extends BaseSelect<
 		
 		final SharedSelectSource selectSource = new SharedSelectSource_Named(cl);
 
-		return new Short_Collector_SingleResult_Undecided<SingleCompiled<RESULT>, RESULT>(selectSource, singleQueryCompiler());
+		return new Short_Collector_SingleResult_Undecided<SingleCompiled<RESULT>, RESULT>(this, selectSource, singleQueryCompiler());
 	}
 
 	@Override
@@ -50,7 +47,7 @@ final class ShortSelect extends BaseSelect<
 		
 		final SharedSelectSource selectSource = new SharedSelectSource_Named(cl);
 
-		return new Short_Collector_MultiResult_Undecided<MultiCompiled<RESULT>, RESULT>(selectSource, ECollectionType.LIST, multiQueryCompiler());
+		return new Short_Collector_MultiResult_Undecided<MultiCompiled<RESULT>, RESULT>(this, selectSource, ECollectionType.LIST, multiQueryCompiler());
 	}
 
 	@Override

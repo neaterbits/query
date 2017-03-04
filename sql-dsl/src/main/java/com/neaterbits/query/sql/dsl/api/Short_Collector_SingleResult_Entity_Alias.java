@@ -6,12 +6,12 @@ final class Short_Collector_SingleResult_Entity_Alias<MODEL, RESULT>
 	implements IShortResult_Mapped_Single_Alias<MODEL, RESULT>
 {
 
-	Short_Collector_SingleResult_Entity_Alias(CollectedQueryResult_Mapped_Single result, ModelCompiler<MODEL> modelCompiler) {
-		super(result, modelCompiler);
+	Short_Collector_SingleResult_Entity_Alias(BaseShortSelect select, CollectedQueryResult_Mapped_Single result, ModelCompiler<MODEL> modelCompiler) {
+		super(select, result, modelCompiler);
 	}
 	
-	Short_Collector_SingleResult_Entity_Alias(CollectedQueryResult_Entity_Single result, ModelCompiler<MODEL> modelCompiler) {
-		super(result, modelCompiler);
+	Short_Collector_SingleResult_Entity_Alias(BaseShortSelect select, CollectedQueryResult_Entity_Single result, ModelCompiler<MODEL> modelCompiler) {
+		super(select, result, modelCompiler);
 	}
 
 	/*

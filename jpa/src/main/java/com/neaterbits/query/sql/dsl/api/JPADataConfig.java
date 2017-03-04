@@ -9,8 +9,10 @@ import javax.persistence.metamodel.Attribute;
 import javax.persistence.metamodel.EmbeddableType;
 import javax.persistence.metamodel.IdentifiableType;
 import javax.persistence.metamodel.ManagedType;
+import javax.persistence.metamodel.Metamodel;
 
 import com.neaterbits.query.sql.dsl.api.entity.EntityModel;
+import com.neaterbits.query.sql.dsl.api.entity.QueryMetaModel;
 
 public abstract class JPADataConfig extends DataConfigBase<
 		EntityManager,
@@ -41,6 +43,28 @@ public abstract class JPADataConfig extends DataConfigBase<
 		return persistenceUnitName;
 	}
 	
+	
+	@Override
+	protected QueryMetaModel getQueryMetaModel() {
+		return new JPAQueryMetaModel(getMetaModel());
+	}
+	
+	private final Metamodel getMetaModel() {
+		final Metamodel entityModel;
+
+		final EntityManagerFactory emf = Persistence.createEntityManagerFactory(getPersistenceUnitName());
+		
+		try {
+			entityModel = emf.getMetamodel();
+		}
+		finally {
+			emf.close();
+		}
+
+		return entityModel;
+	}
+	
+
 	@Override
 	protected final EntityModel<ManagedType<?>, EmbeddableType<?>, IdentifiableType<?>, Attribute<?, ?>, Set<Attribute<?, ?>>> getEntityModel() {
 		

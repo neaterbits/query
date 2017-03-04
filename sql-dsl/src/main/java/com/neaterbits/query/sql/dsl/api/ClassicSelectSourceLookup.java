@@ -1,9 +1,8 @@
 package com.neaterbits.query.sql.dsl.api;
 
-import java.util.function.BiConsumer;
 import java.util.function.Function;
 
-final class ClassicSelectSourceLookup implements SelectSourceLookup {
+final class ClassicSelectSourceLookup extends SelectSourceLookup {
 
 	
 	private final CompiledSelectSources<?> compiledSources;
@@ -21,32 +20,27 @@ final class ClassicSelectSourceLookup implements SelectSourceLookup {
 	}
 
 	@Override
-	public CompiledFieldReference makeFieldReference(CollectedItem original, Getter inputGetter) throws CompileException {
+	CompiledFieldReference makeFieldReference(CollectedItem original, Getter inputGetter) throws CompileException {
 		return compiledSources.makeFieldReference(original, inputGetter, cache);
 	}
 	
 	@Override
-	public TypeMapSource getNamedSource(Class<?> type) {
+	TypeMapSource getNamedSource(Class<?> type) {
 		return compiledSources.getNamedSource(type);
 	}
 	
 	@Override
-	public TypeMapSource getAliasesSource(IAlias alias) {
+	TypeMapSource getAliasesSource(IAlias alias) {
 		return compiledSources.getAliasesSource(alias);
 	}
 	
 	@Override
-	public CompiledGetterFunction findGetter(Function<?, ?> getter) throws CompileException {
+	CompiledGetterFunction findGetter(Function<?, ?> getter) throws CompileException {
 		return (CompiledGetterFunction)cache.findGetterFromTypes(compiledSources.getTypes(), getter);
 	}
 	
 	@Override
-	public CompiledSetter compileSetterUntyped(Class<?> resultType, BiConsumer<?, ?> setter) {
-		return cache.compileSetterUntyped(resultType, setter);
-	}
-	
-	@Override
-	public CompiledSelectSources<?> compile() {
+	CompiledSelectSources<?> compile() {
 		return compiledSources;
 	}
 }

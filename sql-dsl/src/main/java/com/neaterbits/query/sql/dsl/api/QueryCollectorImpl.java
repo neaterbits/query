@@ -9,6 +9,7 @@ import java.util.function.Function;
 
 class QueryCollectorImpl<MODEL> extends Collector_Query<MODEL> {
 	
+
 	// The expected result type
 	private CollectedQueryResult result;
 	
@@ -38,8 +39,8 @@ class QueryCollectorImpl<MODEL> extends Collector_Query<MODEL> {
 	private int [] orderByColumns;
 	
 	
-	QueryCollectorImpl(EQueryStyle queryStyle, ModelCompiler<MODEL> modelCompiler, CollectedQueryResult result) {
-		super(queryStyle, modelCompiler);
+	QueryCollectorImpl(BaseQuery baseQuery, ModelCompiler<MODEL> modelCompiler, CollectedQueryResult result) {
+		super(baseQuery, modelCompiler);
 
 		if (result != null) {
 			setResult(result);

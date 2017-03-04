@@ -33,9 +33,14 @@ final class Short_Collector_SingleResult_Undecided<MODEL, RESULT>
 			ISQLLogical_WhereOrJoin_Named_Base<MODEL, RESULT>,
 			
 			IShortResult_Single<MODEL, RESULT> {
+	
+	private final BaseShortSelect select;
+	
 
-	Short_Collector_SingleResult_Undecided(SharedSelectSource selectSource, ModelCompiler<MODEL> modelCompiler) {
-		super(selectSource, modelCompiler);
+	Short_Collector_SingleResult_Undecided(BaseShortSelect select, SharedSelectSource selectSource, ModelCompiler<MODEL> modelCompiler) {
+		super(select, selectSource, modelCompiler);
+		
+		this.select = select;
 	}
 
 	
@@ -44,7 +49,7 @@ final class Short_Collector_SingleResult_Undecided<MODEL, RESULT>
 		
 		final CollectedQueryResult_Mapped_Single collectedQueryResult = new CollectedQueryResult_Mapped_Single(getResultType());
 		
-		return new Short_Collector_SingleResult_Decided_Named<MODEL, RESULT>(collectedQueryResult, getModelCompiler());
+		return new Short_Collector_SingleResult_Decided_Named<MODEL, RESULT>(select, collectedQueryResult, getModelCompiler());
 	}
 
 
@@ -52,10 +57,8 @@ final class Short_Collector_SingleResult_Undecided<MODEL, RESULT>
 	final IMappingCollector<MODEL, RESULT> getMapToResultAlias() {
 		final CollectedQueryResult_Mapped_Single collectedQueryResult = new CollectedQueryResult_Mapped_Single(getResultType());
 
-		return new Short_Collector_SingleResult_Entity_Alias<MODEL, RESULT>(collectedQueryResult, getModelCompiler());
+		return new Short_Collector_SingleResult_Entity_Alias<MODEL, RESULT>(select, collectedQueryResult, getModelCompiler());
 	}
-
-	
 	
 
 	// ******************* !!! IMPORTANT must switch to one that implements AndOr interface !!! *******************
@@ -66,7 +69,7 @@ final class Short_Collector_SingleResult_Undecided<MODEL, RESULT>
 		// TODO: rename *MapToResult* here
 		final CollectedQueryResult_Entity_Single collectedQueryResult = new CollectedQueryResult_Entity_Single(getSelectSource());
 
-		return new Short_Collector_SingleResult_Decided_Named<>(collectedQueryResult, getModelCompiler());
+		return new Short_Collector_SingleResult_Decided_Named<>(select, collectedQueryResult, getModelCompiler());
 	}
 
 
@@ -75,7 +78,7 @@ final class Short_Collector_SingleResult_Undecided<MODEL, RESULT>
 		// TODO: rename *MapToResult* here
 		final CollectedQueryResult_Entity_Single collectedQueryResult = new CollectedQueryResult_Entity_Single(getSelectSource());
 
-		return new Short_Collector_SingleResult_Entity_Alias<>(collectedQueryResult, getModelCompiler());
+		return new Short_Collector_SingleResult_Entity_Alias<>(select, collectedQueryResult, getModelCompiler());
 	}
 	
 	@Override

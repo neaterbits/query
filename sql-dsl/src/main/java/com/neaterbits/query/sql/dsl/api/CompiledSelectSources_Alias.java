@@ -1,6 +1,9 @@
 package com.neaterbits.query.sql.dsl.api;
 
+import java.lang.reflect.Method;
 import java.util.List;
+import java.util.function.Function;
+import java.util.function.Supplier;
 
 final class CompiledSelectSources_Alias extends CompiledSelectSources<CompiledSelectSource_Alias> {
 
@@ -8,11 +11,14 @@ final class CompiledSelectSources_Alias extends CompiledSelectSources<CompiledSe
 		super(original, sources);
 	}
 
+	CompiledSelectSources_Alias(List<CompiledSelectSource_Alias> sources) {
+		super(sources);
+	}
 
 	@Override
 	public CompiledFieldReference makeFieldReference(CollectedItem original, Getter inputGetter, CompiledGetterSetterCache cache) throws CompileException {
 		
-		return TypeMapBase.makeFieldReferenceFromAliases(
+		return makeFieldReferenceFromAliases(
 				original,
 				inputGetter,
 				cache,
@@ -51,5 +57,63 @@ final class CompiledSelectSources_Alias extends CompiledSelectSources<CompiledSe
 		}
 		
 		return -1;
+	}
+	
+	static class AliasMethod<T> {
+		final T element;
+		final Method method;
+		
+		public AliasMethod(T element, Method method) {
+			this.element = element;
+			this.method = method;
+		}
+	}
+
+	static <T> AliasMethod<T> findMethodForAlias(SupplierGetter supplierGetter, Iterable<T> sources, Function<T, IAlias> aliasGetter) {
+
+		final Supplier<?> getter = supplierGetter.getGetter();
+		
+		// Trigger supplier
+		getter.get();
+		
+		Method lastMethod = null;
+		T foundSelectSource = null;
+		
+		for (T source : sources) {
+
+			 final IAlias alias = aliasGetter.apply(source);
+			 lastMethod = alias.getLastInvokedMethod();
+			 
+			 if (lastMethod != null) {
+				 foundSelectSource = source;
+				 break;
+			 }
+		}
+
+		if (lastMethod == null) {
+			throw new IllegalArgumentException("Method not invoked on alias, not an alias Supplier");
+		}
+
+		return new AliasMethod<>(foundSelectSource, lastMethod);
+	}
+	
+	private static<T extends TypeMapSource> CompiledFieldReference makeFieldReferenceFromAliases(
+			CollectedItem original,
+			Getter inputGetter,
+			CompiledGetterSetterCache cache,
+			Iterable<T> sources,
+			Function<T, IAlias> aliasGetter) throws CompileException {
+
+		final SupplierGetter supplierGetter = (SupplierGetter)inputGetter;
+
+		
+		final AliasMethod<T> aliasMethod = findMethodForAlias(supplierGetter, sources, aliasGetter);
+		
+		
+		// Find the alias and method
+
+		final CompiledGetter compiledGetter = new CompiledGetterSupplier(supplierGetter.getGetter(), aliasMethod.method);
+		
+		return new CompiledFieldReference(original, aliasMethod.element, compiledGetter);
 	}
 }

@@ -30,15 +30,17 @@ final class Short_Collector_MultiResult_Undecided<MODEL, RESULT>
 	implements IShortResult_Multi<MODEL, RESULT> {
 
 
+	private final BaseShortSelect select;
 	private final ECollectionType collectionType;
 	
-	Short_Collector_MultiResult_Undecided(SharedSelectSource selectSource, ECollectionType collectionType, ModelCompiler<MODEL> modelCompiler) {
-		super(selectSource, modelCompiler);
+	Short_Collector_MultiResult_Undecided(BaseShortSelect select, SharedSelectSource selectSource, ECollectionType collectionType, ModelCompiler<MODEL> modelCompiler) {
+		super(select, selectSource, modelCompiler);
 		
 		if (collectionType == null) {
 			throw new IllegalArgumentException("collectionType == null");
 		}
 
+		this.select = select;
 		this.collectionType = collectionType;
 	}
 	
@@ -48,7 +50,7 @@ final class Short_Collector_MultiResult_Undecided<MODEL, RESULT>
 	Collector_Conditions_GroupBy<MODEL, RESULT, ?> getAfterWhereNamed() {
 		final CollectedQueryResult_Entity_Multi result = new CollectedQueryResult_Entity_Multi(getSelectSource(), collectionType);
 		
-		return new Short_Collector_MultiResult_Decided_Named<>(result, getModelCompiler());
+		return new Short_Collector_MultiResult_Decided_Named<>(select, result, getModelCompiler());
 	}
 
 
@@ -57,7 +59,7 @@ final class Short_Collector_MultiResult_Undecided<MODEL, RESULT>
 	Collector_Conditions_GroupBy<MODEL, RESULT, ?> getAfterWhereAlias() {
 		final CollectedQueryResult_Entity_Multi result = new CollectedQueryResult_Entity_Multi(getSelectSource(), collectionType);
 		
-		return new Short_Collector_MultiResult_Decided_Alias<>(result, getModelCompiler());
+		return new Short_Collector_MultiResult_Decided_Alias<>(select, result, getModelCompiler());
 	}
 
 
@@ -67,7 +69,7 @@ final class Short_Collector_MultiResult_Undecided<MODEL, RESULT>
 		
 		final CollectedQueryResult_Mapped_Multi collectedQueryResult = new CollectedQueryResult_Mapped_Multi(getResultType(), collectionType);
 		
-		return new Short_Collector_MultiResult_Decided_Named<MODEL, RESULT>(collectedQueryResult, getModelCompiler());
+		return new Short_Collector_MultiResult_Decided_Named<MODEL, RESULT>(select, collectedQueryResult, getModelCompiler());
 	}
 
 
@@ -75,7 +77,7 @@ final class Short_Collector_MultiResult_Undecided<MODEL, RESULT>
 	final IMappingCollector<MODEL, RESULT> getMapToResultAlias() {
 		final CollectedQueryResult_Mapped_Multi collectedQueryResult = new CollectedQueryResult_Mapped_Multi(getResultType(), collectionType);
 
-		return new Short_Collector_MultiResult_Decided_Alias<MODEL, RESULT>(collectedQueryResult, getModelCompiler());
+		return new Short_Collector_MultiResult_Decided_Alias<MODEL, RESULT>(select, collectedQueryResult, getModelCompiler());
 	}
 
 	@Override

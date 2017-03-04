@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.function.BiConsumer;
 import java.util.function.Function;
 
+import com.neaterbits.query.sql.dsl.api.entity.QueryMetaModel;
 import com.neaterbits.query.util.java8.Coll8;
 
 /**
@@ -141,11 +142,12 @@ final class CompiledQuery {
 
 	// short-model, we do not have the select-sources available, so we must look them up as we go
 	static <MODEL> CompiledQuery compileShort(Collector_Query<MODEL> collector) throws CompileException {
-		final CollectedSelectSource sources = collector.getSources();
-		final CompiledSelectSources<?> compiledSources = compileSelectSources(sources);
 
-		final SelectSourceLookup lookup = null;
 		
+		final QueryMetaModel queryMetaModel = collector.getQueryMetaModel();
+	
+		
+		final SelectSourceLookup lookup = new ShortSelectSourceLookup(queryMetaModel.getAllManagedTypes(), collector.getAllAliases());
 		
 		return compile(collector, lookup);
 	}
@@ -404,12 +406,9 @@ final class CompiledQuery {
 			int classNo = 0;
 			
 			for (Class<?> cl : selectSourceClasses.getClasses()) {
-				final String name = cl.getSimpleName().toLowerCase();
 
-				if (Coll8.has(compiledList, e -> e.getName().equals(name))) {
-					throw new IllegalStateException("Two entity classes with same lowercase name \"" + name + "\"");
-				}
-
+				final String name = CompiledSelectSource_Named.getName(cl, compiledList);
+				
 				final CompiledSelectSource_Named c = new CompiledSelectSource_Named(selectSourceClasses, cl, name, classNo);
 
 				compiledList.add(c);
@@ -427,7 +426,10 @@ final class CompiledQuery {
 			int aliasNo = 0;
 			
 			for (IAlias alias : selectSourceAliases.getAliases()) {
-				final CompiledSelectSource_Alias c = new CompiledSelectSource_Alias(selectSourceAliases, alias, "al" + aliasNo, aliasNo);
+				
+				final String name = CompiledSelectSource_Alias.getName(aliasNo);
+				
+				final CompiledSelectSource_Alias c = new CompiledSelectSource_Alias(selectSourceAliases, alias, name, aliasNo);
 
 				compiledList.add(c);
 

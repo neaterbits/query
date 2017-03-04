@@ -17,8 +17,8 @@ abstract class Classic_Collector_AggregateResult<
 			ALIAS_WHERE_OR_JOIN
 			> {
 
-	Classic_Collector_AggregateResult(CollectedQueryResult result, ModelCompiler<MODEL> modelCompiler) {
-		super(result, modelCompiler);
+	Classic_Collector_AggregateResult(ClassicSelect classic, CollectedQueryResult result, ModelCompiler<MODEL> modelCompiler) {
+		super(classic, result, modelCompiler);
 	}
 }
 

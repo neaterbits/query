@@ -12,8 +12,8 @@ abstract class Classic_Collector_MapToResult_Base<
 	implements IMappingCollector<MODEL, RESULT>
 {
 
-	Classic_Collector_MapToResult_Base(CollectedQueryResult result, ModelCompiler<MODEL> modelCompiler) {
-		super(result, modelCompiler);
+	Classic_Collector_MapToResult_Base(ClassicSelect select, CollectedQueryResult result, ModelCompiler<MODEL> modelCompiler) {
+		super(select, result, modelCompiler);
 
 		final MappingCollector mappingCollector = new MappingCollector();
 

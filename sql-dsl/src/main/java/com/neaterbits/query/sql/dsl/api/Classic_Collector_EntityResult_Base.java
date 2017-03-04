@@ -7,7 +7,7 @@ abstract class Classic_Collector_EntityResult_Base<MODEL, RESULT,
 
 		> extends Classic_Collector_SelectSource<MODEL, RESULT, NAMED_WHERE_OR_JOIN, ALIAS_WHERE_OR_JOIN> {
 
-	Classic_Collector_EntityResult_Base(CollectedQueryResult result, ModelCompiler<MODEL> modelCompiler) {
-		super(result, modelCompiler);
+	Classic_Collector_EntityResult_Base(ClassicSelect classic, CollectedQueryResult result, ModelCompiler<MODEL> modelCompiler) {
+		super(classic, result, modelCompiler);
 	}
 }

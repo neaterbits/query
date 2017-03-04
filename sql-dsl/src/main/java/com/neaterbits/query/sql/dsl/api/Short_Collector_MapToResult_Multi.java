@@ -31,12 +31,12 @@ abstract class Short_Collector_MapToResult_Multi<MODEL, RESULT>
 		
 		> {
 
-	Short_Collector_MapToResult_Multi(CollectedQueryResult_Mapped result, ModelCompiler<MODEL> modelCompiler) {
-		super(result, modelCompiler);
+	Short_Collector_MapToResult_Multi(BaseShortSelect select, CollectedQueryResult_Mapped result, ModelCompiler<MODEL> modelCompiler) {
+		super(select, result, modelCompiler);
 	}
 
-	Short_Collector_MapToResult_Multi(CollectedQueryResult_Entity result, ModelCompiler<MODEL> modelCompiler) {
-		super(result, modelCompiler);
+	Short_Collector_MapToResult_Multi(BaseShortSelect select, CollectedQueryResult_Entity result, ModelCompiler<MODEL> modelCompiler) {
+		super(select, result, modelCompiler);
 	}
 
 	@Override

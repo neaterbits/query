@@ -17,13 +17,17 @@ final class Classic_Collector_SingleResult<MODEL, RESULT>
 
 	implements IClassicResult_Single<MODEL, RESULT> {
 
-	Classic_Collector_SingleResult(SharedSelectSource selectSource, ModelCompiler<MODEL> modelCompiler) {
-		super(selectSource, modelCompiler);
+	private final ClassicSelect select;
+	
+	Classic_Collector_SingleResult(ClassicSelect select, SharedSelectSource selectSource, ModelCompiler<MODEL> modelCompiler) {
+		super(select, selectSource, modelCompiler);
+		
+		this.select = select;
 	}
 
 	@Override
 	Classic_Collector_MapToResult_Base<MODEL, RESULT, ISQLLogical_WhereOrJoin_SingleResult_Named_And_Function<MODEL, RESULT>, ISQLLogical_WhereOrJoin_SingleResult_Alias_And_Function<MODEL, RESULT>> createMapToResult() {
-		return new Classic_Collector_MapToResult_Single<>(getResultType(), getModelCompiler());
+		return new Classic_Collector_MapToResult_Single<>(select, getResultType(), getModelCompiler());
 	}
 
 	@Override

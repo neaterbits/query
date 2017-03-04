@@ -49,16 +49,8 @@ public class ShortAPITest extends BaseSQLAPITest {
 				.store(b);
 	}
 
-	/*
 	private static final IShortPrepared prepared = IShortPrepared.get(jpqlJPA);
-	
-	private static final SinglePrepared<Company>
-			acmeQuery = prepared
-					.one(Company.class)
-					.where(Company::getName).startsWith("Acme")
-					
-					.compile();
-
+	/*
 	private static final SinglePrepared<Company>
 			acmeQuery2 = 
 			 one(Company.class)
@@ -93,6 +85,16 @@ public class ShortAPITest extends BaseSQLAPITest {
 	}
 	*/
 	
+	@Test
+    public void testPrepared() {
+		final SinglePrepared<Company> acmeQuery = prepared
+				.one(Company.class)
+				.where(Company::getName).startsWith("Acme")
+				
+				.compile();
+		
+		
+	}
 	@Test
     public void testNameBasedMapped() {
 

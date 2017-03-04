@@ -17,8 +17,8 @@ final class Classic_Collector_MapToResult_Multi<
 				   IClassicResult_Mapped_Multi_Named<MODEL, RESULT>,
 		           IClassicResult_Mapped_Multi_Alias<MODEL, RESULT> {
 
-	Classic_Collector_MapToResult_Multi(Class<?> resultType, ECollectionType collectionType, ModelCompiler<MODEL> modelCompiler) {
-		super(new CollectedQueryResult_Mapped_Multi(resultType, collectionType), modelCompiler);
+	Classic_Collector_MapToResult_Multi(ClassicSelect select, Class<?> resultType, ECollectionType collectionType, ModelCompiler<MODEL> modelCompiler) {
+		super(select, new CollectedQueryResult_Mapped_Multi(resultType, collectionType), modelCompiler);
 	}
 	
 
