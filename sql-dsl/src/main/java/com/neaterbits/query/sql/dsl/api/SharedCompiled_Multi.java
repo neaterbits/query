@@ -3,7 +3,7 @@ package com.neaterbits.query.sql.dsl.api;
 import java.util.List;
 
 final class SharedCompiled_Multi<RESULT> extends SharedCompiled_Base<List<RESULT>, RESULT>
-			implements MultiCompiled<RESULT> {
+			implements MultiBuilt<RESULT> {
 	
 	SharedCompiled_Multi(CompiledQuery compiledQuery) {
 		super(compiledQuery);

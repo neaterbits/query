@@ -2,7 +2,7 @@ package com.neaterbits.query.sql.dsl.api;
 
 final class SharedCollected_Multi<MODEL, RESULT> 
 	extends SharedCollected_Base<MODEL> 
-	implements MultiCompiled<RESULT> {
+	implements MultiBuilt<RESULT> {
 
 	SharedCollected_Multi(Collector_Query<MODEL> collected) {
 		super(collected);

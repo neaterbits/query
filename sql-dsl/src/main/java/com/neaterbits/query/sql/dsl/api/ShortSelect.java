@@ -18,36 +18,36 @@ final class ShortSelect extends BaseShortSelect
 	
 	// Aggregate helpers
 	@Override
-	public <RESULT> IShortResult_Single<SingleCompiled<RESULT>, RESULT> one(Class<RESULT> cl) {
+	public <RESULT> IShortResult_Single<SingleBuilt<RESULT>, RESULT> one(Class<RESULT> cl) {
 		if (cl == null) {
 			throw new IllegalArgumentException("cl == null");
 		}	
 		
 		final SharedSelectSource selectSource = new SharedSelectSource_Named(cl);
 
-		return new Short_Collector_SingleResult_Undecided<SingleCompiled<RESULT>, RESULT>(this, selectSource, singleQueryCollected());
+		return new Short_Collector_SingleResult_Undecided<SingleBuilt<RESULT>, RESULT>(this, selectSource, singleQueryCollected());
 	}
 
 	@Override
-	public <RESULT> IShortResult_Single<SingleCompiled<RESULT>, RESULT> oneOrNull(Class<RESULT> cl) {
+	public <RESULT> IShortResult_Single<SingleBuilt<RESULT>, RESULT> oneOrNull(Class<RESULT> cl) {
 		if (cl == null) {
 			throw new IllegalArgumentException("cl == null");
 		}
 		
 		final SharedSelectSource selectSource = new SharedSelectSource_Named(cl);
 
-		return new Short_Collector_SingleResult_Undecided<SingleCompiled<RESULT>, RESULT>(this, selectSource, singleQueryCollected());
+		return new Short_Collector_SingleResult_Undecided<SingleBuilt<RESULT>, RESULT>(this, selectSource, singleQueryCollected());
 	}
 
 	@Override
-	public <RESULT> IShortResult_Multi<MultiCompiled<RESULT>, RESULT> list(Class<RESULT> cl) {
+	public <RESULT> IShortResult_Multi<MultiBuilt<RESULT>, RESULT> list(Class<RESULT> cl) {
 		if (cl == null) {
 			throw new IllegalArgumentException("cl == null");
 		}
 		
 		final SharedSelectSource selectSource = new SharedSelectSource_Named(cl);
 
-		return new Short_Collector_MultiResult_Undecided<MultiCompiled<RESULT>, RESULT>(this, selectSource, ECollectionType.LIST, multiQueryCollected());
+		return new Short_Collector_MultiResult_Undecided<MultiBuilt<RESULT>, RESULT>(this, selectSource, ECollectionType.LIST, multiQueryCollected());
 	}
 
 	@Override

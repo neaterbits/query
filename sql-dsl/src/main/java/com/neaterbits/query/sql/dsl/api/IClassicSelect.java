@@ -22,23 +22,23 @@ public interface IClassicSelect {
 	}
 	*/
 
-	public static <MAPPED_RESULT> IClassicResult_Multi<MultiCompiled<MAPPED_RESULT>, MAPPED_RESULT> list(Class<MAPPED_RESULT> cl) {
+	public static <MAPPED_RESULT> IClassicResult_Multi<MultiBuilt<MAPPED_RESULT>, MAPPED_RESULT> list(Class<MAPPED_RESULT> cl) {
 		return ClassicSelect.selectImpl.list(cl);
 	}
 
-	public static <TYPE_RESULT> IClassicResult_Single<SingleCompiled<TYPE_RESULT>, TYPE_RESULT> one(Class<TYPE_RESULT> cl) {
+	public static <TYPE_RESULT> IClassicResult_Single<SingleBuilt<TYPE_RESULT>, TYPE_RESULT> one(Class<TYPE_RESULT> cl) {
 		return ClassicSelect.selectImpl.one(cl);
 	}
 
-	public static <TYPE_RESULT> IClassicResult_Single<SingleCompiled<TYPE_RESULT>, TYPE_RESULT> oneOrNull(Class<TYPE_RESULT> cl) {
+	public static <TYPE_RESULT> IClassicResult_Single<SingleBuilt<TYPE_RESULT>, TYPE_RESULT> oneOrNull(Class<TYPE_RESULT> cl) {
 		return ClassicSelect.selectImpl.oneOrNull(cl);
 	}
 
-	public static <TYPE_RESULT> IClassicSingleWhereClauseBuilderNamed<SingleCompiled<TYPE_RESULT>, TYPE_RESULT> oneFrom(Class<TYPE_RESULT> cl) {
+	public static <TYPE_RESULT> IClassicSingleWhereClauseBuilderNamed<SingleBuilt<TYPE_RESULT>, TYPE_RESULT> oneFrom(Class<TYPE_RESULT> cl) {
 		return ClassicSelect.selectImpl.oneFrom(cl);
 	}
 
-	public static <TYPE_RESULT> IClassicSingleWhereClauseBuilderNamed<MultiCompiled<TYPE_RESULT>, TYPE_RESULT> listFrom(Class<TYPE_RESULT> cl) {
+	public static <TYPE_RESULT> IClassicSingleWhereClauseBuilderNamed<MultiBuilt<TYPE_RESULT>, TYPE_RESULT> listFrom(Class<TYPE_RESULT> cl) {
 		return ClassicSelect.selectImpl.listFrom(cl);
 	}
 	

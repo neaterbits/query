@@ -37,19 +37,19 @@ abstract class BaseQuery implements IQueryPreparation {
 		return compiledQuery;
 	}
 
-	static <T> ModelCompiler<SingleCompiled<T>> singleQueryCollected() {
+	static <T> ModelCompiler<SingleBuilt<T>> singleQueryCollected() {
 		return collectedQuery -> new SharedCollected_Single<>(collectedQuery);
 	}
 
-	static <T> ModelCompiler<MultiCompiled<T>> multiQueryCollected() {
+	static <T> ModelCompiler<MultiBuilt<T>> multiQueryCollected() {
 		return collectedQuery -> new SharedCollected_Multi<>(collectedQuery);
 	}
 	
-	static <T> ModelCompiler<SingleCompiled<T>> singleQueryCompiled() {
+	static <T> ModelCompiler<SingleBuilt<T>> singleQueryCompiled() {
 		return collectedQuery -> new SharedCompiled_Single<>(compile(collectedQuery, null));
 	}
 
-	static <T> ModelCompiler<MultiCompiled<T>> multiQueryCompiled() {
+	static <T> ModelCompiler<MultiBuilt<T>> multiQueryCompiled() {
 		return collectedQuery -> new SharedCompiled_Multi<>(compile(collectedQuery, null));
 	}
 	

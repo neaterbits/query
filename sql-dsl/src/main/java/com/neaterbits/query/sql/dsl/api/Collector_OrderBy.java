@@ -70,11 +70,11 @@ final class Collector_OrderBy<MODEL, RESULT>
 	}
 
 	@Override
-	public MODEL compile() {
+	public MODEL build() {
 
 		addLastSortOrder();
 		
-		return collectorConditions.compile();
+		return collectorConditions.build();
 	}
 
 	@Override

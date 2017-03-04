@@ -91,7 +91,7 @@ public class ShortAPITest extends BaseSQLAPITest {
 				.one(Company.class)
 				.where(Company::getName).startsWith("Acme")
 				
-				.compile();
+				.build();
 		
 		
 	}
@@ -101,7 +101,7 @@ public class ShortAPITest extends BaseSQLAPITest {
 		final Company acme = new Company(-1, "Acme");
 		final Company foo = new Company(-1, "Foo");
 
-        final SingleCompiled<CompanyResultVO> startsWithAc =
+        final SingleBuilt<CompanyResultVO> startsWithAc =
         		oneOrNull(CompanyResultVO.class)
 
         	.map(Company::getName).to(CompanyResultVO::setName)
@@ -109,7 +109,7 @@ public class ShortAPITest extends BaseSQLAPITest {
         	.where(Company::getName).startsWith("Ac")
         	.  and(Company::getName).endsWith("cme")
 
-        	.compile();
+        	.build();
 		
 		store(s  -> s.add(acme)).
 		check(ds -> {
@@ -137,13 +137,13 @@ public class ShortAPITest extends BaseSQLAPITest {
 		final Company acme = new Company(-1, "Acme");
 		final Company foo = new Company(-1, "Foo");
 
-        final SingleCompiled<Company> startsWithAc =
+        final SingleBuilt<Company> startsWithAc =
         		oneOrNull(Company.class)
 
         	.where(Company::getName).startsWith("Ac")
         	.  and(Company::getName).endsWith("cme")
 
-        	.compile();
+        	.build();
 		
 		store(s  -> s.add(acme)).
 		check(ds -> {
@@ -171,7 +171,7 @@ public class ShortAPITest extends BaseSQLAPITest {
 		final Company acme = new Company(-1, "Acme");
 		final Company foo = new Company(-1, "Foo");
 
-        final MultiCompiled<Company> startsWithAc = list(Company.class).compile();
+        final MultiBuilt<Company> startsWithAc = list(Company.class).build();
 		
 		store(s  -> s.add(acme)).
 		check(ds -> {
@@ -200,12 +200,12 @@ public class ShortAPITest extends BaseSQLAPITest {
 		final Company acme = new Company(-1, "Acme");
 		final Company foo = new Company(-1, "Foo");
 
-        final MultiCompiled<Company> startsWithAc =
+        final MultiBuilt<Company> startsWithAc =
 
         			 select.list(Company.class)
         			.orderBy(Company::getName)
         			.desc()
-        			.compile();
+        			.build();
 		
 		store(s  -> s.add(acme)).
 		check(ds -> {

@@ -66,7 +66,7 @@ abstract class Collector_Conditions_GroupBy<MODEL, RESULT, AFTER_GROUP_BY>
 	
 	
 	@Override
-	public final MODEL compile() {
+	public final MODEL build() {
 		
 		// Get collected query
 		final Collector_Query<MODEL> queryCollector = getQueryCollector();

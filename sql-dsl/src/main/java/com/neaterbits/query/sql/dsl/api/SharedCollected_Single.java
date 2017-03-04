@@ -3,7 +3,7 @@ package com.neaterbits.query.sql.dsl.api;
 final class SharedCollected_Single<MODEL, RESULT>
 
 	extends SharedCollected_Base<MODEL>
-	implements SingleCompiled<RESULT> {
+	implements SingleBuilt<RESULT> {
 	
 	
 

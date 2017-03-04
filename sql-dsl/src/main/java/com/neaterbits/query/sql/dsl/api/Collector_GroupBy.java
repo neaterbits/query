@@ -73,8 +73,8 @@ abstract class Collector_GroupBy<MODEL, RESULT>
 
 
 	@Override
-	public final MODEL compile() {
-		return collectorConditions.compile();
+	public final MODEL build() {
+		return collectorConditions.build();
 	}
 
 	@Override

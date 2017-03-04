@@ -74,52 +74,52 @@ final class ClassicSelect
 	}
 
 	@Override
-	public <RESULT> IClassicResult_Single<SingleCompiled<RESULT>, RESULT> one(Class<RESULT> cl) {
+	public <RESULT> IClassicResult_Single<SingleBuilt<RESULT>, RESULT> one(Class<RESULT> cl) {
 		if (cl == null) {
 			throw new IllegalArgumentException("cl == null");
 		}
 		
 		final SharedSelectSource selectSource = new SharedSelectSource_Named(cl);
 
-		return new Classic_Collector_SingleResult<SingleCompiled<RESULT>, RESULT>(this, selectSource, singleQueryCompiled());
+		return new Classic_Collector_SingleResult<SingleBuilt<RESULT>, RESULT>(this, selectSource, singleQueryCompiled());
 	}
 
 	@Override
-	public <RESULT> IClassicResult_Single<SingleCompiled<RESULT>, RESULT> oneOrNull(Class<RESULT> cl) {
+	public <RESULT> IClassicResult_Single<SingleBuilt<RESULT>, RESULT> oneOrNull(Class<RESULT> cl) {
 		if (cl == null) {
 			throw new IllegalArgumentException("cl == null");
 		}
 		
 		final SharedSelectSource selectSource = new SharedSelectSource_Named(cl);
 
-		return new Classic_Collector_SingleResult<SingleCompiled<RESULT>, RESULT>(this, selectSource, singleQueryCompiled());
+		return new Classic_Collector_SingleResult<SingleBuilt<RESULT>, RESULT>(this, selectSource, singleQueryCompiled());
 	}
 
 	@Override
-	public <RESULT> IClassicResult_Multi<MultiCompiled<RESULT>, RESULT> list(Class<RESULT> cl) {
+	public <RESULT> IClassicResult_Multi<MultiBuilt<RESULT>, RESULT> list(Class<RESULT> cl) {
 		if (cl == null) {
 			throw new IllegalArgumentException("cl == null");
 		}
 		
 		final SharedSelectSource selectSource = new SharedSelectSource_Named(cl);
 
-		return new Classic_Collector_MultiResult<MultiCompiled<RESULT>, RESULT>(this, selectSource, ECollectionType.LIST, multiQueryCompiled());
+		return new Classic_Collector_MultiResult<MultiBuilt<RESULT>, RESULT>(this, selectSource, ECollectionType.LIST, multiQueryCompiled());
 	}
 
 	@Override
-	public <TYPE_RESULT> IClassicSingleWhereClauseBuilderNamed<SingleCompiled<TYPE_RESULT>, TYPE_RESULT> oneFrom(Class<TYPE_RESULT> cl) {
+	public <TYPE_RESULT> IClassicSingleWhereClauseBuilderNamed<SingleBuilt<TYPE_RESULT>, TYPE_RESULT> oneFrom(Class<TYPE_RESULT> cl) {
 		if (cl == null) {
 			throw new IllegalArgumentException("cl == null");
 		}
 
 		final SharedSelectSource selectSource = new SharedSelectSource_Named(cl);
 		
-		return new ClassicSingleNamedResult<SingleCompiled<TYPE_RESULT>, TYPE_RESULT>(this, new CollectedQueryResult_Entity_Single(selectSource), singleQueryCompiled());
+		return new ClassicSingleNamedResult<SingleBuilt<TYPE_RESULT>, TYPE_RESULT>(this, new CollectedQueryResult_Entity_Single(selectSource), singleQueryCompiled());
 	}
 
 
 	@Override
-	public <TYPE_RESULT> IClassicSingleWhereClauseBuilderNamed<MultiCompiled<TYPE_RESULT>, TYPE_RESULT> listFrom(Class<TYPE_RESULT> cl) {
+	public <TYPE_RESULT> IClassicSingleWhereClauseBuilderNamed<MultiBuilt<TYPE_RESULT>, TYPE_RESULT> listFrom(Class<TYPE_RESULT> cl) {
 		if (cl == null) {
 			throw new IllegalArgumentException("cl == null");
 		}
@@ -128,7 +128,7 @@ final class ClassicSelect
 
 		final CollectedQueryResult_Entity_Multi result = new CollectedQueryResult_Entity_Multi(selectSource, ECollectionType.LIST);
 		
-		return new ClassicSingleNamedResult<MultiCompiled<TYPE_RESULT>, TYPE_RESULT>(this, result, multiQueryCompiled());
+		return new ClassicSingleNamedResult<MultiBuilt<TYPE_RESULT>, TYPE_RESULT>(this, result, multiQueryCompiled());
 	}
 
 
