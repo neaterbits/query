@@ -2,6 +2,8 @@ package com.neaterbits.query.sql.dsl.api;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
 
 import com.neaterbits.query.util.java8.Coll8;
 
@@ -107,24 +109,60 @@ final class CompiledQuery {
 	CompiledConditions getHaving() {
 		return resultProcessing.getHaving().getConditions();
 	}
-
+	
 	static <MODEL> CompiledQuery compile(Collector_Query<MODEL> collector) throws CompileException {
+		final CompiledQuery ret;
+
+		switch (collector.getQueryStyle()) {
+		case CLASSIC:
+			ret = compileClassic(collector);
+			break;
+
+		case SHORT:
+			ret = compileShort(collector);
+			break;
+			
+		default:
+			throw new UnsupportedOperationException("Unknown query style: " + collector.getQueryStyle());
+		}
+		
+		return ret;
+	}
+	
+	// Classic-query
+	static <MODEL> CompiledQuery compileClassic(Collector_Query<MODEL> collector) throws CompileException {
+		final CollectedSelectSource sources = collector.getSources();
+		final CompiledSelectSources<?> compiledSources = compileSelectSources(sources);
+
+		final SelectSourceLookup lookup = new ClassicSelectSourceLookup(compiledSources);
+		
+		return compile(collector, lookup);
+	}
+
+	// short-model, we do not have the select-sources available, so we must look them up as we go
+	static <MODEL> CompiledQuery compileShort(Collector_Query<MODEL> collector) throws CompileException {
+		final CollectedSelectSource sources = collector.getSources();
+		final CompiledSelectSources<?> compiledSources = compileSelectSources(sources);
+
+		final SelectSourceLookup lookup = null;
+		
+		
+		return compile(collector, lookup);
+	}
+	
+	private static <MODEL> CompiledQuery compile(Collector_Query<MODEL> collector, SelectSourceLookup selectSources) throws CompileException {
 		if (collector == null) {
 			throw new IllegalArgumentException("collector == null");
 		}
 		
-		final CompiledGetterSetterCache cache = new CompiledGetterSetterCache();
-		final CollectedSelectSource sources = collector.getSources();
-
-		final CompiledSelectSources<?> compiledSources = compileSelectSources(sources);
-		final CompiledQueryResult compiledQueryResult = compileQueryResult(collector, compiledSources, cache);
+		final CompiledQueryResult compiledQueryResult = compileQueryResult(collector, selectSources);
 
 		final CompiledConditions compiledConditions;
 		
 		// Check all clauses etc
 		final int conditionsMaxDepth;
 		if (collector.getClauses() != null && !collector.getClauses().getConditions().isEmpty()) {
-			compiledConditions = compileConditions(collector.getClauses(), compiledSources, cache, 0);
+			compiledConditions = compileConditions(collector.getClauses(), selectSources, 0);
 			
 			conditionsMaxDepth = compiledConditions.getMaxDepth();
 		}
@@ -137,7 +175,7 @@ final class CompiledQuery {
 		final CompiledJoins joins;
 
 		if (collector.getJoins() != null) {
-			joins = compileJoins(collector.getJoins(), compiledSources, cache);
+			joins = compileJoins(collector.getJoins(), selectSources);
 		}
 		else {
 			joins = null;
@@ -151,8 +189,7 @@ final class CompiledQuery {
 			resultProcessing = compileResultProcessing(
 				collector,
 				((CompiledQueryResult_Mapped)compiledQueryResult).getMappings(),
-				compiledSources,
-				cache);
+				selectSources);
 		}
 		else {
 			if (collector.getGroupBy() != null) {
@@ -165,7 +202,7 @@ final class CompiledQuery {
 
 		return new CompiledQuery(
 				compiledQueryResult,
-				compiledSources,
+				selectSources.compile(),
 				joins,
 				compiledConditions,
 				conditionsMaxDepth,
@@ -201,8 +238,7 @@ final class CompiledQuery {
 		R compileResultProcessingFields(
 			T fields,
 			CompiledMappings mappings,
-			CompiledSelectSources<?> sources,
-			CompiledGetterSetterCache cache,
+			SelectSourceLookup sources,
 			ResultProcessingFieldsCtor<T, R> ctor) throws CompileException {
 		
 		final int [] columns;
@@ -216,8 +252,9 @@ final class CompiledQuery {
 			columns = new int[getters.length];
 			
 			for (int i = 0; i < getters.length; ++ i) {
-				final CompiledGetterFunction getter = (CompiledGetterFunction)cache.findGetterFromTypes(sources.getTypes(), getters[i].getter);
 				
+				final CompiledGetterFunction getter = sources.findGetter(getters[i].getter);
+						
 				columns[i] = getProcessingResultIndexStartingAtOne(mappings, getter);
 			}
 		}
@@ -236,8 +273,7 @@ final class CompiledQuery {
 	private static <MODEL> CompiledResultProcessing compileResultProcessing(
 					Collector_Query<MODEL> collector,
 					CompiledMappings mappings,
-					CompiledSelectSources<?> sources,
-					CompiledGetterSetterCache cache) throws CompileException {
+					SelectSourceLookup sources) throws CompileException {
 
 		final CompiledResultProcessing ret;
 		
@@ -247,12 +283,12 @@ final class CompiledQuery {
 		final CompiledOrderBy compiledOrderBy;
 		
 		if (collector.getGroupBy() != null) {
-			compiledGroupBy = compileResultProcessingFields(collector.getGroupBy(), mappings, sources, cache, (fields, indices, getters) -> new CompiledGroupBy(indices, getters) );
+			compiledGroupBy = compileResultProcessingFields(collector.getGroupBy(), mappings, sources, (fields, indices, getters) -> new CompiledGroupBy(indices, getters) );
 
 			final Collector_Clause having = collector.getGroupBy().getHaving();
 			
 			if (having != null) {
-				final CompiledConditions havingConditions = compileConditions(having, sources, cache, 0);
+				final CompiledConditions havingConditions = compileConditions(having, sources,0);
 				
 				compiledHaving = new CompiledHaving(havingConditions);
 				
@@ -264,7 +300,7 @@ final class CompiledQuery {
 		
 		if (collector.getOrderBy() != null) {
 			
-			compiledOrderBy = compileResultProcessingFields(collector.getOrderBy(), mappings, sources, cache, (fields, indices, getters) -> new CompiledOrderBy(indices, getters, fields.getSortOrders()));
+			compiledOrderBy = compileResultProcessingFields(collector.getOrderBy(), mappings, sources, (fields, indices, getters) -> new CompiledOrderBy(indices, getters, fields.getSortOrders()));
 		}
 		else {
 			compiledOrderBy = null;
@@ -281,7 +317,7 @@ final class CompiledQuery {
 	}
 	
 	
-	private static <MODEL> CompiledQueryResult compileQueryResult(Collector_Query<MODEL> collector, CompiledSelectSources<?> compiledSources, CompiledGetterSetterCache cache) throws CompileException {
+	private static <MODEL> CompiledQueryResult compileQueryResult(Collector_Query<MODEL> collector, SelectSourceLookup sourceLookup) throws CompileException {
 		
 		final CompiledQueryResult ret;
 		
@@ -291,12 +327,7 @@ final class CompiledQuery {
 			
 			if (collector.getMappings() != null) {
 				
-				final CompiledMappings compiledMappings = compileMappings(
-						result.getType(),
-						collector.getMappings(),
-						collector.getSources(),
-						compiledSources,
-						cache);
+				final CompiledMappings compiledMappings = compileMappings(result.getType(), collector.getMappings(), sourceLookup);
 				
 				ret = new CompiledQueryResult_Mapped((CollectedQueryResult_Mapped)result, compiledMappings);
 			}
@@ -308,7 +339,7 @@ final class CompiledQuery {
 			ret = new CompiledQueryResult_Entity((CollectedQueryResult_Entity)result);
 		}
 		else if (result instanceof QueryResultAggregate) {
-			ret = compileAggregateQueryResult((QueryResultAggregate)result, compiledSources, cache);
+			ret = compileAggregateQueryResult((QueryResultAggregate)result, sourceLookup);
 		}
 		else {
 			throw new UnsupportedOperationException("Unknown query result type " + result.getClass().getName());
@@ -317,15 +348,9 @@ final class CompiledQuery {
 		return ret;
 	}
 	
-	private static CompiledQueryResult_Aggregate compileAggregateQueryResult(
-			QueryResultAggregate result,
-			CompiledSelectSources<?> compiledSelectSources,
-			CompiledGetterSetterCache cache) throws CompileException {
+	private static CompiledQueryResult_Aggregate compileAggregateQueryResult(QueryResultAggregate result, SelectSourceLookup sources) throws CompileException {
 
-		final CompiledFieldReference fieldReference = compiledSelectSources.makeFieldReference(
-				result,
-				result.getGetter(),
-				cache);
+		final CompiledFieldReference fieldReference = sources.makeFieldReference(result, result.getGetter());
 
 		return new CompiledQueryResult_Aggregate(result, fieldReference);
 	}
@@ -334,21 +359,14 @@ final class CompiledQuery {
 	private static CompiledMappings compileMappings(
 			Class<?> resultType,
 			MappingCollector mappingCollector,
-			CollectedSelectSource selectSource,
-			CompiledSelectSources<?> compiledSelectSources,
-			CompiledGetterSetterCache cache) throws CompileException {
+			SelectSourceLookup sources) throws CompileException {
 
 		final List<CollectedMapping> collectedMappings = mappingCollector.getCollectedMappings();
 		final List<CompiledMapping> compiledMappings = new ArrayList<>(collectedMappings.size());
 
 		for (CollectedMapping collected : collectedMappings) {
 
-			final CompiledMapping compiled = compileMapping(
-					resultType,
-					collected,
-					selectSource,
-					compiledSelectSources,
-					cache);
+			final CompiledMapping compiled = compileMapping(resultType, collected, sources);
 
 			compiledMappings.add(compiled);
 		}
@@ -359,20 +377,15 @@ final class CompiledQuery {
 	private static CompiledMapping compileMapping(
 			Class<?> resultType,
 			CollectedMapping collected,
-			CollectedSelectSource selectSource,
-			CompiledSelectSources<?> compiledSelectSources,
-			CompiledGetterSetterCache cache) throws CompileException {
+			SelectSourceLookup sources) throws CompileException {
 
-		final CompiledSetter mapSetter = cache.compileSetterUntyped(resultType, collected.getSetter());
+		final CompiledSetter mapSetter = sources.compileSetterUntyped(resultType, collected.getSetter());
 		
 		if (mapSetter == null) {
 			throw new CompileException("Unknown mapping setter " + collected);
 		}
 		
-		final CompiledFieldReference fieldReference = compiledSelectSources.makeFieldReference(
-				collected,
-				collected.getGetter(),
-				cache);
+		final CompiledFieldReference fieldReference = sources.makeFieldReference(collected, collected.getGetter());
 
 		return new CompiledMapping(fieldReference, mapSetter);
 	}
@@ -430,7 +443,7 @@ final class CompiledQuery {
 		return compiled;
 	}
 
-	private static CompiledJoins compileJoins(Collector_Joins collector, CompiledSelectSources<?> sources, CompiledGetterSetterCache cache) throws CompileException {
+	private static CompiledJoins compileJoins(Collector_Joins collector, SelectSourceLookup sources) throws CompileException {
 		
 		final List<CollectedJoin> collected = collector.getJoins();
 		
@@ -499,15 +512,15 @@ final class CompiledQuery {
 
 					final CollectedJoinCondition_Comparison joinConditionComparison = (CollectedJoinCondition_Comparison)joinCondition;
 
-					final CompiledFieldReference left = sources.makeFieldReference(joinCondition, joinConditionComparison.getLeftGetter(), cache);
-					final CompiledFieldReference right = sources.makeFieldReference(joinCondition, joinConditionComparison.getRightGetter(), cache);
+					final CompiledFieldReference left = sources.makeFieldReference(joinCondition, joinConditionComparison.getLeftGetter());
+					final CompiledFieldReference right = sources.makeFieldReference(joinCondition, joinConditionComparison.getRightGetter());
 					
 					compiledJoinCondition = new CompiledJoinCondition_Comparison(joinConditionComparison, left, right);
 				}
 				else if (joinCondition instanceof CollectedJoinCondition_OneToMany) {
 
 					final CollectedJoinCondition_OneToMany oneToMany = (CollectedJoinCondition_OneToMany)joinCondition;
-					final CompiledFieldReference collection = sources.makeFieldReference(joinCondition, oneToMany.getCollectionGetter(), cache);
+					final CompiledFieldReference collection = sources.makeFieldReference(joinCondition, oneToMany.getCollectionGetter());
 					
 					final TypeMapSource left;
 					final TypeMapSource right;
@@ -551,7 +564,7 @@ final class CompiledQuery {
 		return ret;
 	}
 	
-	private static CompiledConditions compileConditions(Collector_Clause clauses, CompiledSelectSources<?> sources, CompiledGetterSetterCache cache, int level)
+	private static CompiledConditions compileConditions(Collector_Clause clauses, SelectSourceLookup sources, int level)
 		throws CompileException {
 
 		final List<CollectedCondition> list = clauses.getConditions();
@@ -566,20 +579,20 @@ final class CompiledQuery {
 		
 		if (num == 1) {
 			
-			final CompiledCondition singleCondition = compileCondition(list.get(0), sources, cache, level);
+			final CompiledCondition singleCondition = compileCondition(list.get(0), sources, level);
 			
 			ret = new CompiledConditions_Single(singleCondition);
 		}
 		else {
 			final List<CompiledCondition> conditions = new ArrayList<>(num);
 
-			conditions.add(compileCondition(list.get(0), sources, cache, level));
+			conditions.add(compileCondition(list.get(0), sources, level));
 
 			for (int i = 1; i < num; ++ i) {
 
 				final CollectedCondition condition = list.get(i);
 
-				conditions.add(compileCondition(condition, sources, cache, level));
+				conditions.add(compileCondition(condition, sources, level));
 			}
 			
 			switch (clauses.getConditionsType()) {
@@ -599,7 +612,7 @@ final class CompiledQuery {
 		return ret;
 	}
 
-	private static CompiledCondition compileCondition(CollectedCondition condition, CompiledSelectSources<?> sources, CompiledGetterSetterCache cache, int level) throws CompileException {
+	private static CompiledCondition compileCondition(CollectedCondition condition, SelectSourceLookup sources, int level) throws CompileException {
 		
 		if (condition == null) {
 			throw new IllegalArgumentException("condition == null");
@@ -608,10 +621,10 @@ final class CompiledQuery {
 		final CompiledCondition ret;
 		
 		if (condition instanceof CollectedCondition_NonNested) {
-			ret = compileNonNestedCondition((CollectedCondition_NonNested)condition, sources, cache);
+			ret = compileNonNestedCondition((CollectedCondition_NonNested)condition, sources);
 		}
 		else if (condition instanceof CollectedCondition_Nested) {
-			ret = compileNestedCondition((CollectedCondition_Nested)condition, sources, cache, level);
+			ret = compileNestedCondition((CollectedCondition_Nested)condition, sources, level);
 		}
 		else {
 			throw new UnsupportedOperationException("unknown condition type " + condition);
@@ -621,12 +634,12 @@ final class CompiledQuery {
 	}
 
 
-	private static CompiledCondition compileNestedCondition(CollectedCondition_Nested condition, CompiledSelectSources<?> sources, CompiledGetterSetterCache cache, int level) throws CompileException {
+	private static CompiledCondition compileNestedCondition(CollectedCondition_Nested condition, SelectSourceLookup sources, int level) throws CompileException {
 
 		final CompiledConditionNested ret;
 		
 		// Compiled recursively
-		final CompiledConditions compiled = compileConditions(condition.getCollected().clauseCollector, sources, cache, level + 1);
+		final CompiledConditions compiled = compileConditions(condition.getCollected().clauseCollector, sources, level + 1);
 		
 		ret = new CompiledConditionNested(compiled);
 		
@@ -634,9 +647,9 @@ final class CompiledQuery {
 	}
 
 	
-	private static CompiledCondition compileNonNestedCondition(CollectedCondition_NonNested condition, CompiledSelectSources<?> sources, CompiledGetterSetterCache cache) throws CompileException {
+	private static CompiledCondition compileNonNestedCondition(CollectedCondition_NonNested condition, SelectSourceLookup sources) throws CompileException {
 		
-		final CompiledFieldReference lhs = sources.makeFieldReference(condition, condition.getGetter(), cache);
+		final CompiledFieldReference lhs = sources.makeFieldReference(condition, condition.getGetter());
 		
 		ConditionValue value;
 		
@@ -648,7 +661,7 @@ final class CompiledQuery {
 				
 				final Getter valueGetter = ((ConditionValue_Getter)value).getGetter();
 				
-				final CompiledFieldReference rhs = sources.makeFieldReference(value, valueGetter, cache);
+				final CompiledFieldReference rhs = sources.makeFieldReference(value, valueGetter);
 				
 				value = new ConditionValue_FieldRerefence(rhs);
 			}

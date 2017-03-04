@@ -38,8 +38,8 @@ class QueryCollectorImpl<MODEL> extends Collector_Query<MODEL> {
 	private int [] orderByColumns;
 	
 	
-	QueryCollectorImpl(ModelCompiler<MODEL> modelCompiler, CollectedQueryResult result) {
-		super(modelCompiler);
+	QueryCollectorImpl(EQueryStyle queryStyle, ModelCompiler<MODEL> modelCompiler, CollectedQueryResult result) {
+		super(queryStyle, modelCompiler);
 
 		if (result != null) {
 			setResult(result);

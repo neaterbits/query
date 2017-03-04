@@ -73,7 +73,7 @@ abstract class Short_Collector_Result_Undecided_Base<
 	private final ModelCompiler<MODEL> modelCompiler;
 
 	protected Short_Collector_Result_Undecided_Base(SharedSelectSource selectSource, ModelCompiler<MODEL> modelCompiler) {
-		super(new QueryCollectorImpl<MODEL>(modelCompiler, null), new Collector_Clause(EConditionsClause.WHERE, ConditionsType.SINGLE));
+		super(new QueryCollectorImpl<MODEL>(EQueryStyle.CLASSIC, modelCompiler, null), new Collector_Clause(EConditionsClause.WHERE, ConditionsType.SINGLE));
 		
 		if (selectSource == null) {
 			throw new IllegalArgumentException("selectSource == null");

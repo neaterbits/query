@@ -10,6 +10,8 @@ package com.neaterbits.query.sql.dsl.api;
  */
 
 abstract class Collector_Query<MODEL> {
+	
+	private final EQueryStyle queryStyle;
 	private final ModelCompiler<MODEL> modelCompiler;
 
 	abstract CollectedQueryResult getResult();
@@ -43,14 +45,24 @@ abstract class Collector_Query<MODEL> {
 	abstract Collected_OrderBy getOrderBy();
 	
 	
-	Collector_Query(ModelCompiler<MODEL> modelCompiler) {
+	Collector_Query(EQueryStyle queryStyle, ModelCompiler<MODEL> modelCompiler) {
+		
+		if (queryStyle == null) {
+			throw new IllegalArgumentException("queryStyle == null");
+		}
+		
 		if (modelCompiler == null) {
 			throw new IllegalArgumentException("modelCompiler == null");
 		}
+		
 
+		this.queryStyle = queryStyle;
 		this.modelCompiler = modelCompiler;
 	}
 
+	final EQueryStyle getQueryStyle() {
+		return queryStyle;
+	}
 
 	final ModelCompiler<MODEL> getModelCompiler() {
 		return modelCompiler;

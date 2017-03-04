@@ -25,7 +25,7 @@ abstract class Classic_Collector_SelectSource<
 	abstract CollectedQueryResult getCollectedQueryResult();
 					
 	Classic_Collector_SelectSource(CollectedQueryResult result, ModelCompiler<MODEL> modelCompiler) {
-		super(new QueryCollectorImpl<MODEL>(modelCompiler, result));
+		super(new QueryCollectorImpl<MODEL>(EQueryStyle.CLASSIC, modelCompiler, result));
 	}
 	
 	

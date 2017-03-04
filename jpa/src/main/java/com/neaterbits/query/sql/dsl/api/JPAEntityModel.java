@@ -3,6 +3,7 @@ package com.neaterbits.query.sql.dsl.api;
 import java.lang.reflect.AccessibleObject;
 import java.lang.reflect.Member;
 import java.lang.reflect.Method;
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.Column;
@@ -54,6 +55,21 @@ public class JPAEntityModel implements EntityModel<
 	}
 
 	
+	
+
+	@Override
+	public Set<Class<?>> getAllManagedTypes() {
+		
+		final Set<EntityType<?>> entities = metamodel.getEntities();
+		final Set<Class<?>> ret = new HashSet<>(entities.size());
+		
+		for (EntityType<?> entity : entities) {
+			ret.add(entity.getJavaType());
+		}
+		
+		return ret;
+	}
+
 
 	@SuppressWarnings({"unchecked", "rawtypes"})
 	@Override

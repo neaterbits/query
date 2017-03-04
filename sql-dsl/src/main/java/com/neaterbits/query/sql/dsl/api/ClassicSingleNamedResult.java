@@ -16,7 +16,7 @@ final class ClassicSingleNamedResult<MODEL, RESULT>
 	}
 	
 	private static <M> Collector_Query<M> makeCollector(ModelCompiler<M> modelCompiler, CollectedQueryResult result) {
-		final Collector_Query<M> collector = new QueryCollectorImpl<>(modelCompiler, result);
+		final Collector_Query<M> collector = new QueryCollectorImpl<>(EQueryStyle.CLASSIC, modelCompiler, result);
 		
 		collector.setSources(new CollectedSelectSource_Named(new Class<?> [] { result.getType() }));
 		

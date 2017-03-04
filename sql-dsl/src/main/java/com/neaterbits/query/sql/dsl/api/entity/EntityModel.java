@@ -3,6 +3,7 @@ package com.neaterbits.query.sql.dsl.api.entity;
 import java.lang.reflect.Member;
 import java.lang.reflect.Method;
 import java.util.Collection;
+import java.util.Set;
 
 public interface EntityModel<MANAGED, EMBEDDED, IDENTIFIABLE, ATTRIBUTE, ATTRIBUTE_COLL extends Collection<ATTRIBUTE>> {
 
@@ -14,6 +15,8 @@ public interface EntityModel<MANAGED, EMBEDDED, IDENTIFIABLE, ATTRIBUTE, ATTRIBU
 	 */
 	
 
+	Set<Class<?>> getAllManagedTypes(); 
+	
 	MANAGED getManaged(Class<?> type);
 	
 	Class<?> getJavaType(MANAGED managed);

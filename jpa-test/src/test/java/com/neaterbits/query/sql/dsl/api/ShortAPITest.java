@@ -5,6 +5,7 @@ import static com.neaterbits.query.sql.dsl.api.IShortSelect.one;
 import static com.neaterbits.query.sql.dsl.api.IShortSelect.list;
 
 import java.util.function.Consumer;
+import java.util.function.Function;
 
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
@@ -48,8 +49,9 @@ public class ShortAPITest extends BaseSQLAPITest {
 				.store(b);
 	}
 
+	/*
 	private static final IShortPrepared prepared = IShortPrepared.get(jpqlJPA);
-
+	
 	private static final SinglePrepared<Company>
 			acmeQuery = prepared
 					.one(Company.class)
@@ -63,7 +65,23 @@ public class ShortAPITest extends BaseSQLAPITest {
 			.where(Company::getName).startsWith("Acme")
 			
 			.compile().prepare(jpqlJPA);
+	*/
 	
+
+	@Test
+    public void testLambdaIdentities() {
+		
+		final Function<Company, String> lambda1 = Company::getName;
+		final Function<Company, String> lambda2 = Company::getName;
+		
+		System.out.format("Lambda 1: %08x\n", System.identityHashCode(lambda1));
+		System.out.format("Lambda 2: %08x\n", System.identityHashCode(lambda2));
+		
+		System.out.println("equals: " + lambda1.equals(lambda2));
+		System.out.println("hashCode: " + lambda1.hashCode() + "/" + lambda2.hashCode());
+	}
+	
+	/*
 	@Test
     public void testPrepared() {
 		
@@ -73,6 +91,7 @@ public class ShortAPITest extends BaseSQLAPITest {
 		assertThat(c).isNull();
 		
 	}
+	*/
 	
 	@Test
     public void testNameBasedMapped() {
