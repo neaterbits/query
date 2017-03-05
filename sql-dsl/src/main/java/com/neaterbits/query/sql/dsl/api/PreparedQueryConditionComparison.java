@@ -5,11 +5,11 @@ import java.util.function.Consumer;
 
 final class PreparedQueryConditionComparison extends PreparedQueryCondition {
 
-	private final List<FunctionBase> functions;
+	private final List<FunctionCalcBase> functions;
 	private final FieldReference lhs;
 	private final PreparedQueryComparisonRHS rhs;
 	
-	PreparedQueryConditionComparison(List<FunctionBase> functions, FieldReference lhs, PreparedQueryComparisonRHS rhs) {
+	PreparedQueryConditionComparison(List<FunctionCalcBase> functions, FieldReference lhs, PreparedQueryComparisonRHS rhs) {
 		
 		
 		if (lhs == null) {
@@ -26,7 +26,7 @@ final class PreparedQueryConditionComparison extends PreparedQueryCondition {
 	}
 	
 
-	List<FunctionBase> getLhsFunctions() {
+	List<FunctionCalcBase> getLhsFunctions() {
 		return functions;
 	}
 

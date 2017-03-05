@@ -27,7 +27,7 @@ final class AdhocFunctions<
 	private ScalarType scalarType; 
 	private final IAdhocFunctions_Callback<MODEL, RESULT, ?> listener;
 		
-	private final List<FunctionBase> functions;
+	private final List<FunctionCalcBase> functions;
 
 
 	AdhocFunctions(ConditionsType conditionsType, IAdhocFunctions_Callback<MODEL, RESULT, ?> listener) {
@@ -63,7 +63,7 @@ final class AdhocFunctions<
 	
 	Object applyTo(Object value) {
 		
-		for (FunctionBase function : functions) {
+		for (FunctionCalcBase function : functions) {
 			value = function.applyTo(scalarType, value);
 		}
 		
@@ -80,7 +80,7 @@ final class AdhocFunctions<
 		return conditionsType;
 	}
 
-	List<FunctionBase> getFunctions() {
+	List<FunctionCalcBase> getFunctions() {
 		return functions;
 	}
 	
@@ -88,7 +88,7 @@ final class AdhocFunctions<
 	/**************************************************************************
 	** Helpers
 	**************************************************************************/
-	private void add(FunctionBase function) {
+	private void add(FunctionCalcBase function) {
 		if (function == null) {
 			throw new IllegalArgumentException("function == null");
 		}

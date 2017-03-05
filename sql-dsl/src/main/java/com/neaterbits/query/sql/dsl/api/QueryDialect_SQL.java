@@ -48,7 +48,7 @@ abstract class QueryDialect_SQL extends QueryDialect_Base {
 	 * Get name of function as appears in query string
 	 * @return
 	 */
-	String getFunctionName(FunctionBase function) {
+	String getFunctionName(FunctionCalcBase function) {
 		// default function names
 		return function.visit(functionToNameVisitor, null);
 	}

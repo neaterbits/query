@@ -147,7 +147,7 @@ abstract class AdhocQueryBase<MODEL, QUERY extends AdhocQueryBase<MODEL, QUERY>>
 	}
 	
 	@Override
-	public FunctionBase getMappingFunction(QUERY query, int mappingIdx, int functionIdx) {
+	public FunctionCalcBase getMappingFunction(QUERY query, int mappingIdx, int functionIdx) {
 		throw new UnsupportedOperationException("TODO: support mapping");
 	}
 

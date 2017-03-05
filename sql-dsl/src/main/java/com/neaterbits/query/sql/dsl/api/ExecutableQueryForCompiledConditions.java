@@ -116,8 +116,8 @@ final class ExecutableQueryForCompiledConditions
 
 
 	@Override
-	public FunctionBase getConditionFunction(CompiledConditions conditions, int level, int[] conditionIndices, int functionIdx) {
-		return getComparisonCondition(conditions, level, conditionIndices).getFunctionAt(functionIdx);
+	public FunctionCalcBase getConditionFunction(CompiledConditions conditions, int level, int[] conditionIndices, int functionIdx) {
+		return (FunctionCalcBase)getComparisonCondition(conditions, level, conditionIndices).getFunctionAt(functionIdx);
 	}
 	
 	@Override

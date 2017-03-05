@@ -45,7 +45,7 @@ final class PreparedQueryConditionsBuilderORM extends PreparedQueryConditionsBui
 		return new PreparedQueryConditionsBuilderORM(dialect, conditionsClause, atRoot);
 	}
 
-	private void resolveFunction(FunctionBase function, int idx, QueryBuilder sb, BiConsumer<Integer, QueryBuilder> appendNext) {
+	private void resolveFunction(FunctionCalcBase function, int idx, QueryBuilder sb, BiConsumer<Integer, QueryBuilder> appendNext) {
 		
 		final String functionName = dialect.getFunctionName(function);
 		
@@ -165,7 +165,7 @@ final class PreparedQueryConditionsBuilderORM extends PreparedQueryConditionsBui
 				final PreparedQueryConditionComparison comparison = (PreparedQueryConditionComparison)condition;
 
 				// We must add any functions
-				final List<FunctionBase> funcs = comparison.getLhsFunctions();
+				final List<FunctionCalcBase> funcs = comparison.getLhsFunctions();
 				
 				if (funcs != null) {
 					// recursively resolve so that we nest output
@@ -190,11 +190,11 @@ final class PreparedQueryConditionsBuilderORM extends PreparedQueryConditionsBui
 
 	protected class AppendNextFunction implements BiConsumer<Integer, QueryBuilder> {
 
-		private final List<FunctionBase> funcs;
+		private final List<FunctionCalcBase> funcs;
 		private final PreparedQueryConditionComparison comparison;
 		private final int num;
 		
-		AppendNextFunction(List<FunctionBase> funcs, PreparedQueryConditionComparison comparison) {
+		AppendNextFunction(List<FunctionCalcBase> funcs, PreparedQueryConditionComparison comparison) {
 
 			if (funcs == null) {
 				throw new IllegalArgumentException("funcs == null");
@@ -224,7 +224,7 @@ final class PreparedQueryConditionsBuilderORM extends PreparedQueryConditionsBui
 				// resolve next
 				final int nextIdx = idx + 1;
 				
-				final FunctionBase func = funcs.get(nextIdx);
+				final FunctionCalcBase func = funcs.get(nextIdx);
 				
 				// resolve next call
 				resolveFunction(func, nextIdx, sb, this);

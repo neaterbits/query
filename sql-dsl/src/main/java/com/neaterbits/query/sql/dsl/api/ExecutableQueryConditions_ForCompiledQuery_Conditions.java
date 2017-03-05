@@ -57,7 +57,7 @@ final class ExecutableQueryConditions_ForCompiledQuery_Conditions implements Exe
 	}
 
 	@Override
-	public FunctionBase getConditionFunction(CompiledQuery query, int level, int[] conditionIndices, int functionIdx) {
+	public FunctionCalcBase getConditionFunction(CompiledQuery query, int level, int[] conditionIndices, int functionIdx) {
 		return forConditions.getConditionFunction(query.getConditions(), level, conditionIndices, functionIdx);
 	}
 

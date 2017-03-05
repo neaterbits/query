@@ -337,12 +337,12 @@ interface ExecutableQuery<QUERY> {
 	
 	int getRootConditionNumFunctions(QUERY query, int conditionIdx);
 
-	FunctionBase getRootConditionFunction(QUERY query, int conditionIdx, int functionIdx);
+	FunctionCalcBase getRootConditionFunction(QUERY query, int conditionIdx, int functionIdx);
 	
-	default List<FunctionBase> getRootConditionFunctions(QUERY query, int conditionIdx) {
+	default List<FunctionCalcBase> getRootConditionFunctions(QUERY query, int conditionIdx) {
 		final int numFunctions = getRootConditionNumFunctions(query, conditionIdx);
 		
-		final List<FunctionBase> ret;
+		final List<FunctionCalcBase> ret;
 		
 		if (numFunctions == 0) {
 			ret = null;
@@ -352,7 +352,7 @@ interface ExecutableQuery<QUERY> {
 		
 			for (int i = 0; i < numFunctions; ++ i) {
 				
-				final FunctionBase function = getRootConditionFunction(query, conditionIdx, i);
+				final FunctionCalcBase function = getRootConditionFunction(query, conditionIdx, i);
 				
 				if (function == null) {
 					throw new IllegalStateException("function == null");

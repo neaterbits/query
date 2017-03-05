@@ -48,16 +48,16 @@ interface ExecutableQueryConditions<QUERY> {
 
 	int getConditionNumFunctions(QUERY query, int level, int [] conditionIndices);
 
-	FunctionBase getConditionFunction(QUERY query, int level, int [] conditionIndices, int functionIdx);
+	FunctionCalcBase getConditionFunction(QUERY query, int level, int [] conditionIndices, int functionIdx);
 
 	Method getForDebugConditionLhsMethod(QUERY query, int level, int [] conditionIndices);
 	
 	String getForDebugConditionValue(QUERY query, int level, int [] conditionIndices);
 	
-	default List<FunctionBase> getConditionFunctions(QUERY query, int level, int [] conditionIndices) {
+	default List<FunctionCalcBase> getConditionFunctions(QUERY query, int level, int [] conditionIndices) {
 		final int numFunctions = getConditionNumFunctions(query, level, conditionIndices);
 		
-		final List<FunctionBase> ret;
+		final List<FunctionCalcBase> ret;
 		
 		if (numFunctions == 0) {
 			ret = null;
@@ -68,7 +68,7 @@ interface ExecutableQueryConditions<QUERY> {
 			
 			for (int i = 0; i < numFunctions; ++ i) {
 				
-				final FunctionBase function = getConditionFunction(query, level, conditionIndices, i);
+				final FunctionCalcBase function = getConditionFunction(query, level, conditionIndices, i);
 				
 				if (function == null) {
 					throw new IllegalStateException("function == null");

@@ -294,13 +294,13 @@ abstract class AdhocQuery_Named<MODEL, RESULT>
 	}
 
 	@Override
-	public final FunctionBase getRootConditionFunction(AdhocQuery_Named<MODEL, RESULT> query, int conditionIdx, int functionIdx) {
+	public final FunctionCalcBase getRootConditionFunction(AdhocQuery_Named<MODEL, RESULT> query, int conditionIdx, int functionIdx) {
 		throw new UnsupportedOperationException("TODO");
 	}
 
 	
 	@Override
-	public final List<FunctionBase> getRootConditionFunctions(AdhocQuery_Named<MODEL, RESULT> query, int conditionIdx) {
+	public final List<FunctionCalcBase> getRootConditionFunctions(AdhocQuery_Named<MODEL, RESULT> query, int conditionIdx) {
 		throw new UnsupportedOperationException("TODO");
 	}
 
@@ -377,12 +377,12 @@ abstract class AdhocQuery_Named<MODEL, RESULT>
 	}
 
 	@Override
-	public final FunctionBase getConditionFunction(AdhocQuery_Named<MODEL, RESULT> query, int level, int[] conditionIndices, int functionIdx) {
+	public final FunctionCalcBase getConditionFunction(AdhocQuery_Named<MODEL, RESULT> query, int level, int[] conditionIndices, int functionIdx) {
 		throw new UnsupportedOperationException("TODO");
 	}
 
 	@Override
-	public final List<FunctionBase> getConditionFunctions(AdhocQuery_Named<MODEL, RESULT> query, int level, int[] conditionIndices) {
+	public final List<FunctionCalcBase> getConditionFunctions(AdhocQuery_Named<MODEL, RESULT> query, int level, int[] conditionIndices) {
 		throw new UnsupportedOperationException("TODO");
 	}
 

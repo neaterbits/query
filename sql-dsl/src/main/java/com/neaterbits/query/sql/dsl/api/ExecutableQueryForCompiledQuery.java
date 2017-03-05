@@ -441,8 +441,8 @@ final class ExecutableQueryForCompiledQuery extends ExecutableQueryForCompiledBa
 
 
 	@Override
-	public FunctionBase getRootConditionFunction(CompiledQuery query, int conditionIdx, int functionIdx) {
-		return getRootComparisonCondition(query, conditionIdx).getFunctionAt(functionIdx);
+	public FunctionCalcBase getRootConditionFunction(CompiledQuery query, int conditionIdx, int functionIdx) {
+		return (FunctionCalcBase)getRootComparisonCondition(query, conditionIdx).getFunctionAt(functionIdx);
 	}
 
 	@Override

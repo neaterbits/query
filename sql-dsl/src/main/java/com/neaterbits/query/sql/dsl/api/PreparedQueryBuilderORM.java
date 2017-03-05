@@ -630,7 +630,7 @@ final class PreparedQueryBuilderORM<MANAGED, EMBEDDED, IDENTIFIABLE, ATTRIBUTE, 
 			final EClauseOperator operator = q.getRootConditionOperator(query, conditionIdx);
 
 			final FieldReference left = prepareFieldReference(q, query, lhs);
-			final List<FunctionBase> lhsFunctions = q.getRootConditionFunctions(query, conditionIdx);
+			final List<FunctionCalcBase> lhsFunctions = q.getRootConditionFunctions(query, conditionIdx);
 					
 
 			// Operator and value
@@ -682,7 +682,7 @@ final class PreparedQueryBuilderORM<MANAGED, EMBEDDED, IDENTIFIABLE, ATTRIBUTE, 
 				
 				final FieldReference left = prepareFieldReference(q, query, lhs);
 				
-				final List<FunctionBase> lhsFunctions = qc.getConditionFunctions(query, level, conditionIndices);
+				final List<FunctionCalcBase> lhsFunctions = qc.getConditionFunctions(query, level, conditionIndices);
 				
 
 				// Operator and value

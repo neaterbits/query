@@ -2,15 +2,23 @@ package com.neaterbits.query.sql.dsl.api;
 
 import java.util.function.Supplier;
 
-final class Collector_SharedFunctions_Alias<MODEL, RESULT, RET extends ISharedLogical_Base<MODEL, RESULT>,
+class Collector_SharedFunctions_Alias<
+		MODEL,
+		RESULT,
+		RET extends ISharedLogical_Base<MODEL, RESULT>,
 
-		INTEGER_CLAUSE extends ISharedCondition_Comparable_Common_Base<MODEL, RESULT, Integer, RET>,
-		LONG_CLAUSE extends ISharedCondition_Comparable_Common_Base<MODEL, RESULT, Long, RET>,
-		STRING_CLAUSE extends ISharedCondition_Comparable_String_Base<MODEL, RESULT, RET>>
+		// commented out since reused for mapping functions 
+		INTEGER_CLAUSE, // extends ISharedCondition_Comparable_Common_Base<MODEL, RESULT, Integer, RET>,
+		LONG_CLAUSE, // extends ISharedCondition_Comparable_Common_Base<MODEL, RESULT, Long, RET>,
+		STRING_CLAUSE // extends ISharedCondition_Comparable_String_Base<MODEL, RESULT, RET>
+		
+		>
 
 		extends Collector_SharedFunctions_Base<MODEL, RESULT, RET>
 
-		implements ISharedFunctions_Alias_Initial_And_NoParam<MODEL, RESULT, RET, INTEGER_CLAUSE, LONG_CLAUSE, STRING_CLAUSE> {
+		implements 
+		
+			ISharedFunctions_Alias_Initial_And_NoParam<MODEL, RESULT, RET, INTEGER_CLAUSE, LONG_CLAUSE, STRING_CLAUSE> {
 
 	private final ISharedCollector_Functions_Callback_Alias<MODEL, RESULT, RET> func;
 
@@ -24,15 +32,23 @@ final class Collector_SharedFunctions_Alias<MODEL, RESULT, RET extends ISharedLo
 	}
 
 	@SuppressWarnings("unchecked")
+	final <VALUE extends Comparable<?>, TYPE>  
+	
+		TYPE addAndReturnType(FunctionBase function, Supplier<? extends Comparable<?>> getter) {
+
+		add(function);
+
+		return (TYPE)func.onComparable(collect(), getter);
+	}
+	
 	private <VALUE extends Comparable<?>,
-			COMPARABLE extends ISharedCondition_Comparable_Common_Base<MODEL, RESULT, VALUE, RET>>  
+			COMPARABLE extends ISharedCondition_Comparable_Common_Base<MODEL, RESULT, VALUE, RET>>
+	
 	
 		COMPARABLE addAndReturnComparable(
 			Function_Arithmetic function, Supplier<? extends Comparable<?>> getter) {
 
-		add(function);
-
-		return (COMPARABLE)func.onComparable(collect(), getter);
+		return addAndReturnType(function, getter);
 	}
 
 	private ISharedCondition_Comparable_String_Base<MODEL, RESULT, RET> addAndReturnString(Function_String function, ISupplierString getter) {

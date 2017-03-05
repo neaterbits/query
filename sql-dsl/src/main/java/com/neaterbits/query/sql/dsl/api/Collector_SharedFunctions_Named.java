@@ -13,14 +13,17 @@ import java.util.function.Function;
  * @param <STRING_CLAUSE>
  */
 
-final class Collector_SharedFunctions_Named<
+class Collector_SharedFunctions_Named<
 				MODEL,
 				RESULT,
 				RET extends ISharedLogical_Base<MODEL, RESULT>,
 	
-				INTEGER_CLAUSE extends ISharedCondition_Comparable_Common_Base<MODEL, RESULT, Integer, RET>,
-				LONG_CLAUSE extends ISharedCondition_Comparable_Common_Base<MODEL, RESULT, Long, RET>,
-				STRING_CLAUSE extends ISharedCondition_Comparable_String_Base<MODEL, RESULT, RET>>
+				// commented out since reused for mapping functions 
+				INTEGER_CLAUSE, // extends ISharedCondition_Comparable_Common_Base<MODEL, RESULT, Integer, RET>,
+				LONG_CLAUSE, // extends ISharedCondition_Comparable_Common_Base<MODEL, RESULT, Long, RET>,
+				STRING_CLAUSE // extends ISharedCondition_Comparable_String_Base<MODEL, RESULT, RET>
+				
+				>
 
 	extends Collector_SharedFunctions_Base<MODEL, RESULT, RET>
 
@@ -37,17 +40,23 @@ final class Collector_SharedFunctions_Named<
 		
 		this.func = func;
 	}
-	
-	
+
 	@SuppressWarnings("unchecked")
+	final <VAL extends Comparable<?>, CLAUSE>
+	 	CLAUSE addAndReturnType(FunctionBase function, Function<?, ? extends Comparable<?>> getter) {
+	
+	add(function);
+
+	return (CLAUSE)func.onComparable(collect(), getter);
+}
+	
+	
 	private
 		<VAL extends Comparable<?>, CLAUSE extends ISharedCondition_Comparable_Common_Base<MODEL, RESULT, VAL, RET>>
 	
 		 CLAUSE addAndReturnComparable(Function_Arithmetic function, Function<?, ? extends Comparable<?>> getter) {
-		
-		add(function);
 
-		return (CLAUSE)func.onComparable(collect(), getter);
+		return addAndReturnComparable(function, getter);
 	}
 	
 	private ISharedCondition_Comparable_String_Base<MODEL, RESULT, RET> addAndReturnString(Function_String function, StringFunction<?> getter) {
