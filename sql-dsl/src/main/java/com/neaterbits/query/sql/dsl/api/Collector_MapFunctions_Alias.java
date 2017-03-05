@@ -17,10 +17,7 @@ final class Collector_MapFunctions_Alias<
 		INT_RET 	extends ISharedFunction_Next<MODEL, RESULT, RET>, 
 		LONG_RET 	extends ISharedFunction_Next<MODEL, RESULT, RET>,
 		BIGDECIMAL_RET extends ISharedFunction_Next<MODEL, RESULT, RET>,
-		
-		INTEGER_CLAUSE 	extends ISharedFunction_Next<MODEL, RESULT, RET>,
-		LONG_CLAUSE 	extends ISharedFunction_Next<MODEL, RESULT, RET>,
-		STRING_CLAUSE 	extends ISharedFunction_Next<MODEL, RESULT, RET>
+		STRING_RET 	extends ISharedFunction_Next<MODEL, RESULT, RET>
 	>
 
 
@@ -30,9 +27,9 @@ final class Collector_MapFunctions_Alias<
 
 		RET,
 
-		INTEGER_CLAUSE,
-		LONG_CLAUSE,
-		STRING_CLAUSE> 
+		INT_RET,
+		LONG_RET,
+		STRING_RET> 
 	
 	
 		implements IShared_Aggregate_All_Alias<SUM_LONG_RET, COUNT_RET, SHORT_RET, INT_RET, LONG_RET, BIGDECIMAL_RET>

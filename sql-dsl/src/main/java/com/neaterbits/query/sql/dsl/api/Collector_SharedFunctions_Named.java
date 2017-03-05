@@ -44,10 +44,10 @@ class Collector_SharedFunctions_Named<
 	final <VAL extends Comparable<?>, CLAUSE>
 	 	CLAUSE addAndReturnType(FunctionBase function, Function<?, ? extends Comparable<?>> getter) {
 	
-	add(function);
+		add(function);
 
-	return (CLAUSE)func.onComparable(collect(), getter);
-}
+		return (CLAUSE)func.onComparable(collect(), getter);
+	}
 	
 	
 	private

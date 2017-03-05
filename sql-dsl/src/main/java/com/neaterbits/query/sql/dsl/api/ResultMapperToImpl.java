@@ -18,8 +18,13 @@ final class ResultMapperToImpl<
 	private final Supplier<?> fromSupplier;
 	
 	private final IMappingCollector<MODEL, RESULT> impl;
+	private final CollectedFunctions collectedFunctions;
 
 	ResultMapperToImpl(Function<?, ?> fromGetter, IMappingCollector<MODEL, RESULT> impl) {
+		this(fromGetter, impl, null);
+	}
+	
+	ResultMapperToImpl(Function<?, ?> fromGetter, IMappingCollector<MODEL, RESULT> impl, CollectedFunctions collectedFunctions) {
 		
 		if (fromGetter == null) {
 			throw new IllegalArgumentException("fromGetter == null");
@@ -29,13 +34,17 @@ final class ResultMapperToImpl<
 			throw new IllegalArgumentException("impl == null");
 		}
 		
-		
 		this.fromGetter = fromGetter;
 		this.fromSupplier = null;
 		this.impl = impl;
+		this.collectedFunctions = collectedFunctions;
 	}
 
 	ResultMapperToImpl(Supplier<?> fromSupplier, IMappingCollector<MODEL, RESULT> impl) {
+		this(fromSupplier, impl, null);
+	}
+
+	ResultMapperToImpl(Supplier<?> fromSupplier, IMappingCollector<MODEL, RESULT> impl, CollectedFunctions collectedFunctions) {
 		
 		if (fromSupplier == null) {
 			throw new IllegalArgumentException("fromGetter == null");
@@ -44,11 +53,11 @@ final class ResultMapperToImpl<
 		if (impl == null) {
 			throw new IllegalArgumentException("impl == null");
 		}
-		
 
 		this.fromGetter = null;
 		this.fromSupplier = fromSupplier;
 		this.impl = impl;
+		this.collectedFunctions = collectedFunctions;
 	}
 
 	@Override
@@ -62,10 +71,10 @@ final class ResultMapperToImpl<
 		final MappingCollector mappingCollector = impl.getMappingCollector();
 
 		if (fromGetter != null) {
-			mappingCollector.add(this, fromGetter, setter);
+			mappingCollector.add(this, fromGetter, setter, collectedFunctions);
 		}
 		else if (fromSupplier != null) {
-			mappingCollector.add(this, fromSupplier, setter);
+			mappingCollector.add(this, fromSupplier, setter, collectedFunctions);
 		}
 		else {
 			throw new IllegalStateException("Neither getter nor supplier set");

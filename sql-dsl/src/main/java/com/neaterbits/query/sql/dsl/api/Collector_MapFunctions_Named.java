@@ -1,15 +1,17 @@
 package com.neaterbits.query.sql.dsl.api;
 
 final class Collector_MapFunctions_Named<
+
 			MODEL,
 			RESULT,
-			RET extends ISharedFunction_After<MODEL, RESULT>,
-			
-			// for sums, we return Long for short and int so must differentiate from other aggregate
-			// fuctions, this is because sum may wrap over limits of type
-			SUM_LONG_RET,
-			COUNT_RET,
-			
+
+			RET extends ISharedSelectSourceBuilder<MODEL, RESULT>,
+
+			// for sums, we return Long for short and so must differentiate from other aggregate
+			// functions, this is because sum may wrap over limits of type
+			SUM_LONG_RET	extends ISharedFunction_Next<MODEL, RESULT, RET>,
+			COUNT_RET		extends ISharedFunction_Next<MODEL, RESULT, RET>,
+
 			// for other types aggregates, we return the same result as the input type, eg.
 			// max of short-type will never be > short type
 			SHORT_RET 		extends ISharedFunction_Next<MODEL, RESULT, RET>,
@@ -17,7 +19,7 @@ final class Collector_MapFunctions_Named<
 			LONG_RET		extends ISharedFunction_Next<MODEL, RESULT, RET>,
 			BIGDECIMAL_RET	extends ISharedFunction_Next<MODEL, RESULT, RET>,
 			STRING_RET		extends ISharedFunction_Next<MODEL, RESULT, RET>
-			
+
 			>
 			
 		
@@ -33,7 +35,7 @@ final class Collector_MapFunctions_Named<
 
 
 			
-		implements IShared_Aggregate_All_Named<SUM_LONG_RET, COUNT_RET, SHORT_RET, INT_RET, LONG_RET, BIGDECIMAL_RET> {
+		implements ISharedMapFunctions_Named<MODEL, RESULT, RET, SUM_LONG_RET, COUNT_RET, SHORT_RET, INT_RET, LONG_RET, BIGDECIMAL_RET, STRING_RET>{
 
 	Collector_MapFunctions_Named(ISharedCollector_Functions_Callback_Named<MODEL, RESULT, RET> func) {
 		super(func);

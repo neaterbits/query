@@ -1,7 +1,5 @@
 package com.neaterbits.query.sql.dsl.api;
 
-import java.util.function.Supplier;
-
 final class SharedMapFunctions_Initial<
 		MODEL,
 		RESULT,
@@ -25,28 +23,6 @@ final class SharedMapFunctions_Initial<
 		ALIAS_LONG_RET		extends ISharedFunction_Next<MODEL, RESULT, ALIAS_RET>,
 		ALIAS_BIGDECIMAL_RET extends ISharedFunction_Next<MODEL, RESULT, ALIAS_RET>,
 		ALIAS_STRING_RET 	extends ISharedFunction_Next<MODEL, RESULT, ALIAS_RET>
-		
-		
-		
-		/* Not comparables, we just map to ResultMapperTo for all
-		NAMED_INTEGER_CLAUSE extends ISharedCondition_Comparable_Common_Base<MODEL, RESULT, Integer, NAMED_RET>,
-		NAMED_LONG_CLAUSE, //  extends ISharedCondition_Comparable_Common_Base<MODEL, RESULT, Long, NAMED_RET>,
-		NAMED_STRING_CLAUSE, //  extends ISharedCondition_Comparable_String_Base<MODEL, RESULT, NAMED_RET>,
-		
-		ALIAS_INTEGER_CLAUSE extends ISharedCondition_Comparable_Common_Base<MODEL, RESULT, Integer, ALIAS_RET>,
-		ALIAS_LONG_CLAUSE extends ISharedCondition_Comparable_Common_Base<MODEL, RESULT, Long, ALIAS_RET>,
-		ALIAS_STRING_CLAUSE extends ISharedCondition_Comparable_String_Base<MODEL, RESULT, ALIAS_RET>
-		*/
-		
-		/*
-		NAMED_INTEGER_CLAUSE extends ISharedResultMapperTo<MODEL, RESULT, Integer, NAMED_RET>,
-		NAMED_LONG_CLAUSE    extends ISharedResultMapperTo<MODEL, RESULT, Long,    NAMED_RET>,
-		NAMED_STRING_CLAUSE  extends ISharedResultMapperTo<MODEL, RESULT, String,  NAMED_RET>,
-		
-		ALIAS_INTEGER_CLAUSE extends ISharedResultMapperTo<MODEL, RESULT, Integer, ALIAS_RET>,
-		ALIAS_LONG_CLAUSE 	 extends ISharedResultMapperTo<MODEL, RESULT, Long,    ALIAS_RET>,
-		ALIAS_STRING_CLAUSE  extends ISharedResultMapperTo<MODEL, RESULT, Integer, ALIAS_RET>
-		*/
 		>
 		
 	
@@ -72,355 +48,329 @@ final class SharedMapFunctions_Initial<
 			ALIAS_LONG_RET,
 			ALIAS_BIGDECIMAL_RET,
 			ALIAS_STRING_RET
-			
-			/*
-			,
-			
-			
-			NAMED_INTEGER_CLAUSE,
-			NAMED_LONG_CLAUSE,
-			NAMED_STRING_CLAUSE,
-			
-			ALIAS_INTEGER_CLAUSE,
-			ALIAS_LONG_CLAUSE,
-			ALIAS_STRING_CLAUSE
-			*/
 		> {
 		
-		
-    private Collector_MapFunctions_Alias<MODEL, RESULT, ALIAS_RET, ALIAS_SUM_LONG_RET, ALIAS_COUNT_RET, ALIAS_SHORT_RET, ALIAS_INT_RET, ALIAS_LONG_RET, ALIAS_BIGDECIMAL_RET, ALIAS_INT_RET, ALIAS_LONG_RET, ALIAS_STRING_RET> alias;
+			
+			
+	private Collector_MapFunctions_Named<MODEL, RESULT, NAMED_RET, NAMED_SUM_LONG_RET, NAMED_COUNT_RET, NAMED_SHORT_RET, NAMED_INT_RET, NAMED_LONG_RET, NAMED_BIGDECIMAL_RET, NAMED_STRING_RET> named;
+	private Collector_MapFunctions_Alias<MODEL, RESULT, ALIAS_RET, ALIAS_SUM_LONG_RET, ALIAS_COUNT_RET, ALIAS_SHORT_RET, ALIAS_INT_RET, ALIAS_LONG_RET, ALIAS_BIGDECIMAL_RET, ALIAS_STRING_RET> alias;
 
     
+    private final ISharedCollector_Functions_Callback_Named<MODEL, RESULT, NAMED_RET> namedCallback;
+    private final ISharedCollector_Functions_Callback_Alias<MODEL, RESULT, ALIAS_RET> aliasCallback;
     
-	SharedMapFunctions_Initial() {
-		this.alias = null;
+    
+    
+    public SharedMapFunctions_Initial(
+			ISharedCollector_Functions_Callback_Named<MODEL, RESULT, NAMED_RET> namedCallback,
+			ISharedCollector_Functions_Callback_Alias<MODEL, RESULT, ALIAS_RET> aliasCallback) {
+
+    	this.namedCallback = namedCallback;
+		this.aliasCallback = aliasCallback;
 	}
+
+
+
+
+	Collector_MapFunctions_Alias<MODEL, RESULT, ALIAS_RET, ALIAS_SUM_LONG_RET, ALIAS_COUNT_RET, ALIAS_SHORT_RET, ALIAS_INT_RET, ALIAS_LONG_RET, ALIAS_BIGDECIMAL_RET, ALIAS_STRING_RET> 
+    
+    	alias() {
+    		
+    	if (this.named != null) {
+    		throw new IllegalStateException("Already set named");
+    	}
+    	
+    	if (this.alias == null) {
+    		this.alias = new Collector_MapFunctions_Alias<>(aliasCallback);
+    	}
+    	
+    	return alias;
+	}
+    	
+    	
+	Collector_MapFunctions_Named<MODEL, RESULT, NAMED_RET, NAMED_SUM_LONG_RET, NAMED_COUNT_RET, NAMED_SHORT_RET, NAMED_INT_RET, NAMED_LONG_RET, NAMED_BIGDECIMAL_RET, NAMED_STRING_RET>
+    	
+			named() {
+
+    	if (this.alias != null) {
+    		throw new IllegalStateException("Already set alias");
+    	}
+    	
+    	if (this.named == null) {
+    		this.named = new Collector_MapFunctions_Named<>(namedCallback);
+    	}
+
+    	return named;
+	}
+    
 
 	@Override
 	public <T> NAMED_INT_RET abs(IFunctionInteger<T> getter) {
-		// TODO Auto-generated method stub
-		return null;
+		return named().abs(getter);
 	}
 
 	@Override
 	public <T> NAMED_LONG_RET abs(IFunctionLong<T> getter) {
-		// TODO Auto-generated method stub
-		return null;
+		return named().abs(getter);
 	}
 
 	@Override
 	public <T> ALIAS_INT_RET abs(ISupplierInteger getter) {
-		// TODO Auto-generated method stub
-		return null;
+		return alias().abs(getter);
 	}
 
 	@Override
 	public <T> ALIAS_LONG_RET abs(ISupplierLong getter) {
-		// TODO Auto-generated method stub
-		return null;
+		return alias().abs(getter);
 	}
 
 	@Override
 	public <T> NAMED_SHORT_RET avg(IFunctionShort<T> field) {
-		// TODO Auto-generated method stub
-		return null;
+		return named().avg(field);
 	}
 
 	@Override
 	public <T> NAMED_INT_RET avg(IFunctionInteger<T> field) {
-		// TODO Auto-generated method stub
-		return null;
+		return named().avg(field);
 	}
 
 	@Override
 	public <T> NAMED_LONG_RET avg(IFunctionLong<T> field) {
-		// TODO Auto-generated method stub
-		return null;
+		return named().avg(field);
 	}
 
 	@Override
 	public <T> NAMED_BIGDECIMAL_RET avg(IFunctionBigDecimal<T> field) {
-		// TODO Auto-generated method stub
-		return null;
+		return named().avg(field);
 	}
 
 	@Override
 	public ALIAS_SHORT_RET avg(ISupplierShort field) {
-		// TODO Auto-generated method stub
-		return null;
+		return alias().avg(field);
 	}
 
 	@Override
 	public ALIAS_INT_RET avg(ISupplierInteger field) {
-		// TODO Auto-generated method stub
-		return null;
+		return alias().avg(field);
 	}
 
 	@Override
 	public ALIAS_LONG_RET avg(ISupplierLong field) {
-		// TODO Auto-generated method stub
-		return null;
+		return alias().avg(field);
 	}
 
 	@Override
 	public ALIAS_BIGDECIMAL_RET avg(ISupplierBigDecimal field) {
-		// TODO Auto-generated method stub
-		return null;
+		return alias().avg(field);
 	}
 
 	@Override
 	public <T> NAMED_COUNT_RET count(IFunctionShort<T> field) {
-		// TODO Auto-generated method stub
-		return null;
+		return named().count(field);
 	}
 
 	@Override
 	public <T> NAMED_COUNT_RET count(IFunctionInteger<T> field) {
-		// TODO Auto-generated method stub
-		return null;
+		return named().count(field);
 	}
 
 	@Override
 	public <T> NAMED_COUNT_RET count(IFunctionLong<T> field) {
-		// TODO Auto-generated method stub
-		return null;
+		return named().count(field);
 	}
 
 	@Override
 	public <T> NAMED_COUNT_RET count(IFunctionBigDecimal<T> field) {
-		// TODO Auto-generated method stub
-		return null;
+		return named().count(field);
 	}
 
 	@Override
 	public ALIAS_COUNT_RET count(ISupplierShort field) {
-		// TODO Auto-generated method stub
-		return null;
+		return alias().count(field);
 	}
 
 	@Override
 	public ALIAS_COUNT_RET count(ISupplierInteger field) {
-		// TODO Auto-generated method stub
-		return null;
+		return alias().count(field);
 	}
 
 	@Override
 	public ALIAS_COUNT_RET count(ISupplierLong field) {
-		// TODO Auto-generated method stub
-		return null;
+		return alias().count(field);
 	}
 
 	@Override
 	public ALIAS_COUNT_RET count(ISupplierBigDecimal field) {
-		// TODO Auto-generated method stub
-		return null;
+		return alias().count(field);
 	}
 
 	@Override
 	public <T> ALIAS_STRING_RET lower(ISupplierString getter) {
-		// TODO Auto-generated method stub
-		return null;
+		return alias().lower(getter);
 	}
 
 	@Override
 	public <T> NAMED_STRING_RET lower(StringFunction<T> getter) {
-		// TODO Auto-generated method stub
-		return null;
+		return named().lower(getter);
 	}
 
 	@Override
 	public <T> NAMED_SHORT_RET max(IFunctionShort<T> field) {
-		// TODO Auto-generated method stub
-		return null;
+		return named().max(field);
 	}
 
 	@Override
 	public <T> NAMED_INT_RET max(IFunctionInteger<T> field) {
-		// TODO Auto-generated method stub
-		return null;
+		return named().max(field);
 	}
 
 	@Override
 	public <T> NAMED_LONG_RET max(IFunctionLong<T> field) {
-		// TODO Auto-generated method stub
-		return null;
+		return named().max(field);
 	}
 
 	@Override
 	public <T> NAMED_BIGDECIMAL_RET max(IFunctionBigDecimal<T> field) {
-		// TODO Auto-generated method stub
-		return null;
+		return named().max(field);
 	}
 
 	@Override
 	public ALIAS_SHORT_RET max(ISupplierShort field) {
-		// TODO Auto-generated method stub
-		return null;
+		return alias().max(field);
 	}
 
 	@Override
 	public ALIAS_INT_RET max(ISupplierInteger field) {
-		// TODO Auto-generated method stub
-		return null;
+		return alias().max(field);
 	}
 
 	@Override
 	public ALIAS_LONG_RET max(ISupplierLong field) {
-		// TODO Auto-generated method stub
-		return null;
+		return alias().max(field);
 	}
 
 	@Override
 	public ALIAS_BIGDECIMAL_RET max(ISupplierBigDecimal field) {
-		// TODO Auto-generated method stub
-		return null;
+		return alias().max(field);
 	}
 
 	@Override
 	public <T> NAMED_SHORT_RET min(IFunctionShort<T> field) {
-		// TODO Auto-generated method stub
-		return null;
+		return named().min(field);
 	}
 
 	@Override
 	public <T> NAMED_INT_RET min(IFunctionInteger<T> field) {
-		// TODO Auto-generated method stub
-		return null;
+		return named().min(field);
 	}
 
 	@Override
 	public <T> NAMED_LONG_RET min(IFunctionLong<T> field) {
-		// TODO Auto-generated method stub
-		return null;
+		return named().min(field);
 	}
 
 	@Override
 	public <T> NAMED_BIGDECIMAL_RET min(IFunctionBigDecimal<T> field) {
-		// TODO Auto-generated method stub
-		return null;
+		return named().min(field);
 	}
 
 	@Override
 	public ALIAS_SHORT_RET min(ISupplierShort field) {
-		// TODO Auto-generated method stub
-		return null;
+		return alias().min(field);
 	}
 
 	@Override
 	public ALIAS_INT_RET min(ISupplierInteger field) {
-		// TODO Auto-generated method stub
-		return null;
+		return alias().min(field);
 	}
 
 	@Override
 	public ALIAS_LONG_RET min(ISupplierLong field) {
-		// TODO Auto-generated method stub
-		return null;
+		return alias().min(field);
 	}
 
 	@Override
 	public ALIAS_BIGDECIMAL_RET min(ISupplierBigDecimal field) {
-		// TODO Auto-generated method stub
-		return null;
+		return alias().min(field);
 	}
 
 	@Override
 	public <T> NAMED_INT_RET sqrt(IFunctionInteger<T> getter) {
-		// TODO Auto-generated method stub
-		return null;
+		return named().sqrt(getter);
 	}
 
 	@Override
 	public <T> NAMED_LONG_RET sqrt(IFunctionLong<T> getter) {
-		// TODO Auto-generated method stub
-		return null;
+		return named().sqrt(getter);
 	}
 
 	@Override
 	public <T> ALIAS_INT_RET sqrt(ISupplierInteger getter) {
-		// TODO Auto-generated method stub
-		return null;
+		return alias().sqrt(getter);
 	}
 
 	@Override
 	public <T> ALIAS_LONG_RET sqrt(ISupplierLong getter) {
-		// TODO Auto-generated method stub
-		return null;
+		return alias().sqrt(getter);
 	}
 
 	@Override
 	public <T> NAMED_SUM_LONG_RET sum(IFunctionShort<T> field) {
-		// TODO Auto-generated method stub
-		return null;
+		return named().sum(field);
 	}
 
 	@Override
 	public <T> NAMED_SUM_LONG_RET sum(IFunctionInteger<T> field) {
-		// TODO Auto-generated method stub
-		return null;
+		return named().sum(field);
 	}
 
 	@Override
 	public <T> NAMED_SUM_LONG_RET sum(IFunctionLong<T> field) {
-		// TODO Auto-generated method stub
-		return null;
+		return named().sum(field);
 	}
 
 	@Override
 	public <T> NAMED_BIGDECIMAL_RET sum(IFunctionBigDecimal<T> field) {
-		// TODO Auto-generated method stub
-		return null;
+		return named().sum(field);
 	}
 
 	@Override
 	public ALIAS_SUM_LONG_RET sum(ISupplierShort field) {
-		// TODO Auto-generated method stub
-		return null;
+		return alias().sum(field);
 	}
 
 	@Override
 	public ALIAS_SUM_LONG_RET sum(ISupplierInteger field) {
-		// TODO Auto-generated method stub
-		return null;
+		return alias().sum(field);
 	}
 
 	@Override
 	public ALIAS_SUM_LONG_RET sum(ISupplierLong field) {
-		// TODO Auto-generated method stub
-		return null;
+		return alias().sum(field);
 	}
 
 	@Override
 	public ALIAS_BIGDECIMAL_RET sum(ISupplierBigDecimal field) {
-		// TODO Auto-generated method stub
-		return null;
+		return alias().sum(field);
 	}
 
 	@Override
 	public <T> ALIAS_STRING_RET trim(ISupplierString getter) {
-		// TODO Auto-generated method stub
-		return null;
+		return alias().trim(getter);
 	}
 
 	@Override
 	public <T> NAMED_STRING_RET trim(StringFunction<T> getter) {
-		// TODO Auto-generated method stub
-		return null;
+		return named().trim(getter);
 	}
 
 	@Override
 	public <T> ALIAS_STRING_RET upper(ISupplierString getter) {
-		// TODO Auto-generated method stub
-		return null;
+		return alias().upper(getter);
 	}
 
 	@Override
 	public <T> NAMED_STRING_RET upper(StringFunction<T> getter) {
-		// TODO Auto-generated method stub
-		return null;
+		return named().upper(getter);
 	} 
-
-    
-    
-
-	}
+}

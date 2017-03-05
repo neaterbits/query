@@ -262,6 +262,24 @@ final class Short_Collector_SingleResult_Undecided<MODEL, RESULT>
 			ISharedResultMapperTo<MODEL, RESULT, String, IShortResult_Mapped_Single_Alias<MODEL, RESULT>>>
 
 		map() {
-		throw new UnsupportedOperationException("TODO");
+		
+		final ISharedCollector_Functions_Callback_Named<MODEL, RESULT, IShortResult_Mapped_Single_Named<MODEL, RESULT>> namedCallback
+		
+			= MapFunctionUtil.singleNamedCallback(
+				() -> new Short_Collector_SingleResult_Decided_Named<>(
+					select,
+					new CollectedQueryResult_Mapped_Single(getResultType()),
+					getModelCompiler()));
+			
+			
+			
+		final ISharedCollector_Functions_Callback_Alias<MODEL, RESULT, IShortResult_Mapped_Single_Alias<MODEL, RESULT>> aliasCallback
+			= MapFunctionUtil.singleAliasCallback(
+				() -> new Short_Collector_SingleResult_Decided_Alias<>(
+					select,
+					new CollectedQueryResult_Mapped_Single(getResultType()),
+					getModelCompiler()));
+
+		return new SharedMapFunctions_Initial<>(namedCallback, aliasCallback);
 	}
 }

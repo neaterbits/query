@@ -14,18 +14,18 @@ final class MappingCollector {
 		this.collectedMapping = new ArrayList<CollectedMapping>();
 	}
 
-	void add(CollectedItem builderItem, Function<?, ?> getter, BiConsumer<?, ?> setter) {
+	void add(CollectedItem builderItem, Function<?, ?> getter, BiConsumer<?, ?> setter, CollectedFunctions collectedFunctions) {
 
-		final CollectedMapping mapping = new CollectedMapping_Named(builderItem, getter, setter, null);
+		final CollectedMapping mapping = new CollectedMapping_Named(builderItem, getter, setter, collectedFunctions);
 
 		checkSameType(mapping);
 
 		collectedMapping.add(mapping);
 	}
 
-	void add(CollectedItem builderItem, Supplier<?> getter, BiConsumer<?, ?> setter) {
+	void add(CollectedItem builderItem, Supplier<?> getter, BiConsumer<?, ?> setter, CollectedFunctions collectedFunctions) {
 
-		final CollectedMapping mapping = new CollectedMapping_Alias(builderItem, getter, setter, null);
+		final CollectedMapping mapping = new CollectedMapping_Alias(builderItem, getter, setter, collectedFunctions);
 
 		checkSameType(mapping);
 
