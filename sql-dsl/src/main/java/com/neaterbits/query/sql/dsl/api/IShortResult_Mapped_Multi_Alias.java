@@ -1,7 +1,9 @@
 package com.neaterbits.query.sql.dsl.api;
 
 public interface IShortResult_Mapped_Multi_Alias<MODEL, RESULT> 
-	extends ISharedSelectSourceBuilder<MODEL, RESULT>, // TODO: really select-source? needed for type-checking  
+	extends 
+	
+		ISharedResult_Mapped_Alias_Base<MODEL, RESULT, IShortResult_Mapped_Multi_Alias<MODEL, RESULT>>,  
 	
 		ISQLLogical_WhereOrJoin_MultiMapped_Alias<MODEL, RESULT>
 {

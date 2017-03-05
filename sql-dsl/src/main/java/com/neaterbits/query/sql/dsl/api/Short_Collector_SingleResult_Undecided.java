@@ -59,7 +59,7 @@ final class Short_Collector_SingleResult_Undecided<MODEL, RESULT>
 	final IMappingCollector<MODEL, RESULT> getMapToResultAlias() {
 		final CollectedQueryResult_Mapped_Single collectedQueryResult = new CollectedQueryResult_Mapped_Single(getResultType());
 
-		return new Short_Collector_SingleResult_Entity_Alias<MODEL, RESULT>(select, collectedQueryResult, getModelCompiler());
+		return new Short_Collector_SingleResult_Decided_Alias<MODEL, RESULT>(select, collectedQueryResult, getModelCompiler());
 	}
 	
 
@@ -80,7 +80,7 @@ final class Short_Collector_SingleResult_Undecided<MODEL, RESULT>
 		// TODO: rename *MapToResult* here
 		final CollectedQueryResult_Entity_Single collectedQueryResult = new CollectedQueryResult_Entity_Single(getSelectSource());
 
-		return new Short_Collector_SingleResult_Entity_Alias<>(select, collectedQueryResult, getModelCompiler());
+		return new Short_Collector_SingleResult_Decided_Alias<>(select, collectedQueryResult, getModelCompiler());
 	}
 	
 	@Override

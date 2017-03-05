@@ -85,6 +85,55 @@ public class ShortAPITest extends BaseSQLAPITest {
 		
 	}
 	*/
+
+	static class CompanyResultsVO {
+		private String name;
+		private BigDecimal avgStockPrice;
+		private BigDecimal sumStockPrice;
+
+		public String getName() {
+			return name;
+		}
+
+		public void setName(String name) {
+			this.name = name;
+		}
+
+		public BigDecimal getAvgStockPrice() {
+			return avgStockPrice;
+		}
+
+		public void setAvgStockPrice(BigDecimal avgStockPrice) {
+			this.avgStockPrice = avgStockPrice;
+		}
+
+		public BigDecimal getSumStockPrice() {
+			return sumStockPrice;
+		}
+
+		public void setSumStockPrice(BigDecimal sumStockPrice) {
+			this.sumStockPrice = sumStockPrice;
+		}
+	}
+	
+	@Test
+    public void testMapSum() {
+		final SinglePrepared<CompanyResultsVO> acmeQuery = prepared
+				.one(CompanyResultsVO.class)
+
+				.map(Company::getName).to(CompanyResultsVO::setName)
+				.map().sum(Company::getStockPrice).to(CompanyResultsVO::setSumStockPrice)
+
+				// TODO: sqrt().avg()
+				
+				.map().avg(Company::getStockPrice).to(CompanyResultsVO::setAvgStockPrice)
+				
+				.where(Company::getName).startsWith("Acme")
+				
+				.build();
+		
+		
+	}
 	
 	@Test
     public void testPrepared() {
