@@ -4,6 +4,7 @@ import static com.neaterbits.query.sql.dsl.api.IShortSelect.oneOrNull;
 import static com.neaterbits.query.sql.dsl.api.IShortSelect.one;
 import static com.neaterbits.query.sql.dsl.api.IShortSelect.list;
 
+import java.math.BigDecimal;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
@@ -95,6 +96,23 @@ public class ShortAPITest extends BaseSQLAPITest {
 		
 		
 	}
+
+	@Test
+    public void testNonPreparedAggregate() {
+
+		final SinglePrepared<BigDecimal> prepared = select.sum(Company::getStockPrice).build().prepare(jpqlJPA);
+
+		final BigDecimal value = prepared.execute();
+
+		assertThat(value).isNotNull();
+	}
+	
+	
+	@Test
+    public void testPreparedAggregate() {
+		final BigDecimal ret = prepared.sum(Company::getStockPrice).build().execute();
+	}
+	
 	@Test
     public void testNameBasedMapped() {
 

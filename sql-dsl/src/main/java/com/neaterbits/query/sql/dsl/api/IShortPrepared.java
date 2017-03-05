@@ -1,6 +1,16 @@
 package com.neaterbits.query.sql.dsl.api;
 
-public interface IShortPrepared {
+import java.math.BigDecimal;
+
+public interface IShortPrepared extends ISQL<
+		IShortPrepared_Numeric_Named<Long>,
+		IShortPrepared_Numeric_Named<Long>,
+		
+		IShortPrepared_Numeric_Named<Short>,
+		IShortPrepared_Numeric_Named<Integer>,
+		IShortPrepared_Numeric_Named<Long>,
+		IShortPrepared_Numeric_Named<BigDecimal>
+		> {
 	
 	public static IShortPrepared get(DataConfig dataConfig) {
 		return ShortSelectPrepared.get(dataConfig);

@@ -28,19 +28,19 @@ public interface IShortSelect {
 		return ShortSelect.selectImpl.aliasAlias(aliasType);
     }
 
-    public static <T> IShortResult_Numeric_Named<Long> sum(IFunctionShort<T> field) {
+    public static <T> IShortBuilt_Numeric_Named<Long> sum(IFunctionShort<T> field) {
     	return ShortSelect.selectImpl.sum(field);
     }
 	
-    public static <T> IShortResult_Numeric_Named<Long> sum(IFunctionInteger<T> field) {
+    public static <T> IShortBuilt_Numeric_Named<Long> sum(IFunctionInteger<T> field) {
     	return ShortSelect.selectImpl.sum(field);
     }
 
-    public static <T> IShortResult_Numeric_Named<Long> sum(IFunctionLong<T> field) {
+    public static <T> IShortBuilt_Numeric_Named<Long> sum(IFunctionLong<T> field) {
     	return ShortSelect.selectImpl.sum(field);
     }
 
-    public static <T> IShortResult_Numeric_Named<BigDecimal> sum(IFunctionBigDecimal<T> field) {
+    public static <T> IShortBuilt_Numeric_Named<BigDecimal> sum(IFunctionBigDecimal<T> field) {
     	return ShortSelect.selectImpl.sum(field);
     }
     

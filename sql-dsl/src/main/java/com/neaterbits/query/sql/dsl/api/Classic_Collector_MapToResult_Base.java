@@ -1,5 +1,6 @@
 package com.neaterbits.query.sql.dsl.api;
 
+
 abstract class Classic_Collector_MapToResult_Base<
 	MODEL,
 	RESULT,

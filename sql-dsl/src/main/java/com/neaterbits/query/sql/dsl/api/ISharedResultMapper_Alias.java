@@ -4,6 +4,6 @@ import java.util.function.Supplier;
 
 public interface ISharedResultMapper_Alias<MODEL, RESULT, SOURCE extends ISharedSelectSourceBuilder<MODEL, RESULT>> {
 
-	<T, R> ISharedResultMapperTo<MODEL, RESULT, R, SOURCE> map(Supplier<R> getter);
+	<R> ISharedResultMapperTo<MODEL, RESULT, R, SOURCE> map(Supplier<R> getter);
 	
 }

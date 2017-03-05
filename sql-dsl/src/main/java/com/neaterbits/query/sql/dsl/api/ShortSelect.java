@@ -1,8 +1,18 @@
 package com.neaterbits.query.sql.dsl.api;
 
+import java.math.BigDecimal;
 import java.util.function.Function;
 
-final class ShortSelect extends BaseShortSelect
+final class ShortSelect extends BaseShortSelect<
+
+		IShortBuilt_Numeric_Named<Long>,
+		IShortBuilt_Numeric_Named<Long>,
+		
+		IShortBuilt_Numeric_Named<Short>,
+		IShortBuilt_Numeric_Named<Integer>,
+		IShortBuilt_Numeric_Named<Long>,
+		IShortBuilt_Numeric_Named<BigDecimal>>
+
 	
 	implements IShort
 
@@ -71,7 +81,7 @@ final class ShortSelect extends BaseShortSelect
 	}
 
 	@Override
-	<T, NUM, RESULT> IShortResult_Numeric_Named<Long> count(Function<T, NUM> field, Class<NUM> numCl,
+	<T, NUM, RESULT> IShortBuilt_Numeric_Named<Long> count(Function<T, NUM> field, Class<NUM> numCl,
 			Class<RESULT> resultCl) {
 		throw new UnsupportedOperationException("TODO");
 	}

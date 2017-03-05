@@ -106,7 +106,7 @@ abstract class Short_Collector_Result_Undecided_Base<
 	}
 
 	@Override
-	public final <T, R> ISharedResultMapperTo<MODEL, RESULT, R, MAPPED_SOURCE_ALIAS> map(Supplier<R> getter) {
+	public final <R> ISharedResultMapperTo<MODEL, RESULT, R, MAPPED_SOURCE_ALIAS> map(Supplier<R> getter) {
 		return new ResultMapperToImpl<>(getter, getMapToResultAlias());
 	}
 }

@@ -30,7 +30,17 @@ abstract class Short_Collector_SingleResult_Decided<MODEL, RESULT, AFTER_GROUP_B
 			AFTER_GROUP_BY>
 
 
-	implements IShortResult_Mapped_Single_All<MODEL, RESULT>
+	implements 
+	
+	
+		// cannot implement because at this point, we've decided named or alias,
+		// we only implement both in base class for reuse
+	
+	    // IShortResult_Mapped_Single_All<MODEL, RESULT>
+	
+	
+		ISharedResultMapper_Named<MODEL, RESULT, IShortResult_Mapped_Single_Named<MODEL, RESULT>>,
+		ISharedResultMapper_Alias<MODEL, RESULT, IShortResult_Mapped_Single_Alias<MODEL, RESULT>>
 			
 {
 	Short_Collector_SingleResult_Decided(BaseShortSelect select, CollectedQueryResult_Mapped_Single result, ModelCompiler<MODEL> modelCompiler) {
@@ -50,7 +60,7 @@ abstract class Short_Collector_SingleResult_Decided<MODEL, RESULT, AFTER_GROUP_B
 	}
 
 	@Override
-	public final <T, R> ISharedResultMapperTo<MODEL, RESULT, R, IShortResult_Mapped_Single_Alias<MODEL, RESULT>> map(Supplier<R> getter) {
+	public final <R> ISharedResultMapperTo<MODEL, RESULT, R, IShortResult_Mapped_Single_Alias<MODEL, RESULT>> map(Supplier<R> getter) {
 
 		return new ResultMapperToImpl<>(getter, this);
 	}

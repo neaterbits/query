@@ -3,13 +3,13 @@ package com.neaterbits.query.sql.dsl.api;
 import java.math.BigDecimal;
 
 public interface IShort extends ISQL<
-		IShortResult_Numeric_Named<Long>,
-		IShortResult_Numeric_Named<Long>,
+		IShortBuilt_Numeric_Named<Long>,
+		IShortBuilt_Numeric_Named<Long>,
 		
-		IShortResult_Numeric_Named<Short>,
-		IShortResult_Numeric_Named<Integer>,
-		IShortResult_Numeric_Named<Long>,
-		IShortResult_Numeric_Named<BigDecimal>
+		IShortBuilt_Numeric_Named<Short>,
+		IShortBuilt_Numeric_Named<Integer>,
+		IShortBuilt_Numeric_Named<Long>,
+		IShortBuilt_Numeric_Named<BigDecimal>
 	> {
 
 	<TYPE_RESULT> IShortResult_Single<SingleBuilt<TYPE_RESULT>, TYPE_RESULT> one(Class<TYPE_RESULT> cl);

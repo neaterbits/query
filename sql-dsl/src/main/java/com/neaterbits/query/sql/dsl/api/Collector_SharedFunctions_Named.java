@@ -24,7 +24,7 @@ final class Collector_SharedFunctions_Named<
 
 	extends Collector_SharedFunctions_Base<MODEL, RESULT, RET>
 
-	implements ISharedFunctions_Named_Initial<MODEL, RESULT, RET, INTEGER_CLAUSE, LONG_CLAUSE, STRING_CLAUSE> {
+	implements ISharedFunctions_Named_Initial_And_NoParam<MODEL, RESULT, RET, INTEGER_CLAUSE, LONG_CLAUSE, STRING_CLAUSE> {
 		
 	private final ISharedCollector_Functions_Callback_Named<MODEL, RESULT, RET> func;
 	

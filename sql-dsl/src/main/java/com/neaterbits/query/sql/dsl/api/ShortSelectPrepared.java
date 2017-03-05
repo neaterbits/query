@@ -5,7 +5,15 @@ import java.util.function.Function;
 
 import com.neaterbits.query.sql.dsl.api.entity.QueryMetaModel;
 
-final class ShortSelectPrepared extends BaseShortSelect
+final class ShortSelectPrepared extends BaseShortSelect<
+		IShortPrepared_Numeric_Named<Long>,
+		IShortPrepared_Numeric_Named<Long>,
+		
+		IShortPrepared_Numeric_Named<Short>,
+		IShortPrepared_Numeric_Named<Integer>,
+		IShortPrepared_Numeric_Named<Long>,
+		IShortPrepared_Numeric_Named<BigDecimal>
+	>
 
 	implements IShortPrepared {
 	
@@ -83,31 +91,27 @@ final class ShortSelectPrepared extends BaseShortSelect
 
 	@Override
 	<T, NUM, RESULT, RET> RET sum(Function<T, NUM> field, Class<NUM> numCl, Class<RESULT> resultCl) {
-		// TODO Auto-generated method stub
-		return null;
+		throw new UnsupportedOperationException("TODO");
 	}
 
 	@Override
 	<T, NUM, RESULT, RET> RET max(Function<T, NUM> field, Class<NUM> numCl, Class<RESULT> resultCl) {
-		// TODO Auto-generated method stub
-		return null;
+		throw new UnsupportedOperationException("TODO");
 	}
 
 	@Override
 	<T, NUM, RESULT, RET> RET min(Function<T, NUM> field, Class<NUM> numCl, Class<RESULT> resultCl) {
-		// TODO Auto-generated method stub
-		return null;
+		throw new UnsupportedOperationException("TODO");
 	}
 
 	@Override
 	<T, NUM, RESULT, RET> RET avg(Function<T, NUM> field, Class<NUM> numCl, Class<RESULT> resultCl) {
-		// TODO Auto-generated method stub
-		return null;
+		throw new UnsupportedOperationException("TODO");
 	}
 
 	@Override
-	<T, NUM, RESULT> IShortResult_Numeric_Named<Long> count(Function<T, NUM> field, Class<NUM> numCl, Class<RESULT> resultCl) {
-		// TODO Auto-generated method stub
-		return null;
+	<T, NUM, RESULT> IShortPrepared_Numeric_Named<Long> count(Function<T, NUM> field, Class<NUM> numCl,
+			Class<RESULT> resultCl) {
+		throw new UnsupportedOperationException("TODO");
 	}
 }

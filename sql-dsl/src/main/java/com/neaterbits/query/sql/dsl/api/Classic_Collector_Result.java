@@ -1,5 +1,6 @@
 package com.neaterbits.query.sql.dsl.api;
 
+import java.math.BigDecimal;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
@@ -64,7 +65,7 @@ abstract class Classic_Collector_Result<
 
 
 	@Override
-	public final <T, R> ISharedResultMapperTo<MODEL, RESULT, R, MAPPED_SOURCE_ALIAS> map(Supplier<R> getter) {
+	public final <R> ISharedResultMapperTo<MODEL, RESULT, R, MAPPED_SOURCE_ALIAS> map(Supplier<R> getter) {
 		return new ResultMapperToImpl<>(getter, createMapToResult());
 	}
 }

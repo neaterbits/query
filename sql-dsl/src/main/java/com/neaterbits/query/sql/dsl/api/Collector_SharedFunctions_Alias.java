@@ -10,7 +10,7 @@ final class Collector_SharedFunctions_Alias<MODEL, RESULT, RET extends ISharedLo
 
 		extends Collector_SharedFunctions_Base<MODEL, RESULT, RET>
 
-		implements ISharedFunctions_Alias_Initial<MODEL, RESULT, RET, INTEGER_CLAUSE, LONG_CLAUSE, STRING_CLAUSE> {
+		implements ISharedFunctions_Alias_Initial_And_NoParam<MODEL, RESULT, RET, INTEGER_CLAUSE, LONG_CLAUSE, STRING_CLAUSE> {
 
 	private final ISharedCollector_Functions_Callback_Alias<MODEL, RESULT, RET> func;
 
