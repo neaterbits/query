@@ -4,10 +4,10 @@ public interface ISharedFunctions_Alias_String<
 
 			MODEL,
 			RESULT,
-			RET, // can be used for mapping as well extends ISharedLogical_Base<MODEL, RESULT>,
-			
-			// comment out since may be used for map as well, not only in conditions
-			STRING_CLAUSE // extends ISharedCondition_Comparable_String_Base<MODEL, RESULT, RET>
+
+			RET extends ISharedFunction_After<MODEL, RESULT>,
+
+			STRING_CLAUSE extends ISharedFunction_Next<MODEL, RESULT, RET>
 
 	> {
 		

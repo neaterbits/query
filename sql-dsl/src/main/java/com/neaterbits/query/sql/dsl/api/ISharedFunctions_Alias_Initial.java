@@ -3,12 +3,12 @@ package com.neaterbits.query.sql.dsl.api;
 public interface ISharedFunctions_Alias_Initial <
 		MODEL,
 		RESULT,
-		RET, // can be used for mapping as well extends ISharedLogical_Base<MODEL, RESULT>,
-		
-		// comment out since may be used for map as well, not only in conditions
-		INTEGER_CLAUSE, // extends ISharedCondition_Comparable_Common_Base<MODEL, RESULT, Integer, RET>,
-		LONG_CLAUSE, // extends ISharedCondition_Comparable_Common_Base<MODEL, RESULT, Long, RET>,
-		STRING_CLAUSE // extends ISharedCondition_Comparable_String_Base<MODEL, RESULT, RET>
+
+		RET extends ISharedFunction_After<MODEL, RESULT>,
+
+		INTEGER_CLAUSE	extends ISharedFunction_Next<MODEL, RESULT, RET>,
+		LONG_CLAUSE		extends ISharedFunction_Next<MODEL, RESULT, RET>,
+		STRING_CLAUSE	extends ISharedFunction_Next<MODEL, RESULT, RET>
 		
 		>
 

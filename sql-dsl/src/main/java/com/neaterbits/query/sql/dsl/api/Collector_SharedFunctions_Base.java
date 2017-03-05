@@ -6,7 +6,11 @@ import java.util.List;
 abstract class Collector_SharedFunctions_Base<
 		MODEL,
 		RESULT,
-		RET extends ISharedLogical_Base<MODEL, RESULT>> {
+
+		// commented out since reused for mapping functions 
+		RET // extends ISharedLogical_Base<MODEL, RESULT>
+
+		> {
 	
 	private final List<FunctionBase> functions;
 

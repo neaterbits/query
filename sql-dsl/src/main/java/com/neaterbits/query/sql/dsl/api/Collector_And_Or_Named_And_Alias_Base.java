@@ -105,8 +105,9 @@ abstract class Collector_And_Or_Named_And_Alias_Base<
 		final ISharedCollector_Functions_Callback_Named<MODEL, RESULT, NAMED_AND_CLAUSES> cb
 				= new ISharedCollector_Functions_Callback_Named<MODEL, RESULT, NAMED_AND_CLAUSES>() {
 		
+					// Condition_Comparable_Common_Base<MODEL, RESULT, Comparable<?>, NAMED_AND_CLAUSES>
 			@Override
-			public ISharedCondition_Comparable_Common_Base<MODEL, RESULT, Comparable<?>, NAMED_AND_CLAUSES>
+			public ISharedFunction_Next<MODEL, RESULT, NAMED_AND_CLAUSES>
 				onComparable(CollectedFunctions functions, Function getter) {
 				
 				return andNamedClassImplComparable(functions, (Function)getter);

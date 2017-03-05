@@ -3,10 +3,10 @@ package com.neaterbits.query.sql.dsl.api;
 public interface ISharedFunctions_Named_String_NoParam<
 		MODEL,
 		RESULT,
-		RET extends ISharedLogical_Base<MODEL, RESULT>,
+
+		RET extends ISharedFunction_After<MODEL, RESULT>,
 		
-		// comment out since may be used for map as well, not only in conditions
-		STRING_CLAUSE // extends ISharedCondition_Comparable_String_Base<MODEL, RESULT, RET>
+		STRING_CLAUSE extends ISharedFunction_Next<MODEL, RESULT, RET>
 		
 		> {
 

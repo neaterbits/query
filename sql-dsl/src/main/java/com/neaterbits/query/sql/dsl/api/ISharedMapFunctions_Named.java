@@ -4,24 +4,35 @@ public interface ISharedMapFunctions_Named<
 		MODEL,
 		RESULT,
 
-		NAMED_SUM_LONG_RET, NAMED_COUNT_RET, NAMED_SHORT_RET, NAMED_INT_RET, NAMED_LONG_RET, NAMED_BIGDECIMAL_RET,
+		RET extends ISharedSelectSourceBuilder<MODEL, RESULT>,
+		
+		SUM_LONG_NEXT	extends ISharedFunction_Next<MODEL, RESULT, RET>,
+		COUNT_RET	extends ISharedFunction_Next<MODEL, RESULT, RET>,
+		
+		
+		SHORT_NEXT	extends ISharedFunction_Next<MODEL, RESULT, RET>,
+		INT_NEXT	extends ISharedFunction_Next<MODEL, RESULT, RET>, 
+		LONG_NEXT	extends ISharedFunction_Next<MODEL, RESULT, RET>,
+		BIGDECIMAL_NEXT extends ISharedFunction_Next<MODEL, RESULT, RET>,
+		STRING_NEXT extends ISharedFunction_Next<MODEL, RESULT, RET>
 
-		NAMED_RET extends ISharedSelectSourceBuilder<MODEL, RESULT>,
 
+		/*
 		// TODO: cannot map to ResultMapperTo, must allow for shared-functons as well
 		
 		NAMED_INTEGER_CLAUSE extends ISharedResultMapperTo<MODEL, RESULT, Integer, NAMED_RET>,
 		NAMED_LONG_CLAUSE    extends ISharedResultMapperTo<MODEL, RESULT, Long,    NAMED_RET>,
 		NAMED_STRING_CLAUSE  extends ISharedResultMapperTo<MODEL, RESULT, String,  NAMED_RET>
+		*/
 		>
 		
 		extends 
 		
 		// named without no-param (because of signature collision)
-		ISharedFunctions_Named_All<MODEL, RESULT, NAMED_RET, NAMED_INTEGER_CLAUSE, NAMED_LONG_CLAUSE, NAMED_STRING_CLAUSE>,
+		ISharedFunctions_Named_All<MODEL, RESULT, RET, INT_NEXT, LONG_NEXT, STRING_NEXT>,
 		
 		// Aggregates as well 
-		IShared_Aggregate_All_Named<NAMED_SUM_LONG_RET, NAMED_COUNT_RET, NAMED_SHORT_RET, NAMED_INT_RET, NAMED_LONG_RET, NAMED_BIGDECIMAL_RET>
+		IShared_Aggregate_All_Named<SUM_LONG_NEXT, COUNT_RET, SHORT_NEXT, INT_NEXT, LONG_NEXT, BIGDECIMAL_NEXT>
 
 
 {

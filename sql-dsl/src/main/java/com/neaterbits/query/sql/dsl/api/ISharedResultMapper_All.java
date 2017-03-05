@@ -22,6 +22,9 @@ public interface ISharedResultMapper_All<MODEL, RESULT,
 	ISharedMapFunctions_Initial<
 				MODEL,
 				RESULT,
+
+				NAMED_SOURCE,
+				ALIAS_SOURCE,
 				
 				// Named functions
 				ISharedResultMapperTo<MODEL, RESULT, Long, NAMED_SOURCE>,
@@ -30,6 +33,7 @@ public interface ISharedResultMapper_All<MODEL, RESULT,
 				ISharedResultMapperTo<MODEL, RESULT, Integer, NAMED_SOURCE>,
 				ISharedResultMapperTo<MODEL, RESULT, Long, NAMED_SOURCE>,
 				ISharedResultMapperTo<MODEL, RESULT, BigDecimal, NAMED_SOURCE>,
+				ISharedResultMapperTo<MODEL, RESULT, String,  NAMED_SOURCE>,
 				
 				// Alias functions
 				ISharedResultMapperTo<MODEL, RESULT, Long, ALIAS_SOURCE>,
@@ -38,17 +42,21 @@ public interface ISharedResultMapper_All<MODEL, RESULT,
 				ISharedResultMapperTo<MODEL, RESULT, Integer, ALIAS_SOURCE>,
 				ISharedResultMapperTo<MODEL, RESULT, Long, ALIAS_SOURCE>,
 				ISharedResultMapperTo<MODEL, RESULT, BigDecimal, ALIAS_SOURCE>,
+				ISharedResultMapperTo<MODEL, RESULT, String,  ALIAS_SOURCE>
 				
-				NAMED_SOURCE,
-				ALIAS_SOURCE,
-				
+
+				/*
 				ISharedResultMapperTo<MODEL, RESULT, Integer, NAMED_SOURCE>,
 				ISharedResultMapperTo<MODEL, RESULT, Long,    NAMED_SOURCE>,
 				ISharedResultMapperTo<MODEL, RESULT, String,  NAMED_SOURCE>,
 
 				ISharedResultMapperTo<MODEL, RESULT, Integer, ALIAS_SOURCE>,
 				ISharedResultMapperTo<MODEL, RESULT, Long,    ALIAS_SOURCE>,
-				ISharedResultMapperTo<MODEL, RESULT, Integer, ALIAS_SOURCE>
-				> map();
+				ISharedResultMapperTo<MODEL, RESULT, String,  NAMED_SOURCE>,
+				
+				*/
+	>
+				
+				map();
 	
 }

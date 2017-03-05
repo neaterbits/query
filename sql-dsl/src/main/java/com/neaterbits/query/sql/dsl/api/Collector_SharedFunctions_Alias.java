@@ -5,36 +5,37 @@ import java.util.function.Supplier;
 class Collector_SharedFunctions_Alias<
 		MODEL,
 		RESULT,
-		RET extends ISharedLogical_Base<MODEL, RESULT>,
 
 		// commented out since reused for mapping functions 
-		INTEGER_CLAUSE, // extends ISharedCondition_Comparable_Common_Base<MODEL, RESULT, Integer, RET>,
-		LONG_CLAUSE, // extends ISharedCondition_Comparable_Common_Base<MODEL, RESULT, Long, RET>,
-		STRING_CLAUSE // extends ISharedCondition_Comparable_String_Base<MODEL, RESULT, RET>
+		RET extends ISharedFunction_After<MODEL, RESULT>,
+
+		INTEGER_CLAUSE extends ISharedFunction_Next<MODEL, RESULT, RET>,
+		LONG_CLAUSE    extends ISharedFunction_Next<MODEL, RESULT, RET>,
+		STRING_CLAUSE  extends ISharedFunction_Next<MODEL, RESULT, RET>
 		
 		>
 
 		extends Collector_SharedFunctions_Base<MODEL, RESULT, RET>
 
 		implements 
-		
+
 			ISharedFunctions_Alias_Initial_And_NoParam<MODEL, RESULT, RET, INTEGER_CLAUSE, LONG_CLAUSE, STRING_CLAUSE> {
 
 	private final ISharedCollector_Functions_Callback_Alias<MODEL, RESULT, RET> func;
 
 	Collector_SharedFunctions_Alias(ISharedCollector_Functions_Callback_Alias<MODEL, RESULT, RET> func) {
-	
+
 		if (func == null) {
 			throw new IllegalArgumentException("func == null");
 		}
-		
+
 		this.func = func;
 	}
 
 	@SuppressWarnings("unchecked")
-	final <VALUE extends Comparable<?>, TYPE>  
+	final <VALUE extends Comparable<?>, TYPE extends ISharedFunction_Next<MODEL, RESULT, RET>>  
 	
-		TYPE addAndReturnType(FunctionBase function, Supplier<? extends Comparable<?>> getter) {
+		 TYPE addAndReturnType(FunctionBase function, Supplier<? extends Comparable<?>> getter) {
 
 		add(function);
 
@@ -42,7 +43,7 @@ class Collector_SharedFunctions_Alias<
 	}
 	
 	private <VALUE extends Comparable<?>,
-			COMPARABLE extends ISharedCondition_Comparable_Common_Base<MODEL, RESULT, VALUE, RET>>
+			COMPARABLE extends ISharedCondition_Comparable_Common_Base<MODEL, RESULT, VALUE, ?>>
 	
 	
 		COMPARABLE addAndReturnComparable(
@@ -51,7 +52,7 @@ class Collector_SharedFunctions_Alias<
 		return addAndReturnType(function, getter);
 	}
 
-	private ISharedCondition_Comparable_String_Base<MODEL, RESULT, RET> addAndReturnString(Function_String function, ISupplierString getter) {
+	private ISharedFunction_Next<MODEL, RESULT, RET> addAndReturnString(Function_String function, ISupplierString getter) {
 
 		add(function);
 

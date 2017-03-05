@@ -3,7 +3,7 @@ package com.neaterbits.query.sql.dsl.api;
 final class Collector_MapFunctions_Named<
 			MODEL,
 			RESULT,
-			RET extends ISharedLogical_Base<MODEL, RESULT>,
+			RET extends ISharedFunction_After<MODEL, RESULT>,
 			
 			// for sums, we return Long for short and int so must differentiate from other aggregate
 			// fuctions, this is because sum may wrap over limits of type
@@ -12,15 +12,12 @@ final class Collector_MapFunctions_Named<
 			
 			// for other types aggregates, we return the same result as the input type, eg.
 			// max of short-type will never be > short type
-			SHORT_RET,
-			INT_RET,
-			LONG_RET,
-			BIGDECIMAL_RET,
+			SHORT_RET 		extends ISharedFunction_Next<MODEL, RESULT, RET>,
+			INT_RET	  		extends ISharedFunction_Next<MODEL, RESULT, RET>,
+			LONG_RET		extends ISharedFunction_Next<MODEL, RESULT, RET>,
+			BIGDECIMAL_RET	extends ISharedFunction_Next<MODEL, RESULT, RET>,
+			STRING_RET		extends ISharedFunction_Next<MODEL, RESULT, RET>
 			
-			// commented out since reused for mapping functions 
-			INTEGER_CLAUSE, // extends ISharedCondition_Comparable_Common_Base<MODEL, RESULT, Integer, RET>,
-			LONG_CLAUSE, // extends ISharedCondition_Comparable_Common_Base<MODEL, RESULT, Long, RET>,
-			STRING_CLAUSE // extends ISharedCondition_Comparable_String_Base<MODEL, RESULT, RET>
 			>
 			
 		
@@ -30,9 +27,9 @@ final class Collector_MapFunctions_Named<
 			
 			RET,
 			
-			INTEGER_CLAUSE,
-			LONG_CLAUSE,
-			STRING_CLAUSE> 
+			INT_RET,
+			LONG_RET,
+			STRING_RET> 
 
 
 			
