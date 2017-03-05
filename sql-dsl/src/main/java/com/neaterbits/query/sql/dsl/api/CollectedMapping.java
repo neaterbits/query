@@ -7,8 +7,10 @@ abstract class CollectedMapping extends CollectedItem {
 	private final Getter getter;
 	private final BiConsumer<?, ?> setter;
 
+	private CollectedFunctions functions;
+
 	
-	CollectedMapping(CollectedItem original, Getter getter, BiConsumer<?, ?> setter) {
+	CollectedMapping(CollectedItem original, Getter getter, BiConsumer<?, ?> setter, CollectedFunctions functions) {
 		
 		if (original == null) {
 			throw new IllegalArgumentException("original == null");
@@ -25,6 +27,7 @@ abstract class CollectedMapping extends CollectedItem {
 		this.original = original;
 		this.getter = getter;
 		this.setter = setter;
+		this.functions = functions;
 	}
 	
 	final Getter getGetter() {
@@ -38,4 +41,23 @@ abstract class CollectedMapping extends CollectedItem {
 	final BiConsumer<?, ?> getSetter() {
 		return setter;
 	}
+
+	final CollectedFunctions getFunctions() {
+		return functions;
+	}
+
+	/*
+	final void setFunctions(CollectedFunctions functions) {
+
+		if (functions == null) {
+			throw new IllegalArgumentException("functions == null");
+		}
+
+		if (this.functions != null) {
+			throw new IllegalStateException("functions already set");
+		}
+
+		this.functions = functions;
+	}
+	*/
 }

@@ -121,7 +121,7 @@ public class ShortAPITest extends BaseSQLAPITest {
 		final SinglePrepared<CompanyResultsVO> acmeQuery = prepared
 				.one(CompanyResultsVO.class)
 
-				.map(Company::getName).to(CompanyResultsVO::setName)
+				.map().lower(Company::getName).to(CompanyResultsVO::setName)
 				.map().sum(Company::getStockPrice).to(CompanyResultsVO::setSumStockPrice)
 
 				// TODO: sqrt().avg()

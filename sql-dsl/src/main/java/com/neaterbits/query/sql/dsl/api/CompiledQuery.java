@@ -2,11 +2,8 @@ package com.neaterbits.query.sql.dsl.api;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.BiConsumer;
-import java.util.function.Function;
 
 import com.neaterbits.query.sql.dsl.api.entity.QueryMetaModel;
-import com.neaterbits.query.util.java8.Coll8;
 
 /**
  * Representation of query where we have compiled all information 
@@ -388,7 +385,7 @@ final class CompiledQuery {
 		
 		final CompiledFieldReference fieldReference = sources.makeFieldReference(collected, collected.getGetter());
 
-		return new CompiledMapping(fieldReference, mapSetter);
+		return new CompiledMapping(fieldReference, mapSetter, collected.getFunctions());
 	}
 	
 	private static CompiledSelectSources<?> compileSelectSources(CollectedSelectSource sources) {

@@ -16,7 +16,7 @@ final class MappingCollector {
 
 	void add(CollectedItem builderItem, Function<?, ?> getter, BiConsumer<?, ?> setter) {
 
-		final CollectedMapping mapping = new CollectedMapping_Named(builderItem, getter, setter);
+		final CollectedMapping mapping = new CollectedMapping_Named(builderItem, getter, setter, null);
 
 		checkSameType(mapping);
 
@@ -25,7 +25,7 @@ final class MappingCollector {
 
 	void add(CollectedItem builderItem, Supplier<?> getter, BiConsumer<?, ?> setter) {
 
-		final CollectedMapping mapping = new CollectedMapping_Alias(builderItem, getter, setter);
+		final CollectedMapping mapping = new CollectedMapping_Alias(builderItem, getter, setter, null);
 
 		checkSameType(mapping);
 

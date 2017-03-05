@@ -217,6 +217,11 @@ interface ExecutableQuery<QUERY> {
 	int getMappingSourceIdx(QUERY query, int mappingIdx);
 
 	CompiledFieldReference getMappingField(QUERY query, int mappingIdx);
+	
+	// Can perform mutiple builtin functions within mapping
+	int getMappingNumFunctions(QUERY query, int mappingIdx);
+
+	FunctionBase getMappingFunction(QUERY query, int mappingIdx, int functionIdx);
 
 	Object createMappedInstance(QUERY query);
 

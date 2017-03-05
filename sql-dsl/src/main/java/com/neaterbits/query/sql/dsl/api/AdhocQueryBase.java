@@ -142,10 +142,20 @@ abstract class AdhocQueryBase<MODEL, QUERY extends AdhocQueryBase<MODEL, QUERY>>
 
 
 	@Override
-	public final Object createMappedInstance(QUERY query) {
+	public int getMappingNumFunctions(QUERY query, int mappingIdx) {
+		throw new UnsupportedOperationException("TODO: support mapping");
+	}
+	
+	@Override
+	public FunctionBase getMappingFunction(QUERY query, int mappingIdx, int functionIdx) {
 		throw new UnsupportedOperationException("TODO: support mapping");
 	}
 
+	@Override
+	public final Object createMappedInstance(QUERY query) {
+		throw new UnsupportedOperationException("TODO: support mapping");
+	}
+	
 	@Override
 	public final CompiledFieldReference getRootConditionLhs(QUERY query, int conditionIdx) {
 		throw new UnsupportedOperationException("TODO - not supported for Adhoc queries");

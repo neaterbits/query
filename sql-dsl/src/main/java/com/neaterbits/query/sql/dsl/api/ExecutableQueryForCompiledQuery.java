@@ -107,32 +107,41 @@ final class ExecutableQueryForCompiledQuery extends ExecutableQueryForCompiledBa
 	}
 
 
+	private static CompiledMappings getMappedResult(CompiledQuery query) {
+		final CompiledQueryResult_Mapped mapped = (CompiledQueryResult_Mapped)query.getResult();
+		
+		return mapped.getMappings();
+	}
+	
+	private static CompiledMapping getMapping(CompiledQuery query, int mappingIdx) {
+		return getMappedResult(query).getMappings().get(mappingIdx);
+	}
+	
 	@Override
 	public int getMappingCount(CompiledQuery query) {
 
-		/*
-		if (query.getGathering() != QueryResultGathering.MAPPED)) {
-			throw new IllegalStateException("Expected mapped");
-		}
-		*/
-		
-		final CompiledQueryResult_Mapped mapped = (CompiledQueryResult_Mapped)query.getResult();
-		
-		return mapped.getMappings().getMappings().size();
+		return getMappedResult(query).getMappings().size();
 	}
 
 	@Override
 	public int getMappingSourceIdx(CompiledQuery query, int mappingIdx) {
-		final CompiledQueryResult_Mapped mapped = (CompiledQueryResult_Mapped)query.getResult();
 
-		return mapped.getMappings().getMappings().get(mappingIdx).getField().getSource().getIdx();
+		return getMapping(query, mappingIdx).getField().getSource().getIdx();
+	}
+	
+	@Override
+	public int getMappingNumFunctions(CompiledQuery query, int mappingIdx) {
+		return getMapping(query, mappingIdx).getNumFunctions();
+	}
+
+	@Override
+	public FunctionBase getMappingFunction(CompiledQuery query, int mappingIdx, int functionIdx) {
+		return getMapping(query, mappingIdx).getFunctionAt(functionIdx);
 	}
 
 	@Override
 	public CompiledFieldReference getMappingField(CompiledQuery query, int mappingIdx) {
-		final CompiledQueryResult_Mapped mapped = (CompiledQueryResult_Mapped)query.getResult();
-
-		return mapped.getMappings().getMappings().get(mappingIdx).getField();
+		return getMappedResult(query).getMappings().get(mappingIdx).getField();
 	}
 
 	@Override

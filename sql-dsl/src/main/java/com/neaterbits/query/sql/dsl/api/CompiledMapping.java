@@ -4,8 +4,9 @@ final class CompiledMapping {
 
 	private final CompiledFieldReference field;
 	private final CompiledSetter setter;
+	private final CollectedFunctions functions;
 	
-	CompiledMapping(CompiledFieldReference field, CompiledSetter setter) {
+	CompiledMapping(CompiledFieldReference field, CompiledSetter setter, CollectedFunctions functions) {
 		
 		if (field == null) {
 			throw new IllegalArgumentException("field == null");
@@ -17,6 +18,7 @@ final class CompiledMapping {
 
 		this.field = field;
 		this.setter = setter;
+		this.functions = functions;
 	}
 	
 	final Object executeGetter(Object instance) {
@@ -33,5 +35,13 @@ final class CompiledMapping {
 
 	CompiledSetter getSetter() {
 		return setter;
+	}
+
+	int getNumFunctions() {
+		return functions == null ? 0 : functions.getFunctions().size();
+	}
+
+	FunctionBase getFunctionAt(int idx) {
+		return functions.getFunctions().get(idx);
 	}
 }
