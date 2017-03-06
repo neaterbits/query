@@ -1,6 +1,6 @@
 package com.neaterbits.query.sql.dsl.api;
 
-public interface ISharedFunctions_Named_Arithmetic_NoParam<
+public interface ISharedFunctions_Arithmetic_NoParam_Named<
 		MODEL,
 		RESULT,
 	
@@ -12,7 +12,7 @@ public interface ISharedFunctions_Named_Arithmetic_NoParam<
 	extends ISharedFunctions_Arithmetic_NoParam_Base<
 		MODEL,
 		RESULT, 
-		ISharedFunctions_Named_Arithmetic<MODEL, RESULT, RET, INTEGER_CLAUSE, LONG_CLAUSE>
+		ISharedFunctions_Arithmetic_Named<MODEL, RESULT, RET, INTEGER_CLAUSE, LONG_CLAUSE>
 	> {
 
 }

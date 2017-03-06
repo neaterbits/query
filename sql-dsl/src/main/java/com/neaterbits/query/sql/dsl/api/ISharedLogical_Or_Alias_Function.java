@@ -8,7 +8,7 @@ public interface ISharedLogical_Or_Alias_Function<
 
 {
 
-    ISharedFunctions_Alias_Transform_Initial<
+    ISharedFunctions_Transform_Initial_Alias<
 		MODEL,
 		RESULT,
 		OR_CLAUSES,

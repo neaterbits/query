@@ -1,6 +1,6 @@
 package com.neaterbits.query.sql.dsl.api;
 
-public interface ISharedFunctions_Alias_Arithmetic<
+public interface ISharedFunctions_Arithmetic_Alias<
 
 		MODEL,
 		RESULT,

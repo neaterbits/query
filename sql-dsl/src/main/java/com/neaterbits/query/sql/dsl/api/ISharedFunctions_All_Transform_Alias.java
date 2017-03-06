@@ -1,6 +1,6 @@
 package com.neaterbits.query.sql.dsl.api;
 
-public interface ISharedFunctions_Alias_All_Transform<
+public interface ISharedFunctions_All_Transform_Alias<
 			MODEL,
 			RESULT,
 			
@@ -11,7 +11,7 @@ public interface ISharedFunctions_Alias_All_Transform<
 			STRING_CLAUSE  extends ISharedFunction_Next<MODEL, RESULT, RET>
 		>
 		extends
-			ISharedFunctions_Alias_Arithmetic<MODEL, RESULT, RET, INTEGER_CLAUSE, LONG_CLAUSE>,
-			ISharedFunctions_Alias_String<MODEL, RESULT, RET, STRING_CLAUSE> {
+			ISharedFunctions_Arithmetic_Alias<MODEL, RESULT, RET, INTEGER_CLAUSE, LONG_CLAUSE>,
+			ISharedFunctions_String_Alias<MODEL, RESULT, RET, STRING_CLAUSE> {
 
 }

@@ -14,7 +14,7 @@ public interface ISharedLogical_Or_Named_Function<
 	STRING_CLAUSE extends ISharedCondition_Comparable_String_Base<MODEL, RESULT, OR_CLAUSES>
 	*/> {
 
-    ISharedFunctions_Named_Transform_Initial<
+    ISharedFunctions_Transform_Initial_Named<
     		MODEL,
     		RESULT,
     		OR_CLAUSES,

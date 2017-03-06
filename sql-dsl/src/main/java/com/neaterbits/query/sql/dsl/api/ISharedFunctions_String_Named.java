@@ -1,6 +1,6 @@
 package com.neaterbits.query.sql.dsl.api;
 
-public interface ISharedFunctions_Named_String<
+public interface ISharedFunctions_String_Named<
 		MODEL,
 		RESULT,
 		RET extends ISharedFunction_After<MODEL, RESULT>,

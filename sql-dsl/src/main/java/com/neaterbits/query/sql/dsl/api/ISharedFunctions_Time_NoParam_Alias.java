@@ -1,6 +1,6 @@
 package com.neaterbits.query.sql.dsl.api;
 
-public interface ISharedFunctions_Alias_Time_NoParam<
+public interface ISharedFunctions_Time_NoParam_Alias<
 		MODEL,
 		RESULT,
 

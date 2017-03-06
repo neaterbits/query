@@ -26,7 +26,7 @@ class Collector_SharedFunctions_Named<
 
 	extends Collector_SharedFunctions_Base<MODEL, RESULT, RET>
 
-	implements ISharedFunctions_Named_Initial_And_NoParam<MODEL, RESULT, RET, INTEGER_NEXT, LONG_NEXT, STRING_NEXT> {
+	implements ISharedFunctions_Initial_And_NoParam_Named<MODEL, RESULT, RET, INTEGER_NEXT, LONG_NEXT, STRING_NEXT> {
 		
 	private final ISharedCollector_Functions_Callback_Named<MODEL, RESULT, RET> func;
 	
@@ -73,7 +73,7 @@ class Collector_SharedFunctions_Named<
 	}
 
 	@Override
-	public ISharedFunctions_Named_String<MODEL, RESULT, RET, STRING_NEXT> lower() {
+	public ISharedFunctions_String_Named<MODEL, RESULT, RET, STRING_NEXT> lower() {
 		add(Function_String_Lower.INSTANCE);
 		
 		return this;
@@ -86,7 +86,7 @@ class Collector_SharedFunctions_Named<
 	}
 
 	@Override
-	public ISharedFunctions_Named_String<MODEL, RESULT, RET, STRING_NEXT> upper() {
+	public ISharedFunctions_String_Named<MODEL, RESULT, RET, STRING_NEXT> upper() {
 		add(Function_String_Upper.INSTANCE);
 
 		return this;
@@ -99,7 +99,7 @@ class Collector_SharedFunctions_Named<
 	}
 
 	@Override
-	public ISharedFunctions_Named_String<MODEL, RESULT, RET, STRING_NEXT> trim() {
+	public ISharedFunctions_String_Named<MODEL, RESULT, RET, STRING_NEXT> trim() {
 		add(Function_String_Trim.INSTANCE);
 
 		return this;
@@ -116,7 +116,7 @@ class Collector_SharedFunctions_Named<
 	}
 
 	@Override
-	public ISharedFunctions_Named_Arithmetic<MODEL, RESULT, RET, INTEGER_NEXT, LONG_NEXT> abs() {
+	public ISharedFunctions_Arithmetic_Named<MODEL, RESULT, RET, INTEGER_NEXT, LONG_NEXT> abs() {
 		add(Function_Arithmetic_Abs.INSTANCE);
 
 		return this;
@@ -133,7 +133,7 @@ class Collector_SharedFunctions_Named<
 	}
 
 	@Override
-	public ISharedFunctions_Named_Arithmetic<MODEL, RESULT, RET, INTEGER_NEXT, LONG_NEXT> sqrt() {
+	public ISharedFunctions_Arithmetic_Named<MODEL, RESULT, RET, INTEGER_NEXT, LONG_NEXT> sqrt() {
 		add(Function_Arithmetic_Sqrt.INSTANCE);
 
 		return this;

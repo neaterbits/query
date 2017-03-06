@@ -21,10 +21,10 @@ public interface ISharedMapFunctions_Named<
 		extends 
 		
 		// named without no-param (because of signature collision)
-		ISharedFunctions_Named_All_Transform<MODEL, RESULT, RET, INT_NEXT, LONG_NEXT, STRING_NEXT>,
+		ISharedFunctions_All_Transform_Named<MODEL, RESULT, RET, INT_NEXT, LONG_NEXT, STRING_NEXT>,
 		
 		// Aggregates as well 
-		ISharedFunctions_Named_Aggregate<SUM_LONG_NEXT, COUNT_RET, SHORT_NEXT, INT_NEXT, LONG_NEXT, BIGDECIMAL_NEXT>
+		ISharedFunctions_Aggregate_Named<SUM_LONG_NEXT, COUNT_RET, SHORT_NEXT, INT_NEXT, LONG_NEXT, BIGDECIMAL_NEXT>
 
 
 {

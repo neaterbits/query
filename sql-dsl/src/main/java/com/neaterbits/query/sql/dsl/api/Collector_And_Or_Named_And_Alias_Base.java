@@ -93,7 +93,7 @@ abstract class Collector_And_Or_Named_And_Alias_Base<
 
 	}
 	
-	final ISharedFunctions_Named_Transform_Initial<
+	final ISharedFunctions_Transform_Initial_Named<
 				MODEL,
 				RESULT,
 				NAMED_AND_CLAUSES,
@@ -145,7 +145,7 @@ abstract class Collector_And_Or_Named_And_Alias_Base<
 		return orNamedClassImplString(null, getter);
 	}
 
-	final ISharedFunctions_Named_Transform_Initial<
+	final ISharedFunctions_Transform_Initial_Named<
 		MODEL,
 		RESULT,
 		NAMED_OR_CLAUSES,
@@ -319,7 +319,7 @@ abstract class Collector_And_Or_Named_And_Alias_Base<
 		return orAliasImplString(null, getter);
 	}
 
-	final ISharedFunctions_Alias_Transform_Initial<
+	final ISharedFunctions_Transform_Initial_Alias<
 		MODEL,
 		RESULT,
 		ALIAS_AND_CLAUSES,
@@ -418,7 +418,7 @@ abstract class Collector_And_Or_Named_And_Alias_Base<
 	}
 	*/
 	
-	final ISharedFunctions_Alias_Transform_Initial<
+	final ISharedFunctions_Transform_Initial_Alias<
 			MODEL,
 			RESULT,
 			ALIAS_OR_CLAUSES,

@@ -1,6 +1,6 @@
 package com.neaterbits.query.sql.dsl.api;
 
-public interface ISharedFunctions_Alias_String_NoParam<
+public interface ISharedFunctions_String_NoParam_Alias<
 
 		MODEL,
 		RESULT,
@@ -11,7 +11,7 @@ public interface ISharedFunctions_Alias_String_NoParam<
 	extends ISharedFunctions_String_NoParam_Base<
 			MODEL,
 			RESULT,
-			ISharedFunctions_Alias_String<MODEL, RESULT, RET, STRING_CLAUSE>
+			ISharedFunctions_String_Alias<MODEL, RESULT, RET, STRING_CLAUSE>
 	> {
 
 }

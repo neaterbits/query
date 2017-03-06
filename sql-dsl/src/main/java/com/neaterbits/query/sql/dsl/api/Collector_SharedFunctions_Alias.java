@@ -19,7 +19,7 @@ class Collector_SharedFunctions_Alias<
 
 		implements 
 
-			ISharedFunctions_Alias_Initial_And_NoParam<MODEL, RESULT, RET, INTEGER_CLAUSE, LONG_CLAUSE, STRING_CLAUSE> {
+			ISharedFunctions_Initial_And_NoParam_Alias<MODEL, RESULT, RET, INTEGER_CLAUSE, LONG_CLAUSE, STRING_CLAUSE> {
 
 	private final ISharedCollector_Functions_Callback_Alias<MODEL, RESULT, RET> func;
 
@@ -66,7 +66,7 @@ class Collector_SharedFunctions_Alias<
 	}
 
 	@Override
-	public ISharedFunctions_Alias_String<MODEL, RESULT, RET, STRING_CLAUSE> lower() {
+	public ISharedFunctions_String_Alias<MODEL, RESULT, RET, STRING_CLAUSE> lower() {
 		add(Function_String_Lower.INSTANCE);
 
 		return this;
@@ -79,7 +79,7 @@ class Collector_SharedFunctions_Alias<
 	}
 
 	@Override
-	public ISharedFunctions_Alias_String<MODEL, RESULT, RET, STRING_CLAUSE> upper() {
+	public ISharedFunctions_String_Alias<MODEL, RESULT, RET, STRING_CLAUSE> upper() {
 		add(Function_String_Upper.INSTANCE);
 
 		return this;
@@ -92,7 +92,7 @@ class Collector_SharedFunctions_Alias<
 	}
 
 	@Override
-	public ISharedFunctions_Alias_String<MODEL, RESULT, RET, STRING_CLAUSE> trim() {
+	public ISharedFunctions_String_Alias<MODEL, RESULT, RET, STRING_CLAUSE> trim() {
 		add(Function_String_Trim.INSTANCE);
 
 		return this;
@@ -109,7 +109,7 @@ class Collector_SharedFunctions_Alias<
 	}
 
 	@Override
-	public ISharedFunctions_Alias_Arithmetic<MODEL, RESULT, RET, INTEGER_CLAUSE, LONG_CLAUSE> abs() {
+	public ISharedFunctions_Arithmetic_Alias<MODEL, RESULT, RET, INTEGER_CLAUSE, LONG_CLAUSE> abs() {
 		add(Function_Arithmetic_Abs.INSTANCE);
 
 		return this;
@@ -126,7 +126,7 @@ class Collector_SharedFunctions_Alias<
 	}
 
 	@Override
-	public ISharedFunctions_Alias_Arithmetic<MODEL, RESULT, RET, INTEGER_CLAUSE, LONG_CLAUSE> sqrt() {
+	public ISharedFunctions_Arithmetic_Alias<MODEL, RESULT, RET, INTEGER_CLAUSE, LONG_CLAUSE> sqrt() {
 		add(Function_Arithmetic_Sqrt.INSTANCE);
 
 		return this;

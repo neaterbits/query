@@ -1,6 +1,6 @@
 package com.neaterbits.query.sql.dsl.api;
 
-public interface ISharedFunctions_Named_Aggregate<
+public interface ISharedFunctions_Aggregate_Named<
 
 				// for sums, we return Long for short and int so must differentiate from other aggregate
 				// fuctions, this is because sum may wrap over limits of type

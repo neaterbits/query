@@ -5,7 +5,7 @@ public interface ISharedLogical_Where_Named_Function<
 		RESULT,
 		AND_OR extends ISharedLogical_Base<MODEL, RESULT>> {
 
-	ISharedFunctions_Named_Transform_Initial<
+	ISharedFunctions_Transform_Initial_Named<
 			MODEL,
 			RESULT,
 			AND_OR,

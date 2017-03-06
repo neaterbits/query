@@ -83,7 +83,7 @@ abstract class Collector_And_Alias<
 	}
 	
 	@Override
-	public final ISharedFunctions_Alias_Transform_Initial<
+	public final ISharedFunctions_Transform_Initial_Alias<
 				MODEL,
 				RESULT,
 				AND_CLAUSES,

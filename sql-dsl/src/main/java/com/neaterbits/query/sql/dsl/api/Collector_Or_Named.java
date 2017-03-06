@@ -77,7 +77,7 @@ abstract class Collector_Or_Named<
 	}
 
 	@Override
-	public final ISharedFunctions_Named_Transform_Initial<MODEL, RESULT, OR_CLAUSES, ISharedCondition_Comparable_Common_All<MODEL, RESULT, Integer, OR_CLAUSES>, ISharedCondition_Comparable_Common_All<MODEL, RESULT, Long, OR_CLAUSES>, ISharedCondition_Comparable_String_All<MODEL, RESULT, OR_CLAUSES>> or() {
+	public final ISharedFunctions_Transform_Initial_Named<MODEL, RESULT, OR_CLAUSES, ISharedCondition_Comparable_Common_All<MODEL, RESULT, Integer, OR_CLAUSES>, ISharedCondition_Comparable_Common_All<MODEL, RESULT, Long, OR_CLAUSES>, ISharedCondition_Comparable_String_All<MODEL, RESULT, OR_CLAUSES>> or() {
 
 		@SuppressWarnings({ "unchecked", "rawtypes" })
 		final ISharedCollector_Functions_Callback_Named<MODEL, RESULT, OR_CLAUSES> cb = new ISharedCollector_Functions_Callback_Named<MODEL, RESULT, OR_CLAUSES>() {

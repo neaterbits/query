@@ -79,7 +79,7 @@ abstract class SQL_Collector_WhereOrJoin_Alias_Base<
 
 
 	// JoinCondition, marks this as implemented in subclass by implementing matching interface there
-	public final ISharedFunctions_Alias_Transform_Initial<
+	public final ISharedFunctions_Transform_Initial_Alias<
 			MODEL, RESULT,
 			AND_OR,
 			
