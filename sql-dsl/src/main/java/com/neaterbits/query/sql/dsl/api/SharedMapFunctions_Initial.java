@@ -1,5 +1,7 @@
 package com.neaterbits.query.sql.dsl.api;
 
+import com.neaterbits.query.sql.dsl.api.entity.ScalarType;
+
 final class SharedMapFunctions_Initial<
 		MODEL,
 		RESULT,
@@ -24,7 +26,8 @@ final class SharedMapFunctions_Initial<
 		ALIAS_BIGDECIMAL_RET extends ISharedFunction_Next<MODEL, RESULT, ALIAS_RET>,
 		ALIAS_STRING_RET 	extends ISharedFunction_Next<MODEL, RESULT, ALIAS_RET>
 		>
-		
+
+	extends Collector_SharedFunctions_Base<MODEL, RESULT>
 	
 	implements ISharedMapFunctions_Initial<
 			MODEL,
@@ -372,5 +375,41 @@ final class SharedMapFunctions_Initial<
 	@Override
 	public <T> NAMED_STRING_RET upper(StringFunction<T> getter) {
 		return named().upper(getter);
-	} 
+	}
+
+	@Override
+	public ISharedNumericFunctions_Initial<MODEL, RESULT, NAMED_RET, ALIAS_RET, NAMED_SUM_LONG_RET, NAMED_COUNT_RET, NAMED_SHORT_RET, NAMED_INT_RET, NAMED_LONG_RET, NAMED_BIGDECIMAL_RET, ALIAS_SUM_LONG_RET, ALIAS_COUNT_RET, ALIAS_SHORT_RET, ALIAS_INT_RET, ALIAS_LONG_RET, ALIAS_BIGDECIMAL_RET> abs() {
+		add(Function_Arithmetic_Abs.INSTANCE);
+		
+		return this;
+	}
+
+	@Override
+	public ISharedNumericFunctions_Initial<MODEL, RESULT, NAMED_RET, ALIAS_RET, NAMED_SUM_LONG_RET, NAMED_COUNT_RET, NAMED_SHORT_RET, NAMED_INT_RET, NAMED_LONG_RET, NAMED_BIGDECIMAL_RET, ALIAS_SUM_LONG_RET, ALIAS_COUNT_RET, ALIAS_SHORT_RET, ALIAS_INT_RET, ALIAS_LONG_RET, ALIAS_BIGDECIMAL_RET> sqrt() {
+		add(Function_Arithmetic_Sqrt.INSTANCE);
+		
+		return this;
+	}
+
+	@Override
+	public ISharedStringFunctions_Initial<MODEL, RESULT, NAMED_RET, ALIAS_RET, NAMED_STRING_RET, ALIAS_STRING_RET> lower() {
+		add(Function_String_Lower.INSTANCE);
+		
+		return this;
+	}
+
+
+	@Override
+	public ISharedStringFunctions_Initial<MODEL, RESULT, NAMED_RET, ALIAS_RET, NAMED_STRING_RET, ALIAS_STRING_RET> upper() {
+		add(Function_String_Upper.INSTANCE);
+		
+		return this;
+	}
+
+	@Override
+	public ISharedStringFunctions_Initial<MODEL, RESULT, NAMED_RET, ALIAS_RET, NAMED_STRING_RET, ALIAS_STRING_RET> trim() {
+		add(Function_String_Trim.INSTANCE);
+		
+		return this;
+	}
 }

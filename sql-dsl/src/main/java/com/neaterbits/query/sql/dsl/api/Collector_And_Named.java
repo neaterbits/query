@@ -118,7 +118,7 @@ abstract class Collector_And_Named<
 			}
 		};
 
-		return new Collector_SharedFunctions_Named<>(cb);
+		return new Collector_ConditionFunctions_Named<>(cb);
 	}
 
 	@Override

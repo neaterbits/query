@@ -140,5 +140,41 @@ final class Collector_MapFunctions_Named<
 	public <T> BIGDECIMAL_RET sum(IFunctionBigDecimal<T> field) {
 		return addAndReturnType(Function_Aggregate.SUM, field);
 	}
+
+	// NoParam
+	@Override
+	public ISharedMapFunctions_Numeric_Named<MODEL, RESULT, RET, SUM_LONG_RET, COUNT_RET, SHORT_RET, INT_RET, LONG_RET, BIGDECIMAL_RET> abs() {
+		add(Function_Arithmetic_Abs.INSTANCE);
+		
+		return this;
+	}
+
+	@Override
+	public ISharedMapFunctions_Numeric_Named<MODEL, RESULT, RET, SUM_LONG_RET, COUNT_RET, SHORT_RET, INT_RET, LONG_RET, BIGDECIMAL_RET> sqrt() {
+		add(Function_Arithmetic_Sqrt.INSTANCE);
+
+		return this;
+	}
+
+	@Override
+	public ISharedFunctions_String_Named<MODEL, RESULT, RET, STRING_RET> lower() {
+		add(Function_String_Lower.INSTANCE);
+		
+		return this;
+	}
+
+	@Override
+	public ISharedFunctions_String_Named<MODEL, RESULT, RET, STRING_RET> upper() {
+		add(Function_String_Upper.INSTANCE);
+		
+		return this;
+	}
+
+	@Override
+	public ISharedFunctions_String_Named<MODEL, RESULT, RET, STRING_RET> trim() {
+		add(Function_String_Trim.INSTANCE);
+		
+		return this;
+	}
 }
 

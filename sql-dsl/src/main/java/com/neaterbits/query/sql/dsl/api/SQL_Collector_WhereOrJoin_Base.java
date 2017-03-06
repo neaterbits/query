@@ -195,7 +195,7 @@ abstract class SQL_Collector_WhereOrJoin_Base<
 			}
 		};
 		
-		return new Collector_SharedFunctions_Named<>(cb);
+		return new Collector_ConditionFunctions_Named<>(cb);
 	}
 	
 
@@ -338,7 +338,7 @@ abstract class SQL_Collector_WhereOrJoin_Base<
 			}
 		};
 	
-		return new Collector_SharedFunctions_Alias<>(cb);
+		return new Collector_ConditionFunctions_Alias<>(cb);
 	}
 	// ------------------------  WHERE ------------------------
 

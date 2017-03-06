@@ -121,7 +121,7 @@ abstract class Collector_And_Or_Named_And_Alias_Base<
 			}
 		};
 
-		return new Collector_SharedFunctions_Named<>(cb);
+		return new Collector_ConditionFunctions_Named<>(cb);
 		
 	}
 	
@@ -173,7 +173,7 @@ abstract class Collector_And_Or_Named_And_Alias_Base<
 			}
 		};
 
-		return new Collector_SharedFunctions_Named<>(cb);
+		return new Collector_ConditionFunctions_Named<>(cb);
 	}
 	
 	// ------------------------  AND helpers ------------------------
@@ -348,7 +348,7 @@ abstract class Collector_And_Or_Named_And_Alias_Base<
 			}
 		};
 	
-		return new Collector_SharedFunctions_Alias<>(cb);
+		return new Collector_ConditionFunctions_Alias<>(cb);
 	}
 	
 	// ------------------------  AND helpers ------------------------
@@ -447,7 +447,7 @@ abstract class Collector_And_Or_Named_And_Alias_Base<
 				}
 			};
 
-			return new Collector_SharedFunctions_Alias<>(cb);
+			return new Collector_ConditionFunctions_Alias<>(cb);
 		}
 
 	// ------------------------  OR helpers ------------------------

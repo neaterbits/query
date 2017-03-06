@@ -101,7 +101,7 @@ abstract class Collector_Or_Alias<
 			}
 		};
 
-		return new Collector_SharedFunctions_Alias<>(cb);
+		return new Collector_ConditionFunctions_Alias<>(cb);
 	}
 
 	@Override

@@ -3,14 +3,7 @@ package com.neaterbits.query.sql.dsl.api;
 import java.util.ArrayList;
 import java.util.List;
 
-abstract class Collector_SharedFunctions_Base<
-		MODEL,
-		RESULT,
-
-		// commented out since reused for mapping functions 
-		RET // extends ISharedLogical_Base<MODEL, RESULT>
-
-		> {
+abstract class Collector_SharedFunctions_Base<MODEL, RESULT> {
 	
 	private final List<FunctionBase> functions;
 

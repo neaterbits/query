@@ -2,7 +2,7 @@ package com.neaterbits.query.sql.dsl.api;
 
 import java.util.function.Supplier;
 
-class Collector_SharedFunctions_Alias<
+abstract class Collector_SharedFunctions_Alias<
 		MODEL,
 		RESULT,
 
@@ -15,11 +15,12 @@ class Collector_SharedFunctions_Alias<
 		
 		>
 
-		extends Collector_SharedFunctions_Base<MODEL, RESULT, RET>
+		extends Collector_SharedFunctions_Base<MODEL, RESULT>
 
-		implements 
+		implements ISharedFunctions_Transform_Initial_Alias<MODEL, RESULT, RET, INTEGER_CLAUSE, LONG_CLAUSE, STRING_CLAUSE>
 
-			ISharedFunctions_Initial_And_NoParam_Alias<MODEL, RESULT, RET, INTEGER_CLAUSE, LONG_CLAUSE, STRING_CLAUSE> {
+
+{
 
 	private final ISharedCollector_Functions_Callback_Alias<MODEL, RESULT, RET> func;
 
@@ -65,12 +66,6 @@ class Collector_SharedFunctions_Alias<
 		return (STRING_CLAUSE) addAndReturnString(Function_String_Lower.INSTANCE, getter);
 	}
 
-	@Override
-	public ISharedFunctions_String_Alias<MODEL, RESULT, RET, STRING_CLAUSE> lower() {
-		add(Function_String_Lower.INSTANCE);
-
-		return this;
-	}
 
 	@Override
 	@SuppressWarnings("unchecked")
@@ -79,23 +74,9 @@ class Collector_SharedFunctions_Alias<
 	}
 
 	@Override
-	public ISharedFunctions_String_Alias<MODEL, RESULT, RET, STRING_CLAUSE> upper() {
-		add(Function_String_Upper.INSTANCE);
-
-		return this;
-	}
-
-	@Override
 	@SuppressWarnings("unchecked")
 	public <T> STRING_CLAUSE trim(ISupplierString getter) {
 		return (STRING_CLAUSE) addAndReturnString(Function_String_Trim.INSTANCE, getter);
-	}
-
-	@Override
-	public ISharedFunctions_String_Alias<MODEL, RESULT, RET, STRING_CLAUSE> trim() {
-		add(Function_String_Trim.INSTANCE);
-
-		return this;
 	}
 
 	@Override
@@ -109,13 +90,6 @@ class Collector_SharedFunctions_Alias<
 	}
 
 	@Override
-	public ISharedFunctions_Arithmetic_Alias<MODEL, RESULT, RET, INTEGER_CLAUSE, LONG_CLAUSE> abs() {
-		add(Function_Arithmetic_Abs.INSTANCE);
-
-		return this;
-	}
-
-	@Override
 	public <T> INTEGER_CLAUSE sqrt(ISupplierInteger getter) {
 		return addAndReturnComparable(Function_Arithmetic_Sqrt.INSTANCE, getter);
 	}
@@ -125,10 +99,4 @@ class Collector_SharedFunctions_Alias<
 		return addAndReturnComparable(Function_Arithmetic_Sqrt.INSTANCE, getter);
 	}
 
-	@Override
-	public ISharedFunctions_Arithmetic_Alias<MODEL, RESULT, RET, INTEGER_CLAUSE, LONG_CLAUSE> sqrt() {
-		add(Function_Arithmetic_Sqrt.INSTANCE);
-
-		return this;
-	}
 }

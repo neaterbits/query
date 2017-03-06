@@ -13,7 +13,7 @@ import java.util.function.Function;
  * @param <STRING_NEXT>
  */
 
-class Collector_SharedFunctions_Named<
+abstract class Collector_SharedFunctions_Named<
 				MODEL,
 				RESULT,
 				RET extends ISharedFunction_After<MODEL, RESULT>,
@@ -24,9 +24,11 @@ class Collector_SharedFunctions_Named<
 				
 				>
 
-	extends Collector_SharedFunctions_Base<MODEL, RESULT, RET>
+	extends Collector_SharedFunctions_Base<MODEL, RESULT>
 
-	implements ISharedFunctions_Initial_And_NoParam_Named<MODEL, RESULT, RET, INTEGER_NEXT, LONG_NEXT, STRING_NEXT> {
+	implements ISharedFunctions_Transform_Initial_Named<MODEL, RESULT, RET, INTEGER_NEXT, LONG_NEXT, STRING_NEXT>
+
+{
 		
 	private final ISharedCollector_Functions_Callback_Named<MODEL, RESULT, RET> func;
 	
@@ -72,12 +74,6 @@ class Collector_SharedFunctions_Named<
 		return (STRING_NEXT)addAndReturnString(Function_String_Lower.INSTANCE, getter);
 	}
 
-	@Override
-	public ISharedFunctions_String_Named<MODEL, RESULT, RET, STRING_NEXT> lower() {
-		add(Function_String_Lower.INSTANCE);
-		
-		return this;
-	}
 
 	@Override
 	@SuppressWarnings("unchecked")
@@ -86,23 +82,9 @@ class Collector_SharedFunctions_Named<
 	}
 
 	@Override
-	public ISharedFunctions_String_Named<MODEL, RESULT, RET, STRING_NEXT> upper() {
-		add(Function_String_Upper.INSTANCE);
-
-		return this;
-	}
-
-	@Override
 	@SuppressWarnings("unchecked")
 	public <T> STRING_NEXT trim(StringFunction<T> getter) {
 		return (STRING_NEXT)addAndReturnString(Function_String_Trim.INSTANCE, getter);
-	}
-
-	@Override
-	public ISharedFunctions_String_Named<MODEL, RESULT, RET, STRING_NEXT> trim() {
-		add(Function_String_Trim.INSTANCE);
-
-		return this;
 	}
 
 	@Override
@@ -116,13 +98,6 @@ class Collector_SharedFunctions_Named<
 	}
 
 	@Override
-	public ISharedFunctions_Arithmetic_Named<MODEL, RESULT, RET, INTEGER_NEXT, LONG_NEXT> abs() {
-		add(Function_Arithmetic_Abs.INSTANCE);
-
-		return this;
-	}
-
-	@Override
 	public <T> INTEGER_NEXT sqrt(IFunctionInteger<T> getter) {
 		return addAndReturnComparable(Function_Arithmetic_Sqrt.INSTANCE, getter);
 	}
@@ -132,10 +107,4 @@ class Collector_SharedFunctions_Named<
 		return addAndReturnComparable(Function_Arithmetic_Sqrt.INSTANCE, getter);
 	}
 
-	@Override
-	public ISharedFunctions_Arithmetic_Named<MODEL, RESULT, RET, INTEGER_NEXT, LONG_NEXT> sqrt() {
-		add(Function_Arithmetic_Sqrt.INSTANCE);
-
-		return this;
-	}
 }

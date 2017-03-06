@@ -7,7 +7,7 @@ public interface ISharedMapFunctions_Named<
 		RET extends ISharedSelectSourceBuilder<MODEL, RESULT>,
 		
 		SUM_LONG_NEXT	extends ISharedFunction_Next<MODEL, RESULT, RET>,
-		COUNT_RET	extends ISharedFunction_Next<MODEL, RESULT, RET>,
+		COUNT_NEXT	extends ISharedFunction_Next<MODEL, RESULT, RET>,
 		
 		
 		SHORT_NEXT	extends ISharedFunction_Next<MODEL, RESULT, RET>,
@@ -18,15 +18,11 @@ public interface ISharedMapFunctions_Named<
 
 		>
 		
-		extends 
+		extends
 		
-		// named without no-param (because of signature collision)
-		ISharedFunctions_All_Transform_Named<MODEL, RESULT, RET, INT_NEXT, LONG_NEXT, STRING_NEXT>,
-		
-		// Aggregates as well 
-		ISharedFunctions_Aggregate_Named<SUM_LONG_NEXT, COUNT_RET, SHORT_NEXT, INT_NEXT, LONG_NEXT, BIGDECIMAL_NEXT>
+			ISharedMapFunctions_Numeric_Named<MODEL, RESULT, RET, SUM_LONG_NEXT, COUNT_NEXT, SHORT_NEXT, INT_NEXT, LONG_NEXT, BIGDECIMAL_NEXT>,
 
-
-{
+			ISharedFunctions_String_Named<MODEL, RESULT, RET, STRING_NEXT>,
+			ISharedFunctions_String_NoParam_Named<MODEL, RESULT, RET, STRING_NEXT> {
 
 }

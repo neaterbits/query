@@ -248,7 +248,6 @@ public class ShortAPITest extends BaseSQLAPITest {
 				//.map(Company::getName) .to (CompanyResultsVO::setName)
 				.map().sqrt().sum ( Company::getStockPrice) .to (CompanyResultsVO::setSumStockPrice)
 
-
 				.map().sqrt().avg(Company::getStockPrice).to(CompanyResultsVO::setAvgStockPrice)
 
 				.where(Company::getName).startsWith("Acme")
