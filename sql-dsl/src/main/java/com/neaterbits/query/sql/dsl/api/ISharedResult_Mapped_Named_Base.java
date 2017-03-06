@@ -24,6 +24,7 @@ public interface ISharedResult_Mapped_Named_Base<
 			ISharedResultMapperTo<MODEL, RESULT, Short, 	 RET>,
 			ISharedResultMapperTo<MODEL, RESULT, Integer, 	 RET>,
 			ISharedResultMapperTo<MODEL, RESULT, Long, 		 RET>,
+			ISharedResultMapperTo<MODEL, RESULT, Double,     RET>,
 			ISharedResultMapperTo<MODEL, RESULT, BigDecimal, RET>,
 			ISharedResultMapperTo<MODEL, RESULT, String, 	 RET>
 		> 

@@ -17,6 +17,7 @@ final class Collector_MapFunctions_Named<
 			SHORT_RET 		extends ISharedFunction_Next<MODEL, RESULT, RET>,
 			INT_RET	  		extends ISharedFunction_Next<MODEL, RESULT, RET>,
 			LONG_RET		extends ISharedFunction_Next<MODEL, RESULT, RET>,
+			DOUBLE_RET		extends ISharedFunction_Next<MODEL, RESULT, RET>,
 			BIGDECIMAL_RET	extends ISharedFunction_Next<MODEL, RESULT, RET>,
 			STRING_RET		extends ISharedFunction_Next<MODEL, RESULT, RET>
 
@@ -31,11 +32,12 @@ final class Collector_MapFunctions_Named<
 			
 			INT_RET,
 			LONG_RET,
+			DOUBLE_RET,
 			STRING_RET> 
 
 
 			
-		implements ISharedMapFunctions_Named<MODEL, RESULT, RET, SUM_LONG_RET, COUNT_RET, SHORT_RET, INT_RET, LONG_RET, BIGDECIMAL_RET, STRING_RET> {
+		implements ISharedMapFunctions_Named<MODEL, RESULT, RET, SUM_LONG_RET, COUNT_RET, SHORT_RET, INT_RET, LONG_RET, DOUBLE_RET, BIGDECIMAL_RET, STRING_RET> {
 
 	Collector_MapFunctions_Named(ISharedCollector_Functions_Callback_Named<MODEL, RESULT, RET> func, Collector_SharedFunctions_Base<MODEL, RESULT> last) {
 		super(func, last);
@@ -143,25 +145,37 @@ final class Collector_MapFunctions_Named<
 
 	// NoParam
 	@Override
-	public ISharedMapFunctions_Numeric_Named<MODEL, RESULT, RET, SUM_LONG_RET, COUNT_RET, SHORT_RET, INT_RET, LONG_RET, BIGDECIMAL_RET> abs() {
+	public ISharedMapFunctions_Numeric_Named<MODEL, RESULT, RET, SUM_LONG_RET, COUNT_RET, SHORT_RET, INT_RET, LONG_RET, DOUBLE_RET, BIGDECIMAL_RET> abs() {
 		add(Function_Arithmetic_Abs.INSTANCE);
 		
 		return this;
 	}
 
+	/*
 	@Override
-	public ISharedMapFunctions_Numeric_Named<MODEL, RESULT, RET, SUM_LONG_RET, COUNT_RET, SHORT_RET, INT_RET, LONG_RET, BIGDECIMAL_RET> sqrt() {
+	public ISharedMapFunctions_Numeric_Named<MODEL, RESULT, RET, SUM_LONG_RET, COUNT_RET, SHORT_RET, INT_RET, LONG_RET, DOUBLE_RET, BIGDECIMAL_RET> sqrt() {
 		add(Function_Arithmetic_Sqrt.INSTANCE);
 
 		return this;
 	}
+	*/
 
+	@SuppressWarnings({"unchecked", "rawtypes"})
+	@Override
+	public ISharedMapFunctions_Numeric_Named<MODEL, RESULT, RET, DOUBLE_RET, DOUBLE_RET, DOUBLE_RET, DOUBLE_RET, DOUBLE_RET, DOUBLE_RET, DOUBLE_RET> sqrt() {
+		add(Function_Arithmetic_Sqrt.INSTANCE);
+
+		return (ISharedMapFunctions_Numeric_Named)this;
+	}
+	
+	
 	@Override
 	public ISharedFunctions_String_Named<MODEL, RESULT, RET, STRING_RET> lower() {
 		add(Function_String_Lower.INSTANCE);
 		
 		return this;
 	}
+
 
 	@Override
 	public ISharedFunctions_String_Named<MODEL, RESULT, RET, STRING_RET> upper() {

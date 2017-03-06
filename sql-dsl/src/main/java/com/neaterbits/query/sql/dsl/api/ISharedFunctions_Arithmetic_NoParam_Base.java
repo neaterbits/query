@@ -1,9 +1,17 @@
 package com.neaterbits.query.sql.dsl.api;
 
-public interface ISharedFunctions_Arithmetic_NoParam_Base<MODEL, RESULT, RET> {
+public interface ISharedFunctions_Arithmetic_NoParam_Base<
+		MODEL,
+		RESULT,
+		SAME_TYPE_RET,
 
-	RET abs();
+		DOUBLE_RET // trick: must return double-type so that forwards double-type (or whatever it is defined as) all the way to the mapper  
+	> 
 
-	RET sqrt();
+{
+
+	SAME_TYPE_RET abs();
+
+	DOUBLE_RET sqrt();
 
 }

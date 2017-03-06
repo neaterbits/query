@@ -14,6 +14,7 @@ final class SharedMapFunctions_Initial<
 		NAMED_SHORT_RET		extends ISharedFunction_Next<MODEL, RESULT, NAMED_RET>,
 		NAMED_INT_RET		extends ISharedFunction_Next<MODEL, RESULT, NAMED_RET>,
 		NAMED_LONG_RET		extends ISharedFunction_Next<MODEL, RESULT, NAMED_RET>,
+		NAMED_DOUBLE_RET	extends ISharedFunction_Next<MODEL, RESULT, NAMED_RET>,
 		NAMED_BIGDECIMAL_RET extends ISharedFunction_Next<MODEL, RESULT, NAMED_RET>,
 		NAMED_STRING_RET 	extends ISharedFunction_Next<MODEL, RESULT, NAMED_RET>,
 		
@@ -22,6 +23,7 @@ final class SharedMapFunctions_Initial<
 		ALIAS_SHORT_RET		extends ISharedFunction_Next<MODEL, RESULT, ALIAS_RET>,
 		ALIAS_INT_RET		extends ISharedFunction_Next<MODEL, RESULT, ALIAS_RET>,
 		ALIAS_LONG_RET		extends ISharedFunction_Next<MODEL, RESULT, ALIAS_RET>,
+		ALIAS_DOUBLE_RET	extends ISharedFunction_Next<MODEL, RESULT, ALIAS_RET>,
 		ALIAS_BIGDECIMAL_RET extends ISharedFunction_Next<MODEL, RESULT, ALIAS_RET>,
 		ALIAS_STRING_RET 	extends ISharedFunction_Next<MODEL, RESULT, ALIAS_RET>
 		>
@@ -40,6 +42,7 @@ final class SharedMapFunctions_Initial<
 			NAMED_SHORT_RET,
 			NAMED_INT_RET,
 			NAMED_LONG_RET,
+			NAMED_DOUBLE_RET,
 			NAMED_BIGDECIMAL_RET,
 			NAMED_STRING_RET,
 
@@ -48,14 +51,15 @@ final class SharedMapFunctions_Initial<
 			ALIAS_SHORT_RET,
 			ALIAS_INT_RET,
 			ALIAS_LONG_RET,
+			ALIAS_DOUBLE_RET,
 			ALIAS_BIGDECIMAL_RET,
 			ALIAS_STRING_RET
 		> {
 		
 			
 			
-	private Collector_MapFunctions_Named<MODEL, RESULT, NAMED_RET, NAMED_SUM_LONG_RET, NAMED_COUNT_RET, NAMED_SHORT_RET, NAMED_INT_RET, NAMED_LONG_RET, NAMED_BIGDECIMAL_RET, NAMED_STRING_RET> named;
-	private Collector_MapFunctions_Alias<MODEL, RESULT, ALIAS_RET, ALIAS_SUM_LONG_RET, ALIAS_COUNT_RET, ALIAS_SHORT_RET, ALIAS_INT_RET, ALIAS_LONG_RET, ALIAS_BIGDECIMAL_RET, ALIAS_STRING_RET> alias;
+	private Collector_MapFunctions_Named<MODEL, RESULT, NAMED_RET, NAMED_SUM_LONG_RET, NAMED_COUNT_RET, NAMED_SHORT_RET, NAMED_INT_RET, NAMED_LONG_RET, NAMED_DOUBLE_RET, NAMED_BIGDECIMAL_RET, NAMED_STRING_RET> named;
+	private Collector_MapFunctions_Alias<MODEL, RESULT, ALIAS_RET, ALIAS_SUM_LONG_RET, ALIAS_COUNT_RET, ALIAS_SHORT_RET, ALIAS_INT_RET, ALIAS_LONG_RET, ALIAS_DOUBLE_RET, ALIAS_BIGDECIMAL_RET, ALIAS_STRING_RET> alias;
 
     
     private final ISharedCollector_Functions_Callback_Named<MODEL, RESULT, NAMED_RET> namedCallback;
@@ -76,7 +80,7 @@ final class SharedMapFunctions_Initial<
 
 
 
-	Collector_MapFunctions_Alias<MODEL, RESULT, ALIAS_RET, ALIAS_SUM_LONG_RET, ALIAS_COUNT_RET, ALIAS_SHORT_RET, ALIAS_INT_RET, ALIAS_LONG_RET, ALIAS_BIGDECIMAL_RET, ALIAS_STRING_RET> 
+	Collector_MapFunctions_Alias<MODEL, RESULT, ALIAS_RET, ALIAS_SUM_LONG_RET, ALIAS_COUNT_RET, ALIAS_SHORT_RET, ALIAS_INT_RET, ALIAS_LONG_RET, ALIAS_DOUBLE_RET, ALIAS_BIGDECIMAL_RET, ALIAS_STRING_RET> 
     
     	alias() {
     		
@@ -92,7 +96,7 @@ final class SharedMapFunctions_Initial<
 	}
     	
     	
-	Collector_MapFunctions_Named<MODEL, RESULT, NAMED_RET, NAMED_SUM_LONG_RET, NAMED_COUNT_RET, NAMED_SHORT_RET, NAMED_INT_RET, NAMED_LONG_RET, NAMED_BIGDECIMAL_RET, NAMED_STRING_RET>
+	Collector_MapFunctions_Named<MODEL, RESULT, NAMED_RET, NAMED_SUM_LONG_RET, NAMED_COUNT_RET, NAMED_SHORT_RET, NAMED_INT_RET, NAMED_LONG_RET, NAMED_DOUBLE_RET, NAMED_BIGDECIMAL_RET, NAMED_STRING_RET>
     	
 			named() {
 
@@ -299,22 +303,22 @@ final class SharedMapFunctions_Initial<
 	}
 
 	@Override
-	public <T> NAMED_INT_RET sqrt(IFunctionInteger<T> getter) {
+	public <T> NAMED_DOUBLE_RET sqrt(IFunctionInteger<T> getter) {
 		return named().sqrt(getter);
 	}
 
 	@Override
-	public <T> NAMED_LONG_RET sqrt(IFunctionLong<T> getter) {
+	public <T> NAMED_DOUBLE_RET sqrt(IFunctionLong<T> getter) {
 		return named().sqrt(getter);
 	}
 
 	@Override
-	public <T> ALIAS_INT_RET sqrt(ISupplierInteger getter) {
+	public <T> ALIAS_DOUBLE_RET sqrt(ISupplierInteger getter) {
 		return alias().sqrt(getter);
 	}
 
 	@Override
-	public <T> ALIAS_LONG_RET sqrt(ISupplierLong getter) {
+	public <T> ALIAS_DOUBLE_RET sqrt(ISupplierLong getter) {
 		return alias().sqrt(getter);
 	}
 
@@ -379,18 +383,32 @@ final class SharedMapFunctions_Initial<
 	}
 
 	@Override
-	public ISharedNumericFunctions_Initial<MODEL, RESULT, NAMED_RET, ALIAS_RET, NAMED_SUM_LONG_RET, NAMED_COUNT_RET, NAMED_SHORT_RET, NAMED_INT_RET, NAMED_LONG_RET, NAMED_BIGDECIMAL_RET, ALIAS_SUM_LONG_RET, ALIAS_COUNT_RET, ALIAS_SHORT_RET, ALIAS_INT_RET, ALIAS_LONG_RET, ALIAS_BIGDECIMAL_RET> abs() {
+	public ISharedNumericFunctions_Initial<MODEL, RESULT, NAMED_RET, ALIAS_RET, NAMED_SUM_LONG_RET, NAMED_COUNT_RET, NAMED_SHORT_RET, NAMED_INT_RET, NAMED_LONG_RET, NAMED_DOUBLE_RET, NAMED_BIGDECIMAL_RET, ALIAS_SUM_LONG_RET, ALIAS_COUNT_RET, ALIAS_SHORT_RET, ALIAS_INT_RET, ALIAS_LONG_RET, ALIAS_DOUBLE_RET, ALIAS_BIGDECIMAL_RET> abs() {
 		add(Function_Arithmetic_Abs.INSTANCE);
 		
 		return this;
 	}
 
+	
+	/*
 	@Override
-	public ISharedNumericFunctions_Initial<MODEL, RESULT, NAMED_RET, ALIAS_RET, NAMED_SUM_LONG_RET, NAMED_COUNT_RET, NAMED_SHORT_RET, NAMED_INT_RET, NAMED_LONG_RET, NAMED_BIGDECIMAL_RET, ALIAS_SUM_LONG_RET, ALIAS_COUNT_RET, ALIAS_SHORT_RET, ALIAS_INT_RET, ALIAS_LONG_RET, ALIAS_BIGDECIMAL_RET> sqrt() {
+	public ISharedNumericFunctions_Initial<MODEL, RESULT, NAMED_RET, ALIAS_RET, NAMED_SUM_LONG_RET, NAMED_COUNT_RET, NAMED_SHORT_RET, NAMED_INT_RET, NAMED_LONG_RET, NAMED_DOUBLE_RET, NAMED_BIGDECIMAL_RET, ALIAS_SUM_LONG_RET, ALIAS_COUNT_RET, ALIAS_SHORT_RET, ALIAS_INT_RET, ALIAS_LONG_RET, ALIAS_DOUBLE_RET, ALIAS_BIGDECIMAL_RET> sqrt() {
 		add(Function_Arithmetic_Sqrt.INSTANCE);
 		
 		return this;
 	}
+	*/
+
+	@Override
+	@SuppressWarnings({"unchecked", "rawtypes"})
+	public ISharedNumericFunctions_Initial<MODEL, RESULT, NAMED_RET, ALIAS_RET, NAMED_DOUBLE_RET, NAMED_DOUBLE_RET, NAMED_DOUBLE_RET, NAMED_DOUBLE_RET, NAMED_DOUBLE_RET, NAMED_DOUBLE_RET, NAMED_DOUBLE_RET, ALIAS_DOUBLE_RET, ALIAS_DOUBLE_RET, ALIAS_DOUBLE_RET, ALIAS_DOUBLE_RET, ALIAS_DOUBLE_RET, ALIAS_DOUBLE_RET, ALIAS_DOUBLE_RET> sqrt() {
+		add(Function_Arithmetic_Sqrt.INSTANCE);
+		
+		return (ISharedNumericFunctions_Initial)this;
+	}
+
+
+
 
 	@Override
 	public ISharedStringFunctions_Initial<MODEL, RESULT, NAMED_RET, ALIAS_RET, NAMED_STRING_RET, ALIAS_STRING_RET> lower() {

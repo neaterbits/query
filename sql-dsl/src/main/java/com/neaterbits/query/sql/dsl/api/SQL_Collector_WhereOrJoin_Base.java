@@ -172,6 +172,7 @@ abstract class SQL_Collector_WhereOrJoin_Base<
 	
 		ISharedCondition_Comparable_Common_All_Compilable<MODEL, RESULT, Integer, NAMED_AND_OR>,
 		ISharedCondition_Comparable_Common_All_Compilable<MODEL, RESULT, Long, NAMED_AND_OR>,
+		ISharedCondition_Comparable_Common_All_Compilable<MODEL, RESULT, Double, NAMED_AND_OR>,
 		ISharedCondition_Comparable_String_All_Compilable<MODEL, RESULT, NAMED_AND_OR>> 
 
 			whereNamed() {
@@ -314,6 +315,7 @@ abstract class SQL_Collector_WhereOrJoin_Base<
 			
 			ISharedCondition_Comparable_Common_All<MODEL, RESULT, Integer, ALIAS_AND_OR>,
 			ISharedCondition_Comparable_Common_All<MODEL, RESULT, Long, ALIAS_AND_OR>,
+			ISharedCondition_Comparable_Common_All<MODEL, RESULT, Double, ALIAS_AND_OR>,
 			ISharedCondition_Comparable_String_All<MODEL, RESULT, ALIAS_AND_OR>
 	> 
 	

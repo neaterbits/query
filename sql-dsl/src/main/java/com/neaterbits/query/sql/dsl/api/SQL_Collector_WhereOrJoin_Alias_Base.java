@@ -85,6 +85,7 @@ abstract class SQL_Collector_WhereOrJoin_Alias_Base<
 			
 			ISharedCondition_Comparable_Common_All<MODEL, RESULT, Integer, AND_OR>,
 			ISharedCondition_Comparable_Common_All<MODEL, RESULT, Long, AND_OR>,
+			ISharedCondition_Comparable_Common_All<MODEL, RESULT, Double, AND_OR>,
 			ISharedCondition_Comparable_String_All<MODEL, RESULT, AND_OR>
 	> 
 	

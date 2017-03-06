@@ -5,6 +5,18 @@ class CompanySqrtAggregatesVO {
 	private Double sqrtAvgStockPrice;
 	private Double sqrtSumStockPrice;
 
+	
+	
+	CompanySqrtAggregatesVO() {
+		
+	}
+
+	
+	CompanySqrtAggregatesVO(Double sqrtAvgStockPrice, Double sqrtSumStockPrice) {
+		this.sqrtAvgStockPrice = sqrtAvgStockPrice;
+		this.sqrtSumStockPrice = sqrtSumStockPrice;
+	}
+
 	Double getSqrtAvgStockPrice() {
 		return sqrtAvgStockPrice;
 	}
@@ -20,8 +32,8 @@ class CompanySqrtAggregatesVO {
 	void setSqrtSumStockPrice(Double sqrtSumStockPrice) {
 		this.sqrtSumStockPrice = sqrtSumStockPrice;
 	}
-	@Override
 	
+	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
@@ -50,4 +62,13 @@ class CompanySqrtAggregatesVO {
 			return false;
 		return true;
 	}
+
+
+	@Override
+	public String toString() {
+		return "CompanySqrtAggregatesVO [sqrtAvgStockPrice=" + sqrtAvgStockPrice + ", sqrtSumStockPrice="
+				+ sqrtSumStockPrice + "]";
+	}
+
+	
 }

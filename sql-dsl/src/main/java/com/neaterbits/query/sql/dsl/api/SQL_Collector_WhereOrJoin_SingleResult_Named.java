@@ -37,9 +37,9 @@ final class SQL_Collector_WhereOrJoin_SingleResult_Named<MODEL, RESULT>
 			MODEL,
 			RESULT,
 			ISQLLogical_And_NonProcessResult_Named<MODEL, RESULT>,
-			ISharedCondition_Comparable_Common_All<MODEL, RESULT, Integer,
-			ISQLLogical_And_NonProcessResult_Named<MODEL, RESULT>>, 
+			ISharedCondition_Comparable_Common_All<MODEL, RESULT, Integer,ISQLLogical_And_NonProcessResult_Named<MODEL, RESULT>>, 
 			ISharedCondition_Comparable_Common_All<MODEL, RESULT, Long, ISQLLogical_And_NonProcessResult_Named<MODEL, RESULT>>,
+			ISharedCondition_Comparable_Common_All<MODEL, RESULT, Double, ISQLLogical_And_NonProcessResult_Named<MODEL, RESULT>>,
 			ISharedCondition_Comparable_String_All<MODEL, RESULT, ISQLLogical_And_NonProcessResult_Named<MODEL, RESULT>>>
 	
 			and() {
@@ -54,6 +54,7 @@ final class SQL_Collector_WhereOrJoin_SingleResult_Named<MODEL, RESULT>
 			ISQLLogical_Or_NonProcessResult_Named<MODEL, RESULT>,
 			ISharedCondition_Comparable_Common_All<MODEL, RESULT, Integer, ISQLLogical_Or_NonProcessResult_Named<MODEL, RESULT>>,
 			ISharedCondition_Comparable_Common_All<MODEL, RESULT, Long, ISQLLogical_Or_NonProcessResult_Named<MODEL, RESULT>>,
+			ISharedCondition_Comparable_Common_All<MODEL, RESULT, Double, ISQLLogical_Or_NonProcessResult_Named<MODEL, RESULT>>,
 			ISharedCondition_Comparable_String_All<MODEL, RESULT, ISQLLogical_Or_NonProcessResult_Named<MODEL, RESULT>>>
 	
 			or() {

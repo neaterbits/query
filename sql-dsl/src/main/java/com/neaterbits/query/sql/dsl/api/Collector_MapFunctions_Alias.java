@@ -16,6 +16,7 @@ final class Collector_MapFunctions_Alias<
 		SHORT_RET 	extends ISharedFunction_Next<MODEL, RESULT, RET>,
 		INT_RET 	extends ISharedFunction_Next<MODEL, RESULT, RET>, 
 		LONG_RET 	extends ISharedFunction_Next<MODEL, RESULT, RET>,
+		DOUBLE_RET 	extends ISharedFunction_Next<MODEL, RESULT, RET>,
 		BIGDECIMAL_RET extends ISharedFunction_Next<MODEL, RESULT, RET>,
 		STRING_RET 	extends ISharedFunction_Next<MODEL, RESULT, RET>
 	>
@@ -29,12 +30,13 @@ final class Collector_MapFunctions_Alias<
 
 		INT_RET,
 		LONG_RET,
+		DOUBLE_RET,
 		STRING_RET> 
 	
 	
 		implements 
 		
-			ISharedMapFunctions_Alias<MODEL, RESULT, RET, SUM_LONG_RET, COUNT_RET, SHORT_RET, INT_RET, LONG_RET, BIGDECIMAL_RET, STRING_RET>
+			ISharedMapFunctions_Alias<MODEL, RESULT, RET, SUM_LONG_RET, COUNT_RET, SHORT_RET, INT_RET, LONG_RET, DOUBLE_RET, BIGDECIMAL_RET, STRING_RET>
 	
 	{
 

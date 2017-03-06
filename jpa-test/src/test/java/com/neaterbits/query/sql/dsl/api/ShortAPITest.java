@@ -157,7 +157,7 @@ public class ShortAPITest extends BaseSQLAPITest implements SumTest {
 	}
 	
 	public void foo() {
-		sqrt(sum(Company::getStockPrice)));
+		String s = sqrt(sum(Company::getStockPrice));
 	}
 	
 	
@@ -165,7 +165,7 @@ public class ShortAPITest extends BaseSQLAPITest implements SumTest {
     public void testSqrtOfAvgList() {
 		
 		final Company acme1 = new Company(1, "Acme1", new BigDecimal("45"));
-		final Company acme2 = new Company(2, "Acme2", new BigDecimal("51"));
+		final Company acme2 = new Company(2, "Acme2", new BigDecimal("53"));
 		final Company foo = new Company(3, "Foo", new BigDecimal("35.6"));
 
 		final SingleBuilt<CompanySqrtAggregatesVO> acmeQuery = select
@@ -174,9 +174,9 @@ public class ShortAPITest extends BaseSQLAPITest implements SumTest {
 				//.map(Company::getName) .to (CompanyResultsVO::setName)
 				//.map(sqrt(sum(Company::getStockPrice))) .to (CompanySqrtAggregatesVO::setSumStockPrice)
 				
-				.map().sqrt().sum(Company::getStockPrice) .to (CompanySqrtAggregatesVO::setSumStockPrice)
+				//.map().sqrt().sum(Company::getStockPrice) .to (CompanySqrtAggregatesVO::setSqrtSumStockPrice)
 
-				.map().sqrt().avg(Company::getStockPrice).to(CompanySqrtAggregatesVO::setAvgStockPrice)
+				.map().sqrt().avg(Company::getStockPrice).to(CompanySqrtAggregatesVO::setSqrtAvgStockPrice)
 
 				.where(Company::getName).startsWith("Acme")
 				.build();
@@ -187,11 +187,43 @@ public class ShortAPITest extends BaseSQLAPITest implements SumTest {
 		check(ds -> {
 	        checkSelectOneOrNull(
 	        		ds,
-	        		new CompanyAggregatesVO(null, new BigDecimal("124.95"), new BigDecimal("249.9")),
+	        		new CompanySqrtAggregatesVO(7.0, null),
 	        		acmeQuery,
 	        		q -> q.execute());
 		});
+	}
+	
+	@Test
+    public void testSumOfSqrtList() {
 		
+		final Company acme1 = new Company(1, "Acme1", new BigDecimal("49"));
+		final Company acme2 = new Company(2, "Acme2", new BigDecimal("120.5"));
+		final Company acme3 = new Company(3, "Acme2", new BigDecimal("256.5"));
+		final Company foo = new Company(4, "Foo", new BigDecimal("35.6"));
+
+		final SingleBuilt<CompanySqrtAggregatesVO> acmeQuery = select
+				.one(CompanySqrtAggregatesVO.class)
+
+				//.map(Company::getName) .to (CompanyResultsVO::setName)
+				
+				.map().sum().sqrt(Company::getStockPrice) .to (CompanySqrtAggregatesVO::setSqrtSumStockPrice)
+
+				.map().sqrt().avg(Company::getStockPrice).to(CompanySqrtAggregatesVO::setSqrtAvgStockPrice)
+
+				.where(Company::getName).startsWith("Acme")
+				.build();
+		
+		store(s  -> s.add(acme1)
+					 .add(acme2)
+					 .add(acme3)
+					 .add(foo)).
+		check(ds -> {
+	        checkSelectOneOrNull(
+	        		ds,
+	        		new CompanySqrtAggregatesVO(null, 35.0),
+	        		acmeQuery,
+	        		q -> q.execute());
+		});
 	}
 	
 	@Test

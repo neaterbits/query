@@ -8,20 +8,22 @@ class Collector_ConditionFunctions_Alias<
 		// commented out since reused for mapping functions 
 		RET extends ISharedFunction_After<MODEL, RESULT>,
 		
-		INTEGER_CLAUSE extends ISharedFunction_Next<MODEL, RESULT, RET>,
-		LONG_CLAUSE    extends ISharedFunction_Next<MODEL, RESULT, RET>,
-		STRING_CLAUSE  extends ISharedFunction_Next<MODEL, RESULT, RET>>
+		INTEGER_RET extends ISharedFunction_Next<MODEL, RESULT, RET>,
+		LONG_RET    extends ISharedFunction_Next<MODEL, RESULT, RET>,
+		DOUBLE_RET  extends ISharedFunction_Next<MODEL, RESULT, RET>,
+		STRING_RET  extends ISharedFunction_Next<MODEL, RESULT, RET>>
 
 	extends Collector_SharedFunctions_Alias<
 			MODEL, 
 			RESULT, 
 			RET,
 			
-			INTEGER_CLAUSE,
-			LONG_CLAUSE,
-			STRING_CLAUSE> 
+			INTEGER_RET,
+			LONG_RET,
+			DOUBLE_RET,
+			STRING_RET> 
 
-	implements ISharedFunctions_Initial_And_NoParam_Alias<MODEL, RESULT, RET, INTEGER_CLAUSE, LONG_CLAUSE, STRING_CLAUSE> 
+	implements ISharedFunctions_Initial_And_NoParam_Alias<MODEL, RESULT, RET, INTEGER_RET, LONG_RET, DOUBLE_RET, STRING_RET> 
 
 {
 	
@@ -30,35 +32,46 @@ class Collector_ConditionFunctions_Alias<
 	}
 
 	@Override
-	public ISharedFunctions_String_Alias<MODEL, RESULT, RET, STRING_CLAUSE> lower() {
+	public ISharedFunctions_String_Alias<MODEL, RESULT, RET, STRING_RET> lower() {
 		add(Function_String_Lower.INSTANCE);
 
 		return this;
 	}
 
 	@Override
-	public ISharedFunctions_String_Alias<MODEL, RESULT, RET, STRING_CLAUSE> upper() {
+	public ISharedFunctions_String_Alias<MODEL, RESULT, RET, STRING_RET> upper() {
 		add(Function_String_Upper.INSTANCE);
 
 		return this;
 	}
 
 	@Override
-	public ISharedFunctions_Arithmetic_Alias<MODEL, RESULT, RET, INTEGER_CLAUSE, LONG_CLAUSE> abs() {
+	public ISharedFunctions_Arithmetic_Alias<MODEL, RESULT, RET, INTEGER_RET, LONG_RET, DOUBLE_RET> abs() {
 		add(Function_Arithmetic_Abs.INSTANCE);
 
 		return this;
 	}
 
+	/*
 	@Override
-	public ISharedFunctions_Arithmetic_Alias<MODEL, RESULT, RET, INTEGER_CLAUSE, LONG_CLAUSE> sqrt() {
+	public ISharedFunctions_Arithmetic_Alias<MODEL, RESULT, RET, INTEGER_RET, LONG_RET, DOUBLE_RET> sqrt() {
 		add(Function_Arithmetic_Sqrt.INSTANCE);
 
 		return this;
 	}
+	*/
 
 	@Override
-	public ISharedFunctions_String_Alias<MODEL, RESULT, RET, STRING_CLAUSE> trim() {
+	@SuppressWarnings({"unchecked", "rawtypes"})
+	public ISharedFunctions_Arithmetic_Alias<MODEL, RESULT, RET, DOUBLE_RET, DOUBLE_RET, DOUBLE_RET> sqrt() {
+		add(Function_Arithmetic_Sqrt.INSTANCE);
+
+		return (ISharedFunctions_Arithmetic_Alias)this;
+	}
+	
+
+	@Override
+	public ISharedFunctions_String_Alias<MODEL, RESULT, RET, STRING_RET> trim() {
 		add(Function_String_Trim.INSTANCE);
 
 		return this;

@@ -30,6 +30,7 @@ public interface ISharedLogical_And_Named_Function
 			AND_CLAUSES,
 			ISharedCondition_Comparable_Common_All<MODEL, RESULT, Integer, AND_CLAUSES>,
 			ISharedCondition_Comparable_Common_All<MODEL, RESULT, Long, AND_CLAUSES>,
+			ISharedCondition_Comparable_Common_All<MODEL, RESULT, Double, AND_CLAUSES>,
 			ISharedCondition_Comparable_String_All<MODEL, RESULT, AND_CLAUSES>			
 			//INTEGER_CLAUSE, LONG_CLAUSE, STRING_CLAUSE
 			

@@ -65,6 +65,7 @@ final class Classic_Collector_MapToResult_Single<MODEL, RESULT>
 				ISharedResultMapperTo<MODEL, RESULT, Short, IClassicResult_Mapped_Single_Named<MODEL, RESULT>>,
 				ISharedResultMapperTo<MODEL, RESULT, Integer, IClassicResult_Mapped_Single_Named<MODEL, RESULT>>,
 				ISharedResultMapperTo<MODEL, RESULT, Long, IClassicResult_Mapped_Single_Named<MODEL, RESULT>>,
+				ISharedResultMapperTo<MODEL, RESULT, Double, IClassicResult_Mapped_Single_Named<MODEL, RESULT>>,
 				ISharedResultMapperTo<MODEL, RESULT, BigDecimal, IClassicResult_Mapped_Single_Named<MODEL, RESULT>>,
 				ISharedResultMapperTo<MODEL, RESULT, String, IClassicResult_Mapped_Single_Named<MODEL, RESULT>>,
 
@@ -73,6 +74,7 @@ final class Classic_Collector_MapToResult_Single<MODEL, RESULT>
 				ISharedResultMapperTo<MODEL, RESULT, Short, IClassicResult_Mapped_Single_Alias<MODEL, RESULT>>,
 				ISharedResultMapperTo<MODEL, RESULT, Integer, IClassicResult_Mapped_Single_Alias<MODEL, RESULT>>,
 				ISharedResultMapperTo<MODEL, RESULT, Long, IClassicResult_Mapped_Single_Alias<MODEL, RESULT>>, 
+				ISharedResultMapperTo<MODEL, RESULT, Double, IClassicResult_Mapped_Single_Alias<MODEL, RESULT>>, 
 				ISharedResultMapperTo<MODEL, RESULT, BigDecimal, IClassicResult_Mapped_Single_Alias<MODEL, RESULT>>,
 				ISharedResultMapperTo<MODEL, RESULT, String, IClassicResult_Mapped_Single_Alias<MODEL, RESULT>>
 			> 

@@ -10,7 +10,7 @@ import java.util.function.Function;
  * @param <RESULT>
  * @param <RET>
  * @param <COMPARABLE_CLAUSE>
- * @param <STRING_NEXT>
+ * @param <STRING_RET>
  */
 
 abstract class Collector_SharedFunctions_Named<
@@ -18,15 +18,16 @@ abstract class Collector_SharedFunctions_Named<
 				RESULT,
 				RET extends ISharedFunction_After<MODEL, RESULT>,
 	
-				INTEGER_NEXT extends ISharedFunction_Next<MODEL, RESULT, RET>,
-				LONG_NEXT	 extends ISharedFunction_Next<MODEL, RESULT, RET>,
-				STRING_NEXT  extends ISharedFunction_Next<MODEL, RESULT, RET>
+				INTEGER_RET extends ISharedFunction_Next<MODEL, RESULT, RET>,
+				LONG_RET	 extends ISharedFunction_Next<MODEL, RESULT, RET>,
+				DOUBLE_RET	 extends ISharedFunction_Next<MODEL, RESULT, RET>,
+				STRING_RET  extends ISharedFunction_Next<MODEL, RESULT, RET>
 				
 				>
 
 	extends Collector_SharedFunctions_Base<MODEL, RESULT>
 
-	implements ISharedFunctions_Transform_Initial_Named<MODEL, RESULT, RET, INTEGER_NEXT, LONG_NEXT, STRING_NEXT>
+	implements ISharedFunctions_Transform_Initial_Named<MODEL, RESULT, RET, INTEGER_RET, LONG_RET, DOUBLE_RET, STRING_RET>
 
 {
 		
@@ -72,40 +73,40 @@ abstract class Collector_SharedFunctions_Named<
 
 	@Override
 	@SuppressWarnings("unchecked")
-	public <T> STRING_NEXT lower(StringFunction<T> getter) {
-		return (STRING_NEXT)addAndReturnString(Function_String_Lower.INSTANCE, getter);
+	public <T> STRING_RET lower(StringFunction<T> getter) {
+		return (STRING_RET)addAndReturnString(Function_String_Lower.INSTANCE, getter);
 	}
 
 
 	@Override
 	@SuppressWarnings("unchecked")
-	public <T> STRING_NEXT upper(StringFunction<T> getter) {
-		return (STRING_NEXT)addAndReturnString(Function_String_Upper.INSTANCE, getter);
+	public <T> STRING_RET upper(StringFunction<T> getter) {
+		return (STRING_RET)addAndReturnString(Function_String_Upper.INSTANCE, getter);
 	}
 
 	@Override
 	@SuppressWarnings("unchecked")
-	public <T> STRING_NEXT trim(StringFunction<T> getter) {
-		return (STRING_NEXT)addAndReturnString(Function_String_Trim.INSTANCE, getter);
+	public <T> STRING_RET trim(StringFunction<T> getter) {
+		return (STRING_RET)addAndReturnString(Function_String_Trim.INSTANCE, getter);
 	}
 
 	@Override
-	public <T> INTEGER_NEXT abs(IFunctionInteger<T> getter) {
+	public <T> INTEGER_RET abs(IFunctionInteger<T> getter) {
 		return addAndReturnComparable(Function_Arithmetic_Abs.INSTANCE, getter);
 	}
 
 	@Override
-	public <T> LONG_NEXT abs(IFunctionLong<T> getter) {
+	public <T> LONG_RET abs(IFunctionLong<T> getter) {
 		return addAndReturnComparable(Function_Arithmetic_Abs.INSTANCE, getter);
 	}
 
 	@Override
-	public <T> INTEGER_NEXT sqrt(IFunctionInteger<T> getter) {
+	public <T> DOUBLE_RET sqrt(IFunctionInteger<T> getter) {
 		return addAndReturnComparable(Function_Arithmetic_Sqrt.INSTANCE, getter);
 	}
 
 	@Override
-	public <T> LONG_NEXT sqrt(IFunctionLong<T> getter) {
+	public <T> DOUBLE_RET sqrt(IFunctionLong<T> getter) {
 		return addAndReturnComparable(Function_Arithmetic_Sqrt.INSTANCE, getter);
 	}
 

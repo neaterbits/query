@@ -6,13 +6,14 @@ public interface ISharedFunctions_All_Transform_Named<
 		
 		RET extends ISharedFunction_After<MODEL, RESULT>,
 		
-		INTEGER_CLAUSE 	extends ISharedFunction_Next<MODEL, RESULT, RET>,
-		LONG_CLAUSE  	extends ISharedFunction_Next<MODEL, RESULT, RET>,
-		STRING_CLAUSE	extends ISharedFunction_Next<MODEL, RESULT, RET>
+		INTEGER_RET extends ISharedFunction_Next<MODEL, RESULT, RET>,
+		LONG_RET  	extends ISharedFunction_Next<MODEL, RESULT, RET>,
+		DOUBLE_RET  extends ISharedFunction_Next<MODEL, RESULT, RET>,
+		STRING_RET	extends ISharedFunction_Next<MODEL, RESULT, RET>
 	>
 	extends
-		ISharedFunctions_Arithmetic_Named<MODEL, RESULT, RET, INTEGER_CLAUSE, LONG_CLAUSE>,
-		ISharedFunctions_String_Named<MODEL, RESULT, RET, STRING_CLAUSE> {
+		ISharedFunctions_Arithmetic_Named<MODEL, RESULT, RET, INTEGER_RET, LONG_RET, DOUBLE_RET>,
+		ISharedFunctions_String_Named<MODEL, RESULT, RET, STRING_RET> {
 	
 
 

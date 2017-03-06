@@ -9,15 +9,16 @@ abstract class Collector_SharedFunctions_Alias<
 		// commented out since reused for mapping functions 
 		RET extends ISharedFunction_After<MODEL, RESULT>,
 
-		INTEGER_CLAUSE extends ISharedFunction_Next<MODEL, RESULT, RET>,
-		LONG_CLAUSE    extends ISharedFunction_Next<MODEL, RESULT, RET>,
-		STRING_CLAUSE  extends ISharedFunction_Next<MODEL, RESULT, RET>
+		INTEGER_RET extends ISharedFunction_Next<MODEL, RESULT, RET>,
+		LONG_RET    extends ISharedFunction_Next<MODEL, RESULT, RET>,
+		DOUBLE_RET  extends ISharedFunction_Next<MODEL, RESULT, RET>,
+		STRING_RET  extends ISharedFunction_Next<MODEL, RESULT, RET>
 		
 		>
 
 		extends Collector_SharedFunctions_Base<MODEL, RESULT>
 
-		implements ISharedFunctions_Transform_Initial_Alias<MODEL, RESULT, RET, INTEGER_CLAUSE, LONG_CLAUSE, STRING_CLAUSE>
+		implements ISharedFunctions_Transform_Initial_Alias<MODEL, RESULT, RET, INTEGER_RET, LONG_RET, DOUBLE_RET, STRING_RET>
 
 
 {
@@ -63,40 +64,40 @@ abstract class Collector_SharedFunctions_Alias<
 
 	@Override
 	@SuppressWarnings("unchecked")
-	public <T> STRING_CLAUSE lower(ISupplierString getter) {
-		return (STRING_CLAUSE) addAndReturnString(Function_String_Lower.INSTANCE, getter);
+	public <T> STRING_RET lower(ISupplierString getter) {
+		return (STRING_RET) addAndReturnString(Function_String_Lower.INSTANCE, getter);
 	}
 
 
 	@Override
 	@SuppressWarnings("unchecked")
-	public <T> STRING_CLAUSE upper(ISupplierString getter) {
-		return (STRING_CLAUSE) addAndReturnString(Function_String_Upper.INSTANCE, getter);
+	public <T> STRING_RET upper(ISupplierString getter) {
+		return (STRING_RET) addAndReturnString(Function_String_Upper.INSTANCE, getter);
 	}
 
 	@Override
 	@SuppressWarnings("unchecked")
-	public <T> STRING_CLAUSE trim(ISupplierString getter) {
-		return (STRING_CLAUSE) addAndReturnString(Function_String_Trim.INSTANCE, getter);
+	public <T> STRING_RET trim(ISupplierString getter) {
+		return (STRING_RET) addAndReturnString(Function_String_Trim.INSTANCE, getter);
 	}
 
 	@Override
-	public <T> INTEGER_CLAUSE abs(ISupplierInteger getter) {
+	public <T> INTEGER_RET abs(ISupplierInteger getter) {
 		return addAndReturnComparable(Function_Arithmetic_Abs.INSTANCE, getter);
 	}
 
 	@Override
-	public <T> LONG_CLAUSE abs(ISupplierLong getter) {
+	public <T> LONG_RET abs(ISupplierLong getter) {
 		return addAndReturnComparable(Function_Arithmetic_Abs.INSTANCE, getter);
 	}
 
 	@Override
-	public <T> INTEGER_CLAUSE sqrt(ISupplierInteger getter) {
+	public <T> DOUBLE_RET sqrt(ISupplierInteger getter) {
 		return addAndReturnComparable(Function_Arithmetic_Sqrt.INSTANCE, getter);
 	}
 
 	@Override
-	public <T> LONG_CLAUSE sqrt(ISupplierLong getter) {
+	public <T> DOUBLE_RET sqrt(ISupplierLong getter) {
 		return addAndReturnComparable(Function_Arithmetic_Sqrt.INSTANCE, getter);
 	}
 

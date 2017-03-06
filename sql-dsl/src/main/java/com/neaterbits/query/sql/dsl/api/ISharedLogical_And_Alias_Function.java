@@ -18,6 +18,7 @@ public interface ISharedLogical_And_Alias_Function<
 		AND_CLAUSES,
 		ISharedCondition_Comparable_Common_All<MODEL, RESULT, Integer, AND_CLAUSES>,
 		ISharedCondition_Comparable_Common_All<MODEL, RESULT, Long, AND_CLAUSES>,
+		ISharedCondition_Comparable_Common_All<MODEL, RESULT, Double, AND_CLAUSES>,
 		ISharedCondition_Comparable_String_All<MODEL, RESULT, AND_CLAUSES>>
 	
 		and();

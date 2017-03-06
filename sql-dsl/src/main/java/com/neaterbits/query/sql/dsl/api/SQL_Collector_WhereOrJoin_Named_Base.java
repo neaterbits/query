@@ -74,6 +74,7 @@ abstract class SQL_Collector_WhereOrJoin_Named_Base<
 			
 			ISharedCondition_Comparable_Common_All_Compilable<MODEL, RESULT, Integer, AND_OR>,
 			ISharedCondition_Comparable_Common_All_Compilable<MODEL, RESULT, Long, AND_OR>,
+			ISharedCondition_Comparable_Common_All_Compilable<MODEL, RESULT, Double, AND_OR>,
 			ISharedCondition_Comparable_String_All_Compilable<MODEL, RESULT, AND_OR>> 
 	
 			where() {

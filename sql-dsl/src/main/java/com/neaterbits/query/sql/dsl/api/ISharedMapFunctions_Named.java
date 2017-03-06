@@ -13,6 +13,7 @@ public interface ISharedMapFunctions_Named<
 		SHORT_NEXT	extends ISharedFunction_Next<MODEL, RESULT, RET>,
 		INT_NEXT	extends ISharedFunction_Next<MODEL, RESULT, RET>, 
 		LONG_NEXT	extends ISharedFunction_Next<MODEL, RESULT, RET>,
+		DOUBLE_NEXT extends ISharedFunction_Next<MODEL, RESULT, RET>,
 		BIGDECIMAL_NEXT extends ISharedFunction_Next<MODEL, RESULT, RET>,
 		STRING_NEXT extends ISharedFunction_Next<MODEL, RESULT, RET>
 
@@ -20,7 +21,7 @@ public interface ISharedMapFunctions_Named<
 		
 		extends
 		
-			ISharedMapFunctions_Numeric_Named<MODEL, RESULT, RET, SUM_LONG_NEXT, COUNT_NEXT, SHORT_NEXT, INT_NEXT, LONG_NEXT, BIGDECIMAL_NEXT>,
+			ISharedMapFunctions_Numeric_Named<MODEL, RESULT, RET, SUM_LONG_NEXT, COUNT_NEXT, SHORT_NEXT, INT_NEXT, LONG_NEXT, DOUBLE_NEXT, BIGDECIMAL_NEXT>,
 
 			ISharedFunctions_String_Named<MODEL, RESULT, RET, STRING_NEXT>,
 			ISharedFunctions_String_NoParam_Named<MODEL, RESULT, RET, STRING_NEXT> {
