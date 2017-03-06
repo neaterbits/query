@@ -4,7 +4,7 @@ import java.math.BigDecimal;
 
 public interface ISharedProcessResult_Having_Aggregate_Alias<MODEL, RESULT, AFTER_HAVING extends ISharedLogical_Base<MODEL, RESULT>>
 
-	extends IShared_Aggregate_All_Alias<
+	extends ISharedFunctions_Alias_Aggregate<
 		    ISharedCondition_Comparable_Common_All<MODEL, RESULT, Long, AFTER_HAVING>,
 		    ISharedCondition_Comparable_Common_All<MODEL, RESULT, Long, AFTER_HAVING>,
 			

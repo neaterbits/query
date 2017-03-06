@@ -32,7 +32,7 @@ public interface ISharedMapFunctions_Named<
 		ISharedFunctions_Named_All<MODEL, RESULT, RET, INT_NEXT, LONG_NEXT, STRING_NEXT>,
 		
 		// Aggregates as well 
-		IShared_Aggregate_All_Named<SUM_LONG_NEXT, COUNT_RET, SHORT_NEXT, INT_NEXT, LONG_NEXT, BIGDECIMAL_NEXT>
+		ISharedFunctions_Named_Aggregate<SUM_LONG_NEXT, COUNT_RET, SHORT_NEXT, INT_NEXT, LONG_NEXT, BIGDECIMAL_NEXT>
 
 
 {

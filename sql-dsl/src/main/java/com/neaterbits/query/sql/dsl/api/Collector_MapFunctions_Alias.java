@@ -32,7 +32,7 @@ final class Collector_MapFunctions_Alias<
 		STRING_RET> 
 	
 	
-		implements IShared_Aggregate_All_Alias<SUM_LONG_RET, COUNT_RET, SHORT_RET, INT_RET, LONG_RET, BIGDECIMAL_RET>
+		implements ISharedFunctions_Alias_Aggregate<SUM_LONG_RET, COUNT_RET, SHORT_RET, INT_RET, LONG_RET, BIGDECIMAL_RET>
 	
 	{
 

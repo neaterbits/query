@@ -13,7 +13,7 @@ public interface ISQL<
 		LONG_RET,
 		BIGDECIMAL_RET>
 
-		extends IShared_Aggregate_All_Named<
+		extends ISharedFunctions_Named_Aggregate<
 			SUM_LONG_RET,
 			COUNT_RET,
 			
