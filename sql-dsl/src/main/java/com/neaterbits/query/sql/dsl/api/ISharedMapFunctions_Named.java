@@ -16,14 +16,6 @@ public interface ISharedMapFunctions_Named<
 		BIGDECIMAL_NEXT extends ISharedFunction_Next<MODEL, RESULT, RET>,
 		STRING_NEXT extends ISharedFunction_Next<MODEL, RESULT, RET>
 
-
-		/*
-		// TODO: cannot map to ResultMapperTo, must allow for shared-functons as well
-		
-		NAMED_INTEGER_CLAUSE extends ISharedResultMapperTo<MODEL, RESULT, Integer, NAMED_RET>,
-		NAMED_LONG_CLAUSE    extends ISharedResultMapperTo<MODEL, RESULT, Long,    NAMED_RET>,
-		NAMED_STRING_CLAUSE  extends ISharedResultMapperTo<MODEL, RESULT, String,  NAMED_RET>
-		*/
 		>
 		
 		extends 

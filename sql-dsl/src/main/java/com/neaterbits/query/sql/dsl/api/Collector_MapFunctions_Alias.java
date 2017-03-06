@@ -4,7 +4,7 @@ final class Collector_MapFunctions_Alias<
 		MODEL,
 		RESULT,
 
-		RET extends ISharedFunction_After<MODEL, RESULT>,
+		RET extends ISharedSelectSourceBuilder<MODEL, RESULT>,
 
 		// for sums, we return Long for short and int so must differentiate from other aggregate
 		// fuctions, this is because sum may wrap over limits of type
@@ -32,7 +32,9 @@ final class Collector_MapFunctions_Alias<
 		STRING_RET> 
 	
 	
-		implements ISharedFunctions_Alias_Aggregate<SUM_LONG_RET, COUNT_RET, SHORT_RET, INT_RET, LONG_RET, BIGDECIMAL_RET>
+		implements 
+		
+			ISharedMapFunctions_Alias<MODEL, RESULT, RET, SUM_LONG_RET, COUNT_RET, SHORT_RET, INT_RET, LONG_RET, BIGDECIMAL_RET, STRING_RET>
 	
 	{
 

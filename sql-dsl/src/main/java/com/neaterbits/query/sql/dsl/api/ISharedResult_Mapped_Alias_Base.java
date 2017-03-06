@@ -13,6 +13,8 @@ public interface ISharedResult_Mapped_Alias_Base<
 			MODEL,
 			RESULT,
 			
+			RET,
+			
 			ISharedResultMapperTo<MODEL, RESULT, Long, 		 RET>,
 			ISharedResultMapperTo<MODEL, RESULT, Long, 		 RET>,
 		
@@ -20,13 +22,7 @@ public interface ISharedResult_Mapped_Alias_Base<
 			ISharedResultMapperTo<MODEL, RESULT, Integer, 	 RET>,
 			ISharedResultMapperTo<MODEL, RESULT, Long, 		 RET>,
 			ISharedResultMapperTo<MODEL, RESULT, BigDecimal, RET>,
-		
-			RET,
-			
-			
-			ISharedResultMapperTo<MODEL, RESULT, Integer, RET>,
-			ISharedResultMapperTo<MODEL, RESULT, Long,    RET>,
-			ISharedResultMapperTo<MODEL, RESULT, String,  RET>
+			ISharedResultMapperTo<MODEL, RESULT, String, RET>
 		> 
 		
 		map();
