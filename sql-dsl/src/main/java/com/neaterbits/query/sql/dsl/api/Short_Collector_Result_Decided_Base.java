@@ -1,11 +1,17 @@
 package com.neaterbits.query.sql.dsl.api;
 
+import java.util.function.Function;
+import java.util.function.Supplier;
+
 abstract class Short_Collector_Result_Decided_Base<
 			MODEL, 
 			RESULT,
 			
 			NAMED_WHERE_OR_JOIN extends ISQLLogical_WhereOrJoin_Named_Base<MODEL, RESULT>,
 			ALIAS_WHERE_OR_JOIN extends ISQLLogical_WhereOrJoin_Alias_Base<MODEL, RESULT>,
+			
+			NAMED_MAPPED extends ISharedSelectSourceBuilder<MODEL, RESULT>,
+			ALIAS_MAPPED extends ISharedSelectSourceBuilder<MODEL, RESULT>,
 			
 			
 			NAMED_AND_CLAUSES extends ISharedLogical_And_Named_All<MODEL, RESULT, NAMED_AND_CLAUSES, NAMED_NESTED_OR_CLAUSES>,
@@ -56,7 +62,19 @@ abstract class Short_Collector_Result_Decided_Base<
 			AFTER_GROUP_BY
 			>
 	
-	implements IMappingCollector<MODEL, RESULT>, ISharedSelectSourceBuilder<MODEL, RESULT> {
+	implements IMappingCollector<MODEL, RESULT>, ISharedSelectSourceBuilder<MODEL, RESULT>,
+	
+	
+	// cannot implement because at this point, we've decided named or alias,
+	// we only implement both in base class for reuse
+
+    // IShortResult_Mapped_Single_All<MODEL, RESULT>
+
+
+		ISharedResultMapper_Named<MODEL, RESULT, NAMED_MAPPED>,
+		ISharedResultMapper_Alias<MODEL, RESULT, ALIAS_MAPPED>
+		
+	{
 	
 		
 	private final EQueryResultGathering gathering;
@@ -80,6 +98,20 @@ abstract class Short_Collector_Result_Decided_Base<
 		
 		this.gathering = EQueryResultGathering.ENTITY;
 	}
+	
+	@Override
+	public final <T, R> ISharedResultMapperTo<MODEL, RESULT, R, NAMED_MAPPED>
+				map(Function<T, R> getter) {
+
+		return new ResultMapperToImpl<>(getter, this);
+	}
+
+	@Override
+	public final <R> ISharedResultMapperTo<MODEL, RESULT, R, ALIAS_MAPPED> map(Supplier<R> getter) {
+
+		return new ResultMapperToImpl<>(getter, this);
+	}
+	
 
 	@Override
 	public final MappingCollector getMappingCollector() {

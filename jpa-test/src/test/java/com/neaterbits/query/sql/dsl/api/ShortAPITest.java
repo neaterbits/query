@@ -91,6 +91,16 @@ public class ShortAPITest extends BaseSQLAPITest {
 		private BigDecimal avgStockPrice;
 		private BigDecimal sumStockPrice;
 
+		CompanyResultsVO() {
+			
+		}
+		
+		CompanyResultsVO(String name, BigDecimal avgStockPrice, BigDecimal sumStockPrice) {
+			this.name = name;
+			this.avgStockPrice = avgStockPrice;
+			this.sumStockPrice = sumStockPrice;
+		}
+
 		public String getName() {
 			return name;
 		}
@@ -114,24 +124,113 @@ public class ShortAPITest extends BaseSQLAPITest {
 		public void setSumStockPrice(BigDecimal sumStockPrice) {
 			this.sumStockPrice = sumStockPrice;
 		}
+
+		@Override
+		public int hashCode() {
+			final int prime = 31;
+			int result = 1;
+			result = prime * result + ((avgStockPrice == null) ? 0 : avgStockPrice.hashCode());
+			result = prime * result + ((name == null) ? 0 : name.hashCode());
+			result = prime * result + ((sumStockPrice == null) ? 0 : sumStockPrice.hashCode());
+			return result;
+		}
+
+		@Override
+		public boolean equals(Object obj) {
+			if (this == obj)
+				return true;
+			if (obj == null)
+				return false;
+			if (getClass() != obj.getClass())
+				return false;
+			CompanyResultsVO other = (CompanyResultsVO) obj;
+			if (avgStockPrice == null) {
+				if (other.avgStockPrice != null)
+					return false;
+			} else if (avgStockPrice.compareTo(other.avgStockPrice) != 0)
+				return false;
+			if (name == null) {
+				if (other.name != null)
+					return false;
+			} else if (!name.equals(other.name))
+				return false;
+			if (sumStockPrice == null) {
+				if (other.sumStockPrice != null)
+					return false;
+			} else if (sumStockPrice.compareTo(other.sumStockPrice) != 0)
+				return false;
+			return true;
+		}
+
+		@Override
+		public String toString() {
+			return "CompanyResultsVO [name=" + name + ", avgStockPrice=" + avgStockPrice + ", sumStockPrice="
+					+ sumStockPrice + "]";
+		}
+		
 	}
 	
 	@Test
-    public void testMapSum() {
-		final SinglePrepared<CompanyResultsVO> acmeQuery = prepared
+    public void testMapSumAndAvgOne() {
+		
+		final Company acme = new Company(1, "Acme", new BigDecimal("153.2"));
+		final Company foo = new Company(2, "Foo", new BigDecimal("96.7"));
+		
+		
+		final SingleBuilt<CompanyResultsVO> acmeQuery = select
 				.one(CompanyResultsVO.class)
 
-				.map().lower(Company::getName).to(CompanyResultsVO::setName)
-				.map().sum(Company::getStockPrice).to(CompanyResultsVO::setSumStockPrice)
+				//.map(Company::getName) .to (CompanyResultsVO::setName)
+				.map().sum  ( Company::getStockPrice) .to (CompanyResultsVO::setSumStockPrice)
 
-				// TODO: sqrt().avg()
-				
+
 				.map().avg(Company::getStockPrice).to(CompanyResultsVO::setAvgStockPrice)
-				
+
 				.where(Company::getName).startsWith("Acme")
-				
 				.build();
 		
+		store(s  -> s.add(acme)
+					 .add(foo)).
+		check(ds -> {
+	        checkSelectOneOrNull(
+	        		ds,
+	        		
+	        		new CompanyResultsVO(null, new BigDecimal("153.2"), new BigDecimal("153.2")),
+	        		acmeQuery,
+	        		q -> q.execute());
+		});
+		
+	}
+	
+	@Test
+    public void testMapSumAndAvgList() {
+		
+		final Company acme1 = new Company(1, "Acme1", new BigDecimal("153.2"));
+		final Company acme2 = new Company(2, "Acme2", new BigDecimal("96.7"));
+		final Company foo = new Company(3, "Foo", new BigDecimal("35.6"));
+
+		final SingleBuilt<CompanyResultsVO> acmeQuery = select
+				.one(CompanyResultsVO.class)
+
+				//.map(Company::getName) .to (CompanyResultsVO::setName)
+				.map().sum  ( Company::getStockPrice) .to (CompanyResultsVO::setSumStockPrice)
+
+
+				.map().avg(Company::getStockPrice).to(CompanyResultsVO::setAvgStockPrice)
+
+				.where(Company::getName).startsWith("Acme")
+				.build();
+		
+		store(s  -> s.add(acme1)
+					 .add(acme2)
+					 .add(foo)).
+		check(ds -> {
+	        checkSelectOneOrNull(
+	        		ds,
+	        		new CompanyResultsVO(null, new BigDecimal("124.95"), new BigDecimal("249.9")),
+	        		acmeQuery,
+	        		q -> q.execute());
+		});
 		
 	}
 	

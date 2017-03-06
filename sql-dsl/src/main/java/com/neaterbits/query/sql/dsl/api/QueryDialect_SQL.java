@@ -27,8 +27,6 @@ abstract class QueryDialect_SQL extends QueryDialect_Base {
 	
 	abstract void addAggregateResult(QueryBuilder sb, EAggregateFunction function, FieldReference field);
 
-	//abstract void addMappings(List<FieldReference> references);
-
 	//abstract void addFromSelectSources(FieldReferenceType fieldReferenceType, List<SourceReference> references);
 	
 	abstract void addOneToManyJoin(QueryBuilder sb, Relation relation, FieldReferenceType fieldReferenceType, SourceReference from, SourceReference to);
@@ -48,7 +46,7 @@ abstract class QueryDialect_SQL extends QueryDialect_Base {
 	 * Get name of function as appears in query string
 	 * @return
 	 */
-	String getFunctionName(FunctionCalcBase function) {
+	String getFunctionName(FunctionBase function) {
 		// default function names
 		return function.visit(functionToNameVisitor, null);
 	}
@@ -63,11 +61,6 @@ abstract class QueryDialect_SQL extends QueryDialect_Base {
 		sb.append("SELECT ");
 	}
 
-	//@Override
-	final void addMappings(QueryBuilder sb, List<FieldReference> references) {
-		appendFieldReferences(sb, references);
-	}
-	
 	private void appendFieldReferences(QueryBuilder sb,  List<FieldReference> fieldReferences) {
 		QueryStringUtil.commaSeparated(sb, fieldReferences, (s, r) -> {
 
@@ -76,7 +69,7 @@ abstract class QueryDialect_SQL extends QueryDialect_Base {
 		});
 	}
 	
-	final void appendFieldReference(QueryBuilder s ,FieldReference r) {
+	final void appendFieldReference(QueryBuilder s, FieldReference r) {
 		if (r instanceof FieldReferenceAlias) {
 			appendAliasFieldReference(s, (FieldReferenceAlias)r);
 		}
@@ -120,7 +113,13 @@ abstract class QueryDialect_SQL extends QueryDialect_Base {
 	}
 
 	private static final FunctionVisitor<Void, String> functionToNameVisitor = new FunctionVisitor<Void, String>() {
+
 		
+		
+		public String onAggregate(Function_Aggregate function, Void param) {
+			return function.getFunction().name().toLowerCase();
+		}
+
 		@Override
 		public String onStringUpper(Function_String_Upper function, Void param) {
 			return "upper";

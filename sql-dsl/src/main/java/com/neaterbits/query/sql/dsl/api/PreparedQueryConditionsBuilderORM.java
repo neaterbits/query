@@ -28,34 +28,11 @@ final class PreparedQueryConditionsBuilderORM extends PreparedQueryConditionsBui
 		this.sb = new QueryBuilder();
 	}
 	
-	final void appendFieldReference(QueryBuilder s, FieldReference r) {
-		if (r instanceof FieldReferenceAlias) {
-			dialect.appendAliasFieldReference(s, (FieldReferenceAlias)r);
-		}
-		else if (r instanceof FieldReferenceEntity) {
-			dialect.appendEntityFieldReference(s, (FieldReferenceEntity)r);
-		}
-		else {
-			throw new UnsupportedOperationException("Unknown field reference type " + r.getClass().getName());
-		}
-	}
-	
 	@Override
 	PreparedQueryConditionsBuilder createConditionsBuilder(EConditionsClause conditionsClause, boolean atRoot) {
 		return new PreparedQueryConditionsBuilderORM(dialect, conditionsClause, atRoot);
 	}
 
-	private void resolveFunction(FunctionCalcBase function, int idx, QueryBuilder sb, BiConsumer<Integer, QueryBuilder> appendNext) {
-		
-		final String functionName = dialect.getFunctionName(function);
-		
-		sb.append(functionName).append('(');
-		
-		// recursively append
-		appendNext.accept(idx, sb);
-		
-		sb.append(')');
-	}
 	
 	@Override
 	final void addJoinCondition(ConditionsType type, FieldReference left, EClauseOperator operator, FieldReference right) {
@@ -66,7 +43,7 @@ final class PreparedQueryConditionsBuilderORM extends PreparedQueryConditionsBui
 
 		sb.append(os).append(' ');
 		
-		appendFieldReference(sb, left);
+		dialect.appendFieldReference(sb, left);
 		
 		if (operator != EClauseOperator.IS_EQUAL) {
 			throw new IllegalStateException("Only equals supported for field joins");
@@ -74,7 +51,7 @@ final class PreparedQueryConditionsBuilderORM extends PreparedQueryConditionsBui
 		
 		sb.append(" = ");
 
-		appendFieldReference(sb, right);
+		dialect.appendFieldReference(sb, right);
 		
 		sb.append(' ');
 	}
@@ -169,12 +146,11 @@ final class PreparedQueryConditionsBuilderORM extends PreparedQueryConditionsBui
 				
 				if (funcs != null) {
 					// recursively resolve so that we nest output
-					resolveFunction(funcs.get(0), 0, sb, new AppendNextFunction(funcs, comparison));
+					PreparedQueryBuilderUtil.resolveFunction(dialect, funcs, comparison.getLhs(), sb);
 				}
 				else {
 					// Must add any functions before 
-					appendFieldReference(sb, comparison.getLhs());
-					
+					dialect.appendFieldReference(sb, comparison.getLhs());
 				}
 				
 				
@@ -188,50 +164,4 @@ final class PreparedQueryConditionsBuilderORM extends PreparedQueryConditionsBui
 		}
 	}
 
-	protected class AppendNextFunction implements BiConsumer<Integer, QueryBuilder> {
-
-		private final List<FunctionCalcBase> funcs;
-		private final PreparedQueryConditionComparison comparison;
-		private final int num;
-		
-		AppendNextFunction(List<FunctionCalcBase> funcs, PreparedQueryConditionComparison comparison) {
-
-			if (funcs == null) {
-				throw new IllegalArgumentException("funcs == null");
-			}
-			
-			if (comparison == null) {
-				throw new IllegalArgumentException("comparison == null");
-			}
-			
-			this.funcs = funcs;
-			this.comparison = comparison;
-			this.num = funcs.size();
-		 }
-
-
-		@Override
-		public void accept(Integer idx, QueryBuilder sb) {
-			
-			if (idx < 0) {
-				throw new IllegalArgumentException("idx < 0");
-			}
-			else if (idx == num - 1) {
-				// at last idx, return getter
-				appendFieldReference(sb, comparison.getLhs());
-			}
-			else if (idx < num - 1) {
-				// resolve next
-				final int nextIdx = idx + 1;
-				
-				final FunctionCalcBase func = funcs.get(nextIdx);
-				
-				// resolve next call
-				resolveFunction(func, nextIdx, sb, this);
-			}
-			else {
-				throw new IllegalStateException("idx out of range");
-			}
-		}
-	}
 }

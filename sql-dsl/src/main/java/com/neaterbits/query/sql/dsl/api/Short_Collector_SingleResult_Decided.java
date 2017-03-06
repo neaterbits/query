@@ -1,8 +1,5 @@
 package com.neaterbits.query.sql.dsl.api;
 
-import java.util.function.Function;
-import java.util.function.Supplier;
-
 abstract class Short_Collector_SingleResult_Decided<MODEL, RESULT, AFTER_GROUP_BY> 
 	extends Short_Collector_Result_Decided_Base<
 			MODEL,
@@ -10,6 +7,9 @@ abstract class Short_Collector_SingleResult_Decided<MODEL, RESULT, AFTER_GROUP_B
 			
 			ISQLLogical_WhereOrJoin_SingleResult_Named_And_Function<MODEL,RESULT>,
 			ISQLLogical_WhereOrJoin_SingleResult_Alias_And_Function<MODEL,RESULT>,
+			
+			IShortResult_Mapped_Single_Named<MODEL, RESULT>,
+			IShortResult_Mapped_Single_Alias<MODEL, RESULT>,
 			
 			ISQLLogical_And_NonProcessResult_Named<MODEL, RESULT>,
 			ISQLLogical_Or_NonProcessResult_Named<MODEL, RESULT>,
@@ -30,17 +30,6 @@ abstract class Short_Collector_SingleResult_Decided<MODEL, RESULT, AFTER_GROUP_B
 			AFTER_GROUP_BY>
 
 
-	implements 
-	
-	
-		// cannot implement because at this point, we've decided named or alias,
-		// we only implement both in base class for reuse
-	
-	    // IShortResult_Mapped_Single_All<MODEL, RESULT>
-	
-	
-		ISharedResultMapper_Named<MODEL, RESULT, IShortResult_Mapped_Single_Named<MODEL, RESULT>>,
-		ISharedResultMapper_Alias<MODEL, RESULT, IShortResult_Mapped_Single_Alias<MODEL, RESULT>>
 			
 {
 	Short_Collector_SingleResult_Decided(BaseShortSelect select, CollectedQueryResult_Mapped_Single result, ModelCompiler<MODEL> modelCompiler) {
@@ -49,20 +38,6 @@ abstract class Short_Collector_SingleResult_Decided<MODEL, RESULT, AFTER_GROUP_B
 
 	Short_Collector_SingleResult_Decided(BaseShortSelect select, CollectedQueryResult_Entity_Single result, ModelCompiler<MODEL> modelCompiler) {
 		super(select, result, modelCompiler);
-	}
-	
-
-	@Override
-	public final <T, R> ISharedResultMapperTo<MODEL, RESULT, R, IShortResult_Mapped_Single_Named<MODEL, RESULT>>
-				map(Function<T, R> getter) {
-
-		return new ResultMapperToImpl<>(getter, this);
-	}
-
-	@Override
-	public final <R> ISharedResultMapperTo<MODEL, RESULT, R, IShortResult_Mapped_Single_Alias<MODEL, RESULT>> map(Supplier<R> getter) {
-
-		return new ResultMapperToImpl<>(getter, this);
 	}
 
 	@Override

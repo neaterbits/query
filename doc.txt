@@ -569,6 +569,12 @@ W - parametere
 - ikke tillate aggregates på toppniv kun på joina typer? list(SomeEntity.class).where().sum(SomeEntity::getSomeMumber) ?
   Gir ikke mening dette queryet.
 
+- map() for funksjoner
+ * fortsett med å fikse query slik at henter sum osv
+ * også fikse sqrt().avg() og avg().sqrt() osv
+		
+ * OBS! Også fikse count(*), må altså kunne mappes uten å velge noe source-felt.
+
 
 # - order by?
 

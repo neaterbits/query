@@ -124,19 +124,59 @@ final class PreparedQueryBuilderORM<MANAGED, EMBEDDED, IDENTIFIABLE, ATTRIBUTE, 
 		
 		final int numMappings = q.getMappingCount(query);
 		
-		final List<FieldReference> refs = new ArrayList<>(numMappings);
+		//final List<FieldReference> refs = new ArrayList<>(numMappings);
 		
-		for (int i = 0; i < numMappings; ++ i) {
-			final CompiledFieldReference field = q.getMappingField(query, i);
+		for (int mappingIdx = 0; mappingIdx < numMappings; ++ mappingIdx) {
+			
+			if (mappingIdx > 0) {
+				s.append(", ");
+			}
+			
+			final CompiledFieldReference field = q.getMappingField(query, mappingIdx);
 
 			final FieldReference ref = prepareFieldReference(q, query, field);
 			
-			refs.add(ref);
+			//refs.add(ref);
+			
+			final List<FunctionBase> funcs = getMappingFunctions(q, query, mappingIdx);
+			
+			if (funcs != null) {
+				// recursively resolve so that we nest output
+				PreparedQueryBuilderUtil.resolveFunction(dialect, funcs, ref, s);
+			}
+			else {
+				// Must add any functions before 
+				dialect.appendFieldReference(s, ref);
+			}
 		}
 		
-		dialect.addMappings(s, refs);
+		//dialect.addMappings(s, refs);
 	}
+	
+	private static <QUERY> List<FunctionBase> getMappingFunctions(ExecutableQuery<QUERY> q, QUERY query, int mappingIdx) {
+		final int numFunctions = q.getMappingNumFunctions(query, mappingIdx);
+		
+		final List<FunctionBase> ret;
+		
+		if (numFunctions > 0) {
+			// has functions, create list for simplicity
+			ret = new ArrayList<>(numFunctions);
 
+			for (int functionIdx = 0; functionIdx < numFunctions; ++ functionIdx) {
+
+				final FunctionBase function = q.getMappingFunction(query, mappingIdx, functionIdx);
+
+				ret.add(function);
+			}
+		}
+		else {
+			ret = null;
+		}
+
+		return ret;
+	}
+	
+	
 
 	private static <QUERY> int [] getArray(QUERY query, int num, BiFunction<QUERY, Integer, Integer> getIndex) {
 		

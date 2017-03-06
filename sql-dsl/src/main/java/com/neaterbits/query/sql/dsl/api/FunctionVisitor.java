@@ -1,6 +1,8 @@
 package com.neaterbits.query.sql.dsl.api;
 
 interface FunctionVisitor<T, R> {
+
+	R onAggregate(Function_Aggregate function, T param);
 	
 	// String
 	R onStringLower(Function_String_Lower function, T param);

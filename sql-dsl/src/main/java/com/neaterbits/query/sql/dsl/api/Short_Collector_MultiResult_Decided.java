@@ -1,12 +1,14 @@
 package com.neaterbits.query.sql.dsl.api;
 
-abstract class Short_Collector_MapToResult_Multi<MODEL, RESULT>
+abstract class Short_Collector_MultiResult_Decided<MODEL, RESULT>
 	extends Short_Collector_Result_Decided_Base<
 		MODEL,
 		RESULT,
 		ISQLLogical_WhereOrJoin_MultiMapped_Named<MODEL,RESULT>,
 		ISQLLogical_WhereOrJoin_MultiMapped_Alias<MODEL,RESULT>,
 		
+		IShortResult_Mapped_Multi_Named<MODEL, RESULT>,
+		IShortResult_Mapped_Multi_Alias<MODEL, RESULT>,
 		
 		ISQLLogical_And_MultiMapped_Named<MODEL, RESULT>,
 		ISQLLogical_Or_MultiMapped_Named<MODEL, RESULT>,
@@ -27,15 +29,15 @@ abstract class Short_Collector_MapToResult_Multi<MODEL, RESULT>
 		ISQLJoin_Condition_MultiMapped_Alias<MODEL, RESULT>,
 		ISQLLogical_AndOr_MultiMapped_Alias<MODEL, RESULT>,
 		
-		Void
+		ISharedProcessResult_After_GroupBy_Named<MODEL, RESULT>
 		
 		> {
 
-	Short_Collector_MapToResult_Multi(BaseShortSelect select, CollectedQueryResult_Mapped result, ModelCompiler<MODEL> modelCompiler) {
+	Short_Collector_MultiResult_Decided(BaseShortSelect select, CollectedQueryResult_Mapped result, ModelCompiler<MODEL> modelCompiler) {
 		super(select, result, modelCompiler);
 	}
 
-	Short_Collector_MapToResult_Multi(BaseShortSelect select, CollectedQueryResult_Entity result, ModelCompiler<MODEL> modelCompiler) {
+	Short_Collector_MultiResult_Decided(BaseShortSelect select, CollectedQueryResult_Entity result, ModelCompiler<MODEL> modelCompiler) {
 		super(select, result, modelCompiler);
 	}
 

@@ -5,6 +5,7 @@ public interface IShortResult_Mapped_Multi_Named<MODEL, RESULT>
 		ISharedResult_Mapped_Named_Base<MODEL, RESULT, IShortResult_Mapped_Multi_Named<MODEL, RESULT>>,
 		ISQLLogical_WhereOrJoin_MultiMapped_Named<MODEL, RESULT>
 
+
 {
 
 }

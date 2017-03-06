@@ -5,69 +5,94 @@ import java.util.function.Supplier;
 
 class MapFunctionUtil {
 
-	private static <MODEL, RESULT, R> ResultMapperToImpl<MODEL, RESULT, R, IShortResult_Mapped_Single_Named<MODEL, RESULT>>
-
-		singleNamed(CollectedFunctions functions, Function<?, ? extends Comparable<?>> getter, Supplier<Short_Collector_SingleResult_Decided_Named<MODEL, RESULT>> supplier) {
+	private static <MODEL, RESULT, R, IF extends ISharedSelectSourceBuilder<MODEL, RESULT>, DECIDED extends IMappingCollector<MODEL, RESULT>>
+	
+		ResultMapperToImpl<MODEL, RESULT, R, IF> named(CollectedFunctions functions, Function<?, ? extends Comparable<?>> getter, Supplier<DECIDED> supplier) {
 		
-		final Short_Collector_SingleResult_Decided_Named<MODEL, RESULT> impl = supplier.get();
+		final DECIDED impl = supplier.get();
 	
 		final IMappingCollector<MODEL, RESULT> mappingCollector = impl;
 		
 		// Named, switch
-		return new ResultMapperToImpl<>(getter, mappingCollector, functions);
+		return new ResultMapperToImpl<MODEL, RESULT, R, IF>(getter, mappingCollector, functions);
 	}
 
-	private static <MODEL, RESULT, R> ResultMapperToImpl<MODEL, RESULT, R, IShortResult_Mapped_Single_Alias<MODEL, RESULT>>
-
-		singleAlias(CollectedFunctions functions, Supplier<? extends Comparable<?>> getter, Supplier<Short_Collector_SingleResult_Decided_Alias<MODEL, RESULT>> supplier) {
+	private static <MODEL, RESULT, R, IF extends ISharedSelectSourceBuilder<MODEL, RESULT>, DECIDED extends IMappingCollector<MODEL, RESULT>>
 	
-		final Short_Collector_SingleResult_Decided_Alias<MODEL, RESULT> impl = supplier.get();
+		ResultMapperToImpl<MODEL, RESULT, R, IF> alias(CollectedFunctions functions, Supplier<? extends Comparable<?>> getter, Supplier<DECIDED> supplier) {
+	
+		final DECIDED impl = supplier.get();
 		
 		// Named, switch
 		return new ResultMapperToImpl<>(getter, impl, functions);
 	}
 	
-	static <MODEL, RESULT> ISharedCollector_Functions_Callback_Named<MODEL, RESULT, IShortResult_Mapped_Single_Named<MODEL, RESULT>>
+	private static <MODEL, RESULT, IF extends ISharedSelectSourceBuilder<MODEL, RESULT>, DECIDED extends IMappingCollector<MODEL, RESULT>>
 	
-			singleNamedCallback(Supplier<Short_Collector_SingleResult_Decided_Named<MODEL, RESULT>> supplier) {
+		ISharedCollector_Functions_Callback_Named<MODEL, RESULT, IF> namedCallback(Supplier<DECIDED> supplier) {
 
-		return new ISharedCollector_Functions_Callback_Named<MODEL, RESULT, IShortResult_Mapped_Single_Named<MODEL, RESULT>> () {
+		return new ISharedCollector_Functions_Callback_Named<MODEL, RESULT, IF> () {
 			
 			@Override
-			public ISharedFunction_Next<MODEL, RESULT, IShortResult_Mapped_Single_Named<MODEL, RESULT>>
+			public ISharedFunction_Next<MODEL, RESULT, IF>
 						onComparable(CollectedFunctions functions, Function<?, ? extends Comparable<?>> getter) {
 		
-				return singleNamed(functions, getter, supplier);
+				return named(functions, getter, supplier);
 			}
 		
 			@Override
-			public ISharedFunction_Next<MODEL, RESULT, IShortResult_Mapped_Single_Named<MODEL, RESULT>> onString(
+			public ISharedFunction_Next<MODEL, RESULT, IF> onString(
 					CollectedFunctions functions, StringFunction<?> getter) {
 		
-				return singleNamed(functions, getter, supplier);
+				return named(functions, getter, supplier);
 			}
 		};
 	}
 
-	static <MODEL, RESULT> ISharedCollector_Functions_Callback_Alias<MODEL, RESULT, IShortResult_Mapped_Single_Alias<MODEL, RESULT>>
+	private static <MODEL, RESULT, IF extends ISharedSelectSourceBuilder<MODEL, RESULT>, DECIDED extends IMappingCollector<MODEL, RESULT>>
 	
-			singleAliasCallback(Supplier<Short_Collector_SingleResult_Decided_Alias<MODEL, RESULT>> supplier) {
+		ISharedCollector_Functions_Callback_Alias<MODEL, RESULT, IF> aliasCallback(Supplier<DECIDED> supplier) {
 
-		return new ISharedCollector_Functions_Callback_Alias<MODEL, RESULT, IShortResult_Mapped_Single_Alias<MODEL,RESULT>>() {
+		return new ISharedCollector_Functions_Callback_Alias<MODEL, RESULT, IF>() {
 
 			@Override
-			public ISharedFunction_Next<MODEL, RESULT, IShortResult_Mapped_Single_Alias<MODEL, RESULT>>
+			public ISharedFunction_Next<MODEL, RESULT, IF>
 					onComparable(CollectedFunctions functions, Supplier<? extends Comparable<?>> getter) {
 				
-				return singleAlias(functions, getter, supplier);
+				return alias(functions, getter, supplier);
 			}
 			
 			@Override
-			public ISharedFunction_Next<MODEL, RESULT, IShortResult_Mapped_Single_Alias<MODEL, RESULT>> onString(
+			public ISharedFunction_Next<MODEL, RESULT, IF> onString(
 					CollectedFunctions functions, ISupplierString getter) {
 			
-				return singleAlias(functions, getter, supplier);
+				return alias(functions, getter, supplier);
 			}
 		};
+	}
+
+	static <MODEL, RESULT> ISharedCollector_Functions_Callback_Named<MODEL, RESULT, IShortResult_Mapped_Single_Named<MODEL, RESULT>>
+	
+		singleNamedCallback(Supplier<Short_Collector_SingleResult_Decided_Named<MODEL, RESULT>> supplier) {
+		
+		return namedCallback(supplier);
+	}
+	
+	static <MODEL, RESULT> ISharedCollector_Functions_Callback_Alias<MODEL, RESULT, IShortResult_Mapped_Single_Alias<MODEL, RESULT>>
+		singleAliasCallback(Supplier<Short_Collector_SingleResult_Decided_Alias<MODEL, RESULT>> supplier) {
+		
+		return aliasCallback(supplier);
+	}
+	
+	static <MODEL, RESULT> ISharedCollector_Functions_Callback_Named<MODEL, RESULT, IShortResult_Mapped_Multi_Named<MODEL, RESULT>>
+		multiNamedCallback(Supplier<Short_Collector_MultiResult_Decided_Named<MODEL, RESULT>> supplier) {
+	
+		return namedCallback(supplier);
+	}
+
+	static <MODEL, RESULT> ISharedCollector_Functions_Callback_Alias<MODEL, RESULT, IShortResult_Mapped_Multi_Alias<MODEL, RESULT>>
+		multiAliasCallback(Supplier<Short_Collector_MultiResult_Decided_Alias<MODEL, RESULT>> supplier) {
+	
+		return aliasCallback(supplier);
 	}
 }
