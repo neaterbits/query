@@ -68,7 +68,7 @@ abstract class SQL_Collector_WhereOrJoin_Named_Base<
 
 	
 	// implemented in subclass @Override
-	public final ISharedFunctions_Named_Initial<
+	public final ISharedFunctions_Named_Transform_Initial<
 			MODEL, RESULT,
 			AND_OR,
 			

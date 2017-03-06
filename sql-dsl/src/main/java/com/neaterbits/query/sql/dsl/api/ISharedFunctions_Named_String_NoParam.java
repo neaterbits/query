@@ -5,13 +5,13 @@ public interface ISharedFunctions_Named_String_NoParam<
 		RESULT,
 
 		RET extends ISharedFunction_After<MODEL, RESULT>,
-		
 		STRING_CLAUSE extends ISharedFunction_Next<MODEL, RESULT, RET>
-		
+		> 
+
+		extends ISharedFunctions_String_NoParam_Base<
+				MODEL,
+				RESULT,
+				ISharedFunctions_Named_String<MODEL, RESULT, RET, STRING_CLAUSE>
 		> {
 
-    ISharedFunctions_Named_String<MODEL, RESULT, RET, STRING_CLAUSE> lower();
-    ISharedFunctions_Named_String<MODEL, RESULT, RET, STRING_CLAUSE> upper();
-    ISharedFunctions_Named_String<MODEL, RESULT, RET, STRING_CLAUSE> trim();
-	
 }

@@ -234,6 +234,39 @@ public class ShortAPITest extends BaseSQLAPITest {
 		
 	}
 	
+	
+	@Test
+    public void testSqrtOfAvgList() {
+		
+		final Company acme1 = new Company(1, "Acme1", new BigDecimal("45"));
+		final Company acme2 = new Company(2, "Acme2", new BigDecimal("51"));
+		final Company foo = new Company(3, "Foo", new BigDecimal("35.6"));
+
+		final SingleBuilt<CompanyResultsVO> acmeQuery = select
+				.one(CompanyResultsVO.class)
+
+				//.map(Company::getName) .to (CompanyResultsVO::setName)
+				.map().sqrt().sum ( Company::getStockPrice) .to (CompanyResultsVO::setSumStockPrice)
+
+
+				.map().sqrt().avg(Company::getStockPrice).to(CompanyResultsVO::setAvgStockPrice)
+
+				.where(Company::getName).startsWith("Acme")
+				.build();
+		
+		store(s  -> s.add(acme1)
+					 .add(acme2)
+					 .add(foo)).
+		check(ds -> {
+	        checkSelectOneOrNull(
+	        		ds,
+	        		new CompanyResultsVO(null, new BigDecimal("124.95"), new BigDecimal("249.9")),
+	        		acmeQuery,
+	        		q -> q.execute());
+		});
+		
+	}
+	
 	@Test
     public void testPrepared() {
 		final SinglePrepared<Company> acmeQuery = prepared

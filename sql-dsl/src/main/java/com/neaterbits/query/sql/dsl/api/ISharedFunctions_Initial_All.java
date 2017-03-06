@@ -12,8 +12,8 @@ public interface ISharedFunctions_Initial_All<
 
 	extends 
 
-		ISharedFunctions_Named_Initial<MODEL, RESULT, RET, INTEGER_CLAUSE, LONG_CLAUSE, STRING_CLAUSE>,
-		ISharedFunctions_Alias_Initial<MODEL, RESULT, RET, INTEGER_CLAUSE, LONG_CLAUSE, STRING_CLAUSE>
+		ISharedFunctions_Named_Transform_Initial<MODEL, RESULT, RET, INTEGER_CLAUSE, LONG_CLAUSE, STRING_CLAUSE>,
+		ISharedFunctions_Alias_Transform_Initial<MODEL, RESULT, RET, INTEGER_CLAUSE, LONG_CLAUSE, STRING_CLAUSE>
 
 {
 

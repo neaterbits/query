@@ -24,7 +24,7 @@ public interface ISharedLogical_And_Named_Function
 	
 {
 
-	ISharedFunctions_Named_Initial<
+	ISharedFunctions_Named_Transform_Initial<
 			MODEL,
 			RESULT, 
 			AND_CLAUSES,

@@ -7,10 +7,11 @@ public interface ISharedFunctions_Alias_String_NoParam<
 		RET extends ISharedFunction_After<MODEL, RESULT>,
 		
 		STRING_CLAUSE extends ISharedFunction_Next<MODEL, RESULT, RET>
-		> {
+		> 
+	extends ISharedFunctions_String_NoParam_Base<
+			MODEL,
+			RESULT,
+			ISharedFunctions_Alias_String<MODEL, RESULT, RET, STRING_CLAUSE>
+	> {
 
-	ISharedFunctions_Alias_String<MODEL, RESULT, RET, STRING_CLAUSE> lower();
-	ISharedFunctions_Alias_String<MODEL, RESULT, RET, STRING_CLAUSE> upper();
-	ISharedFunctions_Alias_String<MODEL, RESULT, RET, STRING_CLAUSE> trim();
-	
 }

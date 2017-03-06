@@ -1,6 +1,6 @@
 package com.neaterbits.query.sql.dsl.api;
 
-public interface ISharedFunctions_Named_All<
+public interface ISharedFunctions_Named_All_Transform<
 		MODEL,
 		RESULT,
 		

@@ -165,7 +165,7 @@ abstract class SQL_Collector_WhereOrJoin_Base<
 	}
 	
 
-	final ISharedFunctions_Named_Initial<
+	final ISharedFunctions_Named_Transform_Initial<
 		MODEL,
 		RESULT,
 		NAMED_AND_OR,
@@ -308,7 +308,7 @@ abstract class SQL_Collector_WhereOrJoin_Base<
 	}
 
 	// JoinCondition, marks this as implemented in subclass by implementing matching interface there
-	final ISharedFunctions_Alias_Initial<
+	final ISharedFunctions_Alias_Transform_Initial<
 			MODEL, RESULT,
 			ALIAS_AND_OR,
 			

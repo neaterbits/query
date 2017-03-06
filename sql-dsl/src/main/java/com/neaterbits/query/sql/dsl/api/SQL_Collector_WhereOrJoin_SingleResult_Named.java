@@ -33,7 +33,7 @@ final class SQL_Collector_WhereOrJoin_SingleResult_Named<MODEL, RESULT>
 	}
 
 	@Override
-	public ISharedFunctions_Named_Initial<
+	public ISharedFunctions_Named_Transform_Initial<
 			MODEL,
 			RESULT,
 			ISQLLogical_And_NonProcessResult_Named<MODEL, RESULT>,
@@ -48,7 +48,7 @@ final class SQL_Collector_WhereOrJoin_SingleResult_Named<MODEL, RESULT>
 	}
 
 	@Override
-	public ISharedFunctions_Named_Initial<
+	public ISharedFunctions_Named_Transform_Initial<
 			MODEL,
 			RESULT,
 			ISQLLogical_Or_NonProcessResult_Named<MODEL, RESULT>,

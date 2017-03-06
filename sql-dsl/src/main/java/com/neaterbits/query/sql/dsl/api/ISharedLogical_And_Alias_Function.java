@@ -12,7 +12,7 @@ public interface ISharedLogical_And_Alias_Function<
 			AND_CLAUSES extends ISharedLogical_And_Alias_Base<MODEL, RESULT, AND_CLAUSES, NESTED_OR_CLAUSES>,
 			NESTED_OR_CLAUSES extends ISharedLogical_Or_Alias<MODEL, RESULT>> {
 
-    ISharedFunctions_Alias_Initial<
+    ISharedFunctions_Alias_Transform_Initial<
 		MODEL,
 		RESULT,
 		AND_CLAUSES,

@@ -89,7 +89,7 @@ abstract class Collector_And_Named<
 	}
 
 	@Override
-	public final ISharedFunctions_Named_Initial<
+	public final ISharedFunctions_Named_Transform_Initial<
 				MODEL,
 				RESULT,
 				AND_CLAUSES,
