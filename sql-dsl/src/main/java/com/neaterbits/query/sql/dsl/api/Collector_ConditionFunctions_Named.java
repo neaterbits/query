@@ -15,7 +15,7 @@ final class Collector_ConditionFunctions_Named<
 	implements ISharedFunctions_Initial_And_NoParam_Named<MODEL, RESULT, RET, INTEGER_NEXT, LONG_NEXT, STRING_NEXT> {
 
 	Collector_ConditionFunctions_Named(ISharedCollector_Functions_Callback_Named<MODEL, RESULT, RET> func) {
-		super(func);
+		super(func, null);
 	}
 		
 	@Override

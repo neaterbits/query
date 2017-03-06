@@ -24,7 +24,8 @@ abstract class Collector_SharedFunctions_Alias<
 
 	private final ISharedCollector_Functions_Callback_Alias<MODEL, RESULT, RET> func;
 
-	Collector_SharedFunctions_Alias(ISharedCollector_Functions_Callback_Alias<MODEL, RESULT, RET> func) {
+	Collector_SharedFunctions_Alias(ISharedCollector_Functions_Callback_Alias<MODEL, RESULT, RET> func, Collector_SharedFunctions_Base<MODEL, RESULT> last) {
+		super(last);
 
 		if (func == null) {
 			throw new IllegalArgumentException("func == null");

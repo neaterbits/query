@@ -1,6 +1,8 @@
 package com.neaterbits.query.sql.dsl.api;
 
 import static com.neaterbits.query.sql.dsl.api.IShortSelect.oneOrNull;
+
+
 import static com.neaterbits.query.sql.dsl.api.IShortSelect.one;
 import static com.neaterbits.query.sql.dsl.api.IShortSelect.list;
 
@@ -11,13 +13,16 @@ import java.util.function.Function;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
+import org.eclipse.persistence.jpa.jpql.parser.SqrtExpression;
 import org.junit.Test;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import com.neaterbits.query.jpatest.model.Company;
 import com.neaterbits.query.sql.dsl.api.entity.QueryMetaModel;
 
-public class ShortAPITest extends BaseSQLAPITest {
+
+
+public class ShortAPITest extends BaseSQLAPITest implements SumTest {
 	
 	private static final String persistenceUnitName = "query-jpa-test";
 	
@@ -86,89 +91,6 @@ public class ShortAPITest extends BaseSQLAPITest {
 	}
 	*/
 
-	static class CompanyResultsVO {
-		private String name;
-		private BigDecimal avgStockPrice;
-		private BigDecimal sumStockPrice;
-
-		CompanyResultsVO() {
-			
-		}
-		
-		CompanyResultsVO(String name, BigDecimal avgStockPrice, BigDecimal sumStockPrice) {
-			this.name = name;
-			this.avgStockPrice = avgStockPrice;
-			this.sumStockPrice = sumStockPrice;
-		}
-
-		public String getName() {
-			return name;
-		}
-
-		public void setName(String name) {
-			this.name = name;
-		}
-
-		public BigDecimal getAvgStockPrice() {
-			return avgStockPrice;
-		}
-
-		public void setAvgStockPrice(BigDecimal avgStockPrice) {
-			this.avgStockPrice = avgStockPrice;
-		}
-
-		public BigDecimal getSumStockPrice() {
-			return sumStockPrice;
-		}
-
-		public void setSumStockPrice(BigDecimal sumStockPrice) {
-			this.sumStockPrice = sumStockPrice;
-		}
-
-		@Override
-		public int hashCode() {
-			final int prime = 31;
-			int result = 1;
-			result = prime * result + ((avgStockPrice == null) ? 0 : avgStockPrice.hashCode());
-			result = prime * result + ((name == null) ? 0 : name.hashCode());
-			result = prime * result + ((sumStockPrice == null) ? 0 : sumStockPrice.hashCode());
-			return result;
-		}
-
-		@Override
-		public boolean equals(Object obj) {
-			if (this == obj)
-				return true;
-			if (obj == null)
-				return false;
-			if (getClass() != obj.getClass())
-				return false;
-			CompanyResultsVO other = (CompanyResultsVO) obj;
-			if (avgStockPrice == null) {
-				if (other.avgStockPrice != null)
-					return false;
-			} else if (avgStockPrice.compareTo(other.avgStockPrice) != 0)
-				return false;
-			if (name == null) {
-				if (other.name != null)
-					return false;
-			} else if (!name.equals(other.name))
-				return false;
-			if (sumStockPrice == null) {
-				if (other.sumStockPrice != null)
-					return false;
-			} else if (sumStockPrice.compareTo(other.sumStockPrice) != 0)
-				return false;
-			return true;
-		}
-
-		@Override
-		public String toString() {
-			return "CompanyResultsVO [name=" + name + ", avgStockPrice=" + avgStockPrice + ", sumStockPrice="
-					+ sumStockPrice + "]";
-		}
-		
-	}
 	
 	@Test
     public void testMapSumAndAvgOne() {
@@ -177,14 +99,14 @@ public class ShortAPITest extends BaseSQLAPITest {
 		final Company foo = new Company(2, "Foo", new BigDecimal("96.7"));
 		
 		
-		final SingleBuilt<CompanyResultsVO> acmeQuery = select
-				.one(CompanyResultsVO.class)
+		final SingleBuilt<CompanyAggregatesVO> acmeQuery = select
+				.one(CompanyAggregatesVO.class)
 
 				//.map(Company::getName) .to (CompanyResultsVO::setName)
-				.map().sum  ( Company::getStockPrice) .to (CompanyResultsVO::setSumStockPrice)
+				.map().sum  ( Company::getStockPrice) .to (CompanyAggregatesVO::setSumStockPrice)
 
 
-				.map().avg(Company::getStockPrice).to(CompanyResultsVO::setAvgStockPrice)
+				.map().avg(Company::getStockPrice).to(CompanyAggregatesVO::setAvgStockPrice)
 
 				.where(Company::getName).startsWith("Acme")
 				.build();
@@ -195,7 +117,7 @@ public class ShortAPITest extends BaseSQLAPITest {
 	        checkSelectOneOrNull(
 	        		ds,
 	        		
-	        		new CompanyResultsVO(null, new BigDecimal("153.2"), new BigDecimal("153.2")),
+	        		new CompanyAggregatesVO(null, new BigDecimal("153.2"), new BigDecimal("153.2")),
 	        		acmeQuery,
 	        		q -> q.execute());
 		});
@@ -209,14 +131,14 @@ public class ShortAPITest extends BaseSQLAPITest {
 		final Company acme2 = new Company(2, "Acme2", new BigDecimal("96.7"));
 		final Company foo = new Company(3, "Foo", new BigDecimal("35.6"));
 
-		final SingleBuilt<CompanyResultsVO> acmeQuery = select
-				.one(CompanyResultsVO.class)
+		final SingleBuilt<CompanyAggregatesVO> acmeQuery = select
+				.one(CompanyAggregatesVO.class)
 
 				//.map(Company::getName) .to (CompanyResultsVO::setName)
-				.map().sum  ( Company::getStockPrice) .to (CompanyResultsVO::setSumStockPrice)
+				.map().sum  ( Company::getStockPrice) .to (CompanyAggregatesVO::setSumStockPrice)
 
 
-				.map().avg(Company::getStockPrice).to(CompanyResultsVO::setAvgStockPrice)
+				.map().avg(Company::getStockPrice).to(CompanyAggregatesVO::setAvgStockPrice)
 
 				.where(Company::getName).startsWith("Acme")
 				.build();
@@ -227,11 +149,15 @@ public class ShortAPITest extends BaseSQLAPITest {
 		check(ds -> {
 	        checkSelectOneOrNull(
 	        		ds,
-	        		new CompanyResultsVO(null, new BigDecimal("124.95"), new BigDecimal("249.9")),
+	        		new CompanyAggregatesVO(null, new BigDecimal("124.95"), new BigDecimal("249.9")),
 	        		acmeQuery,
 	        		q -> q.execute());
 		});
 		
+	}
+	
+	public void foo() {
+		sqrt(sum(Company::getStockPrice)));
 	}
 	
 	
@@ -242,13 +168,15 @@ public class ShortAPITest extends BaseSQLAPITest {
 		final Company acme2 = new Company(2, "Acme2", new BigDecimal("51"));
 		final Company foo = new Company(3, "Foo", new BigDecimal("35.6"));
 
-		final SingleBuilt<CompanyResultsVO> acmeQuery = select
-				.one(CompanyResultsVO.class)
+		final SingleBuilt<CompanySqrtAggregatesVO> acmeQuery = select
+				.one(CompanySqrtAggregatesVO.class)
 
 				//.map(Company::getName) .to (CompanyResultsVO::setName)
-				.map().sqrt().sum ( Company::getStockPrice) .to (CompanyResultsVO::setSumStockPrice)
+				//.map(sqrt(sum(Company::getStockPrice))) .to (CompanySqrtAggregatesVO::setSumStockPrice)
+				
+				.map().sqrt().sum(Company::getStockPrice) .to (CompanySqrtAggregatesVO::setSumStockPrice)
 
-				.map().sqrt().avg(Company::getStockPrice).to(CompanyResultsVO::setAvgStockPrice)
+				.map().sqrt().avg(Company::getStockPrice).to(CompanySqrtAggregatesVO::setAvgStockPrice)
 
 				.where(Company::getName).startsWith("Acme")
 				.build();
@@ -259,7 +187,7 @@ public class ShortAPITest extends BaseSQLAPITest {
 		check(ds -> {
 	        checkSelectOneOrNull(
 	        		ds,
-	        		new CompanyResultsVO(null, new BigDecimal("124.95"), new BigDecimal("249.9")),
+	        		new CompanyAggregatesVO(null, new BigDecimal("124.95"), new BigDecimal("249.9")),
 	        		acmeQuery,
 	        		q -> q.execute());
 		});

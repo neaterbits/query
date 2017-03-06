@@ -22,6 +22,6 @@ public final class JPADataConfigJPQL extends JPADataConfig {
 
 	@Override
 	protected DataStore<EntityManager> getDataStore() {
-		return new NativeJPADataStore(getPersistenceUnitName());
+		return new JPQLDataStore(getPersistenceUnitName());
 	}
 }

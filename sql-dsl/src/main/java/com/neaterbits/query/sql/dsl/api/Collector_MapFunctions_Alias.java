@@ -39,7 +39,7 @@ final class Collector_MapFunctions_Alias<
 	{
 
 	Collector_MapFunctions_Alias(ISharedCollector_Functions_Callback_Alias<MODEL, RESULT, RET> func) {
-		super(func);
+		super(func, null);
 	}
 
 	@Override

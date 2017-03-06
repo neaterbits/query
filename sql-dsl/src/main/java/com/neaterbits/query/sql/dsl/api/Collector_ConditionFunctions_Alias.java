@@ -26,7 +26,7 @@ class Collector_ConditionFunctions_Alias<
 {
 	
 	Collector_ConditionFunctions_Alias(ISharedCollector_Functions_Callback_Alias<MODEL, RESULT, RET> func) {
-		super(func);
+		super(func, null);
 	}
 
 	@Override

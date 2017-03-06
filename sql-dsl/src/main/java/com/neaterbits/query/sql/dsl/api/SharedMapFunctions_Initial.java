@@ -1,6 +1,5 @@
 package com.neaterbits.query.sql.dsl.api;
 
-import com.neaterbits.query.sql.dsl.api.entity.ScalarType;
 
 final class SharedMapFunctions_Initial<
 		MODEL,
@@ -68,6 +67,8 @@ final class SharedMapFunctions_Initial<
 			ISharedCollector_Functions_Callback_Named<MODEL, RESULT, NAMED_RET> namedCallback,
 			ISharedCollector_Functions_Callback_Alias<MODEL, RESULT, ALIAS_RET> aliasCallback) {
 
+    	super(null);
+    	
     	this.namedCallback = namedCallback;
 		this.aliasCallback = aliasCallback;
 	}
@@ -100,7 +101,7 @@ final class SharedMapFunctions_Initial<
     	}
     	
     	if (this.named == null) {
-    		this.named = new Collector_MapFunctions_Named<>(namedCallback);
+    		this.named = new Collector_MapFunctions_Named<>(namedCallback, this);
     	}
 
     	return named;
