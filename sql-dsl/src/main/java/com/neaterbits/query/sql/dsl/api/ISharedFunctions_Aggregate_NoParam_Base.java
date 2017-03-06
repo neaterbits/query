@@ -1,8 +1,8 @@
 package com.neaterbits.query.sql.dsl.api;
 
-public interface ISharedFunctions_Aggregate_NoParam_Base<MODEL, RESULT, RET> {
+public interface ISharedFunctions_Aggregate_NoParam_Base<MODEL, RESULT, RET, SUM_RET, COUNT_RET> {
 
-	RET sum();
+	SUM_RET sum();
 	
 	RET min();
 	
@@ -10,5 +10,5 @@ public interface ISharedFunctions_Aggregate_NoParam_Base<MODEL, RESULT, RET> {
 	
 	RET avg();
 	
-	RET count();
+	COUNT_RET count();
 }

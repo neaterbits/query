@@ -77,7 +77,34 @@ public interface ISharedNumericFunctions_Initial<
 									
 							NAMED_SUM_LONG_RET, NAMED_COUNT_RET, NAMED_SHORT_RET, NAMED_INT_RET, NAMED_LONG_RET, NAMED_DOUBLE_RET, NAMED_BIGDECIMAL_RET,
 							ALIAS_SUM_LONG_RET, ALIAS_COUNT_RET, ALIAS_SHORT_RET, ALIAS_INT_RET, ALIAS_LONG_RET, ALIAS_DOUBLE_RET, ALIAS_BIGDECIMAL_RET>
-					>
+					,
+					
+					// Sum, cast all to long exception Double and BigDecimal
+					ISharedNumericFunctions_Initial<
+						MODEL, 
+						RESULT,
+						
+						NAMED_RET,
+						ALIAS_RET,
+								
+						NAMED_SUM_LONG_RET, NAMED_COUNT_RET, NAMED_SUM_LONG_RET, NAMED_SUM_LONG_RET, NAMED_SUM_LONG_RET, NAMED_DOUBLE_RET, NAMED_BIGDECIMAL_RET,
+						ALIAS_SUM_LONG_RET, ALIAS_COUNT_RET, ALIAS_SUM_LONG_RET, ALIAS_SUM_LONG_RET, ALIAS_SUM_LONG_RET, ALIAS_DOUBLE_RET, ALIAS_BIGDECIMAL_RET>
+					,
+					
+					// Count, always return long-type for all values
+					ISharedNumericFunctions_Initial<
+						MODEL, 
+						RESULT,
+						
+						NAMED_RET,
+						ALIAS_RET,
+								
+						NAMED_SUM_LONG_RET, NAMED_COUNT_RET, NAMED_COUNT_RET, NAMED_COUNT_RET, NAMED_COUNT_RET, NAMED_COUNT_RET, NAMED_COUNT_RET,
+						ALIAS_SUM_LONG_RET, ALIAS_COUNT_RET, ALIAS_COUNT_RET, ALIAS_COUNT_RET, ALIAS_COUNT_RET, ALIAS_COUNT_RET, ALIAS_COUNT_RET>
+				>
+					
+							
+							
 				
 				
 {
