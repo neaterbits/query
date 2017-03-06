@@ -197,8 +197,8 @@ public class ShortAPITest extends BaseSQLAPITest implements SumTest {
     public void testSumOfSqrtList() {
 		
 		final Company acme1 = new Company(1, "Acme1", new BigDecimal("49"));
-		final Company acme2 = new Company(2, "Acme2", new BigDecimal("120.5"));
-		final Company acme3 = new Company(3, "Acme2", new BigDecimal("256.5"));
+		final Company acme2 = new Company(2, "Acme2", new BigDecimal("121"));
+		final Company acme3 = new Company(3, "Acme2", new BigDecimal("256"));
 		final Company foo = new Company(4, "Foo", new BigDecimal("35.6"));
 
 		final SingleBuilt<CompanySqrtAggregatesVO> acmeQuery = select
@@ -208,7 +208,7 @@ public class ShortAPITest extends BaseSQLAPITest implements SumTest {
 				
 				.map().sum().sqrt(Company::getStockPrice) .to (CompanySqrtAggregatesVO::setSqrtSumStockPrice)
 
-				.map().sqrt().avg(Company::getStockPrice).to(CompanySqrtAggregatesVO::setSqrtAvgStockPrice)
+				//.map().sqrt().avg(Company::getStockPrice).to(CompanySqrtAggregatesVO::setSqrtAvgStockPrice)
 
 				.where(Company::getName).startsWith("Acme")
 				.build();
@@ -220,7 +220,7 @@ public class ShortAPITest extends BaseSQLAPITest implements SumTest {
 		check(ds -> {
 	        checkSelectOneOrNull(
 	        		ds,
-	        		new CompanySqrtAggregatesVO(null, 35.0),
+	        		new CompanySqrtAggregatesVO(null, 34.0),
 	        		acmeQuery,
 	        		q -> q.execute());
 		});

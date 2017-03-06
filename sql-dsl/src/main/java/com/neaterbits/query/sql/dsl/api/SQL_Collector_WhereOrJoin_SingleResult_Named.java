@@ -1,5 +1,7 @@
 package com.neaterbits.query.sql.dsl.api;
 
+import java.math.BigDecimal;
+
 final class SQL_Collector_WhereOrJoin_SingleResult_Named<MODEL, RESULT>
 
 	extends SQL_Collector_WhereOrJoin_Named_Base<
@@ -37,9 +39,11 @@ final class SQL_Collector_WhereOrJoin_SingleResult_Named<MODEL, RESULT>
 			MODEL,
 			RESULT,
 			ISQLLogical_And_NonProcessResult_Named<MODEL, RESULT>,
+			ISharedCondition_Comparable_Common_All<MODEL, RESULT, Short,ISQLLogical_And_NonProcessResult_Named<MODEL, RESULT>>, 
 			ISharedCondition_Comparable_Common_All<MODEL, RESULT, Integer,ISQLLogical_And_NonProcessResult_Named<MODEL, RESULT>>, 
 			ISharedCondition_Comparable_Common_All<MODEL, RESULT, Long, ISQLLogical_And_NonProcessResult_Named<MODEL, RESULT>>,
 			ISharedCondition_Comparable_Common_All<MODEL, RESULT, Double, ISQLLogical_And_NonProcessResult_Named<MODEL, RESULT>>,
+			ISharedCondition_Comparable_Common_All<MODEL, RESULT, BigDecimal, ISQLLogical_And_NonProcessResult_Named<MODEL, RESULT>>,
 			ISharedCondition_Comparable_String_All<MODEL, RESULT, ISQLLogical_And_NonProcessResult_Named<MODEL, RESULT>>>
 	
 			and() {
@@ -52,9 +56,11 @@ final class SQL_Collector_WhereOrJoin_SingleResult_Named<MODEL, RESULT>
 			MODEL,
 			RESULT,
 			ISQLLogical_Or_NonProcessResult_Named<MODEL, RESULT>,
+			ISharedCondition_Comparable_Common_All<MODEL, RESULT, Short, ISQLLogical_Or_NonProcessResult_Named<MODEL, RESULT>>,
 			ISharedCondition_Comparable_Common_All<MODEL, RESULT, Integer, ISQLLogical_Or_NonProcessResult_Named<MODEL, RESULT>>,
 			ISharedCondition_Comparable_Common_All<MODEL, RESULT, Long, ISQLLogical_Or_NonProcessResult_Named<MODEL, RESULT>>,
 			ISharedCondition_Comparable_Common_All<MODEL, RESULT, Double, ISQLLogical_Or_NonProcessResult_Named<MODEL, RESULT>>,
+			ISharedCondition_Comparable_Common_All<MODEL, RESULT, BigDecimal, ISQLLogical_Or_NonProcessResult_Named<MODEL, RESULT>>,
 			ISharedCondition_Comparable_String_All<MODEL, RESULT, ISQLLogical_Or_NonProcessResult_Named<MODEL, RESULT>>>
 	
 			or() {

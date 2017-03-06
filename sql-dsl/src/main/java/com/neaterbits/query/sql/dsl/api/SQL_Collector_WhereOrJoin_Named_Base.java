@@ -1,5 +1,7 @@
 package com.neaterbits.query.sql.dsl.api;
 
+import java.math.BigDecimal;
+
 abstract class SQL_Collector_WhereOrJoin_Named_Base<
 
 			MODEL,
@@ -72,9 +74,11 @@ abstract class SQL_Collector_WhereOrJoin_Named_Base<
 			MODEL, RESULT,
 			AND_OR,
 			
+			ISharedCondition_Comparable_Common_All_Compilable<MODEL, RESULT, Short, AND_OR>,
 			ISharedCondition_Comparable_Common_All_Compilable<MODEL, RESULT, Integer, AND_OR>,
 			ISharedCondition_Comparable_Common_All_Compilable<MODEL, RESULT, Long, AND_OR>,
 			ISharedCondition_Comparable_Common_All_Compilable<MODEL, RESULT, Double, AND_OR>,
+			ISharedCondition_Comparable_Common_All_Compilable<MODEL, RESULT, BigDecimal, AND_OR>,
 			ISharedCondition_Comparable_String_All_Compilable<MODEL, RESULT, AND_OR>> 
 	
 			where() {

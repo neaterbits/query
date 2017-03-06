@@ -1,5 +1,6 @@
 package com.neaterbits.query.sql.dsl.api;
 
+import java.math.BigDecimal;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Supplier;
@@ -97,9 +98,11 @@ abstract class Collector_And_Or_Named_And_Alias_Base<
 				MODEL,
 				RESULT,
 				NAMED_AND_CLAUSES,
+				ISharedCondition_Comparable_Common_All<MODEL, RESULT, Short, NAMED_AND_CLAUSES>,
 				ISharedCondition_Comparable_Common_All<MODEL, RESULT, Integer, NAMED_AND_CLAUSES>,
 				ISharedCondition_Comparable_Common_All<MODEL, RESULT, Long, NAMED_AND_CLAUSES>,
 				ISharedCondition_Comparable_Common_All<MODEL, RESULT, Double, NAMED_AND_CLAUSES>,
+				ISharedCondition_Comparable_Common_All<MODEL, RESULT, BigDecimal, NAMED_AND_CLAUSES>,
 				ISharedCondition_Comparable_String_All<MODEL, RESULT, NAMED_AND_CLAUSES>
 			> andNamed() {
 		@SuppressWarnings({"unchecked", "rawtypes"})
@@ -150,9 +153,11 @@ abstract class Collector_And_Or_Named_And_Alias_Base<
 		MODEL,
 		RESULT,
 		NAMED_OR_CLAUSES,
+		ISharedCondition_Comparable_Common_All<MODEL, RESULT, Short, NAMED_OR_CLAUSES>,
 		ISharedCondition_Comparable_Common_All<MODEL, RESULT, Integer, NAMED_OR_CLAUSES>,
 		ISharedCondition_Comparable_Common_All<MODEL, RESULT, Long, NAMED_OR_CLAUSES>,
 		ISharedCondition_Comparable_Common_All<MODEL, RESULT, Double, NAMED_OR_CLAUSES>,
+		ISharedCondition_Comparable_Common_All<MODEL, RESULT, BigDecimal, NAMED_OR_CLAUSES>,
 		ISharedCondition_Comparable_String_All<MODEL, RESULT, NAMED_OR_CLAUSES>
 	>
 		orNamed() {

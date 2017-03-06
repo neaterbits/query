@@ -58,8 +58,8 @@ final class SharedMapFunctions_Initial<
 		
 			
 			
-	private Collector_MapFunctions_Named<MODEL, RESULT, NAMED_RET, NAMED_SUM_LONG_RET, NAMED_COUNT_RET, NAMED_SHORT_RET, NAMED_INT_RET, NAMED_LONG_RET, NAMED_DOUBLE_RET, NAMED_BIGDECIMAL_RET, NAMED_STRING_RET> named;
-	private Collector_MapFunctions_Alias<MODEL, RESULT, ALIAS_RET, ALIAS_SUM_LONG_RET, ALIAS_COUNT_RET, ALIAS_SHORT_RET, ALIAS_INT_RET, ALIAS_LONG_RET, ALIAS_DOUBLE_RET, ALIAS_BIGDECIMAL_RET, ALIAS_STRING_RET> alias;
+	private Collector_MapFunctions_Named<MODEL, RESULT, NAMED_RET, NAMED_SUM_LONG_RET, NAMED_COUNT_RET, NAMED_SHORT_RET, NAMED_INT_RET, NAMED_LONG_RET, NAMED_DOUBLE_RET, NAMED_BIGDECIMAL_RET, NAMED_STRING_RET> named_do_not_call_directly;
+	private Collector_MapFunctions_Alias<MODEL, RESULT, ALIAS_RET, ALIAS_SUM_LONG_RET, ALIAS_COUNT_RET, ALIAS_SHORT_RET, ALIAS_INT_RET, ALIAS_LONG_RET, ALIAS_DOUBLE_RET, ALIAS_BIGDECIMAL_RET, ALIAS_STRING_RET> alias_do_not_call_directly;
 
     
     private final ISharedCollector_Functions_Callback_Named<MODEL, RESULT, NAMED_RET> namedCallback;
@@ -84,15 +84,15 @@ final class SharedMapFunctions_Initial<
     
     	alias() {
     		
-    	if (this.named != null) {
+    	if (this.named_do_not_call_directly != null) {
     		throw new IllegalStateException("Already set named");
     	}
     	
-    	if (this.alias == null) {
-    		this.alias = new Collector_MapFunctions_Alias<>(aliasCallback);
+    	if (this.alias_do_not_call_directly == null) {
+    		this.alias_do_not_call_directly = new Collector_MapFunctions_Alias<>(aliasCallback);
     	}
     	
-    	return alias;
+    	return alias_do_not_call_directly;
 	}
     	
     	
@@ -100,17 +100,23 @@ final class SharedMapFunctions_Initial<
     	
 			named() {
 
-    	if (this.alias != null) {
+    	if (this.alias_do_not_call_directly != null) {
     		throw new IllegalStateException("Already set alias");
     	}
     	
-    	if (this.named == null) {
-    		this.named = new Collector_MapFunctions_Named<>(namedCallback, this);
+    	if (this.named_do_not_call_directly == null) {
+    		this.named_do_not_call_directly = new Collector_MapFunctions_Named<>(namedCallback, this);
     	}
 
-    	return named;
+    	return named_do_not_call_directly;
 	}
-    
+
+			
+
+	@Override
+	public <T> NAMED_SHORT_RET abs(IFunctionShort<T> getter) {
+		return named().abs(getter);
+	}
 
 	@Override
 	public <T> NAMED_INT_RET abs(IFunctionInteger<T> getter) {
@@ -130,6 +136,11 @@ final class SharedMapFunctions_Initial<
 	@Override
 	public <T> ALIAS_LONG_RET abs(ISupplierLong getter) {
 		return alias().abs(getter);
+	}
+
+	@Override
+	public <T> NAMED_BIGDECIMAL_RET abs(IFunctionBigDecimal<T> getter) {
+		return named().abs(getter);
 	}
 
 	@Override
@@ -301,6 +312,11 @@ final class SharedMapFunctions_Initial<
 	public ALIAS_BIGDECIMAL_RET min(ISupplierBigDecimal field) {
 		return alias().min(field);
 	}
+	
+	@Override
+	public <T> NAMED_DOUBLE_RET sqrt(IFunctionShort<T> getter) {
+		return named().sqrt(getter);
+	}
 
 	@Override
 	public <T> NAMED_DOUBLE_RET sqrt(IFunctionInteger<T> getter) {
@@ -312,6 +328,11 @@ final class SharedMapFunctions_Initial<
 		return named().sqrt(getter);
 	}
 
+	@Override
+	public <T> NAMED_DOUBLE_RET sqrt(IFunctionBigDecimal<T> getter) {
+		return named().sqrt(getter);
+	}
+	
 	@Override
 	public <T> ALIAS_DOUBLE_RET sqrt(ISupplierInteger getter) {
 		return alias().sqrt(getter);
@@ -382,6 +403,7 @@ final class SharedMapFunctions_Initial<
 		return named().upper(getter);
 	}
 
+	
 	@Override
 	public ISharedNumericFunctions_Initial<MODEL, RESULT, NAMED_RET, ALIAS_RET, NAMED_SUM_LONG_RET, NAMED_COUNT_RET, NAMED_SHORT_RET, NAMED_INT_RET, NAMED_LONG_RET, NAMED_DOUBLE_RET, NAMED_BIGDECIMAL_RET, ALIAS_SUM_LONG_RET, ALIAS_COUNT_RET, ALIAS_SHORT_RET, ALIAS_INT_RET, ALIAS_LONG_RET, ALIAS_DOUBLE_RET, ALIAS_BIGDECIMAL_RET> abs() {
 		add(Function_Arithmetic_Abs.INSTANCE);
@@ -406,8 +428,6 @@ final class SharedMapFunctions_Initial<
 		
 		return (ISharedNumericFunctions_Initial)this;
 	}
-
-
 
 
 	@Override

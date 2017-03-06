@@ -1,5 +1,7 @@
 package com.neaterbits.query.sql.dsl.api;
 
+import java.math.BigDecimal;
+
 /**
  * Causes name-crash with alias so must be in separate interface
  * @author nhl
@@ -28,9 +30,11 @@ public interface ISharedLogical_And_Named_Function
 			MODEL,
 			RESULT, 
 			AND_CLAUSES,
+			ISharedCondition_Comparable_Common_All<MODEL, RESULT, Short, AND_CLAUSES>,
 			ISharedCondition_Comparable_Common_All<MODEL, RESULT, Integer, AND_CLAUSES>,
 			ISharedCondition_Comparable_Common_All<MODEL, RESULT, Long, AND_CLAUSES>,
 			ISharedCondition_Comparable_Common_All<MODEL, RESULT, Double, AND_CLAUSES>,
+			ISharedCondition_Comparable_Common_All<MODEL, RESULT, BigDecimal, AND_CLAUSES>,
 			ISharedCondition_Comparable_String_All<MODEL, RESULT, AND_CLAUSES>			
 			//INTEGER_CLAUSE, LONG_CLAUSE, STRING_CLAUSE
 			

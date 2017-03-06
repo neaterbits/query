@@ -5,15 +5,17 @@ final class Collector_ConditionFunctions_Named<
 		RESULT,
 		RET extends ISharedFunction_After<MODEL, RESULT>,
 		
+		SHORT_RET extends ISharedFunction_Next<MODEL, RESULT, RET>,
 		INTEGER_RET extends ISharedFunction_Next<MODEL, RESULT, RET>,
 		LONG_RET	 extends ISharedFunction_Next<MODEL, RESULT, RET>,
-		DOUBLE_RET	 extends ISharedFunction_Next<MODEL, RESULT, RET>,
+		DOUBLE_RET	  extends ISharedFunction_Next<MODEL, RESULT, RET>,
+		BIGDECIMAL_RET extends ISharedFunction_Next<MODEL, RESULT, RET>,
 		STRING_RET  extends ISharedFunction_Next<MODEL, RESULT, RET>
 	> 
 
-	extends Collector_SharedFunctions_Named<MODEL, RESULT, RET, INTEGER_RET, LONG_RET, DOUBLE_RET, STRING_RET>
+	extends Collector_SharedFunctions_Named<MODEL, RESULT, RET, SHORT_RET, INTEGER_RET, LONG_RET, DOUBLE_RET, BIGDECIMAL_RET, STRING_RET>
 
-	implements ISharedFunctions_Initial_And_NoParam_Named<MODEL, RESULT, RET, INTEGER_RET, LONG_RET, DOUBLE_RET, STRING_RET> {
+	implements ISharedFunctions_Initial_And_NoParam_Named<MODEL, RESULT, RET, SHORT_RET, INTEGER_RET, LONG_RET, DOUBLE_RET, BIGDECIMAL_RET, STRING_RET> {
 
 	Collector_ConditionFunctions_Named(ISharedCollector_Functions_Callback_Named<MODEL, RESULT, RET> func) {
 		super(func, null);
@@ -41,7 +43,7 @@ final class Collector_ConditionFunctions_Named<
 	}
 
 	@Override
-	public ISharedFunctions_Arithmetic_Named<MODEL, RESULT, RET, INTEGER_RET, LONG_RET, DOUBLE_RET> abs() {
+	public ISharedFunctions_Arithmetic_Named<MODEL, RESULT, RET, SHORT_RET, INTEGER_RET, LONG_RET, DOUBLE_RET, BIGDECIMAL_RET> abs() {
 		add(Function_Arithmetic_Abs.INSTANCE);
 
 		return this;
@@ -49,7 +51,7 @@ final class Collector_ConditionFunctions_Named<
 
 	@Override
 	@SuppressWarnings({"unchecked", "rawtypes"})
-	public ISharedFunctions_Arithmetic_Named<MODEL, RESULT, RET, DOUBLE_RET, DOUBLE_RET, DOUBLE_RET> sqrt() {
+	public ISharedFunctions_Arithmetic_Named<MODEL, RESULT, RET, DOUBLE_RET, DOUBLE_RET, DOUBLE_RET, DOUBLE_RET, DOUBLE_RET> sqrt() {
 		add(Function_Arithmetic_Sqrt.INSTANCE);
 
 		return (ISharedFunctions_Arithmetic_Named)this;

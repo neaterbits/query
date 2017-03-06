@@ -6,24 +6,24 @@ public interface ISharedMapFunctions_Named<
 
 		RET extends ISharedSelectSourceBuilder<MODEL, RESULT>,
 		
-		SUM_LONG_NEXT	extends ISharedFunction_Next<MODEL, RESULT, RET>,
-		COUNT_NEXT	extends ISharedFunction_Next<MODEL, RESULT, RET>,
+		SUM_LONG_RET	extends ISharedFunction_Next<MODEL, RESULT, RET>,
+		COUNT_RET	extends ISharedFunction_Next<MODEL, RESULT, RET>,
 		
 		
-		SHORT_NEXT	extends ISharedFunction_Next<MODEL, RESULT, RET>,
-		INT_NEXT	extends ISharedFunction_Next<MODEL, RESULT, RET>, 
-		LONG_NEXT	extends ISharedFunction_Next<MODEL, RESULT, RET>,
-		DOUBLE_NEXT extends ISharedFunction_Next<MODEL, RESULT, RET>,
-		BIGDECIMAL_NEXT extends ISharedFunction_Next<MODEL, RESULT, RET>,
-		STRING_NEXT extends ISharedFunction_Next<MODEL, RESULT, RET>
+		SHORT_RET	extends ISharedFunction_Next<MODEL, RESULT, RET>,
+		INT_RET	extends ISharedFunction_Next<MODEL, RESULT, RET>, 
+		LONG_RET	extends ISharedFunction_Next<MODEL, RESULT, RET>,
+		DOUBLE_RET extends ISharedFunction_Next<MODEL, RESULT, RET>,
+		BIGDECIMAL_RET extends ISharedFunction_Next<MODEL, RESULT, RET>,
+		STRING_RET extends ISharedFunction_Next<MODEL, RESULT, RET>
 
 		>
 		
 		extends
 		
-			ISharedMapFunctions_Numeric_Named<MODEL, RESULT, RET, SUM_LONG_NEXT, COUNT_NEXT, SHORT_NEXT, INT_NEXT, LONG_NEXT, DOUBLE_NEXT, BIGDECIMAL_NEXT>,
+			ISharedMapFunctions_Numeric_Named<MODEL, RESULT, RET, SUM_LONG_RET, COUNT_RET, SHORT_RET, INT_RET, LONG_RET, DOUBLE_RET, BIGDECIMAL_RET>,
 
-			ISharedFunctions_String_Named<MODEL, RESULT, RET, STRING_NEXT>,
-			ISharedFunctions_String_NoParam_Named<MODEL, RESULT, RET, STRING_NEXT> {
+			ISharedFunctions_String_Named<MODEL, RESULT, RET, STRING_RET>,
+			ISharedFunctions_String_NoParam_Named<MODEL, RESULT, RET, STRING_RET> {
 
 }
