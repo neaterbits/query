@@ -7,6 +7,9 @@ final class Classic_Collector_SingleResult<MODEL, RESULT>
 	extends Classic_Collector_Result<
 		MODEL,
 		RESULT,
+
+		IClassicResult_Mapped_Single_Named<MODEL, RESULT>,		
+
 		ISQLLogical_WhereOrJoin_SingleResult_Named_And_Function<MODEL, RESULT>,
 		ISQLLogical_WhereOrJoin_SingleResult_Alias_And_Function<MODEL, RESULT>,
 	
@@ -28,7 +31,14 @@ final class Classic_Collector_SingleResult<MODEL, RESULT>
 	}
 
 	@Override
-	Classic_Collector_MapToResult_Base<MODEL, RESULT, ISQLLogical_WhereOrJoin_SingleResult_Named_And_Function<MODEL, RESULT>, ISQLLogical_WhereOrJoin_SingleResult_Alias_And_Function<MODEL, RESULT>> createMapToResult() {
+	Classic_Collector_MapToResult_Base<
+					MODEL, RESULT,
+					IClassicResult_Mapped_Single_Named<MODEL, RESULT>,
+					ISQLLogical_WhereOrJoin_SingleResult_Named_And_Function<MODEL, RESULT>,
+					ISQLLogical_WhereOrJoin_SingleResult_Alias_And_Function<MODEL, RESULT>>
+	
+			createMapToResult() {
+		
 		return new Classic_Collector_MapToResult_Single<>(select, getResultType(), getModelCompiler());
 	}
 
@@ -57,6 +67,14 @@ final class Classic_Collector_SingleResult<MODEL, RESULT>
 			IClassicResult_Mapped_Single_Named<MODEL, RESULT>,
 			IClassicResult_Mapped_Single_Alias<MODEL, RESULT>,
 			
+			ISharedResultOps_Numeric_Named<MODEL, RESULT, Long, IClassicResult_Mapped_Single_Named<MODEL, RESULT>>,
+			ISharedResultOps_Numeric_Named<MODEL, RESULT, Long, IClassicResult_Mapped_Single_Named<MODEL, RESULT>>,
+			ISharedResultOps_Numeric_Named<MODEL, RESULT, Short, IClassicResult_Mapped_Single_Named<MODEL, RESULT>>,
+			ISharedResultOps_Numeric_Named<MODEL, RESULT, Integer, IClassicResult_Mapped_Single_Named<MODEL, RESULT>>,
+			ISharedResultOps_Numeric_Named<MODEL, RESULT, Long, IClassicResult_Mapped_Single_Named<MODEL, RESULT>>,
+			ISharedResultOps_Numeric_Named<MODEL, RESULT, Double, IClassicResult_Mapped_Single_Named<MODEL, RESULT>>,
+			ISharedResultOps_Numeric_Named<MODEL, RESULT, BigDecimal, IClassicResult_Mapped_Single_Named<MODEL, RESULT>>,
+			ISharedResultOps_String_Named<MODEL, RESULT, IClassicResult_Mapped_Single_Named<MODEL, RESULT>>,
 			
 			ISharedResultMapperTo<MODEL, RESULT, Long, IClassicResult_Mapped_Single_Named<MODEL, RESULT>>,
 			ISharedResultMapperTo<MODEL, RESULT, Long, IClassicResult_Mapped_Single_Named<MODEL, RESULT>>,
@@ -67,6 +85,15 @@ final class Classic_Collector_SingleResult<MODEL, RESULT>
 			ISharedResultMapperTo<MODEL, RESULT, BigDecimal, IClassicResult_Mapped_Single_Named<MODEL, RESULT>>,
 			ISharedResultMapperTo<MODEL, RESULT, String, IClassicResult_Mapped_Single_Named<MODEL, RESULT>>,
 			
+			ISharedResultOps_Numeric_Alias<MODEL, RESULT, Long, IClassicResult_Mapped_Single_Alias<MODEL, RESULT>>,
+			ISharedResultOps_Numeric_Alias<MODEL, RESULT, Long, IClassicResult_Mapped_Single_Alias<MODEL, RESULT>>,
+			ISharedResultOps_Numeric_Alias<MODEL, RESULT, Short, IClassicResult_Mapped_Single_Alias<MODEL, RESULT>>,
+			ISharedResultOps_Numeric_Alias<MODEL, RESULT, Integer, IClassicResult_Mapped_Single_Alias<MODEL, RESULT>>,
+			ISharedResultOps_Numeric_Alias<MODEL, RESULT, Long, IClassicResult_Mapped_Single_Alias<MODEL, RESULT>>,
+			ISharedResultOps_Numeric_Alias<MODEL, RESULT, Double, IClassicResult_Mapped_Single_Alias<MODEL, RESULT>>,
+			ISharedResultOps_Numeric_Alias<MODEL, RESULT, BigDecimal, IClassicResult_Mapped_Single_Alias<MODEL, RESULT>>,
+			ISharedResultOps_String_Alias<MODEL, RESULT, String, IClassicResult_Mapped_Single_Alias<MODEL, RESULT>>,
+			
 			ISharedResultMapperTo<MODEL, RESULT, Long, IClassicResult_Mapped_Single_Alias<MODEL, RESULT>>,
 			ISharedResultMapperTo<MODEL, RESULT, Long, IClassicResult_Mapped_Single_Alias<MODEL, RESULT>>,
 			ISharedResultMapperTo<MODEL, RESULT, Short, IClassicResult_Mapped_Single_Alias<MODEL, RESULT>>,
@@ -75,7 +102,7 @@ final class Classic_Collector_SingleResult<MODEL, RESULT>
 			ISharedResultMapperTo<MODEL, RESULT, Double, IClassicResult_Mapped_Single_Alias<MODEL, RESULT>>,
 			ISharedResultMapperTo<MODEL, RESULT, BigDecimal, IClassicResult_Mapped_Single_Alias<MODEL, RESULT>>,
 			ISharedResultMapperTo<MODEL, RESULT, String, IClassicResult_Mapped_Single_Alias<MODEL, RESULT>>>
-	
+			
 			map() {
 		
 		throw new UnsupportedOperationException("TODO - map to result for classic");

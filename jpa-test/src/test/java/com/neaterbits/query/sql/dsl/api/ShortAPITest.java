@@ -135,7 +135,7 @@ public class ShortAPITest extends BaseSQLAPITest implements SumTest {
 				.one(CompanyAggregatesVO.class)
 
 				//.map(Company::getName) .to (CompanyResultsVO::setName)
-				.map().sum  ( Company::getStockPrice) .to (CompanyAggregatesVO::setSumStockPrice)
+				.map().sum(Company::getStockPrice).to (CompanyAggregatesVO::setSumStockPrice)
 
 
 				.map().avg(Company::getStockPrice).to(CompanyAggregatesVO::setAvgStockPrice)
@@ -177,6 +177,20 @@ public class ShortAPITest extends BaseSQLAPITest implements SumTest {
 				//.map().sqrt().sum(Company::getStockPrice) .to (CompanySqrtAggregatesVO::setSqrtSumStockPrice)
 
 				.map().sqrt().avg(Company::getStockPrice).to(CompanySqrtAggregatesVO::setSqrtAvgStockPrice)
+				.map(Company::getStockPrice).plus(Company::getStockPrice).to(CompanySqrtAggregatesVO::setFoo)
+				
+				.map().sqrt(Company::getStockPrice).plus(Company::getStockPrice).plus(Company::getStockPrice).to(CompanySqrtAggregatesVO::setSqrtAvgStockPrice)
+				
+				.map().sqrt().abs(Company::getStockPrice).to(CompanySqrtAggregatesVO::setSqrtAvgStockPrice)
+				
+				
+				//.map().sqrt().
+				
+				
+				//.map(Company::getStockPrice).plus(Company::getStockPrice)
+				
+				
+				//.map().sqrt().avg(field).
 
 				.where(Company::getName).startsWith("Acme")
 				.build();
@@ -206,7 +220,116 @@ public class ShortAPITest extends BaseSQLAPITest implements SumTest {
 
 				//.map(Company::getName) .to (CompanyResultsVO::setName)
 				
-				.map().sum().sqrt(Company::getStockPrice) .to (CompanySqrtAggregatesVO::setSqrtSumStockPrice)
+				/*
+				 .map().sum().sqrt(Company::getStockPrice).plus(1) 
+				 sum() eller sqrt() som er + 1? Bør nøste
+				
+				 .map().sum().sqrt(Company::getStockPrice).plus(1)
+				
+				funksjoner? rotete
+				
+				 map(plus(sum(sqrt(Company::getStockPrice)), 1)
+				 map(sum(plus(sqrt(Company::getStockPrice), 1))
+				 
+				 Børe være infix.
+				 
+				 mapOf(s -> s.sumOf(e -> e.sqrt(Company::getStockPrice).plus(1) ))
+				 
+				 For ett-nivå? Men vanskelig å detektere statisk når et ett eller to nivåer? Må ha forskjellige retur-tuper, som er en del jobb.
+				 Dvs må fjerne muligheten for å gjøre plus() om er mer enn en enkelt operasjon.
+
+				 map().sum(Company::getStockPrice).plus(1).to(...)
+				 
+				 Alternativ: mapOf(s -> s.sum(Company::getStorPrice).plus(1) ).to()
+				 
+				 OK alternativ dette, og trengs unsett for mer enn ett level så da kan en begynne med dette og lage mere optimal versjon senere
+				 for det enkle caset.
+
+				 map().sum( s -> s.sqrt(Company::getStockPrice).plus(1) )
+ 				 map(s -> sum(e -> e.sqrt(Company::getStockPrice) ).plus(1) )
+
+				OK, så her må vi ha egen signatur for map
+				
+				compute(s -> sum(e -> e.sqrt(Company::getStockPrice) ).plus(1))
+
+
+				For de andre så spiller det ingen rolle? Siden disse ikke har parametere? Men de kan ha parametere som er 
+				Company::getStockPrice f.eks. Så da funker ikke dette om ikke er consumer?
+				
+				Men må finne retur-typen som skal videre. Så hvordan finne denne? Anta at functions vi ikke finner når vi skanner er noe som skal eksekveres?
+				Men har en builder som parameter. Må nok ha en egen funksjon her,
+				
+				sumOf()
+				sqrtOf()
+				
+				computeSum()
+				computeSqrt()
+
+				compute(s -> sumOf(e -> e.sqrt(Company::getStockPrice) ).plus(1).minus(Company::getFoo))
+				
+				compute(s -> sum(Company::getStockPrice).plus(1).minus(Company::getFoo).plus(e -> e.sqrt(Company::getBar))
+
+				compute(s -> sum(Company::getStockPrice).plus(1).minus().abs(Company::getFoo).plus().sqrt(Company::getBar))
+
+				OBS! Kan ikke mikse aggregates og felter, f.eks
+				
+				compute(s -> sum(Company::getStockPrice).plus().avg(Company::getStockPrice)
+				
+				 er OK mens
+				
+				compute(s -> sum(Company::getStockPrice).plus(Company::getStockPrice))
+				
+				er ikke OK siden vi har blanding av aggregate og enkelt-entries i resultatet for rada.
+
+				OBS! Compute-mode: med en gang er over i denne så 
+				  - kan vi ikke kombinere multiple funksjoner
+				  - alle funksjoner må enten ha en sub-compute eller ha et konkret parameter.
+				  - alle arithmetics-fuksjoner er enten literal value, parameter (sjekk om er mulig), datafelt, eller sub-compute ("plusOf" ?)
+				  
+				  Vi kunne hatt evt mulihet for plus() med en enkelt funksjon etter på:
+				  
+				     sum(Company::getStockPrice).plus().avg(Company::getStockPrice)
+				     
+				     mere lesbart enn 
+				     
+				     
+				     sum(Company::getStockPrice).plusOf(e -> e.avg(Company::getStockPrice))
+
+					 siden egentlig er på samme nivå.
+				     
+
+				Dette blir litt tricky i API siden kan ha multiple nivåer men kan hente sub-query?
+				Får modellere først med POJOer og ser hvordan det blir da.
+				
+				!! ISSUE !! Hvordan auto-detektere alias i nøsta nivåer? Vanskelig å sende dette opp igjen ?? Men må gjøres om skal være konsekevent.
+				Evt at alltid må starte med et felt på noe vis? Men ikke så lett om skal gjøre operasjoner på nøsta nivå.
+				
+				Kan evt detektere miks build-time, at supplier-API er kalt for er et ganske isolert case dette, ikke ofte at skjer.
+				
+				Div eksempler:
+
+				
+				map().sumOf(s -> s.sqrt(Company::getStockPrice)).plus(1))
+				mapOf(s -> s.sumOf(e -> e.sqrt(Company::getStockPrice).plus(1)))
+				
+				
+				returnere en sum av to verdier i en kolonne?
+				
+				mapOf(s -> s.get(Dims::getWidth).mul(Dims::getHeight).mul(Dims::getLength)) . to(VO::setVolume)
+				
+
+ 				 funksjoner? annen enklere mulighet om bare nøsta-kall, men dette blir i så fall egen dialekt, kan ikke mikse her, blir rot.
+ 				 
+ 				 map(sum(sqrt(Company::getStockPrice)).plus(1)))
+ 				 map(sum(sqrt(Company::getStockPrice).plus(1)))
+ 				 
+ 				 map(get(Dims::getWidth).mul(Dims::getHeight).mul(Dims::getLength)) . to(VO::setVolume)
+				*/
+				
+				
+				// map().sumOf(e -> e.sqrt(Company::getStock))
+				
+				.map().sum().sqrt(Company::getStockPrice).to (CompanySqrtAggregatesVO::setSqrtSumStockPrice)
 
 				//.map().sqrt().avg(Company::getStockPrice).to(CompanySqrtAggregatesVO::setSqrtAvgStockPrice)
 
@@ -226,6 +349,26 @@ public class ShortAPITest extends BaseSQLAPITest implements SumTest {
 		});
 	}
 	
+	//substring(1, s -> s.get(Company::getFoo).plus(1))
+	
+	
+	@Test
+    public void testArithmetic() {
+		final SingleBuilt<CompanySqrtAggregatesVO> acmeQuery = select
+				.one(CompanySqrtAggregatesVO.class)
+
+				//.map(Company::getName) .to (CompanyResultsVO::setName)
+				
+				.map().sqrt().sum(Company::getStockPrice).to(CompanySqrtAggregatesVO::setSqrtSumStockPrice)
+
+				//.map().sqrt().avg(Company::getStockPrice).to(CompanySqrtAggregatesVO::setSqrtAvgStockPrice)
+
+				.where(Company::getName).startsWith("Acme")
+				.build();
+		
+	}
+		
+
 	@Test
     public void testPrepared() {
 		final SinglePrepared<Company> acmeQuery = prepared

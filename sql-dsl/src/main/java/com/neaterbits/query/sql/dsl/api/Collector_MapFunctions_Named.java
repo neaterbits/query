@@ -19,7 +19,19 @@ final class Collector_MapFunctions_Named<
 			LONG_RET		extends ISharedFunction_Next<MODEL, RESULT, RET>,
 			DOUBLE_RET		extends ISharedFunction_Next<MODEL, RESULT, RET>,
 			BIGDECIMAL_RET	extends ISharedFunction_Next<MODEL, RESULT, RET>,
-			STRING_RET		extends ISharedFunction_Next<MODEL, RESULT, RET>
+			STRING_RET		extends ISharedFunction_Next<MODEL, RESULT, RET>,
+			
+			
+			NO_PARAM_SUM_LONG_RET	extends ISharedFunction_Next<MODEL, RESULT, RET>,
+			NO_PARAM_COUNT_RET		extends ISharedFunction_Next<MODEL, RESULT, RET>,
+			
+
+			NO_PARAM_SHORT_RET 		extends ISharedFunction_Next<MODEL, RESULT, RET>,
+			NO_PARAM_INT_RET	  		extends ISharedFunction_Next<MODEL, RESULT, RET>,
+			NO_PARAM_LONG_RET		extends ISharedFunction_Next<MODEL, RESULT, RET>,
+			NO_PARAM_DOUBLE_RET		extends ISharedFunction_Next<MODEL, RESULT, RET>,
+			NO_PARAM_BIGDECIMAL_RET	extends ISharedFunction_Next<MODEL, RESULT, RET>,
+			NO_PARAM_STRING_RET		extends ISharedFunction_Next<MODEL, RESULT, RET>
 
 			>
 			
@@ -39,7 +51,9 @@ final class Collector_MapFunctions_Named<
 
 
 			
-		implements ISharedMapFunctions_Named<MODEL, RESULT, RET, SUM_LONG_RET, COUNT_RET, SHORT_RET, INT_RET, LONG_RET, DOUBLE_RET, BIGDECIMAL_RET, STRING_RET> {
+		implements ISharedMapFunctions_Named<MODEL, RESULT, RET,
+			SUM_LONG_RET, COUNT_RET, SHORT_RET, INT_RET, LONG_RET, DOUBLE_RET, BIGDECIMAL_RET, STRING_RET,
+			NO_PARAM_SUM_LONG_RET, NO_PARAM_COUNT_RET, NO_PARAM_SHORT_RET, NO_PARAM_INT_RET, NO_PARAM_LONG_RET, NO_PARAM_DOUBLE_RET, NO_PARAM_BIGDECIMAL_RET, NO_PARAM_STRING_RET> {
 
 	Collector_MapFunctions_Named(ISharedCollector_Functions_Callback_Named<MODEL, RESULT, RET> func, Collector_SharedFunctions_Base<MODEL, RESULT> last) {
 		super(func, last);
@@ -147,10 +161,15 @@ final class Collector_MapFunctions_Named<
 
 	// NoParam
 	@Override
-	public ISharedMapFunctions_Numeric_Named<MODEL, RESULT, RET, SUM_LONG_RET, COUNT_RET, SHORT_RET, INT_RET, LONG_RET, DOUBLE_RET, BIGDECIMAL_RET> abs() {
+	@SuppressWarnings({"unchecked", "rawtypes"})
+	public ISharedMapFunctions_Numeric_Named<MODEL, RESULT, RET,
+			NO_PARAM_SUM_LONG_RET, NO_PARAM_COUNT_RET, NO_PARAM_SHORT_RET, NO_PARAM_INT_RET, NO_PARAM_LONG_RET, NO_PARAM_DOUBLE_RET, NO_PARAM_BIGDECIMAL_RET,
+			NO_PARAM_SUM_LONG_RET, NO_PARAM_COUNT_RET, NO_PARAM_SHORT_RET, NO_PARAM_INT_RET, NO_PARAM_LONG_RET, NO_PARAM_DOUBLE_RET, NO_PARAM_BIGDECIMAL_RET>
+				abs() {
+					
 		add(Function_Arithmetic_Abs.INSTANCE);
 		
-		return this;
+		return (ISharedMapFunctions_Numeric_Named)this;
 	}
 
 	/*
@@ -164,33 +183,41 @@ final class Collector_MapFunctions_Named<
 
 	@SuppressWarnings({"unchecked", "rawtypes"})
 	@Override
-	public ISharedMapFunctions_Numeric_Named<MODEL, RESULT, RET, DOUBLE_RET, DOUBLE_RET, DOUBLE_RET, DOUBLE_RET, DOUBLE_RET, DOUBLE_RET, DOUBLE_RET> sqrt() {
+	public ISharedMapFunctions_Numeric_Named<
+				MODEL, RESULT, RET,
+				NO_PARAM_DOUBLE_RET, NO_PARAM_DOUBLE_RET, NO_PARAM_DOUBLE_RET, NO_PARAM_DOUBLE_RET, NO_PARAM_DOUBLE_RET, NO_PARAM_DOUBLE_RET, NO_PARAM_DOUBLE_RET,
+				NO_PARAM_DOUBLE_RET, NO_PARAM_DOUBLE_RET, NO_PARAM_DOUBLE_RET, NO_PARAM_DOUBLE_RET, NO_PARAM_DOUBLE_RET, NO_PARAM_DOUBLE_RET, NO_PARAM_DOUBLE_RET> sqrt() {
 		add(Function_Arithmetic_Sqrt.INSTANCE);
 
 		return (ISharedMapFunctions_Numeric_Named)this;
 	}
 	
+				
 	
 	@Override
-	public ISharedFunctions_String_Named<MODEL, RESULT, RET, STRING_RET> lower() {
+	@SuppressWarnings({"unchecked", "rawtypes"})
+	public ISharedFunctions_String_Named<MODEL, RESULT, RET, NO_PARAM_STRING_RET> lower() {
 		add(Function_String_Lower.INSTANCE);
 		
-		return this;
+		return (ISharedFunctions_String_Named)this;
 	}
 
 
+
 	@Override
-	public ISharedFunctions_String_Named<MODEL, RESULT, RET, STRING_RET> upper() {
+	@SuppressWarnings({"unchecked", "rawtypes"})
+		public ISharedFunctions_String_Named<MODEL, RESULT, RET, NO_PARAM_STRING_RET> upper() {
 		add(Function_String_Upper.INSTANCE);
 		
-		return this;
+		return (ISharedFunctions_String_Named)this;
 	}
 
 	@Override
-	public ISharedFunctions_String_Named<MODEL, RESULT, RET, STRING_RET> trim() {
+	@SuppressWarnings({"unchecked", "rawtypes"})
+		public ISharedFunctions_String_Named<MODEL, RESULT, RET, NO_PARAM_STRING_RET> trim() {
 		add(Function_String_Trim.INSTANCE);
 		
-		return this;
+		return (ISharedFunctions_String_Named)this;
 	}
 }
 

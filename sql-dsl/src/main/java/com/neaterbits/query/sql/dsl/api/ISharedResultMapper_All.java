@@ -27,9 +27,18 @@ public interface ISharedResultMapper_All<MODEL, RESULT,
 				ALIAS_SOURCE,
 				
 				// Named functions
+				
+				ISharedResultOps_Numeric_Named<MODEL, RESULT, Long, NAMED_SOURCE>,
+				ISharedResultOps_Numeric_Named<MODEL, RESULT, Long, NAMED_SOURCE>,
+				ISharedResultOps_Numeric_Named<MODEL, RESULT, Short, NAMED_SOURCE>,
+				ISharedResultOps_Numeric_Named<MODEL, RESULT, Integer, NAMED_SOURCE>,
+				ISharedResultOps_Numeric_Named<MODEL, RESULT, Long, NAMED_SOURCE>,
+				ISharedResultOps_Numeric_Named<MODEL, RESULT, Double, NAMED_SOURCE>,
+				ISharedResultOps_Numeric_Named<MODEL, RESULT, BigDecimal, NAMED_SOURCE>,
+				ISharedResultOps_String_Named<MODEL, RESULT, NAMED_SOURCE>,
+				
 				ISharedResultMapperTo<MODEL, RESULT, Long, NAMED_SOURCE>,
 				ISharedResultMapperTo<MODEL, RESULT, Long, NAMED_SOURCE>,
-
 				ISharedResultMapperTo<MODEL, RESULT, Short, NAMED_SOURCE>,
 				ISharedResultMapperTo<MODEL, RESULT, Integer, NAMED_SOURCE>,
 				ISharedResultMapperTo<MODEL, RESULT, Long, NAMED_SOURCE>,
@@ -38,6 +47,15 @@ public interface ISharedResultMapper_All<MODEL, RESULT,
 				ISharedResultMapperTo<MODEL, RESULT, String,  NAMED_SOURCE>,
 				
 				// Alias functions
+				ISharedResultOps_Numeric_Alias<MODEL, RESULT, Long, ALIAS_SOURCE>,
+				ISharedResultOps_Numeric_Alias<MODEL, RESULT, Long, ALIAS_SOURCE>,
+				ISharedResultOps_Numeric_Alias<MODEL, RESULT, Short, ALIAS_SOURCE>,
+				ISharedResultOps_Numeric_Alias<MODEL, RESULT, Integer, ALIAS_SOURCE>,
+				ISharedResultOps_Numeric_Alias<MODEL, RESULT, Long, ALIAS_SOURCE>,
+				ISharedResultOps_Numeric_Alias<MODEL, RESULT, Double, ALIAS_SOURCE>,
+				ISharedResultOps_Numeric_Alias<MODEL, RESULT, BigDecimal, ALIAS_SOURCE>,
+				ISharedResultOps_String_Alias<MODEL, RESULT, String,  ALIAS_SOURCE>,
+			
 				ISharedResultMapperTo<MODEL, RESULT, Long, ALIAS_SOURCE>,
 				ISharedResultMapperTo<MODEL, RESULT, Long, ALIAS_SOURCE>,
 				ISharedResultMapperTo<MODEL, RESULT, Short, ALIAS_SOURCE>,

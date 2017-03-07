@@ -1,10 +1,13 @@
 package com.neaterbits.query.sql.dsl.api;
 
+import java.math.BigDecimal;
+
 class CompanySqrtAggregatesVO {
 	
 	private Double sqrtAvgStockPrice;
 	private Double sqrtSumStockPrice;
 
+	private BigDecimal foo;
 	
 	
 	CompanySqrtAggregatesVO() {
@@ -16,6 +19,18 @@ class CompanySqrtAggregatesVO {
 		this.sqrtAvgStockPrice = sqrtAvgStockPrice;
 		this.sqrtSumStockPrice = sqrtSumStockPrice;
 	}
+	
+	
+
+	public BigDecimal getFoo() {
+		return foo;
+	}
+
+
+	public void setFoo(BigDecimal foo) {
+		this.foo = foo;
+	}
+
 
 	Double getSqrtAvgStockPrice() {
 		return sqrtAvgStockPrice;

@@ -4,7 +4,7 @@ import java.util.function.BiConsumer;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
-final class ResultMapperToImpl<
+class ResultMapperToImpl<
 			MODEL,
 			RESULT,
 			R,
@@ -62,7 +62,7 @@ final class ResultMapperToImpl<
 
 	@Override
 	@SuppressWarnings("unchecked")
-	public SOURCE to(BiConsumer<RESULT, R> setter) {
+	public final SOURCE to(BiConsumer<RESULT, R> setter) {
 		
 		if (setter == null) {
 			throw new IllegalArgumentException("setter == null");

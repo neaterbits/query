@@ -1,6 +1,6 @@
 package com.neaterbits.query.sql.dsl.api;
 
-import java.util.function.Function;
+import java.math.BigDecimal;
 import java.util.function.Supplier;
 
 abstract class Short_Collector_Result_Undecided_Base<
@@ -100,9 +100,38 @@ abstract class Short_Collector_Result_Undecided_Base<
 		return modelCompiler;
 	}
 
+	
+	/*
 	@Override
 	public final <T, R> ISharedResultMapperTo<MODEL, RESULT, R, MAPPED_SOURCE_NAMED> map(Function<T, R> getter) {
 		return new ResultMapperToImpl<MODEL, RESULT, R, MAPPED_SOURCE_NAMED>(getter, getMapToResultNamed());
+	}
+	*/
+
+	@Override
+	public final <T> ISharedResultOps_Numeric_Named<MODEL, RESULT, Short, MAPPED_SOURCE_NAMED> map(IFunctionShort<T> getter) {
+		return new ResultMapperOps_Numeric<>(getter, getMapToResultNamed());
+	}
+
+	@Override
+	public final <T> ISharedResultOps_Numeric_Named<MODEL, RESULT, Integer, MAPPED_SOURCE_NAMED> map(
+			IFunctionInteger<T> getter) {
+		return new ResultMapperOps_Numeric<>(getter, getMapToResultNamed());
+	}
+
+	@Override
+	public final <T> ISharedResultOps_Numeric_Named<MODEL, RESULT, Long, MAPPED_SOURCE_NAMED> map(IFunctionLong<T> getter) {
+		return new ResultMapperOps_Numeric<>(getter, getMapToResultNamed());
+	}
+
+	@Override
+	public final <T> ISharedResultOps_Numeric_Named<MODEL, RESULT, BigDecimal, MAPPED_SOURCE_NAMED> map(IFunctionBigDecimal<T> getter) {
+		return new ResultMapperOps_Numeric<>(getter, getMapToResultNamed());
+	}
+
+	@Override
+	public final <T> ISharedResultOps_String_Named<MODEL, RESULT, MAPPED_SOURCE_NAMED> map(StringFunction<T> getter) {
+		return new ResultMapperOps_String<>(getter, getMapToResultNamed());
 	}
 
 	@Override

@@ -1,12 +1,14 @@
 package com.neaterbits.query.sql.dsl.api;
 
 import java.math.BigDecimal;
-import java.util.function.Function;
 import java.util.function.Supplier;
 
 abstract class Classic_Collector_Result<
 			MODEL, 
 			RESULT,
+			
+			NAMED_MAP_RESULT extends ISharedSelectSourceBuilder<MODEL, RESULT>,
+			
 			ENTITY_NAMED_WHERE_OR_JOIN extends ISQLLogical_WhereOrJoin_Named_Base<MODEL, RESULT>,
 			ENTITY_ALIAS_WHERE_OR_JOIN extends ISQLLogical_WhereOrJoin_Alias_Base<MODEL, RESULT>,
 			
@@ -26,7 +28,7 @@ abstract class Classic_Collector_Result<
 			   ISharedResultMapper_Alias<MODEL, RESULT, MAPPED_SOURCE_ALIAS> {
 	
 	
-	abstract Classic_Collector_MapToResult_Base<MODEL, RESULT, MAPPED_NAMED_WHERE_OR_JOIN, MAPPED_ALIAS_WHERE_OR_JOIN> createMapToResult();
+	abstract Classic_Collector_MapToResult_Base<MODEL, RESULT, NAMED_MAP_RESULT, MAPPED_NAMED_WHERE_OR_JOIN, MAPPED_ALIAS_WHERE_OR_JOIN> createMapToResult();
 
 	private final SharedSelectSource selectSource;
 	private final ModelCompiler<MODEL> modelCompiler;
@@ -57,12 +59,31 @@ abstract class Classic_Collector_Result<
 	final ModelCompiler<MODEL> getModelCompiler() {
 		return modelCompiler;
 	}
-
+	
 	@Override
-	public final <T, R> ISharedResultMapperTo<MODEL, RESULT, R, MAPPED_SOURCE_NAMED> map(Function<T, R> getter) {
-		return new ResultMapperToImpl<>(getter, createMapToResult());
+	public <T> ISharedResultOps_Numeric_Named<MODEL, RESULT, Short, MAPPED_SOURCE_NAMED> map(IFunctionShort<T> getter) {
+		return new ResultMapperOps_Numeric<>(getter, createMapToResult());
 	}
 
+	@Override
+	public <T> ISharedResultOps_Numeric_Named<MODEL, RESULT, Integer, MAPPED_SOURCE_NAMED> map(IFunctionInteger<T> getter) {
+		return new ResultMapperOps_Numeric<>(getter, createMapToResult());
+	}
+
+	@Override
+	public <T> ISharedResultOps_Numeric_Named<MODEL, RESULT, Long, MAPPED_SOURCE_NAMED> map(IFunctionLong<T> getter) {
+		return new ResultMapperOps_Numeric<>(getter, createMapToResult());
+	}
+
+	@Override
+	public <T> ISharedResultOps_Numeric_Named<MODEL, RESULT, BigDecimal, MAPPED_SOURCE_NAMED> map(IFunctionBigDecimal<T> getter) {
+		return new ResultMapperOps_Numeric<>(getter, createMapToResult());
+	}
+
+	@Override
+	public <T> ISharedResultOps_String_Named<MODEL, RESULT, MAPPED_SOURCE_NAMED> map(StringFunction<T> getter) {
+		return new ResultMapperOps_String<>(getter, createMapToResult());
+	}
 
 	@Override
 	public final <R> ISharedResultMapperTo<MODEL, RESULT, R, MAPPED_SOURCE_ALIAS> map(Supplier<R> getter) {

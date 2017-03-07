@@ -15,15 +15,28 @@ public interface ISharedMapFunctions_Named<
 		LONG_RET	extends ISharedFunction_Next<MODEL, RESULT, RET>,
 		DOUBLE_RET extends ISharedFunction_Next<MODEL, RESULT, RET>,
 		BIGDECIMAL_RET extends ISharedFunction_Next<MODEL, RESULT, RET>,
-		STRING_RET extends ISharedFunction_Next<MODEL, RESULT, RET>
+		STRING_RET extends ISharedFunction_Next<MODEL, RESULT, RET>,
 
+		NO_PARAM_SUM_LONG_RET	extends ISharedFunction_Next<MODEL, RESULT, RET>,
+		NO_PARAM_COUNT_RET	extends ISharedFunction_Next<MODEL, RESULT, RET>,
+		
+		
+		NO_PARAM_SHORT_RET	extends ISharedFunction_Next<MODEL, RESULT, RET>,
+		NO_PARAM_INT_RET	extends ISharedFunction_Next<MODEL, RESULT, RET>, 
+		NO_PARAM_LONG_RET	extends ISharedFunction_Next<MODEL, RESULT, RET>,
+		NO_PARAM_DOUBLE_RET extends ISharedFunction_Next<MODEL, RESULT, RET>,
+		NO_PARAM_BIGDECIMAL_RET extends ISharedFunction_Next<MODEL, RESULT, RET>,
+		NO_PARAM_STRING_RET extends ISharedFunction_Next<MODEL, RESULT, RET>
 		>
 		
 		extends
 		
-			ISharedMapFunctions_Numeric_Named<MODEL, RESULT, RET, SUM_LONG_RET, COUNT_RET, SHORT_RET, INT_RET, LONG_RET, DOUBLE_RET, BIGDECIMAL_RET>,
+			ISharedMapFunctions_Numeric_Named<MODEL, RESULT, RET,
+			
+				SUM_LONG_RET, COUNT_RET, SHORT_RET, INT_RET, LONG_RET, DOUBLE_RET, BIGDECIMAL_RET,
+				NO_PARAM_SUM_LONG_RET, NO_PARAM_COUNT_RET, NO_PARAM_SHORT_RET, NO_PARAM_INT_RET, NO_PARAM_LONG_RET, NO_PARAM_DOUBLE_RET, NO_PARAM_BIGDECIMAL_RET>,
 
 			ISharedFunctions_String_Named<MODEL, RESULT, RET, STRING_RET>,
-			ISharedFunctions_String_NoParam_Named<MODEL, RESULT, RET, STRING_RET> {
+			ISharedFunctions_String_NoParam_Named<MODEL, RESULT, RET, NO_PARAM_STRING_RET> {
 
 }

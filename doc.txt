@@ -645,8 +645,10 @@ For adhoc er det alltid kun på felter? kan finne 1, 2, 3 der også ut fra mappi
  * OBS! skille ut alt target-spesifikt i eget *Target hierarki for SQL genereringen, uavhengg av datasource (sinden kan kjøre native queries mot JPA f.eks)
 
 
-
-
+- OBS!! Må være måte å spesifisere hvilke dialekt en skal bruke, på tvers av kodebase, dvs at velger ene eller andre dialekten
+slik at er konsekvent gjennom kodebasen. Dette f.eks ved å arve fra et interface og så er det dette som anvendes.
+Kan evt enable runtime-sjekker v.hj.a statics intern som sjekker at kun er en slags dialekt som anvendes.
+Så det er start-interfacet som alltid bestemmer dialekt, kan ikke mikse og matche i samme query uansett.
 
  - mere tester
  - unit tester rett på JPAModel og utils for å sjekke at henter ut relations riktig, attributt kolonner mm på rett vis.
