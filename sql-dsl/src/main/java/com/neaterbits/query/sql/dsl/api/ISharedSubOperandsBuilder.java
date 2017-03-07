@@ -1,8 +1,29 @@
 package com.neaterbits.query.sql.dsl.api;
 
-@FunctionalInterface
-public interface ISharedSubOperandsBuilder<T> {
+public interface ISharedSubOperandsBuilder<MODEL, RESULT, R extends Comparable<R>, AFTER extends ISharedFunction_After<MODEL, RESULT>>
 
-	ISharedSubOperand_End<T> build();
+		extends 
+			ISharedFunction_Next<MODEL, RESULT, AFTER>,
+			ISharedFunctions_Arithmetic_Named<
+				MODEL, RESULT,
+				AFTER,
+				
+				ISharedSubOperand_Numeric_Ops_Named<MODEL, RESULT, R, AFTER>,
+				ISharedSubOperand_Numeric_Ops_Named<MODEL, RESULT, R, AFTER>,
+				ISharedSubOperand_Numeric_Ops_Named<MODEL, RESULT, R, AFTER>,
+				ISharedSubOperand_Numeric_Ops_Named<MODEL, RESULT, R, AFTER>,
+				ISharedSubOperand_Numeric_Ops_Named<MODEL, RESULT, R, AFTER>
+				
+
+				/*
+				
+				ISharedSubOperandsBuilder_Next<MODEL, RESULT, T, AFTER>,
+				ISharedSubOperandsBuilder_Next<MODEL, RESULT, T, AFTER>,
+				ISharedSubOperandsBuilder_Next<MODEL, RESULT, T, AFTER>,
+				ISharedSubOperandsBuilder_Next<MODEL, RESULT, T, AFTER>,
+				ISharedSubOperandsBuilder_Next<MODEL, RESULT, T, AFTER>
+				*/
+
+> {
 
 }

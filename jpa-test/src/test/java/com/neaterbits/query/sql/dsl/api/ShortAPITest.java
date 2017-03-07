@@ -181,8 +181,9 @@ public class ShortAPITest extends BaseSQLAPITest implements SumTest {
 				
 				.map().sqrt(Company::getStockPrice).plus(Company::getStockPrice).plus(Company::getStockPrice).to(CompanySqrtAggregatesVO::setSqrtAvgStockPrice)
 				
-				.map().sqrt().abs(Company::getStockPrice).to(CompanySqrtAggregatesVO::setSqrtAvgStockPrice)
+				.map().sqrt().abs(Company::getStockPrice) . to(CompanySqrtAggregatesVO::setSqrtAvgStockPrice)
 				
+				.map(Company::getStockPrice).plusOf(e -> e.abs(Company::getStockPrice).plus(new BigDecimal("1.5"))).to(CompanySqrtAggregatesVO::setFoo)
 				
 				//.map().sqrt().
 				

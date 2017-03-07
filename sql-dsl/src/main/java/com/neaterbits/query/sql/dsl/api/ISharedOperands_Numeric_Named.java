@@ -32,8 +32,12 @@ public interface ISharedOperands_Numeric_Named<
 	//<T> TYPE_RET plus(Param<Short> param);
 
 	<T> TYPE_RET plus(IFunctionBigDecimal<T> getter);
-	//<T> TYPE_RET plus(ISharedSubOperandsBuilder<BigDecimal> builder);
-	<T> TYPE_RET plus(BigDecimal value);
+	
+	TYPE_RET plusOf(ISharedSubOperandsFunction<MODEL, RESULT, BigDecimal> builder);
+	
+	TYPE_RET plus(BigDecimal value);
+	
+	
 	//<T> TYPE_RET plus(Param<Integer> param);
 	
 }

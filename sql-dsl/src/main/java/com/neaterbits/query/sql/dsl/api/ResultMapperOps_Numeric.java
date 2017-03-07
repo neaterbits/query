@@ -47,7 +47,14 @@ final class ResultMapperOps_Numeric<
 	}
 
 	@Override
-	public <T> ISharedResultOps_Numeric_Named<MODEL, RESULT, R, SOURCE> plus(BigDecimal value) {
+	public ISharedResultOps_Numeric_Named<MODEL, RESULT, R, SOURCE> plusOf(ISharedSubOperandsFunction<MODEL, RESULT, BigDecimal> builder) {
 		throw new UnsupportedOperationException("TODO");
 	}
+
+	@Override
+	public ISharedResultOps_Numeric_Named<MODEL, RESULT, R, SOURCE> plus(BigDecimal value) {
+		throw new UnsupportedOperationException("TODO");
+	}
+
+	
 }
