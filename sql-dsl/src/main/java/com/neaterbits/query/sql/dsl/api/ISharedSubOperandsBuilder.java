@@ -13,17 +13,15 @@ public interface ISharedSubOperandsBuilder<MODEL, RESULT, R extends Comparable<R
 				ISharedSubOperand_Numeric_Ops_Named<MODEL, RESULT, R, AFTER>,
 				ISharedSubOperand_Numeric_Ops_Named<MODEL, RESULT, R, AFTER>,
 				ISharedSubOperand_Numeric_Ops_Named<MODEL, RESULT, R, AFTER>
-				
+			>,
+			ISharedFunctions_Arithmetic_NoParam_Base<
+						MODEL,
+						RESULT,
+						
+						ISharedSubOperandsBuilder_NoParam<MODEL, RESULT, R, AFTER>,
+						ISharedSubOperandsBuilder_NoParam<MODEL, RESULT, Double, AFTER>
+			>
 
-				/*
-				
-				ISharedSubOperandsBuilder_Next<MODEL, RESULT, T, AFTER>,
-				ISharedSubOperandsBuilder_Next<MODEL, RESULT, T, AFTER>,
-				ISharedSubOperandsBuilder_Next<MODEL, RESULT, T, AFTER>,
-				ISharedSubOperandsBuilder_Next<MODEL, RESULT, T, AFTER>,
-				ISharedSubOperandsBuilder_Next<MODEL, RESULT, T, AFTER>
-				*/
-
-> {
+				{
 
 }
