@@ -112,7 +112,6 @@ final class SharedMapFunctions_Initial<
 	}
 
 			
-
 	@Override
 	public <T> NAMED_SHORT_RET abs(IFunctionShort<T> getter) {
 		return named().abs(getter);
@@ -129,12 +128,27 @@ final class SharedMapFunctions_Initial<
 	}
 
 	@Override
+	public <T> ALIAS_SHORT_RET abs(ISupplierShort getter) {
+		return alias().abs(getter);
+	}
+
+	@Override
 	public <T> ALIAS_INT_RET abs(ISupplierInteger getter) {
 		return alias().abs(getter);
 	}
 
 	@Override
 	public <T> ALIAS_LONG_RET abs(ISupplierLong getter) {
+		return alias().abs(getter);
+	}
+
+	@Override
+	public <T> ALIAS_DOUBLE_RET abs(ISupplierDouble getter) {
+		return alias().abs(getter);
+	}
+
+	@Override
+	public <T> ALIAS_BIGDECIMAL_RET abs(ISupplierBigDecimal getter) {
 		return alias().abs(getter);
 	}
 
@@ -332,6 +346,11 @@ final class SharedMapFunctions_Initial<
 	public <T> NAMED_DOUBLE_RET sqrt(IFunctionBigDecimal<T> getter) {
 		return named().sqrt(getter);
 	}
+
+	@Override
+	public <T> ALIAS_DOUBLE_RET sqrt(ISupplierShort getter) {
+		return alias().sqrt(getter);
+	}
 	
 	@Override
 	public <T> ALIAS_DOUBLE_RET sqrt(ISupplierInteger getter) {
@@ -340,6 +359,16 @@ final class SharedMapFunctions_Initial<
 
 	@Override
 	public <T> ALIAS_DOUBLE_RET sqrt(ISupplierLong getter) {
+		return alias().sqrt(getter);
+	}
+
+	@Override
+	public <T> ALIAS_DOUBLE_RET sqrt(ISupplierDouble getter) {
+		return alias().sqrt(getter);
+	}
+
+	@Override
+	public <T> ALIAS_DOUBLE_RET sqrt(ISupplierBigDecimal getter) {
 		return alias().sqrt(getter);
 	}
 
@@ -494,6 +523,12 @@ final class SharedMapFunctions_Initial<
 		
 		return this;
 	}
+
+
+	
+
+
+
 
 
 	@Override

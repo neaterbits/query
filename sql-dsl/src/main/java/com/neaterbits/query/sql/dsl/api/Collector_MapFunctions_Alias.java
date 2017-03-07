@@ -28,9 +28,11 @@ final class Collector_MapFunctions_Alias<
 
 		RET,
 
+		SHORT_RET,
 		INT_RET,
 		LONG_RET,
 		DOUBLE_RET,
+		BIGDECIMAL_RET,
 		STRING_RET> 
 	
 	

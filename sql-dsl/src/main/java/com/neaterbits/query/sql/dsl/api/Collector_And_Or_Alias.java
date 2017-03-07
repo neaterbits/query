@@ -1,5 +1,7 @@
 package com.neaterbits.query.sql.dsl.api;
 
+import java.math.BigDecimal;
+
 import org.w3c.dom.DOMConfiguration;
 
 @Deprecated
@@ -53,9 +55,11 @@ abstract class Collector_And_Or_Alias<
 		MODEL,
 		RESULT,
 		AND_CLAUSES,
+		ISharedCondition_Comparable_Common_All<MODEL, RESULT, Short, AND_CLAUSES>,
 		ISharedCondition_Comparable_Common_All<MODEL, RESULT, Integer, AND_CLAUSES>,
 		ISharedCondition_Comparable_Common_All<MODEL, RESULT, Long, AND_CLAUSES>,
 		ISharedCondition_Comparable_Common_All<MODEL, RESULT, Double, AND_CLAUSES>,
+		ISharedCondition_Comparable_Common_All<MODEL, RESULT, BigDecimal, AND_CLAUSES>,
 		ISharedCondition_Comparable_String_All<MODEL, RESULT, AND_CLAUSES>
 	>
 		and() {
@@ -70,9 +74,11 @@ abstract class Collector_And_Or_Alias<
 		MODEL,
 		RESULT,
 		OR_CLAUSES,
+		ISharedCondition_Comparable_Common_All<MODEL, RESULT, Short, OR_CLAUSES>,
 		ISharedCondition_Comparable_Common_All<MODEL, RESULT, Integer, OR_CLAUSES>,
 		ISharedCondition_Comparable_Common_All<MODEL, RESULT, Long, OR_CLAUSES>,
 		ISharedCondition_Comparable_Common_All<MODEL, RESULT, Double, OR_CLAUSES>,
+		ISharedCondition_Comparable_Common_All<MODEL, RESULT, BigDecimal, OR_CLAUSES>,
 		ISharedCondition_Comparable_String_All<MODEL, RESULT, OR_CLAUSES>
 	>
 		or() {

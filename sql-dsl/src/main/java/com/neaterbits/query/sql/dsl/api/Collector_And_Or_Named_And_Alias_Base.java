@@ -330,9 +330,11 @@ abstract class Collector_And_Or_Named_And_Alias_Base<
 		MODEL,
 		RESULT,
 		ALIAS_AND_CLAUSES,
+		ISharedCondition_Comparable_Common_All<MODEL, RESULT, Short, ALIAS_AND_CLAUSES>,
 		ISharedCondition_Comparable_Common_All<MODEL, RESULT, Integer, ALIAS_AND_CLAUSES>,
 		ISharedCondition_Comparable_Common_All<MODEL, RESULT, Long, ALIAS_AND_CLAUSES>,
 		ISharedCondition_Comparable_Common_All<MODEL, RESULT, Double, ALIAS_AND_CLAUSES>,
+		ISharedCondition_Comparable_Common_All<MODEL, RESULT, BigDecimal, ALIAS_AND_CLAUSES>,
 		ISharedCondition_Comparable_String_All<MODEL, RESULT, ALIAS_AND_CLAUSES>
 	>
 		andAlias() {
@@ -430,9 +432,11 @@ abstract class Collector_And_Or_Named_And_Alias_Base<
 			MODEL,
 			RESULT,
 			ALIAS_OR_CLAUSES,
+			ISharedCondition_Comparable_Common_All<MODEL, RESULT, Short, ALIAS_OR_CLAUSES>,
 			ISharedCondition_Comparable_Common_All<MODEL, RESULT, Integer, ALIAS_OR_CLAUSES>,
 			ISharedCondition_Comparable_Common_All<MODEL, RESULT, Long, ALIAS_OR_CLAUSES>,
 			ISharedCondition_Comparable_Common_All<MODEL, RESULT, Double, ALIAS_OR_CLAUSES>,
+			ISharedCondition_Comparable_Common_All<MODEL, RESULT, BigDecimal, ALIAS_OR_CLAUSES>,
 			ISharedCondition_Comparable_String_All<MODEL, RESULT, ALIAS_OR_CLAUSES>
 		>
 			orAlias() {

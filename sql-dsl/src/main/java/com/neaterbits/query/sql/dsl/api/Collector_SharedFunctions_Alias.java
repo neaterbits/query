@@ -9,16 +9,18 @@ abstract class Collector_SharedFunctions_Alias<
 		// commented out since reused for mapping functions 
 		RET extends ISharedFunction_After<MODEL, RESULT>,
 
+		SHORT_RET extends ISharedFunction_Next<MODEL, RESULT, RET>,
 		INTEGER_RET extends ISharedFunction_Next<MODEL, RESULT, RET>,
 		LONG_RET    extends ISharedFunction_Next<MODEL, RESULT, RET>,
 		DOUBLE_RET  extends ISharedFunction_Next<MODEL, RESULT, RET>,
+		BIGDECIMAL_RET extends ISharedFunction_Next<MODEL, RESULT, RET>,
 		STRING_RET  extends ISharedFunction_Next<MODEL, RESULT, RET>
 		
 		>
 
 		extends Collector_SharedFunctions_Base<MODEL, RESULT>
 
-		implements ISharedFunctions_Transform_Initial_Alias<MODEL, RESULT, RET, INTEGER_RET, LONG_RET, DOUBLE_RET, STRING_RET>
+		implements ISharedFunctions_Transform_Initial_Alias<MODEL, RESULT, RET, SHORT_RET, INTEGER_RET, LONG_RET, DOUBLE_RET, BIGDECIMAL_RET, STRING_RET>
 
 
 {
@@ -49,7 +51,7 @@ abstract class Collector_SharedFunctions_Alias<
 			COMPARABLE extends ISharedCondition_Comparable_Common_Base<MODEL, RESULT, VALUE, ?>>
 	
 	
-		COMPARABLE addAndReturnComparable(
+		COMPARABLE addAndReturnType(
 			Function_Arithmetic function, Supplier<? extends Comparable<?>> getter) {
 
 		return addAndReturnType(function, getter);
@@ -64,41 +66,70 @@ abstract class Collector_SharedFunctions_Alias<
 
 	@Override
 	@SuppressWarnings("unchecked")
-	public <T> STRING_RET lower(ISupplierString getter) {
+	public final <T> STRING_RET lower(ISupplierString getter) {
 		return (STRING_RET) addAndReturnString(Function_String_Lower.INSTANCE, getter);
 	}
 
 
 	@Override
 	@SuppressWarnings("unchecked")
-	public <T> STRING_RET upper(ISupplierString getter) {
+	public final <T> STRING_RET upper(ISupplierString getter) {
 		return (STRING_RET) addAndReturnString(Function_String_Upper.INSTANCE, getter);
 	}
 
 	@Override
 	@SuppressWarnings("unchecked")
-	public <T> STRING_RET trim(ISupplierString getter) {
+	public final <T> STRING_RET trim(ISupplierString getter) {
 		return (STRING_RET) addAndReturnString(Function_String_Trim.INSTANCE, getter);
 	}
 
 	@Override
-	public <T> INTEGER_RET abs(ISupplierInteger getter) {
-		return addAndReturnComparable(Function_Arithmetic_Abs.INSTANCE, getter);
+	public final <T> SHORT_RET abs(ISupplierShort getter) {
+		return addAndReturnType(Function_Arithmetic_Abs.INSTANCE, getter);
 	}
 
 	@Override
-	public <T> LONG_RET abs(ISupplierLong getter) {
-		return addAndReturnComparable(Function_Arithmetic_Abs.INSTANCE, getter);
+	public final <T> INTEGER_RET abs(ISupplierInteger getter) {
+		return addAndReturnType(Function_Arithmetic_Abs.INSTANCE, getter);
 	}
 
 	@Override
-	public <T> DOUBLE_RET sqrt(ISupplierInteger getter) {
-		return addAndReturnComparable(Function_Arithmetic_Sqrt.INSTANCE, getter);
+	public final <T> LONG_RET abs(ISupplierLong getter) {
+		return addAndReturnType(Function_Arithmetic_Abs.INSTANCE, getter);
 	}
 
 	@Override
-	public <T> DOUBLE_RET sqrt(ISupplierLong getter) {
-		return addAndReturnComparable(Function_Arithmetic_Sqrt.INSTANCE, getter);
+	public final <T> DOUBLE_RET abs(ISupplierDouble getter) {
+		return addAndReturnType(Function_Arithmetic_Abs.INSTANCE, getter);
 	}
 
+	@Override
+	public final <T> BIGDECIMAL_RET abs(ISupplierBigDecimal getter) {
+		return addAndReturnType(Function_Arithmetic_Abs.INSTANCE, getter);
+	}
+
+	@Override
+	public final <T> DOUBLE_RET sqrt(ISupplierShort getter) {
+		return addAndReturnType(Function_Arithmetic_Sqrt.INSTANCE, getter);
+	}
+
+	@Override
+	public final <T> DOUBLE_RET sqrt(ISupplierInteger getter) {
+		return addAndReturnType(Function_Arithmetic_Sqrt.INSTANCE, getter);
+	}
+
+	@Override
+	public final <T> DOUBLE_RET sqrt(ISupplierLong getter) {
+		return addAndReturnType(Function_Arithmetic_Sqrt.INSTANCE, getter);
+	}
+
+	@Override
+	public final <T> DOUBLE_RET sqrt(ISupplierDouble getter) {
+		return addAndReturnType(Function_Arithmetic_Sqrt.INSTANCE, getter);
+	}
+
+	@Override
+	public final <T> DOUBLE_RET sqrt(ISupplierBigDecimal getter) {
+		return addAndReturnType(Function_Arithmetic_Sqrt.INSTANCE, getter);
+	}
 }

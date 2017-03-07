@@ -143,6 +143,7 @@ final class PreparedQueryBuilderORM<MANAGED, EMBEDDED, IDENTIFIABLE, ATTRIBUTE, 
 			if (funcs != null) {
 				// recursively resolve so that we nest output
 				PreparedQueryBuilderUtil.resolveFunction(dialect, funcs, ref, s);
+				
 			}
 			else {
 				// Must add any functions before 

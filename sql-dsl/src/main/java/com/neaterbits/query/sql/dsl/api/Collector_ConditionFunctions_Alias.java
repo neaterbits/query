@@ -8,22 +8,27 @@ class Collector_ConditionFunctions_Alias<
 		// commented out since reused for mapping functions 
 		RET extends ISharedFunction_After<MODEL, RESULT>,
 		
+		SHORT_RET extends ISharedFunction_Next<MODEL, RESULT, RET>,
 		INTEGER_RET extends ISharedFunction_Next<MODEL, RESULT, RET>,
 		LONG_RET    extends ISharedFunction_Next<MODEL, RESULT, RET>,
 		DOUBLE_RET  extends ISharedFunction_Next<MODEL, RESULT, RET>,
+		BIGDECIMAL_RET extends ISharedFunction_Next<MODEL, RESULT, RET>,
 		STRING_RET  extends ISharedFunction_Next<MODEL, RESULT, RET>>
 
 	extends Collector_SharedFunctions_Alias<
 			MODEL, 
 			RESULT, 
 			RET,
-			
+
+			SHORT_RET,
 			INTEGER_RET,
 			LONG_RET,
 			DOUBLE_RET,
+			BIGDECIMAL_RET,
+			
 			STRING_RET> 
 
-	implements ISharedFunctions_Initial_And_NoParam_Alias<MODEL, RESULT, RET, INTEGER_RET, LONG_RET, DOUBLE_RET, STRING_RET> 
+	implements ISharedFunctions_Initial_And_NoParam_Alias<MODEL, RESULT, RET, SHORT_RET, INTEGER_RET, LONG_RET, DOUBLE_RET, BIGDECIMAL_RET, STRING_RET> 
 
 {
 	
@@ -46,7 +51,7 @@ class Collector_ConditionFunctions_Alias<
 	}
 
 	@Override
-	public ISharedFunctions_Arithmetic_Alias<MODEL, RESULT, RET, INTEGER_RET, LONG_RET, DOUBLE_RET> abs() {
+	public ISharedFunctions_Arithmetic_Alias<MODEL, RESULT, RET, SHORT_RET, INTEGER_RET, LONG_RET, DOUBLE_RET, BIGDECIMAL_RET> abs() {
 		add(Function_Arithmetic_Abs.INSTANCE);
 
 		return this;
@@ -63,7 +68,7 @@ class Collector_ConditionFunctions_Alias<
 
 	@Override
 	@SuppressWarnings({"unchecked", "rawtypes"})
-	public ISharedFunctions_Arithmetic_Alias<MODEL, RESULT, RET, DOUBLE_RET, DOUBLE_RET, DOUBLE_RET> sqrt() {
+	public ISharedFunctions_Arithmetic_Alias<MODEL, RESULT, RET, DOUBLE_RET, DOUBLE_RET, DOUBLE_RET, DOUBLE_RET, DOUBLE_RET> sqrt() {
 		add(Function_Arithmetic_Sqrt.INSTANCE);
 
 		return (ISharedFunctions_Arithmetic_Alias)this;
