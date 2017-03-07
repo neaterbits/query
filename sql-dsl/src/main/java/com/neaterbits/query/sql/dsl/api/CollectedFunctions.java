@@ -4,9 +4,9 @@ import java.util.Collections;
 import java.util.List;
 
 final class CollectedFunctions {
-	private final List<FunctionBase> functions;
+	private final List<FunctionExpression> functions;
 
-	CollectedFunctions(List<FunctionBase> functions) {
+	CollectedFunctions(List<FunctionExpression> functions) {
 		
 		if (functions == null) {
 			throw new IllegalArgumentException("functions == null");
@@ -19,7 +19,7 @@ final class CollectedFunctions {
 		this.functions = Collections.unmodifiableList(functions);
 	}
 
-	List<FunctionBase> getFunctions() {
+	List<FunctionExpression> getFunctions() {
 		return functions;
 	}
 }

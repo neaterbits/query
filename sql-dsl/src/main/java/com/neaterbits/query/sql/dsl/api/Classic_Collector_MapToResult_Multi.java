@@ -40,7 +40,7 @@ final class Classic_Collector_MapToResult_Multi<
 	@Override
 	public <R> ISharedResultMapperTo<MODEL, RESULT, R, IClassicResult_Mapped_Multi_Alias<MODEL, RESULT>> map(Supplier<R> getter) {
 
-		return new ResultMapperToImpl<>(getter, this);
+		return new ResultMapperToImpl<>(new FieldExpression(getter), this);
 	}
 
 	@Override

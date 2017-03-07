@@ -382,11 +382,86 @@ final class CompiledQuery {
 		if (mapSetter == null) {
 			throw new CompileException("Unknown mapping setter " + collected);
 		}
-		
+
+		/*
 		final CompiledFieldReference fieldReference = sources.makeFieldReference(collected, collected.getGetter());
 
-		return new CompiledMapping(fieldReference, mapSetter, collected.getFunctions());
+		return new CompiledMapping(fieldReference, mapSetter, collected.get));
+		*/
+		
+		return new CompiledMapping(compileExpression(collected.getExpression(), sources), mapSetter);
 	}
+	
+	/*
+	 * Compiling an expression is just switching any field expression for other 
+	 */
+	private static Expression compileExpression(Expression toCompile, SelectSourceLookup sources) throws CompileException {
+		try {
+			return intCompileExpression(toCompile, sources);
+		}
+		catch (RuntimeException ex) {
+			if (ex.getCause() instanceof CompileException) {
+				throw (CompileException)ex.getCause();
+			}
+			else {
+				throw ex;
+			}
+		}
+		
+	}
+		
+	private static Expression intCompileExpression(Expression toCompile, SelectSourceLookup sources) {
+		
+		final Expression expression = toCompile.visit(compileVisitor, sources);
+		
+		if (expression == null) {
+			throw new IllegalStateException("expression == null");
+		}
+
+		return expression;
+	}
+	
+	private static final ExpressionVisitor<SelectSourceLookup, Expression> compileVisitor = new ExpressionVisitor<SelectSourceLookup, Expression>() {
+		@Override
+		public Expression onNestedFunctionCalls(NestedFunctionCallsExpression nested, SelectSourceLookup param) {
+			return new NestedFunctionCallsExpression(nested.getFunctions(), (FieldExpression)intCompileExpression(nested.getField(), param));
+		}
+		
+		@Override
+		public Expression onList(ExpressionList list, SelectSourceLookup param) {
+			
+			final List<Expression> compiled = new ArrayList<>(list.getExpressions().size());
+			
+			for (Expression expression : list.getExpressions()) {
+				compiled.add(intCompileExpression(expression, param));
+			}
+
+			return new ExpressionList(compiled, new ArrayList<>(list.getOperators()));
+		}
+		
+		@Override
+		public Expression onFunction(FunctionExpression function, SelectSourceLookup param) {
+			return new FunctionExpression(function.getFunction(), function.getField());
+		}
+		
+		@Override
+		public Expression onField(FieldExpression field, SelectSourceLookup param) {
+			try {
+				final CompiledFieldReference fieldReference = param.makeFieldReference(null, field.getGetter());
+	
+				return new CompiledFieldExpression(fieldReference);
+			}
+			catch (CompileException ex) {
+				throw new RuntimeException(ex);
+			}
+		}
+
+		@Override
+		public Expression onCompiledField(CompiledFieldExpression compiledField, SelectSourceLookup param) {
+			throw new UnsupportedOperationException("Already compiled");
+		}
+	};
+	
 	
 	private static CompiledSelectSources<?> compileSelectSources(CollectedSelectSource sources) {
 

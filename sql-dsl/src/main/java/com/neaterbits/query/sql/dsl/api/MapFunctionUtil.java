@@ -14,7 +14,10 @@ class MapFunctionUtil {
 		final IMappingCollector<MODEL, RESULT> mappingCollector = impl;
 		
 		// Named, switch
-		return new ResultMapperToImpl<MODEL, RESULT, R, IF>(getter, mappingCollector, functions);
+		
+		final Expression expression = new NestedFunctionCallsExpression(functions, getter);
+		
+		return new ResultMapperToImpl<MODEL, RESULT, R, IF>(expression, mappingCollector);
 	}
 
 	private static <MODEL, RESULT, R, IF extends ISharedSelectSourceBuilder<MODEL, RESULT>, DECIDED extends IMappingCollector<MODEL, RESULT>>
@@ -23,8 +26,10 @@ class MapFunctionUtil {
 	
 		final DECIDED impl = supplier.get();
 		
+		final Expression expression = new NestedFunctionCallsExpression(functions, getter);
+		
 		// Named, switch
-		return new ResultMapperToImpl<>(getter, impl, functions);
+		return new ResultMapperToImpl<>(expression, impl);
 	}
 	
 	private static <MODEL, RESULT, IF extends ISharedSelectSourceBuilder<MODEL, RESULT>, DECIDED extends IMappingCollector<MODEL, RESULT>>

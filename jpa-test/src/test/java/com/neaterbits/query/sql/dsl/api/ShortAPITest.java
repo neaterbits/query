@@ -161,12 +161,13 @@ public class ShortAPITest extends BaseSQLAPITest implements SumTest {
 	
 	
 	@Test
-    public void testSqrtOfAvgList() {
+    public void testVariousMappingSyntax() {
 		
 		final Company acme1 = new Company(1, "Acme1", new BigDecimal("45"));
 		final Company acme2 = new Company(2, "Acme2", new BigDecimal("53"));
 		final Company foo = new Company(3, "Foo", new BigDecimal("35.6"));
 
+		// Only tests that code compiles and query builds successfully
 		final SingleBuilt<CompanySqrtAggregatesVO> acmeQuery = select
 				.one(CompanySqrtAggregatesVO.class)
 
@@ -203,6 +204,21 @@ public class ShortAPITest extends BaseSQLAPITest implements SumTest {
 				
 				
 				//.map().sqrt().avg(field).
+
+				.where(Company::getName).startsWith("Acme")
+				.build();
+	}
+	@Test
+    public void testSqrtOfAvgList() {
+		
+		final Company acme1 = new Company(1, "Acme1", new BigDecimal("45"));
+		final Company acme2 = new Company(2, "Acme2", new BigDecimal("53"));
+		final Company foo = new Company(3, "Foo", new BigDecimal("35.6"));
+
+		final SingleBuilt<CompanySqrtAggregatesVO> acmeQuery = select
+				.one(CompanySqrtAggregatesVO.class)
+
+				.map().sqrt().avg(Company::getStockPrice).to(CompanySqrtAggregatesVO::setSqrtAvgStockPrice)
 
 				.where(Company::getName).startsWith("Acme")
 				.build();

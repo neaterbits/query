@@ -14,6 +14,16 @@ final class MappingCollector {
 		this.collectedMapping = new ArrayList<CollectedMapping>();
 	}
 
+	void add(CollectedItem builderItem, Expression expression, BiConsumer<?, ?> setter) {
+
+		final CollectedMapping mapping = new CollectedMapping_Alias(builderItem, expression, setter);
+
+		checkSameType(mapping);
+
+		collectedMapping.add(mapping);
+	}
+	
+	@Deprecated
 	void add(CollectedItem builderItem, Function<?, ?> getter, BiConsumer<?, ?> setter, CollectedFunctions collectedFunctions) {
 
 		final CollectedMapping mapping = new CollectedMapping_Named(builderItem, getter, setter, collectedFunctions);
@@ -23,6 +33,7 @@ final class MappingCollector {
 		collectedMapping.add(mapping);
 	}
 
+	@Deprecated
 	void add(CollectedItem builderItem, Supplier<?> getter, BiConsumer<?, ?> setter, CollectedFunctions collectedFunctions) {
 
 		final CollectedMapping mapping = new CollectedMapping_Alias(builderItem, getter, setter, collectedFunctions);

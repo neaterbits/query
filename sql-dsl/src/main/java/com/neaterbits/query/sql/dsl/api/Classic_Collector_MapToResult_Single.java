@@ -36,7 +36,7 @@ final class Classic_Collector_MapToResult_Single<MODEL, RESULT>
 
 	@Override
 	public <R> ISharedResultMapperTo<MODEL, RESULT, R, IClassicResult_Mapped_Single_Alias<MODEL, RESULT>> map(Supplier<R> getter) {
-		return new ResultMapperToImpl<>(getter, this);
+		return new ResultMapperToImpl<>(new FieldExpression(getter), this);
 	}
 	
 

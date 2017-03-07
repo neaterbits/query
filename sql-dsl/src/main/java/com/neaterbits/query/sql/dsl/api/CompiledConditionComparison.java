@@ -65,7 +65,7 @@ final class CompiledConditionComparison extends CompiledCondition {
 	FunctionBase getFunctionAt(int functionIdx) {
 		final CollectedFunctions functions = original.getFunctions();
 
-		return functions.getFunctions().get(functionIdx);
+		return functions.getFunctions().get(functionIdx).getFunction();
 	}
 
 	

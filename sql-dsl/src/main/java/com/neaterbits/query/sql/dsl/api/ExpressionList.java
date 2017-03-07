@@ -20,6 +20,14 @@ final class ExpressionList extends Expression {
 		this.expressions = expressions;
 		this.operators = operators;
 	}
+	
+	List<Expression> getExpressions() {
+		return expressions;
+	}
+
+	List<ArithmeticOperator> getOperators() {
+		return operators;
+	}
 
 	@Override
 	<T, R> R visit(ExpressionVisitor<T, R> visitor, T param) {

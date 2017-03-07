@@ -13,9 +13,11 @@ final class CompiledFieldReference extends CompiledQueryElement<CollectedItem> {
 
 		super(original);
 
+		/* not necessary and not part of FieldExpression
 		if (original == null) {
 			throw new IllegalArgumentException("original == null");
 		}
+		*/
 
 		if (source == null) {
 			throw new IllegalArgumentException("source == null");

@@ -14,16 +14,42 @@ class ResultMapperToImpl<
 		extends CollectedItem
 		implements ISharedResultMapperTo<MODEL, RESULT, R, SOURCE> {
 
+	
+	private final Expression expression;
+	
+	@Deprecated
 	private final Function<?, ?> fromGetter;
+	@Deprecated
 	private final Supplier<?> fromSupplier;
 	
 	private final IMappingCollector<MODEL, RESULT> impl;
+	@Deprecated
 	private final CollectedFunctions collectedFunctions;
 
+	ResultMapperToImpl(Expression expression, IMappingCollector<MODEL, RESULT> impl) {
+		
+		if (expression == null) {
+			throw new IllegalArgumentException("expression == null");
+		}
+
+		if (impl == null) {
+			throw new IllegalArgumentException("impl == null");
+		}
+
+		this.expression = expression;
+		this.impl = impl;
+		
+		this.collectedFunctions = null;
+		this.fromGetter = null;
+		this.fromSupplier = null;
+	}
+
+	@Deprecated
 	ResultMapperToImpl(Function<?, ?> fromGetter, IMappingCollector<MODEL, RESULT> impl) {
 		this(fromGetter, impl, null);
 	}
 	
+	@Deprecated
 	ResultMapperToImpl(Function<?, ?> fromGetter, IMappingCollector<MODEL, RESULT> impl, CollectedFunctions collectedFunctions) {
 		
 		if (fromGetter == null) {
@@ -38,12 +64,16 @@ class ResultMapperToImpl<
 		this.fromSupplier = null;
 		this.impl = impl;
 		this.collectedFunctions = collectedFunctions;
+
+		this.expression = null;
 	}
 
+	@Deprecated
 	ResultMapperToImpl(Supplier<?> fromSupplier, IMappingCollector<MODEL, RESULT> impl) {
 		this(fromSupplier, impl, null);
 	}
 
+	@Deprecated
 	ResultMapperToImpl(Supplier<?> fromSupplier, IMappingCollector<MODEL, RESULT> impl, CollectedFunctions collectedFunctions) {
 		
 		if (fromSupplier == null) {
@@ -58,6 +88,8 @@ class ResultMapperToImpl<
 		this.fromSupplier = fromSupplier;
 		this.impl = impl;
 		this.collectedFunctions = collectedFunctions;
+
+		this.expression = null;
 	}
 
 	@Override
@@ -67,6 +99,8 @@ class ResultMapperToImpl<
 		if (setter == null) {
 			throw new IllegalArgumentException("setter == null");
 		}
+		
+		
 
 		final MappingCollector mappingCollector = impl.getMappingCollector();
 
@@ -75,6 +109,9 @@ class ResultMapperToImpl<
 		}
 		else if (fromSupplier != null) {
 			mappingCollector.add(this, fromSupplier, setter, collectedFunctions);
+		}
+		else if (expression != null) {
+			mappingCollector.add(this, expression, setter);
 		}
 		else {
 			throw new IllegalStateException("Neither getter nor supplier set");

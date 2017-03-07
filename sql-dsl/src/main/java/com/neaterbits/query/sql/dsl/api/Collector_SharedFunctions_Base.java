@@ -5,7 +5,7 @@ import java.util.List;
 
 abstract class Collector_SharedFunctions_Base<MODEL, RESULT> {
 	
-	private final List<FunctionBase> functions;
+	private final List<FunctionExpression> functions;
 
 
 	/*
@@ -27,7 +27,7 @@ abstract class Collector_SharedFunctions_Base<MODEL, RESULT> {
 			throw new IllegalArgumentException("function == null");
 		}
 		
-		functions.add(function);
+		functions.add(new FunctionExpression(function, null));
 	}
 	
 	final CollectedFunctions collect() {

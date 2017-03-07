@@ -13,18 +13,26 @@ final class ResultMapperOps_String<
 
 	implements ISharedResultOps_String_Named<MODEL, RESULT, SOURCE> {
 
+	ResultMapperOps_String(Expression expression, IMappingCollector<MODEL, RESULT> impl) {
+		super(expression, impl);
+	}
+
+	@Deprecated
 	ResultMapperOps_String(Function<?, ?> fromGetter, IMappingCollector<MODEL, RESULT> impl, CollectedFunctions collectedFunctions) {
 		super(fromGetter, impl, collectedFunctions);
 	}
 
+	@Deprecated
 	ResultMapperOps_String(Function<?, ?> fromGetter, IMappingCollector<MODEL, RESULT> impl) {
 		super(fromGetter, impl);
 	}
 
+	@Deprecated
 	ResultMapperOps_String(Supplier<?> fromSupplier, IMappingCollector<MODEL, RESULT> impl, CollectedFunctions collectedFunctions) {
 		super(fromSupplier, impl, collectedFunctions);
 	}
 
+	@Deprecated
 	ResultMapperOps_String(Supplier<?> fromSupplier, IMappingCollector<MODEL, RESULT> impl) {
 		super(fromSupplier, impl);
 	}

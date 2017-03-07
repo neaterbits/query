@@ -6,7 +6,9 @@ public interface ExpressionVisitor<T, R> {
 	
 	R onField(FieldExpression field, T param);
 
-	R onFunction(FunctionBase function, T param);
+	R onFunction(FunctionExpression function, T param);
 
 	R onNestedFunctionCalls(NestedFunctionCallsExpression nested, T param);
+	
+	R onCompiledField(CompiledFieldExpression compiledField, T param);
 }

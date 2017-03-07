@@ -14,19 +14,26 @@ final class ResultMapperOps_Numeric<
 
 	implements ISharedResultOps_Numeric_Named<MODEL, RESULT, R, SOURCE> {
 	
-	
+	ResultMapperOps_Numeric(Expression expression, IMappingCollector<MODEL, RESULT> impl) {
+		super(expression, impl);
+	}
+
+	@Deprecated
 	ResultMapperOps_Numeric(Function<?, ?> fromGetter, IMappingCollector<MODEL, RESULT> impl, CollectedFunctions collectedFunctions) {
 		super(fromGetter, impl, collectedFunctions);
 	}
 
+	@Deprecated
 	ResultMapperOps_Numeric(Function<?, ?> fromGetter, IMappingCollector<MODEL, RESULT> impl) {
 		super(fromGetter, impl);
 	}
 
+	@Deprecated
 	ResultMapperOps_Numeric(Supplier<?> fromSupplier, IMappingCollector<MODEL, RESULT> impl, CollectedFunctions collectedFunctions) {
 		super(fromSupplier, impl, collectedFunctions);
 	}
 
+	@Deprecated
 	ResultMapperOps_Numeric(Supplier<?> fromSupplier, IMappingCollector<MODEL, RESULT> impl) {
 		super(fromSupplier, impl);
 	}
