@@ -13,7 +13,6 @@ import java.util.function.Function;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
-import org.eclipse.persistence.jpa.jpql.parser.SqrtExpression;
 import org.junit.Test;
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -381,6 +380,27 @@ public class ShortAPITest extends BaseSQLAPITest implements SumTest {
 		
 	}
 		
+
+	
+	@Test
+    public void testMapOf() {
+		
+		final Company acme1 = new Company(1, "Acme1", new BigDecimal("49"));
+		final Company acme2 = new Company(2, "Acme2", new BigDecimal("121"));
+		final Company acme3 = new Company(3, "Acme2", new BigDecimal("256"));
+		final Company foo = new Company(4, "Foo", new BigDecimal("35.6"));
+
+		final Company c = select.alias(Company.class);
+		
+		final SingleBuilt<CompanyAggregatesVO> acmeQuery = select
+				.one(CompanyAggregatesVO.class)
+				
+				.map(c::getStockPrice).to(CompanyAggregatesVO::setAvgStockPrice)
+				//.mapOf(e -> e.abs(c::getStockPrice)).to(CompanyAggregatesVO::setAvgStockPrice)
+				
+				.build()
+				;
+	}
 
 	@Test
     public void testPrepared() {

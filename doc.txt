@@ -575,6 +575,15 @@ W - parametere
 		
  * OBS! Også fikse count(*), må altså kunne mappes uten å velge noe source-felt.
 
+- expression lists, mapOf() osv
+ * mapOf() vil ikke fungere for initelle mappingen siden ikke vet om named eller ikke.
+   Kan forsøke med å sende inn et initial-interface so støtter begge, men to metoder - med forskjellig retur-type i Function<> som er parameter:
+     ISharedSubOperandEnd_Named eller ISharedSubOperandEnd_Alias. Ut i fra denne så klarer kanskje Java å returnere om er named eller alias
+     hele veien tilbake. OBS! Må si så fall testes med multiple nivåer med nøsting hvor named konta alias bare er kjent i nøstede av nøstede nivåer.
+  Evt bare lage mapOfAlias() og mapOfNamed() som fallback for initielle interface men dette hadde vært greit å unngå å måtte si om er named eller alias noe sted. 
+
+
+
 
 # - order by?
 
@@ -649,6 +658,9 @@ For adhoc er det alltid kun på felter? kan finne 1, 2, 3 der også ut fra mappi
 slik at er konsekvent gjennom kodebasen. Dette f.eks ved å arve fra et interface og så er det dette som anvendes.
 Kan evt enable runtime-sjekker v.hj.a statics intern som sjekker at kun er en slags dialekt som anvendes.
 Så det er start-interfacet som alltid bestemmer dialekt, kan ikke mikse og matche i samme query uansett.
+  * !! NB !! kan også fikse dette compile-time med forskjellige jar-filer (dvs Maven dependencies), 1 per dialekt slik at kan velge bort.
+    Kan da gjøre dialekten avhengig av base-fila slik at bare trenger inkludere en enkelt.
+
 
  - mere tester
  - unit tester rett på JPAModel og utils for å sjekke at henter ut relations riktig, attributt kolonner mm på rett vis.

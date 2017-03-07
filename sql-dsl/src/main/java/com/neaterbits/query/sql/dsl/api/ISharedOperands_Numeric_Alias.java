@@ -1,18 +1,17 @@
 package com.neaterbits.query.sql.dsl.api;
 
 import java.math.BigDecimal;
-import java.util.function.Function;
 
-public interface ISharedOperands_Numeric_Named<
-	MODEL,
-	RESULT,
+public interface ISharedOperands_Numeric_Alias<
+		MODEL,
+		RESULT,
+		
+		R extends Comparable<R>,
+		
+		RET extends ISharedFunction_After<MODEL, RESULT>,
+		
+		TYPE_RET extends ISharedFunction_Next<MODEL, RESULT, RET>
 	
-	R extends Comparable<R>,
-	
-	RET extends ISharedFunction_After<MODEL, RESULT>,
-
-	TYPE_RET extends ISharedFunction_Next<MODEL, RESULT, RET>
-
 	> {
 	
 	/* We need types for all to make sure one can add integer-field and short-fild.
@@ -25,19 +24,19 @@ public interface ISharedOperands_Numeric_Named<
 	<T> TYPE_RET plus(R value);
 	<T> TYPE_RET plus(Param<R> param);
 	*/
-
-	<T> TYPE_RET plus(IFunctionShort<T> getter);
+	
+	<T> TYPE_RET plus(ISupplierShort getter);
 	//<T> TYPE_RET plus(ISharedSubOperandsBuilder<Short> builder);
 	<T> TYPE_RET plus(short value);
 	//<T> TYPE_RET plus(Param<Short> param);
-
-	<T> TYPE_RET plus(IFunctionBigDecimal<T> getter);
 	
-	TYPE_RET plusOf(ISharedSubOperandsFunction_Named<MODEL, RESULT, BigDecimal> builder);
+	<T> TYPE_RET plus(ISupplierBigDecimal getter);
+	
+	TYPE_RET plusOf(ISharedSubOperandsFunction_Alias<MODEL, RESULT, BigDecimal> builder);
 	
 	TYPE_RET plus(BigDecimal value);
 	
 	
 	//<T> TYPE_RET plus(Param<Integer> param);
-	
+
 }

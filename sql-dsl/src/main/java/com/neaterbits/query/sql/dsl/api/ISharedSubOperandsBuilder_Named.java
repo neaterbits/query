@@ -1,6 +1,6 @@
 package com.neaterbits.query.sql.dsl.api;
 
-public interface ISharedSubOperandsBuilder<MODEL, RESULT, R extends Comparable<R>, AFTER extends ISharedFunction_After<MODEL, RESULT>>
+public interface ISharedSubOperandsBuilder_Named<MODEL, RESULT, R extends Comparable<R>, AFTER extends ISharedFunction_After<MODEL, RESULT>>
 
 		extends 
 			ISharedFunction_Next<MODEL, RESULT, AFTER>,
@@ -18,8 +18,8 @@ public interface ISharedSubOperandsBuilder<MODEL, RESULT, R extends Comparable<R
 						MODEL,
 						RESULT,
 						
-						ISharedSubOperandsBuilder_NoParam<MODEL, RESULT, R, AFTER>,
-						ISharedSubOperandsBuilder_NoParam<MODEL, RESULT, Double, AFTER>
+						ISharedSubOperandsBuilder_NoParam_Named<MODEL, RESULT, R, AFTER>,
+						ISharedSubOperandsBuilder_NoParam_Named<MODEL, RESULT, Double, AFTER>
 			>
 
 				{

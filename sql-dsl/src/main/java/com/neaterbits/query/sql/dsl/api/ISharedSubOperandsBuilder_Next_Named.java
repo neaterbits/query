@@ -12,22 +12,15 @@ package com.neaterbits.query.sql.dsl.api;
  * @param <R>
  * @param <AFTER>
  */
-public interface ISharedSubOperandsBuilder_Next<MODEL, RESULT, R extends Comparable<R>, AFTER extends ISharedFunction_After<MODEL, RESULT>>
+public interface ISharedSubOperandsBuilder_Next_Named<MODEL, RESULT, R extends Comparable<R>, AFTER extends ISharedFunction_After<MODEL, RESULT>>
 
 	extends 
-		ISharedSubOperand_End<MODEL, RESULT, R>,
+		ISharedSubOperand_End_Named<MODEL, RESULT, R>,
 		ISharedFunction_Next<MODEL, RESULT, AFTER>,
 		ISharedOperands_Numeric_Named<
 			MODEL,
 			RESULT,
 			R,
 			AFTER,
-			ISharedSubOperandsBuilder_Next<MODEL, RESULT, R, AFTER>
-			
-			/*
-			ISharedSubOperand_Numeric_Ops_Named<MODEL, RESULT, R, AFTER>,
-			ISharedSubOperand_Numeric_Ops_Named<MODEL, RESULT, R, AFTER>,
-			ISharedSubOperand_Numeric_Ops_Named<MODEL, RESULT, R, AFTER>,
-			ISharedSubOperand_Numeric_Ops_Named<MODEL, RESULT, R, AFTER> */> {
-
+			ISharedSubOperandsBuilder_Next_Named<MODEL, RESULT, R, AFTER>> {
 }
