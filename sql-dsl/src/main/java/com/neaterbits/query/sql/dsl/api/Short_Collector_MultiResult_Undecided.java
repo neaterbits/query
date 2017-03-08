@@ -280,24 +280,35 @@ final class Short_Collector_MultiResult_Undecided<MODEL, RESULT>
 	
 		>
 			map() {
-		
+		/*
 		final ISharedCollector_Functions_Callback_Named<MODEL, RESULT, IShortResult_Mapped_Multi_Named<MODEL, RESULT>> namedCallback
 		
-		= MapFunctionUtil.multiNamedCallback(
-			() -> new Short_Collector_MultiResult_Decided_Named<>(
-				select,
-				new CollectedQueryResult_Mapped_Multi(getResultType(), collectionType),
-				getModelCompiler()));
+				= MapFunctionUtil.multiNamedCallback(
+					() -> {
+						final Short_Collector_MultiResult_Decided_Named new Short_Collector_MultiResult_Decided_Named<>(
+						select,
+						new CollectedQueryResult_Mapped_Multi(getResultType(), collectionType),
+						getModelCompiler())
+				});
 		
 		
 		
 		final ISharedCollector_Functions_Callback_Alias<MODEL, RESULT, IShortResult_Mapped_Multi_Alias<MODEL, RESULT>> aliasCallback
 			= MapFunctionUtil.multiAliasCallback(
-				() -> new Short_Collector_MultiResult_Decided_Alias<>(
-					select,
-					new CollectedQueryResult_Mapped_Multi(getResultType(), collectionType),
-					getModelCompiler()));
+				() -> {
+					
+					
+					final Short_Collector_MultiResult_Decided_Alias<> ret = new Short_Collector_MultiResult_Decided_Alias<>(
+								select,
+								new CollectedQueryResult_Mapped_Multi(getResultType(), collectionType),
+								getModelCompiler()));
+		
+					return ret;
+				});
 	
-		return new SharedMapFunctions_Initial<>(namedCallback, aliasCallback);
+		return new SharedMapFunctions_Initial<>(namedCallback, aliasCallback, this);
+		*/
+		
+		throw new UnsupportedOperationException("TODO");
 	}
 }

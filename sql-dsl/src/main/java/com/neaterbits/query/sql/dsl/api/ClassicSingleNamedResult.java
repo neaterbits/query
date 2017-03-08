@@ -31,14 +31,14 @@ final class ClassicSingleNamedResult<MODEL, RESULT>
 	public <RR extends Comparable<RR>> ISharedCondition_Equality_All<MODEL, RESULT, RR, IClassicSingleAndOrLogicalClausesNamed<MODEL, RESULT>>
 			where(Function<RESULT, RR> func) {
 
-		return new Collector_Condition_Comparative<MODEL, RESULT, RR, IClassicSingleAndOrLogicalClausesNamed<MODEL,RESULT>>(this, makeGetter(func));
+		return new Collector_Condition_Comparative<MODEL, RESULT, RR, IClassicSingleAndOrLogicalClausesNamed<MODEL,RESULT>>(this, makeGetterExpression(func));
 	}
 
 	@Override
 	public ISharedCondition_Comparable_String_All<MODEL, RESULT, IClassicSingleAndOrLogicalClausesNamed<MODEL, RESULT>>
 			where(StringFunction<RESULT> func) {
 
-		return new Collector_Condition_String<MODEL, RESULT, IClassicSingleAndOrLogicalClausesNamed<MODEL,RESULT>>(this, makeGetter(func));
+		return new Collector_Condition_String<MODEL, RESULT, IClassicSingleAndOrLogicalClausesNamed<MODEL,RESULT>>(this, makeGetterExpression(func));
 	}
 
 	// ------------------------  AND ------------------------
@@ -48,7 +48,7 @@ final class ClassicSingleNamedResult<MODEL, RESULT>
 		
 		final SQL_Collector_And_Named_Single<MODEL, RESULT> andClauses = new SQL_Collector_And_Named_Single<>(this);
 		
-		return new Collector_Condition_Comparative<MODEL, RESULT, Integer, IClassicSingleAndClausesNamed<MODEL,RESULT>>(andClauses, makeGetter(getter));
+		return new Collector_Condition_Comparative<MODEL, RESULT, Integer, IClassicSingleAndClausesNamed<MODEL,RESULT>>(andClauses, makeGetterExpression(getter));
 	}
 
 	@Override
@@ -57,7 +57,7 @@ final class ClassicSingleNamedResult<MODEL, RESULT>
 
 		final SQL_Collector_And_Named_Single<MODEL, RESULT> andClauses = new SQL_Collector_And_Named_Single<>(this);
 		
-		return new Collector_Condition_String<MODEL, RESULT, IClassicSingleAndClausesNamed<MODEL,RESULT>>(andClauses, makeGetter(getter));
+		return new Collector_Condition_String<MODEL, RESULT, IClassicSingleAndClausesNamed<MODEL,RESULT>>(andClauses, makeGetterExpression(getter));
 	}
 	
 	// ------------------------  OR ------------------------
@@ -67,7 +67,7 @@ final class ClassicSingleNamedResult<MODEL, RESULT>
 
 		final Classic_Collector_Or_Named_Single<MODEL, RESULT> orClauses = new Classic_Collector_Or_Named_Single<>(this);
 		
-		return new Collector_Condition_Comparative<MODEL, RESULT, Integer, IClassicSingleOrClausesNamed<MODEL,RESULT>>(orClauses, makeGetter(getter));
+		return new Collector_Condition_Comparative<MODEL, RESULT, Integer, IClassicSingleOrClausesNamed<MODEL,RESULT>>(orClauses, makeGetterExpression(getter));
 	}
 
 	@Override
@@ -76,7 +76,7 @@ final class ClassicSingleNamedResult<MODEL, RESULT>
 
 		final Classic_Collector_Or_Named_Single<MODEL, RESULT> orClauses = new Classic_Collector_Or_Named_Single<>(this);
 
-		return new Collector_Condition_String<MODEL, RESULT, IClassicSingleOrClausesNamed<MODEL,RESULT>>(orClauses, makeGetter(getter));
+		return new Collector_Condition_String<MODEL, RESULT, IClassicSingleOrClausesNamed<MODEL,RESULT>>(orClauses, makeGetterExpression(getter));
 	}
 
 	@Override

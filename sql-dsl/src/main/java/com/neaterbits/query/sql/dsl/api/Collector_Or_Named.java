@@ -29,21 +29,23 @@ abstract class Collector_Or_Named<
 		super(last);
 	}
 
-	private <T, RR extends Comparable<RR>> ISharedCondition_Comparable_Common_All<MODEL, RESULT, RR, OR_CLAUSES> orClassImplComparable(
-			Function<T, RR> getter) {
+	private <T, RR extends Comparable<RR>> ISharedCondition_Comparable_Common_All<MODEL, RESULT, RR, OR_CLAUSES>
+	
+		orClassImplComparable(Function<T, RR> getter) {
 
-		return orClassImplComparable(null, getter);
+		return orClassImplComparable(new FieldExpression(getter));
 	}
 
-	private <T, RR extends Comparable<RR>> ISharedCondition_Comparable_Common_All<MODEL, RESULT, RR, OR_CLAUSES> orClassImplComparable(
-			CollectedFunctions functions, Function<T, RR> getter) {
+	private <T, RR extends Comparable<RR>> ISharedCondition_Comparable_Common_All<MODEL, RESULT, RR, OR_CLAUSES>
+	
+		orClassImplComparable(Expression expression) {
 
-		return new Collector_Condition_Comparative<MODEL, RESULT, RR, OR_CLAUSES>(this, functions, makeGetter(getter));
+		return new Collector_Condition_Comparative<MODEL, RESULT, RR, OR_CLAUSES>(this, expression);
 	}
 
-	private ISharedCondition_Comparable_String_All<MODEL, RESULT, OR_CLAUSES> orClassImplString(
-			CollectedFunctions functions, StringFunction<?> getter) {
-		return new Collector_Condition_String<MODEL, RESULT, OR_CLAUSES>(this, functions, makeGetter(getter));
+	private ISharedCondition_Comparable_String_All<MODEL, RESULT, OR_CLAUSES> orClassImplString(Expression expression) {
+		
+		return new Collector_Condition_String<MODEL, RESULT, OR_CLAUSES>(this, expression);
 	}
 
 	@Override
@@ -60,7 +62,7 @@ abstract class Collector_Or_Named<
 
 	@Override
 	public final <T> ISharedCondition_Comparable_String_All<MODEL, RESULT, OR_CLAUSES> or(StringFunction<T> getter) {
-		return orClassImplString(null, getter);
+		return orClassImplString(new FieldExpression(getter));
 	}
 
 	private final <T extends ISharedLogical_And<MODEL, RESULT>> void addNestedAndImpl(Consumer<T> orBuilder) {
@@ -89,20 +91,17 @@ abstract class Collector_Or_Named<
 			ISharedCondition_Comparable_Common_All<MODEL, RESULT, BigDecimal, OR_CLAUSES>,
 			ISharedCondition_Comparable_String_All<MODEL, RESULT, OR_CLAUSES>> or() {
 
-		@SuppressWarnings({ "unchecked", "rawtypes" })
 		final ISharedCollector_Functions_Callback_Named<MODEL, RESULT, OR_CLAUSES> cb = new ISharedCollector_Functions_Callback_Named<MODEL, RESULT, OR_CLAUSES>() {
 
 			@Override
-			public ISharedCondition_Comparable_Common_All<MODEL, RESULT, Comparable<?>, OR_CLAUSES> onComparable(
-					CollectedFunctions functions, Function getter) {
+			public ISharedCondition_Comparable_Common_All<MODEL, RESULT, Comparable<?>, OR_CLAUSES> onComparable(Expression expression) {
 
-				return orClassImplComparable(functions, (Function) getter);
+				return (ISharedCondition_Comparable_Common_All)orClassImplComparable(expression);
 			}
 
 			@Override
-			public ISharedCondition_Comparable_String_Base<MODEL, RESULT, OR_CLAUSES> onString(
-					CollectedFunctions functions, StringFunction getter) {
-				return orClassImplString(functions, getter);
+			public ISharedCondition_Comparable_String_Base<MODEL, RESULT, OR_CLAUSES> onString(Expression expression) {
+				return orClassImplString(expression);
 			}
 		};
 

@@ -300,6 +300,6 @@ final class Short_Collector_SingleResult_Undecided<MODEL, RESULT>
 					new CollectedQueryResult_Mapped_Single(getResultType()),
 					getModelCompiler()));
 
-		return new SharedMapFunctions_Initial<>(namedCallback, aliasCallback);
+		return new Collector_ExpressionsFunctions_Initial<>(null/* namedCallback, aliasCallback */);
 	}
 }

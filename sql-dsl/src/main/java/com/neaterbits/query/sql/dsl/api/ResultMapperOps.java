@@ -85,7 +85,7 @@ abstract class ResultMapperOps<
 
 	final <RR extends Comparable<RR>> void addSubNumeric(ArithmeticOperator operator, ISharedSubOperandsFunction_Named<MODEL, RESULT, RR> builder) {
 		
-		final Expression expression = SubExpressionUtil.addSubNumericForOperator(operator, builder, null);
+		final Expression expression = SubExpressionUtil.addSubNumericForOperator(operator, builder);
 		
 		expressions.add(expression);
 		operators.add(operator);

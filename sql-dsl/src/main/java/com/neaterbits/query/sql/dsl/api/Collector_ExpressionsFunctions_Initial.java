@@ -1,7 +1,7 @@
 package com.neaterbits.query.sql.dsl.api;
 
 
-final class SharedMapFunctions_Initial<
+final class Collector_ExpressionsFunctions_Initial<
 		MODEL,
 		RESULT,
 
@@ -46,7 +46,33 @@ final class SharedMapFunctions_Initial<
 		NO_PARAM_ALIAS_STRING_RET 	extends ISharedFunction_Next<MODEL, RESULT, ALIAS_RET>
 		>
 
-	extends Collector_SharedFunctions_Base<MODEL, RESULT>
+	extends Collector_NestedFunctions_Base<
+			MODEL,
+			RESULT, 
+			
+			NAMED_RET,
+			ALIAS_RET,
+			
+			NAMED_SUM_LONG_RET,
+			NAMED_COUNT_RET,
+			
+			NAMED_SHORT_RET,
+			NAMED_INT_RET,
+			NAMED_LONG_RET,
+			NAMED_DOUBLE_RET,
+			NAMED_BIGDECIMAL_RET,
+			NAMED_STRING_RET,
+			
+			ALIAS_SUM_LONG_RET,
+			ALIAS_COUNT_RET,
+			
+			ALIAS_SHORT_RET,
+			ALIAS_INT_RET,
+			ALIAS_LONG_RET,
+			ALIAS_DOUBLE_RET,
+			ALIAS_BIGDECIMAL_RET,
+			ALIAS_STRING_RET>
+
 	
 	implements ISharedMapFunctions_Initial<
 			MODEL,
@@ -93,6 +119,7 @@ final class SharedMapFunctions_Initial<
 		> {
 		
 			
+			/*
 			
 	private Collector_MapFunctions_Named<
 			MODEL, RESULT, NAMED_RET,
@@ -107,21 +134,47 @@ final class SharedMapFunctions_Initial<
     
     private final ISharedCollector_Functions_Callback_Named<MODEL, RESULT, NAMED_RET> namedCallback;
     private final ISharedCollector_Functions_Callback_Alias<MODEL, RESULT, ALIAS_RET> aliasCallback;
+    */
     
     
+    private final IMappingCollector<MODEL, RESULT> impl;
     
-    public SharedMapFunctions_Initial(
+    
+    Collector_ExpressionsFunctions_Initial( /*
 			ISharedCollector_Functions_Callback_Named<MODEL, RESULT, NAMED_RET> namedCallback,
-			ISharedCollector_Functions_Callback_Alias<MODEL, RESULT, ALIAS_RET> aliasCallback) {
+			ISharedCollector_Functions_Callback_Alias<MODEL, RESULT, ALIAS_RET> aliasCallback,*/
+			IMappingCollector<MODEL, RESULT> impl
+			) {
 
-    	super(null);
+    	//super(null);
+    	
+    	if (impl == null) {
+    		throw new IllegalArgumentException("impl == null");
+    	}
+    	/*
     	
     	this.namedCallback = namedCallback;
 		this.aliasCallback = aliasCallback;
+		*/
+
+		this.impl = impl;
+	}
+	
+	@Override
+	ISharedFunction_Next<MODEL, RESULT, NAMED_RET> continueAfterNamedComparableFunctions(Expression expression) {
+		throw new UnsupportedOperationException("TODO");
 	}
 
+	@Override
+	ISharedFunction_Next<MODEL, RESULT, NAMED_RET> continueAfterNamedStringFunctions(Expression expression) {
+		throw new UnsupportedOperationException("TODO");
+	}
+
+    
+    
 
 
+/*
 
 	Collector_MapFunctions_Alias<MODEL, RESULT, ALIAS_RET, ALIAS_SUM_LONG_RET, ALIAS_COUNT_RET, ALIAS_SHORT_RET, ALIAS_INT_RET, ALIAS_LONG_RET, ALIAS_DOUBLE_RET, ALIAS_BIGDECIMAL_RET, ALIAS_STRING_RET> 
     
@@ -151,13 +204,15 @@ final class SharedMapFunctions_Initial<
     	}
     	
     	if (this.named_do_not_call_directly == null) {
-    		this.named_do_not_call_directly = new Collector_MapFunctions_Named<>(namedCallback, this);
+    		this.named_do_not_call_directly = new Collector_MapFunctions_Named<>(namedCallback, this, impl);
     	}
 
     	return named_do_not_call_directly;
 	}
+	*/
 
 			
+			/*
 	@Override
 	public <T> NAMED_SHORT_RET abs(IFunctionShort<T> getter) {
 		return named().abs(getter);
@@ -243,7 +298,10 @@ final class SharedMapFunctions_Initial<
 	public <T> NAMED_BIGDECIMAL_RET avg(IFunctionBigDecimal<T> field) {
 		return named().avg(field);
 	}
+	*/
 
+    
+    /*
 	@Override
 	public ALIAS_SHORT_RET avg(ISupplierShort field) {
 		return alias().avg(field);
@@ -503,8 +561,12 @@ final class SharedMapFunctions_Initial<
 	public <T> NAMED_STRING_RET upper(StringFunction<T> getter) {
 		return named().upper(getter);
 	}
-
 	
+	*/
+
+
+
+
 	@Override
 	@SuppressWarnings({"unchecked", "rawtypes"})
 	public ISharedNumericFunctions_Initial<
@@ -522,7 +584,7 @@ final class SharedMapFunctions_Initial<
 				NO_PARAM_ALIAS_SUM_LONG_RET, NO_PARAM_ALIAS_COUNT_RET,
 				NO_PARAM_ALIAS_SHORT_RET, NO_PARAM_ALIAS_INT_RET, NO_PARAM_ALIAS_LONG_RET, NO_PARAM_ALIAS_DOUBLE_RET, NO_PARAM_ALIAS_BIGDECIMAL_RET
 				> abs() {
-		add(Function_Arithmetic_Abs.INSTANCE);
+		addNoParam(Function_Arithmetic_Abs.INSTANCE);
 		
 		return (ISharedNumericFunctions_Initial)this;
 	}
@@ -555,7 +617,7 @@ final class SharedMapFunctions_Initial<
 				
 				
 			> sqrt() {
-		add(Function_Arithmetic_Sqrt.INSTANCE);
+		addNoParam(Function_Arithmetic_Sqrt.INSTANCE);
 		
 		return (ISharedNumericFunctions_Initial)this;
 	}
@@ -563,7 +625,7 @@ final class SharedMapFunctions_Initial<
 
 	@Override
 	public ISharedStringFunctions_Initial<MODEL, RESULT, NAMED_RET, ALIAS_RET, NAMED_STRING_RET, ALIAS_STRING_RET> lower() {
-		add(Function_String_Lower.INSTANCE);
+		addNoParam(Function_String_Lower.INSTANCE);
 		
 		return this;
 	}
@@ -571,14 +633,14 @@ final class SharedMapFunctions_Initial<
 
 	@Override
 	public ISharedStringFunctions_Initial<MODEL, RESULT, NAMED_RET, ALIAS_RET, NAMED_STRING_RET, ALIAS_STRING_RET> upper() {
-		add(Function_String_Upper.INSTANCE);
+		addNoParam(Function_String_Upper.INSTANCE);
 		
 		return this;
 	}
 
 	@Override
 	public ISharedStringFunctions_Initial<MODEL, RESULT, NAMED_RET, ALIAS_RET, NAMED_STRING_RET, ALIAS_STRING_RET> trim() {
-		add(Function_String_Trim.INSTANCE);
+		addNoParam(Function_String_Trim.INSTANCE);
 		
 		return this;
 	}
@@ -602,7 +664,7 @@ final class SharedMapFunctions_Initial<
 					NO_PARAM_ALIAS_SUM_LONG_RET, NO_PARAM_ALIAS_COUNT_RET,
 					NO_PARAM_ALIAS_SUM_LONG_RET, NO_PARAM_ALIAS_SUM_LONG_RET, NO_PARAM_ALIAS_SUM_LONG_RET, NO_PARAM_ALIAS_DOUBLE_RET, NO_PARAM_ALIAS_BIGDECIMAL_RET> sum() {
 
-		add(Function_Aggregate.SUM);
+		addNoParam(Function_Aggregate.SUM);
 		
 		return (ISharedNumericFunctions_Initial)this;
 	}
@@ -631,7 +693,7 @@ final class SharedMapFunctions_Initial<
 
 					
 					> min() {
-		add(Function_Aggregate.MIN);
+		addNoParam(Function_Aggregate.MIN);
 		
 		return (ISharedNumericFunctions_Initial)this;
 	}
@@ -652,7 +714,7 @@ final class SharedMapFunctions_Initial<
 					NO_PARAM_ALIAS_SUM_LONG_RET, NO_PARAM_ALIAS_COUNT_RET,
 					NO_PARAM_ALIAS_SHORT_RET, NO_PARAM_ALIAS_INT_RET, NO_PARAM_ALIAS_LONG_RET, NO_PARAM_ALIAS_DOUBLE_RET, NO_PARAM_ALIAS_BIGDECIMAL_RET
 					> max() {
-		add(Function_Aggregate.MAX);
+		addNoParam(Function_Aggregate.MAX);
 		
 		return (ISharedNumericFunctions_Initial)this;
 	}
@@ -675,7 +737,7 @@ final class SharedMapFunctions_Initial<
 					NO_PARAM_ALIAS_SHORT_RET, NO_PARAM_ALIAS_INT_RET, NO_PARAM_ALIAS_LONG_RET, NO_PARAM_ALIAS_DOUBLE_RET, NO_PARAM_ALIAS_BIGDECIMAL_RET
 					
 					> avg() {
-		add(Function_Aggregate.AVG);
+		addNoParam(Function_Aggregate.AVG);
 		
 		return (ISharedNumericFunctions_Initial)this;
 	}
@@ -705,8 +767,14 @@ final class SharedMapFunctions_Initial<
 				
 				> count() {
 					
-		add(Function_Aggregate.COUNT);
+		addNoParam(Function_Aggregate.COUNT);
 
 		return (ISharedNumericFunctions_Initial)this;
 	}
+
+	@Override
+	ISharedFunction_Next<MODEL, RESULT, ALIAS_RET> continueAfterAliasFunctions(Expression expression) {
+		throw new UnsupportedOperationException("TODO");
+	}
+				
 }

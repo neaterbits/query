@@ -2,8 +2,8 @@ package com.neaterbits.query.sql.dsl.api;
 
 final class CollectedCondition_StringContains extends CollectedCondition_String {
 
-	CollectedCondition_StringContains(Getter getter, ConditionValue value) {
-		super(getter, value);
+	CollectedCondition_StringContains(Expression lhs, ConditionValue value) {
+		super(lhs, value);
 	}
 
 	@Override

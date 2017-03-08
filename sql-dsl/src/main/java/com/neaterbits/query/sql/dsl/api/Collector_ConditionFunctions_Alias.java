@@ -1,5 +1,6 @@
 package com.neaterbits.query.sql.dsl.api;
 
+
 class Collector_ConditionFunctions_Alias<
 
 		MODEL,
@@ -15,11 +16,14 @@ class Collector_ConditionFunctions_Alias<
 		BIGDECIMAL_RET extends ISharedFunction_Next<MODEL, RESULT, RET>,
 		STRING_RET  extends ISharedFunction_Next<MODEL, RESULT, RET>>
 
-	extends Collector_SharedFunctions_Alias<
+	extends Collector_NestedFunctions_Alias<
 			MODEL, 
 			RESULT, 
 			RET,
 
+			ISharedFunction_Next<MODEL, RESULT, RET>,
+			ISharedFunction_Next<MODEL, RESULT, RET>,
+			
 			SHORT_RET,
 			INTEGER_RET,
 			LONG_RET,
@@ -33,52 +37,12 @@ class Collector_ConditionFunctions_Alias<
 {
 	
 	Collector_ConditionFunctions_Alias(ISharedCollector_Functions_Callback_Alias<MODEL, RESULT, RET> func) {
-		super(func, null);
+		super(func);
+		//super(func, null);
 	}
 
 	@Override
-	public ISharedFunctions_String_Alias<MODEL, RESULT, RET, STRING_RET> lower() {
-		add(Function_String_Lower.INSTANCE);
-
-		return this;
-	}
-
-	@Override
-	public ISharedFunctions_String_Alias<MODEL, RESULT, RET, STRING_RET> upper() {
-		add(Function_String_Upper.INSTANCE);
-
-		return this;
-	}
-
-	@Override
-	public ISharedFunctions_Arithmetic_Alias<MODEL, RESULT, RET, SHORT_RET, INTEGER_RET, LONG_RET, DOUBLE_RET, BIGDECIMAL_RET> abs() {
-		add(Function_Arithmetic_Abs.INSTANCE);
-
-		return this;
-	}
-
-	/*
-	@Override
-	public ISharedFunctions_Arithmetic_Alias<MODEL, RESULT, RET, INTEGER_RET, LONG_RET, DOUBLE_RET> sqrt() {
-		add(Function_Arithmetic_Sqrt.INSTANCE);
-
-		return this;
-	}
-	*/
-
-	@Override
-	@SuppressWarnings({"unchecked", "rawtypes"})
-	public ISharedFunctions_Arithmetic_Alias<MODEL, RESULT, RET, DOUBLE_RET, DOUBLE_RET, DOUBLE_RET, DOUBLE_RET, DOUBLE_RET> sqrt() {
-		add(Function_Arithmetic_Sqrt.INSTANCE);
-
-		return (ISharedFunctions_Arithmetic_Alias)this;
-	}
-	
-
-	@Override
-	public ISharedFunctions_String_Alias<MODEL, RESULT, RET, STRING_RET> trim() {
-		add(Function_String_Trim.INSTANCE);
-
-		return this;
+	ISharedFunction_Next<MODEL, RESULT, RET> continueAfterAliasFunctions(Expression expression) {
+		throw new UnsupportedOperationException("TODO");
 	}
 }

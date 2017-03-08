@@ -44,27 +44,27 @@ abstract class Collector_And_Named<
 	private final <T extends ISharedLogical_Or<MODEL, RESULT>> void addNestedOrImpl(Consumer<T> orBuilder) {
 		super.addNestedOrImpl(orBuilder, createNestedOrCollector(this)); // new Classic_Collector_Or_NonProcessResult_Named<MODEL, RESULT>(this));
 	}
+
+	// TODO: avoid this reverse-mapping
+	private <T, RR extends Comparable<RR>>
+	
+		ISharedCondition_Comparable_Common_All<MODEL, RESULT, RR, AND_CLAUSES> andClassImplComparable(Expression expression) {
+
+		return new Collector_Condition_Comparative<MODEL, RESULT, RR, AND_CLAUSES>(this, expression);
+	}
 	
 	private <T, RR extends Comparable<RR>>
 	
 		ISharedCondition_Comparable_Common_All<MODEL, RESULT, RR, AND_CLAUSES> andClassImplComparable(Function<T, RR> getter) {
 
-		return andClassImplComparable(null, getter);
-	}
-
-	private <T, RR extends Comparable<RR>>
-	
-		ISharedCondition_Comparable_Common_All<MODEL, RESULT, RR, AND_CLAUSES> andClassImplComparable(CollectedFunctions functions, Function<T, RR> getter) {
-	
-		return new Collector_Condition_Comparative<MODEL, RESULT, RR, AND_CLAUSES>(this, functions, makeGetter(getter));
+		return andClassImplComparable(makeGetterExpression(getter));
 	}
 
 	private ISharedCondition_Comparable_String_All<MODEL, RESULT, AND_CLAUSES>
-		andClassImplString(CollectedFunctions functions, StringFunction<?> getter) {
-	
-		return new Collector_Condition_String<MODEL, RESULT, AND_CLAUSES>(this, functions, makeGetter(getter));
-	}
+		andClassImplString(Expression expression) {
 
+			throw new UnsupportedOperationException("TODO");
+	}
 	@Override
 	public final <T> ISharedCondition_Comparable_Common_All<MODEL, RESULT, Integer, AND_CLAUSES> and(IFunctionInteger<T> getter) {
 		return andClassImplComparable(getter);
@@ -77,7 +77,7 @@ abstract class Collector_And_Named<
 
 	@Override
 	public final <T> ISharedCondition_Comparable_String_All<MODEL, RESULT, AND_CLAUSES> and(StringFunction<T> getter) {
-		return new Collector_Condition_String<MODEL, RESULT, AND_CLAUSES>(this, makeGetter(getter));
+		return new Collector_Condition_String<MODEL, RESULT, AND_CLAUSES>(this, makeGetterExpression(getter));
 	}
 
 	@SuppressWarnings("unchecked")
@@ -109,16 +109,16 @@ abstract class Collector_And_Named<
 
 			@Override
 			public ISharedCondition_Comparable_Common_Base<MODEL, RESULT, Comparable<?>, AND_CLAUSES>
-				onComparable(CollectedFunctions functions, Function getter) {
+				onComparable(Expression expression) {
 				
-				return andClassImplComparable(functions, (Function)getter);
+				return (ISharedCondition_Comparable_Common_All)andClassImplComparable(expression);
 			}
 
 			@Override
 			public ISharedCondition_Comparable_String_Base<MODEL, RESULT, AND_CLAUSES>
-				onString(CollectedFunctions functions, StringFunction getter) {
+				onString(Expression expression) {
 				
-				return andClassImplString(functions, getter);
+				return andClassImplString(expression);
 			}
 		};
 

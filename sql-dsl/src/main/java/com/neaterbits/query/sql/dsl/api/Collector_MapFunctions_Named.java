@@ -1,5 +1,8 @@
 package com.neaterbits.query.sql.dsl.api;
 
+import java.util.function.Function;
+import java.util.function.Supplier;
+
 final class Collector_MapFunctions_Named<
 
 			MODEL,
@@ -32,151 +35,98 @@ final class Collector_MapFunctions_Named<
 			NO_PARAM_DOUBLE_RET		extends ISharedFunction_Next<MODEL, RESULT, RET>,
 			NO_PARAM_BIGDECIMAL_RET	extends ISharedFunction_Next<MODEL, RESULT, RET>,
 			NO_PARAM_STRING_RET		extends ISharedFunction_Next<MODEL, RESULT, RET>
-
 			>
 			
 		
-	extends Collector_SharedFunctions_Named<
+	extends Collector_NestedFunctions_Named<
 			MODEL,
 			RESULT,
 			
 			RET,
+			
+			SUM_LONG_RET,
+			COUNT_RET,
 			
 			SHORT_RET,
 			INT_RET,
 			LONG_RET,
 			DOUBLE_RET,
 			BIGDECIMAL_RET,
-			STRING_RET> 
+			STRING_RET,
+	
+			ISharedMapFunctions_Numeric_Named<
+			
+				MODEL, RESULT, RET,
+		
+				//SUM_LONG_RET, COUNT_RET, SHORT_RET, INT_RET, LONG_RET, DOUBLE_RET, BIGDECIMAL_RET,
+		
+				// Pass NO_PARAM types for both recursively, since cannot use .plus() when nested functions in this format
+				NO_PARAM_SUM_LONG_RET, NO_PARAM_COUNT_RET, NO_PARAM_SHORT_RET, NO_PARAM_INT_RET, NO_PARAM_LONG_RET, NO_PARAM_DOUBLE_RET, NO_PARAM_BIGDECIMAL_RET,
+				NO_PARAM_SUM_LONG_RET, NO_PARAM_COUNT_RET, NO_PARAM_SHORT_RET, NO_PARAM_INT_RET, NO_PARAM_LONG_RET, NO_PARAM_DOUBLE_RET, NO_PARAM_BIGDECIMAL_RET
+			>,
 
-
+			// for sqrt()
+	
+			ISharedMapFunctions_Numeric_Named<MODEL, RESULT, RET,
+			
+				NO_PARAM_DOUBLE_RET, NO_PARAM_DOUBLE_RET, NO_PARAM_DOUBLE_RET, NO_PARAM_DOUBLE_RET, NO_PARAM_DOUBLE_RET, NO_PARAM_DOUBLE_RET, NO_PARAM_DOUBLE_RET,
+				NO_PARAM_DOUBLE_RET, NO_PARAM_DOUBLE_RET, NO_PARAM_DOUBLE_RET, NO_PARAM_DOUBLE_RET, NO_PARAM_DOUBLE_RET, NO_PARAM_DOUBLE_RET, NO_PARAM_DOUBLE_RET>,
+				
+				
+			NO_PARAM_STRING_RET
+			
+			/*
+			NO_PARAM_SHORT_RET,
+			NO_PARAM_INT_RET,
+			NO_PARAM_LONG_RET,
+			NO_PARAM_DOUBLE_RET,
+			NO_PARAM_BIGDECIMAL_RET,
+			NO_PARAM_STRING_RET
+			*/
+			
+			>
 			
 		implements ISharedMapFunctions_Named<MODEL, RESULT, RET,
 			SUM_LONG_RET, COUNT_RET, SHORT_RET, INT_RET, LONG_RET, DOUBLE_RET, BIGDECIMAL_RET, STRING_RET,
-			NO_PARAM_SUM_LONG_RET, NO_PARAM_COUNT_RET, NO_PARAM_SHORT_RET, NO_PARAM_INT_RET, NO_PARAM_LONG_RET, NO_PARAM_DOUBLE_RET, NO_PARAM_BIGDECIMAL_RET, NO_PARAM_STRING_RET> {
+			NO_PARAM_SUM_LONG_RET, NO_PARAM_COUNT_RET, NO_PARAM_SHORT_RET, NO_PARAM_INT_RET, NO_PARAM_LONG_RET, NO_PARAM_DOUBLE_RET, NO_PARAM_BIGDECIMAL_RET, NO_PARAM_STRING_RET> 
+			
+			{
 
-	Collector_MapFunctions_Named(ISharedCollector_Functions_Callback_Named<MODEL, RESULT, RET> func, Collector_SharedFunctions_Base<MODEL, RESULT> last) {
-		super(func, last);
+	private final IMappingCollector<MODEL, RESULT> impl;
+				
+	Collector_MapFunctions_Named(ISharedCollector_Functions_Callback_Named<MODEL, RESULT, RET> func, /*, Collector_NestedFunctions_Base<MODEL, RESULT> last, */ IMappingCollector<MODEL, RESULT> impl ) {
+		super(func);
+		
+		//super(func, last);
+		
+		if (impl == null) {
+			throw new IllegalArgumentException("impl == null");
+		}
+		
+		this.impl = impl;
 	}
 
-	@Override
-	public <T> SHORT_RET avg(IFunctionShort<T> field) {
-		return addAndReturnType(Function_Aggregate.AVG, field);
-	}
 
+	/*
 	@Override
-	public <T> INT_RET avg(IFunctionInteger<T> field) {
-		return addAndReturnType(Function_Aggregate.AVG, field);
-	}
-
-	@Override
-	public <T> LONG_RET avg(IFunctionLong<T> field) {
-		return addAndReturnType(Function_Aggregate.AVG, field);
-	}
-
-	@Override
-	public <T> BIGDECIMAL_RET avg(IFunctionBigDecimal<T> field) {
-		return addAndReturnType(Function_Aggregate.AVG, field);
-	}
-
-	@Override
-	public <T> COUNT_RET count(IFunctionShort<T> field) {
-		return addAndReturnType(Function_Aggregate.COUNT, field);
-	}
-
-	@Override
-	public <T> COUNT_RET count(IFunctionInteger<T> field) {
-		return addAndReturnType(Function_Aggregate.COUNT, field);
-	}
-
-	@Override
-	public <T> COUNT_RET count(IFunctionLong<T> field) {
-		return addAndReturnType(Function_Aggregate.COUNT, field);
-	}
-
-	@Override
-	public <T> COUNT_RET count(IFunctionBigDecimal<T> field) {
-		return addAndReturnType(Function_Aggregate.COUNT, field);
-	}
-
-	@Override
-	public <T> SHORT_RET max(IFunctionShort<T> field) {
-		return addAndReturnType(Function_Aggregate.MAX, field);
-	}
-
-	@Override
-	public <T> INT_RET max(IFunctionInteger<T> field) {
-		return addAndReturnType(Function_Aggregate.MAX, field);
-	}
-
-	@Override
-	public <T> LONG_RET max(IFunctionLong<T> field) {
-		return addAndReturnType(Function_Aggregate.MAX, field);
-	}
-
-	@Override
-	public <T> BIGDECIMAL_RET max(IFunctionBigDecimal<T> field) {
-		return addAndReturnType(Function_Aggregate.MAX, field);
-	}
-
-	@Override
-	public <T> SHORT_RET min(IFunctionShort<T> field) {
-		return addAndReturnType(Function_Aggregate.MIN, field);
-	}
-
-	@Override
-	public <T> INT_RET min(IFunctionInteger<T> field) {
-		return addAndReturnType(Function_Aggregate.MIN, field);
-	}
-
-	@Override
-	public <T> LONG_RET min(IFunctionLong<T> field) {
-		return addAndReturnType(Function_Aggregate.MIN, field);
-	}
-
-	@Override
-	public <T> BIGDECIMAL_RET min(IFunctionBigDecimal<T> field) {
-		return addAndReturnType(Function_Aggregate.MIN, field);
-	}
-
-	@Override
-	public <T> SUM_LONG_RET sum(IFunctionShort<T> field) {
-		return addAndReturnType(Function_Aggregate.SUM, field);
-	}
-
-	@Override
-	public <T> SUM_LONG_RET sum(IFunctionInteger<T> field) {
-		return addAndReturnType(Function_Aggregate.SUM, field);
-	}
-
-	@Override
-	public <T> SUM_LONG_RET sum(IFunctionLong<T> field) {
-		return addAndReturnType(Function_Aggregate.SUM, field);
-	}
-
-	@Override
-	public <T> BIGDECIMAL_RET sum(IFunctionBigDecimal<T> field) {
-		return addAndReturnType(Function_Aggregate.SUM, field);
-	}
-	
-	@Override
+	@SuppressWarnings("unchecked")
 	<R extends Comparable<R>, CLAUSE> CLAUSE addSubNumeric(Function_Arithmetic function, ISharedSubOperandsFunction_Named<MODEL, RESULT, R> sub) {
-		
+
 		final Expression expression = SubExpressionUtil.addSubNumericForFunction(function, sub, null);
-		
-		throw new UnsupportedOperationException("TODO");
+
+		return (CLAUSE)new ResultMapperOps_Numeric<>(expression, impl);
 	}
 
 	@Override
+	@SuppressWarnings("unchecked")
 	<CLAUSE> CLAUSE addSubString(Function_String function, ISharedSubOperandsFunction_String_Named<MODEL, RESULT> sub) {
-		
+
 		final Expression expression = SubExpressionUtil.addSubStringForFunction(function, sub, null);
 
-		throw new UnsupportedOperationException("TODO");
+		return (CLAUSE)new ResultMapperOps_String<>(expression, impl);
 	}
 
 	// NoParam
-	@Override
 	@SuppressWarnings({"unchecked", "rawtypes"})
 	public ISharedMapFunctions_Numeric_Named<MODEL, RESULT, RET,
 			NO_PARAM_SUM_LONG_RET, NO_PARAM_COUNT_RET, NO_PARAM_SHORT_RET, NO_PARAM_INT_RET, NO_PARAM_LONG_RET, NO_PARAM_DOUBLE_RET, NO_PARAM_BIGDECIMAL_RET,
@@ -187,6 +137,9 @@ final class Collector_MapFunctions_Named<
 		
 		return (ISharedMapFunctions_Numeric_Named)this;
 	}
+	*/
+	
+	
 
 	/*
 	@Override
@@ -197,6 +150,7 @@ final class Collector_MapFunctions_Named<
 	}
 	*/
 
+	/*
 	@SuppressWarnings({"unchecked", "rawtypes"})
 	@Override
 	public ISharedMapFunctions_Numeric_Named<
@@ -235,5 +189,8 @@ final class Collector_MapFunctions_Named<
 		
 		return (ISharedFunctions_String_Named)this;
 	}
+	*/
+
+	
 }
 

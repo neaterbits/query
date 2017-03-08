@@ -4,10 +4,17 @@ class Collector_Condition_Comparative<MODEL, RESULT, R extends Comparable<R>, L 
 	extends Collector_Condition_Equality<MODEL, RESULT, R, L>
 	implements ISharedCondition_Comparable_Common_All_Compilable<MODEL, RESULT, R, L> {
 
+	
+	Collector_Condition_Comparative(Collector_Conditions_GroupBy<MODEL, RESULT, ?> clause, Expression expression) {
+		super(clause, expression);
+	}
+
+	@Deprecated
 	Collector_Condition_Comparative(Collector_Conditions_GroupBy<MODEL, RESULT, ?> clause, Getter getter) {
 		super(clause, getter);
 	}
 
+	@Deprecated
 	Collector_Condition_Comparative(Collector_Conditions_GroupBy<MODEL, RESULT, ?> clause, CollectedFunctions functions, Getter getter) {
 		super(clause, functions, getter);
 	}
@@ -18,7 +25,7 @@ class Collector_Condition_Comparative<MODEL, RESULT, R extends Comparable<R>, L 
 			throw new IllegalArgumentException("value == null");
 		}
 		
-		return addCondition(new CollectedCondition_GreaterThan(getter, makeLiteralValue(value)));
+		return addCondition(new CollectedCondition_GreaterThan(lhs, makeLiteralValue(value)));
 	}
 
 	
@@ -28,7 +35,7 @@ class Collector_Condition_Comparative<MODEL, RESULT, R extends Comparable<R>, L 
 			throw new IllegalArgumentException("value == null");
 		}
 		
-		return addCondition(new CollectedCondition_GreaterThan(getter, makeParamValue(value)));
+		return addCondition(new CollectedCondition_GreaterThan(lhs, makeParamValue(value)));
 	}
 
 	/* ONLY in Joins
@@ -48,7 +55,7 @@ class Collector_Condition_Comparative<MODEL, RESULT, R extends Comparable<R>, L 
 			throw new IllegalArgumentException("value == null");
 		}
 		
-		return addCondition(new CollectedCondition_GreaterThanOrEqual(getter, makeLiteralValue(value)));
+		return addCondition(new CollectedCondition_GreaterThanOrEqual(lhs, makeLiteralValue(value)));
 	}
 
 	@Override
@@ -57,7 +64,7 @@ class Collector_Condition_Comparative<MODEL, RESULT, R extends Comparable<R>, L 
 			throw new IllegalArgumentException("value == null");
 		}
 		
-		return addCondition(new CollectedCondition_GreaterThanOrEqual(getter, makeParamValue(value)));
+		return addCondition(new CollectedCondition_GreaterThanOrEqual(lhs, makeParamValue(value)));
 	}
 
 	/* ONLY in Joins
@@ -77,7 +84,7 @@ class Collector_Condition_Comparative<MODEL, RESULT, R extends Comparable<R>, L 
 			throw new IllegalArgumentException("value == null");
 		}
 		
-		return addCondition(new CollectedCondition_LessThan(getter, makeLiteralValue(value)));
+		return addCondition(new CollectedCondition_LessThan(lhs, makeLiteralValue(value)));
 	}
 
 	@Override
@@ -86,7 +93,7 @@ class Collector_Condition_Comparative<MODEL, RESULT, R extends Comparable<R>, L 
 			throw new IllegalArgumentException("value == null");
 		}
 		
-		return addCondition(new CollectedCondition_LessThan(getter, makeParamValue(value)));
+		return addCondition(new CollectedCondition_LessThan(lhs, makeParamValue(value)));
 	}
 
 	/* ONLY in Joins
@@ -106,7 +113,7 @@ class Collector_Condition_Comparative<MODEL, RESULT, R extends Comparable<R>, L 
 			throw new IllegalArgumentException("value == null");
 		}
 		
-		return addCondition(new CollectedCondition_LessThanOrEqual(getter, makeLiteralValue(value)));
+		return addCondition(new CollectedCondition_LessThanOrEqual(lhs, makeLiteralValue(value)));
 	}
 
 	@Override
@@ -115,7 +122,7 @@ class Collector_Condition_Comparative<MODEL, RESULT, R extends Comparable<R>, L 
 			throw new IllegalArgumentException("value == null");
 		}
 		
-		return addCondition(new CollectedCondition_LessThanOrEqual(getter, makeParamValue(value)));
+		return addCondition(new CollectedCondition_LessThanOrEqual(lhs, makeParamValue(value)));
 	}
 
 	/* ONLY in Joins

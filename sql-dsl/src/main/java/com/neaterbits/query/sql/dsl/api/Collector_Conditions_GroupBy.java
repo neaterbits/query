@@ -23,6 +23,10 @@ abstract class Collector_Conditions_GroupBy<MODEL, RESULT, AFTER_GROUP_BY>
 	static Getter makeGetter(Function<?, ?> getter) {
 		return new FunctionGetter(getter);
 	}
+		
+	static Expression makeGetterExpression(Function<?, ?> getter) {
+		return new FieldExpression(makeGetter(getter));
+	}
 
 	static Getter makeGetter(Supplier<?> getter) {
 		return new SupplierGetter(getter);

@@ -80,17 +80,17 @@ abstract class Collector_And_Or_Named_And_Alias_Base<
     
 	@Override
 	public final <T> ISharedCondition_Comparable_Common_All<MODEL, RESULT, Integer, NAMED_AND_CLAUSES> and(IFunctionInteger<T> getter) {
-		return andNamedClassImplComparative(getter);
+		return andNamedClassImplComparative(new FieldExpression(getter));
 	}
 
 	@Override
 	public final <T> ISharedCondition_Comparable_Common_All<MODEL, RESULT, Long, NAMED_AND_CLAUSES> and(IFunctionLong<T> getter) {
-		return andNamedClassImplComparative(getter);
+		return andNamedClassImplComparative(new FieldExpression(getter));
 	}
 
 	@Override
 	public final <T> ISharedCondition_Comparable_String_All<MODEL, RESULT, NAMED_AND_CLAUSES> and(StringFunction<T> getter) {
-		return andNamedClassImplString(null, getter);
+		return andNamedClassImplString(new FieldExpression(getter));
 
 	}
 	
@@ -105,6 +105,7 @@ abstract class Collector_And_Or_Named_And_Alias_Base<
 				ISharedCondition_Comparable_Common_All<MODEL, RESULT, BigDecimal, NAMED_AND_CLAUSES>,
 				ISharedCondition_Comparable_String_All<MODEL, RESULT, NAMED_AND_CLAUSES>
 			> andNamed() {
+					
 		@SuppressWarnings({"unchecked", "rawtypes"})
 		final ISharedCollector_Functions_Callback_Named<MODEL, RESULT, NAMED_AND_CLAUSES> cb
 				= new ISharedCollector_Functions_Callback_Named<MODEL, RESULT, NAMED_AND_CLAUSES>() {
@@ -112,16 +113,16 @@ abstract class Collector_And_Or_Named_And_Alias_Base<
 					// Condition_Comparable_Common_Base<MODEL, RESULT, Comparable<?>, NAMED_AND_CLAUSES>
 			@Override
 			public ISharedFunction_Next<MODEL, RESULT, NAMED_AND_CLAUSES>
-				onComparable(CollectedFunctions functions, Function getter) {
+				onComparable(Expression expression) {
 				
-				return andNamedClassImplComparable(functions, (Function)getter);
+				return andNamedClassImplComparable(expression);
 			}
 		
 			@Override
 			public ISharedCondition_Comparable_String_Base<MODEL, RESULT, NAMED_AND_CLAUSES>
-				onString(CollectedFunctions functions, StringFunction getter) {
+				onString(Expression expression) {
 				
-				return andNamedClassImplString(functions, getter);
+				return andNamedClassImplString(expression);
 			}
 		};
 
@@ -134,19 +135,19 @@ abstract class Collector_And_Or_Named_And_Alias_Base<
 
 	@Override
 	public final <T> ISharedCondition_Comparable_Common_All<MODEL, RESULT, Integer, NAMED_OR_CLAUSES> or(IFunctionInteger<T> getter) {
-		return orNamedClassImplComparable(getter);
+		return orNamedClassImplComparable(new FieldExpression(getter));
 	}
 
 	
 	@Override
 	public final <T> ISharedCondition_Comparable_Common_All<MODEL, RESULT, Long, NAMED_OR_CLAUSES> or(IFunctionLong<T> getter) {
-		return orNamedClassImplComparable(getter);
+		return orNamedClassImplComparable(new FieldExpression(getter));
 	}
 
 
 	@Override
 	public final <T> ISharedCondition_Comparable_String_All<MODEL, RESULT, NAMED_OR_CLAUSES> or(StringFunction<T> getter) {
-		return orNamedClassImplString(null, getter);
+		return orNamedClassImplString(new FieldExpression(getter));
 	}
 
 	final ISharedFunctions_Transform_Initial_Named<
@@ -168,15 +169,15 @@ abstract class Collector_And_Or_Named_And_Alias_Base<
 		
 			@Override
 			public ISharedCondition_Comparable_Common_Base<MODEL, RESULT, Comparable<?>, NAMED_OR_CLAUSES>
-				onComparable(CollectedFunctions functions, Function getter) {
+				onComparable(Expression expression) {
 				
-				return orNamedClassImplComparable(functions, (Function)getter);
+				return (ISharedCondition_Comparable_Common_All)orNamedClassImplComparable(expression);
 			}
 		
 			@Override
 			public ISharedCondition_Comparable_String_Base<MODEL, RESULT, NAMED_OR_CLAUSES> 
-				onString(CollectedFunctions functions, StringFunction getter) {
-				return orNamedClassImplString(functions, getter);
+				onString(Expression expression) {
+				return (ISharedCondition_Comparable_String_Base)orNamedClassImplString(expression);
 			}
 		};
 
@@ -187,49 +188,45 @@ abstract class Collector_And_Or_Named_And_Alias_Base<
 
 	private <T, RR extends Comparable<RR>>
 			
-		ISharedCondition_Comparable_Common_All<MODEL, RESULT, RR, NAMED_AND_CLAUSES> andNamedClassImplComparative(Function<T, RR> getter) {
+		ISharedCondition_Comparable_Common_All<MODEL, RESULT, RR, NAMED_AND_CLAUSES> andNamedClassImplComparative(Expression expression) {
 		
-		return andNamedClassImplComparable(null, getter);
+		return andNamedClassImplComparable(expression);
 	}
 
 	final <T, RR extends Comparable<RR>>
 		
-		ISharedCondition_Comparable_Common_All<MODEL, RESULT, RR, NAMED_AND_CLAUSES> andNamedClassImplComparable(CollectedFunctions functions, Function<T, RR> getter) {
+		ISharedCondition_Comparable_Common_All<MODEL, RESULT, RR, NAMED_AND_CLAUSES> 
+	
+				andNamedClassImplComparable(Expression expression) {
 	
 		final Collector_And_Named<MODEL, RESULT, NAMED_AND_CLAUSES, NAMED_NESTED_AND_CLAUSES, NAMED_NESTED_OR_CLAUSES, NAMED_AFTER_GROUP_BY> andClauses = createNamedAndCollector(); // new Classic_Collector_And_Named<>(this);
 	
-		return new Collector_Condition_Comparative<MODEL, RESULT, RR, NAMED_AND_CLAUSES>(andClauses, functions, makeGetter(getter));
+		return new Collector_Condition_Comparative<MODEL, RESULT, RR, NAMED_AND_CLAUSES>(andClauses, expression);
 	}
 		
 		
-	final ISharedCondition_Comparable_String_All<MODEL, RESULT, NAMED_AND_CLAUSES> andNamedClassImplString(CollectedFunctions functions, StringFunction<?> getter) {
+	final ISharedCondition_Comparable_String_All<MODEL, RESULT, NAMED_AND_CLAUSES> andNamedClassImplString(Expression expression) {
 		
 		final Collector_And_Named<MODEL, RESULT, NAMED_AND_CLAUSES, NAMED_NESTED_AND_CLAUSES, NAMED_NESTED_OR_CLAUSES, NAMED_AFTER_GROUP_BY> andClauses = createNamedAndCollector(); // new Classic_Collector_And_Named<>(this);
 		
-		return new Collector_Condition_String<MODEL, RESULT, NAMED_AND_CLAUSES>(andClauses, functions, makeGetter(getter));
+		return new Collector_Condition_String<MODEL, RESULT, NAMED_AND_CLAUSES>(andClauses, expression);
 	}
 
 	// ------------------------  OR helpers ------------------------
 	private <T, RR extends Comparable<RR>>
-		ISharedCondition_Comparable_Common_All<MODEL, RESULT, RR, NAMED_OR_CLAUSES> orNamedClassImplComparable(Function<T, RR> getter) {
+		ISharedCondition_Comparable_Common_All<MODEL, RESULT, RR, NAMED_OR_CLAUSES>
 		
-		return orNamedClassImplComparable(null, getter);
+		orNamedClassImplComparable(Expression expressions) {
+		
+		return orNamedClassImplComparable(expressions);
 	}
 
-	final <T, RR extends Comparable<RR>>
-		ISharedCondition_Comparable_Common_All<MODEL, RESULT, RR, NAMED_OR_CLAUSES> orNamedClassImplComparable(CollectedFunctions functions, Function<T, RR> getter) {
-	
-		final Collector_Or_Named<MODEL, RESULT, NAMED_OR_CLAUSES, NAMED_NESTED_AND_CLAUSES, NAMED_NESTED_OR_CLAUSES, NAMED_AFTER_GROUP_BY> orClauses = createNamedOrCollector(); // new Classic_Collector_Or_Named<>(this);
-
-		return new Collector_Condition_Comparative<MODEL, RESULT, RR, NAMED_OR_CLAUSES>(orClauses, functions, makeGetter(getter));
-	}
-		
 	final ISharedCondition_Comparable_String_All<MODEL, RESULT, NAMED_OR_CLAUSES>
-				orNamedClassImplString(CollectedFunctions functions, StringFunction<?> getter) {
+				orNamedClassImplString(Expression expression) {
 
 		final Collector_Or_Named<MODEL, RESULT, NAMED_OR_CLAUSES, NAMED_NESTED_AND_CLAUSES, NAMED_NESTED_OR_CLAUSES, NAMED_AFTER_GROUP_BY> andClauses = createNamedOrCollector(); // new Classic_Collector_Or_Named<>(this);
 
-		return new Collector_Condition_String<MODEL, RESULT, NAMED_OR_CLAUSES>(andClauses, functions, makeGetter(getter));
+		return new Collector_Condition_String<MODEL, RESULT, NAMED_OR_CLAUSES>(andClauses, expression);
 	}
 	
 

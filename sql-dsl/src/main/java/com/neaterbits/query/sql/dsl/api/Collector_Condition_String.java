@@ -4,10 +4,17 @@ final class Collector_Condition_String<MODEL, RESULT, L extends ISharedLogical_B
 		extends Collector_Condition_Comparative<MODEL, RESULT, String, L>
 		implements ISharedCondition_Comparable_String_All_Compilable<MODEL, RESULT, L> {
 
+	
+	Collector_Condition_String(Collector_Conditions_GroupBy<MODEL, RESULT, ?> clause, Expression expression) {
+		super(clause, expression);
+	}
+
+	@Deprecated
 	Collector_Condition_String(Collector_Conditions_GroupBy<MODEL, RESULT, ?> clause, Getter getter) {
 		super(clause, getter);
 	}
 	
+	@Deprecated
 	Collector_Condition_String(Collector_Conditions_GroupBy<MODEL, RESULT, ?> clause, CollectedFunctions functions, Getter getter) {
 		super(clause, functions, getter);
 	}
@@ -27,7 +34,7 @@ final class Collector_Condition_String<MODEL, RESULT, L extends ISharedLogical_B
 			throw new IllegalArgumentException("value == null");
 		}
 		
-		return addCondition(new CollectedCondition_StringStartsWith(getter, makeLiteralValue(value)));
+		return addCondition(new CollectedCondition_StringStartsWith(lhs, makeLiteralValue(value)));
 	}
 
 	@Override
@@ -36,7 +43,7 @@ final class Collector_Condition_String<MODEL, RESULT, L extends ISharedLogical_B
 			throw new IllegalArgumentException("param == null");
 		}
 		
-		return addCondition(new CollectedCondition_StringStartsWith(getter, makeParamValue(param)));
+		return addCondition(new CollectedCondition_StringStartsWith(lhs, makeParamValue(param)));
 	}
 
 	@Override
@@ -45,7 +52,7 @@ final class Collector_Condition_String<MODEL, RESULT, L extends ISharedLogical_B
 			throw new IllegalArgumentException("value == null");
 		}
 		
-		return addCondition(new CollectedCondition_StringEndsWith(getter, makeLiteralValue(value)));
+		return addCondition(new CollectedCondition_StringEndsWith(lhs, makeLiteralValue(value)));
 	}
 
 	@Override
@@ -54,7 +61,7 @@ final class Collector_Condition_String<MODEL, RESULT, L extends ISharedLogical_B
 			throw new IllegalArgumentException("param == null");
 		}
 		
-		return addCondition(new CollectedCondition_StringEndsWith(getter, makeParamValue(param)));
+		return addCondition(new CollectedCondition_StringEndsWith(lhs, makeParamValue(param)));
 	}
 
 	@Override
@@ -63,7 +70,7 @@ final class Collector_Condition_String<MODEL, RESULT, L extends ISharedLogical_B
 			throw new IllegalArgumentException("value == null");
 		}
 		
-		return addCondition(new CollectedCondition_StringContains(getter, makeLiteralValue(value)));
+		return addCondition(new CollectedCondition_StringContains(lhs, makeLiteralValue(value)));
 	}
 
 	@Override
@@ -72,7 +79,7 @@ final class Collector_Condition_String<MODEL, RESULT, L extends ISharedLogical_B
 			throw new IllegalArgumentException("param == null");
 		}
 		
-		return addCondition(new CollectedCondition_StringContains(getter, makeParamValue(param)));
+		return addCondition(new CollectedCondition_StringContains(lhs, makeParamValue(param)));
 	}
 
 	@Override
@@ -81,7 +88,7 @@ final class Collector_Condition_String<MODEL, RESULT, L extends ISharedLogical_B
 			throw new IllegalArgumentException("regex == null");
 		}
 		
-		return addCondition(new CollectedCondition_StringMatches(getter, makeLiteralValue(regex)));
+		return addCondition(new CollectedCondition_StringMatches(lhs, makeLiteralValue(regex)));
 	}
 
 	@Override
@@ -90,6 +97,6 @@ final class Collector_Condition_String<MODEL, RESULT, L extends ISharedLogical_B
 			throw new IllegalArgumentException("param == null");
 		}
 		
-		return addCondition(new CollectedCondition_StringMatches(getter, makeParamValue(param)));
+		return addCondition(new CollectedCondition_StringMatches(lhs, makeParamValue(param)));
 	}
 }

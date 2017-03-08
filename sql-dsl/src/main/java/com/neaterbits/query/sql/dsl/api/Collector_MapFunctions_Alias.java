@@ -22,11 +22,14 @@ final class Collector_MapFunctions_Alias<
 	>
 
 
-	extends Collector_SharedFunctions_Alias<
+	extends Collector_NestedFunctions_Alias<
 		MODEL,
 		RESULT,
 
 		RET,
+		
+		SUM_LONG_RET,
+		COUNT_RET,
 
 		SHORT_RET,
 		INT_RET,
@@ -43,9 +46,17 @@ final class Collector_MapFunctions_Alias<
 	{
 
 	Collector_MapFunctions_Alias(ISharedCollector_Functions_Callback_Alias<MODEL, RESULT, RET> func) {
-		super(func, null);
+		super(func);
+
+//		super(func, null);
 	}
 
+	@Override
+	ISharedFunction_Next<MODEL, RESULT, RET> continueAfterAliasFunctions(Expression expression) {
+		throw new UnsupportedOperationException("TODO");
+	}
+
+	/*
 	@Override
 	public SHORT_RET avg(ISupplierShort field) {
 		return addAndReturnType(Function_Aggregate.AVG, field);
@@ -145,4 +156,5 @@ final class Collector_MapFunctions_Alias<
 	public BIGDECIMAL_RET sum(ISupplierBigDecimal field) {
 		return addAndReturnType(Function_Aggregate.SUM, field);
 	}
+	*/
 }

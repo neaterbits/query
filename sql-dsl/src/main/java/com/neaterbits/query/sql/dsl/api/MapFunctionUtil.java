@@ -1,21 +1,18 @@
 package com.neaterbits.query.sql.dsl.api;
 
-import java.util.function.Function;
 import java.util.function.Supplier;
 
 class MapFunctionUtil {
 
 	private static <MODEL, RESULT, R, IF extends ISharedSelectSourceBuilder<MODEL, RESULT>, DECIDED extends IMappingCollector<MODEL, RESULT>>
 	
-		ResultMapperToImpl<MODEL, RESULT, R, IF> named(CollectedFunctions functions, Function<?, ? extends Comparable<?>> getter, Supplier<DECIDED> supplier) {
+		ResultMapperToImpl<MODEL, RESULT, R, IF> named(Expression expression, Supplier<DECIDED> supplier) {
 		
 		final DECIDED impl = supplier.get();
 	
 		final IMappingCollector<MODEL, RESULT> mappingCollector = impl;
 		
 		// Named, switch
-		
-		final Expression expression = new NestedFunctionCallsExpression(functions, getter);
 		
 		return new ResultMapperToImpl<MODEL, RESULT, R, IF>(expression, mappingCollector);
 	}
@@ -40,16 +37,15 @@ class MapFunctionUtil {
 			
 			@Override
 			public ISharedFunction_Next<MODEL, RESULT, IF>
-						onComparable(CollectedFunctions functions, Function<?, ? extends Comparable<?>> getter) {
+						onComparable(Expression expression) {
 		
-				return named(functions, getter, supplier);
+				return named(expression, supplier);
 			}
 		
 			@Override
-			public ISharedFunction_Next<MODEL, RESULT, IF> onString(
-					CollectedFunctions functions, StringFunction<?> getter) {
+			public ISharedFunction_Next<MODEL, RESULT, IF> onString(Expression expression) {
 		
-				return named(functions, getter, supplier);
+				return named(expression, supplier);
 			}
 		};
 	}

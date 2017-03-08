@@ -2,8 +2,8 @@ package com.neaterbits.query.sql.dsl.api;
 
 final class CollectedCondition_GreaterThanOrEqual extends CollectedCondition_Comparison  {
 
-	CollectedCondition_GreaterThanOrEqual(Getter getter, ConditionValue value) {
-		super(getter, value);
+	CollectedCondition_GreaterThanOrEqual(Expression lhs, ConditionValue value) {
+		super(lhs, value);
 	}
 
 	@Override

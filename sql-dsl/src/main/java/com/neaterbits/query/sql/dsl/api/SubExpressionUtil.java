@@ -6,29 +6,29 @@ import java.util.function.Function;
 
 final class SubExpressionUtil {
 
-	static <MODEL, RESULT, R extends Comparable<R>, CLAUSE> Expression addSubNumericForFunction(Function_Arithmetic function, ISharedSubOperandsFunction_Named<MODEL, RESULT, R> sub, Collector_SharedFunctions_Base<MODEL, RESULT> last) {
+	static <MODEL, RESULT, R extends Comparable<R>, CLAUSE> Expression addSubNumericForFunction(Function_Arithmetic function, ISharedSubOperandsFunction_Named<MODEL, RESULT, R> sub /*, Collector_NestedFunctions_Base<MODEL, RESULT> last */) {
 		
-		final Expression expression = collectSubFunction(function, sub, true, last);
+		final Expression expression = collectSubFunction(function, sub, true); // , last);
 
 		return expression;
 	}
 
-	static <MODEL, RESULT, CLAUSE> Expression addSubStringForFunction(Function_String function, ISharedSubOperandsFunction_String_Named<MODEL, RESULT> sub, Collector_SharedFunctions_Base<MODEL, RESULT> last) {
+	static <MODEL, RESULT, CLAUSE> Expression addSubStringForFunction(Function_String function, ISharedSubOperandsFunction_String_Named<MODEL, RESULT> sub /* , Collector_NestedFunctions_Base<MODEL, RESULT> last */) {
 		
-		final Expression expression = collectSubFunction(function, sub, false, last);
+		final Expression expression = collectSubFunction(function, sub, false); //, last);
 
 		return expression;
 	}
 
-	static <MODEL, RESULT, R extends Comparable<R>, CLAUSE> Expression addSubNumericForOperator(ArithmeticOperator operator, ISharedSubOperandsFunction_Named<MODEL, RESULT, R> sub, Collector_SharedFunctions_Base<MODEL, RESULT> last) {
+	static <MODEL, RESULT, R extends Comparable<R>, CLAUSE> Expression addSubNumericForOperator(ArithmeticOperator operator, ISharedSubOperandsFunction_Named<MODEL, RESULT, R> sub /* , Collector_NestedFunctions_Base<MODEL, RESULT> last */) {
 		
-		final Expression expression = intCollectSub(sub, true, last);
+		final Expression expression = intCollectSub(sub, true); // last);
 
 		return expression;
 	}
 
 	
-	private static <MODEL, RESULT, R extends Comparable<R>> Expression intCollectSub(ISharedSubOperandsFunction_Named<MODEL, RESULT, R> sub, boolean numeric, Collector_SharedFunctions_Base<MODEL, RESULT> last) {
+	private static <MODEL, RESULT, R extends Comparable<R>> Expression intCollectSub(ISharedSubOperandsFunction_Named<MODEL, RESULT, R> sub, boolean numeric /*, Collector_NestedFunctions_Base<MODEL, RESULT> last */) {
 		
 		if (sub == null) {
 			throw new IllegalArgumentException("sub == null");
@@ -43,32 +43,34 @@ final class SubExpressionUtil {
 
 			@Override
 			public ISharedFunction_Next<MODEL, RESULT, ISharedSubOperand_End_Named<MODEL, RESULT, R>> 
-					onComparable(CollectedFunctions functions, Function<?, ? extends Comparable<?>> getter) {
+					onComparable(Expression expression) {
 
 				if (!numeric) {
 					throw new IllegalStateException("not numeric");
 				}
 
-				expressions.add(new NestedFunctionCallsExpression(functions, getter));
+				//expressions.add(new NestedFunctionCallsExpression(functions, getter));
+				expressions.add(expression);
 
 				return null;
 			}
 
 			@Override
 			public ISharedFunction_Next<MODEL, RESULT, ISharedSubOperand_End_Named<MODEL, RESULT, R>>
-					onString(CollectedFunctions functions, StringFunction<?> getter) {
+					onString(Expression expression) {
 				
 				if (numeric) {
 					throw new IllegalStateException("numeric");
 				}
 
-				expressions.add(new NestedFunctionCallsExpression(functions, getter));
+				//expressions.add(new NestedFunctionCallsExpression(functions, getter));
+				expressions.add(expression);
 				
 				return null;
 			}
 		};
 
-		final SubOperandsBuilder<MODEL, RESULT, R, ISharedSubOperand_End_Named<MODEL, RESULT, R>> ret = new SubOperandsBuilder<>(callback, last);
+		final SubOperandsBuilder<MODEL, RESULT, R, ISharedSubOperand_End_Named<MODEL, RESULT, R>> ret = new SubOperandsBuilder<>(callback);
 		
 		sub.apply(ret);
 		
@@ -84,13 +86,13 @@ final class SubExpressionUtil {
 	}
 	
 	
-	private static <MODEL, RESULT, R extends Comparable<R>> Expression collectSubFunction(FunctionBase function, ISharedSubOperandsFunction_Named<MODEL, RESULT, R> sub, boolean numeric, Collector_SharedFunctions_Base<MODEL, RESULT> last) {
+	private static <MODEL, RESULT, R extends Comparable<R>> Expression collectSubFunction(FunctionBase function, ISharedSubOperandsFunction_Named<MODEL, RESULT, R> sub, boolean numeric /*, Collector_NestedFunctions_Base<MODEL, RESULT> last */) {
 		
 		if (function == null) {
 			throw new IllegalArgumentException("function == null");
 		}
 		
-		final Expression collected = intCollectSub(sub, numeric, last);
+		final Expression collected = intCollectSub(sub, numeric); // TODO, last);
 		
 		return new FunctionExpression(function, collected);
 	}

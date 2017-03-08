@@ -129,6 +129,6 @@ final class Short_Collector_SingleResult_Decided_Named<MODEL, RESULT>
 					ISharedResultMapperTo<MODEL, RESULT, BigDecimal, IShortResult_Mapped_Single_Named<MODEL, RESULT>>,
 					ISharedResultMapperTo<MODEL, RESULT, String, IShortResult_Mapped_Single_Named<MODEL, RESULT>>
 		
-					>(callback, null);
+					>(callback, /* null, */ this);
 	}
 }

@@ -186,16 +186,16 @@ abstract class SQL_Collector_WhereOrJoin_Base<
 		
 			@Override
 			public ISharedCondition_Comparable_Common_Base<MODEL, RESULT, Comparable<?>, NAMED_AND_OR>
-				onComparable(CollectedFunctions functions, Function getter) {
+				onComparable(Expression expression) {
 				
-				return andNamedClassImplComparable(functions, (Function)getter);
+				return (ISharedCondition_Comparable_Common_Base)andNamedClassImplComparable(expression);
 			}
 		
 			@Override
 			public ISharedCondition_Comparable_String_Base<MODEL, RESULT, NAMED_AND_OR>
-				onString(CollectedFunctions functions, StringFunction getter) {
+				onString(Expression expression) {
 				
-				return new Collector_Condition_String<MODEL, RESULT, NAMED_AND_OR> (SQL_Collector_WhereOrJoin_Base.this, functions, makeGetter(getter));
+				return new Collector_Condition_String<MODEL, RESULT, NAMED_AND_OR> (SQL_Collector_WhereOrJoin_Base.this, expression);
 			}
 		};
 		
@@ -214,25 +214,25 @@ abstract class SQL_Collector_WhereOrJoin_Base<
 	// implemented in subclass @Override
 	public final <T> ISharedCondition_Comparable_Common_All_Compilable<MODEL, RESULT, Integer, NAMED_AND_OR> where(IFunctionInteger<T> getter) {
 
-		return new Collector_Condition_Comparative<MODEL, RESULT, Integer, NAMED_AND_OR>(getAfterWhereNamed(), makeGetter(getter));
+		return new Collector_Condition_Comparative<MODEL, RESULT, Integer, NAMED_AND_OR>(getAfterWhereNamed(), makeGetterExpression(getter));
 	}
 	
 	//implemented in subclass @Override
 	public final <T> ISharedCondition_Comparable_Common_All_Compilable<MODEL, RESULT, Long, NAMED_AND_OR> where(IFunctionLong<T> getter) {
 
-		return new Collector_Condition_Comparative<MODEL, RESULT, Long, NAMED_AND_OR>(getAfterWhereNamed(), makeGetter(getter));
+		return new Collector_Condition_Comparative<MODEL, RESULT, Long, NAMED_AND_OR>(getAfterWhereNamed(), makeGetterExpression(getter));
 	}
 
 	// implemented in subclass @Override
 	public final <T, E extends Enum<E>> ISharedCondition_Equality_All<MODEL, RESULT, E, NAMED_AND_OR> where(IFunctionEnum<T, E> getter) {
 
-		return new Collector_Condition_Comparative<MODEL, RESULT, E, NAMED_AND_OR>(getAfterWhereNamed(), makeGetter(getter));
+		return new Collector_Condition_Comparative<MODEL, RESULT, E, NAMED_AND_OR>(getAfterWhereNamed(), makeGetterExpression(getter));
 	}
 
 	// implemented in subclass @Override
 	public final <T> ISharedCondition_Comparable_String_All_Compilable<MODEL, RESULT, NAMED_AND_OR> where(StringFunction<T> getter) {
 		
-		return new Collector_Condition_String<MODEL, RESULT, NAMED_AND_OR>(getAfterWhereNamed(), makeGetter(getter));
+		return new Collector_Condition_String<MODEL, RESULT, NAMED_AND_OR>(getAfterWhereNamed(), makeGetterExpression(getter));
 	}
 	
 			

@@ -2,8 +2,8 @@ package com.neaterbits.query.sql.dsl.api;
 
 final class CollectedCondition_In extends CollectedCondition_Value {
 
-	CollectedCondition_In(Getter getter, ConditionValue value) {
-		super(getter, value);
+	CollectedCondition_In(Expression lhs, ConditionValue value) {
+		super(lhs, value);
 	}
 
 	@Override

@@ -2,8 +2,8 @@ package com.neaterbits.query.sql.dsl.api;
 
 final class CollectedCondition_StringStartsWith extends CollectedCondition_String {
 
-	CollectedCondition_StringStartsWith(Getter getter, ConditionValue value) {
-		super(getter, value);
+	CollectedCondition_StringStartsWith(Expression lhs, ConditionValue value) {
+		super(lhs, value);
 	}
 
 	@Override

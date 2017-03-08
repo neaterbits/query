@@ -2,8 +2,8 @@ package com.neaterbits.query.sql.dsl.api;
 
 final class CollectedCondition_StringMatches extends CollectedCondition_String {
 
-	CollectedCondition_StringMatches(Getter getter, ConditionValue value) {
-		super(getter, value);
+	CollectedCondition_StringMatches(Expression lhs, ConditionValue value) {
+		super(lhs, value);
 	}
 
 	@Override

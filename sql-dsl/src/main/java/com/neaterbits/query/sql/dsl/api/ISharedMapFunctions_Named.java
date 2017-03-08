@@ -37,6 +37,7 @@ public interface ISharedMapFunctions_Named<
 				NO_PARAM_SUM_LONG_RET, NO_PARAM_COUNT_RET, NO_PARAM_SHORT_RET, NO_PARAM_INT_RET, NO_PARAM_LONG_RET, NO_PARAM_DOUBLE_RET, NO_PARAM_BIGDECIMAL_RET>,
 
 			ISharedFunctions_String_Named<MODEL, RESULT, RET, STRING_RET>,
-			ISharedFunctions_String_NoParam_Named<MODEL, RESULT, RET, NO_PARAM_STRING_RET> {
+			
+			ISharedFunctions_String_NoParam_Base<MODEL, RESULT, NO_PARAM_STRING_RET> {
 
 }

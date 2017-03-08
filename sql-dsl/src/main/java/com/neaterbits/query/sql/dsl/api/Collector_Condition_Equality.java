@@ -9,15 +9,42 @@ abstract class Collector_Condition_Equality<MODEL, RESULT, R, L extends ISharedL
 			   ISharedCondition_Equality_Alias<MODEL, RESULT, R, L> {
 
 	private final Collector_Conditions_GroupBy<MODEL, RESULT, ?> clause;
+	final Expression lhs;
+
+	@Deprecated
 	final CollectedFunctions functions;
+	@Deprecated
 	final Getter getter;
 
+	Collector_Condition_Equality(Collector_Conditions_GroupBy<MODEL, RESULT, ?> clause, Expression expression) {
+
+		if (clause == null) {
+			throw new IllegalArgumentException("clause == null");
+		}
+		
+		if (expression == null) {
+			throw new IllegalArgumentException("expression == null");
+		}
+
+		this.clause = clause;
+		this.lhs = expression;
+		
+		this.functions = null;
+		this.getter = null;
+	}
+	
+	@Deprecated
 	Collector_Condition_Equality(Collector_Conditions_GroupBy<MODEL, RESULT, ?> clause, Getter getter) {
 		this(clause, null, getter);
 	}
 
+	@Deprecated
 	Collector_Condition_Equality(Collector_Conditions_GroupBy<MODEL, RESULT, ?> clause, CollectedFunctions functions, Getter getter) {
 
+		if (true) {
+			throw new UnsupportedOperationException("Not in use");
+		}
+		
 		if (clause == null) {
 			throw new IllegalArgumentException("clause == null");
 		}
@@ -26,6 +53,7 @@ abstract class Collector_Condition_Equality<MODEL, RESULT, R, L extends ISharedL
 			throw new IllegalArgumentException("getter == null");
 		}
 
+		this.lhs = null;
 		this.clause = clause;
 		this.functions = functions; // optional
 		this.getter = getter;
@@ -80,7 +108,7 @@ abstract class Collector_Condition_Equality<MODEL, RESULT, R, L extends ISharedL
 			throw new IllegalArgumentException("other == null");
 		}
 		
-		return addCondition(new CollectedCondition_EqualTo(getter, makeLiteralValue(other)));
+		return addCondition(new CollectedCondition_EqualTo(lhs, makeLiteralValue(other)));
 	}
 
 	@Override
@@ -90,7 +118,7 @@ abstract class Collector_Condition_Equality<MODEL, RESULT, R, L extends ISharedL
 			throw new IllegalArgumentException("other == null");
 		}
 		
-		return addCondition(new CollectedCondition_EqualTo(getter, makeParamValue(other)));
+		return addCondition(new CollectedCondition_EqualTo(lhs, makeParamValue(other)));
 	}
 
 	/* Only join in Join constructs
@@ -123,7 +151,7 @@ abstract class Collector_Condition_Equality<MODEL, RESULT, R, L extends ISharedL
 			throw new IllegalArgumentException("other == null");
 		}
 
-		return addCondition(new CollectedCondition_NotEqualTo(getter, makeLiteralValue(other)));
+		return addCondition(new CollectedCondition_NotEqualTo(lhs, makeLiteralValue(other)));
 	}
 
 	@Override
@@ -133,7 +161,7 @@ abstract class Collector_Condition_Equality<MODEL, RESULT, R, L extends ISharedL
 			throw new IllegalArgumentException("other == null");
 		}
 
-		return addCondition(new CollectedCondition_NotEqualTo(getter, makeParamValue(other)));
+		return addCondition(new CollectedCondition_NotEqualTo(lhs, makeParamValue(other)));
 	}
 
 	/*
@@ -178,11 +206,11 @@ abstract class Collector_Condition_Equality<MODEL, RESULT, R, L extends ISharedL
 					: new ConditionValue_Array(values);
 						
 		
-		return addCondition(new CollectedCondition_In(getter, conditionValue));
+		return addCondition(new CollectedCondition_In(lhs, conditionValue));
 	}
 
 	@Override
 	public L in(InParam<R> param) {
-		return addCondition(new CollectedCondition_In(getter, new ConditionValue_Param(param)));
+		return addCondition(new CollectedCondition_In(lhs, new ConditionValue_Param(param)));
 	}
 }

@@ -3,8 +3,8 @@ package com.neaterbits.query.sql.dsl.api;
 
 final class CollectedCondition_NotEqualTo extends CollectedCondition_Value {
 
-	CollectedCondition_NotEqualTo(Getter getter, ConditionValue value) {
-		super(getter, value);
+	CollectedCondition_NotEqualTo(Expression lhs, ConditionValue value) {
+		super(lhs, value);
 	}
 
 	@Override
