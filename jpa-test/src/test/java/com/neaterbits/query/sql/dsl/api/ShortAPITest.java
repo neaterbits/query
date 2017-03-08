@@ -378,7 +378,28 @@ public class ShortAPITest extends BaseSQLAPITest implements SumTest {
 	}
 	
 	//substring(1, s -> s.get(Company::getFoo).plus(1))
+
 	
+	@Test
+    public void testArithmeticSubOf() {
+		
+		final Company acme1 = new Company(1, "Acme1", new BigDecimal("49"));
+		final Company acme2 = new Company(2, "Acme2", new BigDecimal("121"));
+		final Company acme3 = new Company(3, "Acme2", new BigDecimal("256"));
+		final Company foo = new Company(4, "Foo", new BigDecimal("35.6"));
+
+		
+		final SingleBuilt<CompanyAggregatesVO> acmeQuery = select
+				.one(CompanyAggregatesVO.class)
+				
+				.map(Company::getStockPrice).to(CompanyAggregatesVO::setAvgStockPrice)
+				.map().abs().absOfDecimal(e -> e.abs(Company::getStockPrice)).to(CompanyAggregatesVO::setAvgStockPrice)
+				//.mapOf(e -> e.abs(c::getStockPrice)).to(CompanyAggregatesVO::setAvgStockPrice)
+				
+				.build()
+				;
+	}
+
 	
 	@Test
     public void testArithmetic() {

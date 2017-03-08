@@ -27,7 +27,7 @@ abstract class Collector_SharedFunctions_Base<MODEL, RESULT> {
 			throw new IllegalArgumentException("function == null");
 		}
 		
-		functions.add(new FunctionExpression(function, null));
+		functions.add(new FunctionExpression(function));
 	}
 	
 	final CollectedFunctions collect() {

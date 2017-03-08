@@ -420,6 +420,17 @@ final class CompiledQuery {
 
 		return expression;
 	}
+
+	private static List<Expression> intCompileExpressions(List<Expression> toCompile, SelectSourceLookup sources) {
+		
+		final List<Expression> ret = new ArrayList<>(toCompile.size());
+		
+		for (Expression expression : toCompile) {
+			ret.add(intCompileExpression(expression, sources));
+		}
+
+		return ret;
+	}
 	
 	private static final ExpressionVisitor<SelectSourceLookup, Expression> compileVisitor = new ExpressionVisitor<SelectSourceLookup, Expression>() {
 		@Override
@@ -441,7 +452,9 @@ final class CompiledQuery {
 		
 		@Override
 		public Expression onFunction(FunctionExpression function, SelectSourceLookup param) {
-			return new FunctionExpression(function.getFunction(), function.getField());
+			final List<Expression> params = intCompileExpressions(function.getParameters(), param);
+			
+			return new FunctionExpression(function.getFunction(), params);
 		}
 		
 		@Override
@@ -455,9 +468,19 @@ final class CompiledQuery {
 				throw new RuntimeException(ex);
 			}
 		}
+		
+		@Override
+		public Expression onValue(ValueExpression value, SelectSourceLookup param) {
+			return value;
+		}
 
 		@Override
 		public Expression onCompiledField(CompiledFieldExpression compiledField, SelectSourceLookup param) {
+			throw new UnsupportedOperationException("Already compiled");
+		}
+
+		@Override
+		public Expression onCompiledNestedFunctionCalls(CompiledNestedFunctionCallsExpression nested, SelectSourceLookup param) {
 			throw new UnsupportedOperationException("Already compiled");
 		}
 	};

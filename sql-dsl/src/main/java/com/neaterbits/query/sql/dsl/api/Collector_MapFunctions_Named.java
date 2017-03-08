@@ -158,6 +158,22 @@ final class Collector_MapFunctions_Named<
 	public <T> BIGDECIMAL_RET sum(IFunctionBigDecimal<T> field) {
 		return addAndReturnType(Function_Aggregate.SUM, field);
 	}
+	
+	@Override
+	<R extends Comparable<R>, CLAUSE> CLAUSE addSubNumeric(Function_Arithmetic function, ISharedSubOperandsFunction_Named<MODEL, RESULT, R> sub) {
+		
+		final Expression expression = SubExpressionUtil.addSubNumericForFunction(function, sub, null);
+		
+		throw new UnsupportedOperationException("TODO");
+	}
+
+	@Override
+	<CLAUSE> CLAUSE addSubString(Function_String function, ISharedSubOperandsFunction_String_Named<MODEL, RESULT> sub) {
+		
+		final Expression expression = SubExpressionUtil.addSubStringForFunction(function, sub, null);
+
+		throw new UnsupportedOperationException("TODO");
+	}
 
 	// NoParam
 	@Override

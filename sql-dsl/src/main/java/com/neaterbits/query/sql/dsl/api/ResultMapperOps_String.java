@@ -1,8 +1,5 @@
 package com.neaterbits.query.sql.dsl.api;
 
-import java.util.function.Function;
-import java.util.function.Supplier;
-
 final class ResultMapperOps_String<
 		MODEL,
 		RESULT,
@@ -15,26 +12,6 @@ final class ResultMapperOps_String<
 
 	ResultMapperOps_String(Expression expression, IMappingCollector<MODEL, RESULT> impl) {
 		super(expression, impl);
-	}
-
-	@Deprecated
-	ResultMapperOps_String(Function<?, ?> fromGetter, IMappingCollector<MODEL, RESULT> impl, CollectedFunctions collectedFunctions) {
-		super(fromGetter, impl, collectedFunctions);
-	}
-
-	@Deprecated
-	ResultMapperOps_String(Function<?, ?> fromGetter, IMappingCollector<MODEL, RESULT> impl) {
-		super(fromGetter, impl);
-	}
-
-	@Deprecated
-	ResultMapperOps_String(Supplier<?> fromSupplier, IMappingCollector<MODEL, RESULT> impl, CollectedFunctions collectedFunctions) {
-		super(fromSupplier, impl, collectedFunctions);
-	}
-
-	@Deprecated
-	ResultMapperOps_String(Supplier<?> fromSupplier, IMappingCollector<MODEL, RESULT> impl) {
-		super(fromSupplier, impl);
 	}
 
 	@Override

@@ -99,8 +99,6 @@ class ResultMapperToImpl<
 		if (setter == null) {
 			throw new IllegalArgumentException("setter == null");
 		}
-		
-		
 
 		final MappingCollector mappingCollector = impl.getMappingCollector();
 

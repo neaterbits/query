@@ -187,6 +187,27 @@ final class SharedMapFunctions_Initial<
 	public <T> ALIAS_LONG_RET abs(ISupplierLong getter) {
 		return alias().abs(getter);
 	}
+	
+	@Override
+	public final <T> NAMED_SHORT_RET absOfShort(ISharedSubOperandsFunction_Short_Named<MODEL, RESULT> sub) {
+		return named().absOfShort(sub);
+	}
+
+	@Override
+	public final <T> NAMED_INT_RET absOfInteger(ISharedSubOperandsFunction_Integer_Named<MODEL, RESULT> sub) {
+		return named().absOfInteger(sub);
+	}
+
+	@Override
+	public final <T> NAMED_LONG_RET absOfLong(ISharedSubOperandsFunction_Long_Named<MODEL, RESULT> sub) {
+		return named().absOfLong(sub);
+	}
+
+	@Override
+	public final <T> NAMED_BIGDECIMAL_RET absOfDecimal(ISharedSubOperandsFunction_BigDecimal_Named<MODEL, RESULT> sub) {
+		return named().absOfDecimal(sub);
+	}
+	
 
 	@Override
 	public <T> ALIAS_DOUBLE_RET abs(ISupplierDouble getter) {
@@ -394,10 +415,15 @@ final class SharedMapFunctions_Initial<
 	}
 
 	@Override
+	public <T> NAMED_DOUBLE_RET sqrtOf(ISharedSubOperandsFunction_Double_Named<MODEL, RESULT> sub) {
+		return named().sqrtOf(sub);
+	}
+
+	@Override
 	public <T> ALIAS_DOUBLE_RET sqrt(ISupplierShort getter) {
 		return alias().sqrt(getter);
 	}
-	
+
 	@Override
 	public <T> ALIAS_DOUBLE_RET sqrt(ISupplierInteger getter) {
 		return alias().sqrt(getter);
@@ -417,7 +443,7 @@ final class SharedMapFunctions_Initial<
 	public <T> ALIAS_DOUBLE_RET sqrt(ISupplierBigDecimal getter) {
 		return alias().sqrt(getter);
 	}
-
+	
 	@Override
 	public <T> NAMED_SUM_LONG_RET sum(IFunctionShort<T> field) {
 		return named().sum(field);

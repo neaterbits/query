@@ -6,6 +6,8 @@ class CompanyAggregatesVO {
 	private String name;
 	private BigDecimal avgStockPrice;
 	private BigDecimal sumStockPrice;
+	
+	private Integer foo;
 
 	CompanyAggregatesVO() {
 		
@@ -15,6 +17,14 @@ class CompanyAggregatesVO {
 		this.name = name;
 		this.avgStockPrice = avgStockPrice;
 		this.sumStockPrice = sumStockPrice;
+	}
+
+	public Integer getFoo() {
+		return foo;
+	}
+
+	public void setFoo(Integer foo) {
+		this.foo = foo;
 	}
 
 	public String getName() {

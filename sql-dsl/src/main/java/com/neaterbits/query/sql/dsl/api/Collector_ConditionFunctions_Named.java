@@ -20,7 +20,22 @@ final class Collector_ConditionFunctions_Named<
 	Collector_ConditionFunctions_Named(ISharedCollector_Functions_Callback_Named<MODEL, RESULT, RET> func) {
 		super(func, null);
 	}
+	
+	@Override
+	<R extends Comparable<R>, CLAUSE> CLAUSE addSubNumeric(Function_Arithmetic function,
+			ISharedSubOperandsFunction_Named<MODEL, RESULT, R> sub) {
 		
+		throw new UnsupportedOperationException("TODO - sub for conditions");
+	}
+
+
+
+	@Override
+	<CLAUSE> CLAUSE addSubString(Function_String function, ISharedSubOperandsFunction_String_Named<MODEL, RESULT> sub) {
+
+		throw new UnsupportedOperationException("TODO - sub for conditions");
+	}
+
 	@Override
 	public ISharedFunctions_String_Named<MODEL, RESULT, RET, STRING_RET> lower() {
 		add(Function_String_Lower.INSTANCE);

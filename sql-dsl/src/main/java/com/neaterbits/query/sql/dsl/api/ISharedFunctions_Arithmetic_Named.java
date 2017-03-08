@@ -20,10 +20,18 @@ public interface ISharedFunctions_Arithmetic_Named<
 	<T> LONG_RET 		abs(IFunctionLong<T> getter);
 	<T> BIGDECIMAL_RET 	abs(IFunctionBigDecimal<T> getter);
 
+	<T> SHORT_RET 		absOfShort(ISharedSubOperandsFunction_Short_Named<MODEL, RESULT> sub);
+	<T> INTEGER_RET 	absOfInteger(ISharedSubOperandsFunction_Integer_Named<MODEL, RESULT> sub);
+	<T> LONG_RET 		absOfLong(ISharedSubOperandsFunction_Long_Named<MODEL, RESULT> sub);
+	<T> BIGDECIMAL_RET 	absOfDecimal(ISharedSubOperandsFunction_BigDecimal_Named<MODEL, RESULT> sub);
+	
+
 	// sqrt always returns double
 	<T> DOUBLE_RET sqrt(IFunctionShort<T> getter);
 	<T> DOUBLE_RET sqrt(IFunctionInteger<T> getter);
 	<T> DOUBLE_RET sqrt(IFunctionLong<T> getter);
 	<T> DOUBLE_RET sqrt(IFunctionBigDecimal<T> getter);
+
+	<T> DOUBLE_RET 	sqrtOf(ISharedSubOperandsFunction_Double_Named<MODEL, RESULT> sub);
 	
 }

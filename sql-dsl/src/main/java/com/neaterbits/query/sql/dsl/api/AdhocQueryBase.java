@@ -125,6 +125,12 @@ abstract class AdhocQueryBase<MODEL, QUERY extends AdhocQueryBase<MODEL, QUERY>>
 	}
 
 	@Override
+	public final Expression getMappingExpression(QUERY query, int mappingIdx) {
+		throw new UnsupportedOperationException("Mapping not supported for Adhoc queries");
+	}
+
+	@Override
+	@Deprecated
 	public final CompiledFieldReference getMappingField(QUERY query, int mappingIdx) {
 		throw new UnsupportedOperationException("Mapping not supported for Adhoc queries");
 	}
@@ -142,11 +148,13 @@ abstract class AdhocQueryBase<MODEL, QUERY extends AdhocQueryBase<MODEL, QUERY>>
 
 
 	@Override
+	@Deprecated
 	public int getMappingNumFunctions(QUERY query, int mappingIdx) {
 		throw new UnsupportedOperationException("TODO: support mapping");
 	}
 	
 	@Override
+	@Deprecated
 	public FunctionCalcBase getMappingFunction(QUERY query, int mappingIdx, int functionIdx) {
 		throw new UnsupportedOperationException("TODO: support mapping");
 	}

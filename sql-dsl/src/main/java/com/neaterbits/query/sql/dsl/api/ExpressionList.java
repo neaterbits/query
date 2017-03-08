@@ -7,7 +7,7 @@ final class ExpressionList extends Expression {
 	private final List<Expression> expressions;
 	private final List<ArithmeticOperator> operators;
 	
-	public ExpressionList(List<Expression> expressions, List<ArithmeticOperator> operators) {
+	ExpressionList(List<Expression> expressions, List<ArithmeticOperator> operators) {
 
 		if (expressions.size() < 2) {
 			throw new IllegalArgumentException("Expression list with only 1 item");

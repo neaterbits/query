@@ -71,7 +71,10 @@ abstract class Collector_SharedFunctions_Named<
 
 		return func.onString(collect(), getter);
 	}
+
+	abstract <R extends Comparable<R>, CLAUSE> CLAUSE addSubNumeric(Function_Arithmetic function, ISharedSubOperandsFunction_Named<MODEL, RESULT, R> sub);
 	
+	abstract <CLAUSE> CLAUSE addSubString(Function_String function, ISharedSubOperandsFunction_String_Named<MODEL, RESULT> sub);
 
 	@Override
 	@SuppressWarnings("unchecked")
@@ -107,6 +110,26 @@ abstract class Collector_SharedFunctions_Named<
 	public final <T> LONG_RET abs(IFunctionLong<T> getter) {
 		return addAndReturnType(Function_Arithmetic_Abs.INSTANCE, getter);
 	}
+	
+	@Override
+	public final <T> SHORT_RET absOfShort(ISharedSubOperandsFunction_Short_Named<MODEL, RESULT> sub) {
+		return addSubNumeric(Function_Arithmetic_Abs.INSTANCE, sub);
+	}
+
+	@Override
+	public final <T> INTEGER_RET absOfInteger(ISharedSubOperandsFunction_Integer_Named<MODEL, RESULT> sub) {
+		return addSubNumeric(Function_Arithmetic_Abs.INSTANCE, sub);
+	}
+
+	@Override
+	public final <T> LONG_RET absOfLong(ISharedSubOperandsFunction_Long_Named<MODEL, RESULT> sub) {
+		return addSubNumeric(Function_Arithmetic_Abs.INSTANCE, sub);
+	}
+
+	@Override
+	public final <T> BIGDECIMAL_RET absOfDecimal(ISharedSubOperandsFunction_BigDecimal_Named<MODEL, RESULT> sub) {
+		return addSubNumeric(Function_Arithmetic_Abs.INSTANCE, sub);
+	}
 
 	@Override
 	public final <T> BIGDECIMAL_RET abs(IFunctionBigDecimal<T> getter) {
@@ -131,5 +154,10 @@ abstract class Collector_SharedFunctions_Named<
 	@Override
 	public final <T> DOUBLE_RET sqrt(IFunctionBigDecimal<T> getter) {
 		return addAndReturnType(Function_Arithmetic_Sqrt.INSTANCE, getter);
+	}
+
+	@Override
+	public final <T> DOUBLE_RET sqrtOf(ISharedSubOperandsFunction_Double_Named<MODEL, RESULT> sub) {
+		return addSubNumeric(Function_Arithmetic_Sqrt.INSTANCE, sub);
 	}
 }

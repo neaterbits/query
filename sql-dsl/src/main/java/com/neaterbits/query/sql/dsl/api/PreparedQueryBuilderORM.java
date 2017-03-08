@@ -11,6 +11,7 @@ import java.util.function.BiFunction;
 
 import com.neaterbits.query.sql.dsl.api.entity.EntityModelUtil;
 import com.neaterbits.query.sql.dsl.api.entity.Relation;
+import com.neaterbits.query.util.java8.Coll8;
 
 final class PreparedQueryBuilderORM<MANAGED, EMBEDDED, IDENTIFIABLE, ATTRIBUTE, COLL extends Collection<ATTRIBUTE>>
 			extends PreparedQueryBuilder {
@@ -132,11 +133,16 @@ final class PreparedQueryBuilderORM<MANAGED, EMBEDDED, IDENTIFIABLE, ATTRIBUTE, 
 				s.append(", ");
 			}
 			
-			final CompiledFieldReference field = q.getMappingField(query, mappingIdx);
-
-			final FieldReference ref = prepareFieldReference(q, query, field);
+			//final CompiledFieldReference field = q.getMappingField(query, mappingIdx);
+			final Expression expression = q.getMappingExpression(query, mappingIdx);
 			
-			//refs.add(ref);
+			outputExpressions(q, query, expression);
+			
+			// Must recursively output query usingn visitor
+			
+			/*
+			final FieldReference ref = prepareFieldReference(q, query, field);
+			refs.add(ref);
 			
 			final List<FunctionBase> funcs = getMappingFunctions(q, query, mappingIdx);
 			
@@ -149,11 +155,68 @@ final class PreparedQueryBuilderORM<MANAGED, EMBEDDED, IDENTIFIABLE, ATTRIBUTE, 
 				// Must add any functions before 
 				dialect.appendFieldReference(s, ref);
 			}
+			*/
 		}
 		
 		//dialect.addMappings(s, refs);
 	}
 	
+	private <QUERY> void outputExpressions(ExecutableQuery<QUERY> q, QUERY query, Expression expression) {
+		final ExpressionVisitor<Void, Void> expressionOutputVisitor = new ExpressionVisitor<Void, Void>() {
+			
+			@Override
+			public Void onNestedFunctionCalls(NestedFunctionCallsExpression nested, Void param) {
+				throw new UnsupportedOperationException("Should have been compiled");
+			}
+			
+			@Override
+			public Void onList(ExpressionList list, Void param) {
+				throw new UnsupportedOperationException("TODO");
+			}
+			
+			@Override
+			public Void onFunction(FunctionExpression function, Void param) {
+				throw new UnsupportedOperationException("TODO");
+			}
+			
+			@Override
+			public Void onValue(ValueExpression value, Void param) {
+				throw new UnsupportedOperationException("TODO");
+			}
+
+			@Override
+			public Void onField(FieldExpression field, Void param) {
+				throw new UnsupportedOperationException("Should have been compiled");
+			}
+
+			
+			
+			@Override
+			public Void onCompiledNestedFunctionCalls(CompiledNestedFunctionCallsExpression nested, Void param) {
+				final FieldReference ref = prepareFieldReference(q, query, nested.getField());
+				
+				final List<FunctionBase> functions = Coll8.remap(nested.getFunctions(), e -> e.getFunction());
+				
+				// recursively resolve so that we nest output
+				PreparedQueryBuilderUtil.resolveFunction(dialect, functions, ref, s);
+
+				return null;
+			}
+
+			@Override
+			public Void onCompiledField(CompiledFieldExpression compiledField, Void param) {
+				
+				dialect.appendFieldReference(s, prepareFieldReference(q, query, compiledField.getFieldReference()));
+				
+				return null;
+			}
+		};
+		
+		expression.visit(expressionOutputVisitor, null);
+	}
+	
+	
+	@Deprecated
 	private static <QUERY> List<FunctionBase> getMappingFunctions(ExecutableQuery<QUERY> q, QUERY query, int mappingIdx) {
 		final int numFunctions = q.getMappingNumFunctions(query, mappingIdx);
 		
