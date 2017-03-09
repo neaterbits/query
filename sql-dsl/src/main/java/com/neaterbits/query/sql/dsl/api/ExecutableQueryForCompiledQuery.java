@@ -43,6 +43,10 @@ final class ExecutableQueryForCompiledQuery extends ExecutableQueryForCompiledBa
 		else if (source instanceof CompiledSelectSources_Named) {
 			ret = FieldReferenceType.ENTITY;
 		}
+		else if (source instanceof CompiledSelectSources_ListAllOfOneEntity) {
+			// no mapping so is a list of entities
+			ret = FieldReferenceType.ENTITY;
+		}
 		else {
 			throw new IllegalStateException("Unknown select source class " + source.getClass());
 		}

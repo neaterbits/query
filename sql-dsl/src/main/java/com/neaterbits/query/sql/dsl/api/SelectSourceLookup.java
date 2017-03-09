@@ -12,7 +12,7 @@ abstract class SelectSourceLookup {
 		this.cache = new CompiledGetterSetterCache();
 	}
 
-	abstract CompiledSelectSources<?> compile();
+	abstract CompiledSelectSources<?> compile(CollectedQueryResult queryResult);
 	
 	abstract TypeMapSource getNamedSource(Class<?> type);
 	abstract TypeMapSource getAliasesSource(IAlias alias);

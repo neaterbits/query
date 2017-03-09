@@ -180,21 +180,30 @@ final class ShortSelectSourceLookup extends SelectSourceLookup {
 	
 	
 	@Override
-	CompiledSelectSources<?> compile() {
+	CompiledSelectSources<?> compile(CollectedQueryResult queryResult) {
 		
 		final CompiledSelectSources<?> ret;
 		
-		switch (accessType) {
-		case NAMED:
-			ret = new CompiledSelectSources_Named(namedSources);
-			break;
+		if (accessType == null) {
 			
-		case ALIAS:
-			ret = new CompiledSelectSources_Alias(aliasSources);
-			break;
-			
-		default:
-			throw new UnsupportedOperationException("Unknown access type " + accessType);
+			final SharedSelectSource selectSource = ((CollectedQueryResult_Entity)queryResult).getSelectSource();
+			// no sources found, so should just be a list(SomeEntity.class) query, return no select sources
+			ret = new CompiledSelectSources_ListAllOfOneEntity((selectSource));
+		}
+		else {
+		
+			switch (accessType) {
+			case NAMED:
+				ret = new CompiledSelectSources_Named(namedSources);
+				break;
+				
+			case ALIAS:
+				ret = new CompiledSelectSources_Alias(aliasSources);
+				break;
+				
+			default:
+				throw new UnsupportedOperationException("Unknown access type " + accessType);
+			}
 		}
 		
 		return ret;

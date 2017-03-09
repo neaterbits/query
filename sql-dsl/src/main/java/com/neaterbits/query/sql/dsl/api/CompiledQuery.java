@@ -200,7 +200,7 @@ final class CompiledQuery {
 
 		return new CompiledQuery(
 				compiledQueryResult,
-				selectSources.compile(),
+				selectSources.compile(collector.getResult()),
 				joins,
 				compiledConditions,
 				conditionsMaxDepth,

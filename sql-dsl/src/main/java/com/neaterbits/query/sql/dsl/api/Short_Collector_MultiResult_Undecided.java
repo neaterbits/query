@@ -46,7 +46,12 @@ final class Short_Collector_MultiResult_Undecided<MODEL, RESULT>
 		this.collectionType = collectionType;
 	}
 	
-	
+
+	@Override
+	CollectedQueryResult getResultWhenNotPresent() {
+		// When string to build() so return multi-entity
+		return new CollectedQueryResult_Entity_Multi(getSelectSource(), collectionType);
+	}
 
 	@Override
 	Collector_Conditions_GroupBy<MODEL, RESULT, ?> getAfterWhereNamed() {
@@ -311,4 +316,6 @@ final class Short_Collector_MultiResult_Undecided<MODEL, RESULT>
 		
 		throw new UnsupportedOperationException("TODO");
 	}
+	
+	
 }

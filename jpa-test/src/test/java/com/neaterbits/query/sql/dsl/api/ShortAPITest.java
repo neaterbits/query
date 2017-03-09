@@ -560,12 +560,15 @@ public class ShortAPITest extends BaseSQLAPITest implements SumTest {
 	@Test
     public void testListAllEntities() {
 		
-		final Company acme = new Company(-1, "Acme");
-		final Company foo = new Company(-1, "Foo");
+		final Company acme = new Company(1, "Acme");
+		final Company foo = new Company(2, "Foo");
 
         final MultiBuilt<Company> startsWithAc = list(Company.class).build();
 		
-		store(s  -> s.add(acme)).
+		store(s  -> s
+				.add(acme)
+				.add(foo))
+				.
 		check(ds -> {
 	        checkSelectListUnordered(
 	        		ds,
@@ -589,17 +592,18 @@ public class ShortAPITest extends BaseSQLAPITest implements SumTest {
 	@Test
     public void testListAllOrderByEntities() {
 		
-		final Company acme = new Company(-1, "Acme");
-		final Company foo = new Company(-1, "Foo");
+		final Company acme = new Company(1, "Acme");
+		final Company foo = new Company(2, "Foo");
 
         final MultiBuilt<Company> startsWithAc =
 
-        			 select.list(Company.class)
-        			.orderBy(Company::getName)
-        			.desc()
+    			select.list(Company.class)
+        			 	.orderBy(Company::getName).desc()
         			.build();
 		
-		store(s  -> s.add(acme)).
+		store(s  -> s
+				.add(acme)
+				.add(foo)).
 		check(ds -> {
 	        checkSelectListUnordered(
 	        		ds,

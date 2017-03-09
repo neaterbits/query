@@ -27,9 +27,9 @@ abstract class Collector_GroupBy<MODEL, RESULT>
 		if (initial == null) {
 			throw new IllegalArgumentException("initial == null");
 		}
-		
+
 		super.add(initial);
-		
+
 		if (collectorConditions == null) {
 			throw new IllegalArgumentException("collectorConditions == null");
 		}
@@ -44,7 +44,7 @@ abstract class Collector_GroupBy<MODEL, RESULT>
 		if (groupByColumns == null) {
 			throw new IllegalArgumentException("groupByColumns == null");
 		}
-		
+
 		this.collectorConditions = collectorConditions;
 		this.groupByColumns = groupByColumns;
 	}

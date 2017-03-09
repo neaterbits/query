@@ -40,7 +40,7 @@ final class ClassicSelectSourceLookup extends SelectSourceLookup {
 	}
 	
 	@Override
-	CompiledSelectSources<?> compile() {
+	CompiledSelectSources<?> compile(CollectedQueryResult queryResult) {
 		return compiledSources;
 	}
 }

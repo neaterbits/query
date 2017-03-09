@@ -45,7 +45,12 @@ final class Short_Collector_SingleResult_Undecided<MODEL, RESULT>
 		this.select = select;
 	}
 
-	
+	@Override
+	CollectedQueryResult getResultWhenNotPresent() {
+		// When string to build() so return multi-entity
+		return new CollectedQueryResult_Entity_Single(getSelectSource());
+	}
+
 	@Override
 	final IMappingCollector<MODEL, RESULT> getMapToResultNamed() {
 		
