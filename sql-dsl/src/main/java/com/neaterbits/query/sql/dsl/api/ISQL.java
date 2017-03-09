@@ -11,6 +11,7 @@ public interface ISQL<
 		SHORT_RET,
 		INT_RET,
 		LONG_RET,
+		DOUBLE_RET,
 		BIGDECIMAL_RET>
 
 		extends ISharedFunctions_Aggregate_Named<
@@ -20,6 +21,7 @@ public interface ISQL<
 			SHORT_RET,
 			INT_RET,
 			LONG_RET,
+			DOUBLE_RET,
 			BIGDECIMAL_RET
 			>
 

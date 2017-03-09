@@ -116,7 +116,7 @@ public class ShortAPITest extends BaseSQLAPITest implements SumTest {
 	        checkSelectOneOrNull(
 	        		ds,
 	        		
-	        		new CompanyAggregatesVO(null, new BigDecimal("153.2"), new BigDecimal("153.2")),
+	        		new CompanyAggregatesVO(null, 153.2, new BigDecimal("153.2")),
 	        		acmeQuery,
 	        		q -> q.execute());
 		});
@@ -148,13 +148,13 @@ public class ShortAPITest extends BaseSQLAPITest implements SumTest {
 		check(ds -> {
 	        checkSelectOneOrNull(
 	        		ds,
-	        		new CompanyAggregatesVO(null, new BigDecimal("124.95"), new BigDecimal("249.9")),
+	        		new CompanyAggregatesVO(null, 124.95, new BigDecimal("249.9")),
 	        		acmeQuery,
 	        		q -> q.execute());
 		});
 		
 	}
-	
+
 	public void foo() {
 		String s = sqrt(sum(Company::getStockPrice));
 	}
@@ -389,11 +389,11 @@ public class ShortAPITest extends BaseSQLAPITest implements SumTest {
 		final Company foo = new Company(4, "Foo", new BigDecimal("35.6"));
 
 		
-		final SingleBuilt<CompanyAggregatesVO> acmeQuery = select
-				.one(CompanyAggregatesVO.class)
+		final SingleBuilt<CompanyResultVO> acmeQuery = select
+				.one(CompanyResultVO.class)
 				
-				.map(Company::getStockPrice).to(CompanyAggregatesVO::setAvgStockPrice)
-				.map().abs().absOfDecimal(e -> e.abs(Company::getStockPrice)).to(CompanyAggregatesVO::setAvgStockPrice)
+				.map(Company::getStockPrice).to(CompanyResultVO::setStockPrice)
+				.map().abs().absOfDecimal(e -> e.abs(Company::getStockPrice)).to(CompanyResultVO::setStockPrice)
 				//.mapOf(e -> e.abs(c::getStockPrice)).to(CompanyAggregatesVO::setAvgStockPrice)
 				
 				.build()
@@ -429,10 +429,10 @@ public class ShortAPITest extends BaseSQLAPITest implements SumTest {
 
 		final Company c = select.alias(Company.class);
 		
-		final SingleBuilt<CompanyAggregatesVO> acmeQuery = select
-				.one(CompanyAggregatesVO.class)
+		final SingleBuilt<CompanyResultVO> acmeQuery = select
+				.one(CompanyResultVO.class)
 				
-				.map(c::getStockPrice).to(CompanyAggregatesVO::setAvgStockPrice)
+				.map(c::getStockPrice).to(CompanyResultVO::setStockPrice)
 				//.mapOf(e -> e.abs(c::getStockPrice)).to(CompanyAggregatesVO::setAvgStockPrice)
 				
 				.build()

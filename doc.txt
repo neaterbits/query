@@ -583,6 +583,10 @@ W - parametere
   Evt bare lage mapOfAlias() og mapOfNamed() som fallback for initielle interface men dette hadde vært greit å unngå å måtte si om er named eller alias noe sted. 
 
 
+ - !! TODO !! bør avg() returnere Double for BigDecimal? virker rart. Vil dette fungere for Long også eller kan Long ha verdier 
+som er større enn double?
+
+
 
 
 # - order by?

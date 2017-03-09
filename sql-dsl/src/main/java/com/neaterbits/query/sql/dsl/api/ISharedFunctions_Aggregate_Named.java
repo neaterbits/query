@@ -12,12 +12,13 @@ public interface ISharedFunctions_Aggregate_Named<
 				SHORT_RET,
 				INT_RET,
 				LONG_RET,
+				DOUBLE_RET,
 				BIGDECIMAL_RET>
 
 		extends IShared_Aggregate_Sum_Named_All<SUM_LONG_RET, BIGDECIMAL_RET>,
 				IShared_Aggregate_Count_Named_All<COUNT_RET>,
 				IShared_Aggregate_Max_Named<SHORT_RET, INT_RET, LONG_RET, BIGDECIMAL_RET>,
 				IShared_Aggregate_Min_Named<SHORT_RET, INT_RET, LONG_RET, BIGDECIMAL_RET>,
-				IShared_Aggregate_Avg_Named<SHORT_RET, INT_RET, LONG_RET, BIGDECIMAL_RET> {
+				IShared_Aggregate_Avg_Named<SHORT_RET, INT_RET, LONG_RET, DOUBLE_RET, BIGDECIMAL_RET> {
 
 }

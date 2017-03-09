@@ -11,6 +11,7 @@ final class ShortSelect extends BaseShortSelect<
 		IShortBuilt_Numeric_Named<Short>,
 		IShortBuilt_Numeric_Named<Integer>,
 		IShortBuilt_Numeric_Named<Long>,
+		IShortBuilt_Numeric_Named<Double>,
 		IShortBuilt_Numeric_Named<BigDecimal>>
 
 	

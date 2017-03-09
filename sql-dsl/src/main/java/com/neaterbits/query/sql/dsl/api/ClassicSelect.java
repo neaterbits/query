@@ -12,6 +12,7 @@ final class ClassicSelect
 		IClassicResult_Numeric_Named<Short>,
 		IClassicResult_Numeric_Named<Integer>,
 		IClassicResult_Numeric_Named<Long>,
+		IClassicResult_Numeric_Named<Double>,
 		IClassicResult_Numeric_Named<BigDecimal>
 	>
 

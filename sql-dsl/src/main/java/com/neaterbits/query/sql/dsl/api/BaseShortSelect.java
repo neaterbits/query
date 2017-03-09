@@ -14,9 +14,10 @@ abstract class BaseShortSelect<
 	SHORT_RET,
 	INT_RET,
 	LONG_RET,
+	DOUBLE_RET,
 	BIGDECIMAL_RET>
 
-	extends BaseSelect<SUM_LONG_RET, COUNT_RET, SHORT_RET, INT_RET, LONG_RET, BIGDECIMAL_RET> {
+	extends BaseSelect<SUM_LONG_RET, COUNT_RET, SHORT_RET, INT_RET, LONG_RET, DOUBLE_RET, BIGDECIMAL_RET> {
 
 	
 	BaseShortSelect(QueryMetaModel queryMetaModel) {

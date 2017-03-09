@@ -23,7 +23,7 @@ public interface ISharedMapFunctions_Alias<
 		ISharedFunctions_All_Transform_Alias<MODEL, RESULT, RET, SHORT_RET, INT_RET, LONG_RET, DOUBLE_RET, BIGDECIMAL_RET, STRING_RET>,
 
 		// Aggregates as well 
-		ISharedFunctions_Aggregate_Alias<SUM_LONG_RET, COUNT_RET, SHORT_RET, INT_RET, LONG_RET, BIGDECIMAL_RET>
+		ISharedFunctions_Aggregate_Alias<SUM_LONG_RET, COUNT_RET, SHORT_RET, INT_RET, LONG_RET, DOUBLE_RET, BIGDECIMAL_RET>
 
 {
 

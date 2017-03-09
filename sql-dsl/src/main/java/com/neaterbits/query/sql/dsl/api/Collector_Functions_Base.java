@@ -43,7 +43,7 @@ abstract class Collector_Functions_Base<
 			NAMED_BIGDECIMAL_RET>,
 			
 		ISharedFunctions_String_Named<MODEL, RESULT, NAMED_RET, NAMED_STRING_RET>,
-		ISharedFunctions_Aggregate_Named<NAMED_SUM_LONG_RET, NAMED_COUNT_RET, NAMED_SHORT_RET, NAMED_INTEGER_RET, NAMED_LONG_RET, NAMED_BIGDECIMAL_RET>,
+		ISharedFunctions_Aggregate_Named<NAMED_SUM_LONG_RET, NAMED_COUNT_RET, NAMED_SHORT_RET, NAMED_INTEGER_RET, NAMED_LONG_RET, NAMED_DOUBLE_RET, NAMED_BIGDECIMAL_RET>,
 	
 		ISharedFunctions_Arithmetic_Alias<
 			MODEL, RESULT,
@@ -57,7 +57,7 @@ abstract class Collector_Functions_Base<
 			
 			
 		ISharedFunctions_String_Alias<MODEL, RESULT, ALIAS_RET, ALIAS_STRING_RET>,
-		ISharedFunctions_Aggregate_Alias<ALIAS_SUM_LONG_RET, ALIAS_COUNT_RET, ALIAS_SHORT_RET, ALIAS_INTEGER_RET, ALIAS_LONG_RET, ALIAS_BIGDECIMAL_RET>
+		ISharedFunctions_Aggregate_Alias<ALIAS_SUM_LONG_RET, ALIAS_COUNT_RET, ALIAS_SHORT_RET, ALIAS_INTEGER_RET, ALIAS_LONG_RET, ALIAS_DOUBLE_RET, ALIAS_BIGDECIMAL_RET>
 			
 {
 	
@@ -196,22 +196,22 @@ abstract class Collector_Functions_Base<
 	
 	// ********* Aggregate methods *********
 	@Override
-	public final <T> NAMED_SHORT_RET avg(IFunctionShort<T> field) {
+	public final <T> NAMED_DOUBLE_RET avg(IFunctionShort<T> field) {
 		return addAndReturnType(Function_Aggregate.AVG, field);
 	}
 
 	@Override
-	public final <T> NAMED_INTEGER_RET avg(IFunctionInteger<T> field) {
+	public final <T> NAMED_DOUBLE_RET avg(IFunctionInteger<T> field) {
 		return addAndReturnType(Function_Aggregate.AVG, field);
 	}
 
 	@Override
-	public final <T> NAMED_LONG_RET avg(IFunctionLong<T> field) {
+	public final <T> NAMED_DOUBLE_RET avg(IFunctionLong<T> field) {
 		return addAndReturnType(Function_Aggregate.AVG, field);
 	}
 
 	@Override
-	public final <T> NAMED_BIGDECIMAL_RET avg(IFunctionBigDecimal<T> field) {
+	public final <T> NAMED_DOUBLE_RET avg(IFunctionBigDecimal<T> field) {
 		return addAndReturnType(Function_Aggregate.AVG, field);
 	}
 
@@ -372,22 +372,22 @@ abstract class Collector_Functions_Base<
 
 	// ********* Aggregate methods *********
 	@Override
-	public final ALIAS_SHORT_RET avg(ISupplierShort field) {
+	public final ALIAS_DOUBLE_RET avg(ISupplierShort field) {
 		return addAndReturnType(Function_Aggregate.AVG, field);
 	}
 
 	@Override
-	public final ALIAS_INTEGER_RET avg(ISupplierInteger field) {
+	public final ALIAS_DOUBLE_RET avg(ISupplierInteger field) {
 		return addAndReturnType(Function_Aggregate.AVG, field);
 	}
 
 	@Override
-	public final ALIAS_LONG_RET avg(ISupplierLong field) {
+	public final ALIAS_DOUBLE_RET avg(ISupplierLong field) {
 		return addAndReturnType(Function_Aggregate.AVG, field);
 	}
 
 	@Override
-	public final ALIAS_BIGDECIMAL_RET avg(ISupplierBigDecimal field) {
+	public final ALIAS_DOUBLE_RET avg(ISupplierBigDecimal field) {
 		return addAndReturnType(Function_Aggregate.AVG, field);
 	}
 

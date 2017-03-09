@@ -16,12 +16,13 @@ abstract class BaseSelect<
 		SHORT_RET,
 		INT_RET,
 		LONG_RET,
+		DOUBLE_RET,
 		BIGDECIMAL_RET
 		>
 
 	extends BaseQuery
 
-	implements ISQL<SUM_LONG_RET, COUNT_RET, SHORT_RET, INT_RET, LONG_RET, BIGDECIMAL_RET> 
+	implements ISQL<SUM_LONG_RET, COUNT_RET, SHORT_RET, INT_RET, LONG_RET, DOUBLE_RET, BIGDECIMAL_RET> 
 	
 	{
 		
@@ -139,22 +140,22 @@ abstract class BaseSelect<
 	abstract <T, NUM, RESULT, RET> RET avg(Function<T, NUM> field, Class<NUM> numCl, Class<RESULT> resultCl);
 
 	@Override
-	public final <T> SHORT_RET avg(IFunctionShort<T> field) {
+	public final <T> DOUBLE_RET avg(IFunctionShort<T> field) {
 		return avg(field, Short.class, Short.class);
 	}
 
 	@Override
-	public final <T> INT_RET avg(IFunctionInteger<T> field) {
+	public final <T> DOUBLE_RET avg(IFunctionInteger<T> field) {
 		return avg(field, Integer.class, Integer.class);
 	}
 	
 	@Override
-	public final <T> LONG_RET avg(IFunctionLong<T> field) {
+	public final <T> DOUBLE_RET avg(IFunctionLong<T> field) {
 		return avg(field, Long.class, Long.class);
 	}
 
 	@Override
-	public final <T> BIGDECIMAL_RET avg(IFunctionBigDecimal<T> field) {
+	public final <T> DOUBLE_RET avg(IFunctionBigDecimal<T> field) {
 		return avg(field, BigDecimal.class, BigDecimal.class);
 	}
 

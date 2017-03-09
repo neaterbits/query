@@ -4,7 +4,7 @@ import java.math.BigDecimal;
 
 class CompanyAggregatesVO {
 	private String name;
-	private BigDecimal avgStockPrice;
+	private Double avgStockPrice;
 	private BigDecimal sumStockPrice;
 	
 	private Integer foo;
@@ -13,7 +13,7 @@ class CompanyAggregatesVO {
 		
 	}
 	
-	CompanyAggregatesVO(String name, BigDecimal avgStockPrice, BigDecimal sumStockPrice) {
+	CompanyAggregatesVO(String name, Double avgStockPrice, BigDecimal sumStockPrice) {
 		this.name = name;
 		this.avgStockPrice = avgStockPrice;
 		this.sumStockPrice = sumStockPrice;
@@ -35,11 +35,11 @@ class CompanyAggregatesVO {
 		this.name = name;
 	}
 
-	public BigDecimal getAvgStockPrice() {
+	public Double getAvgStockPrice() {
 		return avgStockPrice;
 	}
 
-	public void setAvgStockPrice(BigDecimal avgStockPrice) {
+	public void setAvgStockPrice(Double avgStockPrice) {
 		this.avgStockPrice = avgStockPrice;
 	}
 

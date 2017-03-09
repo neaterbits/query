@@ -9,6 +9,7 @@ public interface IShortPrepared extends ISQL<
 		IShortPrepared_Numeric_Named<Short>,
 		IShortPrepared_Numeric_Named<Integer>,
 		IShortPrepared_Numeric_Named<Long>,
+		IShortPrepared_Numeric_Named<Double>,
 		IShortPrepared_Numeric_Named<BigDecimal>
 		> {
 	
