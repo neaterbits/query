@@ -88,6 +88,12 @@ abstract class Collector_NestedFunctions_Named<
 		this.func = func;
 	}
 	
+	Collector_NestedFunctions_Named(Collector_NestedFunctions_Named<MODEL, RESULT, RET, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?> toCopy) {
+		super(toCopy);
+		
+		this.func = toCopy.func;
+	}
+	
 	@Override
 	final ISharedFunction_Next<MODEL, RESULT, RET> continueAfterNamedComparableFunctions(Expression expression) {
 		return func.onComparable(expression);
@@ -143,7 +149,7 @@ abstract class Collector_NestedFunctions_Named<
 	public final NO_PARAM_STRING_RET lower() {
 		addNoParam(Function_String_Lower.INSTANCE);
 		
-		return (NO_PARAM_STRING_RET)this;
+		return (NO_PARAM_STRING_RET)getNamedNoParamNext();
 	}
 
 	@Override
@@ -151,7 +157,7 @@ abstract class Collector_NestedFunctions_Named<
 	public final NO_PARAM_STRING_RET upper() {
 		addNoParam(Function_String_Upper.INSTANCE);
 
-		return (NO_PARAM_STRING_RET)this;
+		return (NO_PARAM_STRING_RET)getNamedNoParamNext();
 	}
 
 	@Override
@@ -159,7 +165,7 @@ abstract class Collector_NestedFunctions_Named<
 	public final NO_PARAM_STRING_RET trim() {
 		addNoParam(Function_String_Trim.INSTANCE);
 
-		return (NO_PARAM_STRING_RET)this;
+		return (NO_PARAM_STRING_RET)getNamedNoParamNext();
 	}
 
 	@Override
@@ -167,7 +173,7 @@ abstract class Collector_NestedFunctions_Named<
 	public final NO_PARAM_ARITHMETIC_SAME_TYPE_RET abs() {
 		addNoParam(Function_Arithmetic_Abs.INSTANCE);
 
-		return (NO_PARAM_ARITHMETIC_SAME_TYPE_RET)this;
+		return (NO_PARAM_ARITHMETIC_SAME_TYPE_RET)getNamedNoParamNext();
 	}
 
 	@Override
@@ -175,6 +181,6 @@ abstract class Collector_NestedFunctions_Named<
 	public final NO_PARAM_ARITHMETIC_DOUBLE_RET sqrt() {
 		addNoParam(Function_Arithmetic_Sqrt.INSTANCE);
 
-		return (NO_PARAM_ARITHMETIC_DOUBLE_RET)this;
+		return (NO_PARAM_ARITHMETIC_DOUBLE_RET)getNamedNoParamNext();
 	}
 }

@@ -62,6 +62,17 @@ abstract class Collector_NestedFunctions_Base<
 	private final List<FunctionExpression> functions;
 
 
+	// Overridable in case have to switch instance
+	@SuppressWarnings("unchecked")
+	ISharedFunction_Next<MODEL, RESULT, NAMED_RET> getNamedNoParamNext() {
+		return (ISharedFunction_Next<MODEL, RESULT, NAMED_RET>)this;
+	}
+	
+	@SuppressWarnings("unchecked")
+	ISharedFunction_Next<MODEL, RESULT, ALIAS_RET> getAliasNoParamNext() {
+		return (ISharedFunction_Next<MODEL, RESULT, ALIAS_RET>)this;
+	}
+	
 	/*
 	Collector_SharedFunctions_Base() {
 		this.functions = new ArrayList<>();
@@ -78,6 +89,11 @@ abstract class Collector_NestedFunctions_Base<
 				: new ArrayList<>();
 				*/
 	}
+	
+	Collector_NestedFunctions_Base(Collector_NestedFunctions_Base<MODEL, RESULT, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?> toCopy) {
+		this.functions = new ArrayList<>(toCopy.functions);
+	}
+
 	
 	final void addNoParam(FunctionBase function) {
 		if (function == null) {

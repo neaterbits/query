@@ -2,7 +2,6 @@ package com.neaterbits.query.sql.dsl.api;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.Function;
 
 final class SubExpressionUtil {
 
@@ -70,7 +69,7 @@ final class SubExpressionUtil {
 			}
 		};
 
-		final SubOperandsBuilder<MODEL, RESULT, R, ISharedSubOperand_End_Named<MODEL, RESULT, R>> ret = new SubOperandsBuilder<>(callback);
+		final SubOperandsBuilder_Initial<MODEL, RESULT, R, ISharedSubOperand_End_Named<MODEL, RESULT, R>> ret = new SubOperandsBuilder_Initial<>(callback);
 		
 		sub.apply(ret);
 		

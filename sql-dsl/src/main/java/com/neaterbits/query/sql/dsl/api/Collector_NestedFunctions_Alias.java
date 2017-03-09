@@ -131,21 +131,21 @@ abstract class Collector_NestedFunctions_Alias<
 	public final ISharedFunctions_String_Alias<MODEL, RESULT, RET, STRING_RET> lower() {
 		addNoParam(Function_String_Lower.INSTANCE);
 
-		return this;
+		return (ISharedFunctions_String_Alias<MODEL, RESULT, RET, STRING_RET>)getAliasNoParamNext();
 	}
 
 	@Override
 	public final ISharedFunctions_String_Alias<MODEL, RESULT, RET, STRING_RET> upper() {
 		addNoParam(Function_String_Upper.INSTANCE);
 
-		return this;
+		return (ISharedFunctions_String_Alias<MODEL, RESULT, RET, STRING_RET>)getAliasNoParamNext();
 	}
 
 	@Override
 	public final ISharedFunctions_Arithmetic_Alias<MODEL, RESULT, RET, SHORT_RET, INTEGER_RET, LONG_RET, DOUBLE_RET, BIGDECIMAL_RET> abs() {
 		addNoParam(Function_Arithmetic_Abs.INSTANCE);
 
-		return this;
+		return (ISharedFunctions_Arithmetic_Alias)getAliasNoParamNext();
 	}
 
 	/*
@@ -162,7 +162,7 @@ abstract class Collector_NestedFunctions_Alias<
 	public final ISharedFunctions_Arithmetic_Alias<MODEL, RESULT, RET, DOUBLE_RET, DOUBLE_RET, DOUBLE_RET, DOUBLE_RET, DOUBLE_RET> sqrt() {
 		addNoParam(Function_Arithmetic_Sqrt.INSTANCE);
 
-		return (ISharedFunctions_Arithmetic_Alias)this;
+		return (ISharedFunctions_Arithmetic_Alias)getAliasNoParamNext();
 	}
 	
 
@@ -170,6 +170,6 @@ abstract class Collector_NestedFunctions_Alias<
 	public final ISharedFunctions_String_Alias<MODEL, RESULT, RET, STRING_RET> trim() {
 		addNoParam(Function_String_Trim.INSTANCE);
 
-		return this;
+		return (ISharedFunctions_String_Alias<MODEL, RESULT, RET, STRING_RET>)getAliasNoParamNext();
 	}
 }
