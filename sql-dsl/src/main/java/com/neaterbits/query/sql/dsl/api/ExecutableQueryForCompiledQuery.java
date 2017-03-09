@@ -130,7 +130,7 @@ final class ExecutableQueryForCompiledQuery extends ExecutableQueryForCompiledBa
 	}
 	
 	@Override
-	public Expression getMappingExpression(CompiledQuery query, int mappingIdx) {
+	public CompiledExpression getMappingExpression(CompiledQuery query, int mappingIdx) {
 		return getMapping(query, mappingIdx).getExpression();
 	}
 

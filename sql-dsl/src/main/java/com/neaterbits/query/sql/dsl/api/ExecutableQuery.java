@@ -218,7 +218,7 @@ interface ExecutableQuery<QUERY> {
 
 	// TODO: perhaps should nest expression as well the same way as for conditions as to avoid construction of Expression instances in Adhoc queries?
 	// TODO: must use switch-case on type if so, but for now just return nested-expressions
-	Expression getMappingExpression(QUERY query, int mappingIdx);
+	CompiledExpression getMappingExpression(QUERY query, int mappingIdx);
 	
 	@Deprecated
 	CompiledFieldReference getMappingField(QUERY query, int mappingIdx);

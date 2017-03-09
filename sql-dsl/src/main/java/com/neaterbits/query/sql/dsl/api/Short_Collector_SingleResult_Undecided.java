@@ -295,11 +295,16 @@ final class Short_Collector_SingleResult_Undecided<MODEL, RESULT>
 			
 		final ISharedCollector_Functions_Callback_Alias<MODEL, RESULT, IShortResult_Mapped_Single_Alias<MODEL, RESULT>> aliasCallback
 			= MapFunctionUtil.singleAliasCallback(
-				() -> new Short_Collector_SingleResult_Decided_Alias<>(
-					select,
-					new CollectedQueryResult_Mapped_Single(getResultType()),
-					getModelCompiler()));
+				() -> {
+					
+					
+					return new Short_Collector_SingleResult_Decided_Alias<>(
+						select,
+						new CollectedQueryResult_Mapped_Single(getResultType()),
+						getModelCompiler());
 
-		return new Collector_ExpressionsFunctions_Initial<>(null/* namedCallback, aliasCallback */);
+				});
+
+		return new Collector_ExpressionsFunctions_Initial<>(namedCallback, aliasCallback);
 	}
 }

@@ -1,40 +1,22 @@
 package com.neaterbits.query.sql.dsl.api;
 
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 final class FunctionExpression extends Expression {
 
-	private final FunctionBase function;
-	private final List<Expression> parameters;
+	private final FunctionExpressionBase<Expression> function;
 	
 	FunctionExpression(FunctionBase function, List<Expression> parameters) {
-		if (function == null) {
-			throw new IllegalArgumentException("function == null");
-		}
-		
-		if (parameters == null) {
-			throw new IllegalArgumentException("parameters == null");
-		}
-
-		this.function = function;
-		this.parameters = parameters;
+		this.function = new FunctionExpressionBase<>(function, parameters);
 	}
 		
 	
 	FunctionExpression(FunctionBase function, Expression ... parameters) {
-		
-		if (function == null) {
-			throw new IllegalArgumentException("function == null");
-		}
-
-		this.function = function;
-		this.parameters = parameters.length == 0 ? Collections.emptyList() : Arrays.asList(parameters);
+		this.function = new FunctionExpressionBase<>(function, parameters);
 	}
 	
 	FunctionBase getFunction() {
-		return function;
+		return function.getFunction();
 	}
 
 
@@ -47,7 +29,7 @@ final class FunctionExpression extends Expression {
 	*/
 	
 	List<Expression> getParameters() {
-		return parameters;
+		return function.getParameters();
 	}
 
 	@Override

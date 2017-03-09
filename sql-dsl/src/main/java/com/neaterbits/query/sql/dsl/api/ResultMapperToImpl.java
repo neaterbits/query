@@ -4,7 +4,8 @@ import java.util.function.BiConsumer;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
-class ResultMapperToImpl<
+// TODO should be able to make this abstract
+/* abstract */ class ResultMapperToImpl<
 			MODEL,
 			RESULT,
 			R,

@@ -395,7 +395,7 @@ final class CompiledQuery {
 	/*
 	 * Compiling an expression is just switching any field expression for other 
 	 */
-	private static Expression compileExpression(Expression toCompile, SelectSourceLookup sources) throws CompileException {
+	private static CompiledExpression compileExpression(Expression toCompile, SelectSourceLookup sources) throws CompileException {
 		try {
 			return intCompileExpression(toCompile, sources);
 		}
@@ -410,9 +410,9 @@ final class CompiledQuery {
 		
 	}
 		
-	private static Expression intCompileExpression(Expression toCompile, SelectSourceLookup sources) {
+	private static CompiledExpression intCompileExpression(Expression toCompile, SelectSourceLookup sources) {
 		
-		final Expression expression = toCompile.visit(compileVisitor, sources);
+		final CompiledExpression expression = toCompile.visit(compileVisitor, sources);
 		
 		if (expression == null) {
 			throw new IllegalStateException("expression == null");
@@ -421,9 +421,9 @@ final class CompiledQuery {
 		return expression;
 	}
 
-	private static List<Expression> intCompileExpressions(List<Expression> toCompile, SelectSourceLookup sources) {
+	private static List<CompiledExpression> intCompileExpressions(List<Expression> toCompile, SelectSourceLookup sources) {
 		
-		final List<Expression> ret = new ArrayList<>(toCompile.size());
+		final List<CompiledExpression> ret = new ArrayList<>(toCompile.size());
 		
 		for (Expression expression : toCompile) {
 			ret.add(intCompileExpression(expression, sources));
@@ -432,33 +432,36 @@ final class CompiledQuery {
 		return ret;
 	}
 	
-	private static final ExpressionVisitor<SelectSourceLookup, Expression> compileVisitor = new ExpressionVisitor<SelectSourceLookup, Expression>() {
+	private static final ExpressionVisitor<SelectSourceLookup, CompiledExpression> compileVisitor = new ExpressionVisitor<SelectSourceLookup, CompiledExpression>() {
 		@Override
-		public Expression onNestedFunctionCalls(NestedFunctionCallsExpression nested, SelectSourceLookup param) {
-			return new NestedFunctionCallsExpression(nested.getFunctions(), (FieldExpression)intCompileExpression(nested.getField(), param));
+		public CompiledExpression onNestedFunctionCalls(NestedFunctionCallsExpression nested, SelectSourceLookup param) {
+			
+			final CompiledFieldExpression compiledField = (CompiledFieldExpression)intCompileExpression(nested.getField(), param);
+			
+			return new CompiledNestedFunctionCallsExpression(nested, compiledField.getFieldReference());
 		}
 		
 		@Override
-		public Expression onList(ExpressionList list, SelectSourceLookup param) {
+		public CompiledExpression onList(ExpressionList list, SelectSourceLookup param) {
 			
-			final List<Expression> compiled = new ArrayList<>(list.getExpressions().size());
+			final List<CompiledExpression> compiled = new ArrayList<>(list.getExpressions().size());
 			
 			for (Expression expression : list.getExpressions()) {
 				compiled.add(intCompileExpression(expression, param));
 			}
 
-			return new ExpressionList(compiled, new ArrayList<>(list.getOperators()));
+			return new CompiledExpressionList(compiled, new ArrayList<>(list.getOperators()));
 		}
 		
 		@Override
-		public Expression onFunction(FunctionExpression function, SelectSourceLookup param) {
-			final List<Expression> params = intCompileExpressions(function.getParameters(), param);
+		public CompiledExpression onFunction(FunctionExpression function, SelectSourceLookup param) {
+			final List<CompiledExpression> params = intCompileExpressions(function.getParameters(), param);
 			
-			return new FunctionExpression(function.getFunction(), params);
+			return new CompiledFunctionExpression(function.getFunction(), params);
 		}
 		
 		@Override
-		public Expression onField(FieldExpression field, SelectSourceLookup param) {
+		public CompiledExpression onField(FieldExpression field, SelectSourceLookup param) {
 			try {
 				final CompiledFieldReference fieldReference = param.makeFieldReference(null, field.getGetter());
 	
@@ -470,18 +473,8 @@ final class CompiledQuery {
 		}
 		
 		@Override
-		public Expression onValue(ValueExpression value, SelectSourceLookup param) {
-			return value;
-		}
-
-		@Override
-		public Expression onCompiledField(CompiledFieldExpression compiledField, SelectSourceLookup param) {
-			throw new UnsupportedOperationException("Already compiled");
-		}
-
-		@Override
-		public Expression onCompiledNestedFunctionCalls(CompiledNestedFunctionCallsExpression nested, SelectSourceLookup param) {
-			throw new UnsupportedOperationException("Already compiled");
+		public CompiledExpression onValue(ValueExpression value, SelectSourceLookup param) {
+			return new CompiledValueExpression(value.getValue());
 		}
 	};
 	

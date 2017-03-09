@@ -12,7 +12,6 @@ package com.neaterbits.query.sql.dsl.api;
  * @param <STRING_RET>
  */
 
-@Deprecated
 abstract class Collector_NestedFunctions_Named<
 
 				MODEL,
@@ -140,7 +139,7 @@ abstract class Collector_NestedFunctions_Named<
 	}
 
 	@Override
-	@SuppressWarnings({"unchecked", "rawtypes"})
+	@SuppressWarnings("unchecked")
 	public final NO_PARAM_STRING_RET lower() {
 		addNoParam(Function_String_Lower.INSTANCE);
 		
@@ -148,7 +147,7 @@ abstract class Collector_NestedFunctions_Named<
 	}
 
 	@Override
-	@SuppressWarnings({"unchecked", "rawtypes"})
+	@SuppressWarnings("unchecked")
 	public final NO_PARAM_STRING_RET upper() {
 		addNoParam(Function_String_Upper.INSTANCE);
 
@@ -156,7 +155,7 @@ abstract class Collector_NestedFunctions_Named<
 	}
 
 	@Override
-	@SuppressWarnings({"unchecked", "rawtypes"})
+	@SuppressWarnings("unchecked")
 	public final NO_PARAM_STRING_RET trim() {
 		addNoParam(Function_String_Trim.INSTANCE);
 
@@ -164,7 +163,7 @@ abstract class Collector_NestedFunctions_Named<
 	}
 
 	@Override
-	@SuppressWarnings({"unchecked", "rawtypes"})
+	@SuppressWarnings("unchecked")
 	public final NO_PARAM_ARITHMETIC_SAME_TYPE_RET abs() {
 		addNoParam(Function_Arithmetic_Abs.INSTANCE);
 
@@ -172,7 +171,7 @@ abstract class Collector_NestedFunctions_Named<
 	}
 
 	@Override
-	@SuppressWarnings({"unchecked", "rawtypes"})
+	@SuppressWarnings("unchecked")
 	public final NO_PARAM_ARITHMETIC_DOUBLE_RET sqrt() {
 		addNoParam(Function_Arithmetic_Sqrt.INSTANCE);
 

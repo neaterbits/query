@@ -1,10 +1,10 @@
 package com.neaterbits.query.sql.dsl.api;
 
-class ValueExpression extends Expression {
+final class CompiledValueExpression extends CompiledExpression {
 
 	private final Comparable<?> value;
 
-	ValueExpression(Comparable<?> value) {
+	CompiledValueExpression(Comparable<?> value) {
 		
 		if (value == null) {
 			throw new IllegalArgumentException("value == null");
@@ -12,13 +12,9 @@ class ValueExpression extends Expression {
 		
 		this.value = value;
 	}
-	
-	Comparable<?> getValue() {
-		return value;
-	}
 
 	@Override
-	<T, R> R visit(ExpressionVisitor<T, R> visitor, T param) {
+	<T, R> R visit(CompiledExpressionVisitor<T, R> visitor, T param) {
 		return visitor.onValue(this, param);
 	}
 }

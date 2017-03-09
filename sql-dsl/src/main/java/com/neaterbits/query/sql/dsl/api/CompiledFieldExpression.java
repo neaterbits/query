@@ -1,6 +1,6 @@
 package com.neaterbits.query.sql.dsl.api;
 
-final class CompiledFieldExpression extends Expression {
+final class CompiledFieldExpression extends CompiledExpression {
 
 	private final CompiledFieldReference fieldReference;
 	
@@ -20,7 +20,7 @@ final class CompiledFieldExpression extends Expression {
 	}
 
 	@Override
-	<T, R> R visit(ExpressionVisitor<T, R> visitor, T param) {
-		return visitor.onCompiledField(this, param);
+	<T, R> R visit(CompiledExpressionVisitor<T, R> visitor, T param) {
+		return visitor.onField(this, param);
 	}
 }

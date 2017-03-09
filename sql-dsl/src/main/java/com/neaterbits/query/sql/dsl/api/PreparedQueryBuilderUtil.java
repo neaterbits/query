@@ -10,6 +10,7 @@ class PreparedQueryBuilderUtil {
 
 		resolveFunction(dialect, funcs.get(0), 0, sb, appendNext);
 	}
+
 	
 	private static void resolveFunction(QueryDialect_SQL dialect, FunctionBase function, int idx, QueryBuilder sb, BiConsumer<Integer, QueryBuilder> appendNext) {
 		
@@ -23,6 +24,12 @@ class PreparedQueryBuilderUtil {
 		sb.append(')');
 	}
 
+	static void resolveOneFunction(QueryDialect_SQL dialect, FunctionBase function, FieldReference field, QueryBuilder sb) {
+		
+		resolveFunction(dialect, function, 0, sb, (idx, s) -> dialect.appendFieldReference(s, field));
+		
+	}
+	
 	private static class AppendNextFunction implements BiConsumer<Integer, QueryBuilder> {
 
 		private final List<? extends FunctionBase> funcs;

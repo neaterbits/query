@@ -4,29 +4,18 @@ import java.util.List;
 
 final class ExpressionList extends Expression {
 
-	private final List<Expression> expressions;
-	private final List<ArithmeticOperator> operators;
+	private final ExpressionListBase<Expression> list;
 	
 	ExpressionList(List<Expression> expressions, List<ArithmeticOperator> operators) {
-
-		if (expressions.size() < 2) {
-			throw new IllegalArgumentException("Expression list with only 1 item");
-		}
-		
-		if (operators.size() != expressions.size() - 1) {
-			throw new IllegalArgumentException("Expected one less operator than expression");
-		}
-		
-		this.expressions = expressions;
-		this.operators = operators;
+		this.list = new ExpressionListBase<>(expressions, operators);
 	}
-	
+
 	List<Expression> getExpressions() {
-		return expressions;
+		return list.getExpressions();
 	}
 
 	List<ArithmeticOperator> getOperators() {
-		return operators;
+		return list.getOperators();
 	}
 
 	@Override

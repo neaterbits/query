@@ -1,7 +1,6 @@
 package com.neaterbits.query.sql.dsl.api;
 
 
-@Deprecated
 abstract class Collector_NestedFunctions_Alias<
 		MODEL,
 		RESULT,

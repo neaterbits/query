@@ -1,5 +1,6 @@
 package com.neaterbits.query.sql.dsl.api;
 
+import org.apache.tools.ant.SubBuildListener;
 
 final class Collector_ExpressionsFunctions_Initial<
 		MODEL,
@@ -131,46 +132,49 @@ final class Collector_ExpressionsFunctions_Initial<
 			
 	private Collector_MapFunctions_Alias<MODEL, RESULT, ALIAS_RET, ALIAS_SUM_LONG_RET, ALIAS_COUNT_RET, ALIAS_SHORT_RET, ALIAS_INT_RET, ALIAS_LONG_RET, ALIAS_DOUBLE_RET, ALIAS_BIGDECIMAL_RET, ALIAS_STRING_RET> alias_do_not_call_directly;
 
+    */
     
     private final ISharedCollector_Functions_Callback_Named<MODEL, RESULT, NAMED_RET> namedCallback;
     private final ISharedCollector_Functions_Callback_Alias<MODEL, RESULT, ALIAS_RET> aliasCallback;
-    */
     
     
-    private final IMappingCollector<MODEL, RESULT> impl;
+    //private final IMappingCollector<MODEL, RESULT> impl;
+			
     
-    
-    Collector_ExpressionsFunctions_Initial( /*
+    Collector_ExpressionsFunctions_Initial(
 			ISharedCollector_Functions_Callback_Named<MODEL, RESULT, NAMED_RET> namedCallback,
-			ISharedCollector_Functions_Callback_Alias<MODEL, RESULT, ALIAS_RET> aliasCallback,*/
-			IMappingCollector<MODEL, RESULT> impl
+			ISharedCollector_Functions_Callback_Alias<MODEL, RESULT, ALIAS_RET> aliasCallback
+			/* IMappingCollector<MODEL, RESULT> impl */
 			) {
 
     	//super(null);
-    	
+    
+    	/*
     	if (impl == null) {
     		throw new IllegalArgumentException("impl == null");
     	}
-    	/*
+    	*/
     	
     	this.namedCallback = namedCallback;
 		this.aliasCallback = aliasCallback;
-		*/
 
-		this.impl = impl;
+		//this.impl = impl;
 	}
 	
 	@Override
 	ISharedFunction_Next<MODEL, RESULT, NAMED_RET> continueAfterNamedComparableFunctions(Expression expression) {
-		throw new UnsupportedOperationException("TODO");
+		return namedCallback.onComparable(expression);
 	}
 
 	@Override
 	ISharedFunction_Next<MODEL, RESULT, NAMED_RET> continueAfterNamedStringFunctions(Expression expression) {
-		throw new UnsupportedOperationException("TODO");
+		return namedCallback.onString(expression);
 	}
 
-    
+	@Override
+	ISharedFunction_Next<MODEL, RESULT, ALIAS_RET> continueAfterAliasFunctions(Expression expression) {
+		throw new UnsupportedOperationException("TODO");
+	}    
     
 
 
@@ -771,10 +775,4 @@ final class Collector_ExpressionsFunctions_Initial<
 
 		return (ISharedNumericFunctions_Initial)this;
 	}
-
-	@Override
-	ISharedFunction_Next<MODEL, RESULT, ALIAS_RET> continueAfterAliasFunctions(Expression expression) {
-		throw new UnsupportedOperationException("TODO");
-	}
-				
 }

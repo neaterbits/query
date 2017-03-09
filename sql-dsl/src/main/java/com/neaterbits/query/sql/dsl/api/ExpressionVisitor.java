@@ -11,8 +11,4 @@ public interface ExpressionVisitor<T, R> {
 	R onFunction(FunctionExpression function, T param);
 
 	R onNestedFunctionCalls(NestedFunctionCallsExpression nested, T param);
-	
-	R onCompiledField(CompiledFieldExpression compiledField, T param);
-
-	R onCompiledNestedFunctionCalls(CompiledNestedFunctionCallsExpression nested, T param);
 }

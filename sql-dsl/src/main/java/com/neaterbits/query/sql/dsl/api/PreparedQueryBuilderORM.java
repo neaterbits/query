@@ -134,7 +134,7 @@ final class PreparedQueryBuilderORM<MANAGED, EMBEDDED, IDENTIFIABLE, ATTRIBUTE, 
 			}
 			
 			//final CompiledFieldReference field = q.getMappingField(query, mappingIdx);
-			final Expression expression = q.getMappingExpression(query, mappingIdx);
+			final CompiledExpression expression = q.getMappingExpression(query, mappingIdx);
 			
 			outputExpressions(q, query, expression);
 			
@@ -161,38 +161,31 @@ final class PreparedQueryBuilderORM<MANAGED, EMBEDDED, IDENTIFIABLE, ATTRIBUTE, 
 		//dialect.addMappings(s, refs);
 	}
 	
-	private <QUERY> void outputExpressions(ExecutableQuery<QUERY> q, QUERY query, Expression expression) {
-		final ExpressionVisitor<Void, Void> expressionOutputVisitor = new ExpressionVisitor<Void, Void>() {
+	private <QUERY> void outputExpressions(ExecutableQuery<QUERY> q, QUERY query, CompiledExpression expression) {
+		final CompiledExpressionVisitor<Void, Void> expressionOutputVisitor = new CompiledExpressionVisitor<Void, Void>() {
 			
 			@Override
-			public Void onNestedFunctionCalls(NestedFunctionCallsExpression nested, Void param) {
-				throw new UnsupportedOperationException("Should have been compiled");
-			}
-			
-			@Override
-			public Void onList(ExpressionList list, Void param) {
+			public Void onList(CompiledExpressionList list, Void param) {
 				throw new UnsupportedOperationException("TODO");
 			}
 			
 			@Override
-			public Void onFunction(FunctionExpression function, Void param) {
-				throw new UnsupportedOperationException("TODO");
+			public Void onFunction(CompiledFunctionExpression function, Void param) {
+				
+				final FieldReference fieldReference = prepareFieldReference(q, query, function.getField());
+				
+				PreparedQueryBuilderUtil.resolveOneFunction(dialect, function.getFunction(), fieldReference, s);
+				
+				return null;
 			}
 			
 			@Override
-			public Void onValue(ValueExpression value, Void param) {
+			public Void onValue(CompiledValueExpression value, Void param) {
 				throw new UnsupportedOperationException("TODO");
 			}
 
 			@Override
-			public Void onField(FieldExpression field, Void param) {
-				throw new UnsupportedOperationException("Should have been compiled");
-			}
-
-			
-			
-			@Override
-			public Void onCompiledNestedFunctionCalls(CompiledNestedFunctionCallsExpression nested, Void param) {
+			public Void onNestedFunctionCalls(CompiledNestedFunctionCallsExpression nested, Void param) {
 				final FieldReference ref = prepareFieldReference(q, query, nested.getField());
 				
 				final List<FunctionBase> functions = Coll8.remap(nested.getFunctions(), e -> e.getFunction());
@@ -204,7 +197,7 @@ final class PreparedQueryBuilderORM<MANAGED, EMBEDDED, IDENTIFIABLE, ATTRIBUTE, 
 			}
 
 			@Override
-			public Void onCompiledField(CompiledFieldExpression compiledField, Void param) {
+			public Void onField(CompiledFieldExpression compiledField, Void param) {
 				
 				dialect.appendFieldReference(s, prepareFieldReference(q, query, compiledField.getFieldReference()));
 				

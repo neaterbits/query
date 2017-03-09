@@ -2,7 +2,7 @@ package com.neaterbits.query.sql.dsl.api;
 
 final class CompiledMapping {
 
-	private final Expression expression;
+	private final CompiledExpression expression;
 	
 	@Deprecated
 	private final CompiledFieldReference field;
@@ -11,7 +11,7 @@ final class CompiledMapping {
 	private final CollectedFunctions functions;
 
 	
-	CompiledMapping(Expression expression, CompiledSetter setter) {
+	CompiledMapping(CompiledExpression expression, CompiledSetter setter) {
 		
 		if (expression == null) {
 			throw new IllegalArgumentException("expression == null");
@@ -52,7 +52,7 @@ final class CompiledMapping {
 		setter.execute(instance, value);
 	}
 
-	Expression getExpression() {
+	CompiledExpression getExpression() {
 		return expression;
 	}
 

@@ -2,11 +2,14 @@ package com.neaterbits.query.sql.dsl.api;
 
 import java.util.function.Supplier;
 
+@Deprecated
 class MapFunctionUtil {
 
 	private static <MODEL, RESULT, R, IF extends ISharedSelectSourceBuilder<MODEL, RESULT>, DECIDED extends IMappingCollector<MODEL, RESULT>>
 	
-		ResultMapperToImpl<MODEL, RESULT, R, IF> named(Expression expression, Supplier<DECIDED> supplier) {
+		// ResultMapperToImpl<MODEL, RESULT, R, IF>
+	
+		IMappingCollector<MODEL, RESULT> named(Expression expression, Supplier<DECIDED> supplier) {
 		
 		final DECIDED impl = supplier.get();
 	
@@ -14,7 +17,8 @@ class MapFunctionUtil {
 		
 		// Named, switch
 		
-		return new ResultMapperToImpl<MODEL, RESULT, R, IF>(expression, mappingCollector);
+		return mappingCollector;
+		
 	}
 
 	private static <MODEL, RESULT, R, IF extends ISharedSelectSourceBuilder<MODEL, RESULT>, DECIDED extends IMappingCollector<MODEL, RESULT>>
@@ -39,13 +43,18 @@ class MapFunctionUtil {
 			public ISharedFunction_Next<MODEL, RESULT, IF>
 						onComparable(Expression expression) {
 		
-				return named(expression, supplier);
+				final IMappingCollector<MODEL, RESULT> impl = named(expression, supplier);
+				
+				return new ResultMapperOps_Numeric<>(expression, impl);
+
 			}
 		
 			@Override
 			public ISharedFunction_Next<MODEL, RESULT, IF> onString(Expression expression) {
 		
-				return named(expression, supplier);
+				final IMappingCollector<MODEL, RESULT> impl =  named(expression, supplier);
+				
+				return new ResultMapperOps_String<>(expression, impl);
 			}
 		};
 	}

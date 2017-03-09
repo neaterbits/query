@@ -2,7 +2,7 @@ package com.neaterbits.query.sql.dsl.api;
 
 import java.util.List;
 
-final class CompiledNestedFunctionCallsExpression extends Expression {
+final class CompiledNestedFunctionCallsExpression extends CompiledExpression {
 
 	private final NestedFunctionCallsExpression original;
 	private final CompiledFieldReference field;
@@ -30,7 +30,7 @@ final class CompiledNestedFunctionCallsExpression extends Expression {
 	}
 
 	@Override
-	<T, R> R visit(ExpressionVisitor<T, R> visitor, T param) {
-		return visitor.onCompiledNestedFunctionCalls(this, param);
+	<T, R> R visit(CompiledExpressionVisitor<T, R> visitor, T param) {
+		return visitor.onNestedFunctionCalls(this, param);
 	}
 }
