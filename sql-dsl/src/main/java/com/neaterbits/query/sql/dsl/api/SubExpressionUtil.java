@@ -6,9 +6,9 @@ import java.util.List;
 
 final class SubExpressionUtil {
 
-	static <MODEL, RESULT, R extends Comparable<R>, CLAUSE> Expression addSubNumericForFunction(Function_Arithmetic function, ISharedSubOperandsFunction_Named<MODEL, RESULT, R> sub /*, Collector_NestedFunctions_Base<MODEL, RESULT> last */) {
+	static <MODEL, RESULT, R extends Comparable<R>, CLAUSE> FunctionExpression addSubNumericForFunction(Function_Arithmetic function, ISharedSubOperandsFunction_Named<MODEL, RESULT, R> sub /*, Collector_NestedFunctions_Base<MODEL, RESULT> last */) {
 		
-		final Expression expression = collectSubFunction(function, sub, true); // , last);
+		final FunctionExpression expression = collectSubFunction(function, sub, true); // , last);
 
 		return expression;
 	}
@@ -91,7 +91,7 @@ final class SubExpressionUtil {
 	}
 	
 	
-	private static <MODEL, RESULT, R extends Comparable<R>> Expression collectSubFunction(FunctionBase function, ISharedSubOperandsFunction_Named<MODEL, RESULT, R> sub, boolean numeric /*, Collector_NestedFunctions_Base<MODEL, RESULT> last */) {
+	private static <MODEL, RESULT, R extends Comparable<R>> FunctionExpression collectSubFunction(FunctionBase function, ISharedSubOperandsFunction_Named<MODEL, RESULT, R> sub, boolean numeric /*, Collector_NestedFunctions_Base<MODEL, RESULT> last */) {
 		
 		if (function == null) {
 			throw new IllegalArgumentException("function == null");

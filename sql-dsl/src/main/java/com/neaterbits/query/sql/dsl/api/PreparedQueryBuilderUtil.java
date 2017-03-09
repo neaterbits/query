@@ -17,7 +17,7 @@ class PreparedQueryBuilderUtil {
 		resolveFunction(dialect, function, 0, sb, (index, s) -> appendParams.accept(s)); 
 	}
 	
-	private static void resolveFunction(QueryDialect_SQL dialect, FunctionBase function, int idx, QueryBuilder sb, BiConsumer<Integer, QueryBuilder> appendNext) {
+	static void resolveFunction(QueryDialect_SQL dialect, FunctionBase function, int idx, QueryBuilder sb, BiConsumer<Integer, QueryBuilder> appendNext) {
 		
 		final String functionName = dialect.getFunctionName(function);
 		

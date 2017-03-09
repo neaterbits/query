@@ -421,7 +421,7 @@ final class CompiledQuery {
 		return expression;
 	}
 
-	private static List<CompiledExpression> intCompileExpressions(List<Expression> toCompile, SelectSourceLookup sources) {
+	private static List<CompiledExpression> intCompileExpressions(List<? extends Expression> toCompile, SelectSourceLookup sources) {
 		
 		final List<CompiledExpression> ret = new ArrayList<>(toCompile.size());
 		
@@ -436,9 +436,24 @@ final class CompiledQuery {
 		@Override
 		public CompiledExpression onNestedFunctionCalls(NestedFunctionCallsExpression nested, SelectSourceLookup param) {
 			
-			final CompiledFieldExpression compiledField = (CompiledFieldExpression)intCompileExpression(nested.getField(), param);
+			if (nested.getField() != null) {
+				throw new IllegalStateException("should be null");
+			}
 			
-			return new CompiledNestedFunctionCallsExpression(nested, compiledField.getFieldReference());
+			final List<FunctionExpression> collectedFunctions = nested.getFunctions().getFunctions();
+			
+			final List<CompiledFunctionExpression> compiledFunctions = new ArrayList<>(collectedFunctions.size());
+			
+			//final CompiledFieldExpression compiledField = (CompiledFieldExpression)intCompileExpression(nested.getField(), param);
+
+			for (FunctionExpression collected : collectedFunctions) {
+				final CompiledFunctionExpression compiled = (CompiledFunctionExpression)intCompileExpression(collected, param);
+				
+				compiledFunctions.add(compiled);
+			}
+			
+			
+			return new CompiledNestedFunctionCallsExpression(compiledFunctions);
 		}
 		
 		@Override

@@ -588,6 +588,8 @@ final class Collector_ExpressionsFunctions_Initial<
 				NO_PARAM_ALIAS_SUM_LONG_RET, NO_PARAM_ALIAS_COUNT_RET,
 				NO_PARAM_ALIAS_SHORT_RET, NO_PARAM_ALIAS_INT_RET, NO_PARAM_ALIAS_LONG_RET, NO_PARAM_ALIAS_DOUBLE_RET, NO_PARAM_ALIAS_BIGDECIMAL_RET
 				> abs() {
+					
+					
 		addNoParam(Function_Arithmetic_Abs.INSTANCE);
 		
 		return (ISharedNumericFunctions_Initial)this;

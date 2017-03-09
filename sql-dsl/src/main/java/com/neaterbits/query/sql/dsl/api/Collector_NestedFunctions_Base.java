@@ -103,13 +103,25 @@ abstract class Collector_NestedFunctions_Base<
 		functions.add(new FunctionExpression(function));
 	}
 	
-	final CollectedFunctions collect() {
-		return new CollectedFunctions(functions);
-	}
-
-	
 
 	/*********************** Named ***********************/
+	
+	Expression collectExpression() {
+		final Expression ret;
+
+		if (functions.isEmpty()) {
+			throw new IllegalStateException("No functions");
+		}
+		else if (functions.size() == 1) {
+			throw new IllegalStateException("Should not collect when only 1 function");
+		}
+		else {
+			ret = new NestedFunctionCallsExpression(new CollectedFunctions(functions));
+		}
+
+		return ret;
+	}
+	
 
 	private Expression createFunctionExpression(FunctionBase function, FieldExpression field) {
 		final Expression expression;
@@ -120,10 +132,16 @@ abstract class Collector_NestedFunctions_Base<
 		}
 		else {
 			// nested functions
+
+			// Add function that is passed field
+			functions.add(new FunctionExpression(function, field));
 			
-			addNoParam(function);
+			// addNoParam(function);
+
 			
-			expression = new NestedFunctionCallsExpression(collect(), field);
+			final CollectedFunctions collected = new CollectedFunctions(functions);
+			
+			expression = new NestedFunctionCallsExpression(collected);
 		}
 
 		return expression;
@@ -170,10 +188,14 @@ abstract class Collector_NestedFunctions_Base<
 	final <R extends Comparable<R>, CLAUSE> CLAUSE addSubNumeric(Function_Arithmetic function, ISharedSubOperandsFunction_Named<MODEL, RESULT, R> sub) {
 		
 		// Must build sub-functions with parameters
-		final Expression expression = SubExpressionUtil.addSubNumericForFunction(function, sub);
+		final FunctionExpression expression = SubExpressionUtil.addSubNumericForFunction(function, sub);
+		
+		// Add to list
+		
+		functions.add(expression);
 
-		// Add expression to
-		return (CLAUSE)continueAfterNamedComparableFunctions(expression);
+		// Return same instance since we can collect more
+		return (CLAUSE)this;
 	}
 
 	@Override

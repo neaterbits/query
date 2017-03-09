@@ -9,14 +9,17 @@ final class NestedFunctionCallsExpression extends Expression {
 	private final CollectedFunctions functions;
 	private final FieldExpression field;
 
+	@Deprecated
 	NestedFunctionCallsExpression(CollectedFunctions functions, Function<?, ?> getter) {
 		this(functions, new FieldExpression(getter));
 	}
 	
+	@Deprecated
 	NestedFunctionCallsExpression(CollectedFunctions functions, Supplier<?> getter) {
 		this(functions, new FieldExpression(getter));
 	}
 	
+	@Deprecated
 	NestedFunctionCallsExpression(CollectedFunctions functions, FieldExpression field) {
 
 		if (functions == null) {
@@ -27,10 +30,16 @@ final class NestedFunctionCallsExpression extends Expression {
 		this.field = field;
 	}
 
+	NestedFunctionCallsExpression(CollectedFunctions functions) {
+		this.functions = functions;
+		this.field = null;
+	}
+	
 	CollectedFunctions getFunctions() {
 		return functions;
 	}
 	
+	@Deprecated
 	FieldExpression getField() {
 		return field;
 	}
