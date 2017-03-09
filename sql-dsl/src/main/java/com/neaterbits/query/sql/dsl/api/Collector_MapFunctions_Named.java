@@ -1,8 +1,5 @@
 package com.neaterbits.query.sql.dsl.api;
 
-import java.util.function.Function;
-import java.util.function.Supplier;
-
 final class Collector_MapFunctions_Named<
 
 			MODEL,
@@ -88,7 +85,9 @@ final class Collector_MapFunctions_Named<
 			
 		implements ISharedMapFunctions_Named<MODEL, RESULT, RET,
 			SUM_LONG_RET, COUNT_RET, SHORT_RET, INT_RET, LONG_RET, DOUBLE_RET, BIGDECIMAL_RET, STRING_RET,
-			NO_PARAM_SUM_LONG_RET, NO_PARAM_COUNT_RET, NO_PARAM_SHORT_RET, NO_PARAM_INT_RET, NO_PARAM_LONG_RET, NO_PARAM_DOUBLE_RET, NO_PARAM_BIGDECIMAL_RET, NO_PARAM_STRING_RET> 
+			NO_PARAM_SUM_LONG_RET, NO_PARAM_COUNT_RET, NO_PARAM_SHORT_RET, NO_PARAM_INT_RET, NO_PARAM_LONG_RET, NO_PARAM_DOUBLE_RET, NO_PARAM_BIGDECIMAL_RET, NO_PARAM_STRING_RET>,
+		
+		    ISharedFunction_Next<MODEL, RESULT, RET>
 			
 			{
 

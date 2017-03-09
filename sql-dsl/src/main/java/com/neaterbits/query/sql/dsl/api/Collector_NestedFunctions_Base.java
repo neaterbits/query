@@ -166,8 +166,14 @@ abstract class Collector_NestedFunctions_Base<
 	}
 
 	@Override
+	@SuppressWarnings("unchecked")
 	final <R extends Comparable<R>, CLAUSE> CLAUSE addSubNumeric(Function_Arithmetic function, ISharedSubOperandsFunction_Named<MODEL, RESULT, R> sub) {
-		throw new UnsupportedOperationException("TODO");
+		
+		// Must build sub-functions with parameters
+		final Expression expression = SubExpressionUtil.addSubNumericForFunction(function, sub);
+
+		// Add expression to
+		return (CLAUSE)continueAfterNamedComparableFunctions(expression);
 	}
 
 	@Override

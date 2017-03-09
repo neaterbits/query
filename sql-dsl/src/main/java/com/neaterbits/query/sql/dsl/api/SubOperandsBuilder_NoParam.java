@@ -33,7 +33,8 @@ final class SubOperandsBuilder_NoParam<
 		ISharedFunction_Next<MODEL, RESULT, AFTER>
 	>
 
-	implements ISharedSubOperandsBuilder_NoParam_End_Named<MODEL, RESULT, R, AFTER> {
+	implements ISharedSubOperandsBuilder_NoParam_End_Named<MODEL, RESULT, R, AFTER>,
+			   ISharedSubOperandsBuilder_NoParam_Named<MODEL, RESULT, R, AFTER> {
 
 	SubOperandsBuilder_NoParam(SubOperandsBuilder_Initial<MODEL, RESULT, R, AFTER> toCopy) {
 		super(toCopy);

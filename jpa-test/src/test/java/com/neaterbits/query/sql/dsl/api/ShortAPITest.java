@@ -181,7 +181,10 @@ public class ShortAPITest extends BaseSQLAPITest implements SumTest {
 				
 				.map().sqrt(Company::getStockPrice).plus(Company::getStockPrice).plus(Company::getStockPrice).to(CompanySqrtAggregatesVO::setSqrtAvgStockPrice)
 				
-				.map().sqrt().abs(Company::getStockPrice) . to(CompanySqrtAggregatesVO::setSqrtAvgStockPrice)
+				.map()
+						.sqrt()
+						.abs(Company::getStockPrice) 
+					. to(CompanySqrtAggregatesVO::setSqrtAvgStockPrice)
 				
 				.map(Company::getStockPrice)
 						.plusOf(e -> e
@@ -405,7 +408,13 @@ public class ShortAPITest extends BaseSQLAPITest implements SumTest {
 				.one(CompanyResultVO.class)
 				
 				.map(Company::getStockPrice).to(CompanyResultVO::setStockPrice)
-				.map().abs().absOfDecimal(e -> e.abs(Company::getStockPrice)).to(CompanyResultVO::setStockPrice)
+				.map()
+						.abs()
+						.absOfDecimal(
+								e -> e.abs(Company::getStockPrice))
+					
+					.to(CompanyResultVO::setStockPrice)
+					
 				//.mapOf(e -> e.abs(c::getStockPrice)).to(CompanyAggregatesVO::setAvgStockPrice)
 				
 				.build()

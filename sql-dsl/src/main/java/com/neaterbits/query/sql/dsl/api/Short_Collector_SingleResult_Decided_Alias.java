@@ -1,8 +1,14 @@
 package com.neaterbits.query.sql.dsl.api;
 
+import java.math.BigDecimal;
+
 final class Short_Collector_SingleResult_Decided_Alias<MODEL, RESULT> 
-	extends Short_Collector_SingleResult_Decided<MODEL, RESULT, ISharedProcessResult_After_GroupBy_Alias<MODEL, RESULT>> 
-{
+	
+		extends Short_Collector_SingleResult_Decided<MODEL, RESULT, ISharedProcessResult_After_GroupBy_Alias<MODEL, RESULT>>
+		implements 
+				IShortResult_Mapped_Single_Alias<MODEL, RESULT>,
+				// when returned 'this' after where
+				ISQLLogical_AndOr_SingleResult_Alias<MODEL, RESULT> {
 
 	Short_Collector_SingleResult_Decided_Alias(BaseShortSelect select, CollectedQueryResult_Mapped_Single result, ModelCompiler<MODEL> modelCompiler) {
 		super(select, result, modelCompiler);
@@ -28,5 +34,10 @@ final class Short_Collector_SingleResult_Decided_Alias<MODEL, RESULT>
 			Collector_Conditions_GroupBy<MODEL, RESULT, ?> collectorConditions) {
 
 		return new Collector_GroupBy_Alias<>(last, groupByColumns, collectorConditions);
+	}
+
+	@Override
+	public ISharedMapFunctions_Alias<MODEL, RESULT, IShortResult_Mapped_Single_Alias<MODEL, RESULT>, ISharedResultMapperTo<MODEL, RESULT, Long, IShortResult_Mapped_Single_Alias<MODEL, RESULT>>, ISharedResultMapperTo<MODEL, RESULT, Long, IShortResult_Mapped_Single_Alias<MODEL, RESULT>>, ISharedResultMapperTo<MODEL, RESULT, Short, IShortResult_Mapped_Single_Alias<MODEL, RESULT>>, ISharedResultMapperTo<MODEL, RESULT, Integer, IShortResult_Mapped_Single_Alias<MODEL, RESULT>>, ISharedResultMapperTo<MODEL, RESULT, Long, IShortResult_Mapped_Single_Alias<MODEL, RESULT>>, ISharedResultMapperTo<MODEL, RESULT, Double, IShortResult_Mapped_Single_Alias<MODEL, RESULT>>, ISharedResultMapperTo<MODEL, RESULT, BigDecimal, IShortResult_Mapped_Single_Alias<MODEL, RESULT>>, ISharedResultMapperTo<MODEL, RESULT, String, IShortResult_Mapped_Single_Alias<MODEL, RESULT>>> map() {
+		throw new UnsupportedOperationException("TODO");
 	}
 }
