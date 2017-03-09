@@ -21,7 +21,7 @@ import com.neaterbits.query.sql.dsl.api.entity.QueryMetaModel;
 
 
 
-public class ShortAPITest extends BaseSQLAPITest implements SumTest {
+public class ShortAPITest extends BaseSQLAPITest {
 	
 	private static final String persistenceUnitName = "query-jpa-test";
 	
