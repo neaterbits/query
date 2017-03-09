@@ -106,7 +106,7 @@ abstract class Collector_NestedFunctions_Base<
 
 	/*********************** Named ***********************/
 	
-	Expression collectExpression() {
+	private Expression collectExpression() {
 		final Expression ret;
 
 		if (functions.isEmpty()) {
@@ -190,12 +190,11 @@ abstract class Collector_NestedFunctions_Base<
 		// Must build sub-functions with parameters
 		final FunctionExpression expression = SubExpressionUtil.addSubNumericForFunction(function, sub);
 		
-		// Add to list
-		
 		functions.add(expression);
+		
+		final Expression collected = collectExpression();
 
-		// Return same instance since we can collect more
-		return (CLAUSE)this;
+		return (CLAUSE)continueAfterNamedComparableFunctions(collected);
 	}
 
 	@Override
