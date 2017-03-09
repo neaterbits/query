@@ -23,13 +23,7 @@ final class FunctionExpressionBase<T> {
 		
 	
 	FunctionExpressionBase(FunctionBase function, T ... parameters) {
-		
-		if (function == null) {
-			throw new IllegalArgumentException("function == null");
-		}
-
-		this.function = function;
-		this.parameters = parameters.length == 0 ? Collections.emptyList() : Arrays.asList(parameters);
+		this(function, parameters.length == 0 ? Collections.emptyList() : Arrays.asList(parameters));
 	}
 	
 	FunctionBase getFunction() {

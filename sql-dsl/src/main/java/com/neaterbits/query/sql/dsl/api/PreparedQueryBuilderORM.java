@@ -166,15 +166,53 @@ final class PreparedQueryBuilderORM<MANAGED, EMBEDDED, IDENTIFIABLE, ATTRIBUTE, 
 			
 			@Override
 			public Void onList(CompiledExpressionList list, Void param) {
-				throw new UnsupportedOperationException("TODO");
+				s.append('(');
+
+				final int num = list.getExpressions().size();
+
+				for (int i = 0; i < num; ++ i) {
+
+					if (i > 0) {
+						final char opChar;
+
+						final ArithmeticOperator operator = list.getOperators().get(i - 1);
+						
+						switch (operator) {
+						case PLUS: 		opChar = '+'; break;
+						case MINUS: 	opChar = '-'; break;
+						case MULTIPLY: 	opChar = '*'; break;
+						case DIVIDE: 	opChar = '/'; break;
+						
+						default:
+							throw new UnsupportedOperationException("Unknown arithmetic operator " + operator);
+						}
+						
+						s.sb.append(' ').append(opChar).append(' ');
+					}
+					
+
+					final CompiledExpression expression = list.getExpressions().get(i);
+					
+					outputExpressions(q, query, expression);
+				}
+
+				s.append(')');
+
+				return null;
 			}
 			
 			@Override
 			public Void onFunction(CompiledFunctionExpression function, Void param) {
 				
-				final FieldReference fieldReference = prepareFieldReference(q, query, function.getField());
 				
-				PreparedQueryBuilderUtil.resolveOneFunction(dialect, function.getFunction(), fieldReference, s);
+				//final FieldReference fieldReference = prepareFieldReference(q, query, function.getField());
+				
+				PreparedQueryBuilderUtil.resolveFunction(dialect, function.getFunction(), s, (QueryBuilder sb) -> {
+					
+					QueryStringUtil.commaSeparated(sb, function.getParameters(), (ps, e) -> outputExpressions(q, query, e));
+					
+				});
+				
 				
 				return null;
 			}

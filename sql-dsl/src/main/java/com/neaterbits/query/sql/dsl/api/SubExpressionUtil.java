@@ -1,6 +1,7 @@
 package com.neaterbits.query.sql.dsl.api;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 final class SubExpressionUtil {
@@ -27,7 +28,7 @@ final class SubExpressionUtil {
 	}
 
 	
-	private static <MODEL, RESULT, R extends Comparable<R>> Expression intCollectSub(ISharedSubOperandsFunction_Named<MODEL, RESULT, R> sub, boolean numeric /*, Collector_NestedFunctions_Base<MODEL, RESULT> last */) {
+	private static <MODEL, RESULT, R extends Comparable<R>> ExpressionList intCollectSub(ISharedSubOperandsFunction_Named<MODEL, RESULT, R> sub, boolean numeric /*, Collector_NestedFunctions_Base<MODEL, RESULT> last */) {
 		
 		if (sub == null) {
 			throw new IllegalArgumentException("sub == null");
@@ -73,13 +74,18 @@ final class SubExpressionUtil {
 		
 		sub.apply(ret);
 		
-		final Expression expression;
+		final ExpressionList expression;
+		/*
 		if (expressions.size() == 1) {
 			expression = expressions.get(0);
 		}
 		else {
 			throw new IllegalStateException("Expected only one expression for now");
 		}
+		*/
+		
+		// Always return list, even if just one entry, so that generated query always looks like code
+		expression = new ExpressionList(expressions, Collections.emptyList(), false);
 		
 		return expression;
 	}
@@ -91,7 +97,7 @@ final class SubExpressionUtil {
 			throw new IllegalArgumentException("function == null");
 		}
 		
-		final Expression collected = intCollectSub(sub, numeric); // TODO, last);
+		final ExpressionList collected = intCollectSub(sub, numeric); // TODO, last);
 		
 		return new FunctionExpression(function, collected);
 	}

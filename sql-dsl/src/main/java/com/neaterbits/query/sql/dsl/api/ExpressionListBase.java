@@ -7,13 +7,19 @@ final class ExpressionListBase<T> {
 	private final List<ArithmeticOperator> operators;
 	
 	ExpressionListBase(List<T> expressions, List<ArithmeticOperator> operators) {
+		this(expressions, operators, true);
+	}
+	
+	ExpressionListBase(List<T> expressions, List<ArithmeticOperator> operators, boolean check) {
 
-		if (expressions.size() < 2) {
-			throw new IllegalArgumentException("Expression list with only 1 item");
-		}
-		
-		if (operators.size() != expressions.size() - 1) {
-			throw new IllegalArgumentException("Expected one less operator than expression");
+		if (check) {
+			if (expressions.size() < 2) {
+				throw new IllegalArgumentException("Expression list with only 1 item");
+			}
+			
+			if (operators.size() != expressions.size() - 1) {
+				throw new IllegalArgumentException("Expected one less operator than expression");
+			}
 		}
 		
 		this.expressions = expressions;

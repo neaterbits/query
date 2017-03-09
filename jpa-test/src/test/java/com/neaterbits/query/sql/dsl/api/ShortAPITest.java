@@ -155,11 +155,6 @@ public class ShortAPITest extends BaseSQLAPITest {
 		
 	}
 
-	public void foo() {
-		String s = sqrt(sum(Company::getStockPrice));
-	}
-	
-	
 	@Test
     public void testVariousMappingSyntax() {
 		
@@ -417,8 +412,10 @@ public class ShortAPITest extends BaseSQLAPITest {
 					
 				//.mapOf(e -> e.abs(c::getStockPrice)).to(CompanyAggregatesVO::setAvgStockPrice)
 				
-				.build()
-				;
+				.build();
+		
+		
+		acmeQuery.prepare(jpqlJPA).execute();
 	}
 
 	

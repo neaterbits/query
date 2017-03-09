@@ -2,6 +2,7 @@ package com.neaterbits.query.sql.dsl.api;
 
 import java.util.List;
 import java.util.function.BiConsumer;
+import java.util.function.Consumer;
 
 class PreparedQueryBuilderUtil {
 
@@ -11,6 +12,10 @@ class PreparedQueryBuilderUtil {
 		resolveFunction(dialect, funcs.get(0), 0, sb, appendNext);
 	}
 
+	
+	static void resolveFunction(QueryDialect_SQL dialect, FunctionBase function, QueryBuilder sb, Consumer<QueryBuilder> appendParams) {
+		resolveFunction(dialect, function, 0, sb, (index, s) -> appendParams.accept(s)); 
+	}
 	
 	private static void resolveFunction(QueryDialect_SQL dialect, FunctionBase function, int idx, QueryBuilder sb, BiConsumer<Integer, QueryBuilder> appendNext) {
 		

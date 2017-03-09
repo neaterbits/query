@@ -7,11 +7,28 @@ final class FunctionExpression extends Expression {
 	private final FunctionExpressionBase<Expression> function;
 	
 	FunctionExpression(FunctionBase function, List<Expression> parameters) {
+		if (!parameters.isEmpty()) {
+			final Expression fieldParam = parameters.get(0);
+			
+			if (!(fieldParam instanceof FieldExpression  || fieldParam instanceof ExpressionList)) {
+				throw new IllegalStateException("Expected param to be field or sub: " + fieldParam.getClass().getSimpleName());
+			}
+		}
+		
 		this.function = new FunctionExpressionBase<>(function, parameters);
 	}
 		
 	
 	FunctionExpression(FunctionBase function, Expression ... parameters) {
+		
+		if (parameters.length != 0) {
+			final Expression fieldParam = parameters[0];
+			
+			if (!(fieldParam instanceof FieldExpression || fieldParam instanceof ExpressionList)) {
+				throw new IllegalStateException("Expected param to be field or sub: " + fieldParam.getClass().getSimpleName());
+			}
+		}
+		
 		this.function = new FunctionExpressionBase<>(function, parameters);
 	}
 	
