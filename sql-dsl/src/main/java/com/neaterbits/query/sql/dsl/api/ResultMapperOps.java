@@ -9,7 +9,7 @@ abstract class ResultMapperOps<
 		MODEL,
 		RESULT,
 		R extends Comparable<R>,
-		SOURCE extends ISharedSelectSourceBuilder<MODEL, RESULT>>
+		SOURCE extends ISharedFunction_After<MODEL, RESULT>>
 
 	extends CollectedItem
 	implements ISharedResultMapperTo<MODEL, RESULT, R, SOURCE> {
@@ -17,24 +17,38 @@ abstract class ResultMapperOps<
 	private final IMappingCollector<MODEL, RESULT> impl;
 	private final List<Expression> expressions;
 	private final List<ArithmeticOperator> operators;
-	
-	ResultMapperOps(Expression expression, IMappingCollector<MODEL, RESULT> impl) {
+
+	private ResultMapperOps(Expression expression, IMappingCollector<MODEL, RESULT> impl, int fixSignatureAmbiguity) {
 
 		if (expression == null) {
 			throw new IllegalArgumentException("expression == null");
 		}
 
-		if (impl == null) {
-			throw new IllegalArgumentException("impl == null");
-		}
-
 		this.impl = impl;
-
 		this.expressions = new ArrayList<>();
 		this.operators = new ArrayList<>();
 
 		// Add initial expression
 		expressions.add(expression);
+		
+	}
+	
+	// Cannot do "to" when null, this is typically utilize for sub expressions
+	// "sub" parameter is just a reminder to take this into consideration
+	ResultMapperOps(Expression expression, boolean sub) {
+		this(expression, null, 0);
+		
+		if (!sub) {
+			throw new IllegalArgumentException("only call fot subs");
+		}
+	}
+	
+	ResultMapperOps(Expression expression, IMappingCollector<MODEL, RESULT> impl) {
+		this(expression, impl, 0);
+
+		if (impl == null) {
+			throw new IllegalArgumentException("impl == null");
+		}
 	}
 
 	@Override

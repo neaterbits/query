@@ -52,7 +52,7 @@ final class SubExpressionUtil {
 				//expressions.add(new NestedFunctionCallsExpression(functions, getter));
 				expressions.add(expression);
 
-				return null;
+				return new ResultMapperOps_Numeric_Sub<>(expression);
 			}
 
 			@Override
@@ -66,7 +66,7 @@ final class SubExpressionUtil {
 				//expressions.add(new NestedFunctionCallsExpression(functions, getter));
 				expressions.add(expression);
 				
-				return null;
+				return new ResultMapperOps_String_Sub<>(expression);
 			}
 		};
 

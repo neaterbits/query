@@ -62,27 +62,27 @@ abstract class Classic_Collector_Result<
 	
 	@Override
 	public <T> ISharedResultOps_Numeric_Named<MODEL, RESULT, Short, MAPPED_SOURCE_NAMED> map(IFunctionShort<T> getter) {
-		return new ResultMapperOps_Numeric<>(new FieldExpression(getter), createMapToResult());
+		return new ResultMapperOps_Numeric_Initial<>(new FieldExpression(getter), createMapToResult());
 	}
 
 	@Override
 	public <T> ISharedResultOps_Numeric_Named<MODEL, RESULT, Integer, MAPPED_SOURCE_NAMED> map(IFunctionInteger<T> getter) {
-		return new ResultMapperOps_Numeric<>(new FieldExpression(getter), createMapToResult());
+		return new ResultMapperOps_Numeric_Initial<>(new FieldExpression(getter), createMapToResult());
 	}
 
 	@Override
 	public <T> ISharedResultOps_Numeric_Named<MODEL, RESULT, Long, MAPPED_SOURCE_NAMED> map(IFunctionLong<T> getter) {
-		return new ResultMapperOps_Numeric<>(new FieldExpression(getter), createMapToResult());
+		return new ResultMapperOps_Numeric_Initial<>(new FieldExpression(getter), createMapToResult());
 	}
 
 	@Override
 	public <T> ISharedResultOps_Numeric_Named<MODEL, RESULT, BigDecimal, MAPPED_SOURCE_NAMED> map(IFunctionBigDecimal<T> getter) {
-		return new ResultMapperOps_Numeric<>(new FieldExpression(getter), createMapToResult());
+		return new ResultMapperOps_Numeric_Initial<>(new FieldExpression(getter), createMapToResult());
 	}
 
 	@Override
 	public <T> ISharedResultOps_String_Named<MODEL, RESULT, MAPPED_SOURCE_NAMED> map(StringFunction<T> getter) {
-		return new ResultMapperOps_String<>(new FieldExpression(getter), createMapToResult());
+		return new ResultMapperOps_String_Initial<>(new FieldExpression(getter), createMapToResult());
 	}
 
 	@Override
