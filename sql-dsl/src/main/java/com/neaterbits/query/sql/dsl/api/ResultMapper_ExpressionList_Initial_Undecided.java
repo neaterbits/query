@@ -1,13 +1,13 @@
 package com.neaterbits.query.sql.dsl.api;
 
+import java.util.function.Supplier;
 
-final class ResultMapper_ExpressionList_Initial_Undecided<
+class ResultMapper_ExpressionList_Initial_Undecided<
 		MODEL,
 		RESULT,
 
 		NAMED_RET extends ISharedSelectSourceBuilder<MODEL, RESULT>,
 		ALIAS_RET extends ISharedSelectSourceBuilder<MODEL, RESULT>,
-
 		
 		NAMED_SUM_LONG_RET  extends ISharedFunction_Next<MODEL, RESULT, NAMED_RET>,
 		NAMED_COUNT_RET		extends ISharedFunction_Next<MODEL, RESULT, NAMED_RET>,
@@ -57,7 +57,7 @@ final class ResultMapper_ExpressionList_Initial_Undecided<
 			NAMED_RET,
 			ALIAS_RET,
 			
-			ISharedFunction_Next<MODEL, RESULT, ISharedFunction_After<MODEL, RESULT>>,
+			ISharedResultOps_Numeric_Named<MODEL, RESULT, Integer, ISharedFunction_After<MODEL, RESULT>>,
 			ISharedFunction_Next<MODEL, RESULT, ISharedFunction_After<MODEL, RESULT>>,
 			
 			
@@ -124,20 +124,40 @@ final class ResultMapper_ExpressionList_Initial_Undecided<
 			NO_PARAM_ALIAS_DOUBLE_RET,
 			NO_PARAM_ALIAS_BIGDECIMAL_RET,
 			NO_PARAM_ALIAS_STRING_RET
-		> {
+		>,
+			
+	ISharedResultOps_Numeric_Named<MODEL, RESULT, Integer, ISharedFunction_After<MODEL,RESULT>>
 		
+		/*, TODO
+	ISharedResultOps_Numeric_Alias<MODEL, RESULT, Integer, ISharedFunction_After<MODEL, RESULT> > */ {
+	
+			
 
 	ResultMapper_ExpressionList_Initial_Undecided(Expression expression, IMappingCollector<MODEL, RESULT> impl) {
 		super(expression, impl);
+		
+		this.getNamed = null;
+		this.getAliased = null;
 	}
 
-
-	ResultMapper_ExpressionList_Initial_Undecided(IMappingCollector<MODEL, RESULT> impl) {
+	
+	private final Supplier<ISharedFunction_Next<MODEL, RESULT, NAMED_RET>> getNamed;
+	private final Supplier<ISharedFunction_Next<MODEL, RESULT, ALIAS_RET>> getAliased;
+	
+	ResultMapper_ExpressionList_Initial_Undecided(
+				IMappingCollector<MODEL, RESULT> impl, 
+				Supplier<ISharedFunction_Next<MODEL, RESULT, NAMED_RET>> getNamed,
+				Supplier<ISharedFunction_Next<MODEL, RESULT, ALIAS_RET>> getAliased) {
 		super(impl);
+		
+		this.getNamed = getNamed;
+		this.getAliased = getAliased;
 	}
 
 			
-		
+
+	
+	
 			
 			/*
 			
@@ -803,7 +823,4 @@ final class ResultMapper_ExpressionList_Initial_Undecided<
 
 		return (ISharedNumericFunctions_Initial)this;
 	}
-				
-				
-				
 }

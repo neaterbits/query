@@ -84,6 +84,18 @@ abstract class Collector_ExpressionList_Base<
 		operators.add(op);
 	}
 	
+	final void addExpression(Expression expression) {
+		if (expression == null) {
+			throw new IllegalArgumentException("expression == null");
+		}
+		
+		if (!expressions.isEmpty()) {
+			throw new IllegalStateException("Can only add as intial expression, otherwise should also have passed operator");
+		}
+		
+		expressions.add(expression);
+	}
+	
 	
 	final void addValue(Operator op, Comparable<?> value) {
 		if (op == null) {

@@ -294,12 +294,12 @@ abstract class Collector_ExpressionList<
 
 					@Override
 					public ISharedFunction_Next<MODEL, RESULT, NAMED_RET> onComparable(Expression expression) {
-						throw new UnsupportedOperationException();
+						return addNamedFunctionResult(expression);
 					}
 
 					@Override
 					public ISharedFunction_Next<MODEL, RESULT, NAMED_RET> onString(Expression expression) {
-						throw new UnsupportedOperationException();
+						return addNamedFunctionResult(expression);
 					}
 			};
 			
@@ -308,6 +308,16 @@ abstract class Collector_ExpressionList<
 
 		return this.named;
 	}
+	
+	ISharedFunction_Next<MODEL, RESULT, NAMED_RET> addNamedFunctionResult(Expression expression) {
+		addExpression(expression);
+		
+		// must clear named-functionns as to collect new ones after operand
+		this.named = null;
+
+		return (ISharedFunction_Next)this;
+	}
+	
 
 	private AliasFunctions assureAliasFunctions() {
 		if (this.alias == null) {

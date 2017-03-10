@@ -1,6 +1,8 @@
 package com.neaterbits.query.sql.dsl.api;
 
 import java.math.BigDecimal;
+import java.util.function.Consumer;
+import java.util.function.Supplier;
 
 final class Short_Collector_SingleResult_Undecided<MODEL, RESULT>
 	extends Short_Collector_Result_Undecided_Base<
@@ -289,6 +291,12 @@ final class Short_Collector_SingleResult_Undecided<MODEL, RESULT>
 
 		map() {
 		
+		final MappingCollector mappingCollector = new MappingCollector();
+
+		// Collect mappings, should ever only create one of these
+		getQueryCollector().setMappings(mappingCollector);
+		
+		
 		final ISharedCollector_Functions_Callback_Named<MODEL, RESULT, IShortResult_Mapped_Single_Named<MODEL, RESULT>> namedCallback
 		
 			= MapFunctionUtil.singleNamedCallback(
@@ -311,11 +319,55 @@ final class Short_Collector_SingleResult_Undecided<MODEL, RESULT>
 
 				});
 
-		return new ResultMapper_ExpressionList_Initial_Undecided<>(this/* namedCallback, aliasCallback */);
+		/*
+		final Supplier<ISharedFunction_Next<MODEL, RESULT, Short_Collector_SingleResult_Decided_Named<MODEL, RESULT>>>
+
+		s1 = () -> {
+			return new Short_Collector_SingleResult_Decided_Named<MODEL, RESULT>(
+					select,
+					new CollectedQueryResult_Mapped_Single(getResultType()),
+					getModelCompiler());
+			};
+
+		final Supplier<ISharedFunction_Next<MODEL, RESULT, Short_Collector_SingleResult_Decided_Named<MODEL, RESULT>>>
+				
+		s2 = () -> {
+			return 
+					new Short_Collector_SingleResult_Decided_Alias<>(
+					select,
+					new CollectedQueryResult_Mapped_Single(getResultType()),
+					getModelCompiler());
+			
+		};
+		
+		return new ResultMapper_ExpressionList_Initial_Undecided<>(this, s1, s2);
+		*/
+		
+		return null;
+		
+		/*{
+			ISharedFunction_Next<MODEL, RESULT, NAMED_RET> addNamedFunctionResult(Expression expression) {
+				
+				super.addNamedFunctionResult(expression);
+				
+				return new Short_Collector_SingleResult_Decided_Named<>(
+						select,
+						new CollectedQueryResult_Mapped_Single(getResultType()),
+						getModelCompiler());
+			}
+		};
+		*/
 	}
 
 	@Override
 	public MappingCollector getMappingCollector() {
-		throw new UnsupportedOperationException("TODO");
+		
+		final MappingCollector ret = getQueryCollector().getMappings();
+		
+		if (ret == null) {
+			throw new IllegalStateException("mappings not set");
+		}
+		
+		return ret;
 	}
 }
