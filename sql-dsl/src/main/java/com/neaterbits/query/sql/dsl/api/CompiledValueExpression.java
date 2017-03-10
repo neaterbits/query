@@ -12,6 +12,10 @@ final class CompiledValueExpression extends CompiledExpression {
 		
 		this.value = value;
 	}
+	
+	public Comparable<?> getValue() {
+		return value;
+	}
 
 	@Override
 	<T, R> R visit(CompiledExpressionVisitor<T, R> visitor, T param) {

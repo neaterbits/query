@@ -69,7 +69,7 @@ final class SubExpressionUtil {
 				return new ResultMapperOps_String_Sub<>(expression);
 			}
 		};
-
+		
 		final SubOperandsBuilder_Initial<MODEL, RESULT, R, ISharedSubOperand_End_Named<MODEL, RESULT, R>> ret = new SubOperandsBuilder_Initial<>(callback);
 		
 		sub.apply(ret);

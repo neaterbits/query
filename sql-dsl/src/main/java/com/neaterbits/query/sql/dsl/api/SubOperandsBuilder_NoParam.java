@@ -39,10 +39,4 @@ final class SubOperandsBuilder_NoParam<
 	SubOperandsBuilder_NoParam(SubOperandsBuilder_Initial<MODEL, RESULT, R, AFTER> toCopy) {
 		super(toCopy);
 	}
-	
-	/*
-	SubOperandsBuilder_NoParam(ISharedCollector_Functions_Callback_Named<MODEL, RESULT, AFTER> func) {
-		super(func);
-	}
-	*/
 }

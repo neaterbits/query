@@ -1,6 +1,6 @@
 package com.neaterbits.query.sql.dsl.api;
 
-public class ResultMapperOps_Numeric_Sub< 
+final class ResultMapperOps_Numeric_Sub< 
 	MODEL,
 	RESULT,
 	R extends Comparable<R>,

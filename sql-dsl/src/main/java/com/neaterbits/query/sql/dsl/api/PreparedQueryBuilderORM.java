@@ -219,7 +219,14 @@ final class PreparedQueryBuilderORM<MANAGED, EMBEDDED, IDENTIFIABLE, ATTRIBUTE, 
 			
 			@Override
 			public Void onValue(CompiledValueExpression value, Void param) {
-				throw new UnsupportedOperationException("TODO");
+				
+				// TODO: handle this properly, must wrap string literals etc
+				
+				s.append(value.getValue().toString());
+				
+				return null;
+				
+				//throw new UnsupportedOperationException("TODO");
 			}
 
 			private void recursivelyOutputNested(List<CompiledFunctionExpression> list, int inputIdx) {

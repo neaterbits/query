@@ -62,6 +62,7 @@ abstract class ResultMapperOps_Numeric<
 	@Override
 	@SuppressWarnings("unchecked")
 	public final NEXT plus(BigDecimal value) {
+		
 		addValue(ArithmeticOperator.PLUS, value);
 
 		return (NEXT)this;
