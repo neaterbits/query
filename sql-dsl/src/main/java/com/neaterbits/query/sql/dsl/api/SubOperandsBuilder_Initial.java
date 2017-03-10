@@ -36,14 +36,22 @@ final class SubOperandsBuilder_Initial<
 		implements ISharedSubOperandsBuilder_Named<MODEL, RESULT, R, AFTER>
  {
 
-	SubOperandsBuilder_Initial(ISharedCollector_Functions_Callback_Named<MODEL, RESULT, AFTER> func) {
-		super(func);
+	SubOperandsBuilder_Initial() {
+
+	}
+	
+	
+	ISharedFunction_Next<MODEL, RESULT, AFTER> getNamedNoParamNext(ISharedFunction_Next<MODEL, RESULT, AFTER> def) {
+		return new SubOperandsBuilder_NoParam<>(this);
 	}
 
 	@Override
-	ISharedFunction_Next<MODEL, RESULT, AFTER> getNamedNoParamNext() {
-		
-		// Must return no-param version since implements separate interface
-		return new SubOperandsBuilder_NoParam<>(this);
+	public ISharedSubOperandsBuilder_NoParam_Named<MODEL, RESULT, R, AFTER> abs() {
+		return super.absNoParam();
+	}
+
+	@Override
+	public ISharedSubOperandsBuilder_NoParam_Named<MODEL, RESULT, Double, AFTER> sqrt() {
+		return super.sqrtNoParam();
 	}
  }

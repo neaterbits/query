@@ -45,7 +45,7 @@ class MapFunctionUtil {
 		
 				final IMappingCollector<MODEL, RESULT> impl = named(expression, supplier);
 				
-				return new ResultMapperOps_Numeric_Initial<>(expression, impl);
+				return new ResultMapper_ExpressionList_Numeric_Named<>(expression, impl);
 
 			}
 		
@@ -54,7 +54,7 @@ class MapFunctionUtil {
 		
 				final IMappingCollector<MODEL, RESULT> impl =  named(expression, supplier);
 				
-				return new ResultMapperOps_String_Initial<>(expression, impl);
+				return new ResultMapper_ExpressionList_String_Named<>(expression, impl);
 			}
 		};
 	}

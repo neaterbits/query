@@ -51,7 +51,9 @@ final class Short_Collector_MultiResult_Decided_Named<MODEL, RESULT>
 		
 		final ISharedCollector_Functions_Callback_Named<MODEL, RESULT, IShortResult_Mapped_Multi_Named<MODEL, RESULT>>
 			callback = MapFunctionUtil.multiNamedCallback(() -> this);
-	
+		
+		return (ISharedMapFunctions_Named)new ResultMapper_ExpressionList_Initial(this); 
+	/*
 		return new Collector_MapFunctions_Named<
 			
 				MODEL,
@@ -77,7 +79,8 @@ final class Short_Collector_MultiResult_Decided_Named<MODEL, RESULT>
 				ISharedResultMapperTo<MODEL, RESULT, BigDecimal, IShortResult_Mapped_Multi_Named<MODEL, RESULT>>,
 				ISharedResultMapperTo<MODEL, RESULT, String, IShortResult_Mapped_Multi_Named<MODEL, RESULT>>
 	
-				>(callback, /* null, */ this);
+				>(callback, /* null, this);
+			*/
 	}
 
 	@Override

@@ -20,7 +20,7 @@ final class SubExpressionUtil {
 		return expression;
 	}
 
-	static <MODEL, RESULT, R extends Comparable<R>, CLAUSE> Expression addSubNumericForOperator(ArithmeticOperator operator, ISharedSubOperandsFunction_Named<MODEL, RESULT, R> sub /* , Collector_NestedFunctions_Base<MODEL, RESULT> last */) {
+	static <MODEL, RESULT, R extends Comparable<R>, CLAUSE> Expression addSubNumericForOperator(Operator operator, ISharedSubOperandsFunction_Named<MODEL, RESULT, R> sub /* , Collector_NestedFunctions_Base<MODEL, RESULT> last */) {
 		
 		final Expression expression = intCollectSub(sub, true); // last);
 
@@ -36,8 +36,9 @@ final class SubExpressionUtil {
 		
 		
 		// We'll just create a nested-expression, collect function-calls
+		/*
 		final List<Expression> expressions = new ArrayList<>();
-		
+
 		final ISharedCollector_Functions_Callback_Named<MODEL, RESULT, ISharedSubOperand_End_Named<MODEL, RESULT, R>> callback
 				= new ISharedCollector_Functions_Callback_Named<MODEL, RESULT, ISharedSubOperand_End_Named<MODEL, RESULT, R>>() {
 
@@ -52,7 +53,7 @@ final class SubExpressionUtil {
 				//expressions.add(new NestedFunctionCallsExpression(functions, getter));
 				expressions.add(expression);
 
-				return new ResultMapperOps_Numeric_Sub<>(expression);
+				return new Collector_Expression_List_Sub<>(expression);
 			}
 
 			@Override
@@ -69,25 +70,17 @@ final class SubExpressionUtil {
 				return new ResultMapperOps_String_Sub<>(expression);
 			}
 		};
-		
-		final SubOperandsBuilder_Initial<MODEL, RESULT, R, ISharedSubOperand_End_Named<MODEL, RESULT, R>> ret = new SubOperandsBuilder_Initial<>(callback);
-		
-		sub.apply(ret);
-		
-		final ExpressionList expression;
-		/*
-		if (expressions.size() == 1) {
-			expression = expressions.get(0);
-		}
-		else {
-			throw new IllegalStateException("Expected only one expression for now");
-		}
 		*/
 		
-		// Always return list, even if just one entry, so that generated query always looks like code
-		expression = new ExpressionList(expressions, Collections.emptyList(), false);
+		final SubOperandsBuilder_Initial<MODEL, RESULT, R, ISharedSubOperand_End_Named<MODEL, RESULT, R>> builder = new SubOperandsBuilder_Initial<>();
 		
-		return expression;
+		
+		sub.apply(builder);
+		
+		
+		final ExpressionList expressionList = builder.collectAsExpressionList();
+		
+		return expressionList;
 	}
 	
 	

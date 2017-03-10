@@ -6,7 +6,7 @@ final class CompiledExpressionList extends CompiledExpression {
 	
 	private final ExpressionListBase<CompiledExpression> list;
 	
-	CompiledExpressionList(List<CompiledExpression> expressions, List<ArithmeticOperator> operators) {
+	CompiledExpressionList(List<CompiledExpression> expressions, List<Operator> operators) {
 		this.list = new ExpressionListBase<>(expressions, operators, false);
 	}
 
@@ -14,7 +14,7 @@ final class CompiledExpressionList extends CompiledExpression {
 		return list.getExpressions();
 	}
 
-	List<ArithmeticOperator> getOperators() {
+	List<Operator> getOperators() {
 		return list.getOperators();
 	}
 

@@ -2,6 +2,7 @@ package com.neaterbits.query.sql.dsl.api;
 
 import java.util.function.BiConsumer;
 
+@Deprecated
 final class Collector_MapFunctions_Named<
 
 			MODEL,

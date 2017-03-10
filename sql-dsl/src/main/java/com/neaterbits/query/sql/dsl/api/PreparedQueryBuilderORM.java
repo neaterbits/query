@@ -175,7 +175,7 @@ final class PreparedQueryBuilderORM<MANAGED, EMBEDDED, IDENTIFIABLE, ATTRIBUTE, 
 					if (i > 0) {
 						final char opChar;
 
-						final ArithmeticOperator operator = list.getOperators().get(i - 1);
+						final Operator operator = list.getOperators().get(i - 1);
 						
 						switch (operator) {
 						case PLUS: 		opChar = '+'; break;

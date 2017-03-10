@@ -34,9 +34,21 @@ final class SubOperandsBuilder_NoParam<
 	>
 
 	implements ISharedSubOperandsBuilder_NoParam_End_Named<MODEL, RESULT, R, AFTER>,
-			   ISharedSubOperandsBuilder_NoParam_Named<MODEL, RESULT, R, AFTER> {
+			   ISharedSubOperandsBuilder_NoParam_Named<MODEL, RESULT, R, AFTER>,
+			   
+			   	ISharedFunction_Next<MODEL, RESULT, AFTER> {
 
 	SubOperandsBuilder_NoParam(SubOperandsBuilder_Initial<MODEL, RESULT, R, AFTER> toCopy) {
 		super(toCopy);
+	}
+
+	@Override
+	public ISharedSubOperandsBuilder_NoParam_Named<MODEL, RESULT, R, AFTER> abs() {
+		return super.absNoParam();
+	}
+
+	@Override
+	public ISharedSubOperandsBuilder_NoParam_Named<MODEL, RESULT, Double, AFTER> sqrt() {
+		return super.sqrtNoParam();
 	}
 }

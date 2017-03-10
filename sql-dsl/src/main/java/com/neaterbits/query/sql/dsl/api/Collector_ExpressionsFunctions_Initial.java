@@ -1,6 +1,5 @@
 package com.neaterbits.query.sql.dsl.api;
 
-import org.apache.tools.ant.SubBuildListener;
 
 final class Collector_ExpressionsFunctions_Initial<
 		MODEL,

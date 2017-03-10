@@ -24,6 +24,24 @@ abstract class SubOperandsBuilder<MODEL,
 			
 			NO_PARAM_STRING_RET>
 
+	extends Collector_ExpressionList<MODEL, RESULT, R,
+	
+			AFTER,
+			
+			ISharedFunction_Next<MODEL, RESULT, AFTER>,
+			ISharedFunction_Next<MODEL, RESULT, AFTER>,
+			
+			SUM_LONG_RET,
+			COUNT_RET,
+			
+			SHORT_RET,
+			INTEGER_RET,
+			LONG_RET,
+			DOUBLE_RET,
+			BIGDECIMAL_RET,
+			STRING_RET>
+
+/*
 		extends Collector_NestedFunctions_Named<
 		
 		
@@ -48,17 +66,16 @@ abstract class SubOperandsBuilder<MODEL,
 			NO_PARAM_STRING_RET
 			
 			>
+			*/
 
 {
+		
+	SubOperandsBuilder() {
 
-	SubOperandsBuilder(ISharedCollector_Functions_Callback_Named<MODEL, RESULT, AFTER> func /* , Collector_NestedFunctions_Base<MODEL, RESULT> last */) {
-		super(func);
-		//super(func, last);
 	}
-
+		
 	SubOperandsBuilder(SubOperandsBuilder<MODEL, RESULT, R, AFTER, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?> toCopy) {
 		super(toCopy);
-		//super(func, last);
 	}
 	
 }

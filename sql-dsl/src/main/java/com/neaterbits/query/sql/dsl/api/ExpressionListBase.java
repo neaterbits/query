@@ -4,13 +4,13 @@ import java.util.List;
 
 final class ExpressionListBase<T> {
 	private final List<T> expressions;
-	private final List<ArithmeticOperator> operators;
+	private final List<Operator> operators;
 	
-	ExpressionListBase(List<T> expressions, List<ArithmeticOperator> operators) {
+	ExpressionListBase(List<T> expressions, List<Operator> operators) {
 		this(expressions, operators, true);
 	}
 	
-	ExpressionListBase(List<T> expressions, List<ArithmeticOperator> operators, boolean check) {
+	ExpressionListBase(List<T> expressions, List<Operator> operators, boolean check) {
 
 		if (check) {
 			if (expressions.size() < 2) {
@@ -30,7 +30,7 @@ final class ExpressionListBase<T> {
 		return expressions;
 	}
 
-	List<ArithmeticOperator> getOperators() {
+	List<Operator> getOperators() {
 		return operators;
 	}
 }

@@ -6,11 +6,11 @@ final class ExpressionList extends Expression {
 
 	private final ExpressionListBase<Expression> list;
 
-	ExpressionList(List<Expression> expressions, List<ArithmeticOperator> operators) {
+	ExpressionList(List<Expression> expressions, List<Operator> operators) {
 		this(expressions, operators, true);
 	}
 
-	ExpressionList(List<Expression> expressions, List<ArithmeticOperator> operators, boolean check) {
+	ExpressionList(List<Expression> expressions, List<Operator> operators, boolean check) {
 		this.list = new ExpressionListBase<>(expressions, operators, check);
 	}
 
@@ -18,7 +18,7 @@ final class ExpressionList extends Expression {
 		return list.getExpressions();
 	}
 
-	List<ArithmeticOperator> getOperators() {
+	List<Operator> getOperators() {
 		return list.getOperators();
 	}
 
