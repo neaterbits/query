@@ -1,12 +1,12 @@
 package com.neaterbits.query.sql.dsl.api;
 
-public interface ISharedResultOps_Numeric_Named<
+public interface ISharedResultMap_OpsAndTo_Numeric_Named<
 	MODEL,
 	RESULT,
 	R extends Comparable<R>,
 	RET extends ISharedFunction_After<MODEL, RESULT>>
 
-	extends ISharedResultOps_Comparable_Named<MODEL, RESULT, R, RET>,
+	extends ISharedMapResultOps_Comparable_Named<MODEL, RESULT, R, RET>,
 			ISharedOperands_Numeric_Named<
 				MODEL,
 				RESULT,
@@ -15,8 +15,7 @@ public interface ISharedResultOps_Numeric_Named<
 				
 				RET,
 				
-				ISharedResultOps_Numeric_Named<MODEL, RESULT, R, RET>
-			
+				ISharedResultMap_OpsAndTo_Numeric_Named<MODEL, RESULT, R, RET>
 			>
 
 {

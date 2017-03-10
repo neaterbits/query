@@ -1,7 +1,9 @@
 package com.neaterbits.query.sql.dsl.api;
 
 
-abstract class SubOperandsBuilder<MODEL,
+abstract class SubOperandsBuilder<
+
+			MODEL,
 
 			RESULT,
 			R extends Comparable<R>,

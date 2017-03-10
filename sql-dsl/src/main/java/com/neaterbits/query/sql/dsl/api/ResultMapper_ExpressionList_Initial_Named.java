@@ -1,6 +1,6 @@
 package com.neaterbits.query.sql.dsl.api;
 
-class ResultMapper_ExpressionList_Initial_Named< 
+abstract class ResultMapper_ExpressionList_Initial_Named< 
 		MODEL,
 		RESULT,
 		RET extends ISharedFunction_After<MODEL, RESULT>,
@@ -28,7 +28,7 @@ class ResultMapper_ExpressionList_Initial_Named<
 		RET,
 		ISharedFunction_After<MODEL, RESULT>,
 		
-		ISharedResultOps_Numeric_Named<MODEL, RESULT, Integer, RET>,
+		ISharedResultMap_OpsAndTo_Numeric_Named<MODEL, RESULT, Integer, RET>,
 		ISharedResultOps_String_Named<MODEL, RESULT, RET>,
 
 		

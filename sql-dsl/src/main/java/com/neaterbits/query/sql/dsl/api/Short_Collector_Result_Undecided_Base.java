@@ -109,23 +109,23 @@ abstract class Short_Collector_Result_Undecided_Base<
 	*/
 
 	@Override
-	public final <T> ISharedResultOps_Numeric_Named<MODEL, RESULT, Short, MAPPED_SOURCE_NAMED> map(IFunctionShort<T> getter) {
+	public final <T> ISharedResultMap_OpsAndTo_Numeric_Named<MODEL, RESULT, Short, MAPPED_SOURCE_NAMED> map(IFunctionShort<T> getter) {
 		return new ResultMapper_ExpressionList_Numeric_Named<>(new FieldExpression(getter), getMapToResultNamed());
 	}
 
 	@Override
-	public final <T> ISharedResultOps_Numeric_Named<MODEL, RESULT, Integer, MAPPED_SOURCE_NAMED> map(
+	public final <T> ISharedResultMap_OpsAndTo_Numeric_Named<MODEL, RESULT, Integer, MAPPED_SOURCE_NAMED> map(
 			IFunctionInteger<T> getter) {
 		return new ResultMapper_ExpressionList_Numeric_Named<>(new FieldExpression(getter), getMapToResultNamed());
 	}
 
 	@Override
-	public final <T> ISharedResultOps_Numeric_Named<MODEL, RESULT, Long, MAPPED_SOURCE_NAMED> map(IFunctionLong<T> getter) {
+	public final <T> ISharedResultMap_OpsAndTo_Numeric_Named<MODEL, RESULT, Long, MAPPED_SOURCE_NAMED> map(IFunctionLong<T> getter) {
 		return new ResultMapper_ExpressionList_Numeric_Named<>(new FieldExpression(getter), getMapToResultNamed());
 	}
 
 	@Override
-	public final <T> ISharedResultOps_Numeric_Named<MODEL, RESULT, BigDecimal, MAPPED_SOURCE_NAMED> map(IFunctionBigDecimal<T> getter) {
+	public final <T> ISharedResultMap_OpsAndTo_Numeric_Named<MODEL, RESULT, BigDecimal, MAPPED_SOURCE_NAMED> map(IFunctionBigDecimal<T> getter) {
 		return new ResultMapper_ExpressionList_Numeric_Named<>(new FieldExpression(getter), getMapToResultNamed());
 	}
 

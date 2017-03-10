@@ -12,7 +12,11 @@ package com.neaterbits.query.sql.dsl.api;
  * @param <R>
  * @param <AFTER>
  */
-public interface ISharedSubOperandsBuilder_Numeric_Next_Named<MODEL, RESULT, R extends Comparable<R>, AFTER extends ISharedFunction_After<MODEL, RESULT>>
+public interface ISharedSubOperandsBuilder_Numeric_Next_Named<
+		MODEL,
+		RESULT,
+		R extends Comparable<R>, 
+		AFTER extends ISharedFunction_After<MODEL, RESULT>>
 
 	extends 
 		ISharedSubOperand_End_Named<MODEL, RESULT, R>,

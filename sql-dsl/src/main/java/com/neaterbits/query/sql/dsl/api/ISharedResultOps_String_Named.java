@@ -7,7 +7,7 @@ public interface ISharedResultOps_String_Named<
 		
 		extends
 		
-		    ISharedResultOps_Comparable_Named<MODEL, RESULT, String, RET>,
+		    ISharedMapResultOps_Comparable_Named<MODEL, RESULT, String, RET>,
 		    
 			ISharedOperands_String_Named<
 					MODEL,

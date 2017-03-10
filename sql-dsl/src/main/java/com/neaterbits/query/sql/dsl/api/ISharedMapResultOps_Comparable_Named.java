@@ -1,6 +1,6 @@
 package com.neaterbits.query.sql.dsl.api;
 
-public interface ISharedResultOps_Comparable_Named<
+public interface ISharedMapResultOps_Comparable_Named<
 		MODEL,
 		RESULT,
 		R extends Comparable<R>,

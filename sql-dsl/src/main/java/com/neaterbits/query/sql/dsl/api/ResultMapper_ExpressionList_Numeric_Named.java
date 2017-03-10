@@ -19,18 +19,18 @@ final class ResultMapper_ExpressionList_Numeric_Named<
 			RET,
 			ISharedFunction_After<MODEL, RESULT>, // Alias
 			
-			ISharedResultOps_Numeric_Named<MODEL, RESULT, R, RET>,
+			ISharedResultMap_OpsAndTo_Numeric_Named<MODEL, RESULT, R, RET>,
 			ISharedFunction_Next<MODEL, RESULT, RET>, // String
 			
-			ISharedResultOps_Numeric_Named<MODEL, RESULT, Long, RET>,
-			ISharedResultOps_Numeric_Named<MODEL, RESULT, Long, RET>,
+			ISharedResultMap_OpsAndTo_Numeric_Named<MODEL, RESULT, Long, RET>,
+			ISharedResultMap_OpsAndTo_Numeric_Named<MODEL, RESULT, Long, RET>,
 			
-			ISharedResultOps_Numeric_Named<MODEL, RESULT, Short, RET>,
-			ISharedResultOps_Numeric_Named<MODEL, RESULT, Integer, RET>,
-			ISharedResultOps_Numeric_Named<MODEL, RESULT, Long, RET>,
-			ISharedResultOps_Numeric_Named<MODEL, RESULT, Double, RET>,
-			ISharedResultOps_Numeric_Named<MODEL, RESULT, BigDecimal, RET>,
-			ISharedResultOps_Numeric_Named<MODEL, RESULT, String, RET>,
+			ISharedResultMap_OpsAndTo_Numeric_Named<MODEL, RESULT, Short, RET>,
+			ISharedResultMap_OpsAndTo_Numeric_Named<MODEL, RESULT, Integer, RET>,
+			ISharedResultMap_OpsAndTo_Numeric_Named<MODEL, RESULT, Long, RET>,
+			ISharedResultMap_OpsAndTo_Numeric_Named<MODEL, RESULT, Double, RET>,
+			ISharedResultMap_OpsAndTo_Numeric_Named<MODEL, RESULT, BigDecimal, RET>,
+			ISharedResultMap_OpsAndTo_Numeric_Named<MODEL, RESULT, String, RET>,
 			
 
 			ISharedFunction_Next<MODEL, RESULT, ISharedFunction_After<MODEL, RESULT>>,
@@ -45,7 +45,7 @@ final class ResultMapper_ExpressionList_Numeric_Named<
 			
 			>
 
-	implements ISharedResultOps_Numeric_Named<MODEL, RESULT, R, RET>
+	implements ISharedResultMap_OpsAndTo_Numeric_Named<MODEL, RESULT, R, RET>
 
 {
 	// TODO go over constructor calls and use static utility methods? 

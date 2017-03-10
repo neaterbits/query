@@ -16,7 +16,9 @@ final class SubOperandsBuilder_Initial_Named<
 			NAMED_RET,
 			ISharedFunction_After<MODEL,RESULT>>
 
-		implements ISharedSubOperandsBuilder_Named<MODEL, RESULT, R, NAMED_RET>
+		implements 
+		
+			ISharedSubOperandsBuilder_Named<MODEL, RESULT, R, NAMED_RET>
 
 {
 

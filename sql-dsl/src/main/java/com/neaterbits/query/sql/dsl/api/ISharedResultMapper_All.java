@@ -28,13 +28,13 @@ public interface ISharedResultMapper_All<MODEL, RESULT,
 				
 				// Named functions
 				
-				ISharedResultOps_Numeric_Named<MODEL, RESULT, Long, NAMED_SOURCE>,
-				ISharedResultOps_Numeric_Named<MODEL, RESULT, Long, NAMED_SOURCE>,
-				ISharedResultOps_Numeric_Named<MODEL, RESULT, Short, NAMED_SOURCE>,
-				ISharedResultOps_Numeric_Named<MODEL, RESULT, Integer, NAMED_SOURCE>,
-				ISharedResultOps_Numeric_Named<MODEL, RESULT, Long, NAMED_SOURCE>,
-				ISharedResultOps_Numeric_Named<MODEL, RESULT, Double, NAMED_SOURCE>,
-				ISharedResultOps_Numeric_Named<MODEL, RESULT, BigDecimal, NAMED_SOURCE>,
+				ISharedResultMap_OpsAndTo_Numeric_Named<MODEL, RESULT, Long, NAMED_SOURCE>,
+				ISharedResultMap_OpsAndTo_Numeric_Named<MODEL, RESULT, Long, NAMED_SOURCE>,
+				ISharedResultMap_OpsAndTo_Numeric_Named<MODEL, RESULT, Short, NAMED_SOURCE>,
+				ISharedResultMap_OpsAndTo_Numeric_Named<MODEL, RESULT, Integer, NAMED_SOURCE>,
+				ISharedResultMap_OpsAndTo_Numeric_Named<MODEL, RESULT, Long, NAMED_SOURCE>,
+				ISharedResultMap_OpsAndTo_Numeric_Named<MODEL, RESULT, Double, NAMED_SOURCE>,
+				ISharedResultMap_OpsAndTo_Numeric_Named<MODEL, RESULT, BigDecimal, NAMED_SOURCE>,
 				ISharedResultOps_String_Named<MODEL, RESULT, NAMED_SOURCE>,
 				
 				ISharedResultMapperTo<MODEL, RESULT, Long, NAMED_SOURCE>,

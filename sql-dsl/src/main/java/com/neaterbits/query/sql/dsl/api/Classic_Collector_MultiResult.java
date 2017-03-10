@@ -71,13 +71,13 @@ final class Classic_Collector_MultiResult<MODEL, RESULT>
 			IClassicResult_Mapped_Multi_Named<MODEL, RESULT>,
 			IClassicResult_Mapped_Multi_Alias<MODEL, RESULT>,
 			
-			ISharedResultOps_Numeric_Named<MODEL, RESULT, Long, IClassicResult_Mapped_Multi_Named<MODEL, RESULT>>,
-			ISharedResultOps_Numeric_Named<MODEL, RESULT, Long, IClassicResult_Mapped_Multi_Named<MODEL, RESULT>>,
-			ISharedResultOps_Numeric_Named<MODEL, RESULT, Short, IClassicResult_Mapped_Multi_Named<MODEL, RESULT>>,
-			ISharedResultOps_Numeric_Named<MODEL, RESULT, Integer, IClassicResult_Mapped_Multi_Named<MODEL, RESULT>>,
-			ISharedResultOps_Numeric_Named<MODEL, RESULT, Long, IClassicResult_Mapped_Multi_Named<MODEL, RESULT>>,
-			ISharedResultOps_Numeric_Named<MODEL, RESULT, Double, IClassicResult_Mapped_Multi_Named<MODEL, RESULT>>,
-			ISharedResultOps_Numeric_Named<MODEL, RESULT, BigDecimal, IClassicResult_Mapped_Multi_Named<MODEL, RESULT>>,
+			ISharedResultMap_OpsAndTo_Numeric_Named<MODEL, RESULT, Long, IClassicResult_Mapped_Multi_Named<MODEL, RESULT>>,
+			ISharedResultMap_OpsAndTo_Numeric_Named<MODEL, RESULT, Long, IClassicResult_Mapped_Multi_Named<MODEL, RESULT>>,
+			ISharedResultMap_OpsAndTo_Numeric_Named<MODEL, RESULT, Short, IClassicResult_Mapped_Multi_Named<MODEL, RESULT>>,
+			ISharedResultMap_OpsAndTo_Numeric_Named<MODEL, RESULT, Integer, IClassicResult_Mapped_Multi_Named<MODEL, RESULT>>,
+			ISharedResultMap_OpsAndTo_Numeric_Named<MODEL, RESULT, Long, IClassicResult_Mapped_Multi_Named<MODEL, RESULT>>,
+			ISharedResultMap_OpsAndTo_Numeric_Named<MODEL, RESULT, Double, IClassicResult_Mapped_Multi_Named<MODEL, RESULT>>,
+			ISharedResultMap_OpsAndTo_Numeric_Named<MODEL, RESULT, BigDecimal, IClassicResult_Mapped_Multi_Named<MODEL, RESULT>>,
 			ISharedResultOps_String_Named<MODEL, RESULT, IClassicResult_Mapped_Multi_Named<MODEL, RESULT>>,
 			
 			

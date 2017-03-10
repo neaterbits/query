@@ -254,6 +254,9 @@ public class ShortAPITest extends BaseSQLAPITest {
 		
 		acmeQuery.prepare(jpqlJPA).execute();
 	}
+	
+	
+	
 	@Test
     public void testSqrtOfAvgList() {
 		

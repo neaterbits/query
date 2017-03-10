@@ -93,11 +93,12 @@ final class Collector_MapFunctions_Named<
 			SUM_LONG_RET, COUNT_RET, SHORT_RET, INT_RET, LONG_RET, DOUBLE_RET, BIGDECIMAL_RET, STRING_RET,
 			NO_PARAM_SUM_LONG_RET, NO_PARAM_COUNT_RET, NO_PARAM_SHORT_RET, NO_PARAM_INT_RET, NO_PARAM_LONG_RET, NO_PARAM_DOUBLE_RET, NO_PARAM_BIGDECIMAL_RET, NO_PARAM_STRING_RET>,
 		
-		    ISharedFunction_Next<MODEL, RESULT, RET>
+		    ISharedFunction_Next<MODEL, RESULT, RET>,
 			
 		    // May be called ".to()" here if we just collect functions 
 		    //ISharedResultMapperTo<MODEL, RESULT, Comparable, RET>
 			
+		    ISharedResultMap_OpsAndTo_Numeric_Named<MODEL, RESULT, Integer, RET>
 			
 			{
 
