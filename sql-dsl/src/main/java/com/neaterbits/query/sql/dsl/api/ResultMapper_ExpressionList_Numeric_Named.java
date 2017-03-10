@@ -13,8 +13,14 @@ final class ResultMapper_ExpressionList_Numeric_Named<
 			MODEL,
 			RESULT,
 			R,
+			
 			RET,
+			
+			RET,
+			ISharedFunction_After<MODEL, RESULT>, // Alias
+			
 			ISharedResultOps_Numeric_Named<MODEL, RESULT, R, RET>,
+			ISharedFunction_Next<MODEL, RESULT, RET>, // String
 			
 			ISharedResultOps_Numeric_Named<MODEL, RESULT, Long, RET>,
 			ISharedResultOps_Numeric_Named<MODEL, RESULT, Long, RET>,
@@ -24,7 +30,18 @@ final class ResultMapper_ExpressionList_Numeric_Named<
 			ISharedResultOps_Numeric_Named<MODEL, RESULT, Long, RET>,
 			ISharedResultOps_Numeric_Named<MODEL, RESULT, Double, RET>,
 			ISharedResultOps_Numeric_Named<MODEL, RESULT, BigDecimal, RET>,
-			ISharedResultOps_Numeric_Named<MODEL, RESULT, String, RET>
+			ISharedResultOps_Numeric_Named<MODEL, RESULT, String, RET>,
+			
+
+			ISharedFunction_Next<MODEL, RESULT, ISharedFunction_After<MODEL, RESULT>>,
+			ISharedFunction_Next<MODEL, RESULT, ISharedFunction_After<MODEL, RESULT>>,
+			
+			ISharedFunction_Next<MODEL, RESULT, ISharedFunction_After<MODEL, RESULT>>,
+			ISharedFunction_Next<MODEL, RESULT, ISharedFunction_After<MODEL, RESULT>>,
+			ISharedFunction_Next<MODEL, RESULT, ISharedFunction_After<MODEL, RESULT>>,
+			ISharedFunction_Next<MODEL, RESULT, ISharedFunction_After<MODEL, RESULT>>,
+			ISharedFunction_Next<MODEL, RESULT, ISharedFunction_After<MODEL, RESULT>>,
+			ISharedFunction_Next<MODEL, RESULT, ISharedFunction_After<MODEL, RESULT>>
 			
 			>
 

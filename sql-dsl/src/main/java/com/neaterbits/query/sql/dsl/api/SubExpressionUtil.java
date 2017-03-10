@@ -28,7 +28,7 @@ final class SubExpressionUtil {
 	}
 
 	
-	private static <MODEL, RESULT, R extends Comparable<R>> ExpressionList intCollectSub(ISharedSubOperandsFunction_Named<MODEL, RESULT, R> sub, boolean numeric /*, Collector_NestedFunctions_Base<MODEL, RESULT> last */) {
+	private static <MODEL, RESULT, R extends Comparable<R>> ExpressionList intCollectSub(ISharedSubOperandsFunction_Named<MODEL, RESULT, R> sub, boolean numeric) {
 		
 		if (sub == null) {
 			throw new IllegalArgumentException("sub == null");
@@ -72,10 +72,20 @@ final class SubExpressionUtil {
 		};
 		*/
 		
-		final SubOperandsBuilder_Initial<MODEL, RESULT, R, ISharedSubOperand_End_Named<MODEL, RESULT, R>> builder = new SubOperandsBuilder_Initial<>();
+		final SubOperandsBuilder_Initial_Named<
+			MODEL,
+			RESULT,
+			R,
+			
+			ISharedSubOperand_End_Named<MODEL, RESULT, R>
 		
 		
-		sub.apply(builder);
+			> builder = new SubOperandsBuilder_Initial_Named<>();
+		
+		
+		final ISharedSubOperandsBuilder_Named<MODEL, RESULT, R, ISharedSubOperand_End_Named<MODEL, RESULT, R>> b = builder;
+		
+		sub.apply(b);
 		
 		
 		final ExpressionList expressionList = builder.collectAsExpressionList();

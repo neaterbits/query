@@ -1,7 +1,7 @@
 package com.neaterbits.query.sql.dsl.api;
 
 
-final class Collector_ExpressionsFunctions_Initial<
+final class ResultMapper_ExpressionList_Initial_Undecided<
 		MODEL,
 		RESULT,
 
@@ -46,12 +46,20 @@ final class Collector_ExpressionsFunctions_Initial<
 		NO_PARAM_ALIAS_STRING_RET 	extends ISharedFunction_Next<MODEL, RESULT, ALIAS_RET>
 		>
 
-	extends Collector_NestedFunctions_Base<
+	extends ResultMapper_ExpressionList_Base<
 			MODEL,
 			RESULT, 
 			
+			Integer,
+			
+			ISharedFunction_After<MODEL, RESULT>,
+			
 			NAMED_RET,
 			ALIAS_RET,
+			
+			ISharedFunction_Next<MODEL, RESULT, ISharedFunction_After<MODEL, RESULT>>,
+			ISharedFunction_Next<MODEL, RESULT, ISharedFunction_After<MODEL, RESULT>>,
+			
 			
 			NAMED_SUM_LONG_RET,
 			NAMED_COUNT_RET,
@@ -118,6 +126,18 @@ final class Collector_ExpressionsFunctions_Initial<
 			NO_PARAM_ALIAS_STRING_RET
 		> {
 		
+
+	ResultMapper_ExpressionList_Initial_Undecided(Expression expression, IMappingCollector<MODEL, RESULT> impl) {
+		super(expression, impl);
+	}
+
+
+	ResultMapper_ExpressionList_Initial_Undecided(IMappingCollector<MODEL, RESULT> impl) {
+		super(impl);
+	}
+
+			
+		
 			
 			/*
 			
@@ -133,18 +153,21 @@ final class Collector_ExpressionsFunctions_Initial<
 
     */
     
+	/*
     private final ISharedCollector_Functions_Callback_Named<MODEL, RESULT, NAMED_RET> namedCallback;
     private final ISharedCollector_Functions_Callback_Alias<MODEL, RESULT, ALIAS_RET> aliasCallback;
+    */
     
     
     //private final IMappingCollector<MODEL, RESULT> impl;
 			
     
-    Collector_ExpressionsFunctions_Initial(
+    /*
+    ResultMapper_ExpressionList_Initial_Undecided(
 			ISharedCollector_Functions_Callback_Named<MODEL, RESULT, NAMED_RET> namedCallback,
 			ISharedCollector_Functions_Callback_Alias<MODEL, RESULT, ALIAS_RET> aliasCallback
 			/* IMappingCollector<MODEL, RESULT> impl */
-			) {
+			//) {
 
     	//super(null);
     
@@ -153,13 +176,16 @@ final class Collector_ExpressionsFunctions_Initial<
     		throw new IllegalArgumentException("impl == null");
     	}
     	*/
-    	
+
+				/*
     	this.namedCallback = namedCallback;
 		this.aliasCallback = aliasCallback;
+		*/
 
 		//this.impl = impl;
-	}
+	//}
 	
+    /*
 	@Override
 	ISharedFunction_Next<MODEL, RESULT, NAMED_RET> continueAfterNamedComparableFunctions(Expression expression) {
 		return namedCallback.onComparable(expression);
@@ -173,7 +199,8 @@ final class Collector_ExpressionsFunctions_Initial<
 	@Override
 	ISharedFunction_Next<MODEL, RESULT, ALIAS_RET> continueAfterAliasFunctions(Expression expression) {
 		throw new UnsupportedOperationException("TODO");
-	}    
+	} 
+	*/   
     
 
 
@@ -776,4 +803,7 @@ final class Collector_ExpressionsFunctions_Initial<
 
 		return (ISharedNumericFunctions_Initial)this;
 	}
+				
+				
+				
 }

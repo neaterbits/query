@@ -8,7 +8,12 @@ final class Collector_Expression_List_Sub<
 	RESULT,
 	R extends Comparable<R>,
 	
-	RET extends ISharedFunction_After<MODEL, RESULT>>
+	OPERAND_RET extends ISharedFunction_After<MODEL, RESULT>,
+	
+	NAMED_RET extends ISharedFunction_After<MODEL, RESULT>,
+	ALIAS_RET extends ISharedFunction_After<MODEL, RESULT>
+
+	>
 
 	extends Collector_ExpressionList<
 
@@ -16,24 +21,52 @@ final class Collector_Expression_List_Sub<
 		RESULT,
 
 		R,
-		RET,
+		
+		OPERAND_RET,
+		
+		NAMED_RET,
+		ALIAS_RET,
+		
+		ISharedSubOperandsBuilder_Numeric_Next_Named<MODEL, RESULT, R, OPERAND_RET>,
+		ISharedFunction_Next<MODEL, RESULT, OPERAND_RET>,// STRING_OPERAND_NEXT,
+		
+		ISharedSubOperandsBuilder_Numeric_Next_Named<MODEL, RESULT, Long, NAMED_RET>,
+		ISharedSubOperandsBuilder_Numeric_Next_Named<MODEL, RESULT, Long, NAMED_RET>,
 
-		ISharedSubOperandsBuilder_Numeric_Next_Named<MODEL, RESULT, R, RET>,
-		ISharedSubOperandsBuilder_String_Next_Named<MODEL, RESULT, RET>,
+		ISharedSubOperandsBuilder_Numeric_Next_Named<MODEL, RESULT, Short, NAMED_RET>,
+		ISharedSubOperandsBuilder_Numeric_Next_Named<MODEL, RESULT, Integer, NAMED_RET>,
+		ISharedSubOperandsBuilder_Numeric_Next_Named<MODEL, RESULT, Long, NAMED_RET>,
+		ISharedSubOperandsBuilder_Numeric_Next_Named<MODEL, RESULT, Double, NAMED_RET>,
+		ISharedSubOperandsBuilder_Numeric_Next_Named<MODEL, RESULT, BigDecimal, NAMED_RET>,
+		ISharedSubOperandsBuilder_String_Next_Named<MODEL, RESULT, NAMED_RET>,
 
-		ISharedSubOperandsBuilder_Numeric_Next_Named<MODEL, RESULT, Long, RET>,
-		ISharedSubOperandsBuilder_Numeric_Next_Named<MODEL, RESULT, Long, RET>,
 
-		ISharedSubOperandsBuilder_Numeric_Next_Named<MODEL, RESULT, Short, RET>,
-		ISharedSubOperandsBuilder_Numeric_Next_Named<MODEL, RESULT, Integer, RET>,
-		ISharedSubOperandsBuilder_Numeric_Next_Named<MODEL, RESULT, Long, RET>,
-		ISharedSubOperandsBuilder_Numeric_Next_Named<MODEL, RESULT, Double, RET>,
-		ISharedSubOperandsBuilder_Numeric_Next_Named<MODEL, RESULT, BigDecimal, RET>,
-		ISharedSubOperandsBuilder_String_Next_Named<MODEL, RESULT, RET>
-	>
+		ISharedFunction_Next<MODEL, RESULT, ALIAS_RET>,
+		ISharedFunction_Next<MODEL, RESULT, ALIAS_RET>,
+		
+		ISharedFunction_Next<MODEL, RESULT, ALIAS_RET>,
+		ISharedFunction_Next<MODEL, RESULT, ALIAS_RET>,
+		ISharedFunction_Next<MODEL, RESULT, ALIAS_RET>,
+		ISharedFunction_Next<MODEL, RESULT, ALIAS_RET>,
+		ISharedFunction_Next<MODEL, RESULT, ALIAS_RET>,
+		ISharedFunction_Next<MODEL, RESULT, ALIAS_RET>
+		
+		/*
+		ISharedSubOperandsBuilder_Numeric_Next_Alias<MODEL, RESULT, Long, ALIAS_RET>,
+		ISharedSubOperandsBuilder_Numeric_Next_Alias<MODEL, RESULT, Long, ALIAS_RET>,
+		
+		ISharedSubOperandsBuilder_Numeric_Next_Alias<MODEL, RESULT, Short, ALIAS_RET>,
+		ISharedSubOperandsBuilder_Numeric_Next_Alias<MODEL, RESULT, Integer, ALIAS_RET>,
+		ISharedSubOperandsBuilder_Numeric_Next_Alias<MODEL, RESULT, Long, ALIAS_RET>,
+		ISharedSubOperandsBuilder_Numeric_Next_Alias<MODEL, RESULT, Double, ALIAS_RET>,
+		ISharedSubOperandsBuilder_Numeric_Next_Alias<MODEL, RESULT, BigDecimal, ALIAS_RET>,
+		ISharedSubOperandsBuilder_String_Next_Alias<MODEL, RESULT, ALIAS_RET>
+		*/
+
+>
 
 	implements
-		ISharedSubOperand_Numeric_Ops_Named<MODEL, RESULT, R, RET>
+		ISharedSubOperand_Numeric_Ops_Named<MODEL, RESULT, R, OPERAND_RET>
 
 /*, Cannot implement at this level
 		ISharedSubOperandsBuilder_Numeric_Next_Named<MODEL, RESULT, R, RET>,

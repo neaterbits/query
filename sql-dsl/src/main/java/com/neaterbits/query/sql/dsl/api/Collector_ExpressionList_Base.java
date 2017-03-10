@@ -3,6 +3,7 @@ package com.neaterbits.query.sql.dsl.api;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Function;
+import java.util.function.Supplier;
 
 abstract class Collector_ExpressionList_Base<
 		MODEL,
@@ -58,18 +59,32 @@ abstract class Collector_ExpressionList_Base<
 	
 	final void addField(Operator op, Function<?, ?> getter) {
 		
-		if (op == null) {
-			throw new IllegalArgumentException("op == null");
-		}
-
 		if (getter == null) {
 			throw new IllegalArgumentException("getter == null");
 		}
 
-		expressions.add(new FieldExpression(getter));
-		operators.add(op);
+		addField(op, new FieldExpression(getter));
 	}
 
+	final void addField(Operator op, Supplier<?> getter) {
+		
+		if (getter == null) {
+			throw new IllegalArgumentException("getter == null");
+		}
+
+		addField(op, new FieldExpression(getter));
+	}
+	
+	private void addField(Operator op, FieldExpression expression) {
+		if (op == null) {
+			throw new IllegalArgumentException("op == null");
+		}
+
+		expressions.add(expression);
+		operators.add(op);
+	}
+	
+	
 	final void addValue(Operator op, Comparable<?> value) {
 		if (op == null) {
 			throw new IllegalArgumentException("op == null");
@@ -89,5 +104,9 @@ abstract class Collector_ExpressionList_Base<
 		
 		expressions.add(expression);
 		operators.add(operator);
+	}
+
+	final <RR extends Comparable<RR>> void addSubNumeric(Operator operator, ISharedSubOperandsFunction_Alias<MODEL, RESULT, RR> builder) {
+		throw new UnsupportedOperationException("TODO");
 	}
 }

@@ -13,8 +13,6 @@ public interface ISharedResultOps_String_Alias<
 				MODEL,
 				RESULT,
 				
-				R,
-				
 				RET,
 				
 				ISharedResultOps_String_Alias<MODEL, RESULT, R, RET>

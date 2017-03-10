@@ -34,7 +34,8 @@ final class Short_Collector_SingleResult_Undecided<MODEL, RESULT>
 			ISQLLogical_Where_SingleResult_Named_Base<MODEL, RESULT>,
 			ISQLLogical_WhereOrJoin_Named_Base<MODEL, RESULT>,
 			
-			IShortResult_Single<MODEL, RESULT> {
+			IShortResult_Single<MODEL, RESULT>,
+			IMappingCollector<MODEL, RESULT> {
 	
 	private final BaseShortSelect select;
 	
@@ -310,6 +311,11 @@ final class Short_Collector_SingleResult_Undecided<MODEL, RESULT>
 
 				});
 
-		return new Collector_ExpressionsFunctions_Initial<>(namedCallback, aliasCallback);
+		return new ResultMapper_ExpressionList_Initial_Undecided<>(this/* namedCallback, aliasCallback */);
+	}
+
+	@Override
+	public MappingCollector getMappingCollector() {
+		throw new UnsupportedOperationException("TODO");
 	}
 }

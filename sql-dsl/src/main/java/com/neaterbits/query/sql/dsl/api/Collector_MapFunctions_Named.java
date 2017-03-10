@@ -1,7 +1,5 @@
 package com.neaterbits.query.sql.dsl.api;
 
-import java.util.function.BiConsumer;
-
 @Deprecated
 final class Collector_MapFunctions_Named<
 
@@ -36,8 +34,13 @@ final class Collector_MapFunctions_Named<
 			NO_PARAM_BIGDECIMAL_RET	extends ISharedFunction_Next<MODEL, RESULT, RET>,
 			NO_PARAM_STRING_RET		extends ISharedFunction_Next<MODEL, RESULT, RET>
 			>
-			
+
+		extends ResultMapper_ExpressionList_Initial_Named<MODEL, RESULT, RET,
 		
+			SUM_LONG_RET, COUNT_RET, SHORT_RET, INT_RET, LONG_RET, DOUBLE_RET, BIGDECIMAL_RET, STRING_RET
+		>
+			
+		/*
 	extends Collector_NestedFunctions_Named<
 			MODEL,
 			RESULT,
@@ -84,7 +87,7 @@ final class Collector_MapFunctions_Named<
 			NO_PARAM_STRING_RET
 			*/
 			
-			>
+			//>
 			
 		implements ISharedMapFunctions_Named<MODEL, RESULT, RET,
 			SUM_LONG_RET, COUNT_RET, SHORT_RET, INT_RET, LONG_RET, DOUBLE_RET, BIGDECIMAL_RET, STRING_RET,
@@ -98,18 +101,38 @@ final class Collector_MapFunctions_Named<
 			
 			{
 
-	private final IMappingCollector<MODEL, RESULT> impl;
 				
-	Collector_MapFunctions_Named(ISharedCollector_Functions_Callback_Named<MODEL, RESULT, RET> func, /*, Collector_NestedFunctions_Base<MODEL, RESULT> last, */ IMappingCollector<MODEL, RESULT> impl ) {
-		super(func);
+	Collector_MapFunctions_Named(/*ISharedCollector_Functions_Callback_Named<MODEL, RESULT, RET> func,*/ /*, Collector_NestedFunctions_Base<MODEL, RESULT> last, */ IMappingCollector<MODEL, RESULT> impl ) {
+		super(impl);
 		
 		//super(func, last);
 		
-		if (impl == null) {
-			throw new IllegalArgumentException("impl == null");
-		}
-		
-		this.impl = impl;
+	}
+
+	@Override
+	public ISharedMapFunctions_Numeric_Named<MODEL, RESULT, RET, NO_PARAM_SUM_LONG_RET, NO_PARAM_COUNT_RET, NO_PARAM_SHORT_RET, NO_PARAM_INT_RET, NO_PARAM_LONG_RET, NO_PARAM_DOUBLE_RET, NO_PARAM_BIGDECIMAL_RET, NO_PARAM_SUM_LONG_RET, NO_PARAM_COUNT_RET, NO_PARAM_SHORT_RET, NO_PARAM_INT_RET, NO_PARAM_LONG_RET, NO_PARAM_DOUBLE_RET, NO_PARAM_BIGDECIMAL_RET> abs() {
+		return super.absNoParam();
+	}
+
+	@Override
+	public ISharedMapFunctions_Numeric_Named<MODEL, RESULT, RET, NO_PARAM_DOUBLE_RET, NO_PARAM_DOUBLE_RET, NO_PARAM_DOUBLE_RET, NO_PARAM_DOUBLE_RET, NO_PARAM_DOUBLE_RET, NO_PARAM_DOUBLE_RET, NO_PARAM_DOUBLE_RET, NO_PARAM_DOUBLE_RET, NO_PARAM_DOUBLE_RET, NO_PARAM_DOUBLE_RET, NO_PARAM_DOUBLE_RET, NO_PARAM_DOUBLE_RET, NO_PARAM_DOUBLE_RET, NO_PARAM_DOUBLE_RET> sqrt() {
+		return super.sqrtNoParam();
+	}
+	
+	@Override
+	public NO_PARAM_STRING_RET lower() {
+		throw new UnsupportedOperationException("TODO");
+	}
+
+
+	@Override
+	public NO_PARAM_STRING_RET upper() {
+		throw new UnsupportedOperationException("TODO");
+	}
+
+	@Override
+	public NO_PARAM_STRING_RET trim() {
+		throw new UnsupportedOperationException("TODO");
 	}
 
 	/*
@@ -208,6 +231,7 @@ final class Collector_MapFunctions_Named<
 		return (ISharedFunctions_String_Named)this;
 	}
 	*/
+
 
 	
 }

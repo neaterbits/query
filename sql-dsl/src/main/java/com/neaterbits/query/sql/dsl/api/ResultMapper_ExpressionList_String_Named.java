@@ -7,11 +7,18 @@ final class ResultMapper_ExpressionList_String_Named<
 /*,
 		NEXT extends ISharedFunction_Next<MODEL, RESULT, AFTER> */>
 
-	extends ResultMapper_ExpressionList_Base<MODEL, RESULT, String, AFTER,
-	
+	extends ResultMapper_ExpressionList_Base<
+		MODEL, RESULT,
+		String,
+		
+		AFTER,
+		
+		AFTER,
+		ISharedFunction_After<MODEL, RESULT>,
+
+		
 		ISharedResultOps_String_Named<MODEL, RESULT, AFTER>,
-	
-		//NEXT, NEXT, NEXT, NEXT, NEXT, NEXT, NEXT,
+		ISharedResultOps_String_Named<MODEL, RESULT, AFTER>,
 		
 		ISharedFunction_Next<MODEL, RESULT, AFTER>,
 		ISharedFunction_Next<MODEL, RESULT, AFTER>,
@@ -21,8 +28,19 @@ final class ResultMapper_ExpressionList_String_Named<
 		ISharedFunction_Next<MODEL, RESULT, AFTER>,
 		ISharedFunction_Next<MODEL, RESULT, AFTER>,
 		ISharedFunction_Next<MODEL, RESULT, AFTER>,
+		ISharedResultOps_String_Named<MODEL, RESULT, AFTER>,
+
+		ISharedFunction_Next<MODEL, RESULT, ISharedFunction_After<MODEL, RESULT>>,
+		ISharedFunction_Next<MODEL, RESULT, ISharedFunction_After<MODEL, RESULT>>,
 		
-		ISharedResultOps_String_Named<MODEL, RESULT, AFTER>> 
+		ISharedFunction_Next<MODEL, RESULT, ISharedFunction_After<MODEL, RESULT>>,
+		ISharedFunction_Next<MODEL, RESULT, ISharedFunction_After<MODEL, RESULT>>,
+		ISharedFunction_Next<MODEL, RESULT, ISharedFunction_After<MODEL, RESULT>>,
+		ISharedFunction_Next<MODEL, RESULT, ISharedFunction_After<MODEL, RESULT>>,
+		ISharedFunction_Next<MODEL, RESULT, ISharedFunction_After<MODEL, RESULT>>,
+		ISharedFunction_Next<MODEL, RESULT, ISharedFunction_After<MODEL, RESULT>>
+
+> 
 
 
 	implements ISharedResultOps_String_Named<MODEL, RESULT, AFTER> {

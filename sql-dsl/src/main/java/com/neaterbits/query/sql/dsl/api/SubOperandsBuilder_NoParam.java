@@ -1,13 +1,16 @@
 package com.neaterbits.query.sql.dsl.api;
 
-final class SubOperandsBuilder_NoParam<
+abstract class SubOperandsBuilder_NoParam<
 	
 	MODEL,
 	RESULT,
 	
 	R extends Comparable<R>,
 	
-	AFTER extends ISharedFunction_After<MODEL,RESULT>>
+	AFTER extends ISharedFunction_After<MODEL,RESULT>,
+	NAMED_RET extends ISharedFunction_After<MODEL,RESULT>,
+	ALIAS_RET extends ISharedFunction_After<MODEL,RESULT>
+>
 
 	extends SubOperandsBuilder<
 		MODEL,
@@ -17,31 +20,41 @@ final class SubOperandsBuilder_NoParam<
 		
 		AFTER,
 		
+		NAMED_RET,
+		ALIAS_RET,
+		
 		ISharedFunction_Next<MODEL, RESULT, AFTER>,
 		ISharedFunction_Next<MODEL, RESULT, AFTER>,
 		
-		ISharedSubOperandsBuilder_NoParam_End_Named<MODEL, RESULT, R, AFTER>,
-		ISharedSubOperandsBuilder_NoParam_End_Named<MODEL, RESULT, R, AFTER>,
-		ISharedSubOperandsBuilder_NoParam_End_Named<MODEL, RESULT, R, AFTER>, 
-		ISharedSubOperandsBuilder_NoParam_End_Named<MODEL, RESULT, R, AFTER>,
-		ISharedSubOperandsBuilder_NoParam_End_Named<MODEL, RESULT, R, AFTER>,
-		ISharedSubOperandsBuilder_NoParam_End_Named<MODEL, RESULT, R, AFTER>,
+		ISharedSubOperandsBuilder_NoParam_End_Named<MODEL, RESULT, R, NAMED_RET>,
+		ISharedSubOperandsBuilder_NoParam_End_Named<MODEL, RESULT, R, NAMED_RET>,
 		
-		ISharedSubOperandsBuilder_NoParam_Named<MODEL, RESULT, R, AFTER>,
-		ISharedSubOperandsBuilder_NoParam_Named<MODEL, RESULT, Double, AFTER>,
+		ISharedSubOperandsBuilder_NoParam_End_Named<MODEL, RESULT, R, NAMED_RET>, 
+		ISharedSubOperandsBuilder_NoParam_End_Named<MODEL, RESULT, R, NAMED_RET>,
+		ISharedSubOperandsBuilder_NoParam_End_Named<MODEL, RESULT, R, NAMED_RET>,
+		ISharedSubOperandsBuilder_NoParam_End_Named<MODEL, RESULT, R, NAMED_RET>,
+		ISharedSubOperandsBuilder_NoParam_End_Named<MODEL, RESULT, R, NAMED_RET>,
+		ISharedSubOperandsBuilder_NoParam_End_Named<MODEL, RESULT, R, NAMED_RET>,
 		
-		ISharedFunction_Next<MODEL, RESULT, AFTER>
+		ISharedSubOperandsBuilder_NoParam_End_Alias<MODEL, RESULT, R, ALIAS_RET>,
+		ISharedSubOperandsBuilder_NoParam_End_Alias<MODEL, RESULT, R, ALIAS_RET>,
+		
+		ISharedSubOperandsBuilder_NoParam_End_Alias<MODEL, RESULT, R, ALIAS_RET>, 
+		ISharedSubOperandsBuilder_NoParam_End_Alias<MODEL, RESULT, R, ALIAS_RET>,
+		ISharedSubOperandsBuilder_NoParam_End_Alias<MODEL, RESULT, R, ALIAS_RET>,
+		ISharedSubOperandsBuilder_NoParam_End_Alias<MODEL, RESULT, R, ALIAS_RET>,
+		ISharedSubOperandsBuilder_NoParam_End_Alias<MODEL, RESULT, R, ALIAS_RET>,
+		ISharedSubOperandsBuilder_NoParam_End_Alias<MODEL, RESULT, R, ALIAS_RET>
 	>
 
-	implements ISharedSubOperandsBuilder_NoParam_End_Named<MODEL, RESULT, R, AFTER>,
-			   ISharedSubOperandsBuilder_NoParam_Named<MODEL, RESULT, R, AFTER>,
-			   
-			   	ISharedFunction_Next<MODEL, RESULT, AFTER> {
+	implements ISharedSubOperandsBuilder_NoParam_End_Named<MODEL, RESULT, R, NAMED_RET>,
+			   ISharedSubOperandsBuilder_NoParam_Named<MODEL, RESULT, R, NAMED_RET> {
 
-	SubOperandsBuilder_NoParam(SubOperandsBuilder_Initial<MODEL, RESULT, R, AFTER> toCopy) {
+	SubOperandsBuilder_NoParam(SubOperandsBuilder_Initial<MODEL, RESULT, R, AFTER, NAMED_RET, ALIAS_RET> toCopy) {
 		super(toCopy);
 	}
 
+	/*
 	@Override
 	public ISharedSubOperandsBuilder_NoParam_Named<MODEL, RESULT, R, AFTER> abs() {
 		return super.absNoParam();
@@ -51,4 +64,6 @@ final class SubOperandsBuilder_NoParam<
 	public ISharedSubOperandsBuilder_NoParam_Named<MODEL, RESULT, Double, AFTER> sqrt() {
 		return super.sqrtNoParam();
 	}
+	
+*/	
 }

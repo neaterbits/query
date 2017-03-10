@@ -6,40 +6,69 @@ abstract class ResultMapper_ExpressionList_Base<
 			MODEL,
 			RESULT,
 			R extends Comparable<R>, 
-			AFTER extends ISharedFunction_After<MODEL,RESULT>,
 			
-			NEXT extends ISharedFunction_Next<MODEL, RESULT, AFTER>,
+			OPERAND_RET extends ISharedFunction_After<MODEL, RESULT>,
+			
+			NAMED_RET extends ISharedFunction_After<MODEL, RESULT>,
+			ALIAS_RET extends ISharedFunction_After<MODEL, RESULT>,
+			
+			NUMERIC_NEXT extends ISharedFunction_Next<MODEL, RESULT, OPERAND_RET>,
+			STRING_NEXT extends ISharedFunction_Next<MODEL, RESULT, OPERAND_RET>,
 			
 			
-			SUM_LONG_RET  	extends ISharedFunction_Next<MODEL, RESULT, AFTER>,
-			COUNT_RET       extends ISharedFunction_Next<MODEL, RESULT, AFTER>,
+			NAMED_SUM_LONG_RET  extends ISharedFunction_Next<MODEL, RESULT, NAMED_RET>,
+			NAMED_COUNT_RET     extends ISharedFunction_Next<MODEL, RESULT, NAMED_RET>,
 
-			SHORT_RET  		extends ISharedFunction_Next<MODEL, RESULT, AFTER>,
-			INTEGER_RET  	extends ISharedFunction_Next<MODEL, RESULT, AFTER>,
-			LONG_RET 	 	extends ISharedFunction_Next<MODEL, RESULT, AFTER>,
-			DOUBLE_RET   	extends ISharedFunction_Next<MODEL, RESULT, AFTER>,
-			BIGDECIMAL_RET  extends ISharedFunction_Next<MODEL, RESULT, AFTER>,
-			STRING_RET  extends ISharedFunction_Next<MODEL, RESULT, AFTER>
+			NAMED_SHORT_RET  	extends ISharedFunction_Next<MODEL, RESULT, NAMED_RET>,
+			NAMED_INTEGER_RET  	extends ISharedFunction_Next<MODEL, RESULT, NAMED_RET>,
+			NAMED_LONG_RET 	 	extends ISharedFunction_Next<MODEL, RESULT, NAMED_RET>,
+			NAMED_DOUBLE_RET   	extends ISharedFunction_Next<MODEL, RESULT, NAMED_RET>,
+			NAMED_BIGDECIMAL_RET  extends ISharedFunction_Next<MODEL, RESULT, NAMED_RET>,
+			NAMED_STRING_RET  	extends ISharedFunction_Next<MODEL, RESULT, NAMED_RET>,
 			
+			ALIAS_SUM_LONG_RET  	extends ISharedFunction_Next<MODEL, RESULT, ALIAS_RET>,
+			ALIAS_COUNT_RET       extends ISharedFunction_Next<MODEL, RESULT, ALIAS_RET>,
+			
+			ALIAS_SHORT_RET  		extends ISharedFunction_Next<MODEL, RESULT, ALIAS_RET>,
+			ALIAS_INTEGER_RET  	extends ISharedFunction_Next<MODEL, RESULT, ALIAS_RET>,
+			ALIAS_LONG_RET 	 	extends ISharedFunction_Next<MODEL, RESULT, ALIAS_RET>,
+			ALIAS_DOUBLE_RET   	extends ISharedFunction_Next<MODEL, RESULT, ALIAS_RET>,
+			ALIAS_BIGDECIMAL_RET  extends ISharedFunction_Next<MODEL, RESULT, ALIAS_RET>,
+			ALIAS_STRING_RET  extends ISharedFunction_Next<MODEL, RESULT, ALIAS_RET>
+
 			>
 
 		extends Collector_ExpressionList<
 				MODEL, RESULT, R,
-				AFTER,
 				
-				NEXT, NEXT,
+				OPERAND_RET,
 				
-				SUM_LONG_RET,
-				COUNT_RET,
+				NAMED_RET, ALIAS_RET,
 				
-				SHORT_RET,
-				INTEGER_RET,
-				LONG_RET,
-				DOUBLE_RET,
-				BIGDECIMAL_RET,
-				STRING_RET> 
+				NUMERIC_NEXT, STRING_NEXT,
+				
+				NAMED_SUM_LONG_RET,
+				NAMED_COUNT_RET,
+				
+				NAMED_SHORT_RET,
+				NAMED_INTEGER_RET,
+				NAMED_LONG_RET,
+				NAMED_DOUBLE_RET,
+				NAMED_BIGDECIMAL_RET,
+				NAMED_STRING_RET,
+				
+				ALIAS_SUM_LONG_RET,
+				ALIAS_COUNT_RET,
+				
+				ALIAS_SHORT_RET,
+				ALIAS_INTEGER_RET,
+				ALIAS_LONG_RET,
+				ALIAS_DOUBLE_RET,
+				ALIAS_BIGDECIMAL_RET,
+				ALIAS_STRING_RET
+				> 
 
-		implements ISharedResultMapperTo<MODEL, RESULT, R, AFTER> {
+		implements ISharedResultMapperTo<MODEL, RESULT, R, OPERAND_RET> {
 
 	private final IMappingCollector<MODEL, RESULT> impl;
 	
@@ -63,12 +92,12 @@ abstract class ResultMapper_ExpressionList_Base<
 
 	@Override
 	@SuppressWarnings("unchecked")
-	public final AFTER to(BiConsumer<RESULT, R> setter) {
+	public final OPERAND_RET to(BiConsumer<RESULT, R> setter) {
 		
 		final Expression toForward = collectExpressionListOrOne();
 
 		impl.getMappingCollector().add(this, toForward, setter);
 
-		return (AFTER)impl;
+		return (OPERAND_RET)impl;
 	}
 }

@@ -77,7 +77,12 @@ abstract class Collector_NestedFunctions_Alias<
 
 		this.func = func;
 	}
-	
+
+	Collector_NestedFunctions_Alias(Collector_NestedFunctions_Alias<MODEL, RESULT, RET, ?, ?, ?, ?, ?, ?, ?, ?> toCopy) {
+		super(toCopy);
+
+		this.func = toCopy.func;
+	}
 	
 
 	/*
@@ -128,6 +133,7 @@ abstract class Collector_NestedFunctions_Alias<
 
 
 	@Override
+	@SuppressWarnings("unchecked")
 	public final ISharedFunctions_String_Alias<MODEL, RESULT, RET, STRING_RET> lower() {
 		addNoParam(Function_String_Lower.INSTANCE);
 
@@ -135,13 +141,15 @@ abstract class Collector_NestedFunctions_Alias<
 	}
 
 	@Override
-	public final ISharedFunctions_String_Alias<MODEL, RESULT, RET, STRING_RET> upper() {
+	@SuppressWarnings("unchecked")
+		public final ISharedFunctions_String_Alias<MODEL, RESULT, RET, STRING_RET> upper() {
 		addNoParam(Function_String_Upper.INSTANCE);
 
 		return (ISharedFunctions_String_Alias<MODEL, RESULT, RET, STRING_RET>)getAliasNoParamNext();
 	}
 
 	@Override
+	@SuppressWarnings({"unchecked", "rawtypes"})
 	public final ISharedFunctions_Arithmetic_Alias<MODEL, RESULT, RET, SHORT_RET, INTEGER_RET, LONG_RET, DOUBLE_RET, BIGDECIMAL_RET> abs() {
 		addNoParam(Function_Arithmetic_Abs.INSTANCE);
 
@@ -167,6 +175,7 @@ abstract class Collector_NestedFunctions_Alias<
 	
 
 	@Override
+	@SuppressWarnings("unchecked")
 	public final ISharedFunctions_String_Alias<MODEL, RESULT, RET, STRING_RET> trim() {
 		addNoParam(Function_String_Trim.INSTANCE);
 
