@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+
+<base href="..">
+<link href="css/collection_query.css" type="text/css" rel="stylesheet">
+</head>
+<body>
+
+	<div id="outer">
+
+		<div id="header">
+			<div class="outer_title">SQL for Java Collections</div>
+		</div>
+
+		<div id="tabpanel">
+		
+
+			<!-- ********************** The tabs of the page ********************** -->
+
+			<div id="tabs">
+				<span class="tab" onclick="showTab('tab_intro')">Introduction</span>
+				<span class="tab" onclick="showTab('tab_faq')">FAQ</span>
+				<span class="tab" onclick="showTab('tab_examples')">Examples</span>
+				<span class="tab" onclick="showTab('tab_demo')">Demo</span>
+				<span class="tab" onclick="showTab('tab_download')">Download/Maven</span>
+			</div>
+			
+			<div id="tabholder">
+
+				<!----------------- Main tab   ------------------->
+	
+				<div id="tab_intro" >
+					<!-- Comparison table -->
+					
+					<div>
+	
+						<div id="quick_explanation">
+		
+							<span class="main_header">What is collection-query?</span>
+		
+							<p class="main_text">
+								Collection-query is SQL java.util collections</br> It's a domain
+								specific language for querying with SQL semantics on plain Java collections. 
+								It is a plain library with no other dependencies.
+		
+							<p>						
+								
+								 <span class="main_header2">Example:</span>
+								 <br/>
+										
+								 <span class="java_code">list(shapes).where(Shape::getArea).ge(463.3) </span>
+								 <br/>
+								 
+								 <span class="header2">Corresponding Stream API:</span>
+								 <br/>
+		 						 <span class="java_code">shapes.stream().filter(s -> s.getArea() > 463.3).collect(Collectors.toList())</span>
+								 
+							 </p>
+							 
+							 <p>
+							 <span class="main_header">Advantages to Java 8 streams API</span>
+		
+							 <ul>
+							 	<li>Less code to write, ie. shorter queries</li>
+							 	<li>Almost all the power of SQL. Joins, select multiple values, aggregates, group by, order by etc</li>
+							 	
+							 	<!-- 
+							 		<ul>
+								 		<li>Joins on nested lists, like flatmap() or other lists !! EXAMPLE !!</li>
+								 		<li>Multiple return values, mapped to separate POJO. !! EXAMPLE!!</li>
+								 		<li>GROUP BY grouping of results</li>
+							 		</ul>
+							 		 -->
+							 	</li>
+							 	
+							 	<li>Performs as fast or faster for both for smaller and longer list</li>
+							 	<li>Familiar if you know SQL already, otherwise learning SQL will be useful in other contexts as well </li>
+							 	
+							 	<!--  
+							 			<li>If you don't know SQL, learning it here can be applied to real databases</li>
+							 			 
+							 		</ul>
+							 		
+							 		-->
+							 		
+							 	</li>
+							 	<li>Arguably better readability, more like plain English</li>
+							 	<li>Query definition and execution mechanism are separated (no shapes.parallellStream() ) </li>
+							 </ul>
+							 </p>
+							 
+						</div>
+						
+						<div id="main_menu">
+							<div class="main_button">Demo</div>
+							<div class="main_button">Foo!</div>
+						</div>
+					</div>
+					
+	
+					<span class="main_header">Examples and comparison</span>
+					<br/>
+	
+					Some examples and with some performance comparison (YMMV)
+	
+					<table id="comparison_table">
+						<tr class="comparison_header">
+							<td>
+								Collection Query API
+							</td>
+							<td>
+								Streams API
+							</td>
+						<tr>
+						<tr class="comparison_row" >
+							<td>sum(Shape::getArea).from(shapes).get()</td>
+							<td>shapes.stream().mapToDouble(Shape::getArea).reduce((d1, d2) -> d1 + d2)).getAsDouble()</td>
+						</tr>
+						<tr class="comparison_row" >
+							<td>sum(Shape::getArea).from(shapes).where(Shape::getArea).lt(50.0).get()</td>
+							<td>shapes.stream().mapToDouble(Shape::getArea).filter(d -> d < 50.0).reduce((d1, d2) -> d1 + d2)).getAsDouble()</td>
+						</tr>
+						<tr class="comparison_row" >
+							<td>sum(Shape::getArea).from(shapes).where(Shape::getArea).lt(50.0).get()</td>
+							<td>shapes.stream().mapToDouble(Shape::getArea).filter(d -> d < 50.0).reduce((d1, d2) -> d1 + d2)).getAsDouble()</td>
+						</tr>
+						
+						<tr>
+							<td>
+							
+							<td>
+						
+						</tr>
+						
+					</table>
+	
+				</div>
+			
+			</div>
+			
+			<!----------------- FAQ   ------------------->
+			<div id="tab_faq" hidden="true">
+				<div class="faq_item">
+					<p class="faq_q">Why SQL ?</p>
+					<p class="faq_a">It has withstood the tests of time, even many so called NoSQL databases have SQL-like query languages.</p>
+				</div>
+			
+				<div class="faq_item">
+					<p class="faq_q">Why the .ge() syntax and not lambda, eg .where(s -> s.getArea() > 50.0) ?</p>
+					<p class="faq_a">It reads more like plain English and is more similar to SQL. A lambda-variant could be made but rather not have multiple variants. It is also shorter</p>
+				</div>
+				<div class="faq_item">
+					<p class="faq_q">Why can't you do "flat joins" or old-style cartesian joins ?</p>
+					<p class="faq_a">In order to be type-safe we have to join down the object hierarchy from one type to the next - which has to be the type of the list we are currently processing</p>
+				</div>
+
+			</div>
+		</div>
+	</div>
+
+</body>
+
+
+<script type="text/javascript">
+
+	var tabs = ['tab_intro', 'tab_faq', 'tab_example', 'tab_demo', 'tab_download' ];
+
+	function showTab(tab) {
+		//alert('show tab: ' + tab);
+		
+		// switch tab
+		
+	}
+
+</script>
+
+</html>
