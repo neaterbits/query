@@ -216,14 +216,23 @@ abstract class Collector_ExpressionList<
 
 	abstract NamedFunctions createNamedFunctions(ISharedCollector_Functions_Callback_Named<MODEL, RESULT, NAMED_RET> func);
 
-	protected class NamedFunctions
+	protected class NamedFunctions<
+	
+		NO_PARAM_ARITHMETIC_SAME_TYPE_RET,
+		NO_PARAM_ARITHMETIC_DOUBLE_RET,
+		
+		NO_PARAM_STRING_RET>
+	
 	
 		extends Collector_NestedFunctions_Named<
 					MODEL, RESULT, NAMED_RET,
 					
 					NAMED_SUM_LONG_RET, NAMED_COUNT_RET, NAMED_SHORT_RET, NAMED_INTEGER_RET, NAMED_LONG_RET, NAMED_DOUBLE_RET, NAMED_BIGDECIMAL_RET, NAMED_STRING_RET,
 					
-					NUMERIC_OPERAND_NEXT, NUMERIC_OPERAND_NEXT, STRING_OPERAND_NEXT
+					NO_PARAM_ARITHMETIC_SAME_TYPE_RET,
+					NO_PARAM_ARITHMETIC_DOUBLE_RET,
+					
+					NO_PARAM_STRING_RET
 					> 
 	
 		implements ISharedFunction_Next<MODEL, RESULT, NAMED_RET>
@@ -284,7 +293,7 @@ abstract class Collector_ExpressionList<
 	
 	//*************** Arithmetic forwarding functions ***************
 
-	private NamedFunctions assureNamedFunctions() {
+	private NamedFunctions<?, ?, ?> assureNamedFunctions() {
 		if (this.named == null) {
 			
 			final ISharedCollector_Functions_Callback_Named<MODEL, RESULT, NAMED_RET> callback

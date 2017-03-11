@@ -101,7 +101,72 @@ abstract class ResultMapper_ExpressionList_Base<
 		return (OPERAND_RET)impl;
 	}
 
-	private class ResultMapper_Functions extends NamedFunctions 
+	private class ResultMapper_Functions extends
+	
+		NamedFunctions<
+			ISharedMapFunctions_Numeric_Named<
+				MODEL,
+				RESULT,
+				
+				NAMED_RET,
+				
+				NAMED_SUM_LONG_RET,
+				NAMED_COUNT_RET,
+				
+				NAMED_SHORT_RET,
+				NAMED_INTEGER_RET,
+				NAMED_LONG_RET,
+				NAMED_DOUBLE_RET,
+				NAMED_BIGDECIMAL_RET,
+				
+				NAMED_SUM_LONG_RET,
+				NAMED_COUNT_RET,
+				
+				NAMED_SHORT_RET,
+				NAMED_INTEGER_RET,
+				NAMED_LONG_RET,
+				NAMED_DOUBLE_RET,
+				NAMED_BIGDECIMAL_RET
+			
+			>,
+			ISharedMapFunctions_Numeric_Named<
+				MODEL,
+				RESULT,
+				
+				NAMED_RET,
+
+				NAMED_DOUBLE_RET,
+				NAMED_DOUBLE_RET,
+				
+				NAMED_DOUBLE_RET,
+				NAMED_DOUBLE_RET,
+				NAMED_DOUBLE_RET,
+				NAMED_DOUBLE_RET,
+				NAMED_DOUBLE_RET,
+
+/*				
+				NAMED_SUM_LONG_RET,
+				NAMED_COUNT_RET,
+				
+				NAMED_SHORT_RET,
+				NAMED_INTEGER_RET,
+				NAMED_LONG_RET,
+				NAMED_DOUBLE_RET,
+				NAMED_BIGDECIMAL_RET,
+	*/
+				
+				NAMED_DOUBLE_RET,
+				NAMED_DOUBLE_RET,
+				
+				NAMED_DOUBLE_RET,
+				NAMED_DOUBLE_RET,
+				NAMED_DOUBLE_RET,
+				NAMED_DOUBLE_RET,
+				NAMED_DOUBLE_RET
+				
+			>,
+			ISharedFunctions_String_Named<MODEL, RESULT, NAMED_RET, NAMED_STRING_RET>
+		>
 
 	implements ISharedMapFunctions_Numeric_Named<
 				MODEL,
