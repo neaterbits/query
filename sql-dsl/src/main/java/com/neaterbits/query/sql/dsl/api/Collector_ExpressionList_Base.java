@@ -53,8 +53,8 @@ abstract class Collector_ExpressionList_Base<
 		return collected;
 	}
 	
-	final ExpressionList collectAsExpressionList() {
-		return new ExpressionList(expressions, operators);		
+	final ExpressionList collectAsExpressionList(boolean check) {
+		return new ExpressionList(expressions, operators, check);
 	}
 	
 	final void addField(Operator op, Function<?, ?> getter) {

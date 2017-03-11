@@ -48,7 +48,7 @@ abstract class SubOperandsBuilder_Initial<
 			ISharedSubOperand_Numeric_Ops_Alias<MODEL, RESULT, R, ALIAS_RET>
 			>
 
-		
+		implements ISharedSubOperandsBuilder_Numeric_Next_Named<MODEL, RESULT, R, AFTER>
  {
 
  }

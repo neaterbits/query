@@ -3,7 +3,7 @@ package com.neaterbits.query.sql.dsl.api;
 
 /**
  * Must have special next-interface that inherits from ISharedOperand_End while initial builder-interface does not,
- * so that can trigge compiler error for eg. .plusOf(e -> e) while .plusOf(e -> e.abs(Company::getStockPrice) will work
+ * so that can trigger compiler error for eg. .plusOf(e -> e) while .plusOf(e -> e.abs(Company::getStockPrice) will work
  * 
  * @author nhl
  *

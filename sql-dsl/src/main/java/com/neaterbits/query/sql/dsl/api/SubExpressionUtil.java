@@ -88,7 +88,7 @@ final class SubExpressionUtil {
 		sub.apply(b);
 		
 		
-		final ExpressionList expressionList = builder.collectAsExpressionList();
+		final ExpressionList expressionList = builder.collectAsExpressionList(false); // do not check, allows for expression lists of 1 item
 		
 		return expressionList;
 	}
