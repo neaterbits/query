@@ -1,7 +1,8 @@
 package com.neaterbits.query.sql.dsl.api;
 
-import java.io.ObjectInputStream.GetField;
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.function.Supplier;
 
 abstract class Collector_ExpressionList<
@@ -90,7 +91,12 @@ abstract class Collector_ExpressionList<
 			   ISharedFunctions_String_Alias<MODEL, RESULT, ALIAS_RET, ALIAS_STRING_RET>
 			   {
 
-	Collector_ExpressionList() {
+
+	private EFieldAccessType fieldAccessType;
+	private List<FunctionBase> undecidedFunctions;
+					
+				   
+    Collector_ExpressionList() {
 		
 	}
 
@@ -115,12 +121,19 @@ abstract class Collector_ExpressionList<
 		super(toCopy);
 		
 		this.fieldAccessType = toCopy.fieldAccessType;
+		
+		this.undecidedFunctions = toCopy.undecidedFunctions == null
+						? null
+						: new ArrayList<>(toCopy.undecidedFunctions);
 	}
 	
-	private EFieldAccessType fieldAccessType;
 	
 	private void setAccessType(EFieldAccessType accessType) {
 		
+		if (accessType == null) {
+			throw new IllegalArgumentException("accessType == null");
+		}
+
 		if (this.fieldAccessType != null) {
 			
 		    if (this.fieldAccessType != accessType) {
@@ -131,6 +144,17 @@ abstract class Collector_ExpressionList<
 		}
 		else {
 			this.fieldAccessType = accessType;
+			
+			// Check if added functions while undecided, and re-add them now
+			
+			if (undecidedFunctions != null) {
+				for (FunctionBase function : undecidedFunctions) {
+					addNoParam(function);
+				}
+				
+				// reset to null as no longer required
+				this.undecidedFunctions = null;
+			}
 		}
 	}
 	
@@ -331,7 +355,33 @@ abstract class Collector_ExpressionList<
 	 ***************************************************************/
 	
 	final void addNoParam(FunctionBase function) {
-		throw new UnsupportedOperationException("TODO - must figure whether named or alias, may have to add to temporary list");
+		
+		if (function == null) {
+			throw new IllegalArgumentException("function == null");
+		}
+
+		if (fieldAccessType == null) {
+			if (undecidedFunctions == null) {
+				undecidedFunctions = new ArrayList<>();
+			}
+			
+			undecidedFunctions.add(function);
+		}
+		else {
+			// Already know access type
+			switch (fieldAccessType) {
+			case NAMED:
+				assureNamedFunctions().addNoParam(function);
+				break;
+				
+			case ALIAS:
+				assureAliasFunctions().addNoParam(function);
+				break;
+				
+			default:
+				throw new UnsupportedOperationException("Unknown field access type: " + fieldAccessType);
+			}
+		}
 	}
 	
 	//*************** Arithmetic forwarding functions ***************
