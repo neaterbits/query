@@ -116,10 +116,21 @@ abstract class SubOperandsBuilder<
 			?, ?, ?, ?, ?, ?, ?, ?> toCopy) {
 		super(toCopy);
 	}
+	
+	private class SubNamedFunctions extends NamedFunctions
+	
+		implements ISharedSubOperandsBuilder_NoParam_Named {
+
+		SubNamedFunctions(ISharedCollector_Functions_Callback_Named func) {
+			super(func);
+		}
+		
+	}
+	
 
 	@Override
 	final NamedFunctions createNamedFunctions(
 			ISharedCollector_Functions_Callback_Named<MODEL, RESULT, NAMED_RET> func) {
-		return new NamedFunctions(func);
+		return new SubNamedFunctions(func);
 	}
 }
