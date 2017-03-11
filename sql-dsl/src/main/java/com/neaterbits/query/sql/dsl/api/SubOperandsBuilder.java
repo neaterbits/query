@@ -116,5 +116,10 @@ abstract class SubOperandsBuilder<
 			?, ?, ?, ?, ?, ?, ?, ?> toCopy) {
 		super(toCopy);
 	}
-	
+
+	@Override
+	final NamedFunctions createNamedFunctions(
+			ISharedCollector_Functions_Callback_Named<MODEL, RESULT, NAMED_RET> func) {
+		return new NamedFunctions(func);
+	}
 }

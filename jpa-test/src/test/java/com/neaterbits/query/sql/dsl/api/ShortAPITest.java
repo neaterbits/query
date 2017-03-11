@@ -177,9 +177,9 @@ public class ShortAPITest extends BaseSQLAPITest {
 		// Only tests that code compiles and query builds successfully
 		final SingleBuilt<CompanySqrtAggregatesVO> acmeQuery = select
 				.one(CompanySqrtAggregatesVO.class)
-				.map(Company::getStockPrice)
-				.plusOf(e -> e.abs(Company::getStockPrice).plus(new BigDecimal("983.2")))
-				.to(CompanySqrtAggregatesVO::setFoo)
+					.map(Company::getStockPrice)
+						.plusOf(e -> e.abs(Company::getStockPrice).plus(new BigDecimal("983.2")))
+						.to(CompanySqrtAggregatesVO::setFoo)
 				.build();
 		
 		

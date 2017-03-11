@@ -23,7 +23,7 @@ final class Short_Collector_MultiResult_Decided_Named<MODEL, RESULT>
 	}
 
 	@Override
-	public ISharedMapFunctions_Named<
+	public ISharedMapFunctions_All_Named<
 			MODEL,
 			RESULT,
 			IShortResult_Mapped_Multi_Named<MODEL, RESULT>,
@@ -54,7 +54,7 @@ final class Short_Collector_MultiResult_Decided_Named<MODEL, RESULT>
 		
 		// return (ISharedMapFunctions_Named)new ResultMapper_ExpressionList_Initial_Named(this); 
 
-		return new Collector_MapFunctions_Named<>(this);
+		return new Collector_MapFunctions_ExpressionList_Named<>(this);
 	}
 
 	@Override

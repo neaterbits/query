@@ -4,7 +4,7 @@ public interface ISharedMapFunctions_Numeric_Named<
 	MODEL,
 	RESULT,
 	
-	RET extends ISharedSelectSourceBuilder<MODEL, RESULT>,
+	RET extends ISharedFunction_After<MODEL, RESULT>,
 	
 	SUM_LONG_RET	extends ISharedFunction_Next<MODEL, RESULT, RET>,
 	COUNT_RET	extends ISharedFunction_Next<MODEL, RESULT, RET>,

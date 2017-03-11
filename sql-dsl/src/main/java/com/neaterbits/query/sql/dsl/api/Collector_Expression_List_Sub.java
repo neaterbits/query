@@ -77,5 +77,10 @@ final class Collector_Expression_List_Sub<
 	Collector_Expression_List_Sub(Expression expression) {
 		super(expression);
 	}
+
+	@Override
+	NamedFunctions createNamedFunctions(ISharedCollector_Functions_Callback_Named<MODEL, RESULT, NAMED_RET> func) {
+		return new NamedFunctions(func);
+	}
 }
 

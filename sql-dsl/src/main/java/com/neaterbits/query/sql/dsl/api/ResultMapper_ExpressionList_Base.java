@@ -100,4 +100,44 @@ abstract class ResultMapper_ExpressionList_Base<
 
 		return (OPERAND_RET)impl;
 	}
+
+	private class ResultMapper_Functions extends NamedFunctions 
+
+	implements ISharedMapFunctions_Numeric_Named<
+				MODEL,
+				RESULT,
+				
+				NAMED_RET,
+				
+				NAMED_SUM_LONG_RET,
+				NAMED_COUNT_RET,
+				
+				NAMED_SHORT_RET,
+				NAMED_INTEGER_RET,
+				NAMED_LONG_RET,
+				NAMED_DOUBLE_RET,
+				NAMED_BIGDECIMAL_RET,
+				
+				NAMED_SUM_LONG_RET,
+				NAMED_COUNT_RET,
+				
+				NAMED_SHORT_RET,
+				NAMED_INTEGER_RET,
+				NAMED_LONG_RET,
+				NAMED_DOUBLE_RET,
+				NAMED_BIGDECIMAL_RET
+				
+				>
+		{
+
+		ResultMapper_Functions(ISharedCollector_Functions_Callback_Named<MODEL, RESULT, NAMED_RET> func) {
+			super(func);
+		}
+	}
+	
+	@Override
+	final NamedFunctions createNamedFunctions(
+			ISharedCollector_Functions_Callback_Named<MODEL, RESULT, NAMED_RET> func) {
+		return new ResultMapper_Functions(func);
+	}
 }

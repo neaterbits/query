@@ -1,10 +1,10 @@
 package com.neaterbits.query.sql.dsl.api;
 
-public interface ISharedMapFunctions_Named<
+public interface ISharedMapFunctions_All_Named<
 		MODEL,
 		RESULT,
 
-		RET extends ISharedSelectSourceBuilder<MODEL, RESULT>,
+		RET extends ISharedFunction_After<MODEL, RESULT>,
 		
 		SUM_LONG_RET	extends ISharedFunction_Next<MODEL, RESULT, RET>,
 		COUNT_RET	extends ISharedFunction_Next<MODEL, RESULT, RET>,
@@ -19,7 +19,6 @@ public interface ISharedMapFunctions_Named<
 
 		NO_PARAM_SUM_LONG_RET	extends ISharedFunction_Next<MODEL, RESULT, RET>,
 		NO_PARAM_COUNT_RET	extends ISharedFunction_Next<MODEL, RESULT, RET>,
-		
 		
 		NO_PARAM_SHORT_RET	extends ISharedFunction_Next<MODEL, RESULT, RET>,
 		NO_PARAM_INT_RET	extends ISharedFunction_Next<MODEL, RESULT, RET>, 

@@ -1,7 +1,7 @@
 package com.neaterbits.query.sql.dsl.api;
 
 @Deprecated
-final class Collector_MapFunctions_Named<
+final class Collector_MapFunctions_ExpressionList_Named<
 
 			MODEL,
 			RESULT,
@@ -89,7 +89,7 @@ final class Collector_MapFunctions_Named<
 			
 			//>
 			
-		implements ISharedMapFunctions_Named<MODEL, RESULT, RET,
+		implements ISharedMapFunctions_All_Named<MODEL, RESULT, RET,
 			SUM_LONG_RET, COUNT_RET, SHORT_RET, INT_RET, LONG_RET, DOUBLE_RET, BIGDECIMAL_RET, STRING_RET,
 			NO_PARAM_SUM_LONG_RET, NO_PARAM_COUNT_RET, NO_PARAM_SHORT_RET, NO_PARAM_INT_RET, NO_PARAM_LONG_RET, NO_PARAM_DOUBLE_RET, NO_PARAM_BIGDECIMAL_RET, NO_PARAM_STRING_RET>,
 		
@@ -103,7 +103,7 @@ final class Collector_MapFunctions_Named<
 			{
 
 				
-	Collector_MapFunctions_Named(/*ISharedCollector_Functions_Callback_Named<MODEL, RESULT, RET> func,*/ /*, Collector_NestedFunctions_Base<MODEL, RESULT> last, */ IMappingCollector<MODEL, RESULT> impl ) {
+	Collector_MapFunctions_ExpressionList_Named(/*ISharedCollector_Functions_Callback_Named<MODEL, RESULT, RET> func,*/ /*, Collector_NestedFunctions_Base<MODEL, RESULT> last, */ IMappingCollector<MODEL, RESULT> impl ) {
 		super(impl);
 		
 		//super(func, last);
@@ -135,7 +135,7 @@ final class Collector_MapFunctions_Named<
 	public NO_PARAM_STRING_RET trim() {
 		throw new UnsupportedOperationException("TODO");
 	}
-
+	
 	/*
 	@Override
 	public final RET to(BiConsumer<RESULT, Comparable> setter) {

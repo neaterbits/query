@@ -212,21 +212,11 @@ abstract class Collector_ExpressionList<
 	ISharedFunction_Next<MODEL, RESULT, ALIAS_RET> getAliasNoParamNext(ISharedFunction_Next<MODEL, RESULT, ALIAS_RET> def) {
 		return def;
 	}
+	
 
-	
-	Collector_NestedFunctions_Named<
-		MODEL, RESULT, NAMED_RET,
-		NAMED_SUM_LONG_RET, NAMED_COUNT_RET, NAMED_SHORT_RET, NAMED_INTEGER_RET, NAMED_LONG_RET, NAMED_DOUBLE_RET, NAMED_BIGDECIMAL_RET, NAMED_STRING_RET,
-		NUMERIC_OPERAND_NEXT, NUMERIC_OPERAND_NEXT, STRING_OPERAND_NEXT
+	abstract NamedFunctions createNamedFunctions(ISharedCollector_Functions_Callback_Named<MODEL, RESULT, NAMED_RET> func);
 
-	> createNamedFunctionsCollector(ISharedCollector_Functions_Callback_Named<MODEL, RESULT, NAMED_RET> func) {
-
-		return new NamedFunctions(func);
-	}
-	
-	
-	
-	private class NamedFunctions
+	protected class NamedFunctions
 	
 		extends Collector_NestedFunctions_Named<
 					MODEL, RESULT, NAMED_RET,
@@ -246,7 +236,7 @@ abstract class Collector_ExpressionList<
 
 		@Override
 		ISharedFunction_Next<MODEL, RESULT, NAMED_RET> getNamedNoParamNext() {
-			return Collector_ExpressionList.this.getNamedNoParamNext(this);
+			return this;
 		}
 	}
 	
@@ -312,7 +302,7 @@ abstract class Collector_ExpressionList<
 					}
 			};
 			
-			this.named = new NamedFunctions(callback);
+			this.named = createNamedFunctions(callback);
 		}
 
 		return this.named;
