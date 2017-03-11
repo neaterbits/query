@@ -319,8 +319,7 @@ final class Short_Collector_SingleResult_Undecided<MODEL, RESULT>
 
 				});
 
-		/*
-		final Supplier<ISharedFunction_Next<MODEL, RESULT, Short_Collector_SingleResult_Decided_Named<MODEL, RESULT>>>
+		final Supplier<IMappingCollector<MODEL, RESULT>>
 
 		s1 = () -> {
 			return new Short_Collector_SingleResult_Decided_Named<MODEL, RESULT>(
@@ -329,7 +328,7 @@ final class Short_Collector_SingleResult_Undecided<MODEL, RESULT>
 					getModelCompiler());
 			};
 
-		final Supplier<ISharedFunction_Next<MODEL, RESULT, Short_Collector_SingleResult_Decided_Named<MODEL, RESULT>>>
+		final Supplier<IMappingCollector<MODEL, RESULT>>
 				
 		s2 = () -> {
 			return 
@@ -340,10 +339,8 @@ final class Short_Collector_SingleResult_Undecided<MODEL, RESULT>
 			
 		};
 		
-		return new ResultMapper_ExpressionList_Initial_Undecided<>(this, s1, s2);
-		*/
 		
-		return null;
+		return new ResultMapper_ExpressionList_Initial_Undecided<>(s1, s2);
 		
 		/*{
 			ISharedFunction_Next<MODEL, RESULT, NAMED_RET> addNamedFunctionResult(Expression expression) {

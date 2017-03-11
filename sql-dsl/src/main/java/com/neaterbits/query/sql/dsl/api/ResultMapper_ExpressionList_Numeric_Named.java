@@ -48,8 +48,26 @@ final class ResultMapper_ExpressionList_Numeric_Named<
 	implements ISharedResultMap_OpsAndTo_Numeric_Named<MODEL, RESULT, R, RET>
 
 {
+	private final IMappingCollector<MODEL, RESULT> impl;
+	
 	// TODO go over constructor calls and use static utility methods? 
 	ResultMapper_ExpressionList_Numeric_Named(Expression expression, IMappingCollector<MODEL, RESULT> impl) {
-		super(expression, impl);
+		super(expression /*, impl */, EFieldAccessType.NAMED);
+
+		if (impl == null) {
+			throw new IllegalArgumentException("impl == null");
+		}
+		
+		this.impl = impl;
+	}
+	
+	
+	@Override
+	IMappingCollector<MODEL, RESULT> getMappingCollector(EFieldAccessType fieldAccessType) {
+		if (fieldAccessType != EFieldAccessType.NAMED) {
+			throw new IllegalStateException("Expected named");
+		}
+		
+		return impl;
 	}
 }

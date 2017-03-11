@@ -56,8 +56,25 @@ abstract class ResultMapper_ExpressionList_Initial_Named<
 	
 	 {
 	
+	private final IMappingCollector<MODEL, RESULT> impl;
+	
 	// TODO go over constructor calls and use static utility methods? 
 	ResultMapper_ExpressionList_Initial_Named(IMappingCollector<MODEL, RESULT> impl) {
-		super(impl);
+		if (impl == null) {
+			throw new IllegalArgumentException("impl == null");
+		}
+		
+		this.impl = impl;
 	}
+
+	@Override
+	IMappingCollector<MODEL, RESULT> getMappingCollector(EFieldAccessType fieldAccessType) {
+		if (fieldAccessType != EFieldAccessType.NAMED) {
+			throw new IllegalStateException("Expected named");
+		}
+		
+		return impl;
+	}
+	
+	
 }

@@ -70,24 +70,30 @@ abstract class ResultMapper_ExpressionList_Base<
 
 		implements ISharedResultMapperTo<MODEL, RESULT, R, OPERAND_RET> {
 
-	private final IMappingCollector<MODEL, RESULT> impl;
+	//private final IMappingCollector<MODEL, RESULT> impl;
+			
+	abstract IMappingCollector<MODEL, RESULT> getMappingCollector(EFieldAccessType fieldAccessType);
 	
-	ResultMapper_ExpressionList_Base(IMappingCollector<MODEL, RESULT> impl) {
+	ResultMapper_ExpressionList_Base(/* IMappingCollector<MODEL, RESULT> impl */) {
+		/*
 		if (impl == null) {
 			throw new IllegalArgumentException("impl == null");
 		}
 
 		this.impl = impl;
+		*/
 	}
 
-	ResultMapper_ExpressionList_Base(Expression expression, IMappingCollector<MODEL, RESULT> impl) {
-		super(expression);
+	ResultMapper_ExpressionList_Base(Expression expression /* , IMappingCollector<MODEL, RESULT> impl */, EFieldAccessType fieldAccessType) {
+		super(expression, fieldAccessType);
 		
+		/*
 		if (impl == null) {
 			throw new IllegalArgumentException("impl == null");
 		}
 
 		this.impl = impl;
+		*/
 	}
 
 	@Override
@@ -96,9 +102,24 @@ abstract class ResultMapper_ExpressionList_Base<
 		
 		final Expression toForward = collectExpressionListOrOne();
 
+		final EFieldAccessType fieldAccessType = getFieldAccessType();
+		
+		if (fieldAccessType == null) {
+			throw new IllegalStateException("Was unable to determine field access type (named or aliased) during mapping");
+		}
+		
+		final IMappingCollector<MODEL, RESULT> impl = getMappingCollector(fieldAccessType);
+		
+
+		impl.getMappingCollector().add(this, toForward, setter);
+		
+		return (OPERAND_RET)impl;
+		
+		/*
 		impl.getMappingCollector().add(this, toForward, setter);
 
 		return (OPERAND_RET)impl;
+		*/
 	}
 
 	private class ResultMapper_Functions extends

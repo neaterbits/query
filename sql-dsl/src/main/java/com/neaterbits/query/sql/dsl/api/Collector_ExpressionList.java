@@ -1,5 +1,6 @@
 package com.neaterbits.query.sql.dsl.api;
 
+import java.io.ObjectInputStream.GetField;
 import java.math.BigDecimal;
 import java.util.function.Supplier;
 
@@ -93,8 +94,18 @@ abstract class Collector_ExpressionList<
 		
 	}
 
-	Collector_ExpressionList(Expression expression) {
+	Collector_ExpressionList(Expression expression, String fromSub) {
 		super(expression);
+	}
+	
+	Collector_ExpressionList(Expression expression, EFieldAccessType fieldAccessType) {
+		super(expression);
+		
+		if (fieldAccessType == null) {
+			throw new IllegalArgumentException("fieldAccessType == null");
+		}
+		
+		this.fieldAccessType = fieldAccessType;
 	}
 	
 	Collector_ExpressionList(Collector_ExpressionList<MODEL, RESULT, R, OPERAND_RET,
@@ -102,7 +113,39 @@ abstract class Collector_ExpressionList<
 			?, ?, ?, ?, ?, ?, ?, ?, ?, ?
 					> toCopy) {
 		super(toCopy);
+		
+		this.fieldAccessType = toCopy.fieldAccessType;
 	}
+	
+	private EFieldAccessType fieldAccessType;
+	
+	private void setAccessType(EFieldAccessType accessType) {
+		
+		if (this.fieldAccessType != null) {
+			
+		    if (this.fieldAccessType != accessType) {
+		    	throw new IllegalStateException("access type mismatch");
+		    }
+		    
+		    
+		}
+		else {
+			this.fieldAccessType = accessType;
+		}
+	}
+	
+	private void setNamed() {
+		setAccessType(EFieldAccessType.NAMED);
+	}
+
+	private void setAliased() {
+		setAccessType(EFieldAccessType.NAMED);
+	}
+	
+	final EFieldAccessType getFieldAccessType() {
+		return fieldAccessType;
+	}
+	
 	
 	@SuppressWarnings("unchecked")
 	final <CLAUSE> CLAUSE absNoParam() {
@@ -294,6 +337,10 @@ abstract class Collector_ExpressionList<
 	//*************** Arithmetic forwarding functions ***************
 
 	private NamedFunctions<?, ?, ?> assureNamedFunctions() {
+		
+		
+		setNamed();
+		
 		if (this.named == null) {
 			
 			final ISharedCollector_Functions_Callback_Named<MODEL, RESULT, NAMED_RET> callback
@@ -328,6 +375,9 @@ abstract class Collector_ExpressionList<
 	
 
 	private AliasFunctions assureAliasFunctions() {
+		
+		setAliased();
+		
 		if (this.alias == null) {
 			
 			final ISharedCollector_Functions_Callback_Alias<MODEL, RESULT, ALIAS_RET> callback

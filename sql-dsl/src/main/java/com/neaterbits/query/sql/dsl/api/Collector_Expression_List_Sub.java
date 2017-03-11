@@ -75,7 +75,7 @@ final class Collector_Expression_List_Sub<
 		{
 
 	Collector_Expression_List_Sub(Expression expression) {
-		super(expression);
+		super(expression, "sub");
 	}
 
 	@Override

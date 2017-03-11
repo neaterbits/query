@@ -45,7 +45,25 @@ final class ResultMapper_ExpressionList_String_Named<
 
 	implements ISharedResultOps_String_Named<MODEL, RESULT, AFTER> {
 
+	private final IMappingCollector<MODEL, RESULT> impl;
+	
 	ResultMapper_ExpressionList_String_Named(Expression expression, IMappingCollector<MODEL, RESULT> impl) {
-		super(expression, impl);
+		super(expression, EFieldAccessType.NAMED);
+		
+		if (impl == null) {
+			throw new IllegalArgumentException("impl == null");
+		}
+		
+		this.impl = impl;
+		
+	}
+	
+	@Override
+	IMappingCollector<MODEL, RESULT> getMappingCollector(EFieldAccessType fieldAccessType) {
+		if (fieldAccessType != EFieldAccessType.NAMED) {
+			throw new IllegalStateException("Expected named");
+		}
+		
+		return impl;
 	}
 }

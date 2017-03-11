@@ -131,29 +131,49 @@ class ResultMapper_ExpressionList_Initial_Undecided<
 		/*, TODO
 	ISharedResultOps_Numeric_Alias<MODEL, RESULT, Integer, ISharedFunction_After<MODEL, RESULT> > */ {
 	
-			
-
-	ResultMapper_ExpressionList_Initial_Undecided(Expression expression, IMappingCollector<MODEL, RESULT> impl) {
-		super(expression, impl);
-		
-		this.getNamed = null;
-		this.getAliased = null;
-	}
-
-	
-	private final Supplier<ISharedFunction_Next<MODEL, RESULT, NAMED_RET>> getNamed;
-	private final Supplier<ISharedFunction_Next<MODEL, RESULT, ALIAS_RET>> getAliased;
+	private final Supplier<IMappingCollector<MODEL, RESULT>> getNamed;
+	private final Supplier<IMappingCollector<MODEL, RESULT>> getAliased;
 	
 	ResultMapper_ExpressionList_Initial_Undecided(
-				IMappingCollector<MODEL, RESULT> impl, 
-				Supplier<ISharedFunction_Next<MODEL, RESULT, NAMED_RET>> getNamed,
-				Supplier<ISharedFunction_Next<MODEL, RESULT, ALIAS_RET>> getAliased) {
-		super(impl);
+				// IMappingCollector<MODEL, RESULT> impl, 
+				Supplier<IMappingCollector<MODEL, RESULT>> getNamed,
+				Supplier<IMappingCollector<MODEL, RESULT>> getAliased) {
+		//super(impl);
+
+		if (getNamed == null) {
+			throw new IllegalArgumentException("getNamed == null");
+		}
+		
+		if (getAliased == null) {
+			throw new IllegalArgumentException("getAliased == null");
+		}
 		
 		this.getNamed = getNamed;
 		this.getAliased = getAliased;
 	}
 
+	@Override
+	IMappingCollector<MODEL, RESULT> getMappingCollector(EFieldAccessType fieldAccessType) {
+		
+		final IMappingCollector<MODEL, RESULT> ret;
+		
+		switch (fieldAccessType) {
+		case NAMED:
+			ret = getNamed.get();
+			break;
+			
+		case ALIAS:
+			ret = getAliased.get();
+			break;
+			
+		default:
+			throw new UnsupportedOperationException("Unknown field access type: " + fieldAccessType);
+		}
+		
+		return ret;
+	}
+
+	
 			
 
 	
@@ -613,6 +633,12 @@ class ResultMapper_ExpressionList_Initial_Undecided<
 	}
 	
 	*/
+
+
+
+
+
+
 
 
 
