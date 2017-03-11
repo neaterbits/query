@@ -1,0 +1,106 @@
+Max test
+i 4 num 10000
+Select based on length 10000, iterations 10000: 38
+Stream based on length 10000, iterations 10000: 643
+Manual based on length 10000, iterations 10000: 504
+ 
+i 3 num 1000
+Select based on length 1000, iterations 100000: 15
+Stream based on length 1000, iterations 100000: 410
+Manual based on length 1000, iterations 100000: 227
+ 
+i 2 num 100
+Select based on length 100, iterations 1000000: 58
+Stream based on length 100, iterations 1000000: 574
+Manual based on length 100, iterations 1000000: 287
+ 
+i 1 num 10
+Select based on length 10, iterations 10000000: 542
+Stream based on length 10, iterations 10000000: 607
+Manual based on length 10, iterations 10000000: 340
+ 
+Max instance test
+i 4 num 10000
+Select based on length 10000, iterations 10000: 6
+Stream based on length 10000, iterations 10000: 635
+Manual based on length 10000, iterations 10000: 437
+ 
+i 3 num 1000
+Select based on length 1000, iterations 100000: 6
+Stream based on length 1000, iterations 100000: 542
+Manual based on length 1000, iterations 100000: 260
+ 
+i 2 num 100
+Select based on length 100, iterations 1000000: 45
+Stream based on length 100, iterations 1000000: 485
+Manual based on length 100, iterations 1000000: 324
+ 
+i 1 num 10
+Select based on length 10, iterations 10000000: 405
+Stream based on length 10, iterations 10000000: 647
+Manual based on length 10, iterations 10000000: 287
+ 
+Sum test
+i 4 num 10000
+Select based on length 10000, iterations 10000: 6
+Stream based on length 10000, iterations 10000: 317
+Manual based on length 10000, iterations 10000: 227
+ 
+i 3 num 1000
+Select based on length 1000, iterations 100000: 4
+Stream based on length 1000, iterations 100000: 236
+Manual based on length 1000, iterations 100000: 178
+ 
+i 2 num 100
+Select based on length 100, iterations 1000000: 43
+Stream based on length 100, iterations 1000000: 301
+Manual based on length 100, iterations 1000000: 173
+ 
+i 1 num 10
+Select based on length 10, iterations 10000000: 447
+Stream based on length 10, iterations 10000000: 1065
+Manual based on length 10, iterations 10000000: 168
+ 
+Sum test with filter 
+i 4 num 10000
+Select based on length 10000, iterations 10000: 16
+Stream based on length 10000, iterations 10000: 863
+Manual based on length 10000, iterations 10000: 506
+ 
+i 3 num 1000
+Select based on length 1000, iterations 100000: 10
+Stream based on length 1000, iterations 100000: 511
+Manual based on length 1000, iterations 100000: 181
+ 
+i 2 num 100
+Select based on length 100, iterations 1000000: 80
+Stream based on length 100, iterations 1000000: 387
+Manual based on length 100, iterations 1000000: 191
+ 
+i 1 num 10
+Select based on length 10, iterations 10000000: 724
+Stream based on length 10, iterations 10000000: 1283
+Manual based on length 10, iterations 10000000: 238
+ 
+Collection test 
+i 4 num 10000
+Select based on length 10000, iterations 10000: 20
+Stream based on length 10000, iterations 10000: 1280
+Manual based on length 10000, iterations 10000: 847
+ 
+i 3 num 1000
+Select based on length 1000, iterations 100000: 9
+Stream based on length 1000, iterations 100000: 840
+Manual based on length 1000, iterations 100000: 503
+ 
+i 2 num 100
+Select based on length 100, iterations 1000000: 71
+Stream based on length 100, iterations 1000000: 955
+Manual based on length 100, iterations 1000000: 615
+ 
+i 1 num 10
+Select based on length 10, iterations 10000000: 720
+Stream based on length 10, iterations 10000000: 1917
+Manual based on length 10, iterations 10000000: 687
+ 
+
