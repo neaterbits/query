@@ -2,7 +2,7 @@ package com.neaterbits.query.sql.dsl.api;
 
 final class AdhocDebug {
 
-	static final boolean DEBUG_BUILD = true;
+	static final boolean DEBUG_BUILD = false;
 	static final boolean DEBUG_EXECUTE = false;
 
 	static final boolean DEBUG_BUILD_QUERY = DEBUG_BUILD;

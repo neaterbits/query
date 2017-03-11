@@ -214,6 +214,18 @@ abstract class Collector_ExpressionList<
 	}
 
 	
+	Collector_NestedFunctions_Named<
+		MODEL, RESULT, NAMED_RET,
+		NAMED_SUM_LONG_RET, NAMED_COUNT_RET, NAMED_SHORT_RET, NAMED_INTEGER_RET, NAMED_LONG_RET, NAMED_DOUBLE_RET, NAMED_BIGDECIMAL_RET, NAMED_STRING_RET,
+		NUMERIC_OPERAND_NEXT, NUMERIC_OPERAND_NEXT, STRING_OPERAND_NEXT
+
+	> createNamedFunctionsCollector(ISharedCollector_Functions_Callback_Named<MODEL, RESULT, NAMED_RET> func) {
+
+		return new NamedFunctions(func);
+	}
+	
+	
+	
 	private class NamedFunctions
 	
 		extends Collector_NestedFunctions_Named<
@@ -227,9 +239,6 @@ abstract class Collector_ExpressionList<
 		implements ISharedFunction_Next<MODEL, RESULT, NAMED_RET>
 	{
 
-		NamedFunctions(Collector_NestedFunctions_Named<MODEL, RESULT, NAMED_RET, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?> toCopy) {
-			super(toCopy);
-		}
 
 		NamedFunctions(ISharedCollector_Functions_Callback_Named<MODEL, RESULT, NAMED_RET> func) {
 			super(func);

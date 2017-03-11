@@ -145,9 +145,14 @@ interface ExecutableQuery<QUERY> {
 		case MAX:
 			ret = null;
 			break;
+
+		case MIN_INSTANCE:
+		case MAX_INSTANCE:
+			ret = null;
+			break;
 			
 		default:
-			throw new UnsupportedOperationException("Unknown functionn " + function);
+			throw new UnsupportedOperationException("Unknown function " + function);
 		}
 		
 		return ret;

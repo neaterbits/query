@@ -1,6 +1,7 @@
 package com.neaterbits.query.sql.dsl.api;
 
 import java.math.BigDecimal;
+import java.util.Collection;
 
 public class Foo {
 	
@@ -18,6 +19,17 @@ public class Foo {
 	private int value;
 	private int value2;
 	private BigDecimal decimal;
+	
+	private Collection<Baz> bazes;
+	
+
+	public Collection<Baz> getBazes() {
+		return bazes;
+	}
+
+	public void setBazes(Collection<Baz> bazes) {
+		this.bazes = bazes;
+	}
 
 	public int getValue() {
 		return value;

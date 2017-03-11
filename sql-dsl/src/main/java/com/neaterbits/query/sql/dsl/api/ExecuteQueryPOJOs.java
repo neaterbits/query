@@ -15,7 +15,7 @@ import com.neaterbits.query.sql.dsl.api.entity.QueryMetaModel;
 
 final class ExecuteQueryPOJOs<QUERY> extends ExecutableQueryAggregateComputations<QUERY> {
 
-	private static final boolean DEBUG = Boolean.TRUE;
+	private static final boolean DEBUG = Boolean.FALSE;
 
 	/**
 	 * Whether we have found a match within condition loop
