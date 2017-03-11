@@ -24,7 +24,7 @@ abstract class SubOperandsBuilder_Initial<
 			NAMED_RET,
 			ALIAS_RET,
 			
-			ISharedFunction_Next<MODEL, RESULT, AFTER>,
+			ISharedSubOperandsBuilder_Numeric_Next_Named<MODEL,RESULT,R,AFTER>,
 			ISharedFunction_Next<MODEL, RESULT, AFTER>,
 			
 			ISharedSubOperand_Numeric_Ops_Named<MODEL, RESULT, R, NAMED_RET>,
