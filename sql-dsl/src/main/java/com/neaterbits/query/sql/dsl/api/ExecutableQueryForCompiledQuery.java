@@ -133,10 +133,6 @@ final class ExecutableQueryForCompiledQuery extends ExecutableQueryForCompiledBa
 		return getMapping(query, mappingIdx).getField().getSource().getIdx();
 	}
 	
-	@Override
-	public CompiledExpression getMappingExpression(CompiledQuery query, int mappingIdx) {
-		return getMapping(query, mappingIdx).getExpression();
-	}
 	
 	@Override
 	public ExecutableQueryExpressions getMappingExpressions(CompiledQuery query, int mappingIdx) {
@@ -144,16 +140,6 @@ final class ExecutableQueryForCompiledQuery extends ExecutableQueryForCompiledBa
 		final CompiledMapping mapping = getMapping(query, mappingIdx);
 
 		return (ExecutableQueryExpressions)new ExecutableQueryExpressionsForCompiledExpression(mapping.getExpression());
-	}
-
-	@Override
-	public int getMappingNumFunctions(CompiledQuery query, int mappingIdx) {
-		return getMapping(query, mappingIdx).getNumFunctions();
-	}
-
-	@Override
-	public FunctionBase getMappingFunction(CompiledQuery query, int mappingIdx, int functionIdx) {
-		return getMapping(query, mappingIdx).getFunctionAt(functionIdx);
 	}
 
 	@Override
