@@ -9,16 +9,6 @@ class Collector_Condition_Comparative<MODEL, RESULT, R extends Comparable<R>, L 
 		super(clause, expression);
 	}
 
-	@Deprecated
-	Collector_Condition_Comparative(Collector_Conditions_GroupBy<MODEL, RESULT, ?> clause, Getter getter) {
-		super(clause, getter);
-	}
-
-	@Deprecated
-	Collector_Condition_Comparative(Collector_Conditions_GroupBy<MODEL, RESULT, ?> clause, CollectedFunctions functions, Getter getter) {
-		super(clause, functions, getter);
-	}
-
 	@Override
 	public final L isGreaterThan(R value) {
 		if (value == null) {

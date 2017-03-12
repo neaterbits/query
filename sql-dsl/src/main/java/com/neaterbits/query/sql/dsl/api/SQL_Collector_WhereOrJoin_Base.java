@@ -1,7 +1,6 @@
 package com.neaterbits.query.sql.dsl.api;
 
 import java.math.BigDecimal;
-import java.util.function.Function;
 import java.util.function.Supplier;
 
 abstract class SQL_Collector_WhereOrJoin_Base<
@@ -340,13 +339,16 @@ abstract class SQL_Collector_WhereOrJoin_Base<
 			@Override
 			public ISharedCondition_Comparable_String_Base<MODEL, RESULT, ALIAS_AND_OR>
 				onString(CollectedFunctions functions, ISupplierString getter) {
-				
-				return new Collector_Condition_String<MODEL, RESULT, ALIAS_AND_OR> (SQL_Collector_WhereOrJoin_Base.this, functions, makeGetter(getter));
+					
+				final Expression expression =  makeExpression(functions, makeGetterExpression(getter));
+			
+				return new Collector_Condition_String<MODEL, RESULT, ALIAS_AND_OR> (SQL_Collector_WhereOrJoin_Base.this, expression);
 			}
 		};
 	
 		return new Collector_ConditionFunctions_Alias<>(cb);
 	}
+			
 	// ------------------------  WHERE ------------------------
 
 	// Allow swithcing to some other instance after initial where, when we know whether named or alias
@@ -362,7 +364,7 @@ abstract class SQL_Collector_WhereOrJoin_Base<
 				Integer,
 				ALIAS_AND_OR> where(ISupplierInteger func) {
 	
-		return new Collector_Condition_Comparative<MODEL, RESULT, Integer, ALIAS_AND_OR>(getAfterWhereAlias(), makeGetter(func));
+		return new Collector_Condition_Comparative<MODEL, RESULT, Integer, ALIAS_AND_OR>(getAfterWhereAlias(), makeGetterExpression(func));
 	}	
 	
 	// implemented in subclass @Override
@@ -371,7 +373,7 @@ abstract class SQL_Collector_WhereOrJoin_Base<
 				RESULT,
 				ALIAS_AND_OR> where(ISupplierString supplier) {
 	
-		return new Collector_Condition_String<MODEL, RESULT, ALIAS_AND_OR>(getAfterWhereAlias(), makeGetter(supplier));
+		return new Collector_Condition_String<MODEL, RESULT, ALIAS_AND_OR>(getAfterWhereAlias(), makeGetterExpression(supplier));
 	}
 
 }

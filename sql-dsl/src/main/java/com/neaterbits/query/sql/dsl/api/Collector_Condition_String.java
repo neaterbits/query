@@ -9,16 +9,6 @@ final class Collector_Condition_String<MODEL, RESULT, L extends ISharedLogical_B
 		super(clause, expression);
 	}
 
-	@Deprecated
-	Collector_Condition_String(Collector_Conditions_GroupBy<MODEL, RESULT, ?> clause, Getter getter) {
-		super(clause, getter);
-	}
-	
-	@Deprecated
-	Collector_Condition_String(Collector_Conditions_GroupBy<MODEL, RESULT, ?> clause, CollectedFunctions functions, Getter getter) {
-		super(clause, functions, getter);
-	}
-
 	private ConditionValue_Literal_String makeLiteralValue(String value) {
 		
 		if (value == null) {

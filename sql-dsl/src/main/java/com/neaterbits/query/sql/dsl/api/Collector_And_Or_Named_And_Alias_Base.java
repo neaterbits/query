@@ -300,7 +300,7 @@ abstract class Collector_And_Or_Named_And_Alias_Base<
 	
 		final Collector_And_Alias<MODEL, RESULT, ALIAS_AND_CLAUSES, ALIAS_NESTED_AND_CLAUSES, ALIAS_NESTED_OR_CLAUSES, ALIAS_AFTER_GROUP_BY> andClauses = createAliasAndCollector();// new Classic_Collector_And_Alias<>(this);
 		
-		return new Collector_Condition_String<MODEL, RESULT, ALIAS_AND_CLAUSES>(andClauses, makeGetter(getter));
+		return new Collector_Condition_String<MODEL, RESULT, ALIAS_AND_CLAUSES>(andClauses, makeGetterExpression(getter));
 	}
 
 
@@ -372,7 +372,9 @@ abstract class Collector_And_Or_Named_And_Alias_Base<
 	
 		final Collector_And_Alias<MODEL, RESULT, ALIAS_AND_CLAUSES, ALIAS_NESTED_AND_CLAUSES, ALIAS_NESTED_OR_CLAUSES, ALIAS_AFTER_GROUP_BY> andClauses = createAliasAndCollector();// new Classic_Collector_And_Alias<MODEL, RESULT>(this);
 	
-		return new Collector_Condition_Comparative<MODEL, RESULT, RR, ALIAS_AND_CLAUSES>(andClauses, functions, makeGetter(getter));
+		final Expression expression =  makeExpression(functions, makeGetterExpression(getter));
+		
+		return new Collector_Condition_Comparative<MODEL, RESULT, RR, ALIAS_AND_CLAUSES>(andClauses, expression);
 	}
 		
 		
@@ -383,7 +385,9 @@ abstract class Collector_And_Or_Named_And_Alias_Base<
 		
 		final Collector_And_Alias<MODEL, RESULT, ALIAS_AND_CLAUSES, ALIAS_NESTED_AND_CLAUSES, ALIAS_NESTED_OR_CLAUSES, ALIAS_AFTER_GROUP_BY> andClauses = createAliasAndCollector(); // new Classic_Collector_And_Alias<>(this);
 		
-		return new Collector_Condition_String<MODEL, RESULT, ALIAS_AND_CLAUSES>(andClauses, functions, makeGetter(getter));
+		final Expression expression =  makeExpression(functions, makeGetterExpression(getter));
+		
+		return new Collector_Condition_String<MODEL, RESULT, ALIAS_AND_CLAUSES>(andClauses, expression);
 	}
 	
 	// ------------------------  OR helpers ------------------------
@@ -400,7 +404,9 @@ abstract class Collector_And_Or_Named_And_Alias_Base<
 	
 		final Collector_Or_Alias<MODEL, RESULT, ALIAS_OR_CLAUSES, ALIAS_NESTED_AND_CLAUSES, ALIAS_NESTED_OR_CLAUSES, ALIAS_AFTER_GROUP_BY> orClauses = createAliasOrCollector(); // new Classic_Collector_Or_Alias<>(this);
 	
-		return new Collector_Condition_Comparative<MODEL, RESULT, RR, ALIAS_OR_CLAUSES>(orClauses, functions, makeGetter(getter));
+		final Expression expression = makeExpression(functions, makeGetterExpression(getter));
+		
+		return new Collector_Condition_Comparative<MODEL, RESULT, RR, ALIAS_OR_CLAUSES>(orClauses, expression);
 	}
 	
 	final 
@@ -408,7 +414,9 @@ abstract class Collector_And_Or_Named_And_Alias_Base<
 	
 		final Collector_Or_Alias<MODEL, RESULT, ALIAS_OR_CLAUSES, ALIAS_NESTED_AND_CLAUSES, ALIAS_NESTED_OR_CLAUSES, ALIAS_AFTER_GROUP_BY> orClauses = createAliasOrCollector(); // new Classic_Collector_Or_Alias<>(this);
 	
-		return new Collector_Condition_String<MODEL, RESULT, ALIAS_OR_CLAUSES>(orClauses, functions, makeGetter(getter));
+		final Expression expression = makeExpression(functions, makeGetterExpression(getter));
+		
+		return new Collector_Condition_String<MODEL, RESULT, ALIAS_OR_CLAUSES>(orClauses, expression);
 	}
 	
 	

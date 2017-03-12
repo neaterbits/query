@@ -48,14 +48,18 @@ abstract class Collector_And_Alias<
 		NESTED_OR_CLAUSES extends ISharedLogical_Or_Alias<MODEL, RESULT>>
 		
 		ISharedCondition_Comparable_Common_All<MODEL, RESULT, RR, M_AND_CLAUSES> andAliasImplComparable(CollectedFunctions functions, Supplier<RR> getter) {
-	
-			return new Collector_Condition_Comparative<MODEL, RESULT, RR, M_AND_CLAUSES>(this, functions, makeGetter(getter));
+
+		final Expression expression = makeExpression(functions, makeGetterExpression(getter));
+		
+		return new Collector_Condition_Comparative<MODEL, RESULT, RR, M_AND_CLAUSES>(this, expression);
 	}
 
 	private ISharedCondition_Comparable_String_All<MODEL, RESULT, AND_CLAUSES>
 		andAliasImplString(CollectedFunctions functions, ISupplierString getter) {
 		
-		return new Collector_Condition_String<MODEL, RESULT, AND_CLAUSES>(this, functions, makeGetter(getter));
+		final Expression expression = makeExpression(functions, makeGetterExpression(getter));
+			
+		return new Collector_Condition_String<MODEL, RESULT, AND_CLAUSES>(this, expression);
 	}
 		
 	@Override

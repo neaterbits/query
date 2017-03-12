@@ -38,7 +38,7 @@ final class Collector_GroupBy_Named<MODEL, RESULT> extends Collector_GroupBy<MOD
 
 		instantiateHaving();
 		
-		return new Collector_Condition_Comparative<>(having, new FunctionGetter(function));
+		return new Collector_Condition_Comparative<>(having, new FieldExpression(function));
 	}
 	
 
@@ -69,7 +69,7 @@ final class Collector_GroupBy_Named<MODEL, RESULT> extends Collector_GroupBy<MOD
 		
 		instantiateHaving();
 		
-		return new Collector_Condition_String<>(having, new FunctionGetter(getter));
+		return new Collector_Condition_String<>(having, new FieldExpression(getter));
 	}
 
 	@Override

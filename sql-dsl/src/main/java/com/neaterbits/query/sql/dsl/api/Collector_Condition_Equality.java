@@ -33,32 +33,6 @@ abstract class Collector_Condition_Equality<MODEL, RESULT, R, L extends ISharedL
 		this.getter = null;
 	}
 	
-	@Deprecated
-	Collector_Condition_Equality(Collector_Conditions_GroupBy<MODEL, RESULT, ?> clause, Getter getter) {
-		this(clause, null, getter);
-	}
-
-	@Deprecated
-	Collector_Condition_Equality(Collector_Conditions_GroupBy<MODEL, RESULT, ?> clause, CollectedFunctions functions, Getter getter) {
-
-		if (true) {
-			throw new UnsupportedOperationException("Not in use");
-		}
-		
-		if (clause == null) {
-			throw new IllegalArgumentException("clause == null");
-		}
-
-		if (getter == null) {
-			throw new IllegalArgumentException("getter == null");
-		}
-
-		this.lhs = null;
-		this.clause = clause;
-		this.functions = functions; // optional
-		this.getter = getter;
-	}
-
 	final <V> ConditionValue_Literal_Base<V> makeLiteralValue(V value) {
 		return new ConditionValue_Literal_Any<>(value);
 	}

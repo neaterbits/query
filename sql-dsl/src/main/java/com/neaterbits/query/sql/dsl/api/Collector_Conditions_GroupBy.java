@@ -24,7 +24,7 @@ abstract class Collector_Conditions_GroupBy<MODEL, RESULT, AFTER_GROUP_BY>
 		return new FunctionGetter(getter);
 	}
 		
-	static Expression makeGetterExpression(Function<?, ?> getter) {
+	static FieldExpression makeGetterExpression(Function<?, ?> getter) {
 		return new FieldExpression(makeGetter(getter));
 	}
 
@@ -32,6 +32,16 @@ abstract class Collector_Conditions_GroupBy<MODEL, RESULT, AFTER_GROUP_BY>
 		return new SupplierGetter(getter);
 	}
 
+	static FieldExpression makeGetterExpression(Supplier<?> getter) {
+		return new FieldExpression(makeGetter(getter));
+	}
+	
+	static Expression makeExpression(CollectedFunctions functions, FieldExpression field) {
+		return functions != null ? new NestedFunctionCallsExpression(functions, field) : field;
+	}
+			
+	
+	
 	abstract Collector_GroupBy<MODEL, RESULT> createGroupByCollector(Collector_Base<MODEL> last, int [] groupByColumns, Collector_Conditions_GroupBy<MODEL, RESULT, ?> collectorConditions);
 	
 	Collector_Conditions_GroupBy(Collector_Conditions_Initial<MODEL, RESULT, AFTER_GROUP_BY> last, ConditionsType newConditionsType) {

@@ -36,7 +36,7 @@ final class Collector_GroupBy_Alias<MODEL, RESULT> extends Collector_GroupBy<MOD
 
 		instantiateHaving();
 		
-		return new Collector_Condition_Comparative<>(having, new SupplierGetter(supplier));
+		return new Collector_Condition_Comparative<>(having, new FieldExpression(supplier));
 	}
 	
 	@Override
@@ -72,6 +72,6 @@ final class Collector_GroupBy_Alias<MODEL, RESULT> extends Collector_GroupBy<MOD
 
 		instantiateHaving();
 		
-		return new Collector_Condition_String<>(having, new SupplierGetter(getter));
+		return new Collector_Condition_String<>(having, new FieldExpression(getter));
 	}
 }

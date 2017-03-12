@@ -38,14 +38,17 @@ abstract class Collector_Or_Alias<
 
 	private <RR extends Comparable<RR>> ISharedCondition_Comparable_Common_All<MODEL, RESULT, RR, OR_CLAUSES> orAliasImplComparable(CollectedFunctions functions, Supplier<RR> getter) {
 		
+		final Expression expression = makeExpression(functions, makeGetterExpression(getter));
 		
-		return new Collector_Condition_Comparative<MODEL, RESULT, RR, OR_CLAUSES>(this, functions, makeGetter(getter));
+		return new Collector_Condition_Comparative<MODEL, RESULT, RR, OR_CLAUSES>(this, expression);
 	}
 	
 	private ISharedCondition_Comparable_String_All<MODEL, RESULT, OR_CLAUSES>
 		orAliasImplString(CollectedFunctions functions, ISupplierString getter) {
 
-		return new Collector_Condition_String<MODEL, RESULT, OR_CLAUSES>(this, functions, makeGetter(getter));
+		final Expression expression = makeExpression(functions, makeGetterExpression(getter));
+			
+		return new Collector_Condition_String<MODEL, RESULT, OR_CLAUSES>(this, expression);
 	}
 
 	@Override
