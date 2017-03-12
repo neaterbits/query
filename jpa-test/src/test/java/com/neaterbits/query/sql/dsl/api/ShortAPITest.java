@@ -17,6 +17,8 @@ import org.junit.Test;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import com.neaterbits.query.jpatest.model.Company;
+import com.neaterbits.query.jpatest.model.Employee;
+import com.neaterbits.query.jpatest.model.Person;
 import com.neaterbits.query.sql.dsl.api.entity.QueryMetaModel;
 
 
@@ -510,7 +512,17 @@ public class ShortAPITest extends BaseSQLAPITest {
     public void testJoinEntity() {
 		final SingleBuilt<Company> acmeQuery = select
 				.one(Company.class)
-				//.innerJoin(left, right)
+
+				/*
+				// reverse mapping
+				.innerJoin(Employee::getCompany)
+
+				 // on class? oin JPA
+				.innerJoin(Employee.class)
+				*/
+				
+				.innerJoin(Company::getEmployees, j -> 
+						j.innerJoin(Employee::getPersonId, Person::getId))
 
 				//.map(Company::getName) .to (CompanyResultsVO::setName)
 				
@@ -522,6 +534,20 @@ public class ShortAPITest extends BaseSQLAPITest {
 				.build();
 		
 	}
+	
+	@Test
+    public void testJoinEntity2() {
+		final SingleBuilt<Employee> acmeQuery = select
+				.one(Employee.class)
+
+				.innerJoin(Employee::getPersonId, Person::getId)
+
+				.where(Company::getName).startsWith("Acme")
+				.build();
+		
+	}
+	
+	
 	
 	@Test
     public void testNonPreparedAggregate() {

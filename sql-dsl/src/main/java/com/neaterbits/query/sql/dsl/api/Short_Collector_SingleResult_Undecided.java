@@ -1,7 +1,6 @@
 package com.neaterbits.query.sql.dsl.api;
 
 import java.math.BigDecimal;
-import java.util.function.Consumer;
 import java.util.function.Supplier;
 
 final class Short_Collector_SingleResult_Undecided<MODEL, RESULT>
@@ -9,8 +8,13 @@ final class Short_Collector_SingleResult_Undecided<MODEL, RESULT>
 			MODEL,
 			RESULT,
 
+			
+			IShortLogical_WhereOrJoin_SingleResult_Entity_Named<MODEL, RESULT>,
+			IShortLogical_WhereOrJoin_SingleResult_Entity_Alias<MODEL, RESULT>,
+			/*
 			ISQLLogical_WhereOrJoin_SingleResult_Named_And_Function<MODEL, RESULT>,
 			ISQLLogical_WhereOrJoin_SingleResult_Alias_And_Function<MODEL, RESULT>,
+			*/
 						
 			IShortResult_Mapped_Single_Named<MODEL, RESULT>,
 			IShortResult_Mapped_Single_Alias<MODEL, RESULT>,
@@ -71,7 +75,16 @@ final class Short_Collector_SingleResult_Undecided<MODEL, RESULT>
 	}
 	
 
+	
+	
 	// ******************* !!! IMPORTANT must switch to one that implements AndOr interface !!! *******************
+
+
+	@Override
+	public ISharedFunctions_Transform_Initial_Named<MODEL, RESULT, ISQLLogical_AndOr_SingleResult_Named<MODEL, RESULT>, ISharedCondition_Comparable_Common_All_Compilable<MODEL, RESULT, Short, ISQLLogical_AndOr_SingleResult_Named<MODEL, RESULT>>, ISharedCondition_Comparable_Common_All_Compilable<MODEL, RESULT, Integer, ISQLLogical_AndOr_SingleResult_Named<MODEL, RESULT>>, ISharedCondition_Comparable_Common_All_Compilable<MODEL, RESULT, Long, ISQLLogical_AndOr_SingleResult_Named<MODEL, RESULT>>, ISharedCondition_Comparable_Common_All_Compilable<MODEL, RESULT, Double, ISQLLogical_AndOr_SingleResult_Named<MODEL, RESULT>>, ISharedCondition_Comparable_Common_All_Compilable<MODEL, RESULT, BigDecimal, ISQLLogical_AndOr_SingleResult_Named<MODEL, RESULT>>, ISharedCondition_Comparable_String_All_Compilable<MODEL, RESULT, ISQLLogical_AndOr_SingleResult_Named<MODEL, RESULT>>> where() {
+		throw new UnsupportedOperationException("TODO");
+	}
+	
 
 	@Override
 	Collector_Conditions_GroupBy<MODEL, RESULT, ?> getAfterWhereNamed() {
