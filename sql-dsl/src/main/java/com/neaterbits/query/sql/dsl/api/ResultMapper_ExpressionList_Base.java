@@ -216,14 +216,14 @@ abstract class ResultMapper_ExpressionList_Base<
 				>
 		{
 
-		ResultMapper_Functions(ISharedCollector_Functions_Callback_Named<MODEL, RESULT, NAMED_RET> func) {
+		ResultMapper_Functions(ISharedCollector_Functions_Callback<MODEL, RESULT, NAMED_RET> func) {
 			super(func);
 		}
 	}
 	
 	@Override
 	final NamedFunctions createNamedFunctions(
-			ISharedCollector_Functions_Callback_Named<MODEL, RESULT, NAMED_RET> func) {
+			ISharedCollector_Functions_Callback<MODEL, RESULT, NAMED_RET> func) {
 		return new ResultMapper_Functions(func);
 	}
 }

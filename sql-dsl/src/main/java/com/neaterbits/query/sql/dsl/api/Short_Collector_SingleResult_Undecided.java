@@ -297,7 +297,7 @@ final class Short_Collector_SingleResult_Undecided<MODEL, RESULT>
 		getQueryCollector().setMappings(mappingCollector);
 		
 		
-		final ISharedCollector_Functions_Callback_Named<MODEL, RESULT, IShortResult_Mapped_Single_Named<MODEL, RESULT>> namedCallback
+		final ISharedCollector_Functions_Callback<MODEL, RESULT, IShortResult_Mapped_Single_Named<MODEL, RESULT>> namedCallback
 		
 			= MapFunctionUtil.singleNamedCallback(
 				() -> new Short_Collector_SingleResult_Decided_Named<>(

@@ -35,9 +35,9 @@ class MapFunctionUtil {
 	
 	private static <MODEL, RESULT, IF extends ISharedSelectSourceBuilder<MODEL, RESULT>, DECIDED extends IMappingCollector<MODEL, RESULT>>
 	
-		ISharedCollector_Functions_Callback_Named<MODEL, RESULT, IF> namedCallback(Supplier<DECIDED> supplier) {
+		ISharedCollector_Functions_Callback<MODEL, RESULT, IF> namedCallback(Supplier<DECIDED> supplier) {
 
-		return new ISharedCollector_Functions_Callback_Named<MODEL, RESULT, IF> () {
+		return new ISharedCollector_Functions_Callback<MODEL, RESULT, IF> () {
 			
 			@Override
 			public ISharedFunction_Next<MODEL, RESULT, IF>
@@ -81,7 +81,7 @@ class MapFunctionUtil {
 		};
 	}
 
-	static <MODEL, RESULT> ISharedCollector_Functions_Callback_Named<MODEL, RESULT, IShortResult_Mapped_Single_Named<MODEL, RESULT>>
+	static <MODEL, RESULT> ISharedCollector_Functions_Callback<MODEL, RESULT, IShortResult_Mapped_Single_Named<MODEL, RESULT>>
 	
 		singleNamedCallback(Supplier<Short_Collector_SingleResult_Decided_Named<MODEL, RESULT>> supplier) {
 		
@@ -94,7 +94,7 @@ class MapFunctionUtil {
 		return aliasCallback(supplier);
 	}
 	
-	static <MODEL, RESULT> ISharedCollector_Functions_Callback_Named<MODEL, RESULT, IShortResult_Mapped_Multi_Named<MODEL, RESULT>>
+	static <MODEL, RESULT> ISharedCollector_Functions_Callback<MODEL, RESULT, IShortResult_Mapped_Multi_Named<MODEL, RESULT>>
 		multiNamedCallback(Supplier<Short_Collector_MultiResult_Decided_Named<MODEL, RESULT>> supplier) {
 	
 		return namedCallback(supplier);

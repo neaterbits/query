@@ -91,7 +91,7 @@ abstract class Collector_Or_Named<
 			ISharedCondition_Comparable_Common_All<MODEL, RESULT, BigDecimal, OR_CLAUSES>,
 			ISharedCondition_Comparable_String_All<MODEL, RESULT, OR_CLAUSES>> or() {
 
-		final ISharedCollector_Functions_Callback_Named<MODEL, RESULT, OR_CLAUSES> cb = new ISharedCollector_Functions_Callback_Named<MODEL, RESULT, OR_CLAUSES>() {
+		final ISharedCollector_Functions_Callback<MODEL, RESULT, OR_CLAUSES> cb = new ISharedCollector_Functions_Callback<MODEL, RESULT, OR_CLAUSES>() {
 
 			@Override
 			public ISharedCondition_Comparable_Common_All<MODEL, RESULT, Comparable<?>, OR_CLAUSES> onComparable(Expression expression) {

@@ -121,7 +121,7 @@ abstract class SubOperandsBuilder<
 	
 		implements ISharedSubOperandsBuilder_NoParam_Named {
 
-		SubNamedFunctions(ISharedCollector_Functions_Callback_Named func) {
+		SubNamedFunctions(ISharedCollector_Functions_Callback func) {
 			super(func);
 		}
 		
@@ -130,7 +130,7 @@ abstract class SubOperandsBuilder<
 
 	@Override
 	final NamedFunctions createNamedFunctions(
-			ISharedCollector_Functions_Callback_Named<MODEL, RESULT, NAMED_RET> func) {
+			ISharedCollector_Functions_Callback<MODEL, RESULT, NAMED_RET> func) {
 		return new SubNamedFunctions(func);
 	}
 }

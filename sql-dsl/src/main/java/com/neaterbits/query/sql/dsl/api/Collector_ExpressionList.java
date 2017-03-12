@@ -281,7 +281,7 @@ abstract class Collector_ExpressionList<
 	}
 	
 
-	abstract NamedFunctions createNamedFunctions(ISharedCollector_Functions_Callback_Named<MODEL, RESULT, NAMED_RET> func);
+	abstract NamedFunctions createNamedFunctions(ISharedCollector_Functions_Callback<MODEL, RESULT, NAMED_RET> func);
 
 	protected class NamedFunctions<
 	
@@ -306,7 +306,7 @@ abstract class Collector_ExpressionList<
 	{
 
 
-		NamedFunctions(ISharedCollector_Functions_Callback_Named<MODEL, RESULT, NAMED_RET> func) {
+		NamedFunctions(ISharedCollector_Functions_Callback<MODEL, RESULT, NAMED_RET> func) {
 			super(func);
 		}
 
@@ -393,9 +393,9 @@ abstract class Collector_ExpressionList<
 		
 		if (this.named == null) {
 			
-			final ISharedCollector_Functions_Callback_Named<MODEL, RESULT, NAMED_RET> callback
+			final ISharedCollector_Functions_Callback<MODEL, RESULT, NAMED_RET> callback
 			
-				= new ISharedCollector_Functions_Callback_Named<MODEL, RESULT, NAMED_RET>() {
+				= new ISharedCollector_Functions_Callback<MODEL, RESULT, NAMED_RET>() {
 
 					@Override
 					public ISharedFunction_Next<MODEL, RESULT, NAMED_RET> onComparable(Expression expression) {

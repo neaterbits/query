@@ -79,7 +79,7 @@ final class Collector_Expression_List_Sub<
 	}
 
 	@Override
-	NamedFunctions createNamedFunctions(ISharedCollector_Functions_Callback_Named<MODEL, RESULT, NAMED_RET> func) {
+	NamedFunctions createNamedFunctions(ISharedCollector_Functions_Callback<MODEL, RESULT, NAMED_RET> func) {
 		return new NamedFunctions(func);
 	}
 }

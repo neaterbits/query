@@ -181,8 +181,8 @@ abstract class SQL_Collector_WhereOrJoin_Base<
 			whereNamed() {
 
 		@SuppressWarnings({"unchecked", "rawtypes"})
-		final ISharedCollector_Functions_Callback_Named<MODEL, RESULT, NAMED_AND_OR> cb
-				= new ISharedCollector_Functions_Callback_Named<MODEL, RESULT, NAMED_AND_OR>() {
+		final ISharedCollector_Functions_Callback<MODEL, RESULT, NAMED_AND_OR> cb
+				= new ISharedCollector_Functions_Callback<MODEL, RESULT, NAMED_AND_OR>() {
 		
 			@Override
 			public ISharedCondition_Comparable_Common_Base<MODEL, RESULT, Comparable<?>, NAMED_AND_OR>

@@ -104,8 +104,8 @@ abstract class Collector_And_Named<
 			and() {
 		
 		@SuppressWarnings({"unchecked", "rawtypes"})
-		final ISharedCollector_Functions_Callback_Named<MODEL, RESULT, AND_CLAUSES> cb
-				= new ISharedCollector_Functions_Callback_Named<MODEL, RESULT, AND_CLAUSES>() {
+		final ISharedCollector_Functions_Callback<MODEL, RESULT, AND_CLAUSES> cb
+				= new ISharedCollector_Functions_Callback<MODEL, RESULT, AND_CLAUSES>() {
 
 			@Override
 			public ISharedCondition_Comparable_Common_Base<MODEL, RESULT, Comparable<?>, AND_CLAUSES>

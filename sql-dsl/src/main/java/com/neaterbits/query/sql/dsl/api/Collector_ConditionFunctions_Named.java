@@ -37,7 +37,7 @@ final class Collector_ConditionFunctions_Named<
 
 	 {
 
-	Collector_ConditionFunctions_Named(ISharedCollector_Functions_Callback_Named<MODEL, RESULT, RET> func) {
+	Collector_ConditionFunctions_Named(ISharedCollector_Functions_Callback<MODEL, RESULT, RET> func) {
 		super(func);
 	}
 

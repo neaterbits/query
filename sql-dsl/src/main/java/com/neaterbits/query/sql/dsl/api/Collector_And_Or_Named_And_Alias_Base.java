@@ -107,8 +107,8 @@ abstract class Collector_And_Or_Named_And_Alias_Base<
 			> andNamed() {
 					
 		@SuppressWarnings({"unchecked", "rawtypes"})
-		final ISharedCollector_Functions_Callback_Named<MODEL, RESULT, NAMED_AND_CLAUSES> cb
-				= new ISharedCollector_Functions_Callback_Named<MODEL, RESULT, NAMED_AND_CLAUSES>() {
+		final ISharedCollector_Functions_Callback<MODEL, RESULT, NAMED_AND_CLAUSES> cb
+				= new ISharedCollector_Functions_Callback<MODEL, RESULT, NAMED_AND_CLAUSES>() {
 		
 					// Condition_Comparable_Common_Base<MODEL, RESULT, Comparable<?>, NAMED_AND_CLAUSES>
 			@Override
@@ -164,8 +164,8 @@ abstract class Collector_And_Or_Named_And_Alias_Base<
 		orNamed() {
 
 		@SuppressWarnings({"unchecked", "rawtypes"})
-		final ISharedCollector_Functions_Callback_Named<MODEL, RESULT, NAMED_OR_CLAUSES> cb
-				= new ISharedCollector_Functions_Callback_Named<MODEL, RESULT, NAMED_OR_CLAUSES>() {
+		final ISharedCollector_Functions_Callback<MODEL, RESULT, NAMED_OR_CLAUSES> cb
+				= new ISharedCollector_Functions_Callback<MODEL, RESULT, NAMED_OR_CLAUSES>() {
 		
 			@Override
 			public ISharedCondition_Comparable_Common_Base<MODEL, RESULT, Comparable<?>, NAMED_OR_CLAUSES>

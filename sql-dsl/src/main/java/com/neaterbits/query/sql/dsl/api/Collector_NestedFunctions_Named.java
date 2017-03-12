@@ -76,10 +76,10 @@ abstract class Collector_NestedFunctions_Named<
 
 {
 		
-	private final ISharedCollector_Functions_Callback_Named<MODEL, RESULT, RET> func;
+	private final ISharedCollector_Functions_Callback<MODEL, RESULT, RET> func;
 	
 	
-	Collector_NestedFunctions_Named(ISharedCollector_Functions_Callback_Named<MODEL, RESULT, RET> func /* , Collector_NestedFunctions_Base<MODEL, RESULT> last */) {
+	Collector_NestedFunctions_Named(ISharedCollector_Functions_Callback<MODEL, RESULT, RET> func /* , Collector_NestedFunctions_Base<MODEL, RESULT> last */) {
 		
 		if (func == null) {
 			throw new IllegalArgumentException("func == null");
