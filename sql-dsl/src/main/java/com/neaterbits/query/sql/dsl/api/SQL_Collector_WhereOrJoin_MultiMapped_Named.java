@@ -1,6 +1,6 @@
 package com.neaterbits.query.sql.dsl.api;
 
-final class SQL_Collector_WhereOrJoin_MultiMapped_Named<
+abstract class SQL_Collector_WhereOrJoin_MultiMapped_Named<
 		MODEL,
 		RESULT,
 		ALIAS_JOIN_CONDITION extends ISQLJoin_Condition_MultiMapped_Alias<MODEL, RESULT, ALIAS_JOIN_CONDITION>>

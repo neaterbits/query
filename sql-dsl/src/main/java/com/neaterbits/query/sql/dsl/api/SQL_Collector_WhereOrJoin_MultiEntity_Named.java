@@ -1,6 +1,6 @@
 package com.neaterbits.query.sql.dsl.api;
 
-public class SQL_Collector_WhereOrJoin_MultiEntity_Named<MODEL, RESULT>
+abstract class SQL_Collector_WhereOrJoin_MultiEntity_Named<MODEL, RESULT>
 
 		extends SQL_Collector_WhereOrJoin_Named_Base<MODEL, RESULT,
 

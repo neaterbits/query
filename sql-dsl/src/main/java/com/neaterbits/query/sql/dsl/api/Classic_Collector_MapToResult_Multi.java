@@ -45,7 +45,7 @@ final class Classic_Collector_MapToResult_Multi<
 
 	@Override
 	ISQLLogical_WhereOrJoin_MultiMapped_Named<MODEL, RESULT> createWhereOrJoinForNamed() {
-		return new SQL_Collector_WhereOrJoin_MultiMapped_Named<>(this);
+		return new Classic_Collector_WhereOrJoin_MultiMapped_Named<>(this);
 	}
 
 	@Override

@@ -18,7 +18,7 @@ final class Classic_Collector_MultiEntityResult<MODEL, RESULT>
 
 	@Override
 	ISQLLogical_WhereOrJoin_MultiEntity_Named<MODEL, RESULT> createWhereOrJoinForNamed() {
-		return new SQL_Collector_WhereOrJoin_MultiEntity_Named<>(this);
+		return new Classic_Collector_WhereOrJoin_MultiEntity_Named<>(this);
 	}
 
 	@Override
