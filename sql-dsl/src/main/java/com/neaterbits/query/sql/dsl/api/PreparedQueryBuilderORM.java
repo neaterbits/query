@@ -333,44 +333,6 @@ final class PreparedQueryBuilderORM<MANAGED, EMBEDDED, IDENTIFIABLE, ATTRIBUTE, 
 				//throw new UnsupportedOperationException("TODO");
 			}
 
-			private void recursivelyOutputNested(List<CompiledFunctionExpression> list, int inputIdx) {
-				System.out.println("#emitting at " + inputIdx + ", list size: " + list.size());
-				
-				if (inputIdx == list.size() - 1) {
-					// Output expression using emitter, will emit inner-most funcions as standalone
-					outputExpressions(q, query, list.get(inputIdx));
-				}
-				else {
-				
-					PreparedQueryBuilderUtil.resolveFunction(dialect, list.get(inputIdx).getFunction(), inputIdx, s, (i, sb) -> {
-					
-						recursivelyOutputNested(list, i + 1);
-					});
-				}
-				
-			}
-			
-			@Override
-			public Void onNestedFunctionCalls(CompiledNestedFunctionCallsExpression nested, Void param) {
-				
-				// Just output all calls recursively
-
-				final List<CompiledFunctionExpression> list = nested.getFunctions();
-
-				recursivelyOutputNested(list, 0);
-				
-				/*
-				final FieldReference ref = prepareFieldReference(q, query, nested.getField());
-				
-				final List<FunctionBase> functions = Coll8.remap(nested.getFunctions(), e -> e.getFunction());
-				
-				// recursively resolve so that we nest output
-				PreparedQueryBuilderUtil.resolveFunction(dialect, functions, ref, s);
-				*/
-
-				return null;
-			}
-
 			@Override
 			public Void onField(CompiledFieldExpression compiledField, Void param) {
 				

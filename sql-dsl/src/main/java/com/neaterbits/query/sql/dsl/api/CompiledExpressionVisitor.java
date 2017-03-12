@@ -9,7 +9,5 @@ public interface CompiledExpressionVisitor<T, R> {
 	R onValue(CompiledValueExpression value, T param);
 
 	R onFunction(CompiledFunctionExpression function, T param);
-
-	R onNestedFunctionCalls(CompiledNestedFunctionCallsExpression nested, T param);
 	
 }

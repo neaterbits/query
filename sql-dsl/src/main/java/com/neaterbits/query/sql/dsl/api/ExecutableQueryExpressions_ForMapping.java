@@ -95,11 +95,6 @@ final class ExecutableQueryExpressionsForCompiledExpression
 			// Sub within parameters
 			return function.getParameters().get(idx);
 		}
-
-		@Override
-		public CompiledExpression onNestedFunctionCalls(CompiledNestedFunctionCallsExpression nested, Integer idx) {
-			throw new UnsupportedOperationException("TODO");
-		}
 	};
 
 	private static final CompiledExpressionVisitor<Void, Integer> expressionSubCount = new CompiledExpressionVisitor<Void, Integer>() {
@@ -123,11 +118,6 @@ final class ExecutableQueryExpressionsForCompiledExpression
 		public Integer onFunction(CompiledFunctionExpression function, Void param) {
 			return function.getParameters().size();
 		}
-
-		@Override
-		public Integer onNestedFunctionCalls(CompiledNestedFunctionCallsExpression nested, Void param) {
-			throw new UnsupportedOperationException();
-		}
 	};
 	
 	
@@ -137,11 +127,6 @@ final class ExecutableQueryExpressionsForCompiledExpression
 		@Override
 		public EExpressionType onValue(CompiledValueExpression value, Void param) {
 			return EExpressionType.VALUE;
-		}
-		
-		@Override
-		public EExpressionType onNestedFunctionCalls(CompiledNestedFunctionCallsExpression nested, Void param) {
-			throw new UnsupportedOperationException("TODO");
 		}
 		
 		@Override
