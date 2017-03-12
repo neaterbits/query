@@ -94,7 +94,7 @@ abstract class SQL_Collector_WhereOrJoin_Base<
 	// ------------------------  JOIN ------------------------
 	
 	
-	private Collector_Joins addJoin(CollectedJoin collectedJoin) {
+	final Collector_Joins addJoin(CollectedJoin collectedJoin) {
 
 		Collector_Joins joinCollector = getQueryCollector().getJoins();
 		
@@ -142,7 +142,7 @@ abstract class SQL_Collector_WhereOrJoin_Base<
 
 		final CollectedJoin curJoin = getQueryCollector().getJoins().getLast();
 
-		final CollectedJoinCondition joinCondition = new CollectedJoinCondition_OneToMany_Named(collectionGetter);
+		final CollectedJoinCondition joinCondition = new CollectedJoinCondition_OneToMany_Named(collectionGetter, null);
 		
 		curJoin.addJoinCondition(joinCondition);
 		
@@ -157,7 +157,7 @@ abstract class SQL_Collector_WhereOrJoin_Base<
 		
 		final CollectedJoin curJoin = getQueryCollector().getJoins().getLast();
 		
-		final CollectedJoinCondition joinCondition = new CollectedJoinCondition_Comparison_Named(leftGetter, rightGetter);
+		final CollectedJoinCondition joinCondition = new CollectedJoinCondition_Comparison_Named(leftGetter, rightGetter, null);
 		
 		curJoin.addJoinCondition(joinCondition);
 		
@@ -281,7 +281,7 @@ abstract class SQL_Collector_WhereOrJoin_Base<
 		
 		final CollectedJoin curJoin = getQueryCollector().getJoins().getLast();
 		
-		final CollectedJoinCondition joinCondition = new CollectedJoinCondition_Comparison_Alias(leftGetter, rightGetter);
+		final CollectedJoinCondition joinCondition = new CollectedJoinCondition_Comparison_Alias(leftGetter, rightGetter, null);
 		
 		curJoin.addJoinCondition(joinCondition);
 		
@@ -294,7 +294,7 @@ abstract class SQL_Collector_WhereOrJoin_Base<
 		
 		final CollectedJoin curJoin = getQueryCollector().getJoins().getLast();
 		
-		final CollectedJoinCondition joinCondition = new CollectedJoinCondition_OneToMany_Alias(collectionGetter);
+		final CollectedJoinCondition joinCondition = new CollectedJoinCondition_OneToMany_Alias(collectionGetter, null);
 		
 		curJoin.addJoinCondition(joinCondition);
 		

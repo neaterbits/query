@@ -1,6 +1,7 @@
 package com.neaterbits.query.sql.dsl.api;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 abstract class CollectedJoin extends CollectedItem {
@@ -30,6 +31,23 @@ abstract class CollectedJoin extends CollectedItem {
 		this.conditions = new ArrayList<>();
 	}
 
+	public CollectedJoin(EJoinType joinType, CollectedJoinCondition condition) {
+		
+		if (joinType == null) {
+			throw new IllegalArgumentException("joinType == null");
+		}
+		
+		if (condition == null) {
+			throw new IllegalArgumentException("condition == null");
+		}
+		
+		this.joinType = joinType;
+		this.leftType = null;
+		this.rightType = null;
+		this.conditions = Arrays.asList(condition);
+	}
+	
+	
 
 	final void addJoinCondition(CollectedJoinCondition condition) {
 		if (condition == null) {
