@@ -74,4 +74,16 @@ final class ExecutableQueryConditions_ForCompiledQuery_Having implements Executa
 	public String getForDebugConditionValue(CompiledQuery query, int level, int[] conditionIndices) {
 		return forConditions.getForDebugConditionValue(query.getHaving(), level, conditionIndices);
 	}
+
+	@Override
+	public ExecutableQueryExpressions getLHS(CompiledQuery query, int level,
+			int[] conditionIndices) {
+		return forConditions.getLHS(query.getHaving(), level, conditionIndices);
+	}
+
+	@Override
+	public ExecutableQueryExpressions getRHS(CompiledQuery query, int level,
+			int[] conditionIndices) {
+		return forConditions.getRHS(query.getHaving(), level, conditionIndices);
+	}
 }

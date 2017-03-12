@@ -334,6 +334,18 @@ abstract class AdhocQuery_Named<MODEL, RESULT>
 		
 		return conditions.getConditionSourceIdx(level, conditionIndices);
 	}
+	
+
+	@Override
+	public final ExecutableQueryExpressions getLHS(AdhocQuery_Named<MODEL, RESULT> query, int level, int[] conditionIndices) {
+
+		throw new UnsupportedOperationException("TODO");
+	}
+	
+	@Override
+	public final ExecutableQueryExpressions getRHS(AdhocQuery_Named<MODEL, RESULT> query, int level, int[] conditionIndices) {
+		throw new UnsupportedOperationException("TODO");
+	}
 
 	@Override
 	public final boolean evaluateCondition(AdhocQuery_Named<MODEL, RESULT> query, int level, int[] conditionIndices, Object instance, ConditionValuesScratch scratch) {

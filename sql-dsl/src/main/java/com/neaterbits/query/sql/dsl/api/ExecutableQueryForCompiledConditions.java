@@ -137,6 +137,18 @@ final class ExecutableQueryForCompiledConditions
 	public String getForDebugConditionValue(CompiledConditions conditions, int level, int[] conditionIndices) {
 		return getComparisonCondition(conditions, level, conditionIndices).getValue().toString();
 	}
-	
-	
+
+
+	@Override
+	public ExecutableQueryExpressions getLHS(CompiledConditions query, int level, int[] conditionIndices) {
+		throw new UnsupportedOperationException("TODO");
+	}
+
+
+	@Override
+	public ExecutableQueryExpressions getRHS(CompiledConditions query, int level, int[] conditionIndices) {
+		throw new UnsupportedOperationException("TODO");
+	}
 }
+
+

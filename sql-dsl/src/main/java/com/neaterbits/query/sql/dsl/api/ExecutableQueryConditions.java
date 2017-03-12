@@ -40,6 +40,10 @@ interface ExecutableQueryConditions<QUERY> {
 	int getConditionsCount(QUERY query, int level, int [] conditionIndices);
 
 	EClauseOperator getOperator(QUERY query, int level, int [] conditionIndices);
+	
+	// LHS and RHS for condition type
+	ExecutableQueryExpressions getLHS(QUERY query, int level, int [] conditionIndices);
+	ExecutableQueryExpressions getRHS(QUERY query, int level, int [] conditionIndices);
 
 	// for compiled-queries only?
 	CompiledFieldReference getConditionLhs(QUERY query, int level, int [] conditionIndices);

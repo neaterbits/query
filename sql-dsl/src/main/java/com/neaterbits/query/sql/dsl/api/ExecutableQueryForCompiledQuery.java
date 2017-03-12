@@ -137,6 +137,14 @@ final class ExecutableQueryForCompiledQuery extends ExecutableQueryForCompiledBa
 	public CompiledExpression getMappingExpression(CompiledQuery query, int mappingIdx) {
 		return getMapping(query, mappingIdx).getExpression();
 	}
+	
+	@Override
+	public ExecutableQueryExpressions getMappingExpressions(CompiledQuery query, int mappingIdx) {
+
+		final CompiledMapping mapping = getMapping(query, mappingIdx);
+
+		return (ExecutableQueryExpressions)new ExecutableQueryExpressionsForCompiledExpression(mapping.getExpression());
+	}
 
 	@Override
 	public int getMappingNumFunctions(CompiledQuery query, int mappingIdx) {

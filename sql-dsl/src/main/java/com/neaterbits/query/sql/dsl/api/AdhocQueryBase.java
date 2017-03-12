@@ -130,6 +130,11 @@ abstract class AdhocQueryBase<MODEL, QUERY extends AdhocQueryBase<MODEL, QUERY>>
 	}
 
 	@Override
+	public final ExecutableQueryExpressions getMappingExpressions(QUERY query, int mappingIdx) {
+		throw new UnsupportedOperationException("Mapping not supported for Adhoc queries");
+	}
+
+	@Override
 	@Deprecated
 	public final CompiledFieldReference getMappingField(QUERY query, int mappingIdx) {
 		throw new UnsupportedOperationException("Mapping not supported for Adhoc queries");

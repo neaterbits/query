@@ -225,6 +225,10 @@ interface ExecutableQuery<QUERY> {
 	// TODO: must use switch-case on type if so, but for now just return nested-expressions
 	CompiledExpression getMappingExpression(QUERY query, int mappingIdx);
 	
+	
+	ExecutableQueryExpressions getMappingExpressions(QUERY query, int mappingIdx);
+	
+	
 	@Deprecated
 	CompiledFieldReference getMappingField(QUERY query, int mappingIdx);
 	

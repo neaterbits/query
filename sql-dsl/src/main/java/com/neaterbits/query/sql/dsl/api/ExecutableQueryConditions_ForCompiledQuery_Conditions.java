@@ -70,4 +70,16 @@ final class ExecutableQueryConditions_ForCompiledQuery_Conditions implements Exe
 	public String getForDebugConditionValue(CompiledQuery query, int level, int[] conditionIndices) {
 		return forConditions.getForDebugConditionValue(query.getConditions(), level, conditionIndices);
 	}
+
+	@Override
+	public ExecutableQueryExpressions getLHS(CompiledQuery query, int level, int[] conditionIndices) {
+		return forConditions.getLHS(query.getConditions(), level, conditionIndices);
+	}
+
+	@Override
+	public ExecutableQueryExpressions getRHS(CompiledQuery query, int level, int[] conditionIndices) {
+		return forConditions.getRHS(query.getConditions(), level, conditionIndices);
+	}
+	
+	
 }
