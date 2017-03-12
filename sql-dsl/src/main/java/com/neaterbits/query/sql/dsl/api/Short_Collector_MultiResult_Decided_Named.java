@@ -8,11 +8,11 @@ final class Short_Collector_MultiResult_Decided_Named<MODEL, RESULT>
 	implements IShortResult_Mapped_Multi_Named<MODEL, RESULT>,
 			ISQLLogical_AndOr_MultiMapped_Named<MODEL, RESULT>{
 
-	Short_Collector_MultiResult_Decided_Named(BaseShortSelect select, CollectedQueryResult_Mapped_Multi result, ModelCompiler<MODEL> modelCompiler) {
+	Short_Collector_MultiResult_Decided_Named(BaseQuery select, CollectedQueryResult_Mapped_Multi result, ModelCompiler<MODEL> modelCompiler) {
 		super(select, result, modelCompiler);
 	}
 
-	Short_Collector_MultiResult_Decided_Named(BaseShortSelect select, CollectedQueryResult_Entity_Multi result, ModelCompiler<MODEL> modelCompiler) {
+	Short_Collector_MultiResult_Decided_Named(BaseQuery select, CollectedQueryResult_Entity_Multi result, ModelCompiler<MODEL> modelCompiler) {
 		super(select, result, modelCompiler);
 	}
 

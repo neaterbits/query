@@ -39,10 +39,10 @@ final class Short_Collector_SingleResult_Undecided<MODEL, RESULT>
 			IShortResult_Single<MODEL, RESULT>,
 			IMappingCollector<MODEL, RESULT> {
 	
-	private final BaseShortSelect select;
+	private final BaseQuery select;
 	
 
-	Short_Collector_SingleResult_Undecided(BaseShortSelect select, SharedSelectSource selectSource, ModelCompiler<MODEL> modelCompiler) {
+	Short_Collector_SingleResult_Undecided(BaseQuery select, SharedSelectSource selectSource, ModelCompiler<MODEL> modelCompiler) {
 		super(select, selectSource, modelCompiler);
 		
 		this.select = select;

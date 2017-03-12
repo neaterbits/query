@@ -72,7 +72,7 @@ abstract class Short_Collector_Result_Undecided_Base<
 	private final SharedSelectSource selectSource;
 	private final ModelCompiler<MODEL> modelCompiler;
 
-	protected Short_Collector_Result_Undecided_Base(BaseShortSelect select, SharedSelectSource selectSource, ModelCompiler<MODEL> modelCompiler) {
+	protected Short_Collector_Result_Undecided_Base(BaseQuery select, SharedSelectSource selectSource, ModelCompiler<MODEL> modelCompiler) {
 		super(new QueryCollectorImpl<MODEL>(select, modelCompiler, null), new Collector_Clause(EConditionsClause.WHERE, ConditionsType.SINGLE));
 		
 		if (selectSource == null) {

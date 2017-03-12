@@ -32,10 +32,10 @@ final class Short_Collector_MultiResult_Undecided<MODEL, RESULT>
 	implements IShortResult_Multi<MODEL, RESULT> {
 
 
-	private final BaseShortSelect select;
+	private final BaseQuery select;
 	private final ECollectionType collectionType;
 	
-	Short_Collector_MultiResult_Undecided(BaseShortSelect select, SharedSelectSource selectSource, ECollectionType collectionType, ModelCompiler<MODEL> modelCompiler) {
+	Short_Collector_MultiResult_Undecided(BaseQuery select, SharedSelectSource selectSource, ECollectionType collectionType, ModelCompiler<MODEL> modelCompiler) {
 		super(select, selectSource, modelCompiler);
 		
 		if (collectionType == null) {

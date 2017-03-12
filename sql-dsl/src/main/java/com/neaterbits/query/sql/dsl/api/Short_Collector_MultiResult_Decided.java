@@ -33,11 +33,11 @@ abstract class Short_Collector_MultiResult_Decided<MODEL, RESULT>
 		
 		> {
 
-	Short_Collector_MultiResult_Decided(BaseShortSelect select, CollectedQueryResult_Mapped result, ModelCompiler<MODEL> modelCompiler) {
+	Short_Collector_MultiResult_Decided(BaseQuery select, CollectedQueryResult_Mapped result, ModelCompiler<MODEL> modelCompiler) {
 		super(select, result, modelCompiler);
 	}
 
-	Short_Collector_MultiResult_Decided(BaseShortSelect select, CollectedQueryResult_Entity result, ModelCompiler<MODEL> modelCompiler) {
+	Short_Collector_MultiResult_Decided(BaseQuery select, CollectedQueryResult_Entity result, ModelCompiler<MODEL> modelCompiler) {
 		super(select, result, modelCompiler);
 	}
 

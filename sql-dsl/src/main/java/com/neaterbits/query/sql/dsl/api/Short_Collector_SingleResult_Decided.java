@@ -32,11 +32,11 @@ abstract class Short_Collector_SingleResult_Decided<MODEL, RESULT, AFTER_GROUP_B
 
 			
 {
-	Short_Collector_SingleResult_Decided(BaseShortSelect select, CollectedQueryResult_Mapped_Single result, ModelCompiler<MODEL> modelCompiler) {
+	Short_Collector_SingleResult_Decided(BaseQuery select, CollectedQueryResult_Mapped_Single result, ModelCompiler<MODEL> modelCompiler) {
 		super(select, result, modelCompiler);
 	}
 
-	Short_Collector_SingleResult_Decided(BaseShortSelect select, CollectedQueryResult_Entity_Single result, ModelCompiler<MODEL> modelCompiler) {
+	Short_Collector_SingleResult_Decided(BaseQuery select, CollectedQueryResult_Entity_Single result, ModelCompiler<MODEL> modelCompiler) {
 		super(select, result, modelCompiler);
 	}
 

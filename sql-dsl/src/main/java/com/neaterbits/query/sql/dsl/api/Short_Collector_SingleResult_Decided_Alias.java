@@ -10,11 +10,11 @@ final class Short_Collector_SingleResult_Decided_Alias<MODEL, RESULT>
 				// when returned 'this' after where
 				ISQLLogical_AndOr_SingleResult_Alias<MODEL, RESULT> {
 
-	Short_Collector_SingleResult_Decided_Alias(BaseShortSelect select, CollectedQueryResult_Mapped_Single result, ModelCompiler<MODEL> modelCompiler) {
+	Short_Collector_SingleResult_Decided_Alias(BaseQuery select, CollectedQueryResult_Mapped_Single result, ModelCompiler<MODEL> modelCompiler) {
 		super(select, result, modelCompiler);
 	}
 	
-	Short_Collector_SingleResult_Decided_Alias(BaseShortSelect select, CollectedQueryResult_Entity_Single result, ModelCompiler<MODEL> modelCompiler) {
+	Short_Collector_SingleResult_Decided_Alias(BaseQuery select, CollectedQueryResult_Entity_Single result, ModelCompiler<MODEL> modelCompiler) {
 		super(select, result, modelCompiler);
 	}
 
