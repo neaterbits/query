@@ -25,13 +25,28 @@ final class ExecutableQueryExpressionsForCompiledExpression
 		// Iterate down to level through expressions
 		CompiledExpression cur = root;
 
-		for (int i = 1; i < level; ++ i) {
+		for (int i = 1; i <= level; ++ i) {
 			cur = cur.visit(expressionSubVisitor, context[i]);
 		}
 		
 		return cur;
 	}
+
 	
+	@Override
+	public CompiledFieldReference getFieldReference(int level, int[] context) {
+		final CompiledFieldExpression fieldExpression = (CompiledFieldExpression)getExpressionAt(level, context);
+		
+		return fieldExpression.getFieldReference();
+	}
+
+	@Override
+	public Operator getListOperator(int level, int[] context, int idx) {
+		final CompiledExpressionList list = (CompiledExpressionList)getExpressionAt(level, context);
+		
+		return list.getOperators().get(idx);
+	}
+
 	@Override
 	public EExpressionType getExpressionType(int level, int[] context) {
 		
@@ -77,7 +92,7 @@ final class ExecutableQueryExpressionsForCompiledExpression
 
 		@Override
 		public CompiledExpression onFunction(CompiledFunctionExpression function, Integer idx) {
-			// Sub within paramters
+			// Sub within parameters
 			return function.getParameters().get(idx);
 		}
 
@@ -141,7 +156,7 @@ final class ExecutableQueryExpressionsForCompiledExpression
 
 		@Override
 		public EExpressionType onField(CompiledFieldExpression field, Void param) {
-			return EExpressionType.VALUE;
+			return EExpressionType.FIELD;
 		}
 	};
 }

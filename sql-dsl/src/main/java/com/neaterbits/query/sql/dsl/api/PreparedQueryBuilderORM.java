@@ -126,7 +126,9 @@ final class PreparedQueryBuilderORM<MANAGED, EMBEDDED, IDENTIFIABLE, ATTRIBUTE, 
 		final int numMappings = q.getMappingCount(query);
 		
 		//final List<FieldReference> refs = new ArrayList<>(numMappings);
-		
+
+		final FieldReferenceType fieldReferenceType = q.getQueryFieldReferenceType(query);
+
 		for (int mappingIdx = 0; mappingIdx < numMappings; ++ mappingIdx) {
 			
 			if (mappingIdx > 0) {
@@ -134,9 +136,13 @@ final class PreparedQueryBuilderORM<MANAGED, EMBEDDED, IDENTIFIABLE, ATTRIBUTE, 
 			}
 			
 			//final CompiledFieldReference field = q.getMappingField(query, mappingIdx);
-			final CompiledExpression expression = q.getMappingExpression(query, mappingIdx);
+			//final CompiledExpression expression = q.getMappingExpression(query, mappingIdx);
 			
-			outputExpressions(q, query, expression);
+			//outputExpressions(q, query, expression);
+			
+			final ExecutableQueryExpressions expressions = q.getMappingExpressions(query, mappingIdx);
+			
+			outputExpressions(expressions, fieldReferenceType);
 			
 			// Must recursively output query usingn visitor
 			
@@ -160,7 +166,105 @@ final class PreparedQueryBuilderORM<MANAGED, EMBEDDED, IDENTIFIABLE, ATTRIBUTE, 
 		
 		//dialect.addMappings(s, refs);
 	}
+
+	private <QUERY> void outputExpressions(ExecutableQueryExpressions expressions, FieldReferenceType fieldReferenceType) {
+		// Start at root and recurse downwards
+		
+		int level = 0;
+		int [] context = new int[100]; // probably less tahnn 100 nested-levels
+		
+		context[0] = 0; // just one root expression
+		
+		
+		outputExpression(expressions, fieldReferenceType, level, context);
+	}
+	private <QUERY> void outputExpression(ExecutableQueryExpressions expressions, FieldReferenceType fieldReferenceType, int level, int [] context) {
+		// Start at root and recurse downwards
+		
+		final EExpressionType type = expressions.getExpressionType(level, context);
+		
+		switch (type) {
+		case FIELD:
+			
+			final CompiledFieldReference fieldReference = expressions.getFieldReference(level, context);
+			
+			dialect.appendFieldReference(s, prepareFieldReference(fieldReferenceType, fieldReference));
+			break;
+			
+		case VALUE:
+			// TODO: handle this properly, must wrap string literals etc
+			
+			final Comparable<?> value = expressions.getValue(level, context);
+			
+			s.append(value.toString());
+			break;
+			
+		case LIST:
+			s.append('(');
+
+			final int num = expressions.getSubCount(level, context);
+
+			for (int i = 0; i < num; ++ i) {
+
+				if (i > 0) {
+					final char opChar;
+
+					final Operator operator = expressions.getListOperator(level, context, i - 1);
+					
+					switch (operator) {
+					case PLUS: 		opChar = '+'; break;
+					case MINUS: 	opChar = '-'; break;
+					case MULTIPLY: 	opChar = '*'; break;
+					case DIVIDE: 	opChar = '/'; break;
+					
+					default:
+						throw new UnsupportedOperationException("Unknown arithmetic operator " + operator);
+					}
+					
+					s.sb.append(' ').append(opChar).append(' ');
+				}
+				
+				// recurse
+				context[level + 1] = i;
+
+				outputExpression(expressions, fieldReferenceType, level + 1, context);
+			}
+
+			s.append(')');
+			break;
+			
+		case FUNCTION:
+			final FunctionBase function = expressions.getFunction(level, context);
+			final String functionName = dialect.getFunctionName(function);
+			
+			s.append(functionName);
+			s.append('(');
+			
+			final int numParameters = expressions.getSubCount(level, context);
+			
+			for (int i = 0; i < numParameters; ++ i) {
+				
+				if (i > 0) {
+					s.append(", ");
+				}
+				
+				context[level + 1] = i;
+
+				// recurse for param
+				outputExpression(expressions, fieldReferenceType, level + 1, context);
+			}
+			
+			s.append(')');
+			
+			break;
+			
+		default:
+			throw new UnsupportedOperationException("Unknown expression type " + type);
+		}
+		
+	}
 	
+	@Deprecated
 	private <QUERY> void outputExpressions(ExecutableQuery<QUERY> q, QUERY query, CompiledExpression expression) {
 		final CompiledExpressionVisitor<Void, Void> expressionOutputVisitor = new CompiledExpressionVisitor<Void, Void>() {
 			
@@ -532,14 +636,19 @@ final class PreparedQueryBuilderORM<MANAGED, EMBEDDED, IDENTIFIABLE, ATTRIBUTE, 
 	}
 	
 	private <QUERY> FieldReference prepareFieldReference(ExecutableQuery<QUERY> q, QUERY query, CompiledFieldReference field) {
+		final FieldReferenceType fieldReferenceType = q.getQueryFieldReferenceType(query);
 
+		return prepareFieldReference(fieldReferenceType, field);
+	}
+
+	private <QUERY> FieldReference prepareFieldReference(FieldReferenceType fieldReferenceType, CompiledFieldReference field) {
+		
 		final TypeMapSource source = field.getSource();
 
 		final CompiledGetter getter = field.getGetter();
 
 		final String columnName = getColumnNameForGetter(source, getter);
 
-		final FieldReferenceType fieldReferenceType = q.getQueryFieldReferenceType(query);
 		
 		final FieldReference ret;
 		
