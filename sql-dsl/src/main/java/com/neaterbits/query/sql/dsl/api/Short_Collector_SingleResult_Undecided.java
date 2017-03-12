@@ -309,28 +309,6 @@ final class Short_Collector_SingleResult_Undecided<MODEL, RESULT>
 		// Collect mappings, should ever only create one of these
 		getQueryCollector().setMappings(mappingCollector);
 		
-		
-		final ISharedCollector_Functions_Callback<MODEL, RESULT, IShortResult_Mapped_Single_Named<MODEL, RESULT>> namedCallback
-		
-			= MapFunctionUtil.singleNamedCallback(
-				() -> new Short_Collector_SingleResult_Decided_Named<>(
-					select,
-					new CollectedQueryResult_Mapped_Single(getResultType()),
-					getModelCompiler()));
-			
-			
-			
-		final ISharedCollector_Functions_Callback_Alias<MODEL, RESULT, IShortResult_Mapped_Single_Alias<MODEL, RESULT>> aliasCallback
-			= MapFunctionUtil.singleAliasCallback(
-				() -> {
-					
-					
-					return new Short_Collector_SingleResult_Decided_Alias<>(
-						select,
-						new CollectedQueryResult_Mapped_Single(getResultType()),
-						getModelCompiler());
-
-				});
 
 		final Supplier<IMappingCollector<MODEL, RESULT>>
 
@@ -354,19 +332,6 @@ final class Short_Collector_SingleResult_Undecided<MODEL, RESULT>
 		
 		
 		return new ResultMapper_ExpressionList_Initial_Undecided<>(s1, s2);
-		
-		/*{
-			ISharedFunction_Next<MODEL, RESULT, NAMED_RET> addNamedFunctionResult(Expression expression) {
-				
-				super.addNamedFunctionResult(expression);
-				
-				return new Short_Collector_SingleResult_Decided_Named<>(
-						select,
-						new CollectedQueryResult_Mapped_Single(getResultType()),
-						getModelCompiler());
-			}
-		};
-		*/
 	}
 
 	@Override
