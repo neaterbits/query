@@ -2,13 +2,16 @@ package com.neaterbits.query.sql.dsl.api;
 
 import java.math.BigDecimal;
 
-final class SQL_Collector_WhereOrJoin_SingleResult_Named<MODEL, RESULT>
+abstract class SQL_Collector_WhereOrJoin_SingleResult_Named<
+		MODEL,
+		RESULT,
+		ALIAS_JOIN_CONDITION extends ISQLJoin_Condition_SingleResult_Alias<MODEL, RESULT, ALIAS_JOIN_CONDITION>>
 
 	extends SQL_Collector_WhereOrJoin_Named_Base<
 				MODEL,
 				RESULT,
 				ISQLJoin_Condition_SingleResult_Named<MODEL, RESULT, Object, Object>,
-				ISQLJoin_Condition_SingleResult_Alias<MODEL, RESULT>,
+				ALIAS_JOIN_CONDITION,
 				
 	
 				ISQLLogical_And_NonProcessResult_Named<MODEL, RESULT>,

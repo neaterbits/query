@@ -14,7 +14,7 @@ final class Classic_Collector_MultiResult<MODEL, RESULT>
 			ISQLLogical_WhereOrJoin_MultiEntity_Alias<MODEL, RESULT>,
 
 			ISQLLogical_WhereOrJoin_MultiMapped_Named<MODEL, RESULT>,
-			ISQLLogical_WhereOrJoin_MultiMapped_Alias<MODEL, RESULT>,
+			IClassicLogical_WhereOrJoin_MultiMapped_Alias<MODEL, RESULT>,
 
 			IClassicResult_Mapped_Multi_Named<MODEL, RESULT>,
 			IClassicResult_Mapped_Multi_Alias<MODEL, RESULT>> 
@@ -43,7 +43,7 @@ final class Classic_Collector_MultiResult<MODEL, RESULT>
 
 	@Override
 	ISQLLogical_WhereOrJoin_MultiEntity_Alias<MODEL, RESULT> createWhereOrJoinForAlias() {
-		return new SQL_Collector_WhereOrJoin_MultiEntity_Alias<>(this);
+		return new Classic_Collector_WhereOrJoin_MultiEntity_Alias<>(this);
 	}
 
 	// For instantiating where or join when mapped
@@ -52,7 +52,7 @@ final class Classic_Collector_MultiResult<MODEL, RESULT>
 				MODEL, RESULT,
 				IClassicResult_Mapped_Multi_Named<MODEL, RESULT>,
 				ISQLLogical_WhereOrJoin_MultiMapped_Named<MODEL, RESULT>,
-				ISQLLogical_WhereOrJoin_MultiMapped_Alias<MODEL, RESULT>> createMapToResult() {
+				IClassicLogical_WhereOrJoin_MultiMapped_Alias<MODEL, RESULT>> createMapToResult() {
 		return new Classic_Collector_MapToResult_Multi<MODEL, RESULT>(select, getResultType(), collectionType, getModelCompiler());
 	}
 

@@ -6,8 +6,7 @@ public interface ISQLJoin_Condition_Alias_Base<
 				RESULT,
 				JOIN_CONDITION extends ISQLJoin_Condition_Alias_Base<MODEL, RESULT, JOIN_CONDITION>>
 
-		extends ISQLJoin_Condition,
-				ISQLJoin_Alias<MODEL, RESULT, JOIN_CONDITION> {
+		extends ISQLJoin_Condition {
 	
 	
 	JOIN_CONDITION on(ISupplierCollection joinCollection);

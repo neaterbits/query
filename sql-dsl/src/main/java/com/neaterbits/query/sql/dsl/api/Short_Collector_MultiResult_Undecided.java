@@ -8,7 +8,7 @@ final class Short_Collector_MultiResult_Undecided<MODEL, RESULT>
 			RESULT,
 			
 			ISQLLogical_WhereOrJoin_MultiMapped_Named<MODEL, RESULT>,
-			ISQLLogical_WhereOrJoin_MultiMapped_Alias<MODEL, RESULT>,
+			ISQLLogical_WhereOrJoin_MultiMapped_Alias<MODEL, RESULT, IShortJoin_Condition_MultiMapped_Alias<MODEL, RESULT>>,
 						
 			IShortResult_Mapped_Multi_Named<MODEL, RESULT>,
 			IShortResult_Mapped_Multi_Alias<MODEL, RESULT>,

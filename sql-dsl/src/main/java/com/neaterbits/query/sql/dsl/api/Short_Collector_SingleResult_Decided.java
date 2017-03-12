@@ -1,6 +1,9 @@
 package com.neaterbits.query.sql.dsl.api;
 
-abstract class Short_Collector_SingleResult_Decided<MODEL, RESULT, AFTER_GROUP_BY> 
+abstract class Short_Collector_SingleResult_Decided<
+		MODEL, 
+		RESULT,
+		AFTER_GROUP_BY> 
 	extends Short_Collector_Result_Decided_Base<
 			MODEL,
 			RESULT,
@@ -23,7 +26,7 @@ abstract class Short_Collector_SingleResult_Decided<MODEL, RESULT, AFTER_GROUP_B
 			ISQLLogical_Or_NonProcessResult_Alias<MODEL, RESULT>,
 			ISQLLogical_And_NonProcessResult_Alias<MODEL, RESULT>,
 			ISQLLogical_Or_NonProcessResult_Alias<MODEL, RESULT>,
-			ISQLJoin_Condition_SingleResult_Alias<MODEL, RESULT>,
+			IShortJoin_Condition_SingleResult_Alias<MODEL, RESULT>,
 			ISQLLogical_AndOr_SingleResult_Alias<MODEL, RESULT>,
 			
 			

@@ -19,12 +19,12 @@ final class Collector_AggregateNamedResult<TYPE>
 
 	@Override
 	ISQLLogical_WhereOrJoin_SingleResult_Named_And_Function<SingleBuilt<TYPE>, TYPE> createWhereOrJoinForNamed() {
-		return new SQL_Collector_WhereOrJoin_SingleResult_Named<SingleBuilt<TYPE>, TYPE>(this);
+		return new Classic_Collector_WhereOrJoin_SingleResult_Named<SingleBuilt<TYPE>, TYPE>(this);
 	}
 
 	@Override
 	ISQLLogical_WhereOrJoin_SingleResult_Alias_And_Function<SingleBuilt<TYPE>, TYPE> createWhereOrJoinForAlias() {
-		return new SQL_Collector_WhereOrJoin_SingleResult_Alias<SingleBuilt<TYPE>, TYPE>(this);
+		return new Classic_Collector_WhereOrJoin_SingleResult_Alias<SingleBuilt<TYPE>, TYPE>(this);
 	}
 
 	@Override

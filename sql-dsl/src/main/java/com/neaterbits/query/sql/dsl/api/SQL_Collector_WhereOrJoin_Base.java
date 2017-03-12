@@ -72,7 +72,7 @@ abstract class SQL_Collector_WhereOrJoin_Base<
 				ISharedJoin_Condition_Named<MODEL, RESULT, Object, Object, NAMED_JOIN_CONDITION>,
 	
 			   	ISQLLogical_WhereOrJoin_Alias_Base<MODEL, RESULT>,
-			   	ISQLJoin_Alias<MODEL, RESULT, ALIAS_JOIN_CONDITION>
+			   	IShared_Join
 		
 		{
 		
@@ -254,7 +254,7 @@ abstract class SQL_Collector_WhereOrJoin_Base<
 	}
 	
 	
-	@Override
+	// @Override TODO : for classic, remove elsewhere?
 	public final ALIAS_JOIN_CONDITION innerJoin(Object left, Object right) {
 	
 		final CollectedJoin_Alias collectedJoin = new CollectedJoin_Alias(EJoinType.INNER, (IAlias)left, (IAlias)right);
@@ -264,7 +264,7 @@ abstract class SQL_Collector_WhereOrJoin_Base<
 		return getJoinConditionAlias();
 	}
 	
-	@Override
+	// @Override TODO : for classic, remove elsewhere?
 	public final ALIAS_JOIN_CONDITION leftJoin(Object left, Object right) {
 	
 		final CollectedJoin_Alias collectedJoin = new CollectedJoin_Alias(EJoinType.LEFT, (IAlias)left, (IAlias)right);

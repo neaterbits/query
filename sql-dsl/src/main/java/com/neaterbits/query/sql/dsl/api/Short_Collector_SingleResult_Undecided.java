@@ -26,7 +26,7 @@ final class Short_Collector_SingleResult_Undecided<MODEL, RESULT>
 			ISQLLogical_Or_NonProcessResult_Alias<MODEL, RESULT>,
 			ISQLLogical_And_NonProcessResult_Alias<MODEL, RESULT>,
 			ISQLLogical_Or_NonProcessResult_Alias<MODEL, RESULT>,
-			ISQLJoin_Condition_SingleResult_Alias<MODEL, RESULT>,
+			IShortJoin_Condition_SingleResult_Alias<MODEL, RESULT>,
 			ISQLLogical_AndOr_SingleResult_Alias<MODEL, RESULT>,
 
 			Void

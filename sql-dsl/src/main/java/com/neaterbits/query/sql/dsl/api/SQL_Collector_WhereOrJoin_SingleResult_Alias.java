@@ -1,6 +1,10 @@
 package com.neaterbits.query.sql.dsl.api;
 
-final class SQL_Collector_WhereOrJoin_SingleResult_Alias<MODEL, RESULT>
+abstract class SQL_Collector_WhereOrJoin_SingleResult_Alias<
+		MODEL, 
+		RESULT,
+		ALIAS_JOIN_CONDITION extends ISQLJoin_Condition_Alias_Base<MODEL, RESULT, ALIAS_JOIN_CONDITION>
+		>
 
 		extends SQL_Collector_WhereOrJoin_Alias_Base<
 			MODEL,
@@ -8,8 +12,8 @@ final class SQL_Collector_WhereOrJoin_SingleResult_Alias<MODEL, RESULT>
 			
 			// For sharing code in baseclass
 			ISQLJoin_Condition_SingleResult_Named<MODEL, RESULT, Object, Object>,
+			ALIAS_JOIN_CONDITION,
 			
-			ISQLJoin_Condition_SingleResult_Alias<MODEL, RESULT>,
 			
 			ISQLLogical_And_NonProcessResult_Alias<MODEL, RESULT>,
 			ISQLLogical_Or_NonProcessResult_Alias<MODEL, RESULT>,

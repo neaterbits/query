@@ -507,6 +507,23 @@ public class ShortAPITest extends BaseSQLAPITest {
 	}
 
 	@Test
+    public void testJoinEntity() {
+		final SingleBuilt<Company> acmeQuery = select
+				.one(Company.class)
+				//.innerJoin(left, right)
+
+				//.map(Company::getName) .to (CompanyResultsVO::setName)
+				
+				//.map().sqrt().sum(Company::getStockPrice).to(CompanySqrtAggregatesVO::setSqrtSumStockPrice)
+
+				//.map().sqrt().avg(Company::getStockPrice).to(CompanySqrtAggregatesVO::setSqrtAvgStockPrice)
+
+				.where(Company::getName).startsWith("Acme")
+				.build();
+		
+	}
+	
+	@Test
     public void testNonPreparedAggregate() {
 
 		final SinglePrepared<BigDecimal> prepared = select.sum(Company::getStockPrice).build().prepare(jpqlJPA);

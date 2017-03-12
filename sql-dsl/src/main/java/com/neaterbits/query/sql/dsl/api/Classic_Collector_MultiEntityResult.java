@@ -23,7 +23,7 @@ final class Classic_Collector_MultiEntityResult<MODEL, RESULT>
 
 	@Override
 	ISQLLogical_WhereOrJoin_MultiEntity_Alias<MODEL, RESULT> createWhereOrJoinForAlias() {
-		return new SQL_Collector_WhereOrJoin_MultiEntity_Alias<>(this);
+		return new Classic_Collector_WhereOrJoin_MultiEntity_Alias<>(this);
 	}
 
 	@Override

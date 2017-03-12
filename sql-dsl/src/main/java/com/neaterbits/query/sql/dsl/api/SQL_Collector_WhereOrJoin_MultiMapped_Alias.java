@@ -1,6 +1,10 @@
 package com.neaterbits.query.sql.dsl.api;
 
-final class SQL_Collector_WhereOrJoin_MultiMapped_Alias<MODEL, RESULT>
+abstract class SQL_Collector_WhereOrJoin_MultiMapped_Alias<
+	MODEL,
+	RESULT,
+	ALIAS_JOIN_CONDITION extends ISQLJoin_Condition_MultiMapped_Alias<MODEL,RESULT, ALIAS_JOIN_CONDITION>
+	>
 
 		extends SQL_Collector_WhereOrJoin_Alias_Base<
 			MODEL,
@@ -10,7 +14,7 @@ final class SQL_Collector_WhereOrJoin_MultiMapped_Alias<MODEL, RESULT>
 			ISQLJoin_Condition_MultiMapped_Named<MODEL, RESULT, Object, Object>,
 			
 			
-			ISQLJoin_Condition_MultiMapped_Alias<MODEL,RESULT>,
+			ALIAS_JOIN_CONDITION,
 			
 			ISQLLogical_And_MultiMapped_Alias<MODEL, RESULT>,
 			ISQLLogical_Or_MultiMapped_Alias<MODEL, RESULT>,
@@ -18,7 +22,7 @@ final class SQL_Collector_WhereOrJoin_MultiMapped_Alias<MODEL, RESULT>
 
 			ISharedProcessResult_After_GroupBy_Alias<MODEL, RESULT>>
 		
-		implements ISQLLogical_WhereOrJoin_MultiMapped_Alias<MODEL, RESULT> {
+		implements ISQLLogical_WhereOrJoin_MultiMapped_Alias<MODEL, RESULT, ALIAS_JOIN_CONDITION> {
 		
 	SQL_Collector_WhereOrJoin_MultiMapped_Alias(Collector_Base<MODEL> last) {
 		super(last);

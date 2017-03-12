@@ -1193,9 +1193,9 @@ sub-interfacer for alle,l så tungvindt og mye arbeid.
  .get() => hente verdier fra prepared-query
 
 Men først prepared.
-
-compiled? Er om vi cacher et query som ikke er kjent DS og som må prepares med DS først.
-
+>zxcvbnm,.-+
+m
+1|++
 Men om er med DS så blir det alltid prepared som kan gjøres executeWithParams() på.
 
 Men hvordan skille mellom compile(), prepare() og prepare(ds) ?
@@ -1219,10 +1219,80 @@ kompilerer etter hvert som query kjøres gjennom.
 
 
 
-
-
-
-
 ------------------------------
+
+
+
+Short-query joins:
+
+ - alltid joine nedover i en trestruktur, selv om kunne joine på toppnivå,
+   gir bedre overblikk over layouten i dataene.
+
+
+Må alltid ha en rot-type å joine ut fra.
+
+entity:
+  - rot-typen er i list() så kan bare joine ut rett etter denne.
+
+mapped:
+
+ - vet ikke rot-typen siden ikke spesifiser, letteste er nok spesiell join ytterst der rot-typen må med, eller?
+Kan bare ha en enkelt join på rot-nivå så starter der.
+
+
+ list(Mapped.class)
+  .map(Company::getName).to(Mapped::setName)
+  .map(Employee::getId).to(Mapped::setEmployeeId)
+
+
+  .leftJoin(Company::getId, Employee::getCompanyId)....
+
+  .leftJoin(Company::getEmployees) // men har vi liste-typen vi joiner til? Bør finne med annotations
+
+  // multiple felter
+  .leftJoin() .on(Company::getId, Employee::getCompanyId)
+	     .and(Company::getId2, Employee::getCompanyId2)
+
+
+Oppsummert:
+
+Vi trenger ikke noen egen "from" MEN !! For entity-join så må alltid "from" typen i øverste join være
+det fra lista mens for mapped så kan det være hvilken som helst type.
+
+
+Nøsta joins:
+
+  .leftJoin() .on(Company::getId, Employee::getCompanyId)
+	     .and(Company::getId2, Employee::getCompanyId2),
+
+		j -> j.leftJoin(Employee::getPersoin))
+		
+
+Hva om vi bare skal nøste nedover uten multiple joins på samme? Kunne laget forenkling
+men kan være forvirrende å vite hvilken nøsting vi er i - for valig SQL så kan en joine sub-entries på toppnivå
+så litt forvirrende.
+
+  .leftJoin()
+	.on(Company::getId, Employee::getCompanyId)
+	.and(Company::getId2, Employee::getCompanyId2)
+
+		.leftJoin(Employee::getPerson)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 

@@ -14,7 +14,7 @@ final class Classic_Collector_MapToResult_Multi<
 			IClassicResult_Mapped_Multi_Named<MODEL, RESULT>,
 			
 			ISQLLogical_WhereOrJoin_MultiMapped_Named<MODEL, RESULT>,
-			ISQLLogical_WhereOrJoin_MultiMapped_Alias<MODEL, RESULT>>
+			IClassicLogical_WhereOrJoin_MultiMapped_Alias<MODEL, RESULT>>
 
 		implements IClassicResult_Mapped_Multi_All<MODEL, RESULT>,
 				   IClassicResult_Mapped_Multi_Named<MODEL, RESULT>,
@@ -49,8 +49,8 @@ final class Classic_Collector_MapToResult_Multi<
 	}
 
 	@Override
-	ISQLLogical_WhereOrJoin_MultiMapped_Alias<MODEL, RESULT> createWhereOrJoinForAlias() {
-		return new SQL_Collector_WhereOrJoin_MultiMapped_Alias<>(this);
+	IClassicLogical_WhereOrJoin_MultiMapped_Alias<MODEL, RESULT> createWhereOrJoinForAlias() {
+		return new Classic_Collector_WhereOrJoin_MultiMapped_Alias<>(this);
 	}
 
 	@Override

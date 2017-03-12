@@ -62,7 +62,7 @@ abstract class SQL_Collector_WhereOrJoin_Alias_Base<
 
 	implements 
 		   ISQLLogical_WhereOrJoin_Alias_Base<MODEL, RESULT>,
-		   ISQLJoin_Alias<MODEL, RESULT, ALIAS_JOIN_CONDITION> {
+		   IShared_Join {
 			   
     
     /*

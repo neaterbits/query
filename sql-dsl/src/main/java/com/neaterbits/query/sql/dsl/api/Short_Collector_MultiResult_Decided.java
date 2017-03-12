@@ -5,7 +5,7 @@ abstract class Short_Collector_MultiResult_Decided<MODEL, RESULT>
 		MODEL,
 		RESULT,
 		ISQLLogical_WhereOrJoin_MultiMapped_Named<MODEL,RESULT>,
-		ISQLLogical_WhereOrJoin_MultiMapped_Alias<MODEL,RESULT>,
+		ISQLLogical_WhereOrJoin_MultiMapped_Alias<MODEL,RESULT, IShortJoin_Condition_MultiMapped_Alias<MODEL, RESULT>>,
 		
 		IShortResult_Mapped_Multi_Named<MODEL, RESULT>,
 		IShortResult_Mapped_Multi_Alias<MODEL, RESULT>,
@@ -26,7 +26,7 @@ abstract class Short_Collector_MultiResult_Decided<MODEL, RESULT>
 		ISQLLogical_And_NonProcessResult_Alias<MODEL, RESULT>,
 		ISQLLogical_Or_NonProcessResult_Alias<MODEL, RESULT>,
 		
-		ISQLJoin_Condition_MultiMapped_Alias<MODEL, RESULT>,
+		IShortJoin_Condition_MultiMapped_Alias<MODEL, RESULT>,
 		ISQLLogical_AndOr_MultiMapped_Alias<MODEL, RESULT>,
 		
 		ISharedProcessResult_After_GroupBy_Named<MODEL, RESULT>

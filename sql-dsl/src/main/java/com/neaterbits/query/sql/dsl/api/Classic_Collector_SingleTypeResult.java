@@ -18,12 +18,12 @@ final class Classic_Collector_SingleTypeResult<MODEL, RESULT>
 
 	@Override
 	ISQLLogical_WhereOrJoin_SingleResult_Named_And_Function<MODEL, RESULT> createWhereOrJoinForNamed() {
-		return new SQL_Collector_WhereOrJoin_SingleResult_Named<>(this);
+		return new Classic_Collector_WhereOrJoin_SingleResult_Named<>(this);
 	}
 
 	@Override
 	ISQLLogical_WhereOrJoin_SingleResult_Alias_And_Function<MODEL, RESULT> createWhereOrJoinForAlias() {
-		return new SQL_Collector_WhereOrJoin_SingleResult_Alias<>(this);
+		return new Classic_Collector_WhereOrJoin_SingleResult_Alias<>(this);
 	}
 	
 	@Override
