@@ -442,18 +442,40 @@ final class CompiledQuery {
 			
 			final List<FunctionExpression> collectedFunctions = nested.getFunctions().getFunctions();
 			
-			final List<CompiledFunctionExpression> compiledFunctions = new ArrayList<>(collectedFunctions.size());
+			//final List<CompiledFunctionExpression> compiledFunctions = new ArrayList<>(collectedFunctions.size());
 			
 			//final CompiledFieldExpression compiledField = (CompiledFieldExpression)intCompileExpression(nested.getField(), param);
 
+			/*
+			
 			for (FunctionExpression collected : collectedFunctions) {
 				final CompiledFunctionExpression compiled = (CompiledFunctionExpression)intCompileExpression(collected, param);
 				
 				compiledFunctions.add(compiled);
 			}
+			*/
+			
+			// Compile in reverse order
+			final int num = collectedFunctions.size();
+
+			CompiledFunctionExpression last = null;
+
+			for (int i = num - 1; i >= 0; -- i) {
+				final FunctionExpression collected = collectedFunctions.get(i);
+				final CompiledFunctionExpression compiled = (CompiledFunctionExpression)intCompileExpression(collected, param);
+
+				if (last != null) {
+					// nested call
+					compiled.getParameters().add(last);
+				}
+
+				last = compiled;
+			}
 			
 			
-			return new CompiledNestedFunctionCallsExpression(compiledFunctions);
+			//return new CompiledNestedFunctionCallsExpression(compiledFunctions);
+			
+			return last;
 		}
 		
 		@Override

@@ -17,13 +17,7 @@ final class ExecutableQueryExpressionsForCompiledExpression
 		this.root = root;
 	}
 
-	private Expression getExpressionAt(int level, int[] context) {
-		throw new UnsupportedOperationException("TODO");
-	}
-	
-	@Override
-	public EExpressionType getExpressionType(int level, int[] context) {
-		
+	private CompiledExpression getExpressionAt(int level, int[] context) {
 		if (level == 0 && context[0] != 0) {
 			throw new IllegalStateException("Expexted to always be index 0 at inital level as only one root expression");
 		}
@@ -35,24 +29,31 @@ final class ExecutableQueryExpressionsForCompiledExpression
 			cur = cur.visit(expressionSubVisitor, context[i]);
 		}
 		
-		return cur.visit(expressionTypeVisitor, null);
+		return cur;
+	}
+	
+	@Override
+	public EExpressionType getExpressionType(int level, int[] context) {
+		
+		return getExpressionAt(level, context).visit(expressionTypeVisitor, null);
 	}
 
 	@Override
 	public FunctionBase getFunction(int level, int[] context) {
-		throw new UnsupportedOperationException("TODO");
+		
+		final CompiledFunctionExpression functionExpression = (CompiledFunctionExpression)getExpressionAt(level, context);
+		
+		return functionExpression.getFunction();
 	}
 
 	@Override
-	public int getNumListMembers(int level, int[] context) {
-		final ExpressionList expressionList = (ExpressionList)getExpressionAt(level, context);
-
-		return expressionList.getExpressions().size();
+	public int getSubCount(int level, int[] context) {
+		return getExpressionAt(level, context).visit(expressionSubCount, null);
 	}
 
 	@Override
 	public Comparable<?> getValue(int level, int[] context) {
-		final ValueExpression valueExpression = (ValueExpression)getExpressionAt(level, context);
+		final CompiledValueExpression valueExpression = (CompiledValueExpression)getExpressionAt(level, context);
 		
 		return valueExpression.getValue();
 	}
@@ -76,7 +77,8 @@ final class ExecutableQueryExpressionsForCompiledExpression
 
 		@Override
 		public CompiledExpression onFunction(CompiledFunctionExpression function, Integer idx) {
-			throw new UnsupportedOperationException("No subs");
+			// Sub within paramters
+			return function.getParameters().get(idx);
 		}
 
 		@Override
@@ -85,6 +87,35 @@ final class ExecutableQueryExpressionsForCompiledExpression
 		}
 	};
 
+	private static final CompiledExpressionVisitor<Void, Integer> expressionSubCount = new CompiledExpressionVisitor<Void, Integer>() {
+
+		@Override
+		public Integer onList(CompiledExpressionList list, Void param) {
+			return list.getExpressions().size();
+		}
+
+		@Override
+		public Integer onField(CompiledFieldExpression field, Void param) {
+			return 0;
+		}
+
+		@Override
+		public Integer onValue(CompiledValueExpression value, Void param) {
+			return 0;
+		}
+
+		@Override
+		public Integer onFunction(CompiledFunctionExpression function, Void param) {
+			return function.getParameters().size();
+		}
+
+		@Override
+		public Integer onNestedFunctionCalls(CompiledNestedFunctionCallsExpression nested, Void param) {
+			throw new UnsupportedOperationException();
+		}
+	};
+	
+	
 	private static final CompiledExpressionVisitor<Void, EExpressionType> expressionTypeVisitor
 			= new CompiledExpressionVisitor<Void, EExpressionType>() {
 

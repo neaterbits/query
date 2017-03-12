@@ -11,7 +11,7 @@ public interface ExecutableQueryExpressions {
 
 	FunctionBase getFunction(int level, int [] context);
 	
-	int getNumListMembers(int level, int [] context);
+	int getSubCount(int level, int [] context);
 
 	Comparable<?> getValue(int level, int [] context);
 

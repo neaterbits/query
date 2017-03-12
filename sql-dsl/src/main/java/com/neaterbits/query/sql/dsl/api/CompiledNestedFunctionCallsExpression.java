@@ -2,6 +2,7 @@ package com.neaterbits.query.sql.dsl.api;
 
 import java.util.List;
 
+@Deprecated
 final class CompiledNestedFunctionCallsExpression extends CompiledExpression {
 
 	//private final NestedFunctionCallsExpression original;
