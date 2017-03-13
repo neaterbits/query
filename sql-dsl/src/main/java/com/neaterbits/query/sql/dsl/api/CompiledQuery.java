@@ -13,6 +13,10 @@ import com.neaterbits.query.sql.dsl.api.entity.QueryMetaModel;
 
 final class CompiledQuery {
 
+	// TODO for now flatten joins onto outer level but could create nested ANSI queris (JPQL not possible, it seems)
+	@Deprecated
+	private static final boolean FLATTEN_SUB_JOINS = true;
+	
 	static final ExecutableQueryForCompiledQuery q = new ExecutableQueryForCompiledQuery();
 	
 	private final CompiledQueryResult result;
@@ -751,11 +755,19 @@ final class CompiledQuery {
 				compiledJoinConditions.add(compiledJoinCondition);
 			}
 			
-			final CompiledJoins subJoins;
+			CompiledJoins subJoins;
 			
 			if (join.getSubJoins() != null) {
 				// nested joins, compile recursively
 				subJoins = compileJoins(join.getSubJoins(), sources);
+				
+				if (FLATTEN_SUB_JOINS) {
+					// Add to outer-list which will be re-added to outer-list again if recursed multiple levels
+					compiledJoins.addAll(subJoins.getJoins());
+					
+					subJoins = null;
+				}
+				
 			}
 			else  {
 				subJoins = null;

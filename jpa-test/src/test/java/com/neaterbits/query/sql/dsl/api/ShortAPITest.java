@@ -533,7 +533,8 @@ public class ShortAPITest extends BaseSQLAPITest {
 
 				.build();
 		
-		acmeQuery.prepare(jpqlJPA);
+		//acmeQuery.prepare(jpqlJPA);
+		acmeQuery.prepare(nativeJPA);
 		
 	}
 	

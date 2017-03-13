@@ -109,7 +109,7 @@ final class PreparedQueryConditionsBuilderORM extends PreparedQueryConditionsBui
 			first = true;
 		}
 		else {
-			sb.append(' ').append(this.sb.toString());
+			sb.append(' ').append(this.sb.asQueryString());
 
 			first = false;
 		}

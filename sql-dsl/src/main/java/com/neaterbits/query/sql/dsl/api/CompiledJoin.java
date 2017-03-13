@@ -11,6 +11,8 @@ final class CompiledJoin {
 	// May have nested sub-joins that should be output as nested within the query
 	
 	private final List<CompiledJoinCondition> conditions;
+	
+	@Deprecated // TODO for now flatten joins onto outer level but could create nested ANSI queris (JPQL not possible, it seems)
 	private final CompiledJoins subJoins;
 
 	CompiledJoin(
@@ -64,6 +66,7 @@ final class CompiledJoin {
 		return conditions;
 	}
 
+	@Deprecated // TODO for now flatten joins onto outer level but could create nested ANSI queris (JPQL not possible, it seems)
 	CompiledJoins getSubJoins() {
 		return subJoins;
 	}
