@@ -751,12 +751,22 @@ final class CompiledQuery {
 				compiledJoinConditions.add(compiledJoinCondition);
 			}
 			
+			final CompiledJoins subJoins;
+			
+			if (join.getSubJoins() != null) {
+				// nested joins, compile recursively
+				subJoins = compileJoins(join.getSubJoins(), sources);
+			}
+			else  {
+				subJoins = null;
+			}
 
 			final CompiledJoin compiledJoin = new CompiledJoin(
 					join,
 					joinSources.left,
 					joinSources.right,
-					compiledJoinConditions);
+					compiledJoinConditions,
+					subJoins);
 
 			compiledJoins.add(compiledJoin);
 		}

@@ -142,7 +142,7 @@ abstract class SQL_Collector_WhereOrJoin_Base<
 
 		final CollectedJoin curJoin = getQueryCollector().getJoins().getLast();
 
-		final CollectedJoinCondition joinCondition = new CollectedJoinCondition_OneToMany_Named(collectionGetter, null);
+		final CollectedJoinCondition joinCondition = new CollectedJoinCondition_OneToMany_Named(collectionGetter);
 		
 		curJoin.addJoinCondition(joinCondition);
 		
@@ -157,7 +157,7 @@ abstract class SQL_Collector_WhereOrJoin_Base<
 		
 		final CollectedJoin curJoin = getQueryCollector().getJoins().getLast();
 		
-		final CollectedJoinCondition joinCondition = new CollectedJoinCondition_Comparison_Named(leftGetter, rightGetter, null);
+		final CollectedJoinCondition joinCondition = new CollectedJoinCondition_Comparison_Named(leftGetter, rightGetter);
 		
 		curJoin.addJoinCondition(joinCondition);
 		
@@ -257,7 +257,7 @@ abstract class SQL_Collector_WhereOrJoin_Base<
 	// @Override TODO : for classic, remove elsewhere?
 	public final ALIAS_JOIN_CONDITION innerJoin(Object left, Object right) {
 	
-		final CollectedJoin_Alias collectedJoin = new CollectedJoin_Alias(EJoinType.INNER, (IAlias)left, (IAlias)right);
+		final CollectedJoin_Alias collectedJoin = new CollectedJoin_Alias(EJoinType.INNER, (IAlias)left, (IAlias)right, null);
 		
 		addJoin(collectedJoin);
 		
@@ -267,7 +267,7 @@ abstract class SQL_Collector_WhereOrJoin_Base<
 	// @Override TODO : for classic, remove elsewhere?
 	public final ALIAS_JOIN_CONDITION leftJoin(Object left, Object right) {
 	
-		final CollectedJoin_Alias collectedJoin = new CollectedJoin_Alias(EJoinType.LEFT, (IAlias)left, (IAlias)right);
+		final CollectedJoin_Alias collectedJoin = new CollectedJoin_Alias(EJoinType.LEFT, (IAlias)left, (IAlias)right, null);
 		
 		addJoin(collectedJoin);
 		
@@ -281,7 +281,7 @@ abstract class SQL_Collector_WhereOrJoin_Base<
 		
 		final CollectedJoin curJoin = getQueryCollector().getJoins().getLast();
 		
-		final CollectedJoinCondition joinCondition = new CollectedJoinCondition_Comparison_Alias(leftGetter, rightGetter, null);
+		final CollectedJoinCondition joinCondition = new CollectedJoinCondition_Comparison_Alias(leftGetter, rightGetter);
 		
 		curJoin.addJoinCondition(joinCondition);
 		
@@ -294,7 +294,7 @@ abstract class SQL_Collector_WhereOrJoin_Base<
 		
 		final CollectedJoin curJoin = getQueryCollector().getJoins().getLast();
 		
-		final CollectedJoinCondition joinCondition = new CollectedJoinCondition_OneToMany_Alias(collectionGetter, null);
+		final CollectedJoinCondition joinCondition = new CollectedJoinCondition_OneToMany_Alias(collectionGetter);
 		
 		curJoin.addJoinCondition(joinCondition);
 		

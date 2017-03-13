@@ -7,14 +7,18 @@ final class CompiledJoin {
 	private final CollectedJoin original;
 	private final TypeMapSource left;
 	private final TypeMapSource right;
-
+	
+	// May have nested sub-joins that should be output as nested within the query
+	
 	private final List<CompiledJoinCondition> conditions;
+	private final CompiledJoins subJoins;
 
 	CompiledJoin(
 			CollectedJoin original,
 			TypeMapSource left,
 			TypeMapSource right,
-			List<CompiledJoinCondition> conditions) {
+			List<CompiledJoinCondition> conditions,
+			CompiledJoins subJoins) {
 
 		if (original == null) {
 			throw new IllegalArgumentException("original == null");
@@ -31,15 +35,17 @@ final class CompiledJoin {
 		if (conditions == null) {
 			throw new IllegalArgumentException("conditions == null");
 		}
-		
+
 		if (conditions.isEmpty()) {
 			throw new IllegalArgumentException("no conditions");
 		}
-		
+
 		this.original = original;
 		this.left = left;
 		this.right = right;
 		this.conditions = conditions;
+
+		this.subJoins = subJoins;
 	}
 
 	EJoinType getJoinType() {
@@ -54,7 +60,11 @@ final class CompiledJoin {
 		return right;
 	}
 	
-	final List<CompiledJoinCondition> getConditions() {
+	List<CompiledJoinCondition> getConditions() {
 		return conditions;
+	}
+
+	CompiledJoins getSubJoins() {
+		return subJoins;
 	}
 }

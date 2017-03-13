@@ -5,8 +5,7 @@ abstract class CollectedJoinCondition_Comparison extends CollectedJoinCondition 
 	private final Getter leftGetter;
 	private final Getter rightGetter;
 
-	CollectedJoinCondition_Comparison(Getter leftGetter, Getter rightGetter, Collector_Joins subJoins) {
-		super(subJoins);
+	CollectedJoinCondition_Comparison(Getter leftGetter, Getter rightGetter) {
 
 		if (leftGetter == null) {
 			throw new IllegalArgumentException("leftGetter == null");

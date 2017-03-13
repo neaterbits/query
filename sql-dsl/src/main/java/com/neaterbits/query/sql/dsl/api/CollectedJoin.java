@@ -10,8 +10,9 @@ abstract class CollectedJoin extends CollectedItem {
 	private final Class<?> leftType;
 	private final Class<?> rightType;
 	private final List<CollectedJoinCondition> conditions;
+	private final Collector_Joins subJoins;
 
-	CollectedJoin(EJoinType joinType, Class<?> leftType, Class<?> rightType) {
+	CollectedJoin(EJoinType joinType, Class<?> leftType, Class<?> rightType, Collector_Joins subJoins) {
 		
 		if (joinType == null) {
 			throw new IllegalArgumentException("joinType == null");
@@ -29,14 +30,16 @@ abstract class CollectedJoin extends CollectedItem {
 		this.leftType = leftType;
 		this.rightType = rightType;
 		this.conditions = new ArrayList<>();
+		// may be null
+		this.subJoins = subJoins;
 	}
 
-	public CollectedJoin(EJoinType joinType, CollectedJoinCondition condition) {
-		
+	CollectedJoin(EJoinType joinType, CollectedJoinCondition condition, Collector_Joins subJoins) {
+
 		if (joinType == null) {
 			throw new IllegalArgumentException("joinType == null");
 		}
-		
+
 		if (condition == null) {
 			throw new IllegalArgumentException("condition == null");
 		}
@@ -45,16 +48,20 @@ abstract class CollectedJoin extends CollectedItem {
 		this.leftType = null;
 		this.rightType = null;
 		this.conditions = Arrays.asList(condition);
+		// may be null
+		this.subJoins = subJoins;
 	}
-	
-	
 
 	final void addJoinCondition(CollectedJoinCondition condition) {
 		if (condition == null) {
 			throw new IllegalArgumentException("condition == null");
 		}
-		
+
 		this.conditions.add(condition);
+	}
+
+	final Collector_Joins getSubJoins() {
+		return subJoins;
 	}
 	
 	final List<CollectedJoinCondition> getJoinConditions() {

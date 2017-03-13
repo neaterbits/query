@@ -522,16 +522,15 @@ public class ShortAPITest extends BaseSQLAPITest {
 				.innerJoin(Employee.class)
 				*/
 				
+				// innerJoin(Employee::getPersonId, Person::getId).and(Employee::getPersonId2, Person::getId2).sub(j -> j.)
+				// innerjoin().on(Employee::getPersonId, Person::getId).and(Employee::getPersonId2, Person::getId2).sub()
+				
+				
 				.innerJoin(Company::getEmployees, j -> 
 						j.innerJoin(Employee::getPersonId, Person::getId))
 
-				//.map(Company::getName) .to (CompanyResultsVO::setName)
-				
-				//.map().sqrt().sum(Company::getStockPrice).to(CompanySqrtAggregatesVO::setSqrtSumStockPrice)
-
-				//.map().sqrt().avg(Company::getStockPrice).to(CompanySqrtAggregatesVO::setSqrtAvgStockPrice)
-
 				.where(Company::getName).startsWith("Acme")
+
 				.build();
 		
 		acmeQuery.prepare(jpqlJPA);

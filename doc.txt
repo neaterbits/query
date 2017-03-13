@@ -1266,6 +1266,13 @@ Nøsta joins:
 	     .and(Company::getId2, Employee::getCompanyId2),
 
 		j -> j.leftJoin(Employee::getPersoin))
+
+fungerer ikke.
+Så må antakelig nøste på utsida slik som for adhoc:
+  .leftJoin(j -> j.on(Company::getId, Employee::getCompanyId)
+	         .and(Company::getId2, Employee::getCompanyId2)
+                 .leftJoin(Employee::getPersoin))
+
 		
 
 Hva om vi bare skal nøste nedover uten multiple joins på samme? Kunne laget forenkling
