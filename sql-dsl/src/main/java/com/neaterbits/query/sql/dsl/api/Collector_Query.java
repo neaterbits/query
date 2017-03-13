@@ -48,6 +48,11 @@ abstract class Collector_Query<MODEL> {
 	
 	abstract Collected_OrderBy getOrderBy();
 	
+	Collector_Query(BaseQuery baseQuery, Collector_Query<MODEL> toCopy) {
+		
+		this.baseQuery = baseQuery;
+		this.modelCompiler = toCopy.modelCompiler;
+	}
 	
 	Collector_Query(BaseQuery baseQuery, ModelCompiler<MODEL> modelCompiler) {
 		

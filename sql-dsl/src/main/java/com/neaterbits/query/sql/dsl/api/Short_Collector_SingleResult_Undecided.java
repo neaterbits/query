@@ -63,7 +63,7 @@ final class Short_Collector_SingleResult_Undecided<MODEL, RESULT>
 		
 		final CollectedQueryResult_Mapped_Single collectedQueryResult = new CollectedQueryResult_Mapped_Single(getResultType());
 		
-		return new Short_Collector_SingleResult_Decided_Named<MODEL, RESULT>(select, collectedQueryResult, getModelCompiler());
+		return new Short_Collector_SingleResult_Decided_Named<MODEL, RESULT>(select, collectedQueryResult, getQueryCollector());
 	}
 
 
@@ -71,7 +71,7 @@ final class Short_Collector_SingleResult_Undecided<MODEL, RESULT>
 	final IMappingCollector<MODEL, RESULT> getMapToResultAlias() {
 		final CollectedQueryResult_Mapped_Single collectedQueryResult = new CollectedQueryResult_Mapped_Single(getResultType());
 
-		return new Short_Collector_SingleResult_Decided_Alias<MODEL, RESULT>(select, collectedQueryResult, getModelCompiler());
+		return new Short_Collector_SingleResult_Decided_Alias<MODEL, RESULT>(select, collectedQueryResult, getQueryCollector());
 	}
 	
 
@@ -92,7 +92,7 @@ final class Short_Collector_SingleResult_Undecided<MODEL, RESULT>
 		// TODO: rename *MapToResult* here
 		final CollectedQueryResult_Entity_Single collectedQueryResult = new CollectedQueryResult_Entity_Single(getSelectSource());
 
-		return new Short_Collector_SingleResult_Decided_Named<>(select, collectedQueryResult, getModelCompiler());
+		return new Short_Collector_SingleResult_Decided_Named<>(select, collectedQueryResult, getQueryCollector());
 	}
 
 
@@ -101,7 +101,7 @@ final class Short_Collector_SingleResult_Undecided<MODEL, RESULT>
 		// TODO: rename *MapToResult* here
 		final CollectedQueryResult_Entity_Single collectedQueryResult = new CollectedQueryResult_Entity_Single(getSelectSource());
 
-		return new Short_Collector_SingleResult_Decided_Alias<>(select, collectedQueryResult, getModelCompiler());
+		return new Short_Collector_SingleResult_Decided_Alias<>(select, collectedQueryResult, getQueryCollector());
 	}
 	
 	@Override
@@ -316,7 +316,7 @@ final class Short_Collector_SingleResult_Undecided<MODEL, RESULT>
 			return new Short_Collector_SingleResult_Decided_Named<MODEL, RESULT>(
 					select,
 					new CollectedQueryResult_Mapped_Single(getResultType()),
-					getModelCompiler());
+					getQueryCollector());
 			};
 
 		final Supplier<IMappingCollector<MODEL, RESULT>>
@@ -326,7 +326,7 @@ final class Short_Collector_SingleResult_Undecided<MODEL, RESULT>
 					new Short_Collector_SingleResult_Decided_Alias<>(
 					select,
 					new CollectedQueryResult_Mapped_Single(getResultType()),
-					getModelCompiler());
+					getQueryCollector());
 			
 		};
 		

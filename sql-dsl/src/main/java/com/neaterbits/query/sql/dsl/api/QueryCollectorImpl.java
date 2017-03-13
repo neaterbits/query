@@ -37,7 +37,37 @@ class QueryCollectorImpl<MODEL> extends Collector_Query<MODEL> {
 
 	private Collector_OrderBy<MODEL, ?> orderByCollector;
 	private int [] orderByColumns;
-	
+
+	QueryCollectorImpl(BaseQuery baseQuery, Collector_Query<MODEL> queryCollector, CollectedQueryResult result) {
+		super(baseQuery, queryCollector);
+
+		if (result != null) {
+			setResult(result);
+		}
+		
+		this.result = result;
+		
+		if (queryCollector.getSources() != null) {
+			this.sources = queryCollector.getSources();
+		}
+		
+		if (queryCollector.getJoins() != null) {
+			this.joins = queryCollector.getJoins();
+		}
+		
+		if (queryCollector.getClauses() != null) {
+			throw new IllegalStateException("clauses already set in source");
+		}
+		
+		if (queryCollector.getGroupBy() != null) {
+			throw new IllegalStateException("groupBy already set in source");
+		}
+		
+		if (queryCollector.getOrderBy() != null) {
+			throw new IllegalStateException("orderBy already set in source");
+		}
+	}
+
 	
 	QueryCollectorImpl(BaseQuery baseQuery, ModelCompiler<MODEL> modelCompiler, CollectedQueryResult result) {
 		super(baseQuery, modelCompiler);

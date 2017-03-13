@@ -506,6 +506,7 @@ public class ShortAPITest extends BaseSQLAPITest {
 				.build();
 		
 		
+		
 	}
 
 	@Test
@@ -532,6 +533,8 @@ public class ShortAPITest extends BaseSQLAPITest {
 
 				.where(Company::getName).startsWith("Acme")
 				.build();
+		
+		acmeQuery.prepare(jpqlJPA);
 		
 	}
 	

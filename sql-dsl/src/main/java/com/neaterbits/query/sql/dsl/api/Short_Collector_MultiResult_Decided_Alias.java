@@ -3,12 +3,12 @@ package com.neaterbits.query.sql.dsl.api;
 final class Short_Collector_MultiResult_Decided_Alias<MODEL, RESULT>
 		extends Short_Collector_MultiResult_Decided<MODEL, RESULT> {
 
-	Short_Collector_MultiResult_Decided_Alias(BaseQuery select, CollectedQueryResult_Mapped_Multi result, ModelCompiler<MODEL> modelCompiler) {
-		super(select, result, modelCompiler);
+	Short_Collector_MultiResult_Decided_Alias(BaseQuery select, CollectedQueryResult_Mapped_Multi result, Collector_Query<MODEL> queryCollector) {
+		super(select, result, queryCollector);
 	}
 	
-	Short_Collector_MultiResult_Decided_Alias(BaseQuery select, CollectedQueryResult_Entity_Multi result, ModelCompiler<MODEL> modelCompiler) {
-		super(select, result, modelCompiler);
+	Short_Collector_MultiResult_Decided_Alias(BaseQuery select, CollectedQueryResult_Entity_Multi result, Collector_Query<MODEL> queryCollector) {
+		super(select, result, queryCollector);
 	}
 
 	@Override
