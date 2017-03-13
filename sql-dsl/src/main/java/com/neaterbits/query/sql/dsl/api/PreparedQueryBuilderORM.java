@@ -11,7 +11,6 @@ import java.util.function.BiFunction;
 
 import com.neaterbits.query.sql.dsl.api.entity.EntityModelUtil;
 import com.neaterbits.query.sql.dsl.api.entity.Relation;
-import com.neaterbits.query.util.java8.Coll8;
 
 final class PreparedQueryBuilderORM<MANAGED, EMBEDDED, IDENTIFIABLE, ATTRIBUTE, COLL extends Collection<ATTRIBUTE>>
 			extends PreparedQueryBuilder {

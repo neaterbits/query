@@ -15,10 +15,12 @@ abstract class CompiledJoinCondition {
 		if (left == null) {
 			throw new IllegalArgumentException("left == null");
 		}
-		
+
+		/*
 		if (right == null) {
 			throw new IllegalArgumentException("right == null");
 		}
+		*/
 		
 		this.original = original;
 		this.left = left;

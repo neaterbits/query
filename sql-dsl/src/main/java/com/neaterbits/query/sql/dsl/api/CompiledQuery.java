@@ -3,6 +3,7 @@ package com.neaterbits.query.sql.dsl.api;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.neaterbits.query.sql.dsl.api.entity.EntityUtil;
 import com.neaterbits.query.sql.dsl.api.entity.QueryMetaModel;
 
 /**
@@ -568,7 +569,91 @@ final class CompiledQuery {
 
 		return compiled;
 	}
+	
+	private static class JoinSources {
+		private final TypeMapSource left;
+		private final TypeMapSource right;
+		private final boolean isClass;
+		
+		
+		JoinSources(TypeMapSource left, TypeMapSource right, boolean isClass) {
+			
+			if (left == null) {
+				throw new IllegalArgumentException("left == null");
+			}
+			
+			if (right == null) {
+				throw new IllegalArgumentException("right == null");
+			}
+			
+			this.left = left;
+			this.right = right;
+			this.isClass = isClass;
+		}
+	}
+	
+	private static JoinSources getExplicitJoinSources(CollectedJoin join, SelectSourceLookup sources) {
+		TypeMapSource leftSource = null;
+		TypeMapSource rightSource = null;
+		
+		final boolean isClass;
 
+		if (join instanceof CollectedJoin_Named) {
+			if (join.getLeftType() != null && join.getRightType() != null) {
+				leftSource  = sources.getNamedSource(join.getLeftType());
+				rightSource = sources.getNamedSource(join.getRightType());
+			}
+			
+			isClass = true;
+		}
+		else if (join instanceof CollectedJoin_Alias) {
+			final CollectedJoin_Alias aliasJoin = (CollectedJoin_Alias)join;
+			leftSource  = sources.getAliasesSource(aliasJoin.getLeftAlias());
+			rightSource = sources.getAliasesSource(aliasJoin.getRightAlias());
+			isClass = false;
+		}
+		else {
+			throw new UnsupportedOperationException("Unknown join type " + join.getClass().getName());
+		}
+
+		final JoinSources ret;
+		
+		if (leftSource != null && rightSource != null) {
+			ret = new JoinSources(leftSource, rightSource, isClass);
+		}
+		else if (leftSource == null && rightSource == null) {
+			ret = null;
+		}
+		else {
+			throw new IllegalStateException("Expecting to have know either both left and right hand side or knowing neither");
+		}
+
+		return ret;
+	}
+
+	private static final boolean isClass(CollectedJoinCondition joinCondition) {
+		final boolean thisOneIsClass;
+
+		if (joinCondition instanceof CollectedJoinCondition_Comparison_Named) {
+			thisOneIsClass = true;
+		}
+		else if (joinCondition instanceof CollectedJoinCondition_Comparison_Alias) {
+			thisOneIsClass = false;
+		}
+		else if (joinCondition instanceof CollectedJoinCondition_OneToMany_Named) {
+			thisOneIsClass = true;
+		}
+		else if (joinCondition instanceof CollectedJoinCondition_OneToMany_Alias) {
+			thisOneIsClass = false;
+		}
+		else {
+			throw new UnsupportedOperationException("Unknown join type " + joinCondition.getClass().getName());
+		}
+
+		return thisOneIsClass;
+	}
+
+	
 	private static CompiledJoins compileJoins(Collector_Joins collector, SelectSourceLookup sources) throws CompileException {
 		
 		final List<CollectedJoin> collected = collector.getJoins();
@@ -581,48 +666,12 @@ final class CompiledQuery {
 			final List<CollectedJoinCondition> collectedConditons = join.getJoinConditions();
 			final List<CompiledJoinCondition> compiledJoinConditions = new ArrayList<>(collectedConditons.size());
 
-			TypeMapSource leftSource = null;
-			TypeMapSource rightSource = null;
-
-			if (join instanceof CollectedJoin_Named) {
-				if (join.getLeftType() != null && join.getRightType() != null) {
-					leftSource  = sources.getNamedSource(join.getLeftType());
-					rightSource = sources.getNamedSource(join.getRightType());
-				}
-				
-				isClass = true;
-			}
-			else if (join instanceof CollectedJoin_Alias) {
-				final CollectedJoin_Alias aliasJoin = (CollectedJoin_Alias)join;
-				leftSource  = sources.getAliasesSource(aliasJoin.getLeftAlias());
-				rightSource = sources.getAliasesSource(aliasJoin.getRightAlias());
-				isClass = false;
-			}
-			else {
-				throw new UnsupportedOperationException("Unknown join type " + join.getClass().getName());
-			}
-			
+			JoinSources joinSources = getExplicitJoinSources(join, sources);
 			
 			for (CollectedJoinCondition joinCondition : collectedConditons) {
-				
-				final boolean thisOneIsClass;
 
-				if (joinCondition instanceof CollectedJoinCondition_Comparison_Named) {
-					thisOneIsClass = true;
-				}
-				else if (joinCondition instanceof CollectedJoinCondition_Comparison_Alias) {
-					thisOneIsClass = false;
-				}
-				else if (joinCondition instanceof CollectedJoinCondition_OneToMany_Named) {
-					thisOneIsClass = true;
-				}
-				else if (joinCondition instanceof CollectedJoinCondition_OneToMany_Alias) {
-					thisOneIsClass = false;
-				}
-				else {
-					throw new UnsupportedOperationException("Unknown join type " + joinCondition.getClass().getName());
-				}
-				
+				final boolean thisOneIsClass = isClass(joinCondition);
+
 				if (isClass == null) {
 					isClass = thisOneIsClass;
 				}
@@ -631,9 +680,9 @@ final class CompiledQuery {
 						throw new IllegalStateException("Both class and alias joins");
 					}
 				}
-				
+
 				final CompiledJoinCondition compiledJoinCondition;
-				
+
 				if (joinCondition instanceof CollectedJoinCondition_Comparison) {
 
 					final CollectedJoinCondition_Comparison joinConditionComparison = (CollectedJoinCondition_Comparison)joinCondition;
@@ -642,6 +691,10 @@ final class CompiledQuery {
 					final CompiledFieldReference right = sources.makeFieldReference(joinCondition, joinConditionComparison.getRightGetter());
 					
 					compiledJoinCondition = new CompiledJoinCondition_Comparison(joinConditionComparison, left, right);
+					
+					if (joinSources == null) {
+						joinSources = new JoinSources(left.getSource(), right.getSource(), isClass);
+					}
 				}
 				else if (joinCondition instanceof CollectedJoinCondition_OneToMany) {
 
@@ -653,16 +706,40 @@ final class CompiledQuery {
 
 					final Class<?> collectionSourceType = collection.getSource().getType();
 
-					if (collectionSourceType.equals(leftSource.getType())) {
-						left = leftSource;
-						right = rightSource;
-					}
-					else if (collectionSourceType.equals(rightSource.getType())) {
-						left = rightSource;
-						right = leftSource;
-					}
-					else {
-						throw new UnsupportedOperationException("Could not match neither left nor right : collection=" + collectionSourceType + ", left=" + leftSource.getType() + ", right=" + rightSource.getType());
+					if (joinSources != null) {
+						
+						// classic syntax where has explicit declaration of types
+						
+						if (collectionSourceType.equals(joinSources.left.getType())) {
+							left = joinSources.left;
+							right = joinSources.right;
+						}
+						else if (collectionSourceType.equals(joinSources.right.getType())) {
+							left = joinSources.right;
+							right = joinSources.left;
+						}
+						else {
+							throw new UnsupportedOperationException("Could not match neither left nor right : collection=" + collectionSourceType + 
+										", left=" + joinSources.left.getType() + ", right=" + joinSources.right.getType());
+						}
+					} else {
+						// short-syntax where source is not explicitely declared
+						left = collection.getSource();
+						
+						// TODO For now, we only support generic-collection joins so we can retrieve the type here,
+						// otherwise we have to change the query builder a bit in order to do this.
+						// BUT for all practical purposes, we require generic collections for typesafety anyway.. and all > Java 5 code will use generics most likely
+						final Class<?> type = EntityUtil.getGenericCollectionMemberType(collection.getGetter().getGetterMethod());
+						
+						if (type == null) {
+							throw new IllegalStateException("Unable to get class type for oneToMany collection join");
+						}
+						
+						right = 
+								isClass ? sources.getNamedSource(type) : sources.getNamedSource(type);
+
+						
+						joinSources = new JoinSources(left, right, isClass);
 					}
 
 					compiledJoinCondition = new CompiledJoinCondition_OneToMany(oneToMany, left, right, collection);
@@ -673,11 +750,12 @@ final class CompiledQuery {
 
 				compiledJoinConditions.add(compiledJoinCondition);
 			}
+			
 
 			final CompiledJoin compiledJoin = new CompiledJoin(
 					join,
-					leftSource,
-					rightSource,
+					joinSources.left,
+					joinSources.right,
 					compiledJoinConditions);
 
 			compiledJoins.add(compiledJoin);
