@@ -6,11 +6,7 @@ import static com.neaterbits.query.sql.dsl.api.IShortSelect.oneOrNull;
 import static com.neaterbits.query.sql.dsl.api.IShortSelect.list;
 
 import java.math.BigDecimal;
-import java.util.function.Consumer;
 import java.util.function.Function;
-
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
 
 import org.junit.Test;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -18,7 +14,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import com.neaterbits.query.jpatest.model.Company;
 import com.neaterbits.query.jpatest.model.Employee;
 import com.neaterbits.query.jpatest.model.Person;
-import com.neaterbits.query.sql.dsl.api.entity.QueryMetaModel;
 
 
 
@@ -144,7 +139,7 @@ public class ShortAPITest extends BaseJPATest {
 				.build();
 		
 		
-		acmeQuery.prepare(jpqlJPA).execute();
+		acmeQuery.prepare(jpqlJPADerby).execute();
 	}
 
 	@Test
@@ -159,7 +154,7 @@ public class ShortAPITest extends BaseJPATest {
 				.build();
 		
 		
-		acmeQuery.prepare(jpqlJPA).execute();
+		acmeQuery.prepare(jpqlJPADerby).execute();
 	}
 
 
@@ -229,7 +224,7 @@ public class ShortAPITest extends BaseJPATest {
 				.where(Company::getName).startsWith("Acme")
 				.build();
 		
-		acmeQuery.prepare(jpqlJPA).execute();
+		acmeQuery.prepare(jpqlJPADerby).execute();
 	}
 	
 	
@@ -429,7 +424,7 @@ public class ShortAPITest extends BaseJPATest {
 
 				.build();
 
-		acmeQuery.prepare(jpqlJPA).execute();
+		acmeQuery.prepare(jpqlJPADerby).execute();
 	}
 
 	
@@ -473,7 +468,7 @@ public class ShortAPITest extends BaseJPATest {
 
 	@Test
     public void testPrepared() {
-		final SinglePrepared<Company> acmeQuery = prepared
+		final SinglePrepared<Company> acmeQuery = preparedJPQLDerby
 				.one(Company.class)
 				.where(Company::getName).startsWith("Acme")
 				
@@ -560,7 +555,7 @@ public class ShortAPITest extends BaseJPATest {
 	@Test
     public void testNonPreparedAggregate() {
 
-		final SinglePrepared<BigDecimal> prepared = select.sum(Company::getStockPrice).build().prepare(jpqlJPA);
+		final SinglePrepared<BigDecimal> prepared = select.sum(Company::getStockPrice).build().prepare(jpqlJPADerby);
 
 		final BigDecimal value = prepared.execute();
 
@@ -570,7 +565,7 @@ public class ShortAPITest extends BaseJPATest {
 	
 	@Test
     public void testPreparedAggregate() {
-		final BigDecimal ret = prepared.sum(Company::getStockPrice).build().execute();
+		final BigDecimal ret = preparedJPQLDerby.sum(Company::getStockPrice).build().execute();
 	}
 	
 	@Test

@@ -414,7 +414,7 @@ public class ClassicAPITest extends BaseJPATest {
 		store(s  -> s.add(acme)
 				 .add(foo))
 		.check(ds -> {
-			final BigDecimal ret = query.prepare(jpqlJPA).execute();
+			final BigDecimal ret = query.prepare(jpqlJPADerby).execute();
 			
 			assertThat(ret).isNotNull();
 			
@@ -678,7 +678,7 @@ public class ClassicAPITest extends BaseJPATest {
 	
 	        	.build();
 	
-	        	query.prepare(jpqlJPA)
+	        	query.prepare(jpqlJPADerby)
 	        	 .executeWith(param1).setTo(123)
 	        	         .and(param2).setTo(345)
 	        	  .get();

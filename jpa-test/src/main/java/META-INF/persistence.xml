@@ -11,8 +11,9 @@
 		<provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
 
 		<exclude-unlisted-classes>false</exclude-unlisted-classes>
+		
 		<properties>
-			<property name="javax.persistence.jdbc.url" value="jdbc:derby:memory:query-jpa-test;create=true" />
+			<property name="javax.persistence.jdbc.url" value="jdbc:derby:memory:query-jpa-test-derby;create=true" />
 			<property name="javax.persistence.jdbc.user" value="" />
 			<property name="javax.persistence.jdbc.password" value="" />
 
@@ -24,6 +25,28 @@
 
             <property name="eclipselink.ddl-generation.output-mode" value="database" />
 		    <property name="javax.persistence.jdbc.driver" value="org.apache.derby.jdbc.EmbeddedDriver"/>
+   		</properties>
+	</persistence-unit>
+
+	<persistence-unit name="query-jpa-test-hsqldb">
+
+		<provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
+
+		<exclude-unlisted-classes>false</exclude-unlisted-classes>
+		
+		<properties>
+			<property name="javax.persistence.jdbc.url" value="jdbc:hsqldb:mem:query-jpa-test-hsqldb" />
+			<property name="javax.persistence.jdbc.user" value="testuser" />
+			<property name="javax.persistence.jdbc.password" value="" />
+
+            <!-- EclipseLink should create the database schema automatically -->
+            <property name="eclipselink.ddl-generation" value="drop-and-create-tables" />
+            
+            <property name="eclipselink.logging.level.sql" value="FINE"/>
+            <property name="eclipselink.logging.paarmeters" value="TRUE"/>
+
+            <property name="eclipselink.ddl-generation.output-mode" value="database" />
+		    <property name="javax.persistence.jdbc.driver" value="org.hsqldb.jdbcDriver"/>
    		</properties>
 	</persistence-unit>
 </persistence>
