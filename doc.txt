@@ -1312,6 +1312,9 @@ Så hvordan blir denne da is å fall ?
 
 
 
+
+
+
 ===========================================================================================
 
 Testplan:
@@ -1400,6 +1403,15 @@ så ikke blir så mange kombinasjoner. F.eks så har functions i mappinga som lo
 Så kan en også ha noen adhoc smoke-tests som sjekker litt slike kombinasjoner også.
 
 Bør kjøre cobertura etter hvert, spesielt viktig for join-semantikken.
+
+
+----
+
+ - multiple datasources, hver test kjører multiple ganger så må slette ut databaseinnholde.
+Men dette er vel gjort i check()?
+
+
+=====
 
 
 

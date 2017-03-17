@@ -10,8 +10,12 @@ import javax.persistence.metamodel.Metamodel;
 abstract class JPADataStore 
 		extends TransactionalDataStore<EntityManagerFactory, EntityManager, EntityTransaction> {
 
+	private final String persistenceUnitName;
+	
 	public JPADataStore(String persistenceUnitName) {
 		super(Persistence.createEntityManagerFactory(persistenceUnitName));
+		
+		this.persistenceUnitName = persistenceUnitName;
 	}
 	
 	@Override
@@ -58,4 +62,11 @@ abstract class JPADataStore
 			System.out.println("Got entity: " + entityType.getName() + " of type " + entityType.getJavaType().getName() + ", persistence type " + entityType.getPersistenceType());
 		}
 	}
+
+	@Override
+	public String toString() {
+		return getClass().getSimpleName() + " [persistenceUnitName=" + persistenceUnitName + "]";
+	}
+	
+	
 }

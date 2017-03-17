@@ -29,6 +29,8 @@ public abstract class QueryTestDSBasePersistent<CTX, ENTITIES, TRANSACTION>
 
 	@Override
 	public final QueryTestDSCheck store(Consumer<QueryTestDSBuilder> dsBuilder) {
+	
+		debug("Storing instances on " + dataStore);
 
 		final BiFunction<TransactionalDataStore<CTX, ENTITIES, TRANSACTION>, Object, Object> getPrimaryKey
 				= (dataStore, instance) -> dataStore.getPrimaryKey(instance);
@@ -56,6 +58,7 @@ public abstract class QueryTestDSBasePersistent<CTX, ENTITIES, TRANSACTION>
 
 			dataStore.commitTransaction(transaction);
 			ok = true;
+			debug("Commited instances OK on " + dataStore);
 		}
 		finally {
 			
@@ -83,10 +86,14 @@ public abstract class QueryTestDSBasePersistent<CTX, ENTITIES, TRANSACTION>
 		@Override
 		public void check(Consumer<DataConfig> testBuilder) {
 
+			debug("Running checks on " + dataStore);
+			
 			final ENTITIES em = dataStore.openEntities();
 
 			try {
 				testBuilder.accept(dataConfig);
+
+				debug("Checks completed without exceptions " + dataStore);
 			}
 			finally {
 				safelyDeleteInstances(em);
@@ -94,6 +101,9 @@ public abstract class QueryTestDSBasePersistent<CTX, ENTITIES, TRANSACTION>
 		}
 		
 		private void safelyDeleteInstances(ENTITIES em) {
+
+			debug("Deleting instances on " + dataStore);
+
 			try {
 				final TRANSACTION transaction = dataStore.beginTransaction(em);
 
@@ -103,6 +113,8 @@ public abstract class QueryTestDSBasePersistent<CTX, ENTITIES, TRANSACTION>
 				}
 				
 				dataStore.commitTransaction(transaction);
+
+				debug("Deletion completed without exceptions " + dataStore);
 			}
 			finally {
 				dataStore.closeEntities(em);

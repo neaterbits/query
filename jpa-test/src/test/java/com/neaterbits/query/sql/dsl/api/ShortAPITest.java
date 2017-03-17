@@ -47,8 +47,8 @@ public class ShortAPITest extends BaseSQLAPITest {
 		
 		return new QueryTestDSCombined()
 				
-				.add(nativeDS)
 				.add(jpqlDS)
+				.add(nativeDS)
 				.add(inMemory)
 				
 				.store(b);

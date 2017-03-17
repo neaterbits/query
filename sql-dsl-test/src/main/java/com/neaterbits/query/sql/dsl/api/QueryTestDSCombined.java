@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 
-import com.neaterbits.query.sql.dsl.api.QueryDataSource;
 
 public class QueryTestDSCombined extends QueryTestDS {
 
@@ -45,6 +44,10 @@ public class QueryTestDSCombined extends QueryTestDS {
 	
 	@Override
 	public QueryTestDSCheck store(Consumer<QueryTestDSBuilder> dsBuilder) {
+
+		// Nothing to do as we must store and check in same loop
+		// since we have to delete previous run before running next
+		/*
 		
 		final List<QueryTestDSCheck> checks = new ArrayList<>(suppliers.size());
 		
@@ -62,8 +65,25 @@ public class QueryTestDSCombined extends QueryTestDS {
 		
 		
 		return new Checker(checks);
+		*/
+
+		final List<QueryTestDSStore> stores = new ArrayList<>(suppliers.size());
+		
+		for (Supplier<QueryTestDSStore> supplier : suppliers) {
+
+			final QueryTestDSStore store = supplier.get();
+			
+			if (store == null) {
+				throw new IllegalStateException("store == null");
+			}
+			
+			stores.add(store);
+		}
+		
+		return new Checker(dsBuilder, stores);
 	}
 	
+	/*
 	private class Checker implements QueryTestDSCheck {
 		private final List<QueryTestDSCheck> checks;
 		
@@ -74,6 +94,28 @@ public class QueryTestDSCombined extends QueryTestDS {
 		@Override
 		public void check(Consumer<DataConfig> testBuilder) {
 			for (QueryTestDSCheck dsCheck : checks) {
+				dsCheck.check(testBuilder);
+			}
+		}
+	}
+	*/
+
+	private class Checker implements QueryTestDSCheck {
+		private final Consumer<QueryTestDSBuilder> dsBuilder;
+		private final List<QueryTestDSStore> stores;
+		
+		Checker(Consumer<QueryTestDSBuilder> dsBuilder, List<QueryTestDSStore> stores) {
+			this.dsBuilder = dsBuilder;
+			this.stores = stores;
+		}
+		
+		@Override
+		public void check(Consumer<DataConfig> testBuilder) {
+			
+
+			for (QueryTestDSStore store : stores) {
+				final QueryTestDSCheck dsCheck = store.store(dsBuilder);
+
 				dsCheck.check(testBuilder);
 			}
 		}
