@@ -3,7 +3,6 @@ package com.neaterbits.query.sql.dsl.api;
 import static com.neaterbits.query.sql.dsl.api.IShortSelect.oneOrNull;
 
 
-import static com.neaterbits.query.sql.dsl.api.IShortSelect.one;
 import static com.neaterbits.query.sql.dsl.api.IShortSelect.list;
 
 import java.math.BigDecimal;
@@ -48,10 +47,9 @@ public class ShortAPITest extends BaseSQLAPITest {
 		
 		return new QueryTestDSCombined()
 				
-				//.add(nativeDS)
+				.add(nativeDS)
 				.add(jpqlDS)
-				
-				//.add(inMemory)
+				.add(inMemory)
 				
 				.store(b);
 	}
@@ -511,8 +509,20 @@ public class ShortAPITest extends BaseSQLAPITest {
 
 	@Test
     public void testJoinEntity() {
-		final SingleBuilt<Company> acmeQuery = select
-				.one(Company.class)
+		
+		final Company acme1 = new Company(1, "Acme1", new BigDecimal("49"));
+		final Company foo = new Company(2, "Foo", new BigDecimal("121"));
+
+		final Person person1 = new Person(1, "John", "Smith");
+		final Person person2 = new Person(2, "Angela", "Jones");
+		final Person person3 = new Person(3, "Adam", "Jones");
+		
+		final Employee acmeEmp1 = new Employee(1, acme1, person1.getId());
+		final Employee acmeEmp2 = new Employee(2, acme1, person2.getId());
+		final Employee fooEmp1 = new Employee(3, foo, person3.getId());
+
+		final SingleBuilt<Person> acmeQuery = select
+				.one(Person.class)
 
 				/*
 				// reverse mapping
@@ -524,17 +534,36 @@ public class ShortAPITest extends BaseSQLAPITest {
 				
 				// innerJoin(Employee::getPersonId, Person::getId).and(Employee::getPersonId2, Person::getId2).sub(j -> j.)
 				// innerjoin().on(Employee::getPersonId, Person::getId).and(Employee::getPersonId2, Person::getId2).sub()
-				
-				
-				.innerJoin(Company::getEmployees, j -> 
-						j.innerJoin(Employee::getPersonId, Person::getId))
 
-				.where(Company::getName).startsWith("Acme")
+				// Company is root of join tree
+				.joinRoot(Company.class) // TODO: always lambdas here to nest? more compex code
+				
+				// branch to person via employees
+				.innerJoin(Company::getEmployees, j ->
+					
+						j.innerJoin(Employee::getPersonId, Person::getId))
+				
+
+				.where(Company::getName).startsWith("Foo")
 
 				.build();
 		
-		//acmeQuery.prepare(jpqlJPA);
-		acmeQuery.prepare(nativeJPA);
+		
+		store(s -> s
+				.add(acme1)
+				.add(foo)
+				.add(person1).add(person2).add(person3)
+				.add(acmeEmp1).add(acmeEmp2).add(fooEmp1))
+		
+		.check(ds -> checkSelectOneOrNull(
+				ds,
+				person3,
+				acmeQuery,
+				q -> q.execute())
+		);
+		
+		
+		// acmeQuery.prepare(nativeJPA);
 		
 	}
 	

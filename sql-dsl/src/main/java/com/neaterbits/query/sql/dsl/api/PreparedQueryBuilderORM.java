@@ -462,7 +462,7 @@ final class PreparedQueryBuilderORM<MANAGED, EMBEDDED, IDENTIFIABLE, ATTRIBUTE, 
 	
 	
 	private <QUERY> SourceReference getSourceReference(ExecutableQuery<QUERY> q, QUERY query, int idx) {
-		final SourceReference ref = new SourceReference(q.getSourceJavaType(query, idx), q.getSourceName(query, idx));
+		final SourceReference ref = new SourceReference(q.getSourceJavaType(query, idx), q.getSourceName(query, idx) );
 
 		return ref;
 	}
@@ -591,8 +591,6 @@ final class PreparedQueryBuilderORM<MANAGED, EMBEDDED, IDENTIFIABLE, ATTRIBUTE, 
 				}
 
 				
-				
-
 				// Joining two fields. TODO Which version of JPA are we?
 
 				// Add as where-queries for later on

@@ -1287,6 +1287,15 @@ så litt forvirrende.
 
 
 
+Hmm.. kan hende vi ønsker å joine på noe annet enn det vi søker ut av entity,
+så da må vi alltid velge root i join.
+
+Kunne det tenkes å ha flere røtter, uten et join-query? Men da er det cartesian i prinsipper, så alltid ha en join-root,
+men kan defaulte til valg entity.
+
+Så hvordan blir denne da is å fall ?
+
+.joinRoot(foo) om skal bytte, men kun mulig bare en enkelt gang.
 
 
 
@@ -1300,6 +1309,97 @@ så litt forvirrende.
 
 
 
+
+
+
+===========================================================================================
+
+Testplan:
+
+Trenger ikke teste alt mulig av tilfeller her men en må spesielt teste de punktene der en "brancher ut".
+
+Dette er en tabell med mange dimensjoner.
+
+Akser:
+
+funksjon | entity/mapped |  single / multi | joins 
+
+
+group by | entity (N/A)|  single / multi | named / alias |
+
+
+Hvordan best visualisere / fremstille dette uten dobbelt-lagring?
+
+Det er nå først og fremst entity/mapped hvor det er unntak og unntakene er også ganske få (f.eks ikke group-by på entity).
+
+
+OBS! Bør også test at en del syntakser ikke er kompilerbare, altså at ikke er kompilerbrart med group-by,
+at joins må være av rett from-type osv, kan bare kalle javac i ekstern prosess.
+
+
+Hvordan fremstille test-plan?
+
+Er altså N/A vi er interessert i, og funksjonalitets kombinasjonene (dvs "having" kun hvis "group by").
+
+
+Som er en dependency problemstilling.
+
+enum Functionality {
+   
+  private Functionality [] dependants;
+
+}
+
+
+Og så liste over når en functionality *ikke* er applicable.
+
+enum EFieldMapping {
+  NAMED,
+  ALIAS;
+
+
+// Alle kombinasjoner innenfor det som er spesifisert her er not applicable.
+class NACase {
+  Functionality functionality;
+  EQueryResultType [] resultTypes;
+  EFieldMapping [] mappings;
+  EQueryDimension [] dimensions;
+}
+
+
+Så må vi finne grafen av tilfeller som vi kan finne ut?
+
+result => mapping => join => where => groupby => having => orderby => limit => offset
+
+
+limit og offset har NA på query dimension single, f.eks.
+
+Så da behøver vi egentlig bare å starte fra toppen her og rekursere ned igjennom for å få ut alle tilfellene.
+Det kan bli ganske mange så vi kan sikkert eliminere noen, det ser vi når vi går nedover. Men vi må nok ha named og alias for alle.
+
+Hvordan kan vi organisere selve testene? Må være et system i dette? 
+Antakelig best å benytte seg av rekkefølgen over i navngivingen av filer.
+
+AggregateMappedJoinWhereGroupByHavingOrderByLimitOffsetTest.java hmm... Eller med underscores.
+
+Da kan egentlig test-rutina klare å finne ut hvilke tester som mangler med reflection, dvs Class.forName("...")
+
+Hva er så innholdet i hver test-klasse? Det blir alle casene for den testen, her kan vi lage tomme tester også ganske enkelt
+
+ testAggregateSingleNamed(), testEntityMultiAlias() osv.
+
+
+Da burde vi ha ganske bra dekning av APIet, slik at unngår ClassCastException pga manglende interface implementasjoner, og den type ting.
+
+
+Så er det noen spesial-greier slik som functions og ikke functions, disse kan da være på en separat akse av testing,
+så ikke blir så mange kombinasjoner. F.eks så har functions i mappinga som lower(Foo::getBar) ikke noe særlig å si for hva som skjer
+ i where-clausen så kan lage egne kombinasjoner her innafor kun mappinga f.eks.
+
+
+Så kan en også ha noen adhoc smoke-tests som sjekker litt slike kombinasjoner også.
+
+Bør kjøre cobertura etter hvert, spesielt viktig for join-semantikken.
 
 
 

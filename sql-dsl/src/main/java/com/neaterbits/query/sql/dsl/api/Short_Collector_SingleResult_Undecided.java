@@ -7,9 +7,8 @@ final class Short_Collector_SingleResult_Undecided<MODEL, RESULT>
 	extends Short_Collector_Result_Undecided_Base<
 			MODEL,
 			RESULT,
-
 			
-			IShortLogical_WhereOrJoin_SingleResult_Entity_Named<MODEL, RESULT>,
+			IShortLogical_WhereOrJoin_SingleResult_Entity_Named<MODEL, RESULT, RESULT>,
 			IShortLogical_WhereOrJoin_SingleResult_Entity_Alias<MODEL, RESULT>,
 			/*
 			ISQLLogical_WhereOrJoin_SingleResult_Named_And_Function<MODEL, RESULT>,
@@ -39,6 +38,8 @@ final class Short_Collector_SingleResult_Undecided<MODEL, RESULT>
 	implements
 			ISQLLogical_Where_SingleResult_Named_Base<MODEL, RESULT>,
 			ISQLLogical_WhereOrJoin_Named_Base<MODEL, RESULT>,
+			IShortLogical_WhereOrJoin_SingleResult_Entity_Named_Initial<MODEL, RESULT>,
+			IShortLogical_WhereOrJoin_SingleResult_Entity_Named<MODEL, RESULT, RESULT>,
 			
 			IShortResult_Single<MODEL, RESULT>,
 			IMappingCollector<MODEL, RESULT> {
@@ -77,8 +78,17 @@ final class Short_Collector_SingleResult_Undecided<MODEL, RESULT>
 
 	
 	
+	
 	// ******************* !!! IMPORTANT must switch to one that implements AndOr interface !!! *******************
 
+
+	@Override
+	public <T> IShortLogical_WhereOrJoin_SingleResult_Entity_Named<MODEL, RESULT, T> joinRoot(Class<T> type) {
+		
+		// Just for type-checking and readability, telling where join starts from, if not from root 
+		
+		return (IShortLogical_WhereOrJoin_SingleResult_Entity_Named)this;
+	}
 
 	@Override
 	public ISharedFunctions_Transform_Initial_Named<MODEL, RESULT, ISQLLogical_AndOr_SingleResult_Named<MODEL, RESULT>, ISharedCondition_Comparable_Common_All_Compilable<MODEL, RESULT, Short, ISQLLogical_AndOr_SingleResult_Named<MODEL, RESULT>>, ISharedCondition_Comparable_Common_All_Compilable<MODEL, RESULT, Integer, ISQLLogical_AndOr_SingleResult_Named<MODEL, RESULT>>, ISharedCondition_Comparable_Common_All_Compilable<MODEL, RESULT, Long, ISQLLogical_AndOr_SingleResult_Named<MODEL, RESULT>>, ISharedCondition_Comparable_Common_All_Compilable<MODEL, RESULT, Double, ISQLLogical_AndOr_SingleResult_Named<MODEL, RESULT>>, ISharedCondition_Comparable_Common_All_Compilable<MODEL, RESULT, BigDecimal, ISQLLogical_AndOr_SingleResult_Named<MODEL, RESULT>>, ISharedCondition_Comparable_String_All_Compilable<MODEL, RESULT, ISQLLogical_AndOr_SingleResult_Named<MODEL, RESULT>>> where() {

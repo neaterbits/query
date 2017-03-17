@@ -7,7 +7,7 @@ public interface IShortResult_Single<MODEL, RESULT>
 
 		
 		
-		IShortLogical_WhereOrJoin_SingleResult_Entity_Named<MODEL, RESULT>,
+		IShortLogical_WhereOrJoin_SingleResult_Entity_Named_Initial<MODEL, RESULT>,
 		IShortLogical_WhereOrJoin_SingleResult_Entity_Alias<MODEL, RESULT> {
 
 }
