@@ -22,39 +22,15 @@ import com.neaterbits.query.sql.dsl.api.entity.QueryMetaModel;
 
 
 
-public class ShortAPITest extends BaseSQLAPITest {
+public class ShortAPITest extends BaseJPATest {
 	
-	private static final String persistenceUnitName = "query-jpa-test";
-	
-	private static final EntityManagerFactory emf = Persistence.createEntityManagerFactory(persistenceUnitName);
 
-	private static final QueryMetaModel jpaQueryMetaModel = new JPAQueryMetaModel(emf.getMetamodel());
-
-	private static final JPADataConfig nativeJPA = new JPADataConfigNative(persistenceUnitName);
-	private static final JPADataConfig jpqlJPA = new JPADataConfigJPQL(persistenceUnitName);
-	
-	private static final QueryTestDSJPA nativeDS = new QueryTestDSJPA(nativeJPA);
-	private static final QueryTestDSJPA jpqlDS = new QueryTestDSJPA(jpqlJPA);
-	private static final QueryTestDSInMemory inMemory = new QueryTestDSInMemory(jpaQueryMetaModel);
-	
 	private static final ShortSelect select = com.neaterbits.query.sql.dsl.api.IShortSelect.get();
 	
 	//private static final QueryDataSource jpqlDS = jpql.getDataSource();
 	
 	
-	private static QueryTestDSCheck store(Consumer<QueryTestDSBuilder> b) {
-		
-		
-		return new QueryTestDSCombined()
-				
-				.add(jpqlDS)
-				.add(nativeDS)
-				.add(inMemory)
-				
-				.store(b);
-	}
 
-	private static final IShortPrepared prepared = IShortPrepared.get(jpqlJPA);
 	/*
 	private static final SinglePrepared<Company>
 			acmeQuery2 = 

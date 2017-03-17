@@ -6,7 +6,7 @@
 	<!-- http://wiki.eclipse.org/EclipseLink/Examples/JPA/Configure -->
 	<!-- http://stackoverflow.com/questions/8459284/using-hibernate-with-embedded-derby -->
 
-	<persistence-unit name="query-jpa-test">
+	<persistence-unit name="query-jpa-test-derby">
 
 		<provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
 

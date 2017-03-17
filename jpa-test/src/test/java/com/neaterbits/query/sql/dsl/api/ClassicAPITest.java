@@ -10,11 +10,8 @@ import static com.neaterbits.query.sql.dsl.api.IClassicSelect.oneOrNull;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.math.BigDecimal;
-import java.util.function.Consumer;
 
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
 
 import org.junit.Test;
 
@@ -22,37 +19,10 @@ import com.neaterbits.query.jpatest.model.Company;
 import com.neaterbits.query.jpatest.model.Employee;
 import com.neaterbits.query.jpatest.model.Person;
 import com.neaterbits.query.jpatest.model.Role;
-import com.neaterbits.query.sql.dsl.api.entity.QueryMetaModel;
 
-public class ClassicAPITest extends BaseSQLAPITest {
+public class ClassicAPITest extends BaseJPATest {
 
-	private static final String persistenceUnitName = "query-jpa-test";
 	
-	private static final EntityManagerFactory emf = Persistence.createEntityManagerFactory(persistenceUnitName);
-
-	private static final QueryMetaModel jpaQueryMetaModel = new JPAQueryMetaModel(emf.getMetamodel());
-	
-	private static final JPADataConfig nativeJPA = new JPADataConfigNative(persistenceUnitName);
-	private static final JPADataConfig jpqlJPA = new JPADataConfigJPQL(persistenceUnitName);
-	
-
-	private static final QueryTestDSStore nativeDS = new QueryTestDSJPA(nativeJPA);
-	private static final QueryTestDSStore jpql = new QueryTestDSJPA(jpqlJPA);
-	
-	private static final QueryTestDSStore inMemory = new QueryTestDSInMemory(jpaQueryMetaModel);
-	
-	private static QueryTestDSCheck store(Consumer<QueryTestDSBuilder> b) {
-		
-		
-		return new QueryTestDSCombined()
-				
-				//.add(nativeDS)
-				.add(jpql)
-				
-				//.add(inMemory)
-				
-				.store(b);
-	}
 
 	
 	@Test
@@ -681,7 +651,6 @@ public class ClassicAPITest extends BaseSQLAPITest {
     public void testAliasBasedObsolete() {
     	EntityManager em = null;
     	try {
-    		em = emf.createEntityManager();
 
     		final Company 	company  = alias(Company.class);
 			final Person 	person   = alias(Person.class); 
@@ -725,9 +694,6 @@ public class ClassicAPITest extends BaseSQLAPITest {
 	        assertThat(query).isNotNull();
     	}
     	finally {
-    		if (em != null) {
-    			em.close();
-    		}
     	}
     }
 
