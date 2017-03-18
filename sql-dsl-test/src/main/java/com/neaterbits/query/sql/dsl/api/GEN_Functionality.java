@@ -8,9 +8,20 @@ import com.neaterbits.util.StringUtils;
 
 public enum GEN_Functionality {
 
-	AGGREGATE(true, true),
-	ENTITY(true, true),
-	MAPPED(true, false),
+	AGGREGATE(true, true,
+			
+		      null,
+		      (result, dimension, fieldAccess) -> result == EQueryResultGathering.AGGREGATE),
+
+	ENTITY(true, true,
+			
+		  null,
+		  (result, dimension, fieldAccess) -> result == EQueryResultGathering.ENTITY),
+
+ 	MAPPED(true, false,
+
+ 		   null,
+		   (result, dimension, fieldAccess) -> result == EQueryResultGathering.ENTITY),
 
 	JOIN(false, true, AGGREGATE, ENTITY, MAPPED), // Choose one when traversing
 	
@@ -27,7 +38,10 @@ public enum GEN_Functionality {
 	AND_NEST(false, false, WHERE, AND),
 	OR_NEST(false, false, WHERE, OR, AND_NEST),
 
-	GROUP_BY(false, true,
+	GROUP_BY(
+			false,
+			true,
+
 			// Must be mapped query and have multi-dimension
 			stack -> stack.contains(GEN_Functionality.MAPPED),
 			(result, dimension, fieldAccess) -> dimension == EQueryResultDimension.MULTI && result == EQueryResultGathering.MAPPED,

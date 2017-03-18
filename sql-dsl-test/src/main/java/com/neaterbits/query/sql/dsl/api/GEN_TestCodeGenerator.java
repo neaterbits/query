@@ -34,7 +34,7 @@ final class GEN_TestCodeGenerator {
 			System.out.println();
 
 			try {
-				genFileForTestCase(testContext, testCase, false);
+				genFileForTestCase(testContext, testCase, true);
 			}
 			catch (IOException ex) {
 				throw new RuntimeException("Failed to write test files", ex);
