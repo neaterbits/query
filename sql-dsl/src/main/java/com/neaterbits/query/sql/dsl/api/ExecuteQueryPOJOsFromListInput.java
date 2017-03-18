@@ -39,16 +39,16 @@ public class ExecuteQueryPOJOsFromListInput implements ExecuteQueryPOJOsInput {
 		// Run though all instances and sort them by type
 		for (Object instance : instances) {
 			final Class<?> cl = instance.getClass();
-			
+
 			final int idx = idx(classes, cl);
-			
+
 			if (idx < 0) {
-				throw new IllegalStateException("instane class " + cl + " is not among epxected: " + Arrays.toString(classes));
+				throw new IllegalStateException("instance class " + cl + " is not among expected: " + Arrays.toString(classes));
 			}
-			
+
 			collections[idx].add(instance);
 		}
-		
+
 		return new ExecuteQueryPOJOsArrayOfCollectionsInput(collections);
 	}
 

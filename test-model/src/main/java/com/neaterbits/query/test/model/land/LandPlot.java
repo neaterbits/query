@@ -8,6 +8,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
+import javax.persistence.Table;
 
 import com.neaterbits.query.test.model.ownership.Owner;
 
@@ -16,7 +17,8 @@ import com.neaterbits.query.test.model.ownership.Owner;
  *
  */
 
-@Entity(name="land_plot")
+@Entity
+@Table(name="land_plot")
 public abstract class LandPlot {
 
 	private Long id;
@@ -48,7 +50,7 @@ public abstract class LandPlot {
 		this.id = id;
 	}
 
-	@Column
+	@Column(precision=12, scale=5)
 	public BigDecimal getHectares() {
 		return hectares;
 	}

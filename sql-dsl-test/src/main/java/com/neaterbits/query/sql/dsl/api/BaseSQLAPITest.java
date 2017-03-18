@@ -1,5 +1,6 @@
 package com.neaterbits.query.sql.dsl.api;
 
+import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.List;
 import java.util.function.Function;
@@ -25,7 +26,17 @@ public abstract class BaseSQLAPITest {
     	}
     	else {
     		assertThat(result).isNotSameAs(expected);
-    		assertThat(result).isEqualTo(expected);
+    		
+    		if (result instanceof BigDecimal && expected instanceof BigDecimal) {
+    			// handle scale differences (ie. 000's at the end)
+    			final BigDecimal resultDecimal = (BigDecimal)result;
+    			final BigDecimal expectedDecimal = (BigDecimal)expected;
+    			
+    			assertThat(resultDecimal.compareTo(expectedDecimal)).isEqualTo(0);
+    		}
+    		else {
+    			assertThat(result).isEqualTo(expected);
+    		}
     	}
 	}
 

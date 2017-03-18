@@ -705,5 +705,14 @@ public class ShortAPITest extends BaseJPATest {
 	        		foo);
 		});
 	}
+
+	@Test
+	public void testEntityWithName() {
+		
+		// Eg @Entity(name="land_plot") for LandPlot class does not work
+		// since generates LandPlot in query
+		
+		assertThat(true).isEqualTo(false);
+	}
 	
 }

@@ -34,7 +34,7 @@ public class AggregateTest extends GEN_BaseTestCase
     	.check(ds ->
     		checkSelectOneOrNull(
     				ds,
-    				new BigDecimal(49.80),
+    				new BigDecimal("49.80"),
     				sumQuery, 
     				q -> q.execute()));
     	
