@@ -1404,11 +1404,27 @@ Så kan en også ha noen adhoc smoke-tests som sjekker litt slike kombinasjoner 
 
 Bør kjøre cobertura etter hvert, spesielt viktig for join-semantikken.
 
+Variants? Må modellere varianter under hver, som er uavhengige? Men disse må testes for seg.
+
 
 ----
 
  - multiple datasources, hver test kjører multiple ganger så må slette ut databaseinnholde.
 Men dette er vel gjort i check()?
+
+
+Så det er en tre-struktur av mulig sekvenser gjennom treet.
+
+start => aggregate osv, hvordan modellere valgene? Gjennom alle som kan være foregående?
+Men hva om er avhengig av noe lenger fremme i pathen ? Er her NA_CASE kan anvendes. Men stort sett er det ikke noe slik.
+
+
+
+
+
+
+
+
 
 
 =====

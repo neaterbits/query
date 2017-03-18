@@ -31,21 +31,21 @@ final class ExecutableQueryForCompiledQuery extends ExecutableQueryForCompiledBa
 
 	
 	@Override
-	public FieldReferenceType getQueryFieldReferenceType(CompiledQuery query) {
+	public EFieldAccessType getQueryFieldAccessType(CompiledQuery query) {
 
 		final CompiledSelectSources<?> source = query.getSelectSources();
 
-		final FieldReferenceType ret;
+		final EFieldAccessType ret;
 
 		if (source instanceof CompiledSelectSources_Alias) {
-			ret = FieldReferenceType.ALIAS;
+			ret = EFieldAccessType.ALIAS;
 		}
 		else if (source instanceof CompiledSelectSources_Named) {
-			ret = FieldReferenceType.ENTITY;
+			ret = EFieldAccessType.NAMED;
 		}
 		else if (source instanceof CompiledSelectSources_ListAllOfOneEntity) {
 			// no mapping so is a list of entities
-			ret = FieldReferenceType.ENTITY;
+			ret = EFieldAccessType.NAMED;
 		}
 		else {
 			throw new IllegalStateException("Unknown select source class " + source.getClass());

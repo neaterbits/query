@@ -116,8 +116,8 @@ abstract class AdhocQuery_Named<MODEL, RESULT>
 	
 	
 	@Override
-	public FieldReferenceType getQueryFieldReferenceType(AdhocQuery_Named<MODEL, RESULT> query) {
-		return FieldReferenceType.ENTITY;
+	public EFieldAccessType getQueryFieldAccessType(AdhocQuery_Named<MODEL, RESULT> query) {
+		return EFieldAccessType.NAMED;
 	}
 
 	@Override

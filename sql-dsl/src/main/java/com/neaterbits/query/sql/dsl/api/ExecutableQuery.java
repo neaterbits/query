@@ -182,7 +182,7 @@ interface ExecutableQuery<QUERY> {
 	 * @return
 	 */
 	
-	FieldReferenceType getQueryFieldReferenceType(QUERY query);
+	EFieldAccessType getQueryFieldAccessType(QUERY query);
 	
 	
 	/**

@@ -28,7 +28,7 @@ final class QueryDialect_ANSI_SQL<MANAGED, EMBEDDED, IDENTIFIABLE, ATTRIBUTE, CO
 	}
 	
 	@Override
-	void addEntityResult(QueryBuilder sb, FieldReferenceType fieldReferenceType, SourceReference sourceReference) {
+	void addEntityResult(QueryBuilder sb, EFieldAccessType fieldReferenceType, SourceReference sourceReference) {
 
 		// Select one complete entity, we need to select all attributes of the model
 		final Class<?> resultType = sourceReference.getJavaType();
@@ -44,7 +44,7 @@ final class QueryDialect_ANSI_SQL<MANAGED, EMBEDDED, IDENTIFIABLE, ATTRIBUTE, CO
 		appendFieldList(sb, entity, prefix);
 	}
 	
-	private String getEntityResultVarName(FieldReferenceType fieldReferenceType, SourceReference sourceReference, IEntity entity) {
+	private String getEntityResultVarName(EFieldAccessType fieldReferenceType, SourceReference sourceReference, IEntity entity) {
 		
 		final String ret;
 		
@@ -53,7 +53,7 @@ final class QueryDialect_ANSI_SQL<MANAGED, EMBEDDED, IDENTIFIABLE, ATTRIBUTE, CO
 			ret = sourceReference.getVarName();
 			break;
 			
-		case ENTITY:
+		case NAMED:
 			ret = entity.getTableName();
 			break;
 			
@@ -153,7 +153,7 @@ final class QueryDialect_ANSI_SQL<MANAGED, EMBEDDED, IDENTIFIABLE, ATTRIBUTE, CO
 	}
 
 	@Override
-	void addOneToManyJoin(QueryBuilder sb, Relation relation, FieldReferenceType fieldReferenceType, SourceReference from, SourceReference to) {
+	void addOneToManyJoin(QueryBuilder sb, Relation relation, EFieldAccessType fieldReferenceType, SourceReference from, SourceReference to) {
 		
 		// One-to-many is a bit tricky, we must write ANSI joins on the model fields
 		
@@ -200,7 +200,7 @@ final class QueryDialect_ANSI_SQL<MANAGED, EMBEDDED, IDENTIFIABLE, ATTRIBUTE, CO
 				sb.append(to.getVarName()).append('.').append(toColumns[i]);
 				break;
 				
-			case ENTITY:
+			case NAMED:
 				if (fromTableName == null) {
 					fromTableName = getTableName(from.getJavaType());
 				}
@@ -242,10 +242,10 @@ final class QueryDialect_ANSI_SQL<MANAGED, EMBEDDED, IDENTIFIABLE, ATTRIBUTE, CO
 	}
 
 	@Override
-	void addSelectSource(QueryBuilder sb, FieldReferenceType fieldReferenceType, SourceReference ref) {
+	void addSelectSource(QueryBuilder sb, EFieldAccessType fieldReferenceType, SourceReference ref) {
 		
 		switch (fieldReferenceType) {
-		case ENTITY:
+		case NAMED:
 			// Just add table name
 			sb.append(getSourceTypeName(ref.getJavaType()));
 			break;

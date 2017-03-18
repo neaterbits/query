@@ -23,13 +23,13 @@ abstract class QueryDialect_SQL extends QueryDialect_Base {
 	
 	//abstract void select();
 	
-	abstract void addEntityResult(QueryBuilder sb, FieldReferenceType fieldReferenceType, SourceReference sourceReference);
+	abstract void addEntityResult(QueryBuilder sb, EFieldAccessType fieldReferenceType, SourceReference sourceReference);
 	
 	abstract void addAggregateResult(QueryBuilder sb, EAggregateFunction function, FieldReference field);
 
 	//abstract void addFromSelectSources(FieldReferenceType fieldReferenceType, List<SourceReference> references);
 	
-	abstract void addOneToManyJoin(QueryBuilder sb, Relation relation, FieldReferenceType fieldReferenceType, SourceReference from, SourceReference to);
+	abstract void addOneToManyJoin(QueryBuilder sb, Relation relation, EFieldAccessType fieldReferenceType, SourceReference from, SourceReference to);
 	
 	abstract void addComparisonJoin(QueryBuilder sb, List<JoinFieldComparison> fieldComparisons, SourceReference from, SourceReference to);
 	
@@ -37,7 +37,7 @@ abstract class QueryDialect_SQL extends QueryDialect_Base {
 	
 	abstract void appendJoinStatement(QueryBuilder sb, EJoinType joinType);
 
-	abstract void addSelectSource(QueryBuilder sb, FieldReferenceType fieldReferenceType, SourceReference ref);
+	abstract void addSelectSource(QueryBuilder sb, EFieldAccessType fieldReferenceType, SourceReference ref);
 	
 	
 	// **************************** Some abstract methods conditions ****************************
@@ -82,7 +82,7 @@ abstract class QueryDialect_SQL extends QueryDialect_Base {
 	}
 
 	//@Override
-	final void addFromSelectSources(QueryBuilder sb, FieldReferenceType fieldReferenceType, List<SourceReference> references) {
+	final void addFromSelectSources(QueryBuilder sb, EFieldAccessType fieldReferenceType, List<SourceReference> references) {
 
 		sb.append("\n").append("FROM ");
 

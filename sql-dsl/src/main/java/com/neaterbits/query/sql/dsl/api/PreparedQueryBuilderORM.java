@@ -93,7 +93,7 @@ final class PreparedQueryBuilderORM<MANAGED, EMBEDDED, IDENTIFIABLE, ATTRIBUTE, 
 		switch (resultGathering) {
 		case ENTITY:
 			// Result may be an alias
-			final FieldReferenceType fieldReferenceType = q.getQueryFieldReferenceType(query);
+			final EFieldAccessType fieldReferenceType = q.getQueryFieldAccessType(query);
 			
 			// Find the resulting source
 			
@@ -126,7 +126,7 @@ final class PreparedQueryBuilderORM<MANAGED, EMBEDDED, IDENTIFIABLE, ATTRIBUTE, 
 		
 		//final List<FieldReference> refs = new ArrayList<>(numMappings);
 
-		final FieldReferenceType fieldReferenceType = q.getQueryFieldReferenceType(query);
+		final EFieldAccessType fieldReferenceType = q.getQueryFieldAccessType(query);
 
 		for (int mappingIdx = 0; mappingIdx < numMappings; ++ mappingIdx) {
 			
@@ -166,7 +166,7 @@ final class PreparedQueryBuilderORM<MANAGED, EMBEDDED, IDENTIFIABLE, ATTRIBUTE, 
 		//dialect.addMappings(s, refs);
 	}
 
-	private <QUERY> void outputExpressions(ExecutableQueryExpressions expressions, FieldReferenceType fieldReferenceType) {
+	private <QUERY> void outputExpressions(ExecutableQueryExpressions expressions, EFieldAccessType fieldReferenceType) {
 		// Start at root and recurse downwards
 		
 		int level = 0;
@@ -177,7 +177,7 @@ final class PreparedQueryBuilderORM<MANAGED, EMBEDDED, IDENTIFIABLE, ATTRIBUTE, 
 		
 		outputExpression(expressions, fieldReferenceType, level, context);
 	}
-	private <QUERY> void outputExpression(ExecutableQueryExpressions expressions, FieldReferenceType fieldReferenceType, int level, int [] context) {
+	private <QUERY> void outputExpression(ExecutableQueryExpressions expressions, EFieldAccessType fieldReferenceType, int level, int [] context) {
 		// Start at root and recurse downwards
 		
 		final EExpressionType type = expressions.getExpressionType(level, context);
@@ -470,7 +470,7 @@ final class PreparedQueryBuilderORM<MANAGED, EMBEDDED, IDENTIFIABLE, ATTRIBUTE, 
 	
 	private <QUERY> void prepareFroms(ExecutableQuery<QUERY> q, QUERY query, int [] fromSelectSources) {
 
-		final FieldReferenceType fieldReferenceType = q.getQueryFieldReferenceType(query);
+		final EFieldAccessType fieldReferenceType = q.getQueryFieldAccessType(query);
 
 		final int numFroms = fromSelectSources.length;
 		
@@ -489,12 +489,12 @@ final class PreparedQueryBuilderORM<MANAGED, EMBEDDED, IDENTIFIABLE, ATTRIBUTE, 
 	}
 	
 	private <QUERY> FieldReference prepareFieldReference(ExecutableQuery<QUERY> q, QUERY query, CompiledFieldReference field) {
-		final FieldReferenceType fieldReferenceType = q.getQueryFieldReferenceType(query);
+		final EFieldAccessType fieldReferenceType = q.getQueryFieldAccessType(query);
 
 		return prepareFieldReference(fieldReferenceType, field);
 	}
 
-	private <QUERY> FieldReference prepareFieldReference(FieldReferenceType fieldReferenceType, CompiledFieldReference field) {
+	private <QUERY> FieldReference prepareFieldReference(EFieldAccessType fieldReferenceType, CompiledFieldReference field) {
 		
 		final TypeMapSource source = field.getSource();
 
@@ -510,7 +510,7 @@ final class PreparedQueryBuilderORM<MANAGED, EMBEDDED, IDENTIFIABLE, ATTRIBUTE, 
 			ret = new FieldReferenceAlias(source.getName(), columnName);
 			break;
 			
-		case ENTITY:
+		case NAMED:
 			ret = new FieldReferenceEntity(source.getType(), source.getName(), columnName);
 			break;
 			
@@ -662,7 +662,7 @@ final class PreparedQueryBuilderORM<MANAGED, EMBEDDED, IDENTIFIABLE, ATTRIBUTE, 
 		
 		final Method collectionGetterMethod = q.getJoinConditionOneToManyCollectionGetter(query, joinIdx, conditionIdx);
 		
-		final FieldReferenceType fieldReferenceType = q.getQueryFieldReferenceType(query);
+		final EFieldAccessType fieldReferenceType = q.getQueryFieldAccessType(query);
 		
 		final int oneToManyLeftSourceIdx  = q.getJoinConditionLeftSourceIdx(query, joinIdx, conditionIdx);
 		final int oneToManyRightSourceIdx = q.getJoinConditionRightSourceIdx(query, joinIdx, conditionIdx);

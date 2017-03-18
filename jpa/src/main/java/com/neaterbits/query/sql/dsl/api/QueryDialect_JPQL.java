@@ -13,7 +13,7 @@ final class QueryDialect_JPQL extends QueryDialect_SQL {
 	}
 	
 	@Override
-	void addEntityResult(QueryBuilder sb, FieldReferenceType fieldReferenceType, SourceReference sourceReference) {
+	void addEntityResult(QueryBuilder sb, EFieldAccessType fieldReferenceType, SourceReference sourceReference) {
 
 		final Class<?> resultType = sourceReference.getJavaType();
 		final String resultVarName = sourceReference.getVarName();
@@ -65,7 +65,7 @@ final class QueryDialect_JPQL extends QueryDialect_SQL {
 
 
 	@Override
-	void addOneToManyJoin(QueryBuilder sb, Relation relation, FieldReferenceType fieldReferenceType, SourceReference from, SourceReference to) {
+	void addOneToManyJoin(QueryBuilder sb, Relation relation, EFieldAccessType fieldReferenceType, SourceReference from, SourceReference to) {
 		
 		// final String entityAliasName = q.getJoinConditionLeftName(query, joinIdx, conditionIdx);
 		
@@ -95,7 +95,7 @@ final class QueryDialect_JPQL extends QueryDialect_SQL {
 	}
 
 	@Override
-	void addSelectSource(QueryBuilder sb, FieldReferenceType fieldReferenceType, SourceReference ref) {
+	void addSelectSource(QueryBuilder sb, EFieldAccessType fieldReferenceType, SourceReference ref) {
 		final String entityName = getSourceTypeName(ref.getJavaType());
 
 		sb.append(entityName).append(' ').append(ref.getVarName());
