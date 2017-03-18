@@ -55,7 +55,8 @@ public abstract class BaseJPATest extends BaseSQLAPITest {
 				.add(jpqlDShsqldb)
 				.add(nativeDShsqldb)
 				
-				.add(inMemory)
+				// TODO: test support for in-memory later
+				//.add(inMemory)
 				
 				.store(b);
 	}
