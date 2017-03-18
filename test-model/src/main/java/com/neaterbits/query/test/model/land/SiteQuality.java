@@ -1,5 +1,7 @@
 package com.neaterbits.query.test.model.land;
 
+import javax.persistence.Entity;
+
 import com.neaterbits.query.test.model.Enumerated;
 
 /**
@@ -7,6 +9,7 @@ import com.neaterbits.query.test.model.Enumerated;
  *
  */
 
+@Entity
 public class SiteQuality extends Enumerated {
 
 	

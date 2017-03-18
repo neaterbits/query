@@ -4,6 +4,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import java.math.BigDecimal;
 
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
+
 import org.junit.Test;
 import com.neaterbits.query.jpatest.GEN_BaseTestCase;
 import com.neaterbits.query.sql.dsl.api.SingleBuilt;
@@ -12,8 +15,14 @@ import com.neaterbits.query.test.model.land.Forest;
 import com.neaterbits.query.test.model.land.LandPlot;
 
 
-public class AggregateTest extends GEN_BaseTestCase {
+public class AggregateTest extends GEN_BaseTestCase
+	{
+/*	
+	private static final String derbyPersistenceUnitName = "query-jpa-test-derby";
+	private static final String hsqldbPersistenceUnitName = "query-jpa-test-hsqldb";
 
+	private static final EntityManagerFactory emf = Persistence.createEntityManagerFactory(derbyPersistenceUnitName);
+*/
 
     @Test
     public void testEntitySingleNamed() {
@@ -93,7 +102,6 @@ public class AggregateTest extends GEN_BaseTestCase {
     public void testAggregateMultiNamed() {
         assertThat(true).isEqualTo(false);
     }
-
 
     @Test
     public void testAggregateMultiAlias() {

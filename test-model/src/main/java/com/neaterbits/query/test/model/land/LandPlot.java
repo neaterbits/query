@@ -49,13 +49,14 @@ public abstract class LandPlot {
 	}
 
 	@Column
+	public BigDecimal getHectares() {
+		return hectares;
+	}
+
 	public void setHectares(BigDecimal hectares) {
 		this.hectares = hectares;
 	}
 
-	public BigDecimal getHectares() {
-		return hectares;
-	}
 
 	@OneToOne
 	public Owner getOwner() {

@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.1"
+	xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
+
+	<!-- http://wiki.eclipse.org/EclipseLink/Examples/JPA/Configure -->
+	<!-- http://stackoverflow.com/questions/8459284/using-hibernate-with-embedded-derby -->
+
+
+	<persistence-unit name="query-jpa-test-derby">
+
+		<provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
+
+		<exclude-unlisted-classes>false</exclude-unlisted-classes>
+		<jar-file>/home/nhl/.m2/repository/com/neaterbits/query/query-test-model/0.0.1-SNAPSHOT/query-test-model-0.0.1-SNAPSHOT.jar</jar-file>
+		
+		<properties>
+			<property name="javax.persistence.jdbc.url" value="jdbc:derby:memory:query-jpa-test-derby;create=true" />
+			<property name="javax.persistence.jdbc.user" value="" />
+			<property name="javax.persistence.jdbc.password" value="" />
+
+            <!-- EclipseLink should create the database schema automatically -->
+            <property name="eclipselink.ddl-generation" value="drop-and-create-tables" />
+            
+            <property name="eclipselink.logging.level.sql" value="FINE"/>
+            <property name="eclipselink.logging.parameters" value="TRUE"/>
+
+            <property name="eclipselink.ddl-generation.output-mode" value="database" />
+		    <property name="javax.persistence.jdbc.driver" value="org.apache.derby.jdbc.EmbeddedDriver"/>
+   		</properties>
+	</persistence-unit>
+
+	<persistence-unit name="query-jpa-test-hsqldb">
+
+		<provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
+
+		<exclude-unlisted-classes>false</exclude-unlisted-classes>
+		<jar-file>/home/nhl/.m2/repository/com/neaterbits/query/query-test-model/0.0.1-SNAPSHOT/query-test-model-0.0.1-SNAPSHOT.jar</jar-file>
+		
+		<properties>
+			<property name="javax.persistence.jdbc.url" value="jdbc:hsqldb:mem:query-jpa-test-hsqldb" />
+			<property name="javax.persistence.jdbc.user" value="testuser" />
+			<property name="javax.persistence.jdbc.password" value="" />
+
+            <!-- EclipseLink should create the database schema automatically -->
+            <property name="eclipselink.ddl-generation" value="drop-and-create-tables" />
+            
+            <property name="eclipselink.logging.level.sql" value="FINE"/>
+            <property name="eclipselink.logging.parameters" value="TRUE"/>
+
+            <property name="eclipselink.ddl-generation.output-mode" value="database" />
+		    <property name="javax.persistence.jdbc.driver" value="org.hsqldb.jdbcDriver"/>
+   		</properties>
+	</persistence-unit>
+</persistence>
+
