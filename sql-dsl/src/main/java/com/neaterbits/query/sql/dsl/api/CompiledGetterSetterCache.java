@@ -81,7 +81,12 @@ final class CompiledGetterSetterCache {
 			
 			if (found != null) {
 				if (ret != null) {
-					throw new CompileException("More than one getter found: " + found + " and " + ret);
+					
+					// !! NOTE !! may find the same method multiple times, when using inheritance, eg. Square and Cirle are Shapes with inherited Shape::getArea
+					
+					if (!ret.equals(found)) {
+						throw new CompileException("More than one getter found: " + found + " and " + ret);
+					}
 				}
 				
 				ret = found;
