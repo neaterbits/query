@@ -1,7 +1,7 @@
 package com.neaterbits.query.sql.dsl.api;
 
 @Deprecated // for now
-final class Collector_AggregateNamedResult<TYPE>
+final class ClassicCollector_AggregateNamedResult<TYPE>
 
 
 		extends Classic_Collector_AggregateResult<
@@ -13,7 +13,7 @@ final class Collector_AggregateNamedResult<TYPE>
 
 		implements IClassicResult_Numeric_Named<TYPE> {
 
-	Collector_AggregateNamedResult(ClassicSelect select, QueryResultAggregate result, ModelCompiler<SingleBuilt<TYPE>> modelCompiler) {
+	ClassicCollector_AggregateNamedResult(ClassicSelect select, QueryResultAggregate result, ModelCompiler<SingleBuilt<TYPE>> modelCompiler) {
 		super(select, result, modelCompiler);
 	}
 

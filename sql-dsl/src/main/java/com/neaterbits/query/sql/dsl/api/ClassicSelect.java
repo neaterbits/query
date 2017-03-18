@@ -138,29 +138,29 @@ final class ClassicSelect
 	@Override
 	@SuppressWarnings("unchecked")
 	<T, NUM, RESULT, RET> RET sum(Function<T, NUM> field, Class<NUM> numCl, Class<RESULT> resultCl) {
-		return (RET)new Collector_AggregateNamedResult<>(this, new QueryResultSum(resultCl, new FunctionGetter(field)), singleQueryCompiled());
+		return (RET)new ClassicCollector_AggregateNamedResult<>(this, new QueryResultSum(resultCl, new FunctionGetter(field)), singleQueryCompiled());
 	}
 
 	@Override
 	@SuppressWarnings("unchecked")
 	<T, NUM, RESULT, RET> RET max(Function<T, NUM> field, Class<NUM> numCl, Class<RESULT> resultCl) {
-		return (RET)new Collector_AggregateNamedResult<>(this, new QueryResultMax(resultCl, new FunctionGetter(field)), singleQueryCompiled());
+		return (RET)new ClassicCollector_AggregateNamedResult<>(this, new QueryResultMax(resultCl, new FunctionGetter(field)), singleQueryCompiled());
 	}
 
 	@Override
 	@SuppressWarnings("unchecked")
 	<T, NUM, RESULT, RET> RET min(Function<T, NUM> field, Class<NUM> numCl, Class<RESULT> resultCl) {
-		return (RET)new Collector_AggregateNamedResult<>(this, new QueryResultMin(resultCl, new FunctionGetter(field)), singleQueryCompiled());
+		return (RET)new ClassicCollector_AggregateNamedResult<>(this, new QueryResultMin(resultCl, new FunctionGetter(field)), singleQueryCompiled());
 	}
 	
 	@Override
 	@SuppressWarnings("unchecked")
 	<T, NUM, RESULT, RET> RET avg(Function<T, NUM> field, Class<NUM> numCl, Class<RESULT> resultCl) {
-		return (RET)new Collector_AggregateNamedResult<>(this, new QueryResultAvg(resultCl, new FunctionGetter(field)), singleQueryCompiled());
+		return (RET)new ClassicCollector_AggregateNamedResult<>(this, new QueryResultAvg(resultCl, new FunctionGetter(field)), singleQueryCompiled());
 	}
 
 	@Override
 	<T, NUM, RESULT> IClassicResult_Numeric_Named<Long> count(Function<T, NUM> field, Class<NUM> numCl, Class<RESULT> resultCl) {
-		return new Collector_AggregateNamedResult<>(this, new QueryResultCount(resultCl, new FunctionGetter(field)), singleQueryCompiled());
+		return new ClassicCollector_AggregateNamedResult<>(this, new QueryResultCount(resultCl, new FunctionGetter(field)), singleQueryCompiled());
 	}
 }
