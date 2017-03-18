@@ -1,10 +1,10 @@
 package com.neaterbits.query.sql.dsl.api;
 
-import java.awt.Dimension;
 import java.util.ArrayList;
 import java.util.List;
 
 import com.neaterbits.util.Stack;
+import com.neaterbits.util.StringUtils;
 
 public enum GEN_Functionality {
 
@@ -30,7 +30,7 @@ public enum GEN_Functionality {
 	GROUP_BY(false, true,
 			// Must be mapped query and have multi-dimension
 			stack -> stack.contains(GEN_Functionality.MAPPED),
-			(result, dimension, fieldAccess) -> dimension == EQueryResultDimension.MULTI,
+			(result, dimension, fieldAccess) -> dimension == EQueryResultDimension.MULTI && result == EQueryResultGathering.MAPPED,
 			
 			MAPPED, WHERE, WHERE_FUNCTION, AND, AND_FUNCTION, OR, OR_FUNCTION),
 	HAVING(false, true, GROUP_BY),
@@ -131,26 +131,6 @@ public enum GEN_Functionality {
 	}
 
 	public String getSourceCodeName() {
-		// Convert to camel case
-		final StringBuilder sb = new StringBuilder(name().length());
-
-		final String lowercase = name().toLowerCase();
-		
-		boolean uppercaseNext = true;
-		
-		for (int i = 0; i < lowercase.length(); ++ i) {
-			
-			final char c = lowercase.charAt(i);
-			
-			if (c == '_') {
-				uppercaseNext = true;
-				continue;
-			}
-			
-			sb.append(uppercaseNext ? Character.toUpperCase(c) : c);
-			uppercaseNext = false;
-		}
-
-		return sb.toString();
+		return StringUtils.camelCase(name());
 	}
 }

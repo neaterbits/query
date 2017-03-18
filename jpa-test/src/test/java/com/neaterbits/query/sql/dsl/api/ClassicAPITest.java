@@ -19,6 +19,7 @@ import com.neaterbits.query.jpatest.model.Company;
 import com.neaterbits.query.jpatest.model.Employee;
 import com.neaterbits.query.jpatest.model.Person;
 import com.neaterbits.query.jpatest.model.Role;
+import com.neaterbits.query.sql.dsl.api.BaseJPATest;
 
 public class ClassicAPITest extends BaseJPATest {
 

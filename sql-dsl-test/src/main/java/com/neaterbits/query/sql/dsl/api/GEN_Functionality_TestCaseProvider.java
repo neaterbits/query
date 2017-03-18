@@ -30,7 +30,7 @@ final class GEN_Functionality_TestCaseProvider extends GEN_TestCaseProvider {
 		}
 	}
 	
-	private void emit(Stack<GEN_Functionality> stack, Consumer<GEN_TestCase> consumer) {
+	private void emit(Stack<GEN_Functionality> stack, Consumer<GEN_TestCase> consumer, GEN_Functionality functionality) {
 		
 		final int num = stack.size();
 		final String [] strings = new String[num];
@@ -44,6 +44,26 @@ final class GEN_Functionality_TestCaseProvider extends GEN_TestCaseProvider {
 			public String[] getFunctionalitySourceCodeNames() {
 				return strings;
 			}
+
+			@Override
+			public boolean isTestApplicable(EQueryResultGathering gathering, EQueryResultDimension dimension, EFieldAccessType accessType) {
+				
+				// Must check for all parts of stack, eg. no-single tet for group-by even if last element is having
+				final int num = stack.size();
+
+				if (functionality != stack.top()) {
+					throw new IllegalStateException("Expected functionality to be top");
+				}
+				
+				for (int i = 0; i < num; ++ i) {
+					final GEN_Functionality f = stack.get(i);
+					if (!f.isTestApplicable(gathering, dimension, accessType)) {
+						return false;
+					}
+				}
+				
+				return true;
+			}
 		});
 	}
 	
@@ -56,7 +76,7 @@ final class GEN_Functionality_TestCaseProvider extends GEN_TestCaseProvider {
 		
 		if (cur.isStop()) {
 			// Can emit for this
-			emit(stack, consumer);
+			emit(stack, consumer, cur);
 		}
 		
 		// Find all elements that follows this

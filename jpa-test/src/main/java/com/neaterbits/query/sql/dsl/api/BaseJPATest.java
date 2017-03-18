@@ -5,6 +5,17 @@ import java.util.function.Consumer;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
+import com.neaterbits.query.sql.dsl.api.BaseSQLAPITest;
+import com.neaterbits.query.sql.dsl.api.IShortPrepared;
+import com.neaterbits.query.sql.dsl.api.JPADataConfig;
+import com.neaterbits.query.sql.dsl.api.JPADataConfigJPQL;
+import com.neaterbits.query.sql.dsl.api.JPADataConfigNative;
+import com.neaterbits.query.sql.dsl.api.JPAQueryMetaModel;
+import com.neaterbits.query.sql.dsl.api.QueryTestDSBuilder;
+import com.neaterbits.query.sql.dsl.api.QueryTestDSCheck;
+import com.neaterbits.query.sql.dsl.api.QueryTestDSCombined;
+import com.neaterbits.query.sql.dsl.api.QueryTestDSInMemory;
+import com.neaterbits.query.sql.dsl.api.QueryTestDSJPA;
 import com.neaterbits.query.sql.dsl.api.entity.QueryMetaModel;
 
 public abstract class BaseJPATest extends BaseSQLAPITest {
