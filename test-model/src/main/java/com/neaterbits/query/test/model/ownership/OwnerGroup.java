@@ -2,6 +2,7 @@ package com.neaterbits.query.test.model.ownership;
 
 import java.util.List;
 
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 
 import com.neaterbits.query.test.model.Person;
@@ -16,7 +17,7 @@ public class OwnerGroup {
 	private List<Person> persons;
 
 	
-	@OneToMany
+	@ManyToMany // one group can be many persons and one person can be in many groups
 	public List<Person> getPersons() {
 		return persons;
 	}

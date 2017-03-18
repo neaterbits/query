@@ -2,6 +2,10 @@ package com.neaterbits.query.test.model;
 
 import java.util.Collection;
 
+import javax.persistence.Column;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
@@ -10,11 +14,23 @@ import com.neaterbits.query.test.model.ownership.Owner;
 
 public class Farm {
 
+	private Long id;
 	private String name;
 	private Owner owner;
 	private Collection<LandPlot> landPlots;
 	
+	
+	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
+	public Long getId() {
+		return id;
+	}
 
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	@Column
 	public String getName() {
 		return name;
 	}
