@@ -5,17 +5,17 @@ import org.junit.Test;
 import com.neaterbits.query.jpatest.GEN_BaseTestCase;
 
 
-class MappedWhereOrFunctionGroupByTest extends GEN_BaseTestCase {
+public class MappedWhereOrFunctionGroupByTest extends GEN_BaseTestCase {
 
 
     @Test
-    void testMappedMultiNamed() {
+    public void testMappedMultiNamed() {
         assertThat(true).isEqualTo(false);
     }
 
 
     @Test
-    void testMappedMultiAlias() {
+    public void testMappedMultiAlias() {
         assertThat(true).isEqualTo(false);
     }
 }

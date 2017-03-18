@@ -5,77 +5,77 @@ import org.junit.Test;
 import com.neaterbits.query.jpatest.GEN_BaseTestCase;
 
 
-class AggregateJoinWhereAndFunctionTest extends GEN_BaseTestCase {
+public class AggregateJoinWhereAndFunctionTest extends GEN_BaseTestCase {
 
 
     @Test
-    void testEntitySingleNamed() {
+    public void testEntitySingleNamed() {
         assertThat(true).isEqualTo(false);
     }
 
 
     @Test
-    void testEntitySingleAlias() {
+    public void testEntitySingleAlias() {
         assertThat(true).isEqualTo(false);
     }
 
 
     @Test
-    void testEntityMultiNamed() {
+    public void testEntityMultiNamed() {
         assertThat(true).isEqualTo(false);
     }
 
 
     @Test
-    void testEntityMultiAlias() {
+    public void testEntityMultiAlias() {
         assertThat(true).isEqualTo(false);
     }
 
 
     @Test
-    void testMappedSingleNamed() {
+    public void testMappedSingleNamed() {
         assertThat(true).isEqualTo(false);
     }
 
 
     @Test
-    void testMappedSingleAlias() {
+    public void testMappedSingleAlias() {
         assertThat(true).isEqualTo(false);
     }
 
 
     @Test
-    void testMappedMultiNamed() {
+    public void testMappedMultiNamed() {
         assertThat(true).isEqualTo(false);
     }
 
 
     @Test
-    void testMappedMultiAlias() {
+    public void testMappedMultiAlias() {
         assertThat(true).isEqualTo(false);
     }
 
 
     @Test
-    void testAggregateSingleNamed() {
+    public void testAggregateSingleNamed() {
         assertThat(true).isEqualTo(false);
     }
 
 
     @Test
-    void testAggregateSingleAlias() {
+    public void testAggregateSingleAlias() {
         assertThat(true).isEqualTo(false);
     }
 
 
     @Test
-    void testAggregateMultiNamed() {
+    public void testAggregateMultiNamed() {
         assertThat(true).isEqualTo(false);
     }
 
 
     @Test
-    void testAggregateMultiAlias() {
+    public void testAggregateMultiAlias() {
         assertThat(true).isEqualTo(false);
     }
 }

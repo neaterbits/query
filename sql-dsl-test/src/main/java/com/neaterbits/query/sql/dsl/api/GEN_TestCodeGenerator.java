@@ -91,7 +91,7 @@ final class GEN_TestCodeGenerator {
 
 		final String className = context.getTestClassName(testCase.getFunctionalitySourceCodeNames());
 		
-		writer.append("class ").append(className) .append(" extends GEN_BaseTestCase {").newLine();
+		writer.append("public class ").append(className) .append(" extends GEN_BaseTestCase {").newLine();
 
 		writer.addIndent();
 
@@ -112,7 +112,7 @@ final class GEN_TestCodeGenerator {
 
 					writer
 					    .indent()
-						.append("void test")
+						.append("public void test")
 						.append(StringUtils.camelCase(gathering.name()))
 						.append(StringUtils.camelCase(dimension.name()))
 						.append(StringUtils.camelCase(accessType.name()))
