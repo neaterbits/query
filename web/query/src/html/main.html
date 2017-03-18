@@ -1,0 +1,109 @@
+				<div id="tab_intro" >
+					<!-- Comparison table -->
+					
+					<div>
+	
+						<div id="quick_explanation">
+		
+		<!-- 
+							<span class="main_header">What is it?</span>
+		-->
+		
+							<p class="main_text">
+								Query allows you to write SQL queries in plain Java 8 on top of JPA or Hibernate and have them mapped into Java objects (e.g JPA managed).
+								
+								No other dependencies code generation required, just include library and start writing queries!
+		
+							<p>						
+								
+								 <span class="main_header2">Example to give a general idea:</span>
+								 <br/>
+										
+								 <span class="java_code">List<Company> acmes = select.list(Company.class).where(Company::getName).like("%Acme%").get()" </span>
+								 <br/>
+								 
+								 <span class="header2">Corresponding Stream API:</span>
+								 <br/>
+		 						 <span class="java_code">shapes.stream().filter(s -> s.getArea() > 463.3).collect(Collectors.toList())</span>
+								 
+							 </p>
+							 
+							 <p>
+							 <span class="main_header">Advantages to Java 8 streams API</span>
+		
+							 <ul>
+							 	<li>Less code to write, ie. shorter queries</li>
+							 	<li>Almost all the power of SQL. Joins, select multiple values, aggregates, group by, order by etc</li>
+							 	
+							 	<!-- 
+							 		<ul>
+								 		<li>Joins on nested lists, like flatmap() or other lists !! EXAMPLE !!</li>
+								 		<li>Multiple return values, mapped to separate POJO. !! EXAMPLE!!</li>
+								 		<li>GROUP BY grouping of results</li>
+							 		</ul>
+							 		 -->
+							 	</li>
+							 	
+							 	<li>Performs as fast or faster for both for smaller and longer list</li>
+							 	<li>Familiar if you know SQL already, otherwise learning SQL will be useful in other contexts as well </li>
+							 	
+							 	<!--  
+							 			<li>If you don't know SQL, learning it here can be applied to real databases</li>
+							 			 
+							 		</ul>
+							 		
+							 		-->
+							 		
+							 	</li>
+							 	<li>Arguably better readability, more like plain English</li>
+							 	<li>Query definition and execution mechanism are separated (no shapes.parallellStream() ) </li>
+							 </ul>
+							 </p>
+							 
+						</div>
+						
+						<div id="main_menu">
+							<div class="main_button">Demo</div>
+							<div class="main_button">Foo!</div>
+						</div>
+					</div>
+					
+	
+					<span class="main_header">Examples and comparison</span>
+					<br/>
+	
+					Some examples and with some performance comparison (YMMV)
+	
+					<table id="comparison_table">
+						<tr class="comparison_header">
+							<td>
+								Collection Query API
+							</td>
+							<td>
+								Streams API
+							</td>
+						<tr>
+						<tr class="comparison_row" >
+							<td>sum(Shape::getArea).from(shapes).get()</td>
+							<td>shapes.stream().mapToDouble(Shape::getArea).reduce((d1, d2) -> d1 + d2)).getAsDouble()</td>
+						</tr>
+						<tr class="comparison_row" >
+							<td>sum(Shape::getArea).from(shapes).where(Shape::getArea).lt(50.0).get()</td>
+							<td>shapes.stream().mapToDouble(Shape::getArea).filter(d -> d < 50.0).reduce((d1, d2) -> d1 + d2)).getAsDouble()</td>
+						</tr>
+						<tr class="comparison_row" >
+							<td>sum(Shape::getArea).from(shapes).where(Shape::getArea).lt(50.0).get()</td>
+							<td>shapes.stream().mapToDouble(Shape::getArea).filter(d -> d < 50.0).reduce((d1, d2) -> d1 + d2)).getAsDouble()</td>
+						</tr>
+						
+						<tr>
+							<td>
+							
+							<td>
+						
+						</tr>
+						
+					</table>
+	
+				</div>
+			

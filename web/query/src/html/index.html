@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+
+<base href="..">
+<link href="css/collection_query.css" type="text/css" rel="stylesheet">
+</head>
+<body>
+
+	<div id="outer">
+
+		<div id="header">
+			<div class="outer_title">Query</div>
+		</div>
+
+		<div id="tabpanel">
+		
+
+			<!-- ********************** The tabs of the page ********************** -->
+
+			<div id="tabs">
+				<span class="tab" onclick="showTab('tab_intro')">Introduction</span>
+				<span class="tab" onclick="showTab('tab_faq')">FAQ</span>
+				<span class="tab" onclick="showTab('tab_examples')">License!</span>
+				<span class="tab" onclick="showTab('tab_examples')">More examples!</span>
+				<span class="tab" onclick="showTab('tab_demo')">Demo</span>
+				<span class="tab" onclick="showTab('tab_download')">Download/Maven</span>
+			</div>
+			
+			<div id="tabholder">
+
+				<!----------------- Main tab   ------------------->
+	
+				<div id="tab_intro" >
+					<!-- Comparison table -->
+					
+					<div>
+	
+						<div id="quick_explanation">
+		
+		<!-- 
+							<span class="main_header">What is it?</span>
+		-->
+		
+							<p class="main_text">
+								Query allows you to write typesafe  SQL queries in plain Java 8 on top of JPA or Hibernate and have them mapped into Java objects (e.g JPA managed).
+								
+								No other dependencies code generation required, just include library and start writing queries!
+								
+								Advantages:
+								 <ul>
+								   <li><b>Typesafe</b> queries, in joins, comparison and result transformations</li>
+								   <li>As <b>portable</b> as JPQL across databases</li>
+								   <li><b>Result transforms</b> are part of queries and typesafe as well, no need to use transformers or resultset casting</li>
+								   <li>Supports <b>aliases</b> as in SQL, though table style recommended whenever aliases not required</li>
+								   <li><b>Refactoring proof</b>. ename entity fields in yout IDE and your queries will be updated</li>
+								   <li>Utilize IDE <b>completion suggestions</b>, Ctrl+SPACE or you favorite IDE's hotkey </li> 
+								   <li>Can eventually support all of standard SQL, also widely supported features outside of JPQL</li>
+								   
+								 </ul>
+							<p>						
+								
+	<!-- 
+								 <span class="main_header2">Example to give a general idea:</span>
+								 <br/>
+										
+								 <pre class="java_code">
+	 List<Company> acmes = select.list(Company.class).where(Company::getName).like("%Acme%").get()"</pre>
+					
+								 <br/>
+	
+								 This will is equivalent to JPQL
+								 <br/>
+								 
+								 <pre class="sql_code">
+ 	Query q = em.createQuery("SELECT c from Company c where c.name like "%acme%");
+ 	List<Company> acmes = q.execute()</pre>
+								 
+								 <br/>
+								 
+								 The JPQL query is arguably simpler, but code is required to create the query 
+							 </p>
+							 
+ -->							 
+							 <span class="main_header2">An example of mapping transformations</span>
+							 
+							 <br/>
+							 
+							 
+							 <div style="height: 100%;">
+							 <pre class="java_code" style="vertical-align: top; width: 45%; height: 100%; display: inline-block; ">
+							 <!-- <code> -->
+  List&lt;KBMovieAndActor&gt; kbMovies = select.list(KBMovieAndActor.class)
+         .map(Movie::getName) . to(KBMovieAndActor::setMovieName)
+         .map(Actor::getName) . to(KBMovieAndActor::setActorName)
+         .innerJoin(Movie::getActors)
+         .where().lower(Actor::getName).eq("kevin bacon")
+         .get();
+	 </pre>
+	<pre class="sql_code" style="width: 45%; display: inline-block;">
+  Query q = em.createQuery(
+         "SELECT movie.name, actor.name " +
+         "FROM Movie movie, Actor actor " +
+         "INNER JOIN movie.actors actor "
+         "WHERE lower(actor.name) = 'kevin bacon'"";
+	  		
+  List&lt;Object []&gt; l = q.list();
+  List&lt;KBMovieAndActor&gt; result = new ArrayList&lt;&gt;(l.size());
+	
+  for (Object [] row : l) {
+    result.add(new KBMovieAndActor((String)row[0], (String)row[1]))
+  } 
+	</pre>
+	</div>
+</div>
+							 
+
+As can be seen above, result transformations happens as an integral part of specifying the columns to select, no need to write separate transformation.
+Though the query is not a lot shorter than the one below, it is type safe and refactoring proof.
+
+
+							 
+							 <br/><br/>
+
+							 
+							 <span class="main_header2">Where's the from clause?</span>
+							 <p>
+							 
+							 The from clause is quite redundant since if you want to loop over multiple tables, you'd really want to use ANSI style joins, and the all tables
+							 are specified within joins. A full outer join is rarely what you want and could be specified explicitly in those cases.
+							 </p>
+							 
+							 
+						</div>
+						
+						<div id="main_menu">
+							<div class="main_button">Demo</div>
+							<div class="main_button">Foo!</div>
+						</div>
+					</div>
+	
+				</div>
+			
+			</div>
+			
+			<!----------------- FAQ   ------------------->
+			<div id="tab_faq" hidden="true">
+				<div class="faq_item">
+					<p class="faq_q">Why SQL ?</p>
+					<p class="faq_a">It has withstood the tests of time, even many so called NoSQL databases have SQL-like query languages.</p>
+				</div>
+			
+				<div class="faq_item">
+					<p class="faq_q">Why the .ge() syntax and not lambda, eg .where(s -> s.getArea() > 50.0) ?</p>
+					<p class="faq_a">It reads more like plain English and is more similar to SQL. A lambda-variant could be made but rather not have multiple variants. It is also shorter</p>
+				</div>
+				<div class="faq_item">
+					<p class="faq_q">Why can't you do "flat joins" or old-style cartesian joins ?</p>
+					<p class="faq_a">In order to be type-safe we have to join down the object hierarchy from one type to the next - which has to be the type of the list we are currently processing</p>
+				</div>
+
+			</div>
+		</div>
+	</div>
+
+</body>
+
+
+<script type="text/javascript">
+
+	var tabs = ['tab_intro', 'tab_faq', 'tab_example', 'tab_demo', 'tab_download' ];
+
+	function showTab(tab) {
+		//alert('show tab: ' + tab);
+		
+		// switch tab
+		
+	}
+
+</script>
+
+</html>
