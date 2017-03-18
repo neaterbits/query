@@ -26,11 +26,8 @@ final class GEN_Functionality_TestCaseProvider extends GEN_TestCaseProvider {
 			
 			recurse(stack, consumer);
 			
-			
 			stack.pop();
-			
 		}
-		
 	}
 	
 	private void emit(Stack<GEN_Functionality> stack, Consumer<GEN_TestCase> consumer) {
@@ -64,7 +61,10 @@ final class GEN_Functionality_TestCaseProvider extends GEN_TestCaseProvider {
 		
 		// Find all elements that follows this
 		for (GEN_Functionality value : GEN_Functionality.values()) {
-			if (value.follows(cur)) {
+			
+			if (   value.follows(cur)
+				&& value.isTestCaseApplicable(stack)) {
+				
 				stack.push(value);
 				
 				recurse(stack, consumer);

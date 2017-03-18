@@ -7,7 +7,8 @@ package com.neaterbits.query.sql.dsl.api;
  *
  */
 
-public class GEN_NACase {
+@Deprecated
+class GEN_NACase {
 
 	private final GEN_Functionality functionality;
 	
