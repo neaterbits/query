@@ -42,6 +42,7 @@
 		<module>jpa</module>
 		<module>jpa-test</module>
 		<module>gen-test</module>
+		<module>test-model</module>
 		<module>util-java8</module>
 	</modules>
 
