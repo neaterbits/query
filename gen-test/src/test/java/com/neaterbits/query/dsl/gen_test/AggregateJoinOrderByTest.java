@@ -18,16 +18,4 @@ public class AggregateJoinOrderByTest extends GEN_BaseTestCase {
     public void testAggregateSingleAlias() {
         assertThat(true).isEqualTo(false);
     }
-
-
-    @Test
-    public void testAggregateMultiNamed() {
-        assertThat(true).isEqualTo(false);
-    }
-
-
-    @Test
-    public void testAggregateMultiAlias() {
-        assertThat(true).isEqualTo(false);
-    }
 }

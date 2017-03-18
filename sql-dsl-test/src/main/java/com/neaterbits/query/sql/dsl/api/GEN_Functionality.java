@@ -11,7 +11,7 @@ public enum GEN_Functionality {
 	AGGREGATE(true, true,
 			
 		      null,
-		      (result, dimension, fieldAccess) -> result == EQueryResultGathering.AGGREGATE),
+		      (result, dimension, fieldAccess) -> result == EQueryResultGathering.AGGREGATE && dimension == EQueryResultDimension.SINGLE),
 
 	ENTITY(true, true,
 			
