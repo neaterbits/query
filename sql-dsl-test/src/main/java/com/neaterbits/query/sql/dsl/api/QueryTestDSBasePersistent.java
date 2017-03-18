@@ -54,6 +54,16 @@ public abstract class QueryTestDSBasePersistent<CTX, ENTITIES, TRANSACTION>
 		
 			for (TestInstance instance : instances) {
 				dataStore.persist(em, instance.getInstance());
+				
+				if (instance.getPK() == null) {
+					// Did not have PK initally probably since generated, set now 
+					//throw new IllegalStateException("pk == null");
+					
+					final Object pk = getPrimaryKey.apply(dataStore, instance.getInstance());
+					
+					instance.setPk(pk);
+					
+				}
 			}
 
 			dataStore.commitTransaction(transaction);

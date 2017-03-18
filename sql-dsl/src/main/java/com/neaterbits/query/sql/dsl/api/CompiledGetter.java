@@ -58,5 +58,10 @@ abstract class CompiledGetter {
 			return false;
 		return true;
 	}
+
+	@Override
+	public String toString() {
+		return getClass().getSimpleName() + " [getterMethod=" + getterMethod + "]";
+	}
 }
 

@@ -62,28 +62,43 @@ final class ShortSelect extends BaseShortSelect<
 	}
 
 	@Override
+	@SuppressWarnings("unchecked")
 	<T, NUM, RESULT, RET> RET sum(Function<T, NUM> field, Class<NUM> numCl, Class<RESULT> resultCl) {
-		throw new UnsupportedOperationException("TODO");
+		
+		final QueryResultSum result = new QueryResultSum(resultCl, new FunctionGetter(field));
+		
+		return (RET)new Short_Collector_Aggregate_Named<RESULT>(this, singleQueryCollected(), result);
 	}
 
 	@Override
+	@SuppressWarnings("unchecked")
 	<T, NUM, RESULT, RET> RET max(Function<T, NUM> field, Class<NUM> numCl, Class<RESULT> resultCl) {
-		throw new UnsupportedOperationException("TODO");
+		final QueryResultMax result = new QueryResultMax(resultCl, new FunctionGetter(field));
+		
+		return (RET)new Short_Collector_Aggregate_Named<RESULT>(this, singleQueryCollected(), result);
 	}
 
 	@Override
+	@SuppressWarnings("unchecked")
 	<T, NUM, RESULT, RET> RET min(Function<T, NUM> field, Class<NUM> numCl, Class<RESULT> resultCl) {
-		throw new UnsupportedOperationException("TODO");
+		final QueryResultMin result = new QueryResultMin(resultCl, new FunctionGetter(field));
+		
+		return (RET)new Short_Collector_Aggregate_Named<RESULT>(this, singleQueryCollected(), result);
 	}
 
 	@Override
+	@SuppressWarnings("unchecked")
 	<T, NUM, RESULT, RET> RET avg(Function<T, NUM> field, Class<NUM> numCl, Class<RESULT> resultCl) {
-		throw new UnsupportedOperationException("TODO");
+		final QueryResultAvg result = new QueryResultAvg(resultCl, new FunctionGetter(field));
+		
+		return (RET)new Short_Collector_Aggregate_Named<RESULT>(this, singleQueryCollected(), result);
 	}
 
 	@Override
-	<T, NUM, RESULT> IShortBuilt_Numeric_Named<Long> count(Function<T, NUM> field, Class<NUM> numCl,
-			Class<RESULT> resultCl) {
-		throw new UnsupportedOperationException("TODO");
+	@SuppressWarnings("unchecked")
+	<T, NUM, RESULT> IShortBuilt_Numeric_Named<Long> count(Function<T, NUM> field, Class<NUM> numCl, Class<RESULT> resultCl) {
+		final QueryResultCount result = new QueryResultCount(resultCl, new FunctionGetter(field));
+		
+		return (IShortBuilt_Numeric_Named<Long>)new Short_Collector_Aggregate_Named<RESULT>(this, singleQueryCollected(), result);
 	}
 }

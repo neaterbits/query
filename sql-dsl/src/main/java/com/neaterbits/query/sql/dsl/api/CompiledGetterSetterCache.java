@@ -81,7 +81,7 @@ final class CompiledGetterSetterCache {
 			
 			if (found != null) {
 				if (ret != null) {
-					throw new CompileException("More than one getter found: " + getter);
+					throw new CompileException("More than one getter found: " + found + " and " + ret);
 				}
 				
 				ret = found;
