@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<div class="faq_item">
+		<p class="faq_q">Why SQL ?</p>
+		<p class="faq_a">It has withstood the tests of time, even many so called NoSQL databases have SQL-like query languages.</p>
+	</div>
+
+	<div class="faq_item">
+		<p class="faq_q">Why the .ge() syntax and not lambda, eg .where(s -> s.getArea() > 50.0) ?</p>
+		<p class="faq_a">It reads more like plain English and is more similar to SQL. A lambda-variant could be made but rather not have multiple variants. It is also shorter</p>
+	</div>
+	<div class="faq_item">
+		<p class="faq_q">Why can't you do "flat joins" or old-style cartesian joins ?</p>
+		<p class="faq_a">In order to be type-safe we have to join down the object hierarchy from one type to the next - which has to be the type of the list we are currently processing</p>
+	</div>
+
+</body>
+</html>

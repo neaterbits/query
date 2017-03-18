@@ -1,109 +1,101 @@
-				<div id="tab_intro" >
-					<!-- Comparison table -->
-					
-					<div>
-	
-						<div id="quick_explanation">
-		
-		<!-- 
-							<span class="main_header">What is it?</span>
-		-->
-		
-							<p class="main_text">
-								Query allows you to write SQL queries in plain Java 8 on top of JPA or Hibernate and have them mapped into Java objects (e.g JPA managed).
-								
-								No other dependencies code generation required, just include library and start writing queries!
-		
-							<p>						
-								
-								 <span class="main_header2">Example to give a general idea:</span>
-								 <br/>
-										
-								 <span class="java_code">List<Company> acmes = select.list(Company.class).where(Company::getName).like("%Acme%").get()" </span>
-								 <br/>
-								 
-								 <span class="header2">Corresponding Stream API:</span>
-								 <br/>
-		 						 <span class="java_code">shapes.stream().filter(s -> s.getArea() > 463.3).collect(Collectors.toList())</span>
-								 
-							 </p>
-							 
-							 <p>
-							 <span class="main_header">Advantages to Java 8 streams API</span>
-		
-							 <ul>
-							 	<li>Less code to write, ie. shorter queries</li>
-							 	<li>Almost all the power of SQL. Joins, select multiple values, aggregates, group by, order by etc</li>
-							 	
-							 	<!-- 
-							 		<ul>
-								 		<li>Joins on nested lists, like flatmap() or other lists !! EXAMPLE !!</li>
-								 		<li>Multiple return values, mapped to separate POJO. !! EXAMPLE!!</li>
-								 		<li>GROUP BY grouping of results</li>
-							 		</ul>
-							 		 -->
-							 	</li>
-							 	
-							 	<li>Performs as fast or faster for both for smaller and longer list</li>
-							 	<li>Familiar if you know SQL already, otherwise learning SQL will be useful in other contexts as well </li>
-							 	
-							 	<!--  
-							 			<li>If you don't know SQL, learning it here can be applied to real databases</li>
-							 			 
-							 		</ul>
-							 		
-							 		-->
-							 		
-							 	</li>
-							 	<li>Arguably better readability, more like plain English</li>
-							 	<li>Query definition and execution mechanism are separated (no shapes.parallellStream() ) </li>
-							 </ul>
-							 </p>
-							 
-						</div>
-						
-						<div id="main_menu">
-							<div class="main_button">Demo</div>
-							<div class="main_button">Foo!</div>
-						</div>
-					</div>
-					
-	
-					<span class="main_header">Examples and comparison</span>
-					<br/>
-	
-					Some examples and with some performance comparison (YMMV)
-	
-					<table id="comparison_table">
-						<tr class="comparison_header">
-							<td>
-								Collection Query API
-							</td>
-							<td>
-								Streams API
-							</td>
-						<tr>
-						<tr class="comparison_row" >
-							<td>sum(Shape::getArea).from(shapes).get()</td>
-							<td>shapes.stream().mapToDouble(Shape::getArea).reduce((d1, d2) -> d1 + d2)).getAsDouble()</td>
-						</tr>
-						<tr class="comparison_row" >
-							<td>sum(Shape::getArea).from(shapes).where(Shape::getArea).lt(50.0).get()</td>
-							<td>shapes.stream().mapToDouble(Shape::getArea).filter(d -> d < 50.0).reduce((d1, d2) -> d1 + d2)).getAsDouble()</td>
-						</tr>
-						<tr class="comparison_row" >
-							<td>sum(Shape::getArea).from(shapes).where(Shape::getArea).lt(50.0).get()</td>
-							<td>shapes.stream().mapToDouble(Shape::getArea).filter(d -> d < 50.0).reduce((d1, d2) -> d1 + d2)).getAsDouble()</td>
-						</tr>
-						
-						<tr>
-							<td>
-							
-							<td>
-						
-						</tr>
-						
-					</table>
-	
-				</div>
+<html>
+<head>
+
+	<base href="..">
+	<link href="css/collection_query.css" type="text/css" rel="stylesheet">
+</head>
+<body>
+	<div id="quick_explanation">
+
+		<p class="main_text">
+			Query allows you to write typesafe  SQL queries in plain Java 8 on top of JPA or Hibernate and have them mapped into Java objects (e.g JPA managed).
 			
+			No other dependencies code generation required, just include library and start writing queries!
+			
+			Advantages:
+			 <ul>
+			   <li><b>Typesafe</b> queries, in joins, comparison and result transformations</li>
+			   <li>As <b>portable</b> as JPQL across databases</li>
+			   <li><b>Result transforms</b> are part of queries and typesafe as well, no need to use transformers or resultset casting</li>
+			   <li>Supports <b>aliases</b> as in SQL, though table style recommended whenever aliases not required</li>
+			   <li><b>Refactoring proof</b>. ename entity fields in yout IDE and your queries will be updated</li>
+			   <li>Utilize IDE <b>completion suggestions</b>, Ctrl+SPACE or you favorite IDE's hotkey </li>
+			   <li>No code generation required, this is plain Java8 utilizonig JPA annotated classes</li> 
+			   <li>Will eventually support all of standard SQL, also widely supported features outside of JPQL can be supported</li>
+			   
+			 </ul>
+		<p>						
+			
+			<!-- 
+		 <span class="main_header2">An example of mapping transformations</span>
+		 <br/>
+		  -->
+		 
+		 <!-- TODO use display: table to make same height -->
+		 
+		 <div class="code_comparison">
+		 <div class="code_comparison_row">
+
+			 <pre class="java_code code_lhs">
+  List&lt;KBMovieAndActor&gt; kbMovies = select.list(KBMovieAndActor.class)
+         .map(Movie::getName) . to(KBMovieAndActor::setMovieName)
+         .map(Actor::getName) . to(KBMovieAndActor::setActorName)
+         .innerJoin(Movie::getActors)
+         .where().lower(Actor::getName).eq("kevin bacon")
+         .get();
+			 </pre>
+	 
+			<pre class="sql_code code_rhs">
+  Query q = em.createQuery(
+         "SELECT movie.name, actor.name " +
+         "FROM Movie movie, Actor actor " +
+         "INNER JOIN movie.actors actor "
+         "WHERE lower(actor.name) = 'kevin bacon'"";
+	  		
+  List&lt;Object []&gt; l = q.list();
+  List&lt;KBMovieAndActor&gt; result = new ArrayList&lt;&gt;(l.size());
+	
+  for (Object [] row : l) {
+    result.add(new KBMovieAndActor((String)row[0], (String)row[1]))
+  } 
+			</pre>
+		</div>
+		</div> <!-- code_comparison -->	
+		
+	</div>
+							 
+
+As can be seen above, result transformations happens as an integral part of specifying the columns to select, no need to write separate transformation.
+Though the query is not a lot shorter than the one below, it is type safe and refactoring proof.
+
+			 <br/><br/>
+
+			 
+			 <span class="main_header2">Where's the from clause?</span>
+			 <p>
+			 
+			 The from clause is quite redundant since we can figure out the tables involved anyway. Cartesian products can be done explicitely.
+			 </p>
+			 
+			 <span class="main_header2">License</span>
+			 <p>
+			 
+			 For now, Query is only available for commercial use.
+			 <br/>
+			 <b>"What!? Not open source of free of charge?"</b>
+			 Not at this moment, see License for rationale.
+			 </p>
+			 
+	</div>
+
+<!-- 		
+		<div id="main_menu">
+			<div class="main_button">Demo</div>
+			<div class="main_button">Foo!</div>
+		</div>
+		
+ -->		
+
+			
+</body>
+</html>

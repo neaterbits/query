@@ -4,15 +4,21 @@
 
 #comparison_table { background: gray; }
 
-body {
+#view {
 	// background-color: #4444EE; 
 
 	background: linear-gradient(to bottom right, #BBBBFF, #4444EE)
-} 
+}
+
+#box {
+
+	padding: 5em;
+}
+ 
 
 #outer {
 
-	margin: 5em;
+	//margin: 5em;
 	// background-color: #44EE44;
 	padding-left: 5em;
 	padding-right: 5em;
@@ -117,7 +123,8 @@ td {
 	padding: 0.2em;
 	margin: 0.2em;
 
-	width: 50%;
+	//width: 50%;
+	// height: 100%;
 } 
 
 .sql_code {
@@ -133,6 +140,40 @@ td {
 	padding: 0.2em;
 	margin: 0.2em;
 
-	width: 50%;
+	// height: 100%;
+	// width: 50%;
 } 
+
+.code_comparison {
+	display: table;
+	width: 100%;
+	position: relative;
+	
+	border-spacing: 10px;
+}
+
+.code_comparison_row {
+	display: table-row;
+	width: 100%;
+	position: relative;
+}
+
+.code_lhs {
+	//display: inline-block;
+	width: 45%;
+	//vertical-align: top;
+	display: table-cell;
+
+	vertical-align: middle;
+	
+}
+
+.code_rhs {
+	display: table-cell;
+	margin-left: 200px;
+	height: 100%;
+	// display: inline-block;
+	width: 45%;
+	vertical-align: top;
+}
 
