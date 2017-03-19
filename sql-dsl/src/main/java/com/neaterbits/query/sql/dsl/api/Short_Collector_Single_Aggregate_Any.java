@@ -105,38 +105,6 @@ abstract class Short_Collector_Single_Aggregate_Any<MODEL, RESULT>
 	}
 
 	@Override
-	final Collector_Or_Alias<
-			MODEL,
-			RESULT,
-
-			ISQLLogical_Or_NonProcessResult_Alias<MODEL, RESULT>,
-			ISQLLogical_And_NonProcessResult_Alias<MODEL, RESULT>,
-			ISQLLogical_Or_NonProcessResult_Alias<MODEL, RESULT>,
-			ISharedProcessResult_After_GroupBy_Alias<MODEL, RESULT>
-	
-		> createAliasNestedOrCollector(
-				
-			Collector_And_Alias<MODEL, RESULT, ISQLLogical_And_NonProcessResult_Alias<MODEL, RESULT>, ISQLLogical_And_NonProcessResult_Alias<MODEL, RESULT>, ISQLLogical_Or_NonProcessResult_Alias<MODEL, RESULT>, ISharedProcessResult_After_GroupBy_Alias<MODEL, RESULT>> andClauses) {
-
-		return new SQL_Collector_Or_NonProcessResult_Alias<>(andClauses);
-	}
-
-	@Override
-	final Collector_And_Alias<
-			MODEL,
-			RESULT,
-			ISQLLogical_And_NonProcessResult_Alias<MODEL, RESULT>,
-			ISQLLogical_And_NonProcessResult_Alias<MODEL, RESULT>,
-			ISQLLogical_Or_NonProcessResult_Alias<MODEL, RESULT>,
-			ISharedProcessResult_After_GroupBy_Alias<MODEL, RESULT>
-	
-		> createAliasNestedAndCollector(
-			Collector_Or_Alias<MODEL, RESULT, ISQLLogical_Or_NonProcessResult_Alias<MODEL, RESULT>, ISQLLogical_And_NonProcessResult_Alias<MODEL, RESULT>, ISQLLogical_Or_NonProcessResult_Alias<MODEL, RESULT>, ISharedProcessResult_After_GroupBy_Alias<MODEL, RESULT>> orClauses) {
-
-		return new SQL_Collector_And_NonProcessResult_Alias<>(orClauses);
-	}
-
-	@Override
 	final Collector_GroupBy<MODEL, RESULT> createGroupByCollector(Collector_Base<MODEL> last, int[] groupByColumns,
 			Collector_Conditions_GroupBy<MODEL, RESULT, ?> collectorConditions) {
 

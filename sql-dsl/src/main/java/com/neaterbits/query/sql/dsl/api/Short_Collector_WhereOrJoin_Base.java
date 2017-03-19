@@ -268,9 +268,14 @@ abstract class Short_Collector_WhereOrJoin_Base<
 			NAMED_NESTED_AND_CLAUSES,
 			NAMED_NESTED_AND_CLAUSES,
 			NAMED_NESTED_OR_CLAUSES,
-			ISharedProcessResult_After_GroupBy_Named<MODEL, RESULT>> createNamedNestedAndCollector(
+			ISharedProcessResult_After_GroupBy_Named<MODEL, RESULT>
+		
+		>
+	
+		createNamedNestedAndCollector(
 					
-					Collector_Or_Named<MODEL,
+				Collector_Or_Named<
+						MODEL,
 						RESULT,
 						NAMED_OR_CLAUSES,
 						NAMED_NESTED_AND_CLAUSES,
@@ -278,6 +283,49 @@ abstract class Short_Collector_WhereOrJoin_Base<
 		
 		return (Collector_And_Named)new SQL_Collector_And_NonProcessResult_Named<>(orClauses);
 	}
+
+	@Override
+	@SuppressWarnings({"unchecked", "rawtypes"})
+	final Collector_And_Alias<
+			MODEL,
+			RESULT,
+			ALIAS_NESTED_AND_CLAUSES,
+			ALIAS_NESTED_AND_CLAUSES,
+			ALIAS_NESTED_OR_CLAUSES,
+			ISharedProcessResult_After_GroupBy_Alias<MODEL, RESULT>
+		>
 	
-	
+		createAliasNestedAndCollector(
+					Collector_Or_Alias<
+							MODEL,
+							RESULT,
+							ALIAS_OR_CLAUSES,
+							ALIAS_NESTED_AND_CLAUSES,
+							ALIAS_NESTED_OR_CLAUSES,
+							ISharedProcessResult_After_GroupBy_Alias<MODEL, RESULT>> orClauses) {
+		
+		return (Collector_And_Alias)new SQL_Collector_And_NonProcessResult_Alias<>(orClauses);
+	}
+
+	@Override
+	@SuppressWarnings({"unchecked", "rawtypes"})
+	final Collector_Or_Alias<
+			MODEL,
+			RESULT,
+			ALIAS_NESTED_OR_CLAUSES,
+			ALIAS_NESTED_AND_CLAUSES,
+			ALIAS_NESTED_OR_CLAUSES, 
+			ISharedProcessResult_After_GroupBy_Alias<MODEL, RESULT>
+		>
+		createAliasNestedOrCollector(
+					Collector_And_Alias<
+						MODEL,
+						RESULT,
+						ALIAS_AND_CLAUSES, 
+						ALIAS_NESTED_AND_CLAUSES, 
+						ALIAS_NESTED_OR_CLAUSES,
+						ISharedProcessResult_After_GroupBy_Alias<MODEL, RESULT>> andClauses) {
+		
+		return (Collector_Or_Alias)new SQL_Collector_Or_NonProcessResult_Alias<>(andClauses);
+	}
 }
