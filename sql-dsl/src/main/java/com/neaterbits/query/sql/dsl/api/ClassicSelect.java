@@ -2,6 +2,7 @@ package com.neaterbits.query.sql.dsl.api;
 
 import java.math.BigDecimal;
 import java.util.function.Function;
+import java.util.function.Supplier;
 
 
 final class ClassicSelect
@@ -134,6 +135,9 @@ final class ClassicSelect
 
 
 	// Aggregate helpers
+	
+	
+	// --------------------------------- Named ---------------------------------
 
 	@Override
 	@SuppressWarnings("unchecked")
@@ -162,5 +166,37 @@ final class ClassicSelect
 	@Override
 	<T, NUM, RESULT> IClassicResult_Numeric_Named<Long> count(Function<T, NUM> field, Class<NUM> numCl, Class<RESULT> resultCl) {
 		return new ClassicCollector_AggregateNamedResult<>(this, new QueryResultCount(resultCl, new FunctionGetter(field)), singleQueryCompiled());
+	}
+	
+
+	// --------------------------------- Alias ---------------------------------
+
+	@Override
+	@SuppressWarnings("unchecked")
+	<NUM, RESULT, RET> RET sum(Supplier<NUM> field, Class<NUM> numCl, Class<RESULT> resultCl) {
+		return (RET)new ClassicCollector_AggregateNamedResult<>(this, new QueryResultSum(resultCl, new SupplierGetter(field)), singleQueryCompiled());
+	}
+
+	@Override
+	@SuppressWarnings("unchecked")
+	<NUM, RESULT, RET> RET max(Supplier<NUM> field, Class<NUM> numCl, Class<RESULT> resultCl) {
+		return (RET)new ClassicCollector_AggregateNamedResult<>(this, new QueryResultMax(resultCl, new SupplierGetter(field)), singleQueryCompiled());
+	}
+
+	@Override
+	@SuppressWarnings("unchecked")
+	<NUM, RESULT, RET> RET min(Supplier<NUM> field, Class<NUM> numCl, Class<RESULT> resultCl) {
+		return (RET)new ClassicCollector_AggregateNamedResult<>(this, new QueryResultMin(resultCl, new SupplierGetter(field)), singleQueryCompiled());
+	}
+	
+	@Override
+	@SuppressWarnings("unchecked")
+	<NUM, RESULT, RET> RET avg(Supplier<NUM> field, Class<NUM> numCl, Class<RESULT> resultCl) {
+		return (RET)new ClassicCollector_AggregateNamedResult<>(this, new QueryResultAvg(resultCl, new SupplierGetter(field)), singleQueryCompiled());
+	}
+
+	@Override
+	<NUM, RESULT> IClassicResult_Numeric_Named<Long> count(Supplier<NUM> field, Class<NUM> numCl, Class<RESULT> resultCl) {
+		return new ClassicCollector_AggregateNamedResult<>(this, new QueryResultCount(resultCl, new SupplierGetter(field)), singleQueryCompiled());
 	}
 }

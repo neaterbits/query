@@ -2,6 +2,7 @@ package com.neaterbits.query.sql.dsl.api;
 
 import java.math.BigDecimal;
 import java.util.function.Function;
+import java.util.function.Supplier;
 
 import com.neaterbits.query.sql.dsl.api.entity.QueryMetaModel;
 
@@ -26,8 +27,17 @@ abstract class BaseSelect<
 	
 	{
 		
+	BaseSelect(QueryMetaModel queryMetaModel) {
+		super(queryMetaModel);
+	}
+
+		
 
 	// ======================== Aggregate functions ========================
+		
+    //*************************************************************************
+    // Named
+	//*************************************************************************
 	
 	
 	// ------------------------ Sum ------------------------
@@ -41,10 +51,6 @@ abstract class BaseSelect<
 
 	abstract <T, NUM, RESULT, RET> RET sum(Function<T, NUM> field, Class<NUM> numCl, Class<RESULT> resultCl);
 	
-	BaseSelect(QueryMetaModel queryMetaModel) {
-		super(queryMetaModel);
-	}
-
 
 
 	@Override
@@ -189,4 +195,165 @@ abstract class BaseSelect<
 	public final <T> COUNT_RET count(IFunctionBigDecimal<T> field) {
 		return count(field, BigDecimal.class, Long.class);
 	}
+
+	
+    //*************************************************************************
+    // Alias
+	//*************************************************************************
+	
+	
+	// ------------------------ Sum ------------------------
+	
+
+	/*
+	private <T, NUM, RESULT> IClassicResult_Numeric_Named<RESULT> sum(Function<T, NUM> field, Class<NUM> numCl, Class<RESULT> resultCl) {
+		return new Collector_AggregateNamedResult<>(new QueryResultSum(resultCl, new FunctionGetter(field)), singleQueryCompiler());
+	}
+	*/
+
+	abstract <NUM, RESULT, RET> RET sum(Supplier<NUM> field, Class<NUM> numCl, Class<RESULT> resultCl);
+	
+
+	@Override
+	public final SUM_LONG_RET sum(ISupplierShort field) {
+		return sum(field, Short.class, Long.class);
+	}
+
+	@Override
+	public final SUM_LONG_RET sum(ISupplierInteger field) {
+		return sum(field, Integer.class, Long.class);
+	}
+	
+	@Override
+	public final SUM_LONG_RET sum(ISupplierLong field) {
+		return sum(field, Long.class, Long.class);
+	}
+
+	@Override
+	public final BIGDECIMAL_RET sum(ISupplierBigDecimal field) {
+		return sum(field, BigDecimal.class, BigDecimal.class);
+	}
+
+
+	// ------------------------ Max ------------------------
+	
+	/*
+	private <T, NUM, RESULT> IClassicResult_Numeric_Named<RESULT> max(Function<T, NUM> field, Class<NUM> numCl, Class<RESULT> resultCl) {
+		return new Collector_AggregateNamedResult<>(new QueryResultMax(resultCl, new FunctionGetter(field)), singleQueryCompiler());
+	}
+	*/
+
+	abstract <NUM, RESULT, RET> RET max(Supplier<NUM> field, Class<NUM> numCl, Class<RESULT> resultCl);
+
+	@Override
+	public final SHORT_RET max(ISupplierShort field) {
+		return max(field, Short.class, Short.class);
+	}
+
+	@Override
+	public final INT_RET max(ISupplierInteger field) {
+		return max(field, Integer.class, Integer.class);
+	}
+	
+	@Override
+	public final LONG_RET max(ISupplierLong field) {
+		return max(field, Long.class, Long.class);
+	}
+
+	@Override
+	public final BIGDECIMAL_RET max(ISupplierBigDecimal field) {
+		return max(field, BigDecimal.class, BigDecimal.class);
+	}
+		
+	
+	// ------------------------ Max ------------------------
+	
+	/*
+	private <T, NUM, RESULT> IClassicResult_Numeric_Named<RESULT> min(Function<T, NUM> field, Class<NUM> numCl, Class<RESULT> resultCl) {
+		return new Collector_AggregateNamedResult<>(new QueryResultMin(resultCl, new FunctionGetter(field)), singleQueryCompiler());
+	}
+	*/
+	
+	abstract <NUM, RESULT, RET> RET min(Supplier<NUM> field, Class<NUM> numCl, Class<RESULT> resultCl);
+
+	@Override
+	public final SHORT_RET min(ISupplierShort field) {
+		return min(field, Short.class, Short.class);
+	}
+
+	@Override
+	public final INT_RET min(ISupplierInteger field) {
+		return min(field, Integer.class, Integer.class);
+	}
+	
+	@Override
+	public final LONG_RET min(ISupplierLong field) {
+		return min(field, Long.class, Long.class);
+	}
+
+	@Override
+	public final BIGDECIMAL_RET min(ISupplierBigDecimal field) {
+		return min(field, BigDecimal.class, BigDecimal.class);
+	}
+
+	// ------------------------ Avg ------------------------
+
+	/*
+	private <T, NUM, RESULT> IClassicResult_Numeric_Named<RESULT> avg(Function<T, NUM> field, Class<NUM> numCl, Class<RESULT> resultCl) {
+		return new Collector_AggregateNamedResult<>(new QueryResultAvg(resultCl, new FunctionGetter(field)), singleQueryCompiler());
+	}
+	*/
+
+	abstract <NUM, RESULT, RET> RET avg(Supplier<NUM> field, Class<NUM> numCl, Class<RESULT> resultCl);
+
+	@Override
+	public final DOUBLE_RET avg(ISupplierShort field) {
+		return avg(field, Short.class, Double.class);
+	}
+
+	@Override
+	public final DOUBLE_RET avg(ISupplierInteger field) {
+		return avg(field, Integer.class, Double.class);
+	}
+	
+	@Override
+	public final DOUBLE_RET avg(ISupplierLong field) {
+		return avg(field, Long.class, Double.class);
+	}
+
+	@Override
+	public final DOUBLE_RET avg(ISupplierBigDecimal field) {
+		return avg(field, BigDecimal.class, Double.class);
+	}
+
+	// ------------------------ Count ------------------------
+	
+	/*
+	private <T, NUM, RESULT> IClassicResult_Numeric_Named<RESULT> count(Function<T, NUM> field, Class<NUM> numCl, Class<RESULT> resultCl) {
+		return new Collector_AggregateNamedResult<>(new QueryResultCount(resultCl, new FunctionGetter(field)), singleQueryCompiler());
+	}
+	*/
+	
+	abstract <NUM, RESULT> COUNT_RET count(Supplier<NUM> field, Class<NUM> numCl, Class<RESULT> resultCl);
+	
+
+	@Override
+	public final COUNT_RET count(ISupplierShort field) {
+		return count(field, Short.class, Long.class);
+	}
+
+	@Override
+	public final COUNT_RET count(ISupplierInteger field) {
+		return count(field, Integer.class, Long.class);
+	}
+	
+	@Override
+	public final COUNT_RET count(ISupplierLong field) {
+		return count(field, Long.class, Long.class);
+	}
+
+	@Override
+	public final COUNT_RET count(ISupplierBigDecimal field) {
+		return count(field, BigDecimal.class, Long.class);
+	}	
 }

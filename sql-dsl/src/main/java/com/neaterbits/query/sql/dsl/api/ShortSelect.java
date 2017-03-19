@@ -2,6 +2,7 @@ package com.neaterbits.query.sql.dsl.api;
 
 import java.math.BigDecimal;
 import java.util.function.Function;
+import java.util.function.Supplier;
 
 final class ShortSelect extends BaseShortSelect<
 
@@ -61,6 +62,9 @@ final class ShortSelect extends BaseShortSelect<
 		return new Short_Collector_MultiResult_Undecided<MultiBuilt<RESULT>, RESULT>(this, selectSource, ECollectionType.LIST, multiQueryCollected());
 	}
 
+
+	
+	// --------------------------------- Named ---------------------------------
 	@Override
 	@SuppressWarnings("unchecked")
 	<T, NUM, RESULT, RET> RET sum(Function<T, NUM> field, Class<NUM> numCl, Class<RESULT> resultCl) {
@@ -98,6 +102,48 @@ final class ShortSelect extends BaseShortSelect<
 	@SuppressWarnings("unchecked")
 	<T, NUM, RESULT> IShortBuilt_Numeric_Named<Long> count(Function<T, NUM> field, Class<NUM> numCl, Class<RESULT> resultCl) {
 		final QueryResultCount result = new QueryResultCount(resultCl, new FunctionGetter(field));
+		
+		return (IShortBuilt_Numeric_Named<Long>)new Short_Collector_Aggregate_Named<RESULT>(this, singleQueryCollected(), result);
+	}
+
+	// --------------------------------- Alias ---------------------------------
+	@Override
+	@SuppressWarnings("unchecked")
+	<NUM, RESULT, RET> RET sum(Supplier<NUM> field, Class<NUM> numCl, Class<RESULT> resultCl) {
+		
+		final QueryResultSum result = new QueryResultSum(resultCl, new SupplierGetter(field));
+		
+		return (RET)new Short_Collector_Aggregate_Named<RESULT>(this, singleQueryCollected(), result);
+	}
+
+	@Override
+	@SuppressWarnings("unchecked")
+	<NUM, RESULT, RET> RET max(Supplier<NUM> field, Class<NUM> numCl, Class<RESULT> resultCl) {
+		final QueryResultMax result = new QueryResultMax(resultCl, new SupplierGetter(field));
+		
+		return (RET)new Short_Collector_Aggregate_Named<RESULT>(this, singleQueryCollected(), result);
+	}
+
+	@Override
+	@SuppressWarnings("unchecked")
+	<NUM, RESULT, RET> RET min(Supplier<NUM> field, Class<NUM> numCl, Class<RESULT> resultCl) {
+		final QueryResultMin result = new QueryResultMin(resultCl, new SupplierGetter(field));
+		
+		return (RET)new Short_Collector_Aggregate_Named<RESULT>(this, singleQueryCollected(), result);
+	}
+
+	@Override
+	@SuppressWarnings("unchecked")
+	<NUM, RESULT, RET> RET avg(Supplier<NUM> field, Class<NUM> numCl, Class<RESULT> resultCl) {
+		final QueryResultAvg result = new QueryResultAvg(resultCl, new SupplierGetter(field));
+		
+		return (RET)new Short_Collector_Aggregate_Named<RESULT>(this, singleQueryCollected(), result);
+	}
+
+	@Override
+	@SuppressWarnings("unchecked")
+	<NUM, RESULT> IShortBuilt_Numeric_Named<Long> count(Supplier<NUM> field, Class<NUM> numCl, Class<RESULT> resultCl) {
+		final QueryResultCount result = new QueryResultCount(resultCl, new SupplierGetter(field));
 		
 		return (IShortBuilt_Numeric_Named<Long>)new Short_Collector_Aggregate_Named<RESULT>(this, singleQueryCollected(), result);
 	}

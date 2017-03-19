@@ -24,8 +24,20 @@ public interface ISQL<
 			DOUBLE_RET,
 			BIGDECIMAL_RET
 			>
-
 		,
+
+		ISharedFunctions_Aggregate_Alias<
+			SUM_LONG_RET,
+			COUNT_RET,
+			
+			SHORT_RET,
+			INT_RET,
+			LONG_RET,
+			DOUBLE_RET,
+			BIGDECIMAL_RET
+		>,
+
+		
 		IQueryPreparation {
 			
 }

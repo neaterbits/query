@@ -2,6 +2,7 @@ package com.neaterbits.query.sql.dsl.api;
 
 import java.math.BigDecimal;
 import java.util.function.Function;
+import java.util.function.Supplier;
 
 import com.neaterbits.query.sql.dsl.api.entity.QueryMetaModel;
 
@@ -90,6 +91,8 @@ final class ShortSelectPrepared extends BaseShortSelect<
 		return new Short_Collector_MultiResult_Undecided<MultiPrepared<TYPE_RESULT>, TYPE_RESULT>(this, selectSource, ECollectionType.LIST, multiQueryPreparer());
 	}
 
+	// TODO: prepared-query
+	
 	@Override
 	<T, NUM, RESULT, RET> RET sum(Function<T, NUM> field, Class<NUM> numCl, Class<RESULT> resultCl) {
 		throw new UnsupportedOperationException("TODO");
@@ -112,6 +115,32 @@ final class ShortSelectPrepared extends BaseShortSelect<
 
 	@Override
 	<T, NUM, RESULT> IShortPrepared_Numeric_Named<Long> count(Function<T, NUM> field, Class<NUM> numCl,
+			Class<RESULT> resultCl) {
+		throw new UnsupportedOperationException("TODO");
+	}
+
+	@Override
+	<NUM, RESULT, RET> RET sum(Supplier<NUM> field, Class<NUM> numCl, Class<RESULT> resultCl) {
+		throw new UnsupportedOperationException("TODO");
+	}
+
+	@Override
+	<NUM, RESULT, RET> RET max(Supplier<NUM> field, Class<NUM> numCl, Class<RESULT> resultCl) {
+		throw new UnsupportedOperationException("TODO");
+	}
+
+	@Override
+	<NUM, RESULT, RET> RET min(Supplier<NUM> field, Class<NUM> numCl, Class<RESULT> resultCl) {
+		throw new UnsupportedOperationException("TODO");
+	}
+
+	@Override
+	<NUM, RESULT, RET> RET avg(Supplier<NUM> field, Class<NUM> numCl, Class<RESULT> resultCl) {
+		throw new UnsupportedOperationException("TODO");
+	}
+
+	@Override
+	<NUM, RESULT> IShortPrepared_Numeric_Named<Long> count(Supplier<NUM> field, Class<NUM> numCl,
 			Class<RESULT> resultCl) {
 		throw new UnsupportedOperationException("TODO");
 	}

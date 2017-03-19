@@ -104,9 +104,9 @@ final class ShortSelectSourceLookup extends SelectSourceLookup {
 		final CompiledSelectSource_Alias ret;
 		
 		if (idx < 0) {
-			final String name = CompiledSelectSource_Alias.getName(namedSources.size());
+			final String name = CompiledSelectSource_Alias.getName(aliasSources.size());
 			// Not found, must create
-			ret = new CompiledSelectSource_Alias(alias, name, namedSources.size());
+			ret = new CompiledSelectSource_Alias(alias, name, aliasSources.size());
 			
 			aliasSources.add(ret);
 

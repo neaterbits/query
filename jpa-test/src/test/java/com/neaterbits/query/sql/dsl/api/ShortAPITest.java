@@ -723,4 +723,14 @@ public class ShortAPITest extends BaseJPATest {
 		
 		assertThat(true).isEqualTo(false);
 	}
+	
+	
+	@Test
+	public void testAggregateFunctionsForShortPrepared() {
+		
+		// In ShortPrepare - does not implment aggregate results yet
+		
+		assertThat(true).isEqualTo(false);
+	}
+	
 }
