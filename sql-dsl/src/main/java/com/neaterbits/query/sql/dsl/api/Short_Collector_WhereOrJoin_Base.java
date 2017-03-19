@@ -138,6 +138,112 @@ abstract class Short_Collector_WhereOrJoin_Base<
 		return collector;
 	}
 
+	@SuppressWarnings("unchecked")
+	final <FROM, TO, R, RET> RET addInnerJoin(Function<FROM, R> from, Function<TO, R> to) {
+		if (from == null) {
+			throw new IllegalArgumentException("from == null");
+		}
+		
+		if (to == null) {
+			throw new IllegalArgumentException("to == null");
+		}
+
+		return (RET)collectJoin(EJoinType.INNER, from, to, null, this::addNamedJoin);
+	}
+	
+	@SuppressWarnings("unchecked")
+	final <FROM, TO, R, RET> RET addInnerJoin(Function<FROM, R> from, Function<TO, R> to, Consumer<IShortJoin_Sub_Named<MODEL, RESULT, TO, Void>> consumer) {
+		
+		if (from == null) {
+			throw new IllegalArgumentException("from == null");
+		}
+		
+		if (to == null) {
+			throw new IllegalArgumentException("to == null");
+		}
+		
+		if (consumer == null) {
+			throw new IllegalArgumentException("consumer == null");
+		}
+		
+		return (RET)collectJoin(EJoinType.INNER, from, to, consumer, this::addNamedJoin);
+	}
+	
+	@SuppressWarnings("unchecked")
+	final <FROM, TO, RET> RET addInnerJoin(CollectionFunction<FROM, TO> collection) {
+		if (collection == null) {
+			throw new IllegalArgumentException("collection == null");
+		}
+		
+		return (RET)collectJoin(EJoinType.INNER, collection, null, this::addNamedJoin);
+	}
+	
+	@SuppressWarnings("unchecked")
+	final <FROM, TO, RET> RET addInnerJoin(CollectionFunction<FROM, TO> collection, Consumer<IShortJoin_Sub_Named<MODEL, RESULT, TO, Void>> consumer) {
+		if (collection == null) {
+			throw new IllegalArgumentException("collection == null");
+		}
+		
+		if (consumer == null) {
+			throw new IllegalArgumentException("consumer == null");
+		}
+		
+		return (RET)collectJoin(EJoinType.INNER, collection, consumer, this::addNamedJoin);
+	}
+
+	@SuppressWarnings("unchecked")
+	final <FROM, TO, R, RET> RET addLeftJoin(Function<FROM, R> from, Function<TO, R> to) {
+		if (from == null) {
+			throw new IllegalArgumentException("from == null");
+		}
+		
+		if (to == null) {
+			throw new IllegalArgumentException("to == null");
+		}
+
+		return (RET)collectJoin(EJoinType.LEFT, from, to, null, this::addNamedJoin);
+	}
+	
+	@SuppressWarnings("unchecked")
+	final <FROM, TO, R, RET> RET addLeftJoin(Function<FROM, R> from, Function<TO, R> to, Consumer<IShortJoin_Sub_Named<MODEL, RESULT, TO, Void>> consumer) {
+		
+		if (from == null) {
+			throw new IllegalArgumentException("from == null");
+		}
+		
+		if (to == null) {
+			throw new IllegalArgumentException("to == null");
+		}
+		
+		if (consumer == null) {
+			throw new IllegalArgumentException("consumer == null");
+		}
+		
+		return (RET)collectJoin(EJoinType.LEFT, from, to, consumer, this::addNamedJoin);
+	}
+	
+	@SuppressWarnings("unchecked")
+	final <FROM, TO, RET> RET addLeftJoin(CollectionFunction<FROM, TO> collection) {
+		if (collection == null) {
+			throw new IllegalArgumentException("collection == null");
+		}
+		
+		return (RET)collectJoin(EJoinType.LEFT, collection, null, this::addNamedJoin);
+	}
+	
+	@SuppressWarnings("unchecked")
+	final <FROM, TO, RET> RET addLeftJoin(CollectionFunction<FROM, TO> collection, Consumer<IShortJoin_Sub_Named<MODEL, RESULT, TO, Void>> consumer) {
+		if (collection == null) {
+			throw new IllegalArgumentException("collection == null");
+		}
+		
+		if (consumer == null) {
+			throw new IllegalArgumentException("consumer == null");
+		}
+		
+		return (RET)collectJoin(EJoinType.LEFT, collection, consumer, this::addNamedJoin);
+	}
+		
 	private <FROM, TO, R, RET> RET collectJoin(
 			EJoinType joinType,
 			Function<FROM, R> from,
@@ -165,7 +271,6 @@ abstract class Short_Collector_WhereOrJoin_Base<
 		
 		return collect.apply(join);
 	}
-	
 	
 	private class ShortJoin_Sub_Named_Builder<TO> implements IShortJoin_Sub_Named<MODEL, RESULT, TO, Void> {
 
