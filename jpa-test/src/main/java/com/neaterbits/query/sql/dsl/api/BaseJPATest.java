@@ -44,6 +44,15 @@ public abstract class BaseJPATest extends BaseSQLAPITest {
 	private static final QueryTestDSInMemory inMemory = new QueryTestDSInMemory(jpaQueryMetaModel);
 	
 	protected static final IShortPrepared preparedJPQLDerby = IShortPrepared.get(jpqlJPADerby);
+
+	protected static final QueryTestDSCheck store(Object ...objects) {
+		return store(s -> {
+			for (Object o : objects) {
+				s.add(o);
+			}
+		});
+	}
+
 	
 	protected static final QueryTestDSCheck store(Consumer<QueryTestDSBuilder> b) {
 		return new QueryTestDSCombined()

@@ -24,10 +24,7 @@ public class MappedWhereTest extends GEN_BaseTestCase {
     			.where(Farm::getName).startsWith("Table")
     			.build(); 
 
-    	store(s -> s
-				.add(farm1)
-				.add(farm2)
-				.add(farm3))
+    	store(farm1, farm2, farm3)
     	.checkOne(query, new FarmInfo("Table Mountain"));
     }
 
