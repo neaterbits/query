@@ -6,7 +6,6 @@ import com.neaterbits.query.jpatest.GEN_BaseTestCase;
 import com.neaterbits.query.sql.dsl.api.MultiBuilt;
 import com.neaterbits.query.sql.dsl.api.SingleBuilt;
 import com.neaterbits.query.test.model.Farm;
-import com.neaterbits.query.test.model.mapped.FarmInfo;
 
 
 public class EntityWhereTest extends GEN_BaseTestCase {
@@ -37,7 +36,6 @@ public class EntityWhereTest extends GEN_BaseTestCase {
     	final Farm f = select.alias(Farm.class);
     	
     	final SingleBuilt<Farm> query = select.one(Farm.class)
-    			
     			.where(f::getName).startsWith("Table")
     			.build(); 
 
@@ -50,7 +48,6 @@ public class EntityWhereTest extends GEN_BaseTestCase {
     public void testEntityMultiNamed() {
     	
     	assertThat(true).isEqualTo(false);
-    	/*
     	final Farm farm1 = new Farm("Hill Valley");
     	final Farm farm2 = new Farm("Table Mountain");
     	final Farm farm3 = new Farm("Snowy Hills");
@@ -62,9 +59,8 @@ public class EntityWhereTest extends GEN_BaseTestCase {
     	store(farm1, farm2, farm3)
     	.checkListUnordered(
     			query,
-    			new FarmInfo("Hill Valley"),
-    			new FarmInfo("Snowy Hills"));
-    			*/
+    			new Farm(farm1.getId(), "Hill Valley"),
+    			new Farm(farm3.getId(), "Snowy Hills"));
     }
 
 

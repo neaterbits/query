@@ -26,22 +26,4 @@ abstract class SQL_Collector_WhereOrJoin_MultiEntity_Named<MODEL, RESULT>
 	Collector_And_Named<MODEL, RESULT, ISQLLogical_And_MultiEntity_Named<MODEL, RESULT>, ISQLLogical_And_NonProcessResult_Named<MODEL, RESULT>, ISQLLogical_Or_NonProcessResult_Named<MODEL, RESULT>, ISharedProcessResult_After_GroupBy_Named<MODEL, RESULT>> createNamedAndCollector() {
 		return new SQL_Collector_And_MultiEntity_Named<>(this);
 	}
-
-	@SuppressWarnings("unchecked")
-	@Override
-	public <LEFT, RIGHT> ISQLJoin_Condition_MultiEntity_Named<MODEL, RESULT, LEFT, RIGHT>
-
-			innerJoin(Class<LEFT> leftType, Class<RIGHT> rightType) {
-
-		return (ISQLJoin_Condition_MultiEntity_Named<MODEL, RESULT, LEFT, RIGHT>) super.innerJoinUtil(leftType, rightType);
-	}
-
-	@SuppressWarnings("unchecked")
-	@Override
-	public <LEFT, RIGHT> ISQLJoin_Condition_MultiEntity_Named<MODEL, RESULT, LEFT, RIGHT> leftJoin(
-			Class<LEFT> leftType, Class<RIGHT> rightType) {
-
-		return (ISQLJoin_Condition_MultiEntity_Named<MODEL, RESULT, LEFT, RIGHT>) super.leftJoinUtil(leftType,
-				rightType);
-	}
 }
