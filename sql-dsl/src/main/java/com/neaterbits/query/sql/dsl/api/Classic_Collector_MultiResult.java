@@ -62,6 +62,7 @@ final class Classic_Collector_MultiResult<MODEL, RESULT>
 		return new CollectedQueryResult_Entity_Multi(getSelectSource(), collectionType);
 	}
 
+	/*
 	
 	
 	@Override
@@ -108,6 +109,52 @@ final class Classic_Collector_MultiResult<MODEL, RESULT>
 			ISharedResultMapperTo<MODEL, RESULT, BigDecimal, IClassicResult_Mapped_Multi_Alias<MODEL, RESULT>>,
 			ISharedResultMapperTo<MODEL, RESULT, String, IClassicResult_Mapped_Multi_Alias<MODEL, RESULT>>> map() {
 		
+		throw new UnsupportedOperationException("TODO - map to result for classic");
+	}
+	*/
+
+	@Override
+	public ISharedMapFunctions_Initial<
+				MODEL,
+				RESULT,
+				IClassicResult_Mapped_Multi_Named<MODEL, RESULT>,
+				
+				IClassicResult_Mapped_Multi_Alias<MODEL, RESULT>,
+				ISharedResultMap_OpsAndTo_Numeric_Named<MODEL, RESULT, Long, IClassicResult_Mapped_Multi_Named<MODEL, RESULT>>,
+				ISharedResultMap_OpsAndTo_Numeric_Named<MODEL, RESULT, Long, IClassicResult_Mapped_Multi_Named<MODEL, RESULT>>,
+				ISharedResultMap_OpsAndTo_Numeric_Named<MODEL, RESULT, Short, IClassicResult_Mapped_Multi_Named<MODEL, RESULT>>,
+				ISharedResultMap_OpsAndTo_Numeric_Named<MODEL, RESULT, Integer, IClassicResult_Mapped_Multi_Named<MODEL, RESULT>>,
+				ISharedResultMap_OpsAndTo_Numeric_Named<MODEL, RESULT, Long, IClassicResult_Mapped_Multi_Named<MODEL, RESULT>>,
+				ISharedResultMap_OpsAndTo_Numeric_Named<MODEL, RESULT, Double, IClassicResult_Mapped_Multi_Named<MODEL, RESULT>>,
+				ISharedResultMap_OpsAndTo_Numeric_Named<MODEL, RESULT, BigDecimal, IClassicResult_Mapped_Multi_Named<MODEL, RESULT>>,
+				ISharedResultOps_String_Named<MODEL, RESULT, IClassicResult_Mapped_Multi_Named<MODEL, RESULT>>,
+				
+				ISharedResultMapperTo<MODEL, RESULT, Long, IClassicResult_Mapped_Multi_Named<MODEL, RESULT>>,
+				ISharedResultMapperTo<MODEL, RESULT, Long, IClassicResult_Mapped_Multi_Named<MODEL, RESULT>>,
+				ISharedResultMapperTo<MODEL, RESULT, Short, IClassicResult_Mapped_Multi_Named<MODEL, RESULT>>, 
+				ISharedResultMapperTo<MODEL, RESULT, Integer, IClassicResult_Mapped_Multi_Named<MODEL, RESULT>>,
+				ISharedResultMapperTo<MODEL, RESULT, Long, IClassicResult_Mapped_Multi_Named<MODEL, RESULT>>,
+				ISharedResultMapperTo<MODEL, RESULT, Double, IClassicResult_Mapped_Multi_Named<MODEL, RESULT>>,
+				ISharedResultMapperTo<MODEL, RESULT, BigDecimal, IClassicResult_Mapped_Multi_Named<MODEL, RESULT>>,
+				ISharedResultMapperTo<MODEL, RESULT, String, IClassicResult_Mapped_Multi_Named<MODEL, RESULT>>,
+				
+				ISharedResultOps_Numeric_Alias<MODEL, RESULT, Long, IClassicResult_Mapped_Multi_Alias<MODEL, RESULT>>,
+				ISharedResultOps_Numeric_Alias<MODEL, RESULT, Long, IClassicResult_Mapped_Multi_Alias<MODEL, RESULT>>,
+				ISharedResultOps_Numeric_Alias<MODEL, RESULT, Short, IClassicResult_Mapped_Multi_Alias<MODEL, RESULT>>,
+				ISharedResultOps_Numeric_Alias<MODEL, RESULT, Integer, IClassicResult_Mapped_Multi_Alias<MODEL, RESULT>>,
+				ISharedResultOps_Numeric_Alias<MODEL, RESULT, Long, IClassicResult_Mapped_Multi_Alias<MODEL, RESULT>>,
+				ISharedResultOps_Numeric_Alias<MODEL, RESULT, Double, IClassicResult_Mapped_Multi_Alias<MODEL, RESULT>>,
+				ISharedResultOps_Numeric_Alias<MODEL, RESULT, BigDecimal, IClassicResult_Mapped_Multi_Alias<MODEL, RESULT>>,
+				
+				ISharedResultOps_String_Alias<MODEL, RESULT, IClassicResult_Mapped_Multi_Alias<MODEL, RESULT>>,
+				ISharedResultMapperTo<MODEL, RESULT, Long, IClassicResult_Mapped_Multi_Alias<MODEL, RESULT>>,
+				ISharedResultMapperTo<MODEL, RESULT, Long, IClassicResult_Mapped_Multi_Alias<MODEL, RESULT>>,
+				ISharedResultMapperTo<MODEL, RESULT, Short, IClassicResult_Mapped_Multi_Alias<MODEL, RESULT>>,
+				ISharedResultMapperTo<MODEL, RESULT, Integer, IClassicResult_Mapped_Multi_Alias<MODEL, RESULT>>,
+				ISharedResultMapperTo<MODEL, RESULT, Long, IClassicResult_Mapped_Multi_Alias<MODEL, RESULT>>,
+				ISharedResultMapperTo<MODEL, RESULT, Double, IClassicResult_Mapped_Multi_Alias<MODEL, RESULT>>,
+				ISharedResultMapperTo<MODEL, RESULT, BigDecimal, IClassicResult_Mapped_Multi_Alias<MODEL, RESULT>>,
+				ISharedResultMapperTo<MODEL, RESULT, String, IClassicResult_Mapped_Multi_Alias<MODEL, RESULT>>> map() {
 		throw new UnsupportedOperationException("TODO - map to result for classic");
 	}
 }

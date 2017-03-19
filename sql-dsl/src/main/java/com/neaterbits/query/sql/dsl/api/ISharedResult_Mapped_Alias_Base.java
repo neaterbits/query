@@ -11,11 +11,21 @@ public interface ISharedResult_Mapped_Alias_Base<
 		ISharedResultMapper_Alias<MODEL, RESULT, RET>,
 		ISharedSelectSourceBuilder<MODEL, RESULT> { // TODO: really select-source? needed for type-checking{
 		
-		ISharedMapFunctions_Alias<
+		ISharedMapFunctions_All_Alias<
 			MODEL,
 			RESULT,
 			
 			RET,
+
+			ISharedResultMap_OpsAndTo_Numeric_Alias<MODEL, RESULT, Long, 	   RET>,
+			ISharedResultMap_OpsAndTo_Numeric_Alias<MODEL, RESULT, Long, 	   RET>,
+		
+			ISharedResultMap_OpsAndTo_Numeric_Alias<MODEL, RESULT, Short, 	   RET>,
+			ISharedResultMap_OpsAndTo_Numeric_Alias<MODEL, RESULT, Integer,    RET>,
+			ISharedResultMap_OpsAndTo_Numeric_Alias<MODEL, RESULT, Long, 	   RET>,
+			ISharedResultMap_OpsAndTo_Numeric_Alias<MODEL, RESULT, Double,     RET>,
+			ISharedResultMap_OpsAndTo_Numeric_Alias<MODEL, RESULT, BigDecimal, RET>,
+			ISharedResultOps_String_Alias<MODEL, RESULT, RET>,
 			
 			ISharedResultMapperTo<MODEL, RESULT, Long, 		 RET>,
 			ISharedResultMapperTo<MODEL, RESULT, Long, 		 RET>,

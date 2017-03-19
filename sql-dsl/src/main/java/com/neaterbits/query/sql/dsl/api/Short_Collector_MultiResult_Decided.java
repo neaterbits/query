@@ -1,6 +1,6 @@
 package com.neaterbits.query.sql.dsl.api;
 
-abstract class Short_Collector_MultiResult_Decided<MODEL, RESULT>
+abstract class Short_Collector_MultiResult_Decided<MODEL, RESULT, AFTER_GROUP_BY>
 	extends Short_Collector_Result_Decided_Base<
 		MODEL,
 		RESULT,
@@ -29,7 +29,7 @@ abstract class Short_Collector_MultiResult_Decided<MODEL, RESULT>
 		IShortJoin_Condition_MultiMapped_Alias<MODEL, RESULT>,
 		ISQLLogical_AndOr_MultiMapped_Alias<MODEL, RESULT>,
 		
-		ISharedProcessResult_After_GroupBy_Named<MODEL, RESULT>
+		AFTER_GROUP_BY
 		
 		> {
 

@@ -3,7 +3,7 @@ package com.neaterbits.query.sql.dsl.api;
 import java.math.BigDecimal;
 
 final class Short_Collector_MultiResult_Decided_Named<MODEL, RESULT>
-		extends Short_Collector_MultiResult_Decided<MODEL, RESULT> 
+		extends Short_Collector_MultiResult_Decided<MODEL, RESULT, ISharedProcessResult_After_GroupBy_Named<MODEL, RESULT>> 
 
 	implements IShortResult_Mapped_Multi_Named<MODEL, RESULT>,
 			ISQLLogical_AndOr_MultiMapped_Named<MODEL, RESULT>{

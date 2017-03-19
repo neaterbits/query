@@ -75,6 +75,4 @@ abstract class ResultMapper_ExpressionList_Initial_Named<
 		
 		return impl;
 	}
-	
-	
 }

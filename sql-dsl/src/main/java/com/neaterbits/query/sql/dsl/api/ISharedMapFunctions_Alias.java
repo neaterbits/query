@@ -1,5 +1,7 @@
 package com.neaterbits.query.sql.dsl.api;
 
+//NO similar named ISharedMapFunctions_Named ?
+@Deprecated 
 public interface ISharedMapFunctions_Alias<
 		MODEL,
 		RESULT,

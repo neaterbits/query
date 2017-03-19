@@ -88,7 +88,7 @@ final class Classic_Collector_MapToResult_Single<MODEL, RESULT>
 				ISharedResultOps_Numeric_Alias<MODEL, RESULT, Long, IClassicResult_Mapped_Single_Alias<MODEL, RESULT>>, 
 				ISharedResultOps_Numeric_Alias<MODEL, RESULT, Double, IClassicResult_Mapped_Single_Alias<MODEL, RESULT>>, 
 				ISharedResultOps_Numeric_Alias<MODEL, RESULT, BigDecimal, IClassicResult_Mapped_Single_Alias<MODEL, RESULT>>,
-				ISharedResultOps_String_Alias<MODEL, RESULT, String, IClassicResult_Mapped_Single_Alias<MODEL, RESULT>>,
+				ISharedResultOps_String_Alias<MODEL, RESULT, IClassicResult_Mapped_Single_Alias<MODEL, RESULT>>,
 				
 				ISharedResultMapperTo<MODEL, RESULT, Long, IClassicResult_Mapped_Single_Alias<MODEL, RESULT>>,
 				ISharedResultMapperTo<MODEL, RESULT, Long, IClassicResult_Mapped_Single_Alias<MODEL, RESULT>>,

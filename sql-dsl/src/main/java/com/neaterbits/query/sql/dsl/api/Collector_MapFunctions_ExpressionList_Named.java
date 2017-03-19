@@ -39,57 +39,8 @@ final class Collector_MapFunctions_ExpressionList_Named<
 		
 			SUM_LONG_RET, COUNT_RET, SHORT_RET, INT_RET, LONG_RET, DOUBLE_RET, BIGDECIMAL_RET, STRING_RET
 		>
-			
-		/*
-	extends Collector_NestedFunctions_Named<
-			MODEL,
-			RESULT,
-			
-			RET,
-			
-			SUM_LONG_RET,
-			COUNT_RET,
-			
-			SHORT_RET,
-			INT_RET,
-			LONG_RET,
-			DOUBLE_RET,
-			BIGDECIMAL_RET,
-			STRING_RET,
-	
-			ISharedMapFunctions_Numeric_Named<
-			
-				MODEL, RESULT, RET,
-		
-				//SUM_LONG_RET, COUNT_RET, SHORT_RET, INT_RET, LONG_RET, DOUBLE_RET, BIGDECIMAL_RET,
-		
-				// Pass NO_PARAM types for both recursively, since cannot use .plus() when nested functions in this format
-				NO_PARAM_SUM_LONG_RET, NO_PARAM_COUNT_RET, NO_PARAM_SHORT_RET, NO_PARAM_INT_RET, NO_PARAM_LONG_RET, NO_PARAM_DOUBLE_RET, NO_PARAM_BIGDECIMAL_RET,
-				NO_PARAM_SUM_LONG_RET, NO_PARAM_COUNT_RET, NO_PARAM_SHORT_RET, NO_PARAM_INT_RET, NO_PARAM_LONG_RET, NO_PARAM_DOUBLE_RET, NO_PARAM_BIGDECIMAL_RET
-			>,
 
-			// for sqrt()
-	
-			ISharedMapFunctions_Numeric_Named<MODEL, RESULT, RET,
-			
-				NO_PARAM_DOUBLE_RET, NO_PARAM_DOUBLE_RET, NO_PARAM_DOUBLE_RET, NO_PARAM_DOUBLE_RET, NO_PARAM_DOUBLE_RET, NO_PARAM_DOUBLE_RET, NO_PARAM_DOUBLE_RET,
-				NO_PARAM_DOUBLE_RET, NO_PARAM_DOUBLE_RET, NO_PARAM_DOUBLE_RET, NO_PARAM_DOUBLE_RET, NO_PARAM_DOUBLE_RET, NO_PARAM_DOUBLE_RET, NO_PARAM_DOUBLE_RET>,
-				
-				
-			NO_PARAM_STRING_RET
-			
-			/*
-			NO_PARAM_SHORT_RET,
-			NO_PARAM_INT_RET,
-			NO_PARAM_LONG_RET,
-			NO_PARAM_DOUBLE_RET,
-			NO_PARAM_BIGDECIMAL_RET,
-			NO_PARAM_STRING_RET
-			*/
-			
-			//>
-			
-		implements ISharedMapFunctions_All_Named<MODEL, RESULT, RET,
+	implements ISharedMapFunctions_All_Named<MODEL, RESULT, RET,
 			SUM_LONG_RET, COUNT_RET, SHORT_RET, INT_RET, LONG_RET, DOUBLE_RET, BIGDECIMAL_RET, STRING_RET,
 			NO_PARAM_SUM_LONG_RET, NO_PARAM_COUNT_RET, NO_PARAM_SHORT_RET, NO_PARAM_INT_RET, NO_PARAM_LONG_RET, NO_PARAM_DOUBLE_RET, NO_PARAM_BIGDECIMAL_RET, NO_PARAM_STRING_RET>,
 		
@@ -105,9 +56,6 @@ final class Collector_MapFunctions_ExpressionList_Named<
 				
 	Collector_MapFunctions_ExpressionList_Named(/*ISharedCollector_Functions_Callback_Named<MODEL, RESULT, RET> func,*/ /*, Collector_NestedFunctions_Base<MODEL, RESULT> last, */ IMappingCollector<MODEL, RESULT> impl ) {
 		super(impl);
-		
-		//super(func, last);
-		
 	}
 
 	@Override
@@ -125,7 +73,6 @@ final class Collector_MapFunctions_ExpressionList_Named<
 		throw new UnsupportedOperationException("TODO");
 	}
 
-
 	@Override
 	public NO_PARAM_STRING_RET upper() {
 		throw new UnsupportedOperationException("TODO");
@@ -135,105 +82,5 @@ final class Collector_MapFunctions_ExpressionList_Named<
 	public NO_PARAM_STRING_RET trim() {
 		throw new UnsupportedOperationException("TODO");
 	}
-	
-	/*
-	@Override
-	public final RET to(BiConsumer<RESULT, Comparable> setter) {
-		
-		final Expression expression = collectExpression();
-		
-		impl.getMappingCollector().add(null, expression, setter);
-		
-		return (RET)impl;
-	}
-	*/
-
-	
-	/*
-	@Override
-	@SuppressWarnings("unchecked")
-	<R extends Comparable<R>, CLAUSE> CLAUSE addSubNumeric(Function_Arithmetic function, ISharedSubOperandsFunction_Named<MODEL, RESULT, R> sub) {
-
-		final Expression expression = SubExpressionUtil.addSubNumericForFunction(function, sub, null);
-
-		return (CLAUSE)new ResultMapperOps_Numeric<>(expression, impl);
-	}
-
-	@Override
-	@SuppressWarnings("unchecked")
-	<CLAUSE> CLAUSE addSubString(Function_String function, ISharedSubOperandsFunction_String_Named<MODEL, RESULT> sub) {
-
-		final Expression expression = SubExpressionUtil.addSubStringForFunction(function, sub, null);
-
-		return (CLAUSE)new ResultMapperOps_String<>(expression, impl);
-	}
-
-	// NoParam
-	@SuppressWarnings({"unchecked", "rawtypes"})
-	public ISharedMapFunctions_Numeric_Named<MODEL, RESULT, RET,
-			NO_PARAM_SUM_LONG_RET, NO_PARAM_COUNT_RET, NO_PARAM_SHORT_RET, NO_PARAM_INT_RET, NO_PARAM_LONG_RET, NO_PARAM_DOUBLE_RET, NO_PARAM_BIGDECIMAL_RET,
-			NO_PARAM_SUM_LONG_RET, NO_PARAM_COUNT_RET, NO_PARAM_SHORT_RET, NO_PARAM_INT_RET, NO_PARAM_LONG_RET, NO_PARAM_DOUBLE_RET, NO_PARAM_BIGDECIMAL_RET>
-				abs() {
-					
-		add(Function_Arithmetic_Abs.INSTANCE);
-		
-		return (ISharedMapFunctions_Numeric_Named)this;
-	}
-	*/
-	
-	
-
-	/*
-	@Override
-	public ISharedMapFunctions_Numeric_Named<MODEL, RESULT, RET, SUM_LONG_RET, COUNT_RET, SHORT_RET, INT_RET, LONG_RET, DOUBLE_RET, BIGDECIMAL_RET> sqrt() {
-		add(Function_Arithmetic_Sqrt.INSTANCE);
-
-		return this;
-	}
-	*/
-
-	/*
-	@SuppressWarnings({"unchecked", "rawtypes"})
-	@Override
-	public ISharedMapFunctions_Numeric_Named<
-				MODEL, RESULT, RET,
-				NO_PARAM_DOUBLE_RET, NO_PARAM_DOUBLE_RET, NO_PARAM_DOUBLE_RET, NO_PARAM_DOUBLE_RET, NO_PARAM_DOUBLE_RET, NO_PARAM_DOUBLE_RET, NO_PARAM_DOUBLE_RET,
-				NO_PARAM_DOUBLE_RET, NO_PARAM_DOUBLE_RET, NO_PARAM_DOUBLE_RET, NO_PARAM_DOUBLE_RET, NO_PARAM_DOUBLE_RET, NO_PARAM_DOUBLE_RET, NO_PARAM_DOUBLE_RET> sqrt() {
-		add(Function_Arithmetic_Sqrt.INSTANCE);
-
-		return (ISharedMapFunctions_Numeric_Named)this;
-	}
-	
-				
-	
-	@Override
-	@SuppressWarnings({"unchecked", "rawtypes"})
-	public ISharedFunctions_String_Named<MODEL, RESULT, RET, NO_PARAM_STRING_RET> lower() {
-		add(Function_String_Lower.INSTANCE);
-		
-		return (ISharedFunctions_String_Named)this;
-	}
-
-
-
-	@Override
-	@SuppressWarnings({"unchecked", "rawtypes"})
-		public ISharedFunctions_String_Named<MODEL, RESULT, RET, NO_PARAM_STRING_RET> upper() {
-		add(Function_String_Upper.INSTANCE);
-		
-		return (ISharedFunctions_String_Named)this;
-	}
-
-	@Override
-	@SuppressWarnings({"unchecked", "rawtypes"})
-		public ISharedFunctions_String_Named<MODEL, RESULT, RET, NO_PARAM_STRING_RET> trim() {
-		add(Function_String_Trim.INSTANCE);
-		
-		return (ISharedFunctions_String_Named)this;
-	}
-	*/
-
-
-	
 }
 

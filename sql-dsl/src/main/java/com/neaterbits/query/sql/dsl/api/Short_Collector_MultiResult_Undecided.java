@@ -272,7 +272,7 @@ final class Short_Collector_MultiResult_Undecided<MODEL, RESULT>
 				ISharedResultOps_Numeric_Alias<MODEL, RESULT, Long, IShortResult_Mapped_Multi_Alias<MODEL, RESULT>>,
 				ISharedResultOps_Numeric_Alias<MODEL, RESULT, Double, IShortResult_Mapped_Multi_Alias<MODEL, RESULT>>,
 				ISharedResultOps_Numeric_Alias<MODEL, RESULT, BigDecimal, IShortResult_Mapped_Multi_Alias<MODEL, RESULT>>,
-				ISharedResultOps_String_Alias<MODEL, RESULT, String, IShortResult_Mapped_Multi_Alias<MODEL, RESULT>>,
+				ISharedResultOps_String_Alias<MODEL, RESULT, IShortResult_Mapped_Multi_Alias<MODEL, RESULT>>,
 				
 				ISharedResultMapperTo<MODEL, RESULT, Long, IShortResult_Mapped_Multi_Alias<MODEL, RESULT>>,
 				ISharedResultMapperTo<MODEL, RESULT, Long, IShortResult_Mapped_Multi_Alias<MODEL, RESULT>>,

@@ -54,7 +54,7 @@ public interface ISharedResultMapper_All<MODEL, RESULT,
 				ISharedResultOps_Numeric_Alias<MODEL, RESULT, Long, ALIAS_SOURCE>,
 				ISharedResultOps_Numeric_Alias<MODEL, RESULT, Double, ALIAS_SOURCE>,
 				ISharedResultOps_Numeric_Alias<MODEL, RESULT, BigDecimal, ALIAS_SOURCE>,
-				ISharedResultOps_String_Alias<MODEL, RESULT, String,  ALIAS_SOURCE>,
+				ISharedResultOps_String_Alias<MODEL, RESULT, ALIAS_SOURCE>,
 			
 				ISharedResultMapperTo<MODEL, RESULT, Long, ALIAS_SOURCE>,
 				ISharedResultMapperTo<MODEL, RESULT, Long, ALIAS_SOURCE>,
