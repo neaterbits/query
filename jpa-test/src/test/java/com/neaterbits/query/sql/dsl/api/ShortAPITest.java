@@ -733,4 +733,36 @@ public class ShortAPITest extends BaseJPATest {
 		assertThat(true).isEqualTo(false);
 	}
 	
+	
+	@Test
+	public void testAddedAllFieldTypesForAggregate() {
+		
+		// Aggregates must have BigInteger as well, and perhaps Float?
+		
+		assertThat(true).isEqualTo(false);
+	}
+	
+	@Test
+	public void testAddedAllFieldTypesForCount() {
+		
+		// IShared_Aggregate_Count_* interfaces must implement all field types
+		
+		assertThat(true).isEqualTo(false);
+	}
+
+	@Test
+	public void testAddedAllFieldTypesForConditions() {
+		
+		// Conditions must have all field types
+		
+		assertThat(true).isEqualTo(false);
+	}
+
+	@Test
+	public void testAddedAllFieldTypesForJoin() {
+		
+		// Joins must have all field types
+		
+		assertThat(true).isEqualTo(false);
+	}
 }
