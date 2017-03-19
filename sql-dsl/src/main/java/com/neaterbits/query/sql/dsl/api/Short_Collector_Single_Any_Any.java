@@ -41,7 +41,8 @@ final class Short_Collector_Single_Any_Any<MODEL, RESULT>
 			ISQLLogical_Where_SingleResult_Named_Base<MODEL, RESULT>,
 			ISQLLogical_WhereOrJoin_Named_Base<MODEL, RESULT>,
 			IShortLogical_WhereOrJoin_SingleResult_Entity_Named_Initial<MODEL, RESULT>,
-			IShortLogical_WhereOrJoin_SingleResult_Entity_Named<MODEL, RESULT, RESULT>,
+			
+			//IShortLogical_WhereOrJoin_SingleResult_Entity_Named<MODEL, RESULT, RESULT>,
 			
 			IShortResult_Single<MODEL, RESULT>,
 			IMappingCollector<MODEL, RESULT> {
@@ -273,66 +274,91 @@ final class Short_Collector_Single_Any_Any<MODEL, RESULT>
 		return ret;
 	}
 
+	<JOIN_FROM> Short_Collector_Single_Entity_Named_TypedJoin<MODEL, RESULT, JOIN_FROM> typedJoinCollector() {
+		return new Short_Collector_Single_Entity_Named_TypedJoin<MODEL, RESULT, JOIN_FROM>(this);
+	}
+	
 	@Override
 	public <JOIN_FROM, JOIN_TO, R extends Comparable<R>>
 		IShortLogical_WhereOrJoin_SingleResult_Entity_Named<MODEL, RESULT, JOIN_FROM> innerJoin(Function<JOIN_FROM, R> from, Function<JOIN_TO, R> to) {
 		
 		addInnerJoin(from, to);
 
-		//return new Short_Collector_Single_Entity_Named_TypedJoin;
-		return null;
+		return typedJoinCollector();
 	}
 
 	@Override
-	public <JOIN_FROM, JOIN_TO> IShortLogical_WhereOrJoin_SingleResult_Entity_Named<MODEL, RESULT, JOIN_FROM> innerJoin(
-			CollectionFunction<JOIN_FROM, JOIN_TO> collection) {
-		// TODO Auto-generated method stub
-		return null;
+	public <JOIN_FROM, JOIN_TO> IShortLogical_WhereOrJoin_SingleResult_Entity_Named<MODEL, RESULT, JOIN_FROM>
+		innerJoin(CollectionFunction<JOIN_FROM, JOIN_TO> collection) {
+		
+		addInnerJoin(collection);
+
+		return typedJoinCollector();
 	}
 
 	@Override
-	public <JOIN_FROM, JOIN_TO, R extends Comparable<R>> IShortLogical_WhereOrJoin_SingleResult_Entity_Named<MODEL, RESULT, JOIN_FROM> innerJoin(
+	public <JOIN_FROM, JOIN_TO, R extends Comparable<R>> IShortLogical_WhereOrJoin_SingleResult_Entity_Named<MODEL, RESULT, JOIN_FROM>
+	
+		innerJoin(
 			Function<JOIN_FROM, R> from, Function<JOIN_TO, R> to,
 			Consumer<IShortJoin_Sub_Named<MODEL, RESULT, JOIN_TO, Void>> consumer) {
-		// TODO Auto-generated method stub
-		return null;
+
+		addInnerJoin(from, to, consumer);
+		
+		return typedJoinCollector();
 	}
 
 	@Override
-	public <JOIN_FROM, JOIN_TO> IShortLogical_WhereOrJoin_SingleResult_Entity_Named<MODEL, RESULT, JOIN_FROM> innerJoin(
+	public <JOIN_FROM, JOIN_TO> IShortLogical_WhereOrJoin_SingleResult_Entity_Named<MODEL, RESULT, JOIN_FROM>
+		innerJoin(
 			CollectionFunction<JOIN_FROM, JOIN_TO> collection,
 			Consumer<IShortJoin_Sub_Named<MODEL, RESULT, JOIN_TO, Void>> consumer) {
-		// TODO Auto-generated method stub
-		return null;
+
+		addInnerJoin(collection, consumer);
+
+		return typedJoinCollector();
 	}
 
 	@Override
-	public <JOIN_FROM, JOIN_TO, R extends Comparable<R>> IShortLogical_WhereOrJoin_SingleResult_Entity_Named<MODEL, RESULT, JOIN_FROM> leftJoin(
-			Function<JOIN_FROM, R> from, Function<JOIN_TO, R> to) {
-		// TODO Auto-generated method stub
-		return null;
+	public <JOIN_FROM, JOIN_TO, R extends Comparable<R>> IShortLogical_WhereOrJoin_SingleResult_Entity_Named<MODEL, RESULT, JOIN_FROM> 
+	
+		leftJoin(Function<JOIN_FROM, R> from, Function<JOIN_TO, R> to) {
+
+		addLeftJoin(from, to);
+		
+		return typedJoinCollector();
 	}
 
 	@Override
-	public <JOIN_FROM, JOIN_TO> IShortLogical_WhereOrJoin_SingleResult_Entity_Named<MODEL, RESULT, JOIN_FROM> leftJoin(
-			CollectionFunction<JOIN_FROM, JOIN_TO> collection) {
-		// TODO Auto-generated method stub
-		return null;
+	public <JOIN_FROM, JOIN_TO> IShortLogical_WhereOrJoin_SingleResult_Entity_Named<MODEL, RESULT, JOIN_FROM>
+	
+		leftJoin(CollectionFunction<JOIN_FROM, JOIN_TO> collection) {
+		
+		addLeftJoin(collection);
+		
+		return typedJoinCollector();
 	}
 
 	@Override
-	public <JOIN_FROM, JOIN_TO, R extends Comparable<R>> IShortLogical_WhereOrJoin_SingleResult_Entity_Named<MODEL, RESULT, JOIN_FROM> leftJoin(
+	public <JOIN_FROM, JOIN_TO, R extends Comparable<R>> IShortLogical_WhereOrJoin_SingleResult_Entity_Named<MODEL, RESULT, JOIN_FROM>
+	
+		leftJoin(
 			Function<JOIN_FROM, R> from, Function<JOIN_TO, R> to,
 			Consumer<IShortJoin_Sub_Named<MODEL, RESULT, JOIN_TO, Void>> consumer) {
-		// TODO Auto-generated method stub
-		return null;
+
+		addLeftJoin(from, to, consumer);
+		
+		return typedJoinCollector();
 	}
 
 	@Override
-	public <JOIN_FROM, JOIN_TO> IShortLogical_WhereOrJoin_SingleResult_Entity_Named<MODEL, RESULT, JOIN_FROM> leftJoin(
+	public <JOIN_FROM, JOIN_TO> IShortLogical_WhereOrJoin_SingleResult_Entity_Named<MODEL, RESULT, JOIN_FROM>
+		leftJoin(
 			CollectionFunction<JOIN_FROM, JOIN_TO> collection,
 			Consumer<IShortJoin_Sub_Named<MODEL, RESULT, JOIN_TO, Void>> consumer) {
-		// TODO Auto-generated method stub
-		return null;
+		
+		addLeftJoin(collection, consumer);
+		
+		return typedJoinCollector();
 	}
 }
