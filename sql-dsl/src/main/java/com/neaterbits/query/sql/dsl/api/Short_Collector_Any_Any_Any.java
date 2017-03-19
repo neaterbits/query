@@ -104,13 +104,6 @@ abstract class Short_Collector_Any_Any_Any<
 	}
 
 	
-	/*
-	@Override
-	public final <T, R> ISharedResultMapperTo<MODEL, RESULT, R, MAPPED_SOURCE_NAMED> map(Function<T, R> getter) {
-		return new ResultMapperToImpl<MODEL, RESULT, R, MAPPED_SOURCE_NAMED>(getter, getMapToResultNamed());
-	}
-	*/
-
 	@Override
 	public final <T> ISharedResultMap_OpsAndTo_Numeric_Named<MODEL, RESULT, Short, MAPPED_SOURCE_NAMED> map(IFunctionShort<T> getter) {
 		return new ResultMapper_ExpressionList_Numeric_Named<>(new FieldExpression(getter), getMapToResultNamed());

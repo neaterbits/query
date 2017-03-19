@@ -102,18 +102,6 @@ abstract class Short_Collector_Any_Mapped_Any<
 		this.gathering = EQueryResultGathering.ENTITY;
 	}
 	
-	
-	/*
-	@Override
-	public final <T, R> ISharedResultMapperTo<MODEL, RESULT, R, NAMED_MAPPED>
-				map(Function<T, R> getter) {
-
-		return new ResultMapperToImpl<>(getter, this);
-	}
-	*/
-	
-	
-
 	@Override
 	public final <T> ISharedResultMap_OpsAndTo_Numeric_Named<MODEL, RESULT, Short, NAMED_MAPPED> map(IFunctionShort<T> getter) {
 		return new ResultMapper_ExpressionList_Numeric_Named<>(new FieldExpression(getter), this);
