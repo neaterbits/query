@@ -6,4 +6,16 @@ import com.neaterbits.query.jpatest.GEN_BaseTestCase;
 
 
 public class MappedWhereAndGroupByHavingTest extends GEN_BaseTestCase {
+
+
+    @Test
+    public void testMappedMultiNamed() {
+        assertThat(true).isEqualTo(false);
+    }
+
+
+    @Test
+    public void testMappedMultiAlias() {
+        assertThat(true).isEqualTo(false);
+    }
 }

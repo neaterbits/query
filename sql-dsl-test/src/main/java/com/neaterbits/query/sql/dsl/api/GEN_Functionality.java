@@ -21,7 +21,7 @@ public enum GEN_Functionality {
  	MAPPED(true, false,
 
  		   null,
-		   (result, dimension, fieldAccess) -> result == EQueryResultGathering.ENTITY),
+		   (result, dimension, fieldAccess) -> result == EQueryResultGathering.MAPPED),
 
 	JOIN(false, true, AGGREGATE, ENTITY, MAPPED), // Choose one when traversing
 	

@@ -9,25 +9,25 @@ public class MappedJoinWhereOrderByTest extends GEN_BaseTestCase {
 
 
     @Test
-    public void testEntitySingleNamed() {
+    public void testMappedSingleNamed() {
         assertThat(true).isEqualTo(false);
     }
 
 
     @Test
-    public void testEntitySingleAlias() {
+    public void testMappedSingleAlias() {
         assertThat(true).isEqualTo(false);
     }
 
 
     @Test
-    public void testEntityMultiNamed() {
+    public void testMappedMultiNamed() {
         assertThat(true).isEqualTo(false);
     }
 
 
     @Test
-    public void testEntityMultiAlias() {
+    public void testMappedMultiAlias() {
         assertThat(true).isEqualTo(false);
     }
 }
