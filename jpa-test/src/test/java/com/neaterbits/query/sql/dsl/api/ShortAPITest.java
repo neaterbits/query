@@ -798,4 +798,14 @@ public class ShortAPITest extends BaseJPATest {
 		
 		assertThat(true).isEqualTo(false);
 	}
+	
+	@Test
+	public void testMapsCorrectAliasInMappedResult() {
+
+		// If multiple aliases of same type in result, assure mapps correct one
+		
+		
+		assertThat(true).isEqualTo(false);
+	}
+
 }

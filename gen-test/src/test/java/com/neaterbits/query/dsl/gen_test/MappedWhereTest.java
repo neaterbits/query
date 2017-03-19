@@ -31,7 +31,21 @@ public class MappedWhereTest extends GEN_BaseTestCase {
 
     @Test
     public void testMappedSingleAlias() {
-        assertThat(true).isEqualTo(false);
+    	final Farm farm1 = new Farm("Hill Valley");
+    	final Farm farm2 = new Farm("Table Mountain");
+    	final Farm farm3 = new Farm("Snowy Hills");
+
+    	final Farm f = select.alias(Farm.class);
+    	
+    	final SingleBuilt<FarmInfo> query = select.one(FarmInfo.class)
+    			
+    			.map(f::getName).to(FarmInfo::setName)
+    			
+    			.where(f::getName).startsWith("Table")
+    			.build(); 
+
+    	store(farm1, farm2, farm3)
+    	.checkOne(query, new FarmInfo("Table Mountain"));
     }
 
 
