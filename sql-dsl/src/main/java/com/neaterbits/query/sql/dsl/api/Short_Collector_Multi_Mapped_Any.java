@@ -1,7 +1,7 @@
 package com.neaterbits.query.sql.dsl.api;
 
-abstract class Short_Collector_MultiResult_Decided<MODEL, RESULT, AFTER_GROUP_BY>
-	extends Short_Collector_Result_Decided_Base<
+abstract class Short_Collector_Multi_Mapped_Any<MODEL, RESULT, AFTER_GROUP_BY>
+	extends Short_Collector_Any_Mapped_Any<
 		MODEL,
 		RESULT,
 		ISQLLogical_WhereOrJoin_MultiMapped_Named<MODEL,RESULT>,
@@ -33,11 +33,11 @@ abstract class Short_Collector_MultiResult_Decided<MODEL, RESULT, AFTER_GROUP_BY
 		
 		> {
 
-	Short_Collector_MultiResult_Decided(BaseQuery select, CollectedQueryResult_Mapped result, Collector_Query<MODEL> queryCollector) {
+	Short_Collector_Multi_Mapped_Any(BaseQuery select, CollectedQueryResult_Mapped result, Collector_Query<MODEL> queryCollector) {
 		super(select, result, queryCollector);
 	}
 
-	Short_Collector_MultiResult_Decided(BaseQuery select, CollectedQueryResult_Entity result, Collector_Query<MODEL> queryCollector) {
+	Short_Collector_Multi_Mapped_Any(BaseQuery select, CollectedQueryResult_Entity result, Collector_Query<MODEL> queryCollector) {
 		super(select, result, queryCollector);
 	}
 

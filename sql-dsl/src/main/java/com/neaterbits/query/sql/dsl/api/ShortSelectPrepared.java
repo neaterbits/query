@@ -66,7 +66,7 @@ final class ShortSelectPrepared extends BaseShortSelect<
 		
 		final SharedSelectSource selectSource = new SharedSelectSource_Named(cl);
 
-		return new Short_Collector_SingleResult_Undecided<SinglePrepared<TYPE_RESULT>, TYPE_RESULT>(this, selectSource, singleQueryPreparer());
+		return new Short_Collector_Single_Any_Any<SinglePrepared<TYPE_RESULT>, TYPE_RESULT>(this, selectSource, singleQueryPreparer());
 	}
 
 	@Override
@@ -77,7 +77,7 @@ final class ShortSelectPrepared extends BaseShortSelect<
 		
 		final SharedSelectSource selectSource = new SharedSelectSource_Named(cl);
 
-		return new Short_Collector_SingleResult_Undecided<SinglePrepared<TYPE_RESULT>, TYPE_RESULT>(this, selectSource, singleQueryPreparer());
+		return new Short_Collector_Single_Any_Any<SinglePrepared<TYPE_RESULT>, TYPE_RESULT>(this, selectSource, singleQueryPreparer());
 	}
 
 	@Override
@@ -88,7 +88,7 @@ final class ShortSelectPrepared extends BaseShortSelect<
 		
 		final SharedSelectSource selectSource = new SharedSelectSource_Named(cl);
 
-		return new Short_Collector_MultiResult_Undecided<MultiPrepared<TYPE_RESULT>, TYPE_RESULT>(this, selectSource, ECollectionType.LIST, multiQueryPreparer());
+		return new Short_Collector_Multi_Any_Any<MultiPrepared<TYPE_RESULT>, TYPE_RESULT>(this, selectSource, ECollectionType.LIST, multiQueryPreparer());
 	}
 
 	// TODO: prepared-query

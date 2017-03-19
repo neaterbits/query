@@ -2,12 +2,12 @@ package com.neaterbits.query.sql.dsl.api;
 
 import java.math.BigDecimal;
 
-final class Short_Collector_Aggregate_Named<RESULT> 
-		extends Short_Collector_Aggregate_Base<SingleBuilt<RESULT>, RESULT> 
+final class Short_Collector_Single_Aggregate_Named<RESULT> 
+		extends Short_Collector_Single_Aggregate_Any<SingleBuilt<RESULT>, RESULT> 
 
 		implements IShortBuilt_Numeric_Named<RESULT> {
 
-	Short_Collector_Aggregate_Named(BaseQuery query, ModelCompiler<SingleBuilt<RESULT>> modelCompiler,
+	Short_Collector_Single_Aggregate_Named(BaseQuery query, ModelCompiler<SingleBuilt<RESULT>> modelCompiler,
 			QueryResultAggregate result) {
 		super(query, modelCompiler, result);
 	}

@@ -2,17 +2,17 @@ package com.neaterbits.query.sql.dsl.api;
 
 import java.math.BigDecimal;
 
-final class Short_Collector_MultiResult_Decided_Named<MODEL, RESULT>
-		extends Short_Collector_MultiResult_Decided<MODEL, RESULT, ISharedProcessResult_After_GroupBy_Named<MODEL, RESULT>> 
+final class Short_Collector_Multi_Mapped_Named<MODEL, RESULT>
+		extends Short_Collector_Multi_Mapped_Any<MODEL, RESULT, ISharedProcessResult_After_GroupBy_Named<MODEL, RESULT>> 
 
 	implements IShortResult_Mapped_Multi_Named<MODEL, RESULT>,
 			ISQLLogical_AndOr_MultiMapped_Named<MODEL, RESULT>{
 
-	Short_Collector_MultiResult_Decided_Named(BaseQuery select, CollectedQueryResult_Mapped_Multi result, Collector_Query<MODEL> queryCollector) {
+	Short_Collector_Multi_Mapped_Named(BaseQuery select, CollectedQueryResult_Mapped_Multi result, Collector_Query<MODEL> queryCollector) {
 		super(select, result, queryCollector);
 	}
 
-	Short_Collector_MultiResult_Decided_Named(BaseQuery select, CollectedQueryResult_Entity_Multi result, Collector_Query<MODEL> queryCollector) {
+	Short_Collector_Multi_Mapped_Named(BaseQuery select, CollectedQueryResult_Entity_Multi result, Collector_Query<MODEL> queryCollector) {
 		super(select, result, queryCollector);
 	}
 

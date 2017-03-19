@@ -3,8 +3,8 @@ package com.neaterbits.query.sql.dsl.api;
 import java.math.BigDecimal;
 import java.util.function.Supplier;
 
-final class Short_Collector_SingleResult_Undecided<MODEL, RESULT>
-	extends Short_Collector_Result_Undecided_Base<
+final class Short_Collector_Single_Any_Any<MODEL, RESULT>
+	extends Short_Collector_Any_Any_Any<
 			MODEL,
 			RESULT,
 			
@@ -47,7 +47,7 @@ final class Short_Collector_SingleResult_Undecided<MODEL, RESULT>
 	private final BaseQuery select;
 	
 
-	Short_Collector_SingleResult_Undecided(BaseQuery select, SharedSelectSource selectSource, ModelCompiler<MODEL> modelCompiler) {
+	Short_Collector_Single_Any_Any(BaseQuery select, SharedSelectSource selectSource, ModelCompiler<MODEL> modelCompiler) {
 		super(select, selectSource, modelCompiler);
 		
 		this.select = select;
@@ -64,7 +64,7 @@ final class Short_Collector_SingleResult_Undecided<MODEL, RESULT>
 		
 		final CollectedQueryResult_Mapped_Single collectedQueryResult = new CollectedQueryResult_Mapped_Single(getResultType());
 		
-		return new Short_Collector_SingleResult_Decided_Named<MODEL, RESULT>(select, collectedQueryResult, getQueryCollector());
+		return new Short_Collector_Single_Mapped_Named<MODEL, RESULT>(select, collectedQueryResult, getQueryCollector());
 	}
 
 
@@ -72,7 +72,7 @@ final class Short_Collector_SingleResult_Undecided<MODEL, RESULT>
 	final IMappingCollector<MODEL, RESULT> getMapToResultAlias() {
 		final CollectedQueryResult_Mapped_Single collectedQueryResult = new CollectedQueryResult_Mapped_Single(getResultType());
 
-		return new Short_Collector_SingleResult_Decided_Alias<MODEL, RESULT>(select, collectedQueryResult, getQueryCollector());
+		return new Short_Collector_Single_Mapped_Alias<MODEL, RESULT>(select, collectedQueryResult, getQueryCollector());
 	}
 	
 
@@ -102,7 +102,7 @@ final class Short_Collector_SingleResult_Undecided<MODEL, RESULT>
 		// TODO: rename *MapToResult* here
 		final CollectedQueryResult_Entity_Single collectedQueryResult = new CollectedQueryResult_Entity_Single(getSelectSource());
 
-		return new Short_Collector_SingleResult_Decided_Named<>(select, collectedQueryResult, getQueryCollector());
+		return new Short_Collector_Single_Mapped_Named<>(select, collectedQueryResult, getQueryCollector());
 	}
 
 
@@ -111,7 +111,7 @@ final class Short_Collector_SingleResult_Undecided<MODEL, RESULT>
 		// TODO: rename *MapToResult* here
 		final CollectedQueryResult_Entity_Single collectedQueryResult = new CollectedQueryResult_Entity_Single(getSelectSource());
 
-		return new Short_Collector_SingleResult_Decided_Alias<>(select, collectedQueryResult, getQueryCollector());
+		return new Short_Collector_Single_Mapped_Alias<>(select, collectedQueryResult, getQueryCollector());
 	}
 	
 	@Override
@@ -323,7 +323,7 @@ final class Short_Collector_SingleResult_Undecided<MODEL, RESULT>
 		final Supplier<IMappingCollector<MODEL, RESULT>>
 
 		s1 = () -> {
-			return new Short_Collector_SingleResult_Decided_Named<MODEL, RESULT>(
+			return new Short_Collector_Single_Mapped_Named<MODEL, RESULT>(
 					select,
 					new CollectedQueryResult_Mapped_Single(getResultType()),
 					getQueryCollector());
@@ -333,7 +333,7 @@ final class Short_Collector_SingleResult_Undecided<MODEL, RESULT>
 				
 		s2 = () -> {
 			return 
-					new Short_Collector_SingleResult_Decided_Alias<>(
+					new Short_Collector_Single_Mapped_Alias<>(
 					select,
 					new CollectedQueryResult_Mapped_Single(getResultType()),
 					getQueryCollector());
