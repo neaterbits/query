@@ -116,49 +116,6 @@ final class Short_Collector_Multi_Any_Any<MODEL, RESULT>
 		return new SQL_Collector_And_MultiEntity_Named<>(this);
 	}
 
-	@Override
-	final Collector_Or_Named<
-			MODEL,
-			RESULT,
-			ISQLLogical_Or_NonProcessResult_Named<MODEL, RESULT>,
-			ISQLLogical_And_NonProcessResult_Named<MODEL, RESULT>,
-			ISQLLogical_Or_NonProcessResult_Named<MODEL, RESULT>,
-			ISharedProcessResult_After_GroupBy_Named<MODEL, RESULT>
-		>
-	
-		createNamedNestedOrCollector(
-			Collector_And_Named<
-				MODEL,
-				RESULT,
-				ISQLLogical_And_MultiEntity_Named<MODEL, RESULT>,
-				ISQLLogical_And_NonProcessResult_Named<MODEL, RESULT>,
-				ISQLLogical_Or_NonProcessResult_Named<MODEL, RESULT>,
-				ISharedProcessResult_After_GroupBy_Named<MODEL, RESULT>> andClauses) {
-		
-		return new SQL_Collector_Or_NonProcessResult_Named<>(andClauses);
-	}
-
-	@Override
-	final Collector_And_Named<
-			MODEL,
-			RESULT,
-			ISQLLogical_And_NonProcessResult_Named<MODEL, RESULT>,
-			ISQLLogical_And_NonProcessResult_Named<MODEL, RESULT>,
-			ISQLLogical_Or_NonProcessResult_Named<MODEL, RESULT>,
-			ISharedProcessResult_After_GroupBy_Named<MODEL, RESULT>
-		>
-
-		createNamedNestedAndCollector(
-			Collector_Or_Named<
-				MODEL,
-				RESULT,
-				ISQLLogical_Or_MultiEntity_Named<MODEL, RESULT>,
-				ISQLLogical_And_NonProcessResult_Named<MODEL, RESULT>,
-				ISQLLogical_Or_NonProcessResult_Named<MODEL, RESULT>,
-				ISharedProcessResult_After_GroupBy_Named<MODEL, RESULT>> orClauses) {
-		
-		return new SQL_Collector_And_NonProcessResult_Named<>(orClauses);
-	}
 
 	@Override
 	final Collector_Or_Alias<

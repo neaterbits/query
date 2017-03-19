@@ -229,5 +229,55 @@ abstract class Short_Collector_WhereOrJoin_Base<
 			return collectJoin(EJoinType.LEFT, collection, consumer, this::addNamedJoin);
 		}
 	}
+
+	
+	/**************************************************************************
+	 * And/Or
+	 *************************************************************************/
+	
+	
+
+	@Override
+	@SuppressWarnings({"unchecked", "rawtypes"})
+	final Collector_Or_Named<
+			MODEL,
+			RESULT,
+			NAMED_NESTED_OR_CLAUSES,
+			NAMED_NESTED_AND_CLAUSES,
+			NAMED_NESTED_OR_CLAUSES,
+			ISharedProcessResult_After_GroupBy_Named<MODEL, RESULT>
+		>
+	
+		createNamedNestedOrCollector(
+			Collector_And_Named<
+				MODEL,
+				RESULT,
+				NAMED_AND_CLAUSES,
+				NAMED_NESTED_AND_CLAUSES,
+				NAMED_NESTED_OR_CLAUSES,
+				ISharedProcessResult_After_GroupBy_Named<MODEL, RESULT>> andClauses) {
+		
+		return (Collector_Or_Named)new SQL_Collector_Or_NonProcessResult_Named<>(andClauses);
+	}
+
+	@Override
+	@SuppressWarnings({"unchecked", "rawtypes"})
+	final Collector_And_Named<
+			MODEL,
+			RESULT,
+			NAMED_NESTED_AND_CLAUSES,
+			NAMED_NESTED_AND_CLAUSES,
+			NAMED_NESTED_OR_CLAUSES,
+			ISharedProcessResult_After_GroupBy_Named<MODEL, RESULT>> createNamedNestedAndCollector(
+					
+					Collector_Or_Named<MODEL,
+						RESULT,
+						NAMED_OR_CLAUSES,
+						NAMED_NESTED_AND_CLAUSES,
+						NAMED_NESTED_OR_CLAUSES, ISharedProcessResult_After_GroupBy_Named<MODEL, RESULT>> orClauses) {
+		
+		return (Collector_And_Named)new SQL_Collector_And_NonProcessResult_Named<>(orClauses);
+	}
+	
 	
 }
