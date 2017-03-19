@@ -27,7 +27,6 @@ public class AggregateTest extends GEN_BaseTestCase {
     	final SingleBuilt<BigDecimal> sumQuery = select.sum(LandPlot::getHectares).build(); 
 
     	
-    	
     	store(s -> s.add(land1).add(land2))
     	.check(ds ->
     		checkSelectOneOrNull(

@@ -289,7 +289,7 @@ public class JPAEntityModel implements EntityModel<
 			
 			targetEntity = getAssociationTarget(attribute);
 			
-			if (oneToOne.mappedBy() != null) {
+			if (oneToOne.mappedBy() != null && !oneToOne.mappedBy().trim().isEmpty()) {
 				final Attribute<?, ?> corresponding = metamodel.entity(targetEntity).getAttribute(oneToOne.mappedBy());
 			
 				// 	Either this or other side has columns
@@ -315,7 +315,7 @@ public class JPAEntityModel implements EntityModel<
 
 			targetEntity = getAssociationTarget(attribute);
 			
-			if (oneToMany.mappedBy() != null) {
+			if (oneToMany.mappedBy() != null && !oneToMany.mappedBy().trim().isEmpty()) {
 				// Find the corresponding entity
 				final Attribute<?, ?> corresponding = metamodel.entity(targetEntity).getAttribute(oneToMany.mappedBy());
 				

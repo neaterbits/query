@@ -1,6 +1,7 @@
 package com.neaterbits.query.sql.dsl.api.entity;
 
 import java.lang.reflect.Member;
+import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 
@@ -43,8 +44,11 @@ abstract class EntityAttribute implements IEntityAttribute {
 		else if (javaType.equals(List.class)) {
 			this.collectionType = EntityCollectionType.LIST;
 		}
+		else if (javaType.equals(Collection.class)) {
+			this.collectionType = EntityCollectionType.COLLECTION;
+		}
 		else {
-			throw new UnsupportedOperationException("Unsupported member type " + javaType.getClass().getName());
+			throw new UnsupportedOperationException("Unsupported member type " + javaType.getName() + " for " + name);
 		}
 	}
 

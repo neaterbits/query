@@ -765,4 +765,14 @@ public class ShortAPITest extends BaseJPATest {
 		
 		assertThat(true).isEqualTo(false);
 	}
+
+
+	@Test
+	public void testOneQueryThrowsExceptionIfNoneOrMultiple() {
+		
+		// Joins must have all field types
+		
+		assertThat(true).isEqualTo(false);
+	}
+
 }
