@@ -808,4 +808,23 @@ public class ShortAPITest extends BaseJPATest {
 		assertThat(true).isEqualTo(false);
 	}
 
+	@Test
+	public void testThatChecksAliasJoinTypesAtBuildTime() {
+
+		// Not able to statically typecheck that joins nest along the right types, but verify this at build time
+		
+		
+		assertThat(true).isEqualTo(false);
+	}
+	
+	@Test
+	public void testThatChecksForCartesianJoinsAtBuildTime() {
+
+		// Various checks that we do not include aliases that are not part of select sources
+		// and that all select sources are joined on
+		
+		
+		assertThat(true).isEqualTo(false);
+	}
+	
 }
