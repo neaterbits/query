@@ -2,11 +2,21 @@ package com.neaterbits.query.sql.dsl.api;
 
 import java.math.BigDecimal;
 
-final class Short_Collector_SingleResult_Decided_Named<MODEL, RESULT>
-		extends Short_Collector_SingleResult_Decided<MODEL, RESULT, ISharedProcessResult_After_GroupBy_Named<MODEL, RESULT>>
-
+abstract class Short_Collector_SingleResult_Decided_Named<
+		MODEL,
+		RESULT, 
+		NAMED_WHERE_OR_JOIN extends ISQLLogical_WhereOrJoin_Named_Base<MODEL, RESULT>>
+		extends Short_Collector_SingleResult_Decided<
+			MODEL,
+			RESULT,
+			
+			NAMED_WHERE_OR_JOIN,
+			ISQLLogical_WhereOrJoin_Alias_Base<MODEL, RESULT>,
+			
+			ISharedProcessResult_After_GroupBy_Named<MODEL, RESULT>>
+	
 		implements IShortResult_Mapped_Single_Named<MODEL, RESULT>,
-				
+		
 				// when returned 'this' after where
 				ISQLLogical_AndOr_SingleResult_Named<MODEL, RESULT> {
 

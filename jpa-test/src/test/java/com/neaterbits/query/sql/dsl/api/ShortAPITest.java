@@ -508,7 +508,7 @@ public class ShortAPITest extends BaseJPATest {
 				// innerjoin().on(Employee::getPersonId, Person::getId).and(Employee::getPersonId2, Person::getId2).sub()
 
 				// Company is root of join tree
-				.joinRoot(Company.class) // TODO: always lambdas here to nest? more compex code
+				//.joinRoot(Company.class) // TODO: always lambdas here to nest? more compex code
 				
 				// branch to person via employees
 				.innerJoin(Company::getEmployees, j ->

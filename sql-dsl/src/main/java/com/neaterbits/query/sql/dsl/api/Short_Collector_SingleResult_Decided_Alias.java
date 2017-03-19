@@ -2,9 +2,20 @@ package com.neaterbits.query.sql.dsl.api;
 
 import java.math.BigDecimal;
 
-final class Short_Collector_SingleResult_Decided_Alias<MODEL, RESULT> 
+final class Short_Collector_SingleResult_Decided_Alias<
+			MODEL,
+			RESULT,
+			ALIAS_WHERE_OR_JOIN extends ISQLLogical_WhereOrJoin_Alias_Base<MODEL, RESULT>
+			> 
 	
-		extends Short_Collector_SingleResult_Decided<MODEL, RESULT, ISharedProcessResult_After_GroupBy_Alias<MODEL, RESULT>>
+		extends Short_Collector_SingleResult_Decided<
+				MODEL, 
+				RESULT,
+				
+				ISQLLogical_WhereOrJoin_Named_Base<MODEL, RESULT>,
+				ALIAS_WHERE_OR_JOIN,
+				
+				ISharedProcessResult_After_GroupBy_Alias<MODEL, RESULT>>
 		implements 
 				IShortResult_Mapped_Single_Alias<MODEL, RESULT>,
 				// when returned 'this' after where

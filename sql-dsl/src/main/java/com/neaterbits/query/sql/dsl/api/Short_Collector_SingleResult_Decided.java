@@ -3,13 +3,22 @@ package com.neaterbits.query.sql.dsl.api;
 abstract class Short_Collector_SingleResult_Decided<
 		MODEL, 
 		RESULT,
+
+		NAMED_WHERE_OR_JOIN extends ISQLLogical_WhereOrJoin_Named_Base<MODEL, RESULT>,
+		ALIAS_WHERE_OR_JOIN extends ISQLLogical_WhereOrJoin_Alias_Base<MODEL, RESULT>,
+		
 		AFTER_GROUP_BY> 
 	extends Short_Collector_Result_Decided_Base<
 			MODEL,
 			RESULT,
 			
+			/*
 			ISQLLogical_WhereOrJoin_SingleResult_Named_And_Function<MODEL,RESULT>,
 			ISQLLogical_WhereOrJoin_SingleResult_Alias_And_Function<MODEL,RESULT>,
+			*/
+			
+			NAMED_WHERE_OR_JOIN,
+			ALIAS_WHERE_OR_JOIN,
 			
 			IShortResult_Mapped_Single_Named<MODEL, RESULT>,
 			IShortResult_Mapped_Single_Alias<MODEL, RESULT>,

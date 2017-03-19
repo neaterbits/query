@@ -1,5 +1,6 @@
 package com.neaterbits.query.sql.dsl.api;
 
+@Deprecated
 public interface IShortJoin_Entitity_Named_Initial<
 		MODEL,
 		RESULT,

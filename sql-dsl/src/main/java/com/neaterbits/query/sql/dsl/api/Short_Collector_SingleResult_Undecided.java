@@ -1,6 +1,8 @@
 package com.neaterbits.query.sql.dsl.api;
 
 import java.math.BigDecimal;
+import java.util.function.Consumer;
+import java.util.function.Function;
 import java.util.function.Supplier;
 
 final class Short_Collector_SingleResult_Undecided<MODEL, RESULT>
@@ -39,7 +41,9 @@ final class Short_Collector_SingleResult_Undecided<MODEL, RESULT>
 			ISQLLogical_Where_SingleResult_Named_Base<MODEL, RESULT>,
 			ISQLLogical_WhereOrJoin_Named_Base<MODEL, RESULT>,
 			IShortLogical_WhereOrJoin_SingleResult_Entity_Named_Initial<MODEL, RESULT>,
-			IShortLogical_WhereOrJoin_SingleResult_Entity_Named<MODEL, RESULT, RESULT>,
+			
+			// Removed since toplevel type has unknown join type yet 
+			//IShortLogical_WhereOrJoin_SingleResult_Entity_Named<MODEL, RESULT, RESULT>,
 			
 			IShortResult_Single<MODEL, RESULT>,
 			IMappingCollector<MODEL, RESULT> {
@@ -64,7 +68,7 @@ final class Short_Collector_SingleResult_Undecided<MODEL, RESULT>
 		
 		final CollectedQueryResult_Mapped_Single collectedQueryResult = new CollectedQueryResult_Mapped_Single(getResultType());
 		
-		return new Short_Collector_SingleResult_Decided_Named<MODEL, RESULT>(select, collectedQueryResult, getQueryCollector());
+		return new Short_Collector_SingleResult_Mapped_JoinUndecided_Named<MODEL, RESULT>(select, collectedQueryResult, getQueryCollector());
 	}
 
 
@@ -72,7 +76,7 @@ final class Short_Collector_SingleResult_Undecided<MODEL, RESULT>
 	final IMappingCollector<MODEL, RESULT> getMapToResultAlias() {
 		final CollectedQueryResult_Mapped_Single collectedQueryResult = new CollectedQueryResult_Mapped_Single(getResultType());
 
-		return new Short_Collector_SingleResult_Decided_Alias<MODEL, RESULT>(select, collectedQueryResult, getQueryCollector());
+		return new Short_Collector_SingleResult_Mapped_JoinUndecided_Alias<MODEL, RESULT>(select, collectedQueryResult, getQueryCollector());
 	}
 	
 
@@ -82,6 +86,7 @@ final class Short_Collector_SingleResult_Undecided<MODEL, RESULT>
 	// ******************* !!! IMPORTANT must switch to one that implements AndOr interface !!! *******************
 
 
+	/*
 	@Override
 	public <T> IShortLogical_WhereOrJoin_SingleResult_Entity_Named<MODEL, RESULT, T> joinRoot(Class<T> type) {
 		
@@ -89,6 +94,7 @@ final class Short_Collector_SingleResult_Undecided<MODEL, RESULT>
 		
 		return (IShortLogical_WhereOrJoin_SingleResult_Entity_Named)this;
 	}
+	*/
 
 	@Override
 	public ISharedFunctions_Transform_Initial_Named<MODEL, RESULT, ISQLLogical_AndOr_SingleResult_Named<MODEL, RESULT>, ISharedCondition_Comparable_Common_All_Compilable<MODEL, RESULT, Short, ISQLLogical_AndOr_SingleResult_Named<MODEL, RESULT>>, ISharedCondition_Comparable_Common_All_Compilable<MODEL, RESULT, Integer, ISQLLogical_AndOr_SingleResult_Named<MODEL, RESULT>>, ISharedCondition_Comparable_Common_All_Compilable<MODEL, RESULT, Long, ISQLLogical_AndOr_SingleResult_Named<MODEL, RESULT>>, ISharedCondition_Comparable_Common_All_Compilable<MODEL, RESULT, Double, ISQLLogical_AndOr_SingleResult_Named<MODEL, RESULT>>, ISharedCondition_Comparable_Common_All_Compilable<MODEL, RESULT, BigDecimal, ISQLLogical_AndOr_SingleResult_Named<MODEL, RESULT>>, ISharedCondition_Comparable_String_All_Compilable<MODEL, RESULT, ISQLLogical_AndOr_SingleResult_Named<MODEL, RESULT>>> where() {
@@ -102,7 +108,7 @@ final class Short_Collector_SingleResult_Undecided<MODEL, RESULT>
 		// TODO: rename *MapToResult* here
 		final CollectedQueryResult_Entity_Single collectedQueryResult = new CollectedQueryResult_Entity_Single(getSelectSource());
 
-		return new Short_Collector_SingleResult_Decided_Named<>(select, collectedQueryResult, getQueryCollector());
+		return new Short_Collector_SingleResult_Entity_JoinUndecided_Named<>(select, collectedQueryResult, getQueryCollector());
 	}
 
 
@@ -111,7 +117,7 @@ final class Short_Collector_SingleResult_Undecided<MODEL, RESULT>
 		// TODO: rename *MapToResult* here
 		final CollectedQueryResult_Entity_Single collectedQueryResult = new CollectedQueryResult_Entity_Single(getSelectSource());
 
-		return new Short_Collector_SingleResult_Decided_Alias<>(select, collectedQueryResult, getQueryCollector());
+		return new Short_Collector_SingleResult_Entity_JoinUndecided_Alias<>(select, collectedQueryResult, getQueryCollector());
 	}
 	
 	@Override
@@ -323,7 +329,7 @@ final class Short_Collector_SingleResult_Undecided<MODEL, RESULT>
 		final Supplier<IMappingCollector<MODEL, RESULT>>
 
 		s1 = () -> {
-			return new Short_Collector_SingleResult_Decided_Named<MODEL, RESULT>(
+			return new Short_Collector_SingleResult_Mapped_JoinUndecided_Named<>(
 					select,
 					new CollectedQueryResult_Mapped_Single(getResultType()),
 					getQueryCollector());
@@ -333,7 +339,7 @@ final class Short_Collector_SingleResult_Undecided<MODEL, RESULT>
 				
 		s2 = () -> {
 			return 
-					new Short_Collector_SingleResult_Decided_Alias<>(
+					new Short_Collector_SingleResult_Mapped_JoinUndecided_Alias<>(
 					select,
 					new CollectedQueryResult_Mapped_Single(getResultType()),
 					getQueryCollector());
@@ -354,5 +360,86 @@ final class Short_Collector_SingleResult_Undecided<MODEL, RESULT>
 		}
 		
 		return ret;
+	}
+
+	@Override
+	public <JOIN_FROM, JOIN_TO, R extends Comparable<R>> IShortLogical_WhereOrJoin_SingleResult_Entity_Named<MODEL, RESULT, JOIN_FROM> innerJoin(
+			Function<JOIN_FROM, R> from, Function<JOIN_TO, R> to) {
+
+		collectJoin(EJoinType.INNER, from, to, null, this::addNamedJoin);
+		
+		return makeJoinResult();
+	}
+
+	@Override
+	public <JOIN_FROM, JOIN_TO> IShortLogical_WhereOrJoin_SingleResult_Entity_Named<MODEL, RESULT, JOIN_FROM> innerJoin(
+			CollectionFunction<JOIN_FROM, JOIN_TO> collection) {
+
+		collectJoin(EJoinType.INNER, collection, null, this::addNamedJoin);
+		
+		return makeJoinResult();
+	}
+
+	@Override
+	public <JOIN_FROM, JOIN_TO, R extends Comparable<R>> IShortLogical_WhereOrJoin_SingleResult_Entity_Named<MODEL, RESULT, JOIN_FROM> innerJoin(
+			Function<JOIN_FROM, R> from, Function<JOIN_TO, R> to,
+			Consumer<IShortJoin_Sub_Named<MODEL, RESULT, JOIN_TO, Void>> consumer) {
+		
+		collectJoin(EJoinType.INNER, from, to, consumer, this::addNamedJoin);
+		
+		return makeJoinResult();
+	}
+
+	@Override
+	public <JOIN_FROM, JOIN_TO> IShortLogical_WhereOrJoin_SingleResult_Entity_Named<MODEL, RESULT, JOIN_FROM> innerJoin(
+			CollectionFunction<JOIN_FROM, JOIN_TO> collection,
+			Consumer<IShortJoin_Sub_Named<MODEL, RESULT, JOIN_TO, Void>> consumer) {
+
+		collectJoin(EJoinType.INNER, collection, consumer, this::addNamedJoin);
+
+		return makeJoinResult();
+	}
+
+	@Override
+	public <JOIN_FROM, JOIN_TO, R extends Comparable<R>> IShortLogical_WhereOrJoin_SingleResult_Entity_Named<MODEL, RESULT, JOIN_FROM> leftJoin(
+			Function<JOIN_FROM, R> from, Function<JOIN_TO, R> to) {
+		
+		collectJoin(EJoinType.LEFT, from, to, null, this::addNamedJoin);
+		
+		return makeJoinResult();
+	}
+
+	@Override
+	public <JOIN_FROM, JOIN_TO> IShortLogical_WhereOrJoin_SingleResult_Entity_Named<MODEL, RESULT, JOIN_FROM> leftJoin(
+			CollectionFunction<JOIN_FROM, JOIN_TO> collection) {
+
+		collectJoin(EJoinType.LEFT, collection, null, this::addNamedJoin);
+		
+		return makeJoinResult();
+	}
+
+	@Override
+	public <JOIN_FROM, JOIN_TO, R extends Comparable<R>> IShortLogical_WhereOrJoin_SingleResult_Entity_Named<MODEL, RESULT, JOIN_FROM> leftJoin(
+			Function<JOIN_FROM, R> from, Function<JOIN_TO, R> to,
+			Consumer<IShortJoin_Sub_Named<MODEL, RESULT, JOIN_TO, Void>> consumer) {
+
+		collectJoin(EJoinType.LEFT, from, to, consumer, this::addNamedJoin);
+		
+		return makeJoinResult();
+	}
+
+	@Override
+	public <JOIN_FROM, JOIN_TO> IShortLogical_WhereOrJoin_SingleResult_Entity_Named<MODEL, RESULT, JOIN_FROM> leftJoin(
+				CollectionFunction<JOIN_FROM, JOIN_TO> collection, 
+				Consumer<IShortJoin_Sub_Named<MODEL, RESULT, JOIN_TO, Void>> consumer) {
+		
+		collectJoin(EJoinType.LEFT, collection, consumer, this::addNamedJoin);
+
+		return makeJoinResult();
+	}
+	
+	private <JOIN_FROM, JOIN_TO> IShortLogical_WhereOrJoin_SingleResult_Entity_Named<MODEL, RESULT, JOIN_FROM>  makeJoinResult() {
+		
+		return new Short_Collector_SingleResult_Entity_JoinDecided_Named<>(select, new CollectedQueryResult_Entity_Single(getSelectSource()), getQueryCollector());
 	}
 }
