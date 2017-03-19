@@ -1321,21 +1321,20 @@ Hjelper ikke bare å flytte interface ned siden fortsatt kræsj på metode.
 
 Så må ha SQLCollector_WhereOrJoin_Initial_Base og SQLCollector_WhereOrJoin_Typed_Base
 
+Men : blir mye kopiering i arve-trærne nedover om skal splitte på typed og untyped join her?
+Eller vil vi alltid være over på typed-join tidlig? kun hvis er join, og kan være undecided frem til da.
+
+Så hvordan kan vi da skille uten å få kræsj i interfacene ?
+Etter where() så har vi ikke dette issuet lengre.
+
+Så vi har dim/result/access men disse sier ikke noe om hvor vi er, med unntak av result, som sier om vi er ferdig med mapped/entity.
+Så før vi vet mapped/entity så er det alltid initial-join ? eller egentlig ikke join i hele tatt? bortsett fra ved valg av Entity,
+så Any-typen på result må implementere initial-join.'
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+OK, så alle joins må implementeres i løv-klassene eller i den retning der det behøvs, mens alle aliaser
+kan behandles i baseklassen siden ikke klarer typesjekke disse uansett.
+For Named så bør en da bare lage bra aksessmetoder i baseklassen.
 
 
 ===========================================================================================
