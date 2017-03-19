@@ -60,7 +60,8 @@ abstract class Short_Collector_WhereOrJoin_Base<
 			
 			AFTER_GROUP_BY> 
 
-	implements IShortJoin_Named_Base<MODEL, RESULT, RESULT, MAPPED_NAMED_WHERE_OR_JOIN>
+	// Have to move this to leaf classes to avoid name clash
+	// implements IShortJoin_Named_Base<MODEL, RESULT, RESULT, MAPPED_NAMED_WHERE_OR_JOIN>
 
 	{
 				
@@ -75,57 +76,6 @@ abstract class Short_Collector_WhereOrJoin_Base<
 		return (MAPPED_NAMED_WHERE_OR_JOIN)this;
 	}
 	
-	@Override
-	public final <JOIN_TO, R extends Comparable<R>> MAPPED_NAMED_WHERE_OR_JOIN innerJoin(Function<RESULT, R> from, Function<JOIN_TO, R> to) {
-		return collectJoin(EJoinType.INNER, from, to, null, this::addNamedJoin);
-	}
-
-	@Override
-	public final <JOIN_TO> MAPPED_NAMED_WHERE_OR_JOIN innerJoin(CollectionFunction<RESULT, JOIN_TO> collection) {
-		return collectJoin(EJoinType.INNER, collection, null, this::addNamedJoin);
-	}
-
-	@Override
-	public final <JOIN_TO, R extends Comparable<R>> MAPPED_NAMED_WHERE_OR_JOIN innerJoin(
-			Function<RESULT, R> from, Function<JOIN_TO, R> to,
-			Consumer<IShortJoin_Sub_Named<MODEL, RESULT, JOIN_TO, Void>> consumer) {
-
-		return collectJoin(EJoinType.INNER, from, to, consumer, this::addNamedJoin);
-	}
-
-	@Override
-	public final <JOIN_TO> MAPPED_NAMED_WHERE_OR_JOIN innerJoin(
-			CollectionFunction<RESULT, JOIN_TO> collection,
-			Consumer<IShortJoin_Sub_Named<MODEL, RESULT, JOIN_TO, Void>> consumer) {
-		
-		return collectJoin(EJoinType.INNER, collection, consumer, this::addNamedJoin);
-	}
-
-	@Override
-	public final <JOIN_TO, R extends Comparable<R>> MAPPED_NAMED_WHERE_OR_JOIN leftJoin(Function<RESULT, R> from, Function<JOIN_TO, R> to) {
-		return collectJoin(EJoinType.LEFT, from, to, null, this::addNamedJoin);
-	}
-
-	@Override
-	public final <JOIN_TO> MAPPED_NAMED_WHERE_OR_JOIN leftJoin(CollectionFunction<RESULT, JOIN_TO> collection) {
-		return collectJoin(EJoinType.LEFT, collection, null, this::addNamedJoin);
-	}
-
-	@Override
-	public final <JOIN_TO, R extends Comparable<R>> MAPPED_NAMED_WHERE_OR_JOIN leftJoin(
-			Function<RESULT, R> from, Function<JOIN_TO, R> to,
-			Consumer<IShortJoin_Sub_Named<MODEL, RESULT, JOIN_TO, Void>> consumer) {
-		
-		return collectJoin(EJoinType.LEFT, from, to, consumer, this::addNamedJoin);
-	}
-	
-	@Override
-	public final <JOIN_TO> MAPPED_NAMED_WHERE_OR_JOIN leftJoin(
-			CollectionFunction<RESULT, JOIN_TO> collection,
-			Consumer<IShortJoin_Sub_Named<MODEL, RESULT, JOIN_TO, Void>> consumer) {
-		
-		return collectJoin(EJoinType.LEFT, collection, consumer, this::addNamedJoin);
-	}
 
 	private <TO> Collector_Joins buildSubJoins(Consumer<IShortJoin_Sub_Named<MODEL, RESULT, TO, Void>> consumer) {
 

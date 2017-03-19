@@ -1,6 +1,8 @@
 package com.neaterbits.query.sql.dsl.api;
 
 import java.math.BigDecimal;
+import java.util.function.Consumer;
+import java.util.function.Function;
 import java.util.function.Supplier;
 
 final class Short_Collector_Single_Any_Any<MODEL, RESULT>
@@ -82,6 +84,7 @@ final class Short_Collector_Single_Any_Any<MODEL, RESULT>
 	// ******************* !!! IMPORTANT must switch to one that implements AndOr interface !!! *******************
 
 
+	/*
 	@Override
 	public <T> IShortLogical_WhereOrJoin_SingleResult_Entity_Named<MODEL, RESULT, T> joinRoot(Class<T> type) {
 		
@@ -89,6 +92,7 @@ final class Short_Collector_Single_Any_Any<MODEL, RESULT>
 		
 		return (IShortLogical_WhereOrJoin_SingleResult_Entity_Named)this;
 	}
+	*/
 
 	@Override
 	public ISharedFunctions_Transform_Initial_Named<MODEL, RESULT, ISQLLogical_AndOr_SingleResult_Named<MODEL, RESULT>, ISharedCondition_Comparable_Common_All_Compilable<MODEL, RESULT, Short, ISQLLogical_AndOr_SingleResult_Named<MODEL, RESULT>>, ISharedCondition_Comparable_Common_All_Compilable<MODEL, RESULT, Integer, ISQLLogical_AndOr_SingleResult_Named<MODEL, RESULT>>, ISharedCondition_Comparable_Common_All_Compilable<MODEL, RESULT, Long, ISQLLogical_AndOr_SingleResult_Named<MODEL, RESULT>>, ISharedCondition_Comparable_Common_All_Compilable<MODEL, RESULT, Double, ISQLLogical_AndOr_SingleResult_Named<MODEL, RESULT>>, ISharedCondition_Comparable_Common_All_Compilable<MODEL, RESULT, BigDecimal, ISQLLogical_AndOr_SingleResult_Named<MODEL, RESULT>>, ISharedCondition_Comparable_String_All_Compilable<MODEL, RESULT, ISQLLogical_AndOr_SingleResult_Named<MODEL, RESULT>>> where() {
@@ -267,5 +271,68 @@ final class Short_Collector_Single_Any_Any<MODEL, RESULT>
 		}
 		
 		return ret;
+	}
+
+	@Override
+	public <JOIN_FROM, JOIN_TO, R extends Comparable<R>>
+		IShortLogical_WhereOrJoin_SingleResult_Entity_Named<MODEL, RESULT, JOIN_FROM> innerJoin(Function<JOIN_FROM, R> from, Function<JOIN_TO, R> to) {
+		
+		addInnerJoin(from, to);
+
+		//return new Short_Collector_Single_Entity_Named_TypedJoin;
+		return null;
+	}
+
+	@Override
+	public <JOIN_FROM, JOIN_TO> IShortLogical_WhereOrJoin_SingleResult_Entity_Named<MODEL, RESULT, JOIN_FROM> innerJoin(
+			CollectionFunction<JOIN_FROM, JOIN_TO> collection) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public <JOIN_FROM, JOIN_TO, R extends Comparable<R>> IShortLogical_WhereOrJoin_SingleResult_Entity_Named<MODEL, RESULT, JOIN_FROM> innerJoin(
+			Function<JOIN_FROM, R> from, Function<JOIN_TO, R> to,
+			Consumer<IShortJoin_Sub_Named<MODEL, RESULT, JOIN_TO, Void>> consumer) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public <JOIN_FROM, JOIN_TO> IShortLogical_WhereOrJoin_SingleResult_Entity_Named<MODEL, RESULT, JOIN_FROM> innerJoin(
+			CollectionFunction<JOIN_FROM, JOIN_TO> collection,
+			Consumer<IShortJoin_Sub_Named<MODEL, RESULT, JOIN_TO, Void>> consumer) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public <JOIN_FROM, JOIN_TO, R extends Comparable<R>> IShortLogical_WhereOrJoin_SingleResult_Entity_Named<MODEL, RESULT, JOIN_FROM> leftJoin(
+			Function<JOIN_FROM, R> from, Function<JOIN_TO, R> to) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public <JOIN_FROM, JOIN_TO> IShortLogical_WhereOrJoin_SingleResult_Entity_Named<MODEL, RESULT, JOIN_FROM> leftJoin(
+			CollectionFunction<JOIN_FROM, JOIN_TO> collection) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public <JOIN_FROM, JOIN_TO, R extends Comparable<R>> IShortLogical_WhereOrJoin_SingleResult_Entity_Named<MODEL, RESULT, JOIN_FROM> leftJoin(
+			Function<JOIN_FROM, R> from, Function<JOIN_TO, R> to,
+			Consumer<IShortJoin_Sub_Named<MODEL, RESULT, JOIN_TO, Void>> consumer) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public <JOIN_FROM, JOIN_TO> IShortLogical_WhereOrJoin_SingleResult_Entity_Named<MODEL, RESULT, JOIN_FROM> leftJoin(
+			CollectionFunction<JOIN_FROM, JOIN_TO> collection,
+			Consumer<IShortJoin_Sub_Named<MODEL, RESULT, JOIN_TO, Void>> consumer) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }
