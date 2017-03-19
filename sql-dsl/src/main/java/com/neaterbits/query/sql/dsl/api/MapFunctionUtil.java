@@ -81,25 +81,29 @@ class MapFunctionUtil {
 		};
 	}
 
+	@Deprecated
 	static <MODEL, RESULT> ISharedCollector_Functions_Callback<MODEL, RESULT, IShortResult_Mapped_Single_Named<MODEL, RESULT>>
 	
-		singleNamedCallback(Supplier<Short_Collector_SingleResult_Decided_Named<MODEL, RESULT>> supplier) {
+		singleNamedCallback(Supplier<Short_Collector_SingleResult_AccessDecided_JoinDecided_Named<MODEL, RESULT, ?>> supplier) {
 		
 		return namedCallback(supplier);
 	}
 	
+	@Deprecated
 	static <MODEL, RESULT> ISharedCollector_Functions_Callback_Alias<MODEL, RESULT, IShortResult_Mapped_Single_Alias<MODEL, RESULT>>
-		singleAliasCallback(Supplier<Short_Collector_SingleResult_Decided_Alias<MODEL, RESULT>> supplier) {
+		singleAliasCallback(Supplier<Short_Collector_SingleResult_AccessDecided_Alias<MODEL, RESULT>> supplier) {
 		
 		return aliasCallback(supplier);
 	}
 	
+	@Deprecated
 	static <MODEL, RESULT> ISharedCollector_Functions_Callback<MODEL, RESULT, IShortResult_Mapped_Multi_Named<MODEL, RESULT>>
 		multiNamedCallback(Supplier<Short_Collector_MultiResult_Decided_Named<MODEL, RESULT>> supplier) {
 	
 		return namedCallback(supplier);
 	}
 
+	@Deprecated
 	static <MODEL, RESULT> ISharedCollector_Functions_Callback_Alias<MODEL, RESULT, IShortResult_Mapped_Multi_Alias<MODEL, RESULT>>
 		multiAliasCallback(Supplier<Short_Collector_MultiResult_Decided_Alias<MODEL, RESULT>> supplier) {
 	
