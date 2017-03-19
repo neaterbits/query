@@ -1298,6 +1298,29 @@ Så hvordan blir denne da is å fall ?
 .joinRoot(foo) om skal bytte, men kun mulig bare en enkelt gang.
 
 
+UPDATE !! 
+
+Alltid bare join'e på første typen, så blir det likt mapped. Så da vet vi ikke from-typen, og må ha egen from
+på det som ikke er i interfacet, men det kan fungere likevel.
+Men blir flere join-interfacer av det.
+
+Men må altså til uansett for mapped, er da <FROM, TO> som egene typer, så har retur-typen FROM satt.
+
+Men da kan vi ikke sende inn ret-typen som en generic-type heller, siden vi vet må ha type på denne.
+Så join-rutinene må legges på helt ytterst, for at skal bli rett.
+
+Så for hver WhereOrJoin så er det en initial og en vanlig.
+
+
+Eller ???
+
+Vi må vite hva som er lhs ? Men vi vet dette for collection-joins allerede, dvs det vil være synlig i query.
+OK, så hvordan fikse Initial når får samme signatur som named-basen som er i SQLCollector_WhereOrJoin base?
+Er samme erasure, så hvordan fikse?
+Hjelper ikke bare å flytte interface ned siden fortsatt kræsj på metode.
+
+Så må ha SQLCollector_WhereOrJoin_Initial_Base og SQLCollector_WhereOrJoin_Typed_Base
+
 
 
 
