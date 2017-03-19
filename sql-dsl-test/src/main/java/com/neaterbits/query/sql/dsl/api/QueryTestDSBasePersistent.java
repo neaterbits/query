@@ -86,7 +86,7 @@ public abstract class QueryTestDSBasePersistent<CTX, ENTITIES, TRANSACTION>
 	}
 
 
-	private class Checker implements QueryTestDSCheck {
+	private class Checker extends BaseChecker implements QueryTestDSCheck {
 		private final List<TestInstance> instances;
 
 		public Checker(List<TestInstance> instances) {

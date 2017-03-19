@@ -775,4 +775,27 @@ public class ShortAPITest extends BaseJPATest {
 		assertThat(true).isEqualTo(false);
 	}
 
+	@Test
+	public void testNoNeedForJoinRootForEntities() {
+		
+		// Join root will be first join-clause
+		
+		assertThat(true).isEqualTo(false);
+	}
+
+	@Test
+	public void testAssureAllRootLevelJoinClausesSameTypeForMapped() {
+		
+		// Join root must be same type for all joins at same level, only initial can be freely selected
+		
+		assertThat(true).isEqualTo(false);
+	}
+	
+	@Test
+	public void testAssureAllRootLevelJoinClausesSameTypeForEntity() {
+		
+		// Join root must be same type for all joins at same level, only initial can be freely selected
+		
+		assertThat(true).isEqualTo(false);
+	}
 }

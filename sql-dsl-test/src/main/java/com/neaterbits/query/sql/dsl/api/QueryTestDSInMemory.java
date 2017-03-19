@@ -24,7 +24,7 @@ public final class QueryTestDSInMemory extends QueryTestDS {
 		return new Checker(b.getInstances());
 	}
 
-	private class Checker implements QueryTestDSCheck {
+	private class Checker extends BaseChecker implements QueryTestDSCheck {
 		private final List<Object> instances;
 
 		Checker(List<Object> instances) {

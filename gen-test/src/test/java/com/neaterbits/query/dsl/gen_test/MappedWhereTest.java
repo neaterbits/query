@@ -18,7 +18,9 @@ public class MappedWhereTest extends GEN_BaseTestCase {
     	final Farm farm3 = new Farm("Snowy Hills");
     	
     	final SingleBuilt<FarmInfo> query = select.one(FarmInfo.class)
+    			
     			.map(Farm::getName).to(FarmInfo::setName)
+    			
     			.where(Farm::getName).startsWith("Table")
     			.build(); 
 
@@ -26,13 +28,7 @@ public class MappedWhereTest extends GEN_BaseTestCase {
 				.add(farm1)
 				.add(farm2)
 				.add(farm3))
-    	.check(ds ->
-    		checkSelectOneOrNull(
-    				ds,
-    				new FarmInfo("Table Mountain"),
-    				query, 
-    				q -> q.execute())
-		);
+    	.checkOne(query, new FarmInfo("Table Mountain"));
     }
 
 

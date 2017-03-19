@@ -100,7 +100,7 @@ public class QueryTestDSCombined extends QueryTestDS {
 	}
 	*/
 
-	private class Checker implements QueryTestDSCheck {
+	private class Checker extends BaseChecker implements QueryTestDSCheck {
 		private final Consumer<QueryTestDSBuilder> dsBuilder;
 		private final List<QueryTestDSStore> stores;
 		
