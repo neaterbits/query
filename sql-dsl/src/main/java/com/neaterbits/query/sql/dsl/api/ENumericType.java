@@ -5,6 +5,7 @@ enum ENumericType {
 	SHORT,
 	INTEGER,
 	LONG,
+	DOUBLE,
 	BIGINT,
 	DECIMAL,
 	

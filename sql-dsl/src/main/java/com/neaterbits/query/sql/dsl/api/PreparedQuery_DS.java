@@ -21,6 +21,7 @@ abstract class PreparedQuery_DS<DATASOURCE extends QueryDataSource> {
 
 	abstract Object execute(ParamValueResolver collectedParams);
 
+	
 	final DATASOURCE getDataSource() {
 		return dataSource;
 	}

@@ -106,6 +106,7 @@ final class QueryDialect_ANSI_SQL<MANAGED, EMBEDDED, IDENTIFIABLE, ATTRIBUTE, CO
 		*/
 	}
 
+	/*
 	@Override
 	void addAggregateResult(QueryBuilder sb, EAggregateFunction function, FieldReference field) {
 		
@@ -122,6 +123,7 @@ final class QueryDialect_ANSI_SQL<MANAGED, EMBEDDED, IDENTIFIABLE, ATTRIBUTE, CO
 			throw new UnsupportedOperationException();
 		}
 	}
+	*/
 
 	private void appendJoinVar(QueryBuilder sb, SourceReference to) {
 		sb.append(getSourceTypeName(to.getJavaType())).append(' ').append(to.getVarName());

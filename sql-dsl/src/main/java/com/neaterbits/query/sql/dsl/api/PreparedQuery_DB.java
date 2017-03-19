@@ -108,11 +108,24 @@ abstract class PreparedQuery_DB<QUERY> extends PreparedQuery_DS<QueryDataSource_
 		case AGGREGATE:
 			final Class<?> aggregateResultType = q.getResultJavaType(query);
 			
-			if (!aggregateResultType.equals(input.getClass())) {
-				throw new IllegalStateException("Not of aggregated type " + aggregateResultType.getName() + ": " + input.getClass().getName());
+			final EAggregateFunction aggregateFunction = q.getAggregateResultFunction(query);
+			
+			// TODO There are some incompatibilities between JPA and native for avg,
+			// JPA returns Double while native returns BigDecimal
+			// TODO always return BigDecimal?
+			
+			
+			if (aggregateFunction == EAggregateFunction.AVG) {
+				ret = getDataSource().convertAvgAggregateResult(aggregateResultType, input);
 			}
+			else {
+				if (!aggregateResultType.equals(input.getClass())) {
+					throw new IllegalStateException("Not of aggregated type " + aggregateResultType.getName() + ": " + input.getClass().getName());
+				}
 
-			ret = input;
+				ret = input;
+			}
+			
 			break;
 
 		default:

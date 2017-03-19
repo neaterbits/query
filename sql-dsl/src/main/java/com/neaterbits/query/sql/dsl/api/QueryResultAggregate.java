@@ -36,6 +36,9 @@ abstract class QueryResultAggregate extends CollectedQueryResult {
 		else if (type.equals(Long.class)) {
 			ret = ENumericType.LONG;
 		}
+		else if (type.equals(Double.class)) {
+			ret = ENumericType.DOUBLE;
+		}
 		else if (type.equals(BigDecimal.class)) {
 			ret = ENumericType.DECIMAL;
 		}

@@ -25,7 +25,7 @@ abstract class QueryDialect_SQL extends QueryDialect_Base {
 	
 	abstract void addEntityResult(QueryBuilder sb, EFieldAccessType fieldReferenceType, SourceReference sourceReference);
 	
-	abstract void addAggregateResult(QueryBuilder sb, EAggregateFunction function, FieldReference field);
+	//abstract void addAggregateResult(QueryBuilder sb, EAggregateFunction function, FieldReference field);
 
 	//abstract void addFromSelectSources(FieldReferenceType fieldReferenceType, List<SourceReference> references);
 	
@@ -60,6 +60,35 @@ abstract class QueryDialect_SQL extends QueryDialect_Base {
 	final void select(QueryBuilder sb) {
 		sb.append("SELECT ");
 	}
+	
+	String getFunctionName(EAggregateFunction function) {
+		return function.name();
+	}
+	
+	void addAggregateResult(QueryBuilder sb, EAggregateFunction function, FieldReference field) {
+		
+		switch (function) {
+		case SUM:
+		case MIN:
+		case MAX:
+		case AVG:
+		case COUNT:
+			
+			sb.append(getFunctionName(function)).append(" (");
+
+			appendFieldReference(sb, field);
+
+			sb.append(")");
+			break;
+			
+			
+
+		default:
+			throw new UnsupportedOperationException("Unknown aggregate: " + function);
+		}
+	}
+
+	
 
 	private void appendFieldReferences(QueryBuilder sb,  List<FieldReference> fieldReferences) {
 		QueryStringUtil.commaSeparated(sb, fieldReferences, (s, r) -> {

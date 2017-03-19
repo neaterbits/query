@@ -25,22 +25,6 @@ final class QueryDialect_JPQL extends QueryDialect_SQL {
 	
 	
 	@Override
-	void addAggregateResult(QueryBuilder sb, EAggregateFunction function, FieldReference field) {
-		switch (function) {
-		case SUM:
-			sb.append("sum (");
-
-			appendFieldReference(sb, field);
-
-			sb.append(")");
-			break;
-
-		default:
-			throw new UnsupportedOperationException("Unknown aggregate: " + function);
-		}
-	}
-
-	@Override
 	void appendJoinStatement(QueryBuilder sb, EJoinType joinType) {
 
 		switch (joinType) {

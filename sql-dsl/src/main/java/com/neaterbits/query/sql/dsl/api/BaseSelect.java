@@ -141,22 +141,22 @@ abstract class BaseSelect<
 
 	@Override
 	public final <T> DOUBLE_RET avg(IFunctionShort<T> field) {
-		return avg(field, Short.class, Short.class);
+		return avg(field, Short.class, Double.class);
 	}
 
 	@Override
 	public final <T> DOUBLE_RET avg(IFunctionInteger<T> field) {
-		return avg(field, Integer.class, Integer.class);
+		return avg(field, Integer.class, Double.class);
 	}
 	
 	@Override
 	public final <T> DOUBLE_RET avg(IFunctionLong<T> field) {
-		return avg(field, Long.class, Long.class);
+		return avg(field, Long.class, Double.class);
 	}
 
 	@Override
 	public final <T> DOUBLE_RET avg(IFunctionBigDecimal<T> field) {
-		return avg(field, BigDecimal.class, BigDecimal.class);
+		return avg(field, BigDecimal.class, Double.class);
 	}
 
 	// ------------------------ Count ------------------------

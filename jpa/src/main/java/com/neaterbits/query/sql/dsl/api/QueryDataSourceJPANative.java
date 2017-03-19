@@ -1,5 +1,6 @@
 package com.neaterbits.query.sql.dsl.api;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -164,6 +165,33 @@ public final class QueryDataSourceJPANative extends QueryDataSourceJPA {
 	@Override
 	protected QueryDialect_SQL getDialect() {
 		return new QueryDialect_ANSI_SQL<>(getEntityModelUtil());
+	}
+
+	@Override
+	Object convertAvgAggregateResult(Class<?> aggregateResultType, Object input) {
+		// TODO hack to work around native returning BigDecimal
+		
+		if (!aggregateResultType.equals(Double.class)) {
+			throw new IllegalStateException("Expected Double");
+		}
+
+		final Object ret;
+
+		if (input instanceof Double) {
+			ret = input;
+		}
+		else if (input instanceof BigDecimal) {
+			
+			final BigDecimal decimal = (BigDecimal)input;
+			
+			ret = decimal.doubleValue();
+		}
+		else {
+			throw new IllegalStateException("Neither Double nor BigDecimal");
+		}
+		
+		
+		return ret;
 	}
 }
 
