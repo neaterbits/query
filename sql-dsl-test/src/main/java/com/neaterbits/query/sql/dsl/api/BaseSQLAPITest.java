@@ -78,7 +78,7 @@ public abstract class BaseSQLAPITest {
 		final List<T> result = execute.apply(ops);
 
 		for (int i = 0; i < result.size(); ++ i) {
-			System.out.println("result " + i + ": " + result.get(i));
+			System.out.println("-- result " + i + ": " + result.get(i));
 		}
 
         assertThat(query).isNotNull();

@@ -105,4 +105,9 @@ public class Farm {
 			return false;
 		return true;
 	}
+
+	@Override
+	public String toString() {
+		return "Farm [id=" + id + ", name=" + name + ", owner=" + owner + ", landPlots=" + landPlots + "]";
+	}
 }
