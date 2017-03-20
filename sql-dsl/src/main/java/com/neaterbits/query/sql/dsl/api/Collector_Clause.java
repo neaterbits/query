@@ -49,6 +49,11 @@ final class Collector_Clause {
 		this.conditions = new ArrayList<CollectedCondition>();
 	}
 	
+	
+	boolean isEmpty() {
+		return conditions.isEmpty();
+	}
+	
 	EConditionsClause getConditionsClause() {
 		return conditionsClause;
 	}

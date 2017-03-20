@@ -37,8 +37,8 @@ abstract class Collector_And_Named<
 		super(last);
 	}
 	
-	Collector_And_Named(Collector_Conditions_Base<MODEL, RESULT> qe) {
-		super(qe);
+	Collector_And_Named(Collector_Conditions_Base<MODEL, RESULT> qe, Void disambiguate) {
+		super(qe, disambiguate);
 	}
 
 	private final <T extends ISharedLogical_Or<MODEL, RESULT>> void addNestedOrImpl(Consumer<T> orBuilder) {

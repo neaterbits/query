@@ -89,10 +89,24 @@ abstract class SQL_Collector_WhereOrJoin_Named_Base<
 	// nested-instantiation
 			
 	@Override
-	final Collector_Or_Named<MODEL, RESULT, ISQLLogical_Or_NonProcessResult_Named<MODEL, RESULT>, ISQLLogical_And_NonProcessResult_Named<MODEL, RESULT>, ISQLLogical_Or_NonProcessResult_Named<MODEL, RESULT>, ISharedProcessResult_After_GroupBy_Named<MODEL, RESULT>> createNamedNestedOrCollector(
-		Collector_And_Named<MODEL, RESULT, AND_CLAUSES, ISQLLogical_And_NonProcessResult_Named<MODEL, RESULT>, ISQLLogical_Or_NonProcessResult_Named<MODEL, RESULT>, ISharedProcessResult_After_GroupBy_Named<MODEL, RESULT>> andClauses) {
+	final Collector_Or_Named<
+				MODEL,
+				RESULT, 
+				ISQLLogical_Or_NonProcessResult_Named<MODEL, RESULT>,
+				ISQLLogical_And_NonProcessResult_Named<MODEL, RESULT>,
+				ISQLLogical_Or_NonProcessResult_Named<MODEL, RESULT>,
+				ISharedProcessResult_After_GroupBy_Named<MODEL, RESULT>
+			> 
+		createNamedNestedOrCollector(
+				Collector_And_Named<
+					MODEL,
+					RESULT,
+					AND_CLAUSES,
+					ISQLLogical_And_NonProcessResult_Named<MODEL, RESULT>,
+					ISQLLogical_Or_NonProcessResult_Named<MODEL, RESULT>,
+					ISharedProcessResult_After_GroupBy_Named<MODEL, RESULT>> andClauses) {
 
-		return new SQL_Collector_Or_NonProcessResult_Named<>(andClauses);
+		return new SQL_Collector_Or_NonProcessResult_Named<>(andClauses, null);
 	}
 
 	@Override
@@ -101,7 +115,7 @@ abstract class SQL_Collector_WhereOrJoin_Named_Base<
 
 		createNamedNestedAndCollector(
 			Collector_Or_Named<MODEL, RESULT, OR_CLAUSES, ISQLLogical_And_NonProcessResult_Named<MODEL, RESULT>, ISQLLogical_Or_NonProcessResult_Named<MODEL, RESULT>, ISharedProcessResult_After_GroupBy_Named<MODEL, RESULT>> orClauses) {
-		return new SQL_Collector_And_NonProcessResult_Named<>(orClauses);
+		return new SQL_Collector_And_NonProcessResult_Named<>(orClauses, null);
 	}
 
 

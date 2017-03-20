@@ -129,8 +129,12 @@ final class Short_Collector_Single_Any_Any<MODEL, RESULT>
 			ISharedProcessResult_After_GroupBy_Named<MODEL, RESULT>
 		>
 		createNamedOrCollector() {
+	
+		@SuppressWarnings({"unchecked", "rawtypes"})
+		final Collector_Conditions_Initial<MODEL, RESULT, ISharedProcessResult_After_GroupBy_Named<MODEL, RESULT>> conditions
+			= (Collector_Conditions_Initial)this;
 		
-		return new SQL_Collector_Or_NonProcessResult_Named<>(this);
+		return new SQL_Collector_Or_NonProcessResult_Named<>(conditions);
 	}
 
 
@@ -144,7 +148,11 @@ final class Short_Collector_Single_Any_Any<MODEL, RESULT>
 		>
 		createNamedAndCollector() {
 
-		return new SQL_Collector_And_NonProcessResult_Named<>(this);
+		@SuppressWarnings({"unchecked", "rawtypes"})
+		final Collector_Conditions_Initial<MODEL, RESULT, ISharedProcessResult_After_GroupBy_Named<MODEL, RESULT>> conditions
+			= (Collector_Conditions_Initial)this;
+		
+		return new SQL_Collector_And_NonProcessResult_Named<>(conditions);
 	}
 
 
@@ -159,7 +167,11 @@ final class Short_Collector_Single_Any_Any<MODEL, RESULT>
 		>
 		createAliasOrCollector() {
 		
-		return new SQL_Collector_Or_NonProcessResult_Alias<>(this);
+		@SuppressWarnings({"unchecked", "rawtypes"})
+		final Collector_Conditions_Initial<MODEL, RESULT, ISharedProcessResult_After_GroupBy_Alias<MODEL, RESULT>> conditions
+			= (Collector_Conditions_Initial)this;
+		
+		return new SQL_Collector_Or_NonProcessResult_Alias<>(conditions);
 	}
 
 
@@ -174,7 +186,11 @@ final class Short_Collector_Single_Any_Any<MODEL, RESULT>
 		>
 		createAliasAndCollector() {
 		
-		return new SQL_Collector_And_NonProcessResult_Alias<>(this);
+		@SuppressWarnings({"unchecked", "rawtypes"})
+		final Collector_Conditions_Initial<MODEL, RESULT, ISharedProcessResult_After_GroupBy_Alias<MODEL, RESULT>> conditions =
+				(Collector_Conditions_Initial)this;
+		
+		return new SQL_Collector_And_NonProcessResult_Alias<>(conditions);
 	}
 
 

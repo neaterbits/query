@@ -23,7 +23,11 @@ abstract class SQL_Collector_WhereOrJoin_MultiEntity_Named<MODEL, RESULT>
 	}
 
 	@Override
-	Collector_And_Named<MODEL, RESULT, ISQLLogical_And_MultiEntity_Named<MODEL, RESULT>, ISQLLogical_And_NonProcessResult_Named<MODEL, RESULT>, ISQLLogical_Or_NonProcessResult_Named<MODEL, RESULT>, ISharedProcessResult_After_GroupBy_Named<MODEL, RESULT>> createNamedAndCollector() {
+	Collector_And_Named<MODEL, RESULT, ISQLLogical_And_MultiEntity_Named<MODEL, RESULT>, ISQLLogical_And_NonProcessResult_Named<MODEL, RESULT>, ISQLLogical_Or_NonProcessResult_Named<MODEL, RESULT>, ISharedProcessResult_After_GroupBy_Named<MODEL, RESULT>>
+	
+		createNamedAndCollector() {
+		
+		
 		return new SQL_Collector_And_MultiEntity_Named<>(this);
 	}
 }

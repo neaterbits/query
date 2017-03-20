@@ -11,7 +11,7 @@ final class Collector_Having_Or_Nested_Named<MODEL, RESULT> extends Collector_Or
 	implements ISharedProcessResult_Having_Or_Nested_Named<MODEL, RESULT> {
 	
 	Collector_Having_Or_Nested_Named(Collector_Conditions_Base<MODEL, RESULT> qe) {
-		super(qe);
+		super(qe, null);
 	}
 	
 	Collector_Having_Or_Nested_Named(Collector_Conditions_Initial<MODEL, RESULT, Void> last) {

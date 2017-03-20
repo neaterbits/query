@@ -9,7 +9,11 @@ abstract class Collector_And<MODEL, RESULT, AFTER_GROUP_BY>
 		super(last, ConditionsType.AND);
 	}
 	
-	Collector_And(Collector_Conditions_Base<MODEL, RESULT> qe) {
+	Collector_And(Collector_Conditions_Base<MODEL, RESULT> qe, Void disambiguate) {
 		super(qe.getQueryCollector(), new Collector_Clause(qe.getConditionsClause(), ConditionsType.AND));
+		
+		if (qe.clauseCollector != null && !qe.clauseCollector.isEmpty()) {
+			throw new IllegalStateException("Not copying non-empty clause-collector");
+		}
 	}
 }

@@ -50,7 +50,11 @@ abstract class Short_Collector_Multi_Entity_Any<MODEL, RESULT, AFTER_GROUP_BY>
 		>
 	createNamedOrCollector() {
 	
-	return new SQL_Collector_Or_MultiEntity_Named<>(this);
+		@SuppressWarnings({"unchecked", "rawtypes"})
+		final Collector_Conditions_Initial<MODEL, RESULT, ISharedProcessResult_After_GroupBy_Named<MODEL, RESULT>> conditions
+			= (Collector_Conditions_Initial)this;
+		
+		return new SQL_Collector_Or_MultiEntity_Named<>(conditions);
 	}
 	
 	@Override
@@ -62,7 +66,11 @@ abstract class Short_Collector_Multi_Entity_Any<MODEL, RESULT, AFTER_GROUP_BY>
 		ISQLLogical_Or_NonProcessResult_Named<MODEL, RESULT>,
 		ISharedProcessResult_After_GroupBy_Named<MODEL, RESULT>> createNamedAndCollector() {
 	
-		return new SQL_Collector_And_MultiEntity_Named<>(this);
+		@SuppressWarnings({"unchecked", "rawtypes"})
+		final Collector_Conditions_Initial<MODEL, RESULT, ISharedProcessResult_After_GroupBy_Named<MODEL, RESULT>> conditions
+			= (Collector_Conditions_Initial)this;
+		
+		return new SQL_Collector_And_MultiEntity_Named<>(conditions);
 	}
 	
 	@Override
@@ -76,8 +84,11 @@ abstract class Short_Collector_Multi_Entity_Any<MODEL, RESULT, AFTER_GROUP_BY>
 	
 	createAliasOrCollector() {
 	
-	
-		return new SQL_Collector_Or_MultiEntity_Alias<>(this);
+		@SuppressWarnings({"unchecked", "rawtypes"})
+		final Collector_Conditions_Initial<MODEL, RESULT, ISharedProcessResult_After_GroupBy_Alias<MODEL, RESULT>> conditions
+			= (Collector_Conditions_Initial)this;
+
+		return new SQL_Collector_Or_MultiEntity_Alias<>(conditions);
 	}
 	
 	@Override
@@ -90,7 +101,12 @@ abstract class Short_Collector_Multi_Entity_Any<MODEL, RESULT, AFTER_GROUP_BY>
 		ISharedProcessResult_After_GroupBy_Alias<MODEL, RESULT>>
 	
 	createAliasAndCollector() {
+		
+		@SuppressWarnings({"unchecked", "rawtypes"})
+		final Collector_Conditions_Initial<MODEL, RESULT, ISharedProcessResult_After_GroupBy_Alias<MODEL, RESULT>> conditions
+			= (Collector_Conditions_Initial)this;
+
 	
-		return new SQL_Collector_And_MultiEntity_Alias<>(this);
+		return new SQL_Collector_And_MultiEntity_Alias<>(conditions);
 	}
 }
