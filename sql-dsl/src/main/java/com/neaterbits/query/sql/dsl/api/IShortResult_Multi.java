@@ -9,6 +9,7 @@ public interface IShortResult_Multi<MODEL, RESULT>
 		
 		
 		IShortLogical_WhereOrJoin_MultiResult_Entity_Named_Initial<MODEL, RESULT>,
+		IShortLogical_WhereOrJoin_MultiResult_Entity_Alias<MODEL, RESULT>,
 		
 		// Cannot go to group-by from initial multi-result, because is no group-by for entities
 		// but we can go to order-by.

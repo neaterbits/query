@@ -47,10 +47,6 @@ public class EntityWhereTest extends GEN_BaseTestCase {
     	.checkOne(query, () -> new Farm(farm2.getId(), "Table Mountain"));
     }
     
-    private static <T> List<T> list(T ... elements) {
-    	return Arrays.asList(elements);
-    }
-
 
     @Test
     public void testEntityMultiNamed() {
@@ -67,7 +63,7 @@ public class EntityWhereTest extends GEN_BaseTestCase {
     	.checkListUnordered(
     			query,
     			
-    			() -> list( 
+    			() -> expected( 
 					new Farm(farm1.getId(), "Hill Valley"),
 					new Farm(farm3.getId(), "Snowy Hills")));
     }
@@ -75,9 +71,7 @@ public class EntityWhereTest extends GEN_BaseTestCase {
 
     @Test
     public void testEntityMultiAlias() {
-    	assertThat(true).isEqualTo(false);
     	
-    	/*
     	final Farm farm1 = new Farm("Hill Valley");
     	final Farm farm2 = new Farm("Table Mountain");
     	final Farm farm3 = new Farm("Snowy Hills");
@@ -91,8 +85,8 @@ public class EntityWhereTest extends GEN_BaseTestCase {
     	store(farm1, farm2, farm3)
     	.checkListUnordered(
     			query,
-    			new FarmInfo("Hill Valley"),
-    			new FarmInfo("Snowy Hills"));
-			*/
+    			() -> expected(
+	    			new Farm(farm1.getId(), "Hill Valley"),
+	    			new Farm(farm3.getId(), "Snowy Hills")));
     }
 }

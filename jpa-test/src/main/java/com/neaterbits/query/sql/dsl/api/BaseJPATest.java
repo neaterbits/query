@@ -1,5 +1,7 @@
 package com.neaterbits.query.sql.dsl.api;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.function.Consumer;
 
 import javax.persistence.EntityManagerFactory;
@@ -45,6 +47,11 @@ public abstract class BaseJPATest extends BaseSQLAPITest {
 	
 	protected static final IShortPrepared preparedJPQLDerby = IShortPrepared.get(jpqlJPADerby);
 
+	protected static <T> List<T> expected(@SuppressWarnings("unchecked") T ... elements) {
+    	return Arrays.asList(elements);
+    }
+
+	
 	protected static final QueryTestDSCheck store(Object ...objects) {
 		return store(s -> {
 			for (Object o : objects) {

@@ -838,4 +838,15 @@ public class ShortAPITest extends BaseJPATest {
 		
 		assertThat(true).isEqualTo(false);
 	}
+
+	@Test
+	public void testMakeSureThatAlwaysUsesAliaseWhenSeleting() {
+
+		// Similar to above, but we should probably
+		// just only allow aliases.
+		
+		
+		assertThat(true).isEqualTo(false);
+	}
+	
 }

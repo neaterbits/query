@@ -558,6 +558,10 @@ W - parametere
  - having?
    !! TODO having: må kunne sjekke mot aggregate-functions i and() og or(), så må kansje parameterisere functions som er retur-verdi her.!!
 
+- where() uten parametre, bør fikse slik at alltid bruker list(alias) for entity queryis mot alias. For mapped så
+vil vi kunne switche i mappinga.
+ Men er samme issue for map():
+
 - casting? ustandard.
 - limit/offset - ustandard, men støttes av fleste databaser.
 
@@ -1335,6 +1339,29 @@ så Any-typen på result må implementere initial-join.'
 OK, så alle joins må implementeres i løv-klassene eller i den retning der det behøvs, mens alle aliaser
 kan behandles i baseklassen siden ikke klarer typesjekke disse uansett.
 For Named så bør en da bare lage bra aksessmetoder i baseklassen.
+
+
+----
+
+
+where() logikk, får kræsj på named vs alias.
+
+Så da gjør vi slik at:
+ - hvis list(alias) => aliased
+ - list(Class) => named så blir da ALLTID named i dette tilfelle'
+
+Men hmm.. dette fungerer ikke for mapped.
+MEN! Hvis er mapped så kan vi endre her igjen. Men blir named HVIS en endrer rett til where()
+
+Hva med map() ?
+
+
+samme for one().
+
+
+MEN: burde vi heller hatt en egen where her? Kan vi legge til senere.
+
+Tror kan være greit å si at alltid må gjøre list(alias) uansett for aliaser.
 
 
 ===========================================================================================

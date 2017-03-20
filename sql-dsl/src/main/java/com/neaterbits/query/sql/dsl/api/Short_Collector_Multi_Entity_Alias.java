@@ -4,6 +4,8 @@ package com.neaterbits.query.sql.dsl.api;
 final class Short_Collector_Multi_Entity_Alias<MODEL, RESULT>
 	extends Short_Collector_Multi_Entity_Any<MODEL, RESULT, ISharedProcessResult_After_GroupBy_Alias<MODEL, RESULT>>
 
+	implements ISQLLogical_AndOr_MultiEntity_Alias<MODEL, RESULT>
+
 	{
 
 
