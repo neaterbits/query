@@ -7,7 +7,7 @@ final class Short_Collector_Single_Mapped_Named<MODEL, RESULT>
 
 		implements IShortResult_Mapped_Single_Named<MODEL, RESULT>,
 				
-				// when returned 'this' after where
+				// when returning 'this' after where
 				ISQLLogical_AndOr_SingleResult_Named<MODEL, RESULT> {
 
 	Short_Collector_Single_Mapped_Named(BaseQuery select, CollectedQueryResult_Mapped_Single result, Collector_Query<MODEL> queryCollector) {

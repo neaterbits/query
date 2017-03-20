@@ -47,7 +47,6 @@ public class EntityWhereTest extends GEN_BaseTestCase {
     @Test
     public void testEntityMultiNamed() {
     	
-    	assertThat(true).isEqualTo(false);
     	final Farm farm1 = new Farm("Hill Valley");
     	final Farm farm2 = new Farm("Table Mountain");
     	final Farm farm3 = new Farm("Snowy Hills");

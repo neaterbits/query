@@ -3,7 +3,7 @@ package com.neaterbits.query.sql.dsl.api;
 import java.math.BigDecimal;
 import java.util.function.Supplier;
 
-abstract class Short_Collector_Any_Mapped_Any<
+abstract class Short_Collector_Any_MappedOrEntity_Any<
 			MODEL, 
 			RESULT,
 			
@@ -83,7 +83,7 @@ abstract class Short_Collector_Any_Mapped_Any<
 	private final EQueryResultGathering gathering;
 		
 		
-	Short_Collector_Any_Mapped_Any(BaseQuery select, CollectedQueryResult_Mapped result, Collector_Query<MODEL> queryCollector) {
+	Short_Collector_Any_MappedOrEntity_Any(BaseQuery select, CollectedQueryResult_Mapped result, Collector_Query<MODEL> queryCollector) {
 		super(new QueryCollectorImpl<MODEL>(select, queryCollector, result), new Collector_Clause(EConditionsClause.WHERE, ConditionsType.SINGLE));
 
 		final MappingCollector mappingCollector = new MappingCollector();
@@ -94,7 +94,7 @@ abstract class Short_Collector_Any_Mapped_Any<
 		this.gathering = EQueryResultGathering.MAPPED;
 	}
 
-	Short_Collector_Any_Mapped_Any(BaseQuery select, CollectedQueryResult_Entity result, Collector_Query<MODEL> queryCollector) {
+	Short_Collector_Any_MappedOrEntity_Any(BaseQuery select, CollectedQueryResult_Entity result, Collector_Query<MODEL> queryCollector) {
 		super(new QueryCollectorImpl<MODEL>(select, queryCollector, result), new Collector_Clause(EConditionsClause.WHERE, ConditionsType.SINGLE));
 		
 		// do not set mapping collector

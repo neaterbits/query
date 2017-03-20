@@ -57,7 +57,7 @@ final class Short_Collector_Multi_Any_Any<MODEL, RESULT>
 	Collector_Conditions_GroupBy<MODEL, RESULT, ?> getAfterWhereNamed() {
 		final CollectedQueryResult_Entity_Multi result = new CollectedQueryResult_Entity_Multi(getSelectSource(), collectionType);
 		
-		return new Short_Collector_Multi_Mapped_Named<>(select, result, getQueryCollector());
+		return new Short_Collector_Multi_Entity_Named<>(select, result, getQueryCollector());
 	}
 
 
@@ -66,7 +66,7 @@ final class Short_Collector_Multi_Any_Any<MODEL, RESULT>
 	Collector_Conditions_GroupBy<MODEL, RESULT, ?> getAfterWhereAlias() {
 		final CollectedQueryResult_Entity_Multi result = new CollectedQueryResult_Entity_Multi(getSelectSource(), collectionType);
 		
-		return new Short_Collector_Multi_Mapped_Alias<>(select, result, getQueryCollector());
+		return new Short_Collector_Multi_Entity_Alias<>(select, result, getQueryCollector());
 	}
 
 

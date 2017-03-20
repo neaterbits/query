@@ -4,7 +4,7 @@ abstract class Short_Collector_Single_Mapped_Any<
 		MODEL, 
 		RESULT,
 		AFTER_GROUP_BY> 
-	extends Short_Collector_Any_Mapped_Any<
+	extends Short_Collector_Any_MappedOrEntity_Any<
 			MODEL,
 			RESULT,
 			

@@ -1,9 +1,11 @@
 package com.neaterbits.query.sql.dsl.api;
 
 abstract class Short_Collector_Multi_Mapped_Any<MODEL, RESULT, AFTER_GROUP_BY>
-	extends Short_Collector_Any_Mapped_Any<
+	extends Short_Collector_Any_MappedOrEntity_Any<
 		MODEL,
 		RESULT,
+		
+
 		ISQLLogical_WhereOrJoin_MultiMapped_Named<MODEL,RESULT>,
 		ISQLLogical_WhereOrJoin_MultiMapped_Alias<MODEL,RESULT, IShortJoin_Condition_MultiMapped_Alias<MODEL, RESULT>>,
 		
@@ -18,7 +20,6 @@ abstract class Short_Collector_Multi_Mapped_Any<MODEL, RESULT, AFTER_GROUP_BY>
 		
 		ISQLJoin_Condition_MultiMapped_Named<MODEL, RESULT, Object, Object>,
 		ISQLLogical_AndOr_MultiMapped_Named<MODEL, RESULT>,
-		
 		
 		ISQLLogical_And_MultiMapped_Alias<MODEL, RESULT>,
 		ISQLLogical_Or_MultiMapped_Alias<MODEL, RESULT>,

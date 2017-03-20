@@ -12,9 +12,6 @@ final class Short_Collector_Multi_Mapped_Named<MODEL, RESULT>
 		super(select, result, queryCollector);
 	}
 
-	Short_Collector_Multi_Mapped_Named(BaseQuery select, CollectedQueryResult_Entity_Multi result, Collector_Query<MODEL> queryCollector) {
-		super(select, result, queryCollector);
-	}
 
 	@Override
 	Collector_GroupBy<MODEL, RESULT> createGroupByCollector(Collector_Base<MODEL> last, int[] groupByColumns,
@@ -97,5 +94,4 @@ final class Short_Collector_Multi_Mapped_Named<MODEL, RESULT>
 		
 		return orNamed();
 	}
-	
 }
