@@ -16,7 +16,7 @@ public class EntityWhereAndTest extends GEN_BaseTestCase {
     	final Farm farm2 = new Farm("Table Mountain");
     	final Farm farm3 = new Farm("Snowy Hills");
     	
-    	final SingleBuilt<Farm> query = select.one(Farm.class)
+    	SingleBuilt<Farm> query = select.one(Farm.class)
     			
     			.where(Farm::getName).contains("Hill")
     			.  and(Farm::getName).contains("Valley")
@@ -24,6 +24,16 @@ public class EntityWhereAndTest extends GEN_BaseTestCase {
 
     	store(farm1, farm2, farm3)
     	.checkOne(query, () -> new Farm(farm1.getId(), "Hill Valley"));
+    
+    	// Check opposite order as well in case drops initial where
+    	query = select.one(Farm.class)
+    			
+    			.where(Farm::getName).contains("Valley")
+    			.  and(Farm::getName).contains("Hill")
+    			.build(); 
+
+    	store(farm1, farm2, farm3)
+    	.checkOne(query, () -> new Farm(farm1.getId(), "Hill Valley"));    	
     }
 
 
@@ -35,9 +45,18 @@ public class EntityWhereAndTest extends GEN_BaseTestCase {
 
     	final Farm f = select.alias(Farm.class);
     	
-    	final SingleBuilt<Farm> query = select.one(Farm.class)
+    	// Check opposite order as well in case drops initial where
+    	SingleBuilt<Farm> query = select.one(Farm.class)
     			.where(f::getName).contains("Hill")
     			.  and(f::getName).contains("Snowy")
+    			.build(); 
+
+    	store(farm1, farm2, farm3)
+    	.checkOne(query, () -> new Farm(farm3.getId(), "Snowy Hills"));
+
+    	query = select.one(Farm.class)
+    			.where(f::getName).contains("Snowy")
+    			.  and(f::getName).contains("Hill")
     			.build(); 
 
     	store(farm1, farm2, farm3)
@@ -51,7 +70,7 @@ public class EntityWhereAndTest extends GEN_BaseTestCase {
     	final Farm farm2 = new Farm("Table Mountain");
     	final Farm farm3 = new Farm("Snowy Hills");
     	
-    	final MultiBuilt<Farm> query = select.list(Farm.class)
+    	MultiBuilt<Farm> query = select.list(Farm.class)
     			.where(Farm::getName).contains("l")
     			.  and(Farm::getName).contains("Hi")
     			.build(); 
@@ -63,7 +82,22 @@ public class EntityWhereAndTest extends GEN_BaseTestCase {
     			() -> expected( 
 					new Farm(farm1.getId(), "Hill Valley"),
 					new Farm(farm3.getId(), "Snowy Hills")));
+    	
+    	
+    	// Check whether drops initial-clause as well
+    	query = select.list(Farm.class)
+    			.where(Farm::getName).contains("Mountain")
+    			.  and(Farm::getName).contains("l")
+    			.build(); 
+
+    	store(farm1, farm2, farm3)
+    	.checkListUnordered(
+    			query,
+    			
+    			() -> expected( 
+					new Farm(farm2.getId(), "Table Mountain")));
     }
+    
 
 
     @Test
@@ -74,7 +108,7 @@ public class EntityWhereAndTest extends GEN_BaseTestCase {
     	
     	final Farm f = select.alias(Farm.class);
     	
-    	final MultiBuilt<Farm> query = select.list(Farm.class)
+    	MultiBuilt<Farm> query = select.list(Farm.class)
     			.where(f::getName).contains("l")
     			.  and(f::getName).contains("Hi")
     			.build(); 
@@ -85,5 +119,17 @@ public class EntityWhereAndTest extends GEN_BaseTestCase {
     			() -> expected(
 	    			new Farm(farm1.getId(), "Hill Valley"),
 	    			new Farm(farm3.getId(), "Snowy Hills")));
+
+    	// Check whether drops initial-clause as well
+    	query = select.list(Farm.class)
+    			.where(f::getName).contains("Mountain")
+    			.  and(f::getName).contains("l")
+    			.build(); 
+
+    	store(farm1, farm2, farm3)
+    	.checkListUnordered(
+    			query,
+    			() -> expected(
+	    			new Farm(farm2.getId(), "Table Mountain")));    	
     }
 }
