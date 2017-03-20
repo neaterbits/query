@@ -1,6 +1,10 @@
 package com.neaterbits.query.dsl.gen_test;
 
 import static org.assertj.core.api.Assertions.assertThat;
+
+import java.util.Arrays;
+import java.util.List;
+
 import org.junit.Test;
 import com.neaterbits.query.jpatest.GEN_BaseTestCase;
 import com.neaterbits.query.sql.dsl.api.MultiBuilt;
@@ -23,7 +27,7 @@ public class EntityWhereTest extends GEN_BaseTestCase {
     			.build(); 
 
     	store(farm1, farm2, farm3)
-    	.checkOne(query, new Farm(farm2.getId(), "Table Mountain"));
+    	.checkOne(query, () -> new Farm(farm2.getId(), "Table Mountain"));
     }
 
 
@@ -40,7 +44,11 @@ public class EntityWhereTest extends GEN_BaseTestCase {
     			.build(); 
 
     	store(farm1, farm2, farm3)
-    	.checkOne(query, new Farm(farm2.getId(), "Table Mountain"));
+    	.checkOne(query, () -> new Farm(farm2.getId(), "Table Mountain"));
+    }
+    
+    private static <T> List<T> list(T ... elements) {
+    	return Arrays.asList(elements);
     }
 
 
@@ -58,8 +66,10 @@ public class EntityWhereTest extends GEN_BaseTestCase {
     	store(farm1, farm2, farm3)
     	.checkListUnordered(
     			query,
-    			new Farm(farm1.getId(), "Hill Valley"),
-    			new Farm(farm3.getId(), "Snowy Hills"));
+    			
+    			() -> list( 
+					new Farm(farm1.getId(), "Hill Valley"),
+					new Farm(farm3.getId(), "Snowy Hills")));
     }
 
 

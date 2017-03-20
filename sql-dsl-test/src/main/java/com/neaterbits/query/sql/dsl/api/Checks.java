@@ -41,6 +41,10 @@ final class Checks {
 
 
 	static final <T> void checkSelectListUnordered(DataConfig ds, MultiBuilt<T> query, Function<ISharedPreparedQueryOps<List<T>>, List<T>> execute, @SuppressWarnings("unchecked") T ... expected) {
+		checkSelectListUnordered(ds, query, execute, Arrays.asList(expected));
+	}
+
+	static final <T> void checkSelectListUnordered(DataConfig ds, MultiBuilt<T> query, Function<ISharedPreparedQueryOps<List<T>>, List<T>> execute, List<T> expected) {
 
 		final List<T> ret = checkSelectListCommon(ds, query, execute, expected);
 		
@@ -48,25 +52,29 @@ final class Checks {
 		
 		final CountMap<T> resultMap = new CountMap<>(ret);
 		
-		final CountMap<T> expectedMap = new CountMap<>(Arrays.asList(expected));
+		final CountMap<T> expectedMap = new CountMap<>(expected);
 		
 		assertThat(resultMap).isEqualTo(expectedMap);
 	}
 
 	static <T> void checkSelectListOrdered(DataConfig ds, MultiBuilt<T> query, Function<ISharedPreparedQueryOps<List<T>>, List<T>> execute, @SuppressWarnings("unchecked") T ... expected) {
+		checkSelectListOrdered(ds, query, execute, Arrays.asList(expected));
+	}
+
+	static <T> void checkSelectListOrdered(DataConfig ds, MultiBuilt<T> query, Function<ISharedPreparedQueryOps<List<T>>, List<T>> execute, List<T> expected) {
 
 		final List<T> ret = checkSelectListCommon(ds, query, execute, expected);
 		
 		// Check that contains the same number of items as the expected
 		// and in order
-		assertThat(ret.size()).isEqualTo(expected.length);
+		assertThat(ret.size()).isEqualTo(expected.size());
 		
-		for (int i = 0; i < expected.length; ++ i) {
-			assertThat(ret.get(i)).isEqualTo(expected[i]);
+		for (int i = 0; i < expected.size(); ++ i) {
+			assertThat(ret.get(i)).isEqualTo(expected.get(i));
 		}
 	}
 	
-	static <T> List<T> checkSelectListCommon(DataConfig ds, MultiBuilt<T> query, Function<ISharedPreparedQueryOps<List<T>>, List<T>> execute, @SuppressWarnings("unchecked") T ... expected) {
+	static <T> List<T> checkSelectListCommon(DataConfig ds, MultiBuilt<T> query, Function<ISharedPreparedQueryOps<List<T>>, List<T>> execute, List<T> expected) {
 		
 		
 		ISharedPreparedQueryOps<List<T>> ops = query.prepare(ds);
@@ -80,7 +88,7 @@ final class Checks {
         assertThat(query).isNotNull();
 
         assertThat(result).isNotNull();
-        assertThat(result.size()).isEqualTo(expected.length);
+        assertThat(result.size()).isEqualTo(expected.size());
 		
         return result;
 	}

@@ -30,6 +30,15 @@ public class Farm {
 	}
 
 	public Farm(Long id, String name) {
+		
+		if (id == null) {
+			throw new IllegalArgumentException("id == null");
+		}
+		
+		if (name == null) {
+			throw new IllegalArgumentException("name == null");
+		}
+		
 		this.id = id;
 		this.name = name;
 	}

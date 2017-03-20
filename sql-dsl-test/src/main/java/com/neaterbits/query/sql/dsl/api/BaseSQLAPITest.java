@@ -20,8 +20,4 @@ public abstract class BaseSQLAPITest {
 	protected final <T> void checkSelectListOrdered(DataConfig ds, MultiBuilt<T> query, Function<ISharedPreparedQueryOps<List<T>>, List<T>> execute, @SuppressWarnings("unchecked") T ... expected) {
 		Checks.checkSelectListOrdered(ds, query, execute, expected);
 	}
-	
-	private <T> List<T> checkSelectListCommon(DataConfig ds, MultiBuilt<T> query, Function<ISharedPreparedQueryOps<List<T>>, List<T>> execute, @SuppressWarnings("unchecked") T ... expected) {
-		return Checks.checkSelectListCommon(ds, query, execute, expected);
-	}
 }

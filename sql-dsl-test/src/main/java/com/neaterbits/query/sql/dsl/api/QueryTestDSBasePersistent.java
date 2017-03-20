@@ -62,7 +62,6 @@ public abstract class QueryTestDSBasePersistent<CTX, ENTITIES, TRANSACTION>
 					final Object pk = getPrimaryKey.apply(dataStore, instance.getInstance());
 					
 					instance.setPk(pk);
-					
 				}
 			}
 
