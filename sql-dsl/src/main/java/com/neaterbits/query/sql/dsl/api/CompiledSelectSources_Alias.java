@@ -48,11 +48,32 @@ final class CompiledSelectSources_Alias extends CompiledSelectSources<CompiledSe
 	@Override
 	int getSourceIdx(SharedSelectSource source) {
 		
-		final SharedSelectSource_Alias aliasSource = (SharedSelectSource_Alias)source;
+		if (source instanceof SharedSelectSource_Named) {
+			final SharedSelectSource_Named classSource = (SharedSelectSource_Named)source;
+
+			int found = -1;
+			
+			for (int i = 0; i < getSources().size(); ++ i) {
+				if (classSource.getType().equals(getSources().get(i).getType())) {
+					if (found != -1) {
+						throw new IllegalStateException("Multiple matching aliasesfound for result, list(alias) or one(alias) instead of list(<class>) or one(<class>) ");
+					}
+					
+					found = i;
+				}
+			}
+			
+			return found;
+
+		}
+		else {
 		
-		for (int i = 0; i < getSources().size(); ++ i) {
-			if (aliasSource.getAlias() == getSources().get(i).getAlias()) {
-				return i;
+			final SharedSelectSource_Alias aliasSource = (SharedSelectSource_Alias)source;
+			
+			for (int i = 0; i < getSources().size(); ++ i) {
+				if (aliasSource.getAlias() == getSources().get(i).getAlias()) {
+					return i;
+				}
 			}
 		}
 		

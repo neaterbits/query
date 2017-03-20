@@ -827,4 +827,15 @@ public class ShortAPITest extends BaseJPATest {
 		assertThat(true).isEqualTo(false);
 	}
 	
+	@Test
+	public void testAliasEntitySelectSourceWhenMultipleOfSameType() {
+
+		// Must be possible to to list(alias)... and one(alias)...
+		// for entity queries where there are multiple aliases for the same type
+		
+		// TODO: perhaps always require alias in this case? Must be checked at runtime
+		
+		
+		assertThat(true).isEqualTo(false);
+	}
 }
