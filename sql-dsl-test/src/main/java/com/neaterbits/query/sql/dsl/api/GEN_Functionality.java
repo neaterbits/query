@@ -50,7 +50,21 @@ public enum GEN_Functionality {
 	HAVING(false, true, GROUP_BY),
 
 	// hmm.. only follow join if the former are specified. Perhaps should just pass criteria into this tree?
-	ORDER_BY(false, true, ENTITY, MAPPED, JOIN, WHERE, AND, OR, GROUP_BY, HAVING)  
+	ORDER_BY(false, true, ENTITY, MAPPED, JOIN, WHERE, AND, OR, GROUP_BY, HAVING),  
+
+	// Smoke-test for explicit order by
+	ORDER_BY_ASC(false, true, 
+			// exclude complex cases to avoid too many permutations
+			// since we're testing base orderby anyway
+			stack -> stack.size() == 2,
+			null,
+			ORDER_BY),
+	ORDER_BY_DESC(false, true,
+			// exclude complex cases to avoid too many permutations
+			// since we're testing base orderby anyway
+			stack -> stack.size() == 2,
+			null,
+			ORDER_BY)
 
 
 	;
