@@ -18,4 +18,10 @@ abstract class Collector_Conditions_Initial<
 		
 		super(queryCollector, collector);
 	}
+
+	
+	@SuppressWarnings("unchecked")
+	final <AG, RET extends Collector_Conditions_Initial<MODEL, RESULT, AG>> RET getThisInitial() {
+		return (RET)this;
+	}
 }

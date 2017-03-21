@@ -50,11 +50,7 @@ abstract class Short_Collector_Single_Entity_Any<
 	
 		createNamedOrCollector() {
 
-		@SuppressWarnings({"unchecked", "rawtypes"})
-		final Collector_Conditions_Initial<MODEL, RESULT, ISharedProcessResult_After_GroupBy_Named<MODEL, RESULT>> conditions
-			= (Collector_Conditions_Initial)this;
-		
-		return new SQL_Collector_Or_NonProcessResult_Named<>(conditions);
+		return new SQL_Collector_Or_NonProcessResult_Named<>(getThisInitial());
 	}
 
 
@@ -67,11 +63,7 @@ abstract class Short_Collector_Single_Entity_Any<
 			ISQLLogical_Or_NonProcessResult_Named<MODEL, RESULT>,
 			ISharedProcessResult_After_GroupBy_Named<MODEL, RESULT>> createNamedAndCollector() {
 
-		@SuppressWarnings({"unchecked", "rawtypes"})
-		final Collector_Conditions_Initial<MODEL, RESULT, ISharedProcessResult_After_GroupBy_Named<MODEL, RESULT>> conditions
-			= (Collector_Conditions_Initial)this;
-
-		return new SQL_Collector_And_NonProcessResult_Named<>(conditions);
+		return new SQL_Collector_And_NonProcessResult_Named<>(getThisInitial());
 	}
 
 	@Override
@@ -83,11 +75,7 @@ abstract class Short_Collector_Single_Entity_Any<
 			ISQLLogical_Or_NonProcessResult_Alias<MODEL, RESULT>,
 			ISharedProcessResult_After_GroupBy_Alias<MODEL, RESULT>> createAliasOrCollector() {
 		
-		@SuppressWarnings({"unchecked", "rawtypes"})
-		final Collector_Conditions_Initial<MODEL, RESULT, ISharedProcessResult_After_GroupBy_Alias<MODEL, RESULT>> conditions
-			= (Collector_Conditions_Initial)this;
-		
-		return new SQL_Collector_Or_NonProcessResult_Alias<>(conditions);
+		return new SQL_Collector_Or_NonProcessResult_Alias<>(getThisInitial());
 	}
 
 
@@ -102,10 +90,6 @@ abstract class Short_Collector_Single_Entity_Any<
 		
 		createAliasAndCollector() {
 		
-		@SuppressWarnings({"unchecked", "rawtypes"})
-		final Collector_Conditions_Initial<MODEL, RESULT, ISharedProcessResult_After_GroupBy_Alias<MODEL, RESULT>> 
-			conditions = (Collector_Conditions_Initial)this;
-		
-		return new SQL_Collector_And_NonProcessResult_Alias<>(conditions);
+		return new SQL_Collector_And_NonProcessResult_Alias<>(getThisInitial());
 	}
 }
