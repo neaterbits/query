@@ -118,7 +118,7 @@ abstract class SQL_Collector_WhereOrJoin_Alias_Base<
 					
 				ISharedProcessResult_After_GroupBy_Alias<MODEL, RESULT>> andClauses) {
 		
-		return new SQL_Collector_Or_NonProcessResult_Alias<>(andClauses, null);
+		return new SQL_Collector_Or_NonProcessResult_Alias<>(andClauses);
 	}
 
 	@Override
@@ -139,7 +139,7 @@ abstract class SQL_Collector_WhereOrJoin_Alias_Base<
 				ISQLLogical_Or_NonProcessResult_Alias<MODEL, RESULT>,
 				ISharedProcessResult_After_GroupBy_Alias<MODEL, RESULT>> orClauses) {
 
-		return new SQL_Collector_And_NonProcessResult_Alias<>(orClauses, null);
+		return new SQL_Collector_And_NonProcessResult_Alias<>(orClauses);
 	}
 
 	@Override

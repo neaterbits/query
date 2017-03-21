@@ -11,7 +11,7 @@ final class SQL_Collector_Or_NonProcessResult_Alias<MODEL, RESULT>
 		super(last);
 	}
 
-	SQL_Collector_Or_NonProcessResult_Alias(Collector_Conditions_Base<MODEL, RESULT> qe, Void disambiguate) {
-		super(qe, disambiguate);
+	SQL_Collector_Or_NonProcessResult_Alias(Collector_Conditions_Intermediate<MODEL, RESULT, ISharedProcessResult_After_GroupBy_Alias<MODEL, RESULT>> qe) {
+		super(qe);
 	}
 }

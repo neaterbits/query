@@ -10,8 +10,8 @@ final class Collector_Having_Or_Nested_Alias<MODEL, RESULT> extends Collector_Or
 
 	implements ISharedProcessResult_Having_Or_Nested_Alias<MODEL, RESULT> {
 
-	Collector_Having_Or_Nested_Alias(Collector_Conditions_Base<MODEL, RESULT> qe) {
-		super(qe, null);
+	Collector_Having_Or_Nested_Alias(Collector_Conditions_Intermediate<MODEL, RESULT, Void> qe) {
+		super(qe);
 	}
 
 	@Deprecated

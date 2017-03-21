@@ -19,8 +19,8 @@ abstract class SQL_Collector_And_Alias<
 		super(last);
 	}
 	
-	SQL_Collector_And_Alias(Collector_Conditions_Base<MODEL, RESULT> qe, Void disambiguate) {
-		super(qe, disambiguate);
+	SQL_Collector_And_Alias(Collector_Conditions_Intermediate<MODEL, RESULT, ISharedProcessResult_After_GroupBy_Alias<MODEL, RESULT>> qe) {
+		super(qe, null);
 	}
 
 
@@ -44,6 +44,6 @@ abstract class SQL_Collector_And_Alias<
 					ISharedProcessResult_After_GroupBy_Alias<MODEL, RESULT>> andClauses) {
 		
 		
-		return new SQL_Collector_Or_NonProcessResult_Alias<MODEL, RESULT>(andClauses, null);
+		return new SQL_Collector_Or_NonProcessResult_Alias<MODEL, RESULT>(andClauses);
 	}
 }

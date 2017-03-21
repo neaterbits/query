@@ -336,7 +336,7 @@ abstract class Short_Collector_WhereOrJoin_Base<
 						NAMED_NESTED_AND_CLAUSES,
 						NAMED_NESTED_OR_CLAUSES, ISharedProcessResult_After_GroupBy_Named<MODEL, RESULT>> orClauses) {
 		
-		return (Collector_And_Named)new SQL_Collector_And_NonProcessResult_Named<>(orClauses, null);
+		return (Collector_And_Named)new SQL_Collector_And_NonProcessResult_Named<>(orClauses);
 	}
 
 	@Override
@@ -359,7 +359,7 @@ abstract class Short_Collector_WhereOrJoin_Base<
 							ALIAS_NESTED_OR_CLAUSES,
 							ISharedProcessResult_After_GroupBy_Alias<MODEL, RESULT>> orClauses) {
 		
-		return (Collector_And_Alias)new SQL_Collector_And_NonProcessResult_Alias<>(orClauses, null);
+		return (Collector_And_Alias)new SQL_Collector_And_NonProcessResult_Alias<>(orClauses);
 	}
 
 	@Override
@@ -381,6 +381,6 @@ abstract class Short_Collector_WhereOrJoin_Base<
 						ALIAS_NESTED_OR_CLAUSES,
 						ISharedProcessResult_After_GroupBy_Alias<MODEL, RESULT>> andClauses) {
 		
-		return (Collector_Or_Alias)new SQL_Collector_Or_NonProcessResult_Alias<>(andClauses, null);
+		return (Collector_Or_Alias)new SQL_Collector_Or_NonProcessResult_Alias<>(andClauses);
 	}
 }

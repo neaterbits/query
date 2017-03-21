@@ -10,7 +10,7 @@ final class SQL_Collector_Or_NonProcessResult_Named<MODEL, RESULT>
 		super(last);
 	}
 
-	SQL_Collector_Or_NonProcessResult_Named(Collector_Conditions_Base<MODEL, RESULT> qe, Void disambiguate) {
-		super(qe, disambiguate);
+	SQL_Collector_Or_NonProcessResult_Named(Collector_Conditions_Intermediate<MODEL, RESULT, ISharedProcessResult_After_GroupBy_Named<MODEL, RESULT>> qe, Void disambiguate) {
+		super(qe);
 	}
 }

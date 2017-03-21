@@ -12,8 +12,8 @@ final class Collector_Having_Or_Named<MODEL, RESULT> extends Collector_Or_Named<
 	implements ISharedProcessResult_Having_Or_Named<MODEL, RESULT> {
 	
 	
-	Collector_Having_Or_Named(Collector_Conditions_Base<MODEL, RESULT> qe, Void disambiguate) {
-		super(qe, disambiguate);
+	Collector_Having_Or_Named(Collector_Conditions_Intermediate<MODEL, RESULT, Void> qe, Void disambiguate) {
+		super(qe);
 	}
 	
 	Collector_Having_Or_Named(Collector_Conditions_Initial<MODEL, RESULT, Void> last) {

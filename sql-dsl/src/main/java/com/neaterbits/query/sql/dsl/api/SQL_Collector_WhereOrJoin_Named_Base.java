@@ -115,7 +115,7 @@ abstract class SQL_Collector_WhereOrJoin_Named_Base<
 
 		createNamedNestedAndCollector(
 			Collector_Or_Named<MODEL, RESULT, OR_CLAUSES, ISQLLogical_And_NonProcessResult_Named<MODEL, RESULT>, ISQLLogical_Or_NonProcessResult_Named<MODEL, RESULT>, ISharedProcessResult_After_GroupBy_Named<MODEL, RESULT>> orClauses) {
-		return new SQL_Collector_And_NonProcessResult_Named<>(orClauses, null);
+		return new SQL_Collector_And_NonProcessResult_Named<>(orClauses);
 	}
 
 

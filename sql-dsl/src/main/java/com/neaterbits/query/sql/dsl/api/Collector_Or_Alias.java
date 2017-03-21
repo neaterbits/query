@@ -21,8 +21,8 @@ abstract class Collector_Or_Alias<
 	abstract Collector_And_Alias<MODEL, RESULT, NESTED_AND_CLAUSES, NESTED_AND_CLAUSES, NESTED_OR_CLAUSES, AFTER_GROUP_BY>
 		createNestedAndCollector(Collector_Or_Alias<MODEL, RESULT, OR_CLAUSES, NESTED_AND_CLAUSES, NESTED_OR_CLAUSES, AFTER_GROUP_BY> orClauses);
 		
-	Collector_Or_Alias(Collector_Conditions_Base<MODEL, RESULT> qe, Void disambiguate) {
-		super(qe, disambiguate);
+	Collector_Or_Alias(Collector_Conditions_Intermediate<MODEL, RESULT, AFTER_GROUP_BY> qe) {
+		super(qe);
 	}
 
 	Collector_Or_Alias(Collector_Conditions_Initial<MODEL, RESULT, AFTER_GROUP_BY> last) {

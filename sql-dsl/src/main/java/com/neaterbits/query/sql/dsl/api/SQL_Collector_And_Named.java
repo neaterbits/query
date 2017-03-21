@@ -17,8 +17,8 @@ abstract class SQL_Collector_And_Named<
 		super(last);
 	}
 	
-	SQL_Collector_And_Named(Collector_Conditions_Base<MODEL, RESULT> qe, Void disambiguate) {
-		super(qe, disambiguate);
+	SQL_Collector_And_Named(Collector_Conditions_Intermediate<MODEL, RESULT, ISharedProcessResult_After_GroupBy_Named<MODEL, RESULT>> qe) {
+		super(qe);
 	}
 
 	@Override

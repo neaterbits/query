@@ -14,8 +14,8 @@ abstract class SQL_Collector_Or_Named<
 					ISharedProcessResult_After_GroupBy_Named<MODEL, RESULT>> {
 
 
-	SQL_Collector_Or_Named(Collector_Conditions_Base<MODEL, RESULT> qe, Void disambiguate) {
-		super(qe, disambiguate);
+	SQL_Collector_Or_Named(Collector_Conditions_Intermediate<MODEL, RESULT, ISharedProcessResult_After_GroupBy_Named<MODEL, RESULT>> qe) {
+		super(qe);
 	}
 
 	SQL_Collector_Or_Named(Collector_Conditions_Initial<MODEL, RESULT, ISharedProcessResult_After_GroupBy_Named<MODEL, RESULT>> last) {
@@ -39,6 +39,6 @@ abstract class SQL_Collector_Or_Named<
 					ISQLLogical_Or_NonProcessResult_Named<MODEL, RESULT>, 
 					ISharedProcessResult_After_GroupBy_Named<MODEL, RESULT>> andClauses) {
 
-		return new SQL_Collector_And_NonProcessResult_Named<MODEL, RESULT>(andClauses, null);
+		return new SQL_Collector_And_NonProcessResult_Named<MODEL, RESULT>(andClauses);
 	}
 }
