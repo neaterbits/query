@@ -1,27 +1,41 @@
 package com.neaterbits.query.dsl.gen_test;
 
-import static org.assertj.core.api.Assertions.assertThat;
 import org.junit.Test;
 import com.neaterbits.query.jpatest.GEN_BaseTestCase;
-import com.neaterbits.query.sql.dsl.api.IAlias;
 import com.neaterbits.query.sql.dsl.api.MultiBuilt;
 import com.neaterbits.query.test.model.Farm;
 
 
 public class EntityWhereOrderByTest extends GEN_BaseTestCase {
-
+	
 
     @Test
     public void testEntitySingleNamed() {
     	// Should test that is not compilable
-        assertThat(true).isEqualTo(false);
+		verifyIsCompilable(
+				"one(Farm.class)" + 
+    			".where(Farm::getName).startsWith(\"Farm\")");
+		
+		verifyIsNotCompilable(
+				"one(Farm.class)" + 
+    			".where(Farm::getName).startsWith(\"Farm\")" +
+				".orderBy(Farm::getName)");		
     }
 
 
     @Test
     public void testEntitySingleAlias() {
-    	// Should test that is not compilable
-        assertThat(true).isEqualTo(false);
+		verifyIsCompilable(
+				"f", Farm.class,
+				
+				"one(Farm.class)" + 
+    			".where(f::getName).startsWith(\"Farm\")");
+		
+		verifyIsNotCompilable(
+				"f", Farm.class,
+				"one(Farm.class)" + 
+    			".where(f::getName).startsWith(\"Farm\")" +
+				".orderBy(Farm::getName)");		
     }
 
 
