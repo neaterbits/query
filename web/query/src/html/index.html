@@ -7,23 +7,24 @@
 <base href="..">
 <link href="css/collection_query.css" type="text/css" rel="stylesheet">
 </head>
-<body id="view" style="height: 100%; position: relative;">
+<body id="view" style="height: 100%; position: relative;" onload="showTab('tab_intro')">
 <div id="box" style="height: 100%; position: relative;">
 
 	<div id="outer" style="height: 100%; position: relative;">
 
-		<div id="header" style="height: 10%;"> <!-- TODO: may overwrite header font -->
-			<div class="outer_title" >Query</div>
+		<div id="header" style="height: 8%;"> <!-- TODO: may overwrite header font -->
+			<div class="outer_title" >Query - easy queries in Java</div>
 		</div>
 
-
-
-		<div id="tabpanel" style="height: 90%; position: relative;">
+		<div id="tabpanel" style="height: 92%; position: relative;">
 		
 
 			<!-- ********************** The tabs of the page ********************** -->
 
-			<div id="tabs" style="height: 5%;">
+			<div id="tabs" style="height: 3%; position: relative;">
+
+				<div style="position: absolute;left: 0;bottom:0;">			
+			
 				<span class="tab" onclick="showTab('tab_intro')">Introduction</span>
 				<span class="tab" onclick="showTab('tab_feedback')">Feedback</span>
 				<span class="tab" onclick="showTab('tab_license')">License</span>
@@ -31,23 +32,24 @@
 				<span class="tab" onclick="showTab('tab_demo')">Demo</span>
 				<span class="tab" onclick="showTab('tab_faq')">FAQ</span>
 				<span class="tab" onclick="showTab('tab_download')">Download/Maven</span>
+				</div>
 			</div>
 			
-			
-			<div id="tabholder" style="height: 95%; position: relative;">
+
+			<div id="tabholder" style="height: 97%; position: relative;">
 
 				<!----------------- Main tab   ------------------->
-				<div id="tab_intro" style="width: 100%; height: 100%; overflow: hidden" hidden="true">
+				<div id="tab_intro" class="tab_page" hidden="true">
  					<object type="text/html" data="html/main.html" style="width: 100%; height: 100%;"></object> 
 				</div>
 				
 				<!----------------- FAQ   ------------------->
-				<div id="tab_faq" style="position: relative; width: 100%; height: 100%; overflow: hidden" hidden="true">
+				<div id="tab_faq" class="tab_page" hidden="true">
  					<object type="text/html" data="html/faq.html" style="width: 100%; height: 100%;"></object> 
 				</div>
 	
 				<!----------------- License   ------------------->
-				<div id="tab_license" style="width: 100%; height: 100%; overflow: hidden" >
+				<div id="tab_license" class="tab_page" hidden="true">
  					<object type="text/html" data="html/license.html" style="width: 100%; height: 100%;"></object> 
 				</div>
 			</div>
@@ -60,13 +62,26 @@
 
 <script type="text/javascript">
 
-	var tabs = ['tab_intro', 'tab_faq', 'tab_example', 'tab_demo', 'tab_download' ];
+	
 
-	function showTab(tab) {
-		//alert('show tab: ' + tab);
-		
+
+	var tabs = ['tab_intro', 'tab_faq', 'tab_license' ]; // 'tab_example', 'tab_demo', 'tab_download' ];
+
+	function showTab(selectedTab) {
 		// switch tab
+		for (var i = 0; i < tabs.length; ++ i) {
 		
+			var tab = tabs[i];
+			var obj = document.getElementById(tab);
+			
+			if (obj === null) {
+				alert("no tab: " + tab);
+			}
+
+			var visible = selectedTab === tab;
+
+			obj.hidden = !visible
+		} 	
 	}
 
 </script>
