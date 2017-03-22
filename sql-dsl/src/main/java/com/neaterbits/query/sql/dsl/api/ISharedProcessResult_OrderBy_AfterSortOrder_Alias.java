@@ -4,8 +4,8 @@ public interface ISharedProcessResult_OrderBy_AfterSortOrder_Alias<MODEL, RESULT
 	extends ISharedProcessResult_After_OrderBy_Or_List_Alias<MODEL, RESULT> {
 		
 		
-	ISharedProcessResult_After_OrderBy_Or_List_Named<MODEL, RESULT> asc();
+	ISharedProcessResult_After_OrderBy_Or_List_Alias<MODEL, RESULT> asc();
 	
-	ISharedProcessResult_After_OrderBy_Or_List_Named<MODEL, RESULT> desc();
+	ISharedProcessResult_After_OrderBy_Or_List_Alias<MODEL, RESULT> desc();
 
 }

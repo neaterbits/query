@@ -2,14 +2,9 @@ package com.neaterbits.query.sql.dsl.api;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.Function;
-import java.util.function.Supplier;
 
-final class Collector_OrderBy<MODEL, RESULT>
-		extends Collector_Fields<MODEL>
-
-		implements ISharedProcessResult_OrderBy_AfterSortOrder_Named<MODEL, RESULT>,
-				   ISharedProcessResult_OrderBy_AfterSortOrder_Alias<MODEL, RESULT>{
+abstract class Collector_OrderBy<MODEL, RESULT> extends Collector_Fields<MODEL> 
+	{
 
 	static final ESortOrder DEFAULT_SORT_ORDER = ESortOrder.ASCENDING;
 		
@@ -43,54 +38,29 @@ final class Collector_OrderBy<MODEL, RESULT>
 		this.sortOrderToAdd = DEFAULT_SORT_ORDER;
 	}
 
-	private void addLastSortOrder() {
+	final void addLastSortOrder() {
 		sortOrders.add(sortOrderToAdd);
 		sortOrderToAdd = DEFAULT_SORT_ORDER;
 	}
 	
-	@Override
-	public <T, R> ISharedProcessResult_OrderBy_AfterSortOrder_Named<MODEL, RESULT> and(Function<T, R> function) {
+	final void setSortOrderToAdd(ESortOrder sortOrder) {
 
-		addLastSortOrder();
-		
-		super.add(new FunctionGetter(function));
-		
-		return this;
+		if (sortOrder == null) {
+			throw new IllegalArgumentException("sortOrder == null");
+		}
+
+		this.sortOrderToAdd = sortOrder;
 	}
 	
-	
-	@Override
-	public <R> ISharedProcessResult_OrderBy_AfterSortOrder_Named<MODEL, RESULT> and(Supplier<R> function) {
-		
-		addLastSortOrder();
-		
-		super.add(new SupplierGetter(function));
-		
-		return this;
-	}
 
-	@Override
-	public MODEL build() {
+	// @Override interface in subclass
+	public final MODEL build() {
 
 		addLastSortOrder();
 		
 		return collectorConditions.build();
 	}
-
-	@Override
-	public ISharedProcessResult_After_OrderBy_Or_List_Named<MODEL, RESULT> asc() {
-		this.sortOrderToAdd = ESortOrder.ASCENDING;
-		
-		return this;
-	}
-
-	@Override
-	public ISharedProcessResult_After_OrderBy_Or_List_Named<MODEL, RESULT> desc() {
-		this.sortOrderToAdd = ESortOrder.DESCENDING;
-		
-		return this;
-	}
-
+	
 	ESortOrder [] getSortOrders() {
 		return sortOrders.toArray(new ESortOrder[sortOrders.size()]);
 	}

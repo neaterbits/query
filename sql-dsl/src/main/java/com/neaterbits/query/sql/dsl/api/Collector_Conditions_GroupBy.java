@@ -137,7 +137,7 @@ abstract class Collector_Conditions_GroupBy<MODEL, RESULT, AFTER_GROUP_BY>
 
 	public final <T, R> ISharedProcessResult_OrderBy_AfterSortOrder_Named<MODEL, RESULT> orderBy(Function<T, R> field) {
 
-		final Collector_OrderBy<MODEL, RESULT> orderByCollector = new Collector_OrderBy<>(this, new FunctionGetter(field), this);
+		final Collector_OrderBy_Named<MODEL, RESULT> orderByCollector = new Collector_OrderBy_Named<>(this, new FunctionGetter(field), this);
 		
 		getQueryCollector().setOrderBy(orderByCollector);
 		
@@ -146,7 +146,7 @@ abstract class Collector_Conditions_GroupBy<MODEL, RESULT, AFTER_GROUP_BY>
 
 	public final <R> ISharedProcessResult_OrderBy_AfterSortOrder_Alias<MODEL, RESULT> orderBy(Supplier<R> field) {
 
-		final Collector_OrderBy<MODEL, RESULT> orderByCollector = new Collector_OrderBy<>(this, new SupplierGetter(field), this);
+		final Collector_OrderBy_Alias<MODEL, RESULT> orderByCollector = new Collector_OrderBy_Alias<>(this, new SupplierGetter(field), this);
 		
 		getQueryCollector().setOrderBy(orderByCollector);
 

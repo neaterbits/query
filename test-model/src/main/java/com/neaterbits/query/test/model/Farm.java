@@ -18,6 +18,8 @@ public class Farm {
 
 	private Long id;
 	private String name;
+	private String farmId; //gård
+	private String subFarmId; // bruk
 	private Owner owner;
 	private Collection<LandPlot> landPlots;
 
@@ -27,6 +29,12 @@ public class Farm {
 	
 	public Farm(String name) {
 		this.name = name;
+
+	}
+	public Farm(String name, String farmId, String subFarmId) {
+		this.name = name;
+		this.farmId = farmId;
+		this.subFarmId = subFarmId;
 	}
 
 	public Farm(Long id, String name) {
@@ -62,6 +70,24 @@ public class Farm {
 		this.name = name;
 	}
 
+	@Column(name="farm_id")
+	public String getFarmId() {
+		return farmId;
+	}
+
+	public void setFarmId(String farmId) {
+		this.farmId = farmId;
+	}
+
+	@Column(name="sub_farm_id")
+	public String getSubFarmId() {
+		return subFarmId;
+	}
+
+	public void setSubFarmId(String subFarmId) {
+		this.subFarmId = subFarmId;
+	}
+
 	@OneToOne
 	public Owner getOwner() {
 		return owner;
@@ -88,8 +114,10 @@ public class Farm {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
+		result = prime * result + ((farmId == null) ? 0 : farmId.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
+		result = prime * result + ((subFarmId == null) ? 0 : subFarmId.hashCode());
 		return result;
 	}
 
@@ -102,6 +130,11 @@ public class Farm {
 		if (getClass() != obj.getClass())
 			return false;
 		Farm other = (Farm) obj;
+		if (farmId == null) {
+			if (other.farmId != null)
+				return false;
+		} else if (!farmId.equals(other.farmId))
+			return false;
 		if (id == null) {
 			if (other.id != null)
 				return false;
@@ -112,11 +145,17 @@ public class Farm {
 				return false;
 		} else if (!name.equals(other.name))
 			return false;
+		if (subFarmId == null) {
+			if (other.subFarmId != null)
+				return false;
+		} else if (!subFarmId.equals(other.subFarmId))
+			return false;
 		return true;
 	}
 
 	@Override
 	public String toString() {
-		return "Farm [id=" + id + ", name=" + name + ", owner=" + owner + ", landPlots=" + landPlots + "]";
+		return "Farm [id=" + id + ", name=" + name + ", farmId=" + farmId + ", subFarmId=" + subFarmId + ", owner="
+				+ owner + ", landPlots=" + landPlots + "]";
 	}
 }
