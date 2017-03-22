@@ -217,7 +217,7 @@ final class CompiledQuery {
 		return ret;
 	}
 	
-	private static int getMappedProcessingResultIndexStartingAtOne(CompiledMappings mappings, CompiledGetterFunction getter) {
+	private static int getMappedProcessingResultIndexStartingAtOne(CompiledMappings mappings, CompiledGetter getter) {
 		
 		// Must compare with source-columns mapping
 		int idx = 1;
@@ -242,7 +242,7 @@ final class CompiledQuery {
 	
 	interface ResultProcessingFieldsCtor<T extends Collected_Fields, R extends CompiledResultFields> {
 		
-		R create(T fields, int [] indicesStartingAtOne, FunctionGetter[] getters);
+		R create(T fields, int [] indicesStartingAtOne, Getter[] getters);
 		
 	}
 	
@@ -255,7 +255,7 @@ final class CompiledQuery {
 			ResultProcessingFieldsCtor<T, R> ctor) throws CompileException {
 		
 		final int [] columns;
-		final FunctionGetter [] getters;
+		final Getter [] getters;
 
 		if (fields.getFields() != null) {
 
@@ -266,7 +266,7 @@ final class CompiledQuery {
 			
 			for (int i = 0; i < getters.length; ++ i) {
 				
-				final CompiledGetterFunction getter = sources.findGetter(getters[i].getter);
+				final CompiledGetter getter = sources.findGetter(getters[i]);
 						
 				columns[i] = getMappedProcessingResultIndexStartingAtOne(mappings, getter);
 			}

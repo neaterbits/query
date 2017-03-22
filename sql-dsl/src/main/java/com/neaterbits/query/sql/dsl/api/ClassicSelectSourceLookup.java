@@ -40,6 +40,11 @@ final class ClassicSelectSourceLookup extends SelectSourceLookup {
 	}
 	
 	@Override
+	CompiledGetter findGetter(Getter getter) throws CompileException {
+		return compiledSources.makeFieldReference(null, getter, cache).getGetter();
+	}
+
+	@Override
 	CompiledSelectSources<?> compile(CollectedQueryResult queryResult) {
 		return compiledSources;
 	}

@@ -4,7 +4,7 @@ final class CompiledOrderBy extends CompiledResultFields {
 	
 	private final ESortOrder [] sortOrders;
 
-	CompiledOrderBy(int[] indicesStartingAtOne, FunctionGetter[] optionalGetters, ESortOrder[] sortOrders) {
+	CompiledOrderBy(int[] indicesStartingAtOne, Getter[] optionalGetters, ESortOrder[] sortOrders) {
 		super(indicesStartingAtOne, optionalGetters);
 
 		if (indicesStartingAtOne == null) {

@@ -180,6 +180,13 @@ final class ShortSelectSourceLookup extends SelectSourceLookup {
 	
 	
 	@Override
+	CompiledGetter findGetter(Getter getter) throws CompileException {
+		return makeFieldReference(null, getter).getGetter();
+	}
+
+
+
+	@Override
 	CompiledSelectSources<?> compile(CollectedQueryResult queryResult) {
 		
 		final CompiledSelectSources<?> ret;

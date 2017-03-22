@@ -23,7 +23,7 @@ abstract class Collector_Fields<MODEL> extends Collector_Base<MODEL> {
 		getters.add(getter);
 	}
 	
-	FunctionGetter [] toArray() {
-		return getters.toArray(new FunctionGetter[getters.size()]);
+	Getter [] toArray() {
+		return getters.toArray(new Getter[getters.size()]);
 	}
 }

@@ -4,10 +4,10 @@ abstract class CompiledResultFields {
 
 	// Should always have indices
 	private int [] indicesStartingAtOne;
-	private FunctionGetter [] optionalGetters; // in case we specified rows by getter
+	private Getter [] optionalGetters; // in case we specified rows by getter
 	
 	
-	CompiledResultFields(int [] indicesStartingAtOne, FunctionGetter [] optionalGetters) {
+	CompiledResultFields(int [] indicesStartingAtOne, Getter [] optionalGetters) {
 		
 		if (indicesStartingAtOne == null) {
 			throw new IllegalArgumentException("indicesStartingAtOne == null");
@@ -35,7 +35,7 @@ abstract class CompiledResultFields {
 		this.indicesStartingAtOne = indicesStartingAtOne;
 	}
 
-	final FunctionGetter[] getOptionalGetters() {
+	final Getter[] getOptionalGetters() {
 		return optionalGetters;
 	}
 }

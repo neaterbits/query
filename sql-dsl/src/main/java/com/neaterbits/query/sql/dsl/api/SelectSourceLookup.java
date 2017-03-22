@@ -23,8 +23,9 @@ abstract class SelectSourceLookup {
 	// For mapping return-types
 	//abstract CompiledSetter compileSetterUntyped(Class<?> resultType, BiConsumer<?, ?> setter);
 	
-	// TODO : for process-result, must support alias as well
 	abstract CompiledGetterFunction findGetter(Function<?, ?> getter) throws CompileException;
+
+	abstract CompiledGetter findGetter(Getter getter) throws CompileException;
 
 	final CompiledSetter compileSetterUntyped(Class<?> resultType, BiConsumer<?, ?> setter) {
 		return cache.compileSetterUntyped(resultType, setter);
