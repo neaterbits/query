@@ -189,7 +189,7 @@ final class CompiledQuery {
 		if (compiledQueryResult instanceof CompiledQueryResult_Mapped) {
 			
 			// Can only do group-by etc for mapped result
-			resultProcessing = compileResultProcessing(
+			resultProcessing = compileMappedResultProcessing(
 				collector,
 				((CompiledQueryResult_Mapped)compiledQueryResult).getMappings(),
 				selectSources);
@@ -202,26 +202,36 @@ final class CompiledQuery {
 			resultProcessing = null;
 		}
 		
+		final CompiledSelectSources<?> compiledSelectSources = selectSources.compile(collector.getResult());
+		
 
-		return new CompiledQuery(
+		final CompiledQuery ret = new CompiledQuery(
 				compiledQueryResult,
-				selectSources.compile(collector.getResult()),
+				compiledSelectSources,
 				joins,
 				compiledConditions,
 				conditionsMaxDepth,
 				resultProcessing);
+		
+		
+		return ret;
 	}
 	
-	private static int getProcessingResultIndexStartingAtOne(CompiledMappings mappings, CompiledGetterFunction getter) {
+	private static int getMappedProcessingResultIndexStartingAtOne(CompiledMappings mappings, CompiledGetterFunction getter) {
 		
 		// Must compare with source-columns mapping
 		int idx = 1;
 		for (CompiledMapping mapping : mappings.getMappings()) {
 			// Get the field we have selected from  
-			final CompiledGetter mappingGetter = mapping.getField().getGetter();
 			
-			if (getter.equals(mappingGetter)) {
-				return idx;
+			// Can only map to plain field expressions, aggregates and so no cannot be ordered-by
+			if (mapping.getExpression() instanceof CompiledFieldExpression) {
+				
+				final CompiledFieldExpression fieldExpression = (CompiledFieldExpression)mapping.getExpression();
+
+				if (getter.equals(fieldExpression.getFieldReference().getGetter())) {
+					return idx;
+				}
 			}
 			
 			++ idx;
@@ -238,7 +248,7 @@ final class CompiledQuery {
 	
 
 	private static <T extends Collected_Fields, R extends CompiledResultFields> 
-		R compileResultProcessingFields(
+		R compileMappedResultProcessingFields(
 			T fields,
 			CompiledMappings mappings,
 			SelectSourceLookup sources,
@@ -258,7 +268,7 @@ final class CompiledQuery {
 				
 				final CompiledGetterFunction getter = sources.findGetter(getters[i].getter);
 						
-				columns[i] = getProcessingResultIndexStartingAtOne(mappings, getter);
+				columns[i] = getMappedProcessingResultIndexStartingAtOne(mappings, getter);
 			}
 		}
 		else if (fields.getColumns() != null) {
@@ -273,7 +283,7 @@ final class CompiledQuery {
 		return ctor.create(fields, columns, getters);
 	}
 	
-	private static <MODEL> CompiledResultProcessing compileResultProcessing(
+	private static <MODEL> CompiledResultProcessing compileMappedResultProcessing(
 					Collector_Query<MODEL> collector,
 					CompiledMappings mappings,
 					SelectSourceLookup sources) throws CompileException {
@@ -286,7 +296,7 @@ final class CompiledQuery {
 		final CompiledOrderBy compiledOrderBy;
 		
 		if (collector.getGroupBy() != null) {
-			compiledGroupBy = compileResultProcessingFields(collector.getGroupBy(), mappings, sources, (fields, indices, getters) -> new CompiledGroupBy(indices, getters) );
+			compiledGroupBy = compileMappedResultProcessingFields(collector.getGroupBy(), mappings, sources, (fields, indices, getters) -> new CompiledGroupBy(indices, getters) );
 
 			final Collector_Clause having = collector.getGroupBy().getHaving();
 			
@@ -303,7 +313,7 @@ final class CompiledQuery {
 		
 		if (collector.getOrderBy() != null) {
 			
-			compiledOrderBy = compileResultProcessingFields(collector.getOrderBy(), mappings, sources, (fields, indices, getters) -> new CompiledOrderBy(indices, getters, fields.getSortOrders()));
+			compiledOrderBy = compileMappedResultProcessingFields(collector.getOrderBy(), mappings, sources, (fields, indices, getters) -> new CompiledOrderBy(indices, getters, fields.getSortOrders()));
 		}
 		else {
 			compiledOrderBy = null;

@@ -281,7 +281,17 @@ final class PreparedQueryBuilderORM<MANAGED, EMBEDDED, IDENTIFIABLE, ATTRIBUTE, 
 		for (int i = 0; i < num; ++ i) {
 			final int idx = getIndex.apply(query, i);
 			
-			final CompiledFieldReference compiledFieldRef = q.getMappingField(query, idx);
+			final ExecutableQueryExpressions mappingExpressions = q.getMappingExpressions(query, idx);
+			
+			final int [] indices = new int[] { 0 };
+			
+			final EExpressionType expressionType = mappingExpressions.getExpressionType(0, indices);
+			
+			if (expressionType != EExpressionType.FIELD) {
+				throw new IllegalStateException("Expected field expression for ordered-by mapping, should have been validated already");
+			}
+			
+			final CompiledFieldReference compiledFieldRef = mappingExpressions.getFieldReference(0, indices);
 			
 			ret.add(prepareFieldReference(q, query, compiledFieldRef));
 		}

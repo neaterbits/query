@@ -849,4 +849,59 @@ public class ShortAPITest extends BaseJPATest {
 		assertThat(true).isEqualTo(false);
 	}
 	
+	@Test
+	public void throwValidationExceptionForMappedQueryWithoutMapping() {
+		/*
+		 
+		  Query below should throw exception in query compilation,
+		  that has a result that isn't am entity and there are no mappings.
+		  
+		  So user should either check whether adding .map() or 
+		  listing a class that is not an entity 
+		  
+		 
+    	final MultiBuilt<FarmInfo> query = select.list(FarmInfo.class)
+    			.where(Farm::getName).startsWith("Farm")
+    			.orderBy(Farm::getName)
+    			.build();
+    			*/ 
+		assertThat(true).isEqualTo(false);
+
+	}
+	
+	@Test
+	public void throwValidationExcecptionForNamedOrAliasAccessNotInJoin() {
+		
+		/**
+		 * Must check for compiled-queries that very field belongs to a select-source that is join (or the same one if no joins)
+		 * so that there are no full outer joins
+		 */
+		
+		assertThat(true).isEqualTo(false);
+		
+	}
+	
+
+	@Test
+	public void throwValidationExcecptionForOrderByFieldNotInEntity() {
+		
+		/**
+		 * Must throw meaningful exception if order-by a field that is not part of entity
+		 */
+		
+		assertThat(true).isEqualTo(false);
+		
+	}
+	
+	@Test
+	public void throwValidationExcecptionForOrderByFieldNotInMapped() {
+		
+		/**
+		 * Must throw meaningful exception if order-by a field that is not part map() from entities
+		 */
+		
+		assertThat(true).isEqualTo(false);
+		
+	}
+	
 }
