@@ -35,11 +35,6 @@ final class ClassicSelectSourceLookup extends SelectSourceLookup {
 	}
 	
 	@Override
-	CompiledGetterFunction findGetter(Function<?, ?> getter) throws CompileException {
-		return (CompiledGetterFunction)cache.findGetterFromTypes(compiledSources.getTypes(), getter);
-	}
-	
-	@Override
 	CompiledGetter findGetter(Getter getter) throws CompileException {
 		return compiledSources.makeFieldReference(null, getter, cache).getGetter();
 	}

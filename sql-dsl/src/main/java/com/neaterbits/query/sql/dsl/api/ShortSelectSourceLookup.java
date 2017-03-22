@@ -174,12 +174,6 @@ final class ShortSelectSourceLookup extends SelectSourceLookup {
 	
 
 	@Override
-	CompiledGetterFunction findGetter(Function<?, ?> getter) throws CompileException {
-		return (CompiledGetterFunction)findFunctionGetter(getter);
-	}
-	
-	
-	@Override
 	CompiledGetter findGetter(Getter getter) throws CompileException {
 		return makeFieldReference(null, getter).getGetter();
 	}
