@@ -510,9 +510,8 @@ final class PreparedQueryBuilderORM<MANAGED, EMBEDDED, IDENTIFIABLE, ATTRIBUTE, 
 
 		final CompiledGetter getter = field.getGetter();
 
-		final String columnName = getColumnNameForGetter(source, getter);
+		final String columnName = getColumnOrFieldNameForGetter(source, getter);
 
-		
 		final FieldReference ret;
 		
 		switch (fieldReferenceType) {
@@ -849,11 +848,12 @@ final class PreparedQueryBuilderORM<MANAGED, EMBEDDED, IDENTIFIABLE, ATTRIBUTE, 
 		}
 	}
 	
-	private final String getColumnNameForGetter(TypeMapSource source, CompiledGetter getter) {
-		return entityModelUtil.getModel().getColumnNameForGetter(source.getType(), getter.getGetterMethod());
+	private final String getColumnOrFieldNameForGetter(TypeMapSource source, CompiledGetter getter) {
+		
+		return dialect.getFieldNameForGetter(entityModelUtil, source.getType(), getter.getGetterMethod());
+		
+		// return entityModelUtil.getModel().getColumnNameForGetter(source.getType(), getter.getGetterMethod());
 	}
-	
-	/// From QueryDataSouceJPA, may move to somewhere else
 	
 	
 }

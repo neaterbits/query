@@ -52,8 +52,11 @@ public interface EntityModel<MANAGED, EMBEDDED, IDENTIFIABLE, ATTRIBUTE, ATTRIBU
 	Class<?> getAssociationTarget(ATTRIBUTE attribute);
 	
 	ATTRIBUTE getAssociationTargetAttribute(ATTRIBUTE attribute);
+
 	
 	// TODO: can be removed or refactored to pass MANAGED?
+	String getEntityFieldNameForGetter(Class<?> type, Method getter);
+	
 	String getColumnNameForGetter(Class<?> type, Method getter);
 	
 }

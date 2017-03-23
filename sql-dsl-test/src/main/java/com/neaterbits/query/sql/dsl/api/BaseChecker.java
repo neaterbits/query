@@ -28,6 +28,13 @@ abstract class BaseChecker implements QueryTestDSCheck {
 	public final <T> void checkListOrdered(MultiBuilt<T> query, @SuppressWarnings("unchecked") T... expected) {
 		check(ds -> Checks.checkSelectListOrdered(ds, query, q -> q.execute(), expected));
 	}
+	
+	@Override
+	public <T> void checkListOrdered(MultiBuilt<T> query, Supplier<List<T>> expected) {
+		check(ds -> {
+			Checks.checkSelectListOrdered(ds, query, q -> q.execute(), expected.get());
+		});
+	}
 
 	@Override
 	public final <T> void checkListUnordered(MultiBuilt<T> query, Function<ISharedPreparedQueryOps<List<T>>, List<T>> execute,

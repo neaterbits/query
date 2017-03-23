@@ -1,8 +1,11 @@
 package com.neaterbits.query.sql.dsl.api;
 
+import java.lang.reflect.Method;
+import java.util.Collection;
 import java.util.List;
 import java.util.function.Consumer;
 
+import com.neaterbits.query.sql.dsl.api.entity.EntityModelUtil;
 import com.neaterbits.query.sql.dsl.api.entity.Relation;
 
 final class QueryDialect_JPQL extends QueryDialect_SQL {
@@ -109,5 +112,11 @@ final class QueryDialect_JPQL extends QueryDialect_SQL {
 		  .append(" ")
 		  .append(joinVarName);
 	}
-	
+
+	@Override
+	<MANAGED, EMBEDDED, IDENTIFIABLE, ATTRIBUTE, COLL extends Collection<ATTRIBUTE>>
+		String getFieldNameForGetter(EntityModelUtil<MANAGED, EMBEDDED, IDENTIFIABLE, ATTRIBUTE, COLL> entityModelUtil, Class<?> type, Method getter) {
+
+		return entityModelUtil.getModel().getEntityFieldNameForGetter(type, getter);
+	}
 }

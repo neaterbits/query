@@ -22,6 +22,8 @@ public interface QueryTestDSCheck {
 	<T> void checkListUnordered(MultiBuilt<T> query, Supplier<List<T>> expected);
 
 	<T> void checkListOrdered(MultiBuilt<T> query, @SuppressWarnings("unchecked") T ... expected);
+
+	<T> void checkListOrdered(MultiBuilt<T> query, Supplier<List<T>> expected);
 	
 	<T> void checkListUnordered(MultiBuilt<T> query, Function<ISharedPreparedQueryOps<List<T>>, List<T>> execute, @SuppressWarnings("unchecked") T ... expected);
 	

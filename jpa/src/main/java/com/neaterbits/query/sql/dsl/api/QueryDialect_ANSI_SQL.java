@@ -1,5 +1,6 @@
 package com.neaterbits.query.sql.dsl.api;
 
+import java.lang.reflect.Method;
 import java.util.Collection;
 import java.util.List;
 
@@ -293,5 +294,13 @@ final class QueryDialect_ANSI_SQL<MANAGED, EMBEDDED, IDENTIFIABLE, ATTRIBUTE, CO
 		final String tableName = entityModelUtil.getEntityInfo(javaType).getTableName();
 
 		return tableName;
+	}
+
+	@Override
+	<M, E, I, A, C extends Collection<A>>
+	
+		String getFieldNameForGetter(EntityModelUtil<M, E, I, A, C> entityModelUtil, Class<?> type, Method getter) {
+		
+		return entityModelUtil.getModel().getColumnNameForGetter(type, getter);
 	}
 }

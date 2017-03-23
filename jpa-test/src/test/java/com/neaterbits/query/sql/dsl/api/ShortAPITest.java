@@ -903,5 +903,21 @@ public class ShortAPITest extends BaseJPATest {
 		assertThat(true).isEqualTo(false);
 		
 	}
+
+	@Test
+	public void testFixNullOrderDifferenceBetweenDerbyAndHSQLDB() {
+		
+		/**
+		 * Add null-check in order-by tests and see if can fix so that sort order
+		 * becomes the same for all databases, does require some research
+		 * into what is most common behavior and whether can trick other DBs in to sorting in that order,
+		 * 
+		 * sort order must be resolved at DB for paging.
+		 */
+		
+		
+		assertThat(true).isEqualTo(false);
+		
+	}
 	
 }

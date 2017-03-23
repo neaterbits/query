@@ -1,5 +1,6 @@
 package com.neaterbits.query.sql.dsl.api;
 
+import java.lang.annotation.Annotation;
 import java.lang.reflect.AccessibleObject;
 import java.lang.reflect.Member;
 import java.lang.reflect.Method;
@@ -721,6 +722,25 @@ public class JPAEntityModel implements EntityModel<
 		return entityName.toLowerCase();
 	}
 
+	@Override
+	public String getEntityFieldNameForGetter(Class<?> type, Method getter) {
+
+		// Look up in entity manager
+		final EntityType<?> entityType = metamodel.entity(type);
+
+		if (entityType == null) {
+			throw new IllegalStateException("No entity type for " + type);
+		}
+
+		final Attribute<?, ?> attr = findAttr(entityType, getter);
+		
+		if (attr == null) {
+			throw new IllegalArgumentException("No attribute for getter " + getter);
+		}
+		
+		return attr.getName();
+	}
+	
 
 
 	@Override
@@ -739,8 +759,37 @@ public class JPAEntityModel implements EntityModel<
 		if (attr == null) {
 			throw new IllegalArgumentException("No attribute for getter " + getter);
 		}
+		
+		final String ret;
+		
 
-		return attr.getName();
+		// TODO: better way to get this information?
+		final Column column = getAnnotation(attr, Column.class);
+		
+		if (column != null && column.name() != null && !column.name().trim().isEmpty()) {
+			ret = column.name().trim();
+		}
+		else {
+			ret = attr.getName();
+		}
+				
+		return ret;
+	}
+	
+	private static <T extends Annotation> T getAnnotation(Attribute<?, ?> attr, Class<T> annotationClass) {
+		
+		final T ret;
+		
+		if (attr.getJavaMember() instanceof AccessibleObject) {
+			final AccessibleObject accesible = (AccessibleObject)attr.getJavaMember();
+			
+			ret = accesible.getDeclaredAnnotation(annotationClass);
+		}
+		else {
+			throw new UnsupportedOperationException("Unknown member type " + attr.getJavaType().getClass());
+		}
+
+		return ret;
 	}
 
 	private static Attribute<?, ?> findAttr(EntityType<?> entityType, Method getterMethod) {

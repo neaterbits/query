@@ -31,7 +31,15 @@ public class Farm {
 		this.name = name;
 
 	}
+
 	public Farm(String name, String farmId, String subFarmId) {
+		this.name = name;
+		this.farmId = farmId;
+		this.subFarmId = subFarmId;
+	}
+
+	public Farm(Long id, String name, String farmId, String subFarmId) {
+		this.id = id;
 		this.name = name;
 		this.farmId = farmId;
 		this.subFarmId = subFarmId;

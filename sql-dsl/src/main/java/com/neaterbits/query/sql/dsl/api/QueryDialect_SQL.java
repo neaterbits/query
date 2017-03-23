@@ -1,7 +1,10 @@
 package com.neaterbits.query.sql.dsl.api;
 
+import java.lang.reflect.Method;
+import java.util.Collection;
 import java.util.List;
 
+import com.neaterbits.query.sql.dsl.api.entity.EntityModelUtil;
 import com.neaterbits.query.sql.dsl.api.entity.Relation;
 
 abstract class QueryDialect_SQL extends QueryDialect_Base {
@@ -38,8 +41,10 @@ abstract class QueryDialect_SQL extends QueryDialect_Base {
 	abstract void appendJoinStatement(QueryBuilder sb, EJoinType joinType);
 
 	abstract void addSelectSource(QueryBuilder sb, EFieldAccessType fieldReferenceType, SourceReference ref);
-	
-	
+
+	abstract <MANAGED, EMBEDDED, IDENTIFIABLE, ATTRIBUTE, COLL extends Collection<ATTRIBUTE>>
+			String getFieldNameForGetter(EntityModelUtil<MANAGED, EMBEDDED, IDENTIFIABLE, ATTRIBUTE, COLL> entityModelUtil, Class<?> type, Method getter);
+
 	// **************************** Some abstract methods conditions ****************************
 	
 	/**
