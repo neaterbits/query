@@ -187,6 +187,11 @@ abstract class AdhocQueryBase<MODEL, QUERY extends AdhocQueryBase<MODEL, QUERY>>
 	}
 
 	@Override
+	public final CompiledFieldReference getGroupByField(QUERY query, int idx) {
+		throw new UnsupportedOperationException("TODO - not supported for Adhoc queries");
+	}
+	
+	@Override
 	public final int getOrderByFieldCount(QUERY query) {
 		throw new UnsupportedOperationException("TODO - not supported for Adhoc queries");
 	}
@@ -197,12 +202,17 @@ abstract class AdhocQueryBase<MODEL, QUERY extends AdhocQueryBase<MODEL, QUERY>>
 	}
 
 	@Override
-	public ESortOrder getOrderBySortOrder(QUERY query, int idx) {
+	public final ESortOrder getOrderBySortOrder(QUERY query, int idx) {
+		throw new UnsupportedOperationException("TODO - not supported for Adhoc queries");
+	}
+	
+	@Override
+	public final CompiledFieldReference getOrderByField(QUERY query, int idx) {
 		throw new UnsupportedOperationException("TODO - not supported for Adhoc queries");
 	}
 
 	@Override
-	public Function<?, ?> getEntityOrderByFieldGetter(QUERY query, int idx) {
+	public final Function<?, ?> getEntityOrderByFieldGetter(QUERY query, int idx) {
 		throw new UnsupportedOperationException("TODO - not supported for Adhoc queries");
 	}
 
@@ -212,12 +222,12 @@ abstract class AdhocQueryBase<MODEL, QUERY extends AdhocQueryBase<MODEL, QUERY>>
 	}
 
 	@Override
-	public ExecutableQueryConditions<QUERY> getExecutableQueryHaving() {
+	public final ExecutableQueryConditions<QUERY> getExecutableQueryHaving() {
 		throw new UnsupportedOperationException("TODO - not supported for Adhoc queries");
 	}
 
 	@Override
-	public boolean hasHaving(QUERY query) {
+	public final boolean hasHaving(QUERY query) {
 		throw new UnsupportedOperationException("TODO - not supported for Adhoc queries");
 	}
 }

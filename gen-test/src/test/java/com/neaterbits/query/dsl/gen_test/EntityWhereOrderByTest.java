@@ -40,7 +40,7 @@ public class EntityWhereOrderByTest extends GEN_BaseTestCase {
 
     @Test
     public void testEntityMultiNamed() {
-    	final Farm farm1 = new Farm("Farm1", "main2", null);
+    	final Farm farm1 = new Farm("Farm1", "main2", "sub3");
     	final Farm farm2 = new Farm("Farm2", "main1", null);
     	final Farm farm3 = new Farm("Farm3", "main2", "sub2");
     	final Farm farm4 = new Farm("Farm4", "main3", "sub2");
@@ -62,12 +62,12 @@ public class EntityWhereOrderByTest extends GEN_BaseTestCase {
     	.checkListOrdered(
     			query,
     			
-    			() -> expected( 
-					new Farm(farm1.getId(), "Farm1"),
-					new Farm(farm2.getId(), "Farm2"),
-					new Farm(farm3.getId(), "Farm3"),
-					new Farm(farm4.getId(), "Farm4"),
-					new Farm(farm5.getId(), "Farm5")
+    			() -> expected(
+					new Farm(farm1.getId(), "Farm1", "main2", "sub3"),
+					new Farm(farm2.getId(), "Farm2", "main1", null),
+					new Farm(farm3.getId(), "Farm3", "main2", "sub2"),
+					new Farm(farm4.getId(), "Farm4", "main3", "sub2"),
+					new Farm(farm5.getId(), "Farm5", "main2", "")
     			));
     	
     	query = select.list(Farm.class)
@@ -84,9 +84,9 @@ public class EntityWhereOrderByTest extends GEN_BaseTestCase {
     			
     			() -> expected(
     					new Farm(farm2.getId(), "Farm2", "main1", null),
-    					new Farm(farm1.getId(), "Farm1", "main2", null),
+    					new Farm(farm5.getId(), "Farm5", "main2", ""),
     					new Farm(farm3.getId(), "Farm3", "main2", "sub2"),
-    					new Farm(farm5.getId(), "Farm5", "main3", "sub1"),
+    					new Farm(farm1.getId(), "Farm1", "main2", "sub3"),
     					new Farm(farm4.getId(), "Farm4", "main3", "sub2")
     			));
     	
@@ -99,7 +99,7 @@ public class EntityWhereOrderByTest extends GEN_BaseTestCase {
 
     @Test
     public void testEntityMultiAlias() {
-    	final Farm farm1 = new Farm("Farm1", "main2", null);
+    	final Farm farm1 = new Farm("Farm1", "main2", "sub3");
     	final Farm farm2 = new Farm("Farm2", "main1", null);
     	final Farm farm3 = new Farm("Farm3", "main2", "sub2");
     	final Farm farm4 = new Farm("Farm4", "main3", "sub2");
@@ -123,12 +123,20 @@ public class EntityWhereOrderByTest extends GEN_BaseTestCase {
     	.checkListOrdered(
     			query,
     			
-    			() -> expected( 
+    			() -> expected(
+    					/*
 					new Farm(farm1.getId(), "Farm1"),
 					new Farm(farm2.getId(), "Farm2"),
 					new Farm(farm3.getId(), "Farm3"),
 					new Farm(farm4.getId(), "Farm4"),
 					new Farm(farm5.getId(), "Farm5")
+					*/
+					new Farm(farm1.getId(), "Farm1", "main2", "sub3"),
+					new Farm(farm2.getId(), "Farm2", "main1", null),
+					new Farm(farm3.getId(), "Farm3", "main2", "sub2"),
+					new Farm(farm4.getId(), "Farm4", "main3", "sub2"),
+					new Farm(farm5.getId(), "Farm5", "main2", "")
+    					
     			));
 
     	query = select.list(Farm.class)
@@ -136,7 +144,7 @@ public class EntityWhereOrderByTest extends GEN_BaseTestCase {
     			.where(f::getName).startsWith("Farm")
     			
     			.orderBy(f::getFarmId).and(f::getSubFarmId).and(f::getName)
-    			.build(); 
+    			.build();
     	
     	
     	// Store out of order
@@ -146,9 +154,9 @@ public class EntityWhereOrderByTest extends GEN_BaseTestCase {
     			
     			() -> expected(
 					new Farm(farm2.getId(), "Farm2", "main1", null),
-					new Farm(farm1.getId(), "Farm1", "main2", null),
+					new Farm(farm5.getId(), "Farm5", "main2", ""),
 					new Farm(farm3.getId(), "Farm3", "main2", "sub2"),
-					new Farm(farm5.getId(), "Farm5", "main3", "sub1"),
+					new Farm(farm1.getId(), "Farm1", "main2", "sub3"),
 					new Farm(farm4.getId(), "Farm4", "main3", "sub2")
     			));
 

@@ -9,7 +9,6 @@ import com.neaterbits.query.test.model.Farm;
 
 public class EntityWhereTest extends GEN_BaseTestCase {
 
-
     @Test
     public void testEntitySingleNamed() {
     	final Farm farm1 = new Farm("Hill Valley");
@@ -24,7 +23,6 @@ public class EntityWhereTest extends GEN_BaseTestCase {
     	store(farm1, farm2, farm3)
     	.checkOne(query, () -> new Farm(farm2.getId(), "Table Mountain"));
     }
-
 
     @Test
     public void testEntitySingleAlias() {

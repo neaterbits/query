@@ -274,24 +274,12 @@ final class PreparedQueryBuilderORM<MANAGED, EMBEDDED, IDENTIFIABLE, ATTRIBUTE, 
 		return ret;
 	}
 
-	private <QUERY> List<FieldReference> getFieldReferences(ExecutableQuery<QUERY> q, QUERY query, int num, BiFunction<QUERY, Integer, Integer> getIndex) {
+	private <QUERY> List<FieldReference> getFieldReferences(ExecutableQuery<QUERY> q, QUERY query, int num, BiFunction<QUERY, Integer, CompiledFieldReference> getIndex) {
 		
 		final List<FieldReference> ret = new ArrayList<>(num);
 		
 		for (int i = 0; i < num; ++ i) {
-			final int idx = getIndex.apply(query, i);
-			
-			final ExecutableQueryExpressions mappingExpressions = q.getMappingExpressions(query, idx);
-			
-			final int [] indices = new int[] { 0 };
-			
-			final EExpressionType expressionType = mappingExpressions.getExpressionType(0, indices);
-			
-			if (expressionType != EExpressionType.FIELD) {
-				throw new IllegalStateException("Expected field expression for ordered-by mapping, should have been validated already");
-			}
-			
-			final CompiledFieldReference compiledFieldRef = mappingExpressions.getFieldReference(0, indices);
+			final CompiledFieldReference compiledFieldRef = getIndex.apply(query, i);
 			
 			ret.add(prepareFieldReference(q, query, compiledFieldRef));
 		}
@@ -301,17 +289,11 @@ final class PreparedQueryBuilderORM<MANAGED, EMBEDDED, IDENTIFIABLE, ATTRIBUTE, 
 	
 	final <QUERY> void addResultProcessing(ExecutableQuery<QUERY> q, QUERY query, QueryParametersDistinct distinctParams) {
 		// Check whether we should do result-processing and add that
-		
 		final int numGroupBy = q.getGroupByFieldCount(query);
-		
+
 		if (numGroupBy > 0) {
-			dialect.appendGroupBy(
-					s,
-					getFieldReferences(q, query, numGroupBy, q::getGroupByFieldIndex)
-					//getArray(query, numGroupBy, q::getGroupByFieldIndex)
-					);
+			dialect.appendGroupBy(s, getFieldReferences(q, query, numGroupBy, q::getGroupByField));
 		}
-		
 
 		if (q.hasHaving(query)) {
 			
@@ -339,7 +321,7 @@ final class PreparedQueryBuilderORM<MANAGED, EMBEDDED, IDENTIFIABLE, ATTRIBUTE, 
 		
 		if (numOrderBy > 0) {
 			
-			final List<FieldReference> fieldReferences = getFieldReferences(q, query, numOrderBy, q::getOrderByFieldIndex);
+			final List<FieldReference> fieldReferences = getFieldReferences(q, query, numOrderBy, q::getOrderByField);
 			final List<OrderByReference> orderByReferences = new ArrayList<>(numOrderBy);
 			
 			for (int i = 0; i < numOrderBy; ++ i) {

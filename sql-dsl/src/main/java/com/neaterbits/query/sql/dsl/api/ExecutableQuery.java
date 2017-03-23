@@ -397,6 +397,8 @@ interface ExecutableQuery<QUERY> {
 	// returns index into selected fields, starting at 0 (not 1 as is the case with SQL)
 	int getGroupByFieldIndex(QUERY query, int idx);
 
+	CompiledFieldReference getGroupByField(QUERY query, int idx);
+
 	ExecutableQueryConditions<QUERY> getExecutableQueryHaving();
 
 	boolean hasHaving(QUERY query);
@@ -408,6 +410,9 @@ interface ExecutableQuery<QUERY> {
 	int getOrderByFieldIndex(QUERY query, int idx);
 
 	ESortOrder getOrderBySortOrder(QUERY query, int idx);
+	
+	// Entity queries cannot be referenced by index, so must return reference here 
+	CompiledFieldReference getOrderByField(QUERY query, int idx);
 	
 	// For POJO execution with order-by on entities, we require the Function
 	// TODO: perhaps change to executeEntityFieldGetter with an index?

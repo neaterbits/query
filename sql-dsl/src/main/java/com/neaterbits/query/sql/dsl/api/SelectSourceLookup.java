@@ -1,7 +1,6 @@
 package com.neaterbits.query.sql.dsl.api;
 
 import java.util.function.BiConsumer;
-import java.util.function.Function;
 
 
 abstract class SelectSourceLookup {

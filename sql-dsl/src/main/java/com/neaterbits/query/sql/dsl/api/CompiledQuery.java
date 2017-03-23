@@ -194,6 +194,9 @@ final class CompiledQuery {
 				((CompiledQueryResult_Mapped)compiledQueryResult).getMappings(),
 				selectSources);
 		}
+		else if (compiledQueryResult instanceof CompiledQueryResult_Entity) {
+			resultProcessing = compileEntityResultProcessing(collector, selectSources);
+		}
 		else {
 			if (collector.getGroupBy() != null) {
 				throw new IllegalStateException("Can only fo group-by for queries that map the result");
@@ -217,7 +220,22 @@ final class CompiledQuery {
 		return ret;
 	}
 	
-	private static int getMappedProcessingResultIndexStartingAtOne(CompiledMappings mappings, CompiledGetter getter) {
+	private static class ColumnAndGetter {
+		private final int column;
+		private final CompiledFieldReference getter;
+
+		ColumnAndGetter(int column, CompiledFieldReference getter) {
+			
+			if (getter == null) {
+				throw new IllegalArgumentException("getter == null");
+			}
+			
+			this.column = column;
+			this.getter = getter;
+		}
+	}
+	
+	private static ColumnAndGetter getMappedProcessingResultIndexStartingAtOne(CompiledMappings mappings, CompiledGetter getter) {
 		
 		// Must compare with source-columns mapping
 		int idx = 1;
@@ -230,7 +248,7 @@ final class CompiledQuery {
 				final CompiledFieldExpression fieldExpression = (CompiledFieldExpression)mapping.getExpression();
 
 				if (getter.equals(fieldExpression.getFieldReference().getGetter())) {
-					return idx;
+					return new ColumnAndGetter(idx, fieldExpression.getFieldReference());
 				}
 			}
 			
@@ -242,7 +260,7 @@ final class CompiledQuery {
 	
 	interface ResultProcessingFieldsCtor<T extends Collected_Fields, R extends CompiledResultFields> {
 		
-		R create(T fields, int [] indicesStartingAtOne, Getter[] getters);
+		R create(T fields, int [] indicesStartingAtOne, CompiledFieldReference[] getters);
 		
 	}
 	
@@ -255,33 +273,62 @@ final class CompiledQuery {
 			ResultProcessingFieldsCtor<T, R> ctor) throws CompileException {
 		
 		final int [] columns;
-		final Getter [] getters;
+		final CompiledFieldReference [] compiledGetters;
+		
 
 		if (fields.getFields() != null) {
 
-			getters = fields.getFields().toArray();
-			
+			final Getter [] getters = fields.getFields().toArray();
 			
 			columns = new int[getters.length];
+			compiledGetters = new CompiledFieldReference[getters.length];
 			
 			for (int i = 0; i < getters.length; ++ i) {
 				
 				final CompiledGetter getter = sources.findGetter(getters[i]);
+				
+				final ColumnAndGetter columnAndGetter = getMappedProcessingResultIndexStartingAtOne(mappings, getter);
 						
-				columns[i] = getMappedProcessingResultIndexStartingAtOne(mappings, getter);
+				columns[i] = columnAndGetter.column;
+				compiledGetters[i] = columnAndGetter.getter;
 			}
 		}
 		else if (fields.getColumns() != null) {
 			columns = fields.getColumns();
-			getters = null;
+			compiledGetters = getFieldReferences(mappings, fields.getColumns().length, fields.getColumns());
 		}
 		else {
 			throw new IllegalStateException("neither fields not columns");
 		}
 
-		
-		return ctor.create(fields, columns, getters);
+		return ctor.create(fields, columns, compiledGetters);
 	}
+	
+	private static CompiledFieldReference [] getFieldReferences(CompiledMappings mapped, int num, int [] columnsStartingAt1) {
+		
+		final CompiledFieldReference [] ret = new CompiledFieldReference[num];
+		
+		for (int i = 0; i < num; ++ i) {
+			final int idx = columnsStartingAt1[i] - 1;
+			
+			final CompiledExpression expression = mapped.getMappings().get(idx).getExpression();
+			
+			if (!(expression instanceof CompiledFieldExpression)) {
+				throw new IllegalStateException("Expected field expression for ordered-by mapping, should have been validated already");
+			}
+			
+			final CompiledFieldReference compiledFieldRef = ((CompiledFieldExpression)expression).getFieldReference();
+
+			if (compiledFieldRef == null) {
+				throw new IllegalStateException("null fieldReference at " + i);
+			}
+
+			ret[i] = compiledFieldRef;
+		}
+
+		return ret;
+	}
+
 	
 	private static <MODEL> CompiledResultProcessing compileMappedResultProcessing(
 					Collector_Query<MODEL> collector,
@@ -312,8 +359,7 @@ final class CompiledQuery {
 		}
 		
 		if (collector.getOrderBy() != null) {
-			
-			compiledOrderBy = compileMappedResultProcessingFields(collector.getOrderBy(), mappings, sources, (fields, indices, getters) -> new CompiledOrderBy(indices, getters, fields.getSortOrders()));
+			compiledOrderBy = compileMappedResultProcessingFields(collector.getOrderBy(), mappings, sources, (fields, indices, getters) -> new CompiledOrderByMapped(indices, getters, fields.getSortOrders()));
 		}
 		else {
 			compiledOrderBy = null;
@@ -329,6 +375,40 @@ final class CompiledQuery {
 		return ret;
 	}
 	
+	private static <MODEL> CompiledOrderByEntity compileEntityOrderByFields(Collected_OrderBy collected, SelectSourceLookup sources) throws CompileException {
+		
+		final Getter [] getters = collected.getFields().toArray();
+		final CompiledFieldReference [] compiledReferences = new CompiledFieldReference[getters.length];
+		
+		for (int i = 0; i < getters.length; ++ i) {
+			compiledReferences[i] = sources.makeFieldReference(null, getters[i]);
+		}
+
+		// Must always pass fields since order by numbers does not make sense
+		return new CompiledOrderByEntity(compiledReferences, collected.getSortOrders());
+	}
+	
+
+	private static <MODEL> CompiledResultProcessing compileEntityResultProcessing(Collector_Query<MODEL> collector, SelectSourceLookup sources) throws CompileException {
+		
+		if (collector.getGroupBy() != null) {
+			throw new IllegalStateException("Should not have group-by for entity queries");
+		}
+		
+		final CompiledResultProcessing ret;
+		
+		if (collector.getOrderBy() != null) {
+			final CompiledOrderByEntity orderBy = compileEntityOrderByFields(collector.getOrderBy(), sources);
+			
+			ret = new CompiledResultProcessing(null, null, orderBy);
+		}
+		else {
+			ret = null;
+		}
+		
+		
+		return ret;
+	}
 	
 	private static <MODEL> CompiledQueryResult compileQueryResult(Collector_Query<MODEL> collector, SelectSourceLookup sourceLookup) throws CompileException {
 		

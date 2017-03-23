@@ -3,39 +3,39 @@ package com.neaterbits.query.sql.dsl.api;
 abstract class CompiledResultFields {
 
 	// Should always have indices
-	private int [] indicesStartingAtOne;
-	private Getter [] optionalGetters; // in case we specified rows by getter
+	private int [] indicesStartingAtOne; // in case we specified rows by index
+	private CompiledFieldReference [] getters; // compiled field references 
 	
 	
-	CompiledResultFields(int [] indicesStartingAtOne, Getter [] optionalGetters) {
+	CompiledResultFields(int [] indicesStartingAtOne, CompiledFieldReference [] getters) {
 		
-		if (indicesStartingAtOne == null) {
-			throw new IllegalArgumentException("indicesStartingAtOne == null");
+		if (getters == null) {
+			throw new IllegalArgumentException("getters == null");
 		}
-		
-		if (indicesStartingAtOne.length == 0) {
-			throw new IllegalArgumentException("no indices");
-		}
-		
-		if (optionalGetters != null && optionalGetters.length != indicesStartingAtOne.length) {
+
+		if (indicesStartingAtOne != null && getters.length != indicesStartingAtOne.length) {
 			throw new IllegalArgumentException("mismatch between optionalGetters and indices");
 		}
 		
-		this.indicesStartingAtOne = indicesStartingAtOne;
-		this.optionalGetters = optionalGetters;
-	}
+		for (int i = 0; i < getters.length; ++ i) {
+			if (getters[i] == null) {
+				throw new IllegalStateException("null getter at " + i);
+			}
+		}
 
+		this.indicesStartingAtOne = indicesStartingAtOne;
+		this.getters = getters;
+	}
 
 	final int[] getIndicesStartingAtOne() {
 		return indicesStartingAtOne;
 	}
 
-
 	final void setIndicesStartingAtOne(int[] indicesStartingAtOne) {
 		this.indicesStartingAtOne = indicesStartingAtOne;
 	}
 
-	final Getter[] getOptionalGetters() {
-		return optionalGetters;
+	final CompiledFieldReference[] getFieldReferences() {
+		return getters;
 	}
 }

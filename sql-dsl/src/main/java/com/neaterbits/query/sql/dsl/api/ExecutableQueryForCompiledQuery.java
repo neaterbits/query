@@ -507,48 +507,37 @@ final class ExecutableQueryForCompiledQuery extends ExecutableQueryForCompiledBa
 	
 	@Override
 	public int getGroupByFieldCount(CompiledQuery query) {
+
+		final int ret;
+
+		if (   query.getResultProcessing() != null
+				&& query.getResultProcessing().getGroupBy() != null) {
+
+			final CompiledGroupBy groupBy = query.getResultProcessing().getGroupBy();
+
+			ret = groupBy.getIndicesStartingAtOne() != null
+					? groupBy.getIndicesStartingAtOne().length
+					: groupBy.getFieldReferences().length;
+		}
+		else {
+			ret = 0;
+		}
 		
-		
-		return query.getResultProcessing() == null
-				
-				? 0
-				: query.getResultProcessing().getGroupBy() == null
-					? 0
-					: query.getResultProcessing().getGroupBy().getIndicesStartingAtOne().length;
+		return ret;
 	}
-
-
+	
 	@Override
 	public int getGroupByFieldIndex(CompiledQuery query, int idx) {
 		return query.getResultProcessing().getGroupBy().getIndicesStartingAtOne()[idx] - 1;
 	}
+	
+
+	@Override
+	public CompiledFieldReference getGroupByField(CompiledQuery query, int idx) {
+		return query.getResultProcessing().getGroupBy().getFieldReferences()[idx];
+	}
 
 	// --------------------- having ---------------------
-	
-	
-	
-	/*
-	
-	private CompiledConditionComparison getComparisonHaving(CompiledQuery query, int level, int[] conditionIndices) {
-
-		final CompiledCondition condition = getHaving(query, level, conditionIndices);
-		
-		return (CompiledConditionComparison)condition;
-	}
-
-	
-	private CompiledCondition getHaving(CompiledQuery query, int level, int[] conditionIndices) {
-		// First find CompiledConditions
-		CompiledConditions conditions = getHavingList(query, level, conditionIndices);
-
-		return conditions.getConditions().get(conditionIndices[level]);
-	}
-	
-
-	private CompiledConditions getHavingList(CompiledQuery query, int level, int[] conditionIndices) {
-		return getConditionsList(query.getResultProcessing().getHaving().getConditions(), level, conditionIndices);
-	}
-	*/
 
 	@Override
 	public ExecutableQueryConditions<CompiledQuery> getExecutableQueryHaving() {
@@ -565,12 +554,23 @@ final class ExecutableQueryForCompiledQuery extends ExecutableQueryForCompiledBa
 	
 	@Override
 	public int getOrderByFieldCount(CompiledQuery query) {
-		return query.getResultProcessing() == null
-				
-				? 0
-				: query.getResultProcessing().getOrderBy() == null
-					? 0
-					: query.getResultProcessing().getOrderBy().getIndicesStartingAtOne().length;
+
+		final int ret;
+		
+		if (   query.getResultProcessing() != null
+			&& query.getResultProcessing().getOrderBy() != null) {
+			
+			final CompiledOrderBy orderBy = query.getResultProcessing().getOrderBy();
+			
+			ret = orderBy.getIndicesStartingAtOne() != null
+					? orderBy.getIndicesStartingAtOne().length
+					: orderBy.getFieldReferences().length;
+		}
+		else {
+			ret = 0;
+		}
+		
+		return ret;
 	}
 
 
@@ -583,6 +583,11 @@ final class ExecutableQueryForCompiledQuery extends ExecutableQueryForCompiledBa
 	@Override
 	public ESortOrder getOrderBySortOrder(CompiledQuery query, int idx) {
 		return query.getResultProcessing().getOrderBy().getSortOrders()[idx];
+	}
+
+	@Override
+	public CompiledFieldReference getOrderByField(CompiledQuery query, int idx) {
+		return query.getResultProcessing().getOrderBy().getFieldReferences()[idx];
 	}
 
 	@Override
