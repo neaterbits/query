@@ -16,7 +16,7 @@ public interface ISharedFunctions_Transform_Initial_Alias <
 		>
 
 		extends
-			ISharedFunctions_Inital_Base<MODEL, RESULT>,
+			ISharedFunctions_Initial_Base<MODEL, RESULT>,
 			ISharedFunctions_All_Transform_Alias<MODEL, RESULT, RET, SHORT_RET, INTEGER_RET, LONG_RET, DOUBLE_RET, BIGDECIMAL_RET, STRING_RET> {
 
 }

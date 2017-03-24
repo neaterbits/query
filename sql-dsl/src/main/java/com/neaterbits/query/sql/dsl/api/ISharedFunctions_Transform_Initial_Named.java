@@ -15,7 +15,7 @@ public interface ISharedFunctions_Transform_Initial_Named<
 		STRING_RET 	extends ISharedFunction_Next<MODEL, RESULT, RET>
 	>
 
-	extends ISharedFunctions_Inital_Base<MODEL, RESULT>,
+	extends ISharedFunctions_Initial_Base<MODEL, RESULT>,
 				ISharedFunctions_All_Transform_Named<MODEL, RESULT, RET, SHORT_RET, INTEGER_RET, LONG_RET, DOUBLE_RET, BIGDECIMAL_RET, STRING_RET> {
     
 }

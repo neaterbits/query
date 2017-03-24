@@ -222,6 +222,12 @@ abstract class SQL_Collector_WhereOrJoin_Base<
 		return new Collector_Condition_Comparative<MODEL, RESULT, Long, NAMED_AND_OR>(getAfterWhereNamed(), makeGetterExpression(getter));
 	}
 
+	//implemented in subclass @Override
+	public final <T> ISharedCondition_Comparable_Common_All_Compilable<MODEL, RESULT, BigDecimal, NAMED_AND_OR> where(IFunctionBigDecimal<T> getter) {
+
+		return new Collector_Condition_Comparative<MODEL, RESULT, BigDecimal, NAMED_AND_OR>(getAfterWhereNamed(), makeGetterExpression(getter));
+	}
+	
 	// implemented in subclass @Override
 	public final <T, E extends Enum<E>> ISharedCondition_Equality_All<MODEL, RESULT, E, NAMED_AND_OR> where(IFunctionEnum<T, E> getter) {
 
@@ -365,6 +371,16 @@ abstract class SQL_Collector_WhereOrJoin_Base<
 				ALIAS_AND_OR> where(ISupplierInteger func) {
 	
 		return new Collector_Condition_Comparative<MODEL, RESULT, Integer, ALIAS_AND_OR>(getAfterWhereAlias(), makeGetterExpression(func));
+	}
+
+	//implemented in subclass @Override
+	public final ISharedCondition_Comparable_Common_All<
+				MODEL,
+				RESULT,
+				BigDecimal,
+				ALIAS_AND_OR> where(ISupplierBigDecimal func) {
+	
+		return new Collector_Condition_Comparative<MODEL, RESULT, BigDecimal, ALIAS_AND_OR>(getAfterWhereAlias(), makeGetterExpression(func));
 	}	
 	
 	// implemented in subclass @Override

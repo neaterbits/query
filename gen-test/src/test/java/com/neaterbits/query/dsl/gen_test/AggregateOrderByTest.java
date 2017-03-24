@@ -1,40 +1,36 @@
 package com.neaterbits.query.dsl.gen_test;
 
-import static org.assertj.core.api.Assertions.assertThat;
 import org.junit.Test;
+
 import com.neaterbits.query.jpatest.GEN_BaseTestCase;
 import com.neaterbits.query.test.model.land.LandPlot;
 
+// No OrderByTests for Aggregates but verify that does not compile
 
-public class AggregateWhereOrderByTest extends GEN_BaseTestCase {
+public class AggregateOrderByTest extends GEN_BaseTestCase {
 
-
-    @Test
+	@Test
     public void testAggregateSingleNamed() {
     	// Should test that is not compilable
 		verifyIsCompilable(
-				"sum(LandPlot::getHectares)" + 
-    			".where(LandPlot::getHectares).isEqualTo(new BigDecimal(\"1.2\"))");
+				"sum(LandPlot::getHectares)");
 		
 		verifyIsNotCompilable(
 				"sum(LandPlot::getHectares)" + 
-				".where(LandPlot::getHectares).isEqualTo(new BigDecimal(\"1.2\"))" +
 				".orderBy(LandPlot::getHectares)");		
     }
 
 
     @Test
     public void testAggregateSingleAlias() {
-    	
 		verifyIsCompilable(
 				"l", LandPlot.class,
-				"sum(l::getHectares)" + 
-				".where(l::getHectares).isEqualTo(new BigDecimal(\"1.2\"))");
+				
+				"sum(l::getHectares)");
 		
 		verifyIsNotCompilable(
 				"l", LandPlot.class,
 				"sum(l::getHectares)" + 
-				".where(l::getHectares).isEqualTo(new BigDecimal(\"1.2\"))" +
 				".orderBy(l::getHectares)");		
     }
 }
