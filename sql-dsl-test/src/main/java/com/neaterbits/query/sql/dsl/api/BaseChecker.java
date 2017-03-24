@@ -59,4 +59,18 @@ abstract class BaseChecker implements QueryTestDSCheck {
 	public final <T> void checkOne(SingleBuilt<T> query, Supplier<T> expected) {
 		check(ds -> Checks.checkSelectOneOrNull(ds, expected.get(), query, q -> q.execute()));
 	}
+
+	@Override
+	public <T extends Comparable<T>> void checkAggregate(SingleBuilt<T> query, T expected) {
+		
+		checkOne(query, expected);
+		
+	}
+
+	@Override
+	public <T extends Comparable<T>> void checkAggregate(SingleBuilt<T> query,
+			Function<ISharedPreparedQueryOps<T>, T> execute, T expected) {
+
+		checkOne(query, execute, expected);
+	}
 }

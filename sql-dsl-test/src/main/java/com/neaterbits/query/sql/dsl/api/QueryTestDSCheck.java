@@ -15,6 +15,10 @@ public interface QueryTestDSCheck {
 	<T> void checkOne(SingleBuilt<T> query, Supplier<T> expected);
 
 	<T> void checkOne(SingleBuilt<T> query, Function<ISharedPreparedQueryOps<T>, T> execute, T expected);
+
+	<T extends Comparable<T>> void checkAggregate(SingleBuilt<T> query, T expected);
+
+	<T extends Comparable<T>> void checkAggregate(SingleBuilt<T> query, Function<ISharedPreparedQueryOps<T>, T> execute, T expected);
 	
 	<T> void checkListUnordered(MultiBuilt<T> query, @SuppressWarnings("unchecked") T ... expected);
 
