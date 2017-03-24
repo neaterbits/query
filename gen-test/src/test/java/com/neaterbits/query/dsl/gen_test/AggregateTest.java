@@ -1,7 +1,5 @@
 package com.neaterbits.query.dsl.gen_test;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 import java.math.BigDecimal;
 
 import org.junit.Test;
@@ -28,56 +26,31 @@ public class AggregateTest extends GEN_BaseTestCase {
 
     	
     	store(s -> s.add(land1).add(land2))
-    	.check(ds ->
-    		checkSelectOneOrNull(
-    				ds,
-    				new BigDecimal("49.80"),
-    				sumQuery, 
-    				q -> q.execute()));
+    	.checkOne(sumQuery, () -> new BigDecimal("49.80"));
     	
     	final SingleBuilt<BigDecimal> minQuery = select.min(LandPlot::getHectares).build(); 
 
     	store(s -> s.add(land1).add(land2).add(land3))
-    	.check(ds ->
-    		checkSelectOneOrNull(
-    				ds,
-    				new BigDecimal("9.30"),
-    				minQuery, 
-    				q -> q.execute()));
+    	.checkOne(minQuery, () -> new BigDecimal("9.30"));
 
     	final SingleBuilt<BigDecimal> maxQuery = select.max(LandPlot::getHectares).build(); 
 
     	store(s -> s.add(land1).add(land2).add(land3))
-    	.check(ds ->
-    		checkSelectOneOrNull(
-    				ds,
-    				new BigDecimal("100.5"),
-    				maxQuery, 
-    				q -> q.execute()));
+    	.checkOne(maxQuery, () -> new BigDecimal("100.5"));
     	
     	
     	// TODO: really return Double for avg of BigDecimal? JPA does though
     	final SingleBuilt<Double> avgQuery = select.avg(LandPlot::getHectares).build(); 
 
     	store(s -> s.add(land1).add(land2).add(land3))
-    	.check(ds ->
-    		checkSelectOneOrNull(
-    				ds,
-    				50.1,
-    				avgQuery, 
-    				q -> q.execute()));
+    	.checkOne(avgQuery, () -> 50.1);
 
     	final SingleBuilt<Long> countQuery = select.count(LandPlot::getHectares).build(); 
 
     	final Long count = 3L;
     	
     	store(s -> s.add(land1).add(land2).add(land3))
-    	.check(ds ->
-    		checkSelectOneOrNull(
-    				ds,
-    				count,
-    				countQuery, 
-    				q -> q.execute()));
+    	.checkOne(countQuery, () -> count);
     }
 
 
@@ -93,58 +66,31 @@ public class AggregateTest extends GEN_BaseTestCase {
     	// sum for all landplots
     	final SingleBuilt<BigDecimal> sumQuery = select.sum(lp::getHectares).build(); 
 
-    	
-    	
     	store(s -> s.add(land1).add(land2))
-    	.check(ds ->
-    		checkSelectOneOrNull(
-    				ds,
-    				new BigDecimal("49.80"),
-    				sumQuery, 
-    				q -> q.execute()));
+    	.checkOne(sumQuery, () -> new BigDecimal("49.80"));
     	
     	final SingleBuilt<BigDecimal> minQuery = select.min(lp::getHectares).build(); 
 
     	store(s -> s.add(land1).add(land2).add(land3))
-    	.check(ds ->
-    		checkSelectOneOrNull(
-    				ds,
-    				new BigDecimal("9.30"),
-    				minQuery, 
-    				q -> q.execute()));
+    	.checkOne(minQuery, () -> new BigDecimal("9.30"));
 
     	final SingleBuilt<BigDecimal> maxQuery = select.max(lp::getHectares).build(); 
 
     	store(s -> s.add(land1).add(land2).add(land3))
-    	.check(ds ->
-    		checkSelectOneOrNull(
-    				ds,
-    				new BigDecimal("100.5"),
-    				maxQuery, 
-    				q -> q.execute()));
+    	.checkOne(maxQuery, new BigDecimal("100.5"));
     	
     	
     	// TODO: really return Double for avg of BigDecimal? JPA does though
     	final SingleBuilt<Double> avgQuery = select.avg(lp::getHectares).build(); 
 
     	store(s -> s.add(land1).add(land2).add(land3))
-    	.check(ds ->
-    		checkSelectOneOrNull(
-    				ds,
-    				50.1,
-    				avgQuery, 
-    				q -> q.execute()));
+    	.checkOne(avgQuery, () -> 50.1);
 
     	final SingleBuilt<Long> countQuery = select.count(lp::getHectares).build(); 
 
     	final Long count = 3L;
     	
     	store(s -> s.add(land1).add(land2).add(land3))
-    	.check(ds ->
-    		checkSelectOneOrNull(
-    				ds,
-    				count,
-    				countQuery, 
-    				q -> q.execute()));
+    	.checkOne(countQuery, () -> count);
     }
 }

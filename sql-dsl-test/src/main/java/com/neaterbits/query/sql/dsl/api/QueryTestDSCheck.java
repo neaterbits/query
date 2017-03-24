@@ -13,9 +13,8 @@ public interface QueryTestDSCheck {
 
 	// When must lazy-initialize with ID
 	<T> void checkOne(SingleBuilt<T> query, Supplier<T> expected);
-	
-	<T> void checkOne(SingleBuilt<T> query, Function<ISharedPreparedQueryOps<T>, T> execute, T expected);
 
+	<T> void checkOne(SingleBuilt<T> query, Function<ISharedPreparedQueryOps<T>, T> execute, T expected);
 	
 	<T> void checkListUnordered(MultiBuilt<T> query, @SuppressWarnings("unchecked") T ... expected);
 

@@ -118,6 +118,19 @@ abstract class PreparedQuery_DB<QUERY> extends PreparedQuery_DS<QueryDataSource_
 			if (aggregateFunction == EAggregateFunction.AVG) {
 				ret = getDataSource().convertAvgAggregateResult(aggregateResultType, input);
 			}
+			else if (aggregateFunction == EAggregateFunction.COUNT) {
+				if (!aggregateResultType.equals(Long.class)) {
+					throw new IllegalStateException("Expected Long type for count(): " + aggregateResultType.getName());
+				}
+			
+				/*
+				if (input != null && !input.getClass().equals(Long.class)) {
+					throw new IllegalStateException("Expected Long result for count(): " + input.getClass().getName());
+				}
+				*/
+				
+				ret = getDataSource().convertCountAggregateResult(aggregateResultType, input);
+			}
 			else {
 				if (!aggregateResultType.equals(input.getClass())) {
 					throw new IllegalStateException("Not of aggregated type " + aggregateResultType.getName() + ": " + input.getClass().getName());

@@ -193,5 +193,28 @@ public final class QueryDataSourceJPANative extends QueryDataSourceJPA {
 		
 		return ret;
 	}
+	
+	@Override
+	Object convertCountAggregateResult(Class<?> aggregateResultType, Object input) {
+		// TODO hack to work around native returning Integer
+		
+		if (!aggregateResultType.equals(Long.class)) {
+			throw new IllegalStateException("Expected Long");
+		}
+
+		final Object ret;
+
+		if (input instanceof Integer) {
+			ret = new Long((Integer)input);
+		}
+		else if (input instanceof Long) {
+			ret = input;
+		}
+		else {
+			throw new IllegalStateException("Neither Integer nor Long");
+		}
+
+		return ret;
+	}
 }
 
