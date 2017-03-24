@@ -38,9 +38,13 @@ final class Short_Collector_Single_Any_Any<MODEL, RESULT>
 			>
 
 	implements
+	/*
 			ISQLLogical_Where_SingleResult_Named_Base<MODEL, RESULT>,
 			ISQLLogical_WhereOrJoin_Named_Base<MODEL, RESULT>,
-			IShortLogical_WhereOrJoin_SingleResult_Entity_Named_Initial<MODEL, RESULT>,
+	*/
+			
+			// IShortLogical_WhereOrJoin_SingleResult_Entity_Named_Initial<MODEL, RESULT>,
+			
 			
 			//IShortLogical_WhereOrJoin_SingleResult_Entity_Named<MODEL, RESULT, RESULT>,
 			
@@ -78,6 +82,8 @@ final class Short_Collector_Single_Any_Any<MODEL, RESULT>
 		return new Short_Collector_Single_Mapped_Alias<MODEL, RESULT>(select, collectedQueryResult, getQueryCollector());
 	}
 	
+	
+	
 
 	
 	
@@ -94,12 +100,6 @@ final class Short_Collector_Single_Any_Any<MODEL, RESULT>
 		return (IShortLogical_WhereOrJoin_SingleResult_Entity_Named)this;
 	}
 	*/
-
-	@Override
-	public ISharedFunctions_Transform_Initial_Named<MODEL, RESULT, ISQLLogical_AndOr_SingleResult_Named<MODEL, RESULT>, ISharedCondition_Comparable_Common_All_Compilable<MODEL, RESULT, Short, ISQLLogical_AndOr_SingleResult_Named<MODEL, RESULT>>, ISharedCondition_Comparable_Common_All_Compilable<MODEL, RESULT, Integer, ISQLLogical_AndOr_SingleResult_Named<MODEL, RESULT>>, ISharedCondition_Comparable_Common_All_Compilable<MODEL, RESULT, Long, ISQLLogical_AndOr_SingleResult_Named<MODEL, RESULT>>, ISharedCondition_Comparable_Common_All_Compilable<MODEL, RESULT, Double, ISQLLogical_AndOr_SingleResult_Named<MODEL, RESULT>>, ISharedCondition_Comparable_Common_All_Compilable<MODEL, RESULT, BigDecimal, ISQLLogical_AndOr_SingleResult_Named<MODEL, RESULT>>, ISharedCondition_Comparable_String_All_Compilable<MODEL, RESULT, ISQLLogical_AndOr_SingleResult_Named<MODEL, RESULT>>> where() {
-		throw new UnsupportedOperationException("TODO");
-	}
-	
 
 	@Override
 	Collector_Conditions_GroupBy<MODEL, RESULT, ?> getAfterWhereNamed() {

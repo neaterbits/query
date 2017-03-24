@@ -10,7 +10,16 @@ public interface IShortPrepared extends ISQL<
 		IShortPrepared_Numeric_Named<Integer>,
 		IShortPrepared_Numeric_Named<Long>,
 		IShortPrepared_Numeric_Named<Double>,
-		IShortPrepared_Numeric_Named<BigDecimal>
+		IShortPrepared_Numeric_Named<BigDecimal>,
+
+		IShortPrepared_Numeric_Alias<Long>,
+		IShortPrepared_Numeric_Alias<Long>,
+		
+		IShortPrepared_Numeric_Alias<Short>,
+		IShortPrepared_Numeric_Alias<Integer>,
+		IShortPrepared_Numeric_Alias<Long>,
+		IShortPrepared_Numeric_Alias<Double>,
+		IShortPrepared_Numeric_Alias<BigDecimal>
 		> {
 	
 	public static IShortPrepared get(DataConfig dataConfig) {

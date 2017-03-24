@@ -10,7 +10,17 @@ public interface IShort extends ISQL<
 		IShortBuilt_Numeric_Named<Integer>,
 		IShortBuilt_Numeric_Named<Long>,
 		IShortBuilt_Numeric_Named<Double>,
-		IShortBuilt_Numeric_Named<BigDecimal>
+		IShortBuilt_Numeric_Named<BigDecimal>,
+
+		IShortBuilt_Numeric_Alias<Long>,
+		IShortBuilt_Numeric_Alias<Long>,
+		
+		IShortBuilt_Numeric_Alias<Short>,
+		IShortBuilt_Numeric_Alias<Integer>,
+		IShortBuilt_Numeric_Alias<Long>,
+		IShortBuilt_Numeric_Alias<Double>,
+		IShortBuilt_Numeric_Alias<BigDecimal>
+
 	> {
 
 	<TYPE_RESULT> IShortResult_Single<SingleBuilt<TYPE_RESULT>, TYPE_RESULT> one(Class<TYPE_RESULT> cl);

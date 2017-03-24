@@ -11,7 +11,16 @@ public interface IClassic
 				IClassicResult_Numeric_Named<Integer>,
 				IClassicResult_Numeric_Named<Long>,
 				IClassicResult_Numeric_Named<Double>,
-				IClassicResult_Numeric_Named<BigDecimal>
+				IClassicResult_Numeric_Named<BigDecimal>,
+
+				IClassicResult_Numeric_Alias<Long>,
+				IClassicResult_Numeric_Alias<Long>,
+				
+				IClassicResult_Numeric_Alias<Short>,
+				IClassicResult_Numeric_Alias<Integer>,
+				IClassicResult_Numeric_Alias<Long>,
+				IClassicResult_Numeric_Alias<Double>,
+				IClassicResult_Numeric_Alias<BigDecimal>
 				>
 
 {

@@ -1,6 +1,7 @@
 package com.neaterbits.query.sql.dsl.api;
 
 import java.lang.reflect.Method;
+import java.math.BigDecimal;
 import java.util.Collection;
 import java.util.List;
 
@@ -45,6 +46,8 @@ abstract class QueryDialect_SQL extends QueryDialect_Base {
 	abstract <MANAGED, EMBEDDED, IDENTIFIABLE, ATTRIBUTE, COLL extends Collection<ATTRIBUTE>>
 			String getFieldNameForGetter(EntityModelUtil<MANAGED, EMBEDDED, IDENTIFIABLE, ATTRIBUTE, COLL> entityModelUtil, Class<?> type, Method getter);
 
+	abstract String getBigDecimalLiteral(BigDecimal value);
+	
 	// **************************** Some abstract methods conditions ****************************
 	
 	/**
@@ -148,8 +151,6 @@ abstract class QueryDialect_SQL extends QueryDialect_Base {
 
 	private static final FunctionVisitor<Void, String> functionToNameVisitor = new FunctionVisitor<Void, String>() {
 
-		
-		
 		public String onAggregate(Function_Aggregate function, Void param) {
 			return function.getFunction().name().toLowerCase();
 		}

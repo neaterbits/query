@@ -5,7 +5,8 @@ final class ConditionStringBuilder_JPQL extends ConditionStringBuilder {
 	private final QueryParametersDistinct distinctParams;
 	
 	
-	ConditionStringBuilder_JPQL(QueryParametersDistinct distinctParams) {
+	ConditionStringBuilder_JPQL(QueryDialect_SQL dialect, QueryParametersDistinct distinctParams) {
+		super(dialect);
 		
 		if (distinctParams == null) {
 			throw new IllegalArgumentException("distinctParams == null");

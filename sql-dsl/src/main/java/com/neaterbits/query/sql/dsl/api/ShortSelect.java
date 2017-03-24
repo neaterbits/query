@@ -13,7 +13,17 @@ final class ShortSelect extends BaseShortSelect<
 		IShortBuilt_Numeric_Named<Integer>,
 		IShortBuilt_Numeric_Named<Long>,
 		IShortBuilt_Numeric_Named<Double>,
-		IShortBuilt_Numeric_Named<BigDecimal>>
+		IShortBuilt_Numeric_Named<BigDecimal>,
+		
+		IShortBuilt_Numeric_Alias<Long>,
+		IShortBuilt_Numeric_Alias<Long>,
+		
+		IShortBuilt_Numeric_Alias<Short>,
+		IShortBuilt_Numeric_Alias<Integer>,
+		IShortBuilt_Numeric_Alias<Long>,
+		IShortBuilt_Numeric_Alias<Double>,
+		IShortBuilt_Numeric_Alias<BigDecimal>
+	>
 
 	
 	implements IShort
@@ -113,7 +123,7 @@ final class ShortSelect extends BaseShortSelect<
 		
 		final QueryResultSum result = new QueryResultSum(resultCl, new SupplierGetter(field));
 		
-		return (RET)new Short_Collector_Single_Aggregate_Named<RESULT>(this, singleQueryCollected(), result);
+		return (RET)new Short_Collector_Single_Aggregate_Alias<RESULT>(this, singleQueryCollected(), result);
 	}
 
 	@Override
@@ -121,7 +131,7 @@ final class ShortSelect extends BaseShortSelect<
 	<NUM, RESULT, RET> RET max(Supplier<NUM> field, Class<NUM> numCl, Class<RESULT> resultCl) {
 		final QueryResultMax result = new QueryResultMax(resultCl, new SupplierGetter(field));
 		
-		return (RET)new Short_Collector_Single_Aggregate_Named<RESULT>(this, singleQueryCollected(), result);
+		return (RET)new Short_Collector_Single_Aggregate_Alias<RESULT>(this, singleQueryCollected(), result);
 	}
 
 	@Override
@@ -129,7 +139,7 @@ final class ShortSelect extends BaseShortSelect<
 	<NUM, RESULT, RET> RET min(Supplier<NUM> field, Class<NUM> numCl, Class<RESULT> resultCl) {
 		final QueryResultMin result = new QueryResultMin(resultCl, new SupplierGetter(field));
 		
-		return (RET)new Short_Collector_Single_Aggregate_Named<RESULT>(this, singleQueryCollected(), result);
+		return (RET)new Short_Collector_Single_Aggregate_Alias<RESULT>(this, singleQueryCollected(), result);
 	}
 
 	@Override
@@ -137,14 +147,14 @@ final class ShortSelect extends BaseShortSelect<
 	<NUM, RESULT, RET> RET avg(Supplier<NUM> field, Class<NUM> numCl, Class<RESULT> resultCl) {
 		final QueryResultAvg result = new QueryResultAvg(resultCl, new SupplierGetter(field));
 		
-		return (RET)new Short_Collector_Single_Aggregate_Named<RESULT>(this, singleQueryCollected(), result);
+		return (RET)new Short_Collector_Single_Aggregate_Alias<RESULT>(this, singleQueryCollected(), result);
 	}
 
 	@Override
 	@SuppressWarnings("unchecked")
-	<NUM, RESULT> IShortBuilt_Numeric_Named<Long> count(Supplier<NUM> field, Class<NUM> numCl, Class<RESULT> resultCl) {
+	<NUM, RESULT> IShortBuilt_Numeric_Alias<Long> count(Supplier<NUM> field, Class<NUM> numCl, Class<RESULT> resultCl) {
 		final QueryResultCount result = new QueryResultCount(resultCl, new SupplierGetter(field));
 		
-		return (IShortBuilt_Numeric_Named<Long>)new Short_Collector_Single_Aggregate_Named<RESULT>(this, singleQueryCollected(), result);
+		return (IShortBuilt_Numeric_Alias<Long>)new Short_Collector_Single_Aggregate_Alias<RESULT>(this, singleQueryCollected(), result);
 	}
 }

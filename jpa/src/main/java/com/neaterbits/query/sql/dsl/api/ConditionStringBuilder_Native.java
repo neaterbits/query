@@ -5,7 +5,9 @@ final class ConditionStringBuilder_Native extends ConditionStringBuilder {
 	private final QueryParametersDistinct distinctParams;
 	
 	
-	ConditionStringBuilder_Native(QueryParametersDistinct distinctParams) {
+	ConditionStringBuilder_Native(QueryDialect_SQL dialect, QueryParametersDistinct distinctParams) {
+		
+		super(dialect);
 		
 		if (distinctParams == null) {
 			throw new IllegalArgumentException("distinctParams == null");

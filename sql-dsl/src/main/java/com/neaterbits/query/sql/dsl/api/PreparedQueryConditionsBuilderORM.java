@@ -1,7 +1,6 @@
 package com.neaterbits.query.sql.dsl.api;
 
 import java.util.List;
-import java.util.function.BiConsumer;
 
 /**
  * Common base class for ORM queries / native ANSI SQL due to commonalities
@@ -156,7 +155,7 @@ final class PreparedQueryConditionsBuilderORM extends PreparedQueryConditionsBui
 				
 				sb.append(' ');
 
-				comparison.getRhs().resolve(sb, resolver);
+				comparison.getRhs().resolve(dialect, sb, resolver);
 			}
 			else {
 				throw new UnsupportedOperationException("Unknown condition type " + condition.getClass().getSimpleName());

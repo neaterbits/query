@@ -920,4 +920,51 @@ public class ShortAPITest extends BaseJPATest {
 		
 	}
 	
+	@Test
+	public void testQueryParams() {
+		
+		// Add params for where/and/or
+		
+		assertThat(true).isEqualTo(false);
+	}
+	
+	@Test
+	public void testOperatorBoundarites() {
+		
+		// Test all > < >= <= etc, but no need to test for all other cases as orthogonal 
+		
+		assertThat(true).isEqualTo(false);
+	}
+	
+	@Test
+	public void testHasAllAggregateTypesForNamed() {
+		
+		// Test all alias functions work on all types (integer, BigDecimal etx)
+		
+		assertThat(true).isEqualTo(false);
+	}
+	
+	@Test
+	public void testHasAllAggregateTypesForAlias() {
+		
+		// Test all alias functions work on all types (integer, BigDecimal etx)
+		
+		assertThat(true).isEqualTo(false);
+	}
+	
+	@Test
+	public void testComparatorsForAllTypesNamed() {
+		
+		// Test has all comparators for all types, orthogonal test
+		
+		assertThat(true).isEqualTo(false);
+	}
+	
+	@Test
+	public void testComparatorsForAllTypesAlias() {
+		
+		// Test has all comparators for all types, orthogonal test
+		
+		assertThat(true).isEqualTo(false);
+	}
 }

@@ -14,7 +14,16 @@ final class ShortSelectPrepared extends BaseShortSelect<
 		IShortPrepared_Numeric_Named<Integer>,
 		IShortPrepared_Numeric_Named<Long>,
 		IShortPrepared_Numeric_Named<Double>,
-		IShortPrepared_Numeric_Named<BigDecimal>
+		IShortPrepared_Numeric_Named<BigDecimal>,
+
+		IShortPrepared_Numeric_Alias<Long>,
+		IShortPrepared_Numeric_Alias<Long>,
+		
+		IShortPrepared_Numeric_Alias<Short>,
+		IShortPrepared_Numeric_Alias<Integer>,
+		IShortPrepared_Numeric_Alias<Long>,
+		IShortPrepared_Numeric_Alias<Double>,
+		IShortPrepared_Numeric_Alias<BigDecimal>
 	>
 
 	implements IShortPrepared {
@@ -140,7 +149,7 @@ final class ShortSelectPrepared extends BaseShortSelect<
 	}
 
 	@Override
-	<NUM, RESULT> IShortPrepared_Numeric_Named<Long> count(Supplier<NUM> field, Class<NUM> numCl,
+	<NUM, RESULT> IShortPrepared_Numeric_Alias<Long> count(Supplier<NUM> field, Class<NUM> numCl,
 			Class<RESULT> resultCl) {
 		throw new UnsupportedOperationException("TODO");
 	}

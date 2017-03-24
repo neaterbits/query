@@ -1,6 +1,7 @@
 package com.neaterbits.query.sql.dsl.api;
 
 import java.lang.reflect.Method;
+import java.math.BigDecimal;
 import java.util.Collection;
 import java.util.List;
 
@@ -287,7 +288,7 @@ final class QueryDialect_ANSI_SQL<MANAGED, EMBEDDED, IDENTIFIABLE, ATTRIBUTE, CO
 
 	@Override
 	final ConditionStringBuilder makeConditionStringBuilder(QueryParametersDistinct distinctParams) {
-		return new ConditionStringBuilder_Native(distinctParams);
+		return new ConditionStringBuilder_Native(this, distinctParams);
 	}
 	
 	private String getTableName(Class<?> javaType) {
@@ -302,5 +303,10 @@ final class QueryDialect_ANSI_SQL<MANAGED, EMBEDDED, IDENTIFIABLE, ATTRIBUTE, CO
 		String getFieldNameForGetter(EntityModelUtil<M, E, I, A, C> entityModelUtil, Class<?> type, Method getter) {
 		
 		return entityModelUtil.getModel().getColumnNameForGetter(type, getter);
+	}
+
+	@Override
+	String getBigDecimalLiteral(BigDecimal value) {
+		return value.toPlainString();
 	}
 }

@@ -19,7 +19,7 @@ final class SQLConditionLikeWithParamUnresolved extends SQLConditionUnresolved {
 	}
 
 	@Override
-	void resolve(QueryBuilder sb, ParamValueResolver resolver) {
+	void resolve(QueryDialect_SQL dialect, QueryBuilder sb, ParamValueResolver resolver) {
 
 		if (resolver == null) {
 			throw new IllegalArgumentException("resolver == null");

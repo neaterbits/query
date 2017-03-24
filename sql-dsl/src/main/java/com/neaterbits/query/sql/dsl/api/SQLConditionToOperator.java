@@ -146,7 +146,7 @@ final class SQLConditionToOperator {
 		@Override
 		public Param<?> onLiteralAny(ConditionValue_Literal_Any<?> value, ConditionStringBuilder builder) {
 
-			appendLiteral(value.getLiteral(), builder::append);
+			appendLiteral(builder.getDialect(), value.getLiteral(), builder::append);
 
 			return null;
 		}
@@ -162,7 +162,7 @@ final class SQLConditionToOperator {
 		@Override
 		public Param<?> onArray(ConditionValue_Array value, ConditionStringBuilder builder) {
 			
-			appendLiteralArray(value.getValues(), builder::append);
+			appendLiteralArray(builder.getDialect(), value.getValues(), builder::append);
 
 			return null;
 		}
@@ -171,7 +171,7 @@ final class SQLConditionToOperator {
 		@Override
 		public Param<?> onList(ConditionValue_List value, ConditionStringBuilder builder) {
 			
-			appendLiteralList(value.getValues(), builder::append);
+			appendLiteralList(builder.getDialect(), value.getValues(), builder::append);
 			
 			
 			return null;
@@ -217,24 +217,26 @@ final class SQLConditionToOperator {
 		append.apply("'");
 	}
 
-	static void appendLiteral(Object literal, Function<String, ?> append) {
+	static void appendLiteral(QueryDialect_SQL dialect, Object literal, Function<String, ?> append) {
 
 		if (literal instanceof String) {
 			appendStringLiteral((String) literal, append);
 		} else if (literal instanceof Integer) {
 			append.apply(String.valueOf((Integer) literal));
 		} else if (literal instanceof BigDecimal) {
-			append.apply("'" + ((BigDecimal)literal).toString() + "'"); // TODO
+			final String asString = dialect.getBigDecimalLiteral((BigDecimal)literal);
+			
+			append.apply(asString);
 		} else {
 			throw new UnsupportedOperationException("Unknown literal of type " + literal.getClass().getName());
 		}
 	}
 
-	static void appendLiteralArray(Object [] values, Function<String, ?> append) {
-		appendLiteralList(Arrays.asList(values), append);
+	static void appendLiteralArray(QueryDialect_SQL dialect, Object [] values, Function<String, ?> append) {
+		appendLiteralList(dialect, Arrays.asList(values), append);
 	}
 	
-	static void appendLiteralList(List<?> values, Function<String, ?> append) {
+	static void appendLiteralList(QueryDialect_SQL dialect, List<?> values, Function<String, ?> append) {
 		
 		final int num = values.size();
 		
@@ -243,7 +245,7 @@ final class SQLConditionToOperator {
 				append.apply(", ");
 			}
 
-			appendLiteral(values.get(i), append);
+			appendLiteral(dialect, values.get(i), append);
 		}
 		
 	}

@@ -6,8 +6,18 @@ public interface IShortResult_Single<MODEL, RESULT>
 		IShortResult_Mapped_Single_All<MODEL, RESULT>,
 
 		
+		ISQLLogical_WhereOrJoin_SingleResult_Named<MODEL, RESULT>,
+		IShortLogical_Join_Single_Named_Initial<MODEL, RESULT>,
 		
+		ISQLLogical_WhereOrJoin_SingleResult_Alias<MODEL, RESULT>
+
+
+		
+/*
 		IShortLogical_WhereOrJoin_SingleResult_Entity_Named_Initial<MODEL, RESULT>,
-		IShortLogical_WhereOrJoin_SingleResult_Entity_Alias<MODEL, RESULT> {
+		IShortLogical_WhereOrJoin_SingleResult_Entity_Alias<MODEL, RESULT> 
+		
+*/
+{
 
 }

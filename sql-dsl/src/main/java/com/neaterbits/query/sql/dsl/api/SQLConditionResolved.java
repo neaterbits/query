@@ -16,7 +16,7 @@ final class SQLConditionResolved extends SQLCondition {
 	}
 
 	@Override
-	void resolve(QueryBuilder sb, ParamValueResolver resolver) {
+	void resolve(QueryDialect_SQL dialect, QueryBuilder sb, ParamValueResolver resolver) {
 		sb.append(getConditionResolvedPrefix());
 	}
 

@@ -17,7 +17,7 @@ final class JPAConditionNativeInUnresolved extends SQLConditionUnresolved {
 	}
 
 	@Override
-	void resolve(QueryBuilder sb, ParamValueResolver paramValueResolver) {
+	void resolve(QueryDialect_SQL dialect, QueryBuilder sb, ParamValueResolver paramValueResolver) {
 		
 		final Object value = paramValueResolver.resolveParam(param);
 		
@@ -38,7 +38,7 @@ final class JPAConditionNativeInUnresolved extends SQLConditionUnresolved {
 				sb.append(',');
 			}
 
-			SQLConditionToOperator.appendLiteral(list.get(i), sb::append);
+			SQLConditionToOperator.appendLiteral(dialect, list.get(i), sb::append);
 		}
 		
 		sb.append(')');

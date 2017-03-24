@@ -13,7 +13,7 @@ public interface ISharedCondition_Comparable_Common_Param<
 	
 	L isGreaterOrEqualTo(ValParam<R> value);
 	
-	L isLesserThan(ValParam<R> value);
+	L isLessThan(ValParam<R> value);
 	
 	L isLesserOrEqualTo(ValParam<R> value);
 }

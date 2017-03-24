@@ -9,21 +9,34 @@ import com.neaterbits.query.sql.dsl.api.entity.QueryMetaModel;
 abstract class BaseSelect<
 		// for sums, we return Long for short and int so must differentiate from other aggregate
 		// fuctions, this is because sum may wrap over limits of type
-		SUM_LONG_RET,
-		COUNT_RET,
+		NAMED_SUM_LONG_RET,
+		NAMED_COUNT_RET,
 		
 		// for other types aggregates, we return the same result as the input type, eg.
 		// max of short-type will never be > short type
-		SHORT_RET,
-		INT_RET,
-		LONG_RET,
-		DOUBLE_RET,
-		BIGDECIMAL_RET
+		NAMED_SHORT_RET,
+		NAMED_INT_RET,
+		NAMED_LONG_RET,
+		NAMED_DOUBLE_RET,
+		NAMED_BIGDECIMAL_RET,
+
+		
+		ALIAS_SUM_LONG_RET,
+		ALIAS_COUNT_RET,
+		
+		ALIAS_SHORT_RET,
+		ALIAS_INT_RET,
+		ALIAS_LONG_RET,
+		ALIAS_DOUBLE_RET,
+		ALIAS_BIGDECIMAL_RET
 		>
 
 	extends BaseQuery
 
-	implements ISQL<SUM_LONG_RET, COUNT_RET, SHORT_RET, INT_RET, LONG_RET, DOUBLE_RET, BIGDECIMAL_RET> 
+	implements ISQL<
+		NAMED_SUM_LONG_RET, NAMED_COUNT_RET, NAMED_SHORT_RET, NAMED_INT_RET, NAMED_LONG_RET, NAMED_DOUBLE_RET, NAMED_BIGDECIMAL_RET,
+		ALIAS_SUM_LONG_RET, ALIAS_COUNT_RET, ALIAS_SHORT_RET, ALIAS_INT_RET, ALIAS_LONG_RET, ALIAS_DOUBLE_RET, ALIAS_BIGDECIMAL_RET
+		> 
 	
 	{
 		
@@ -54,22 +67,22 @@ abstract class BaseSelect<
 
 
 	@Override
-	public final <T> SUM_LONG_RET sum(IFunctionShort<T> field) {
+	public final <T> NAMED_SUM_LONG_RET sum(IFunctionShort<T> field) {
 		return sum(field, Short.class, Long.class);
 	}
 
 	@Override
-	public final <T> SUM_LONG_RET sum(IFunctionInteger<T> field) {
+	public final <T> NAMED_SUM_LONG_RET sum(IFunctionInteger<T> field) {
 		return sum(field, Integer.class, Long.class);
 	}
 	
 	@Override
-	public final <T> SUM_LONG_RET sum(IFunctionLong<T> field) {
+	public final <T> NAMED_SUM_LONG_RET sum(IFunctionLong<T> field) {
 		return sum(field, Long.class, Long.class);
 	}
 
 	@Override
-	public final <T> BIGDECIMAL_RET sum(IFunctionBigDecimal<T> field) {
+	public final <T> NAMED_BIGDECIMAL_RET sum(IFunctionBigDecimal<T> field) {
 		return sum(field, BigDecimal.class, BigDecimal.class);
 	}
 
@@ -85,22 +98,22 @@ abstract class BaseSelect<
 	abstract <T, NUM, RESULT, RET> RET max(Function<T, NUM> field, Class<NUM> numCl, Class<RESULT> resultCl);
 
 	@Override
-	public final <T> SHORT_RET max(IFunctionShort<T> field) {
+	public final <T> NAMED_SHORT_RET max(IFunctionShort<T> field) {
 		return max(field, Short.class, Short.class);
 	}
 
 	@Override
-	public final <T> INT_RET max(IFunctionInteger<T> field) {
+	public final <T> NAMED_INT_RET max(IFunctionInteger<T> field) {
 		return max(field, Integer.class, Integer.class);
 	}
 	
 	@Override
-	public final <T> LONG_RET max(IFunctionLong<T> field) {
+	public final <T> NAMED_LONG_RET max(IFunctionLong<T> field) {
 		return max(field, Long.class, Long.class);
 	}
 
 	@Override
-	public final <T> BIGDECIMAL_RET max(IFunctionBigDecimal<T> field) {
+	public final <T> NAMED_BIGDECIMAL_RET max(IFunctionBigDecimal<T> field) {
 		return max(field, BigDecimal.class, BigDecimal.class);
 	}
 		
@@ -116,22 +129,22 @@ abstract class BaseSelect<
 	abstract <T, NUM, RESULT, RET> RET min(Function<T, NUM> field, Class<NUM> numCl, Class<RESULT> resultCl);
 
 	@Override
-	public final <T> SHORT_RET min(IFunctionShort<T> field) {
+	public final <T> NAMED_SHORT_RET min(IFunctionShort<T> field) {
 		return min(field, Short.class, Short.class);
 	}
 
 	@Override
-	public final <T> INT_RET min(IFunctionInteger<T> field) {
+	public final <T> NAMED_INT_RET min(IFunctionInteger<T> field) {
 		return min(field, Integer.class, Integer.class);
 	}
 	
 	@Override
-	public final <T> LONG_RET min(IFunctionLong<T> field) {
+	public final <T> NAMED_LONG_RET min(IFunctionLong<T> field) {
 		return min(field, Long.class, Long.class);
 	}
 
 	@Override
-	public final <T> BIGDECIMAL_RET min(IFunctionBigDecimal<T> field) {
+	public final <T> NAMED_BIGDECIMAL_RET min(IFunctionBigDecimal<T> field) {
 		return min(field, BigDecimal.class, BigDecimal.class);
 	}
 
@@ -146,22 +159,22 @@ abstract class BaseSelect<
 	abstract <T, NUM, RESULT, RET> RET avg(Function<T, NUM> field, Class<NUM> numCl, Class<RESULT> resultCl);
 
 	@Override
-	public final <T> DOUBLE_RET avg(IFunctionShort<T> field) {
+	public final <T> NAMED_DOUBLE_RET avg(IFunctionShort<T> field) {
 		return avg(field, Short.class, Double.class);
 	}
 
 	@Override
-	public final <T> DOUBLE_RET avg(IFunctionInteger<T> field) {
+	public final <T> NAMED_DOUBLE_RET avg(IFunctionInteger<T> field) {
 		return avg(field, Integer.class, Double.class);
 	}
 	
 	@Override
-	public final <T> DOUBLE_RET avg(IFunctionLong<T> field) {
+	public final <T> NAMED_DOUBLE_RET avg(IFunctionLong<T> field) {
 		return avg(field, Long.class, Double.class);
 	}
 
 	@Override
-	public final <T> DOUBLE_RET avg(IFunctionBigDecimal<T> field) {
+	public final <T> NAMED_DOUBLE_RET avg(IFunctionBigDecimal<T> field) {
 		return avg(field, BigDecimal.class, Double.class);
 	}
 
@@ -173,26 +186,26 @@ abstract class BaseSelect<
 	}
 	*/
 	
-	abstract <T, NUM, RESULT> COUNT_RET count(Function<T, NUM> field, Class<NUM> numCl, Class<RESULT> resultCl);
+	abstract <T, NUM, RESULT> NAMED_COUNT_RET count(Function<T, NUM> field, Class<NUM> numCl, Class<RESULT> resultCl);
 	
 
 	@Override
-	public final <T> COUNT_RET count(IFunctionShort<T> field) {
+	public final <T> NAMED_COUNT_RET count(IFunctionShort<T> field) {
 		return count(field, Short.class, Long.class);
 	}
 
 	@Override
-	public final <T> COUNT_RET count(IFunctionInteger<T> field) {
+	public final <T> NAMED_COUNT_RET count(IFunctionInteger<T> field) {
 		return count(field, Integer.class, Long.class);
 	}
 	
 	@Override
-	public final <T> COUNT_RET count(IFunctionLong<T> field) {
+	public final <T> NAMED_COUNT_RET count(IFunctionLong<T> field) {
 		return count(field, Long.class, Long.class);
 	}
 
 	@Override
-	public final <T> COUNT_RET count(IFunctionBigDecimal<T> field) {
+	public final <T> NAMED_COUNT_RET count(IFunctionBigDecimal<T> field) {
 		return count(field, BigDecimal.class, Long.class);
 	}
 
@@ -215,22 +228,22 @@ abstract class BaseSelect<
 	
 
 	@Override
-	public final SUM_LONG_RET sum(ISupplierShort field) {
+	public final ALIAS_SUM_LONG_RET sum(ISupplierShort field) {
 		return sum(field, Short.class, Long.class);
 	}
 
 	@Override
-	public final SUM_LONG_RET sum(ISupplierInteger field) {
+	public final ALIAS_SUM_LONG_RET sum(ISupplierInteger field) {
 		return sum(field, Integer.class, Long.class);
 	}
 	
 	@Override
-	public final SUM_LONG_RET sum(ISupplierLong field) {
+	public final ALIAS_SUM_LONG_RET sum(ISupplierLong field) {
 		return sum(field, Long.class, Long.class);
 	}
 
 	@Override
-	public final BIGDECIMAL_RET sum(ISupplierBigDecimal field) {
+	public final ALIAS_BIGDECIMAL_RET sum(ISupplierBigDecimal field) {
 		return sum(field, BigDecimal.class, BigDecimal.class);
 	}
 
@@ -246,22 +259,22 @@ abstract class BaseSelect<
 	abstract <NUM, RESULT, RET> RET max(Supplier<NUM> field, Class<NUM> numCl, Class<RESULT> resultCl);
 
 	@Override
-	public final SHORT_RET max(ISupplierShort field) {
+	public final ALIAS_SHORT_RET max(ISupplierShort field) {
 		return max(field, Short.class, Short.class);
 	}
 
 	@Override
-	public final INT_RET max(ISupplierInteger field) {
+	public final ALIAS_INT_RET max(ISupplierInteger field) {
 		return max(field, Integer.class, Integer.class);
 	}
 	
 	@Override
-	public final LONG_RET max(ISupplierLong field) {
+	public final ALIAS_LONG_RET max(ISupplierLong field) {
 		return max(field, Long.class, Long.class);
 	}
 
 	@Override
-	public final BIGDECIMAL_RET max(ISupplierBigDecimal field) {
+	public final ALIAS_BIGDECIMAL_RET max(ISupplierBigDecimal field) {
 		return max(field, BigDecimal.class, BigDecimal.class);
 	}
 		
@@ -277,22 +290,22 @@ abstract class BaseSelect<
 	abstract <NUM, RESULT, RET> RET min(Supplier<NUM> field, Class<NUM> numCl, Class<RESULT> resultCl);
 
 	@Override
-	public final SHORT_RET min(ISupplierShort field) {
+	public final ALIAS_SHORT_RET min(ISupplierShort field) {
 		return min(field, Short.class, Short.class);
 	}
 
 	@Override
-	public final INT_RET min(ISupplierInteger field) {
+	public final ALIAS_INT_RET min(ISupplierInteger field) {
 		return min(field, Integer.class, Integer.class);
 	}
 	
 	@Override
-	public final LONG_RET min(ISupplierLong field) {
+	public final ALIAS_LONG_RET min(ISupplierLong field) {
 		return min(field, Long.class, Long.class);
 	}
 
 	@Override
-	public final BIGDECIMAL_RET min(ISupplierBigDecimal field) {
+	public final ALIAS_BIGDECIMAL_RET min(ISupplierBigDecimal field) {
 		return min(field, BigDecimal.class, BigDecimal.class);
 	}
 
@@ -307,22 +320,22 @@ abstract class BaseSelect<
 	abstract <NUM, RESULT, RET> RET avg(Supplier<NUM> field, Class<NUM> numCl, Class<RESULT> resultCl);
 
 	@Override
-	public final DOUBLE_RET avg(ISupplierShort field) {
+	public final ALIAS_DOUBLE_RET avg(ISupplierShort field) {
 		return avg(field, Short.class, Double.class);
 	}
 
 	@Override
-	public final DOUBLE_RET avg(ISupplierInteger field) {
+	public final ALIAS_DOUBLE_RET avg(ISupplierInteger field) {
 		return avg(field, Integer.class, Double.class);
 	}
 	
 	@Override
-	public final DOUBLE_RET avg(ISupplierLong field) {
+	public final ALIAS_DOUBLE_RET avg(ISupplierLong field) {
 		return avg(field, Long.class, Double.class);
 	}
 
 	@Override
-	public final DOUBLE_RET avg(ISupplierBigDecimal field) {
+	public final ALIAS_DOUBLE_RET avg(ISupplierBigDecimal field) {
 		return avg(field, BigDecimal.class, Double.class);
 	}
 
@@ -334,26 +347,26 @@ abstract class BaseSelect<
 	}
 	*/
 	
-	abstract <NUM, RESULT> COUNT_RET count(Supplier<NUM> field, Class<NUM> numCl, Class<RESULT> resultCl);
+	abstract <NUM, RESULT> ALIAS_COUNT_RET count(Supplier<NUM> field, Class<NUM> numCl, Class<RESULT> resultCl);
 	
 
 	@Override
-	public final COUNT_RET count(ISupplierShort field) {
+	public final ALIAS_COUNT_RET count(ISupplierShort field) {
 		return count(field, Short.class, Long.class);
 	}
 
 	@Override
-	public final COUNT_RET count(ISupplierInteger field) {
+	public final ALIAS_COUNT_RET count(ISupplierInteger field) {
 		return count(field, Integer.class, Long.class);
 	}
 	
 	@Override
-	public final COUNT_RET count(ISupplierLong field) {
+	public final ALIAS_COUNT_RET count(ISupplierLong field) {
 		return count(field, Long.class, Long.class);
 	}
 
 	@Override
-	public final COUNT_RET count(ISupplierBigDecimal field) {
+	public final ALIAS_COUNT_RET count(ISupplierBigDecimal field) {
 		return count(field, BigDecimal.class, Long.class);
 	}	
 }
