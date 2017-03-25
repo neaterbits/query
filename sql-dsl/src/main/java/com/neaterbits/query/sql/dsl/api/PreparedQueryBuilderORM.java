@@ -388,7 +388,8 @@ final class PreparedQueryBuilderORM<MANAGED, EMBEDDED, IDENTIFIABLE, ATTRIBUTE, 
 					
 				case ONE_TO_MANY:
 					// Always remove from FROM if present
-					removeFromFROMifPresent = true;
+					removeFromFROMifPresent = true; //  ! dialect.requiresSelectedFieldsAsPartOfFrom();
+													// true;
 					break;
 					
 				default:
@@ -454,7 +455,7 @@ final class PreparedQueryBuilderORM<MANAGED, EMBEDDED, IDENTIFIABLE, ATTRIBUTE, 
 	
 	
 	private <QUERY> SourceReference getSourceReference(ExecutableQuery<QUERY> q, QUERY query, int idx) {
-		final SourceReference ref = new SourceReference(q.getSourceJavaType(query, idx), q.getSourceName(query, idx) );
+		final SourceReference ref = new SourceReference(q.getSourceJavaType(query, idx), q.getSourceName(query, idx), q.getQueryFieldAccessType(query));
 
 		return ref;
 	}

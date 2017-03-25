@@ -25,6 +25,15 @@ abstract class QueryDialect_SQL extends QueryDialect_Base {
 	 */
 	abstract boolean supportsNonRelationJoins();
 	
+	/**
+	 * Whether requires selected fields to be in From EVEN if in join,
+	 * eg native query select.sum(LandPlot::getHectares).innerJoin(Farm::getLandPlots)
+	 * requires to have FROM farm, land_plot , so cannot just remove land_plot from 'from' even if part of inner-join
+	 */
+	
+	// abstract boolean requiresSelectedFieldsAsPartOfFrom();
+	
+	
 	//abstract void select();
 	
 	abstract void addEntityResult(QueryBuilder sb, EFieldAccessType fieldReferenceType, SourceReference sourceReference);

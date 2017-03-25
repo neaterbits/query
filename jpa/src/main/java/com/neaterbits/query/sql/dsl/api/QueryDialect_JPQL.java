@@ -16,6 +16,13 @@ final class QueryDialect_JPQL extends QueryDialect_SQL {
 		return false;
 	}
 	
+	/*
+	@Override
+	boolean requiresSelectedFieldsAsPartOfFrom() {
+		return false;
+	}
+	*/
+
 	@Override
 	void addEntityResult(QueryBuilder sb, EFieldAccessType fieldReferenceType, SourceReference sourceReference) {
 

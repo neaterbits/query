@@ -3,8 +3,9 @@ package com.neaterbits.query.sql.dsl.api;
 final class SourceReference {
 	private final Class<?> javaType;
 	private final String varName;
+	private final EFieldAccessType fieldAccessType;
 	
-	SourceReference(Class<?> javaType, String varName) {
+	SourceReference(Class<?> javaType, String varName, EFieldAccessType fieldAccessType) {
 		
 		if (javaType == null) {
 			throw new IllegalArgumentException("javaType == null");
@@ -14,8 +15,13 @@ final class SourceReference {
 			throw new IllegalArgumentException("varName == null");
 		}
 
+		if (fieldAccessType == null) {
+			throw new IllegalArgumentException("fieldAccessType == null");
+		}
+
 		this.javaType = javaType;
 		this.varName = varName;
+		this.fieldAccessType = fieldAccessType;
 	}
 
 	Class<?> getJavaType() {
@@ -24,5 +30,9 @@ final class SourceReference {
 
 	String getVarName() {
 		return varName;
+	}
+
+	EFieldAccessType getFieldAccessType() {
+		return fieldAccessType;
 	}
 }

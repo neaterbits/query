@@ -50,8 +50,11 @@ public class AggregateJoinTest extends GEN_BaseTestCase {
     	*/
     	.dump("select * from farm")
     	.dump("select * from land_plot")
+    	
+    	// remove to avoid delete constraints when deleting Farm (not cascade)
     	.remove(land1, land2, land3)
     	.checkAggregate(query, new BigDecimal("150.30"));
+    	
     	
     	//fortsett, innerjoin fra farm til landplot med aggregate på farm? for eksempel min og max TimeFounded eller lignende
     	assertThat(true).isEqualTo(false);

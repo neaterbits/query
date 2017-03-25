@@ -29,6 +29,15 @@ final class QueryDialect_ANSI_SQL<MANAGED, EMBEDDED, IDENTIFIABLE, ATTRIBUTE, CO
 		return true;
 	}
 	
+	/*
+	@Override
+	boolean requiresSelectedFieldsAsPartOfFrom() {
+		// TODO Must always add types from clause, even if in join ?
+		// looks like might not
+		return false;
+	}
+	*/
+
 	@Override
 	void addEntityResult(QueryBuilder sb, EFieldAccessType fieldReferenceType, SourceReference sourceReference) {
 
@@ -128,9 +137,13 @@ final class QueryDialect_ANSI_SQL<MANAGED, EMBEDDED, IDENTIFIABLE, ATTRIBUTE, CO
 	*/
 
 	private void appendJoinVar(QueryBuilder sb, SourceReference to) {
-		sb.append(getSourceTypeName(to.getJavaType())).append(' ').append(to.getVarName());
+		sb.append(getSourceTypeName(to.getJavaType()));
+
+		if (to.getFieldAccessType() == EFieldAccessType.ALIAS) {
+			sb.append(' ').append(to.getVarName());
+		}
 	}
-	
+
 	@Override
 	void addComparisonJoin(QueryBuilder sb, List<JoinFieldComparison> fieldComparisons, SourceReference from, SourceReference to) {
 		

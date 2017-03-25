@@ -298,7 +298,12 @@ public class JPAEntityModel implements EntityModel<
 
 				ret = joinColumns != null
 						? joinColumns
-						: getColumnAnnotationOrDefaultAsArray(attribute); 
+						: // for join columns, looks like defaults to "<attribbutename>_ID" 
+						  // getColumnAnnotationOrDefaultAsArray(attribute);
+						new String [] { attribute.getName().toUpperCase() + "_ID" };
+				
+						
+							
 			}
 			else {
 				// default
@@ -322,8 +327,6 @@ public class JPAEntityModel implements EntityModel<
 				
 				// Must look for JoinColumns on other side
 				final String [] joinColumns = getJoinColumnsReferenced((AccessibleObject)corresponding.getJavaMember());
-				
-				
 
 				if (joinColumns != null) {
 					ret = joinColumns;
@@ -352,7 +355,12 @@ public class JPAEntityModel implements EntityModel<
 			
 			ret = joinColumns != null
 					? joinColumns
-					: getColumnAnnotationOrDefaultAsArray(attribute); 
+							: // for join columns, looks like defaults to "<attribbutename>_ID" 
+								  // getColumnAnnotationOrDefaultAsArray(attribute);
+								new String [] { attribute.getName().toUpperCase() + "_ID" };
+							
+							
+					// : getColumnAnnotationOrDefaultAsArray(attribute); 
 			break;
 
 		case MANY_TO_MANY:
