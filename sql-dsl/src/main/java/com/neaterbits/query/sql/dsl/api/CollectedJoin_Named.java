@@ -22,5 +22,4 @@ final class CollectedJoin_Named extends CollectedJoin {
 			new CollectedJoinCondition_OneToMany_Named(new FunctionGetter(collectionJoin)),
 			subJoins);
 	}
-	
 }

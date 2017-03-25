@@ -370,4 +370,75 @@ abstract class Short_Collector_Initial_Single_Any_Any_Base<MODEL, RESULT>
 		
 		return typedJoinCollector();
 	}
+
+
+
+	@Override
+	public final <R extends Comparable<R>> ISQLLogical_WhereOrJoin_SingleResult_Alias_And_Function<MODEL, RESULT>
+			innerJoin(Supplier<R> from, Supplier<R> to) {
+
+		return addInnerJoin(from, to);
+	}
+
+
+
+	@Override
+	public final <JOIN_TO> ISQLLogical_WhereOrJoin_SingleResult_Alias_And_Function<MODEL, RESULT>
+			innerJoin(CollectionSupplier<JOIN_TO> collection, JOIN_TO alias) {
+		
+		return addInnerJoin(collection, alias);
+	}
+
+
+
+	@Override
+	public final <R extends Comparable<R>> ISQLLogical_WhereOrJoin_SingleResult_Alias_And_Function<MODEL, RESULT>
+			innerJoin(Supplier<R> from, Supplier<R> to, Consumer<IShortJoin_Sub_Alias<MODEL, RESULT, Void>> consumer) {
+
+		return addInnerJoin(from, to, consumer);
+	}
+
+
+
+	@Override
+	public final <JOIN_TO> ISQLLogical_WhereOrJoin_SingleResult_Alias_And_Function<MODEL, RESULT>
+			innerJoin(CollectionSupplier<JOIN_TO> collection, JOIN_TO alias, Consumer<IShortJoin_Sub_Alias<MODEL, RESULT, Void>> consumer) {
+		
+		return addInnerJoin(collection, alias, consumer);
+	}
+
+
+
+	@Override
+	public final <R extends Comparable<R>> ISQLLogical_WhereOrJoin_SingleResult_Alias_And_Function<MODEL, RESULT>
+			leftJoin(Supplier<R> from, Supplier<R> to) {
+
+		return addLeftJoin(from, to);
+	}
+
+
+
+	@Override
+	public final <JOIN_TO> ISQLLogical_WhereOrJoin_SingleResult_Alias_And_Function<MODEL, RESULT>
+			leftJoin(CollectionSupplier<JOIN_TO> collection, JOIN_TO alias) {
+		
+		return addLeftJoin(collection, alias);
+	}
+
+
+	@Override
+	public final <R extends Comparable<R>> ISQLLogical_WhereOrJoin_SingleResult_Alias_And_Function<MODEL, RESULT>
+			leftJoin(Supplier<R> from, Supplier<R> to, Consumer<IShortJoin_Sub_Alias<MODEL, RESULT, Void>> consumer) {
+
+		return addLeftJoin(from, to, consumer);
+	}
+
+
+
+	@Override
+	public final <JOIN_TO> ISQLLogical_WhereOrJoin_SingleResult_Alias_And_Function<MODEL, RESULT>
+			leftJoin(CollectionSupplier<JOIN_TO> collection, JOIN_TO alias, Consumer<IShortJoin_Sub_Alias<MODEL, RESULT, Void>> consumer) {
+
+		return addLeftJoin(collection, alias, consumer);
+	}
 }

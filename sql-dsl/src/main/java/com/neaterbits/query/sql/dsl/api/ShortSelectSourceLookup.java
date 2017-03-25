@@ -84,7 +84,7 @@ final class ShortSelectSourceLookup extends SelectSourceLookup {
 	@Override
 	TypeMapSource getAliasesSource(IAlias alias) {
 		if (alias == null) {
-			throw new IllegalArgumentException("type == null");
+			throw new IllegalArgumentException("alias == null");
 		}
 
 		if (this.accessType != null) {
@@ -160,7 +160,7 @@ final class ShortSelectSourceLookup extends SelectSourceLookup {
 
 		return ret;
 	}
-
+	
 	private CompiledGetter findFunctionGetter(Function<?, ?> getter) throws CompileException {
 		CompiledGetter func = cache.findGetterFromTypes(this.knownTypes, getter);
 

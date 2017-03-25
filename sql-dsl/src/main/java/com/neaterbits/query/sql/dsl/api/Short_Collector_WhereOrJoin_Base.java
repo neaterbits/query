@@ -2,6 +2,7 @@ package com.neaterbits.query.sql.dsl.api;
 
 import java.util.function.Consumer;
 import java.util.function.Function;
+import java.util.function.Supplier;
 
 abstract class Short_Collector_WhereOrJoin_Base<
 		MODEL,
@@ -69,15 +70,19 @@ abstract class Short_Collector_WhereOrJoin_Base<
 		super(queryCollector, clauseCollector);
 	}
 
+	
+	
+	/***********************************************************************
+	 * Named join
+	 **********************************************************************/
 	@SuppressWarnings("unchecked")
 	private MAPPED_NAMED_WHERE_OR_JOIN addNamedJoin(CollectedJoin_Named collectedJoin) {
 		addJoin(collectedJoin);
 		
 		return (MAPPED_NAMED_WHERE_OR_JOIN)this;
 	}
-	
 
-	private <TO> Collector_Joins buildSubJoins(Consumer<IShortJoin_Sub_Named<MODEL, RESULT, TO, Void>> consumer) {
+	private <TO> Collector_Joins buildSubJoinsNamed(Consumer<IShortJoin_Sub_Named<MODEL, RESULT, TO, Void>> consumer) {
 
 		final Collector_Joins collector = new Collector_Joins();
 		
@@ -202,7 +207,7 @@ abstract class Short_Collector_WhereOrJoin_Base<
 			Consumer<IShortJoin_Sub_Named<MODEL, RESULT, TO, Void>> consumer,
 			Function<CollectedJoin_Named, RET> collect) {
 		
-		final Collector_Joins sub = consumer != null ? buildSubJoins(consumer) : null;
+		final Collector_Joins sub = consumer != null ? buildSubJoinsNamed(consumer) : null;
 		
 		final CollectedJoin_Named join = new CollectedJoin_Named(joinType, from, to, sub);
 		
@@ -215,7 +220,7 @@ abstract class Short_Collector_WhereOrJoin_Base<
 			Consumer<IShortJoin_Sub_Named<MODEL, RESULT, TO, Void>> consumer,
 			Function<CollectedJoin_Named, RET> collect) {
 		
-		final Collector_Joins sub = consumer != null ? buildSubJoins(consumer) : null;
+		final Collector_Joins sub = consumer != null ? buildSubJoinsNamed(consumer) : null;
 		
 		final CollectedJoin_Named join = new CollectedJoin_Named(joinType, collection, sub);
 		
@@ -282,6 +287,224 @@ abstract class Short_Collector_WhereOrJoin_Base<
 		@Override
 		public <JOIN_TO> Void leftJoin(CollectionFunction<TO, JOIN_TO> collection, Consumer<IShortJoin_Sub_Named<MODEL, RESULT, JOIN_TO, Void>> consumer) {
 			return collectJoin(EJoinType.LEFT, collection, consumer, this::addNamedJoin);
+		}
+	}
+	
+	
+	/***********************************************************************
+	 * Alias join
+	 **********************************************************************/
+	@SuppressWarnings("unchecked")
+	private MAPPED_ALIAS_WHERE_OR_JOIN addAliasJoin(CollectedJoin_Alias collectedJoin) {
+		addJoin(collectedJoin);
+		
+		return (MAPPED_ALIAS_WHERE_OR_JOIN)this;
+	}
+
+	private <TO> Collector_Joins buildSubJoinsAlias(Consumer<IShortJoin_Sub_Alias<MODEL, RESULT, Void>> consumer) {
+
+		final Collector_Joins collector = new Collector_Joins();
+		
+		final ShortJoin_Sub_Alias_Builder<TO> builder = new ShortJoin_Sub_Alias_Builder<>(collector);
+		
+		consumer.accept(builder);
+
+		return collector;
+	}
+
+	@SuppressWarnings("unchecked")
+	final <R, RET> RET addInnerJoin(Supplier<R> from, Supplier<R> to) {
+		if (from == null) {
+			throw new IllegalArgumentException("from == null");
+		}
+		
+		if (to == null) {
+			throw new IllegalArgumentException("to == null");
+		}
+
+		return (RET)collectJoin(EJoinType.INNER, from, to, null, this::addAliasJoin);
+	}
+	
+	@SuppressWarnings("unchecked")
+	final <R, RET> RET addInnerJoin(Supplier<R> from, Supplier<R> to, Consumer<IShortJoin_Sub_Alias<MODEL, RESULT, Void>> consumer) {
+		
+		if (from == null) {
+			throw new IllegalArgumentException("from == null");
+		}
+		
+		if (to == null) {
+			throw new IllegalArgumentException("to == null");
+		}
+		
+		if (consumer == null) {
+			throw new IllegalArgumentException("consumer == null");
+		}
+		
+		return (RET)collectJoin(EJoinType.INNER, from, to, consumer, this::addAliasJoin);
+	}
+	
+	@SuppressWarnings("unchecked")
+	final <TO, RET> RET addInnerJoin(CollectionSupplier<TO> collection, TO alias) {
+		if (collection == null) {
+			throw new IllegalArgumentException("collection == null");
+		}
+		
+		return (RET)collectJoin(EJoinType.INNER, collection, alias, null, this::addAliasJoin);
+	}
+	
+	@SuppressWarnings("unchecked")
+	final <TO, RET> RET addInnerJoin(CollectionSupplier<TO> collection, TO alias, Consumer<IShortJoin_Sub_Alias<MODEL, RESULT, Void>> consumer) {
+		if (collection == null) {
+			throw new IllegalArgumentException("collection == null");
+		}
+		
+		if (consumer == null) {
+			throw new IllegalArgumentException("consumer == null");
+		}
+		
+		return (RET)collectJoin(EJoinType.INNER, collection, alias, consumer, this::addAliasJoin);
+	}
+
+	@SuppressWarnings("unchecked")
+	final <R, RET> RET addLeftJoin(Supplier<R> from, Supplier<R> to) {
+		if (from == null) {
+			throw new IllegalArgumentException("from == null");
+		}
+		
+		if (to == null) {
+			throw new IllegalArgumentException("to == null");
+		}
+
+		return (RET)collectJoin(EJoinType.LEFT, from, to, null, this::addAliasJoin);
+	}
+	
+	@SuppressWarnings("unchecked")
+	final <R, RET> RET addLeftJoin(Supplier<R> from, Supplier<R> to, Consumer<IShortJoin_Sub_Alias<MODEL, RESULT, Void>> consumer) {
+		
+		if (from == null) {
+			throw new IllegalArgumentException("from == null");
+		}
+		
+		if (to == null) {
+			throw new IllegalArgumentException("to == null");
+		}
+		
+		if (consumer == null) {
+			throw new IllegalArgumentException("consumer == null");
+		}
+		
+		return (RET)collectJoin(EJoinType.LEFT, from, to, consumer, this::addAliasJoin);
+	}
+	
+	@SuppressWarnings("unchecked")
+	final <TO, RET> RET addLeftJoin(CollectionSupplier<TO> collection, TO alias) {
+		if (collection == null) {
+			throw new IllegalArgumentException("collection == null");
+		}
+		
+		return (RET)collectJoin(EJoinType.LEFT, collection, alias ,null, this::addAliasJoin);
+	}
+	
+	@SuppressWarnings("unchecked")
+	final <TO, RET> RET addLeftJoin(CollectionSupplier<TO> collection, TO alias, Consumer<IShortJoin_Sub_Alias<MODEL, RESULT, Void>> consumer) {
+		if (collection == null) {
+			throw new IllegalArgumentException("collection == null");
+		}
+		
+		if (consumer == null) {
+			throw new IllegalArgumentException("consumer == null");
+		}
+		
+		return (RET)collectJoin(EJoinType.LEFT, collection, alias, consumer, this::addAliasJoin);
+	}
+		
+	private <TO, R, RET> RET collectJoin(
+			EJoinType joinType,
+			Supplier<R> from,
+			Supplier<R> to,
+			
+			Consumer<IShortJoin_Sub_Alias<MODEL, RESULT, Void>> consumer,
+			Function<CollectedJoin_Alias, RET> collect) {
+		
+		final Collector_Joins sub = consumer != null ? buildSubJoinsAlias(consumer) : null;
+		
+		final CollectedJoin_Alias join = new CollectedJoin_Alias(joinType, from, to, sub);
+		
+		return collect.apply(join);
+	}
+	
+	private <TO, RET> RET collectJoin(
+			EJoinType joinType,
+			CollectionSupplier<TO> collection,
+			TO alias,
+			Consumer<IShortJoin_Sub_Alias<MODEL, RESULT, Void>> consumer,
+			Function<CollectedJoin_Alias, RET> collect) {
+		
+		final Collector_Joins sub = consumer != null ? buildSubJoinsAlias(consumer) : null;
+
+		final CollectedJoin_Alias join = new CollectedJoin_Alias(joinType, collection, sub, (IAlias)alias);
+
+		return collect.apply(join);
+	}
+	
+	private class ShortJoin_Sub_Alias_Builder<TO> implements IShortJoin_Sub_Alias<MODEL, RESULT, Void> {
+
+		private final Collector_Joins joins;
+		
+		ShortJoin_Sub_Alias_Builder(Collector_Joins joins) {
+			this.joins = joins;
+		}
+
+		private Void addAliasJoin(CollectedJoin join) {
+			
+			if (join == null) {
+				throw new IllegalArgumentException("join == null");
+			}
+
+			joins.addJoin(join);
+			
+			return null;
+		}
+		
+		@Override
+		public <R extends Comparable<R>> Void innerJoin(Supplier<R> from, Supplier<R> to) {
+			return collectJoin(EJoinType.INNER, from, to, null, this::addAliasJoin);
+		}
+
+		@Override
+		public <JOIN_TO> Void innerJoin(CollectionSupplier<JOIN_TO> collection, JOIN_TO alias) {
+			return collectJoin(EJoinType.INNER, collection, alias, null, this::addAliasJoin);
+		}
+
+		@Override
+		public <R extends Comparable<R>> Void innerJoin(Supplier<R> from, Supplier<R> to, Consumer<IShortJoin_Sub_Alias<MODEL, RESULT, Void>> consumer) {
+			return collectJoin(EJoinType.INNER, from, to, consumer, this::addAliasJoin);
+		}
+
+		@Override
+		public <JOIN_TO> Void innerJoin(CollectionSupplier<JOIN_TO> collection, JOIN_TO alias, Consumer<IShortJoin_Sub_Alias<MODEL, RESULT, Void>> consumer) {
+			return collectJoin(EJoinType.INNER, collection, alias, consumer, this::addAliasJoin);
+		}
+
+		@Override
+		public <R extends Comparable<R>> Void leftJoin(Supplier<R> from, Supplier<R> to) {
+			return collectJoin(EJoinType.LEFT, from, to, null, this::addAliasJoin);
+		}
+
+		@Override
+		public <JOIN_TO> Void leftJoin(CollectionSupplier<JOIN_TO> collection, JOIN_TO alias) {
+			return collectJoin(EJoinType.LEFT, collection, alias, null, this::addAliasJoin);
+		}
+
+		@Override
+		public <R extends Comparable<R>> Void leftJoin(Supplier<R> from, Supplier<R> to,
+				Consumer<IShortJoin_Sub_Alias<MODEL, RESULT, Void>> consumer) {
+			return collectJoin(EJoinType.LEFT, from, to, consumer, this::addAliasJoin);
+		}
+
+		@Override
+		public <JOIN_TO> Void leftJoin(CollectionSupplier<JOIN_TO> collection, JOIN_TO alias, Consumer<IShortJoin_Sub_Alias<MODEL, RESULT, Void>> consumer) {
+			return collectJoin(EJoinType.LEFT, collection, alias, consumer, this::addAliasJoin);
 		}
 	}
 

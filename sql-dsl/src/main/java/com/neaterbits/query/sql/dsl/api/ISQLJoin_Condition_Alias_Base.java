@@ -9,7 +9,7 @@ public interface ISQLJoin_Condition_Alias_Base<
 		extends ISQLJoin_Condition {
 	
 	
-	JOIN_CONDITION on(ISupplierCollection joinCollection);
+	<T> JOIN_CONDITION on(ISupplierCollection<T> joinCollection, T alias);
 	
 	JOIN_CONDITION compare(ISupplierInteger left, ISupplierInteger right);
 

@@ -553,7 +553,7 @@ public class ClassicAPITest extends BaseJPATest {
         	.from(company, employee, person)
 
         	.innerJoin(company, employee)
-        		.on(company::getEmployees)
+        		.on(company::getEmployees, employee) // TODO: should not have to pass alias for classic but not pri
 
         	.innerJoin(employee, person)
         		.compare(employee::getPersonId, person::getId)
@@ -673,7 +673,7 @@ public class ClassicAPITest extends BaseJPATest {
 	
 	        	.from(company, person, role)
 	        	.innerJoin(company, employee)
-	        		.on(company::getEmployees)
+	        		.on(company::getEmployees, employee) // TODO: Shouldn't have to pass rhs alias here but not priority
 
 	        	.where(company::getName)		.startsWith("Foo")
 	

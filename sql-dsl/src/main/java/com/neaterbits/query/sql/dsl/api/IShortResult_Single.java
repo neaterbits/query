@@ -9,7 +9,8 @@ public interface IShortResult_Single<MODEL, RESULT>
 		ISQLLogical_WhereOrJoin_SingleResult_Named<MODEL, RESULT>,
 		IShortJoin_Single_Named_Initial<MODEL, RESULT>,
 		
-		ISQLLogical_WhereOrJoin_SingleResult_Alias<MODEL, RESULT>
+		ISQLLogical_WhereOrJoin_SingleResult_Alias<MODEL, RESULT>,
+		IShortJoin_Single_Alias_Initial<MODEL, RESULT>
 
 
 		

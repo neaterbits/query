@@ -694,6 +694,7 @@ final class CompiledQuery {
 
 		if (join instanceof CollectedJoin_Named) {
 			if (join.getLeftType() != null && join.getRightType() != null) {
+				// Classic
 				leftSource  = sources.getNamedSource(join.getLeftType());
 				rightSource = sources.getNamedSource(join.getRightType());
 			}
@@ -702,8 +703,12 @@ final class CompiledQuery {
 		}
 		else if (join instanceof CollectedJoin_Alias) {
 			final CollectedJoin_Alias aliasJoin = (CollectedJoin_Alias)join;
-			leftSource  = sources.getAliasesSource(aliasJoin.getLeftAlias());
-			rightSource = sources.getAliasesSource(aliasJoin.getRightAlias());
+			
+			if (aliasJoin.getLeftAlias() != null && aliasJoin.getRightAlias() != null) {
+				// Classic
+				leftSource  = sources.getAliasesSource(aliasJoin.getLeftAlias());
+				rightSource = sources.getAliasesSource(aliasJoin.getRightAlias());
+			}
 			isClass = false;
 		}
 		else {
@@ -817,23 +822,33 @@ final class CompiledQuery {
 										", left=" + joinSources.left.getType() + ", right=" + joinSources.right.getType());
 						}
 					} else {
-						// short-syntax where source is not explicitely declared
+						// short-syntax where source is not explicitly declared
 						left = collection.getSource();
 						
 						// TODO For now, we only support generic-collection joins so we can retrieve the type here,
 						// otherwise we have to change the query builder a bit in order to do this.
 						// BUT for all practical purposes, we require generic collections for typesafety anyway.. and all > Java 5 code will use generics most likely
-						final Class<?> type = EntityUtil.getGenericCollectionMemberType(collection.getGetter().getGetterMethod());
 						
+						final Class<?> type = EntityUtil.getGenericCollectionMemberType(collection.getGetter().getGetterMethod());
 						if (type == null) {
 							throw new IllegalStateException("Unable to get class type for oneToMany collection join");
 						}
 						
-						right = 
-								isClass ? sources.getNamedSource(type) : sources.getNamedSource(type);
+						if (isClass) {
+							right = sources.getNamedSource(type);
+	
+							joinSources = new JoinSources(left, right, isClass);
+						}
+						else {
+							// Alias can be found from supplier, or?? 
+							// if there are multiple aliases for that particular type, how to know the right one?
+							// should one always specify one? May have to do that in this case.
+							final CollectedJoinCondition_OneToMany_Alias oneToManyAlias = (CollectedJoinCondition_OneToMany_Alias)joinCondition;
 
-						
-						joinSources = new JoinSources(left, right, isClass);
+							right = sources.getAliasesSource(oneToManyAlias.getRhs());
+							
+							joinSources = new JoinSources(left, right, isClass);
+						}
 					}
 
 					compiledJoinCondition = new CompiledJoinCondition_OneToMany(oneToMany, left, right, collection);

@@ -295,12 +295,12 @@ abstract class SQL_Collector_WhereOrJoin_Base<
 	}
 	
 	// JoinCondition, markes as implemented in subclass
-	public final ALIAS_JOIN_CONDITION on(ISupplierCollection joinCollection) {
+	public final <T> ALIAS_JOIN_CONDITION on(ISupplierCollection<T> joinCollection, T rhs) {
 		final SupplierGetter collectionGetter = new SupplierGetter(joinCollection); 
 		
 		final CollectedJoin curJoin = getQueryCollector().getJoins().getLast();
 		
-		final CollectedJoinCondition joinCondition = new CollectedJoinCondition_OneToMany_Alias(collectionGetter);
+		final CollectedJoinCondition joinCondition = new CollectedJoinCondition_OneToMany_Alias(collectionGetter, (IAlias)rhs);
 		
 		curJoin.addJoinCondition(joinCondition);
 		
