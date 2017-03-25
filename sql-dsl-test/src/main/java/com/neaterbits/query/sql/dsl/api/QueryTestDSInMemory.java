@@ -3,7 +3,6 @@ package com.neaterbits.query.sql.dsl.api;
 import java.util.List;
 import java.util.function.Consumer;
 
-import com.neaterbits.query.sql.dsl.api.QueryDataSource;
 import com.neaterbits.query.sql.dsl.api.entity.QueryMetaModel;
 
 public final class QueryTestDSInMemory extends QueryTestDS {
@@ -31,14 +30,27 @@ public final class QueryTestDSInMemory extends QueryTestDS {
 			this.instances = instances;
 		}
 
+		private PojoDataConfig getDataConfig() {
+			final PojoDataConfig pojoDataConfig = new ListPojoDataConfig(instances, queryMetaModel);
+
+			return pojoDataConfig;
+		}
+		
+		
+		@Override
+		List<?> executeSql(String sql) {
+			throw new UnsupportedOperationException("sql not suppported");
+		}
+
+		@Override
+		void execute(Consumer<DataConfig> testBuilder) {
+			testBuilder.accept(getDataConfig());
+		}
+		
+
 		@Override
 		public void check(Consumer<DataConfig> testBuilder) {
-
-			//final QueryDataSource dataSource = new QueryDataSourcePojoWithList(instances, queryMetaModel);
-			
-			final PojoDataConfig pojoDataConfig = new ListPojoDataConfig(instances, queryMetaModel);
-			
-			testBuilder.accept(pojoDataConfig);
+			testBuilder.accept(getDataConfig());
 		}
 	}
 }

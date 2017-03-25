@@ -4,12 +4,16 @@ import java.math.BigDecimal;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import com.neaterbits.query.test.model.Farm;
 import com.neaterbits.query.test.model.ownership.Owner;
 
 /**
@@ -27,6 +31,9 @@ public abstract class LandPlot {
 	
 	// land owner can be multiple, but that is handled by Owner hierarchy
 	private Owner owner; 
+	
+	private Farm farm;
+	
 
 	public LandPlot() {
 
@@ -59,6 +66,16 @@ public abstract class LandPlot {
 		this.hectares = hectares;
 	}
 
+	@ManyToOne(targetEntity=Farm.class, fetch=FetchType.EAGER)
+	//@JoinColumn(name="farm_fk")
+	//@Column(name="farm_fk")
+	public Farm getFarm() {
+		return farm;
+	}
+
+	public void setFarm(Farm farm) {
+		this.farm = farm;
+	}
 
 	@OneToOne
 	public Owner getOwner() {
@@ -67,5 +84,10 @@ public abstract class LandPlot {
 
 	public void setOwner(Owner owner) {
 		this.owner = owner;
+	}
+
+	@Override
+	public String toString() {
+		return getClass().getSimpleName() + " [id=" + id + ", hectares=" + hectares + ", owner=" + owner + ", farm=" + farm + "]";
 	}
 }

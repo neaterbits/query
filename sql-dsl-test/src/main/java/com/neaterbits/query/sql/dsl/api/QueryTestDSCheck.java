@@ -7,6 +7,10 @@ import java.util.function.Supplier;
 
 public interface QueryTestDSCheck {
 
+	<T> QueryTestDSCheck dump(Class<T> entity);
+
+	<T> QueryTestDSCheck dump(String sql);
+	
 	void check(Consumer<DataConfig> testBuilder);
 
 	<T> void checkOne(SingleBuilt<T> query, T expected);

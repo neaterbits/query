@@ -967,4 +967,27 @@ public class ShortAPITest extends BaseJPATest {
 		
 		assertThat(true).isEqualTo(false);
 	}
+
+	@Test
+	public void testNotCompilableToCombineListOrOneOfClassWithAliasEntity() {
+		
+		
+		
+		// for one() or list() aliased queries, must always be one(alias) or list(alias), not .class
+		
+		assertThat(true).isEqualTo(false);
+	}
+
+	@Test
+	public void testBothUniDirectionalAndBiDirectionalOneToMany() {
+
+		// Depends on mappedBy() parameter on OneToMany
+		// eg. if LandPlot does not have a column pointing back to Farm (to be able to use LandPlot in other contexts),
+		// then that becomes a many-to-may with a hidden table created by JPA
+		// eg. FARM_land_plot. So really a many-to-many relation
+		
+		// Should remove Farm from LandPlot probably
+		
+		assertThat(true).isEqualTo(false);
+	}
 }

@@ -91,6 +91,28 @@ public abstract class QueryTestDSBasePersistent<CTX, ENTITIES, TRANSACTION>
 		public Checker(List<TestInstance> instances) {
 			this.instances = instances;
 		}
+		
+		@Override
+		void execute(Consumer<DataConfig> testBuilder) {
+			testBuilder.accept(dataConfig);
+		}
+		
+		@Override
+		List<?> executeSql(String sql) {
+			
+			ENTITIES entities = null;
+			try {
+				entities = dataStore.openEntities();
+
+				return dataStore.executeSql(entities, sql);
+			}
+			finally {
+				if (entities != null) {
+					dataStore.closeEntities(entities);
+				}
+				
+			}
+		}
 
 		@Override
 		public void check(Consumer<DataConfig> testBuilder) {

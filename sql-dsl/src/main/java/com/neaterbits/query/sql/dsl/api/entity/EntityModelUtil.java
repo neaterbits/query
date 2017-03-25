@@ -266,7 +266,12 @@ public class EntityModelUtil<MANAGED, EMBEDDED, IDENTIFIABLE, ATTRIBUTE, COLL ex
 		if (toClassMatch == null || toEntityClass.equals(toClassMatch)) {
 			final RelationField from = new RelationField(fromEntityClass, makeEntityAttribute(attr));
 			
-			final ATTRIBUTE targetAttribute = model.getAssociationTargetAttribute(attr); 
+			final ATTRIBUTE targetAttribute = model.getAssociationTargetAttribute(attr);
+			
+			if (targetAttribute == null) {
+				throw new IllegalStateException("No target attribute found for " + attr + "/" + model.getAttributeName(attr)+ " of " + fromEntityClass);
+			}
+			
 			final RelationField to = new RelationField(toEntityClass, makeEntityAttribute(targetAttribute));
 
 			ret = new Relation(relationType, from, to);

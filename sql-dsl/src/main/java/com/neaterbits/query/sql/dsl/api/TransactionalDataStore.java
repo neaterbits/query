@@ -1,5 +1,6 @@
 package com.neaterbits.query.sql.dsl.api;
 
+import java.util.List;
 
 public abstract class TransactionalDataStore<CTX, ENTITIES, TRANSACTION> extends DataStore<ENTITIES> {
 
@@ -15,9 +16,10 @@ public abstract class TransactionalDataStore<CTX, ENTITIES, TRANSACTION> extends
 
 	protected abstract ENTITIES intOpenEntities(CTX ctx);
 	
+	protected abstract List<?> executeSql(ENTITIES entities, String sql);
+	
 	protected abstract Object getPrimaryKey(Object instance);
-	
-	
+
 	protected abstract TRANSACTION beginTransaction(ENTITIES entities);
 
 	protected abstract void persist(ENTITIES entities, Object instance);

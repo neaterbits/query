@@ -1,8 +1,18 @@
 package com.neaterbits.query.dsl.gen_test;
 
 import static org.assertj.core.api.Assertions.assertThat;
+
+import java.math.BigDecimal;
+import java.util.Arrays;
+
 import org.junit.Test;
 import com.neaterbits.query.jpatest.GEN_BaseTestCase;
+import com.neaterbits.query.sql.dsl.api.SingleBuilt;
+import com.neaterbits.query.test.model.Farm;
+import com.neaterbits.query.test.model.land.CropLand;
+import com.neaterbits.query.test.model.land.Forest;
+import com.neaterbits.query.test.model.land.LandPlot;
+import com.neaterbits.query.test.model.land.Uncultivated;
 
 
 public class AggregateJoinTest extends GEN_BaseTestCase {
@@ -10,7 +20,35 @@ public class AggregateJoinTest extends GEN_BaseTestCase {
 
     @Test
     public void testAggregateSingleNamed() {
-        assertThat(true).isEqualTo(false);
+    	
+    	final Farm farm1 = new Farm("Farm1");
+    	final Farm farm2 = new Farm("Farm2");
+    	
+    	final LandPlot land1 = new CropLand(new BigDecimal("9.30"));
+    	final LandPlot land2 = new Forest(new BigDecimal("40.5"));
+    	final LandPlot land3 = new Uncultivated(new BigDecimal("100.5"));
+    	final LandPlot land4 = new Uncultivated(new BigDecimal("345.43"));
+
+    	farm1.setLandPlots(Arrays.asList(land1, land2));
+    	farm2.setLandPlots(Arrays.asList(land3));
+    	
+    	// only landplots that belong to farms, so land4 should not be included in sum
+    	// since doing innerjoin from farm to landplot
+    	final SingleBuilt<BigDecimal> query
+    		= select.sum(LandPlot::getHectares)
+    			.innerJoin(Farm::getLandPlots)   
+    			.build();
+    	
+    	store(farm1, farm2, land4)
+    	.dump(Farm.class)
+    	.dump(LandPlot.class)
+    	.dump("select * from land_plot")
+    	.checkAggregate(query, new BigDecimal("150.30"));
+    	
+    	
+    	
+    	//fortsett, innerjoin fra farm til landplot med aggregate på farm? for eksempel min og max TimeFounded eller lignende
+    	assertThat(true).isEqualTo(false);
     }
 
 

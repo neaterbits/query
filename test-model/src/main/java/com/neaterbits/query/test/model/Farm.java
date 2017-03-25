@@ -2,8 +2,10 @@ package com.neaterbits.query.test.model;
 
 import java.util.Collection;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -109,7 +111,7 @@ public class Farm {
 	// TODO: landplot connected to multiple? probably too complex, this is just a demo model
 	// TODO: leasing ? can be seen as land.owner != farm.owner ? 
 	// TODO: but perhaps this could be a short-hand join
-	@OneToMany 	
+	@OneToMany(cascade={CascadeType.PERSIST}, mappedBy="farm", fetch=FetchType.EAGER)
 	public Collection<LandPlot> getLandPlots() {
 		return landPlots;
 	}

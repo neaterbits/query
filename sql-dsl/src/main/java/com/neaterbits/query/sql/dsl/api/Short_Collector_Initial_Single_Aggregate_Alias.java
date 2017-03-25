@@ -2,16 +2,18 @@ package com.neaterbits.query.sql.dsl.api;
 
 import java.math.BigDecimal;
 
-final class Short_Collector_Single_Aggregate_Alias<RESULT> 
-extends Short_Collector_Single_Aggregate_Any<SingleBuilt<RESULT>, RESULT> 
+final class Short_Collector_Initial_Single_Aggregate_Alias<RESULT> 
+	extends Short_Collector_Initial_Single_Aggregate_Any<SingleBuilt<RESULT>, RESULT> 
 
 	implements IShortBuilt_Numeric_Alias<RESULT>,
  		ISQLLogical_AndOr_SingleResult_Alias<SingleBuilt<RESULT>, RESULT> {
 
-	Short_Collector_Single_Aggregate_Alias(BaseQuery query, ModelCompiler<SingleBuilt<RESULT>> modelCompiler,
+	Short_Collector_Initial_Single_Aggregate_Alias(BaseQuery query, ModelCompiler<SingleBuilt<RESULT>> modelCompiler,
 		QueryResultAggregate result) {
 		super(query, modelCompiler, result);
 	}
+	
+	
 	
 	
 	/*
@@ -33,6 +35,12 @@ extends Short_Collector_Single_Aggregate_Any<SingleBuilt<RESULT>, RESULT>
 	}
 	*/
 	
+	@Override
+	<JOIN_FROM> IShortLogical_WhereOrJoin_SingleResult_Named<SingleBuilt<RESULT>, RESULT, JOIN_FROM> typedJoinCollector() {
+		throw new UnsupportedOperationException("TODO");
+		//return new Short_Collector_Single_Aggregate_Alias_TypedJoin<>(this);
+	}
+
 	@Override
 	public ISharedFunctions_Transform_Initial_Alias<
 			SingleBuilt<RESULT>,

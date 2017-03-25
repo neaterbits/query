@@ -562,7 +562,7 @@ public class JPAEntityModel implements EntityModel<
 			
 			targetEntity = getAssociationTarget(attribute);
 			
-			if (oneToMany.mappedBy() != null) {
+			if (oneToMany.mappedBy() != null && !oneToMany.mappedBy().trim().isEmpty()) {
 				corresponding = metamodel.entity(targetEntity).getAttribute(oneToMany.mappedBy());
 			}
 			else {

@@ -1,5 +1,7 @@
 package com.neaterbits.query.sql.dsl.api;
 
+import java.util.List;
+
 import javax.persistence.EntityManager;
 
 abstract class ManagedJPADataStore extends JPADataStore {
@@ -25,4 +27,7 @@ abstract class ManagedJPADataStore extends JPADataStore {
 		em.remove(found);
 	}
 
+	protected final List<?> executeSql(EntityManager em, String sql) {
+		return em.createNativeQuery(sql).getResultList();
+	}
 }

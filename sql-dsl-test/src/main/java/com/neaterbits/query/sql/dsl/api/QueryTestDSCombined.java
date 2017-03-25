@@ -100,9 +100,13 @@ public class QueryTestDSCombined extends QueryTestDS {
 	}
 	*/
 
+	
+	
 	private class Checker extends BaseChecker implements QueryTestDSCheck {
 		private final Consumer<QueryTestDSBuilder> dsBuilder;
 		private final List<QueryTestDSStore> stores;
+		private List<Class<?>> dumpEntity;
+		private List<String> dumpSql;
 		
 		Checker(Consumer<QueryTestDSBuilder> dsBuilder, List<QueryTestDSStore> stores) {
 			this.dsBuilder = dsBuilder;
@@ -110,11 +114,62 @@ public class QueryTestDSCombined extends QueryTestDS {
 		}
 		
 		@Override
-		public void check(Consumer<DataConfig> testBuilder) {
-			
+		void execute(Consumer<DataConfig> testBuilder) {
+			throw new UnsupportedOperationException("N/A");
+		}
 
+		@Override
+		List<?> executeSql(String sql) {
+			throw new UnsupportedOperationException("N/A");
+		}
+
+		@Override
+		public <T> QueryTestDSCheck dump(Class<T> entity) {
+			
+			if (entity == null) {
+				throw new IllegalArgumentException("entity == null");
+			}
+			
+			if (this.dumpEntity == null) {
+				this.dumpEntity = new ArrayList<>();
+			}
+
+			this.dumpEntity.add(entity);
+
+			return this;
+		}
+
+		
+		public <T> QueryTestDSCheck dump(String sql) {
+			if (sql == null) {
+				throw new IllegalArgumentException("entity == null");
+			}
+			
+			if (this.dumpSql == null) {
+				this.dumpSql = new ArrayList<>();
+			}
+
+			this.dumpSql.add(sql);
+
+			return this;
+		}
+
+		@Override
+		public void check(Consumer<DataConfig> testBuilder) {
 			for (QueryTestDSStore store : stores) {
 				final QueryTestDSCheck dsCheck = store.store(dsBuilder);
+				
+				if (dumpEntity != null) {
+					for (Class<?> cl : dumpEntity) {
+						dsCheck.dump(cl);
+					}
+				}
+
+				if (dumpSql != null) {
+					for (String sql : dumpSql) {
+						dsCheck.dump(sql);
+					}
+				}
 
 				dsCheck.check(testBuilder);
 			}

@@ -1,7 +1,5 @@
 package com.neaterbits.query.dsl.gen_test;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 import java.math.BigDecimal;
 
 import org.junit.Test;

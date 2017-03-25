@@ -7,11 +7,11 @@ import java.util.function.Function;
 final class Short_Collector_Single_Entity_Named_TypedJoin<MODEL, RESULT, JOIN_FROM>
 	extends Short_Collector_Single_Entity_Named<MODEL, RESULT> 
 	
-	implements IShortLogical_WhereOrJoin_SingleResult_Entity_Named<MODEL, RESULT, JOIN_FROM>
+	implements IShortLogical_WhereOrJoin_SingleResult_Named<MODEL, RESULT, JOIN_FROM>
 	
 	{
 
-	Short_Collector_Single_Entity_Named_TypedJoin(Short_Collector_Single_Any_Any<MODEL, RESULT> input) {
+	Short_Collector_Single_Entity_Named_TypedJoin(Short_Collector_Initial_Single_Any_Any_Base<MODEL, RESULT> input) {
 		super(input.getQueryCollector(), input.clauseCollector);
 	}
 		
@@ -29,20 +29,20 @@ final class Short_Collector_Single_Entity_Named_TypedJoin<MODEL, RESULT, JOIN_FR
 
 	@Override
 	public <JOIN_TO, R extends Comparable<R>>
-		IShortLogical_WhereOrJoin_SingleResult_Entity_Named<MODEL, RESULT, JOIN_FROM> innerJoin(Function<JOIN_FROM, R> from, Function<JOIN_TO, R> to) {
+		IShortLogical_WhereOrJoin_SingleResult_Named<MODEL, RESULT, JOIN_FROM> innerJoin(Function<JOIN_FROM, R> from, Function<JOIN_TO, R> to) {
 
 		return addInnerJoin(from, to);
 	}
 
 	@Override
 	public <JOIN_TO>
-		IShortLogical_WhereOrJoin_SingleResult_Entity_Named<MODEL, RESULT, JOIN_FROM> innerJoin(CollectionFunction<JOIN_FROM, JOIN_TO> collection) {
+		IShortLogical_WhereOrJoin_SingleResult_Named<MODEL, RESULT, JOIN_FROM> innerJoin(CollectionFunction<JOIN_FROM, JOIN_TO> collection) {
 
 		return addInnerJoin(collection);
 	}
 
 	@Override
-	public <JOIN_TO, R extends Comparable<R>> IShortLogical_WhereOrJoin_SingleResult_Entity_Named<MODEL, RESULT, JOIN_FROM>
+	public <JOIN_TO, R extends Comparable<R>> IShortLogical_WhereOrJoin_SingleResult_Named<MODEL, RESULT, JOIN_FROM>
 	
 		innerJoin(
 			Function<JOIN_FROM, R> from, Function<JOIN_TO, R> to,
@@ -52,7 +52,7 @@ final class Short_Collector_Single_Entity_Named_TypedJoin<MODEL, RESULT, JOIN_FR
 	}
 
 	@Override
-	public <JOIN_TO> IShortLogical_WhereOrJoin_SingleResult_Entity_Named<MODEL, RESULT, JOIN_FROM> 
+	public <JOIN_TO> IShortLogical_WhereOrJoin_SingleResult_Named<MODEL, RESULT, JOIN_FROM> 
 	
 		innerJoin(
 			CollectionFunction<JOIN_FROM, JOIN_TO> collection,
@@ -63,7 +63,7 @@ final class Short_Collector_Single_Entity_Named_TypedJoin<MODEL, RESULT, JOIN_FR
 	}
 
 	@Override
-	public <JOIN_TO, R extends Comparable<R>> IShortLogical_WhereOrJoin_SingleResult_Entity_Named<MODEL, RESULT, JOIN_FROM> 
+	public <JOIN_TO, R extends Comparable<R>> IShortLogical_WhereOrJoin_SingleResult_Named<MODEL, RESULT, JOIN_FROM> 
 	
 		leftJoin(Function<JOIN_FROM, R> from, Function<JOIN_TO, R> to) {
 
@@ -71,7 +71,7 @@ final class Short_Collector_Single_Entity_Named_TypedJoin<MODEL, RESULT, JOIN_FR
 	}
 
 	@Override
-	public <JOIN_TO> IShortLogical_WhereOrJoin_SingleResult_Entity_Named<MODEL, RESULT, JOIN_FROM>
+	public <JOIN_TO> IShortLogical_WhereOrJoin_SingleResult_Named<MODEL, RESULT, JOIN_FROM>
 	
 		leftJoin(CollectionFunction<JOIN_FROM, JOIN_TO> collection) {
 
@@ -79,7 +79,7 @@ final class Short_Collector_Single_Entity_Named_TypedJoin<MODEL, RESULT, JOIN_FR
 	}
 
 	@Override
-	public <JOIN_TO, R extends Comparable<R>> IShortLogical_WhereOrJoin_SingleResult_Entity_Named<MODEL, RESULT, JOIN_FROM> leftJoin(
+	public <JOIN_TO, R extends Comparable<R>> IShortLogical_WhereOrJoin_SingleResult_Named<MODEL, RESULT, JOIN_FROM> leftJoin(
 			Function<JOIN_FROM, R> from, Function<JOIN_TO, R> to,
 			Consumer<IShortJoin_Sub_Named<MODEL, RESULT, JOIN_TO, Void>> consumer) {
 		
@@ -88,7 +88,7 @@ final class Short_Collector_Single_Entity_Named_TypedJoin<MODEL, RESULT, JOIN_FR
 	}
 
 	@Override
-	public <JOIN_TO> IShortLogical_WhereOrJoin_SingleResult_Entity_Named<MODEL, RESULT, JOIN_FROM>
+	public <JOIN_TO> IShortLogical_WhereOrJoin_SingleResult_Named<MODEL, RESULT, JOIN_FROM>
 	
 		leftJoin(
 			CollectionFunction<JOIN_FROM, JOIN_TO> collection,

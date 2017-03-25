@@ -1,6 +1,6 @@
 package com.neaterbits.query.sql.dsl.api.entity;
 
-public final class Relation {
+public class Relation {
 	private final RelationField from;
 	private final RelationField to;
 

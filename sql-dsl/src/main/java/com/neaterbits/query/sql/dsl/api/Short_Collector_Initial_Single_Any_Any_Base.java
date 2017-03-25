@@ -5,13 +5,13 @@ import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
-final class Short_Collector_Single_Any_Any<MODEL, RESULT>
+abstract class Short_Collector_Initial_Single_Any_Any_Base<MODEL, RESULT>
 	extends Short_Collector_Any_Any_Any<
 			MODEL,
 			RESULT,
 			
-			IShortLogical_WhereOrJoin_SingleResult_Entity_Named<MODEL, RESULT, RESULT>,
-			IShortLogical_WhereOrJoin_SingleResult_Entity_Alias<MODEL, RESULT>,
+			IShortLogical_WhereOrJoin_SingleResult_Named<MODEL, RESULT, RESULT>,
+			IShortLogical_WhereOrJoin_SingleResult_Alias<MODEL, RESULT>,
 			/*
 			ISQLLogical_WhereOrJoin_SingleResult_Named_And_Function<MODEL, RESULT>,
 			ISQLLogical_WhereOrJoin_SingleResult_Alias_And_Function<MODEL, RESULT>,
@@ -54,11 +54,22 @@ final class Short_Collector_Single_Any_Any<MODEL, RESULT>
 	private final BaseQuery select;
 	
 
-	Short_Collector_Single_Any_Any(BaseQuery select, SharedSelectSource selectSource, ModelCompiler<MODEL> modelCompiler) {
+	Short_Collector_Initial_Single_Any_Any_Base(BaseQuery select, SharedSelectSource selectSource, ModelCompiler<MODEL> modelCompiler) {
 		super(select, selectSource, modelCompiler);
 		
 		this.select = select;
 	}
+	
+	
+
+	// TODO: for aggregates, perhaps separate baseclass?
+	Short_Collector_Initial_Single_Any_Any_Base(BaseQuery select, ModelCompiler<MODEL> modelCompiler) {
+		super(select, modelCompiler);
+		
+		this.select = select;
+	}
+
+
 
 	@Override
 	CollectedQueryResult getResultWhenNotPresent() {
@@ -179,7 +190,7 @@ final class Short_Collector_Single_Any_Any<MODEL, RESULT>
 
 
 	@Override
-	final Collector_GroupBy<MODEL, RESULT> createGroupByCollector(Collector_Base<MODEL> last, int[] groupByColumns,
+	Collector_GroupBy<MODEL, RESULT> createGroupByCollector(Collector_Base<MODEL> last, int[] groupByColumns,
 			Collector_Conditions_GroupBy<MODEL, RESULT, ?> collectorConditions) {
 		throw new UnsupportedOperationException("TODO - no where-clause, must determine type in GroupBy, Collector_Named_Or_Alias or similar");
 	}
@@ -274,13 +285,11 @@ final class Short_Collector_Single_Any_Any<MODEL, RESULT>
 		return ret;
 	}
 
-	<JOIN_FROM> Short_Collector_Single_Entity_Named_TypedJoin<MODEL, RESULT, JOIN_FROM> typedJoinCollector() {
-		return new Short_Collector_Single_Entity_Named_TypedJoin<MODEL, RESULT, JOIN_FROM>(this);
-	}
+	abstract <JOIN_FROM> IShortLogical_WhereOrJoin_SingleResult_Named<MODEL, RESULT, JOIN_FROM> typedJoinCollector();
 	
 	@Override
-	public <JOIN_FROM, JOIN_TO, R extends Comparable<R>>
-		IShortLogical_WhereOrJoin_SingleResult_Entity_Named<MODEL, RESULT, JOIN_FROM> innerJoin(Function<JOIN_FROM, R> from, Function<JOIN_TO, R> to) {
+	public final <JOIN_FROM, JOIN_TO, R extends Comparable<R>>
+		IShortLogical_WhereOrJoin_SingleResult_Named<MODEL, RESULT, JOIN_FROM> innerJoin(Function<JOIN_FROM, R> from, Function<JOIN_TO, R> to) {
 		
 		addInnerJoin(from, to);
 
@@ -288,7 +297,7 @@ final class Short_Collector_Single_Any_Any<MODEL, RESULT>
 	}
 
 	@Override
-	public <JOIN_FROM, JOIN_TO> IShortLogical_WhereOrJoin_SingleResult_Entity_Named<MODEL, RESULT, JOIN_FROM>
+	public final <JOIN_FROM, JOIN_TO> IShortLogical_WhereOrJoin_SingleResult_Named<MODEL, RESULT, JOIN_FROM>
 		innerJoin(CollectionFunction<JOIN_FROM, JOIN_TO> collection) {
 		
 		addInnerJoin(collection);
@@ -297,7 +306,7 @@ final class Short_Collector_Single_Any_Any<MODEL, RESULT>
 	}
 
 	@Override
-	public <JOIN_FROM, JOIN_TO, R extends Comparable<R>> IShortLogical_WhereOrJoin_SingleResult_Entity_Named<MODEL, RESULT, JOIN_FROM>
+	public final <JOIN_FROM, JOIN_TO, R extends Comparable<R>> IShortLogical_WhereOrJoin_SingleResult_Named<MODEL, RESULT, JOIN_FROM>
 	
 		innerJoin(
 			Function<JOIN_FROM, R> from, Function<JOIN_TO, R> to,
@@ -309,7 +318,7 @@ final class Short_Collector_Single_Any_Any<MODEL, RESULT>
 	}
 
 	@Override
-	public <JOIN_FROM, JOIN_TO> IShortLogical_WhereOrJoin_SingleResult_Entity_Named<MODEL, RESULT, JOIN_FROM>
+	public final <JOIN_FROM, JOIN_TO> IShortLogical_WhereOrJoin_SingleResult_Named<MODEL, RESULT, JOIN_FROM>
 		innerJoin(
 			CollectionFunction<JOIN_FROM, JOIN_TO> collection,
 			Consumer<IShortJoin_Sub_Named<MODEL, RESULT, JOIN_TO, Void>> consumer) {
@@ -320,7 +329,7 @@ final class Short_Collector_Single_Any_Any<MODEL, RESULT>
 	}
 
 	@Override
-	public <JOIN_FROM, JOIN_TO, R extends Comparable<R>> IShortLogical_WhereOrJoin_SingleResult_Entity_Named<MODEL, RESULT, JOIN_FROM> 
+	public final <JOIN_FROM, JOIN_TO, R extends Comparable<R>> IShortLogical_WhereOrJoin_SingleResult_Named<MODEL, RESULT, JOIN_FROM> 
 	
 		leftJoin(Function<JOIN_FROM, R> from, Function<JOIN_TO, R> to) {
 
@@ -330,7 +339,7 @@ final class Short_Collector_Single_Any_Any<MODEL, RESULT>
 	}
 
 	@Override
-	public <JOIN_FROM, JOIN_TO> IShortLogical_WhereOrJoin_SingleResult_Entity_Named<MODEL, RESULT, JOIN_FROM>
+	public final <JOIN_FROM, JOIN_TO> IShortLogical_WhereOrJoin_SingleResult_Named<MODEL, RESULT, JOIN_FROM>
 	
 		leftJoin(CollectionFunction<JOIN_FROM, JOIN_TO> collection) {
 		
@@ -340,7 +349,7 @@ final class Short_Collector_Single_Any_Any<MODEL, RESULT>
 	}
 
 	@Override
-	public <JOIN_FROM, JOIN_TO, R extends Comparable<R>> IShortLogical_WhereOrJoin_SingleResult_Entity_Named<MODEL, RESULT, JOIN_FROM>
+	public final <JOIN_FROM, JOIN_TO, R extends Comparable<R>> IShortLogical_WhereOrJoin_SingleResult_Named<MODEL, RESULT, JOIN_FROM>
 	
 		leftJoin(
 			Function<JOIN_FROM, R> from, Function<JOIN_TO, R> to,
@@ -352,7 +361,7 @@ final class Short_Collector_Single_Any_Any<MODEL, RESULT>
 	}
 
 	@Override
-	public <JOIN_FROM, JOIN_TO> IShortLogical_WhereOrJoin_SingleResult_Entity_Named<MODEL, RESULT, JOIN_FROM>
+	public final <JOIN_FROM, JOIN_TO> IShortLogical_WhereOrJoin_SingleResult_Named<MODEL, RESULT, JOIN_FROM>
 		leftJoin(
 			CollectionFunction<JOIN_FROM, JOIN_TO> collection,
 			Consumer<IShortJoin_Sub_Named<MODEL, RESULT, JOIN_TO, Void>> consumer) {

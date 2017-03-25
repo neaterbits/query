@@ -8,7 +8,7 @@ public interface IShortResult_Multi<MODEL, RESULT>
 		IShortResult_Mapped_Multi_All<MODEL, RESULT>,
 		
 		
-		IShortLogical_WhereOrJoin_MultiResult_Entity_Named_Initial<MODEL, RESULT>,
+		IShortLogical_WhereOrJoinInitial_MultiResult_Named<MODEL, RESULT>,
 		IShortLogical_WhereOrJoin_MultiResult_Entity_Alias<MODEL, RESULT>,
 		
 		// Cannot go to group-by from initial multi-result, because is no group-by for entities

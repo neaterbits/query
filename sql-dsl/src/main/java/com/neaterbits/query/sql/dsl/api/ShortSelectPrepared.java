@@ -75,7 +75,7 @@ final class ShortSelectPrepared extends BaseShortSelect<
 		
 		final SharedSelectSource selectSource = new SharedSelectSource_Named(cl);
 
-		return new Short_Collector_Single_Any_Any<SinglePrepared<TYPE_RESULT>, TYPE_RESULT>(this, selectSource, singleQueryPreparer());
+		return new Short_Collector_Single_Any_Any_Instance<SinglePrepared<TYPE_RESULT>, TYPE_RESULT>(this, selectSource, singleQueryPreparer());
 	}
 
 	@Override
@@ -86,7 +86,7 @@ final class ShortSelectPrepared extends BaseShortSelect<
 		
 		final SharedSelectSource selectSource = new SharedSelectSource_Named(cl);
 
-		return new Short_Collector_Single_Any_Any<SinglePrepared<TYPE_RESULT>, TYPE_RESULT>(this, selectSource, singleQueryPreparer());
+		return new Short_Collector_Single_Any_Any_Instance<SinglePrepared<TYPE_RESULT>, TYPE_RESULT>(this, selectSource, singleQueryPreparer());
 	}
 
 	@Override

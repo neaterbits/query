@@ -80,7 +80,7 @@ abstract class Collector_Conditions_GroupBy<MODEL, RESULT, AFTER_GROUP_BY>
 	
 	
 	CollectedQueryResult getResultWhenNotPresent() {
-		throw new UnsupportedOperationException("Override this when not present - mostly when don't know yet if mapped or entity");
+		throw new UnsupportedOperationException(getClass().getSimpleName() + ": Override this when not present - mostly when build() called when don't know yet if mapped or entity");
 	}
 	
 	@Override
@@ -97,7 +97,7 @@ abstract class Collector_Conditions_GroupBy<MODEL, RESULT, AFTER_GROUP_BY>
 		if (clauseCollector.getConditionsClause() == EConditionsClause.WHERE) {
 			queryCollector.setClauses(clauseCollector);
 		}
-		
+
 		// Compile into model (better name for this operation?)
 		return queryCollector.getModelCompiler().compile(queryCollector);
 	}
