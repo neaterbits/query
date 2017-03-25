@@ -66,7 +66,40 @@ public class AggregateJoinTest extends GEN_BaseTestCase {
     	// Aggregate left-join
     	final Farm farm1 = makeFarm("Farm1", "1928-09-02");
     	final Farm farm2 = makeFarm("Farm2", "1974-02-29");
-    	final Farm farm3 = makeFarm("Farm3", "1839-03-22");
+    	final Farm farm3 = makeFarm("Farm3", "2004-03-22");
+
+    	final LandPlot land1 = new CropLand(new BigDecimal("9.30"));
+    	final LandPlot land2 = new Forest(new BigDecimal("40.5"));
+    	
+    	farm1.setLandPlots(Arrays.asList(land1));
+    	land1.setFarm(farm1);
+    	
+    	farm2.setLandPlots(Arrays.asList(land2));
+    	land2.setFarm(farm2);
+    	
+
+    	final SingleBuilt<Date> query
+	    	= select.max(Farm::getTimeFounded)
+				.leftJoin(Farm::getLandPlots)   
+				.build();
+	
+		store(farm1, farm2, farm3)
+		/*.dump(Farm.class)
+		.dump(LandPlot.class)
+		*/
+		
+		// remove to avoid delete constraints when deleting Farm (not cascade)
+		.remove(land1, land2)
+		.checkAggregate(query, date("2004-03-22"));
+    }
+    
+    @Test
+    public void testAggregateSingleNamed_Inner() {
+    	
+    	// Aggregate left-join
+    	final Farm farm1 = makeFarm("Farm1", "1928-09-02");
+    	final Farm farm2 = makeFarm("Farm2", "1974-02-29");
+    	final Farm farm3 = makeFarm("Farm3", "2004-03-22");
 
     	final LandPlot land1 = new CropLand(new BigDecimal("9.30"));
     	final LandPlot land2 = new Forest(new BigDecimal("40.5"));
@@ -83,29 +116,33 @@ public class AggregateJoinTest extends GEN_BaseTestCase {
 				.innerJoin(Farm::getLandPlots)   
 				.build();
 	
-		store(farm1, farm2)
+		store(farm1, farm2, farm3)
 		/*.dump(Farm.class)
 		.dump(LandPlot.class)
 		*/
 		
 		// remove to avoid delete constraints when deleting Farm (not cascade)
 		.remove(land1, land2)
-		.checkAggregate(query, new Date());
-		
+		.checkAggregate(query, date("1974-02-29"));
+    }
+    
+    private static final Date date(String s) {
+    	final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+
+    	try {
+    		return dateFormat.parse(s);
+		}
+		catch (ParseException ex) {
+			throw new RuntimeException("Failed to parse \"" + s + "\"", ex);
+		}
     }
     
     private static Farm makeFarm(String name, String timeFounded) {
 
-    	final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-
+    	
     	final Farm farm = new Farm(name);
 
-    	try {
-    		farm.setTimeFounded(dateFormat.parse(timeFounded));
-    	}
-    	catch (ParseException ex) {
-    		throw new RuntimeException("Failed to parse \"" + timeFounded + "\"", ex);
-    	}
+		farm.setTimeFounded(date(timeFounded));
 
     	return farm;
     }
@@ -144,7 +181,77 @@ public class AggregateJoinTest extends GEN_BaseTestCase {
     	// remove to avoid delete constraints when deleting Farm (not cascade)
     	.remove(land1, land2, land3)
     	.checkAggregate(query, new BigDecimal("150.30"));
+    }
+
+    @Test
+    public void testAggregateSingleAlias_Left() {
     	
-        assertThat(true).isEqualTo(false);
+    	// Aggregate left-join
+    	final Farm farm1 = makeFarm("Farm1", "1928-09-02");
+    	final Farm farm2 = makeFarm("Farm2", "1974-02-29");
+    	final Farm farm3 = makeFarm("Farm3", "2004-03-22");
+
+    	final LandPlot land1 = new CropLand(new BigDecimal("9.30"));
+    	final LandPlot land2 = new Forest(new BigDecimal("40.5"));
+    	
+    	farm1.setLandPlots(Arrays.asList(land1));
+    	land1.setFarm(farm1);
+    	
+    	farm2.setLandPlots(Arrays.asList(land2));
+    	land2.setFarm(farm2);
+    	
+
+    	final LandPlot l = select.alias(LandPlot.class);
+    	final Farm     f = select.alias(Farm.class);
+
+    	final SingleBuilt<Date> query
+	    	= select.max(f::getTimeFounded)
+				.leftJoin(f::getLandPlots, l)   
+				.build();
+	
+		store(farm1, farm2, farm3)
+		/*.dump(Farm.class)
+		.dump(LandPlot.class)
+		*/
+		
+		// remove to avoid delete constraints when deleting Farm (not cascade)
+		.remove(land1, land2)
+		.checkAggregate(query, date("2004-03-22"));
+    }
+    
+    @Test
+    public void testAggregateSingleAlias_Inner() {
+    	
+    	// Aggregate left-join
+    	final Farm farm1 = makeFarm("Farm1", "1928-09-02");
+    	final Farm farm2 = makeFarm("Farm2", "1974-02-29");
+    	final Farm farm3 = makeFarm("Farm3", "2004-03-22");
+
+    	final LandPlot land1 = new CropLand(new BigDecimal("9.30"));
+    	final LandPlot land2 = new Forest(new BigDecimal("40.5"));
+    	
+    	farm1.setLandPlots(Arrays.asList(land1));
+    	land1.setFarm(farm1);
+    	
+    	farm2.setLandPlots(Arrays.asList(land2));
+    	land2.setFarm(farm2);
+    	
+
+    	final LandPlot l = select.alias(LandPlot.class);
+    	final Farm     f = select.alias(Farm.class);
+    	
+    	final SingleBuilt<Date> query
+	    	= select.max(f::getTimeFounded)
+				.innerJoin(f::getLandPlots, l)   
+				.build();
+	
+		store(farm1, farm2, farm3)
+		/*.dump(Farm.class)
+		.dump(LandPlot.class)
+		*/
+		
+		// remove to avoid delete constraints when deleting Farm (not cascade)
+		.remove(land1, land2)
+		.checkAggregate(query, date("1974-02-29"));
     }
 }

@@ -133,10 +133,11 @@ abstract class PreparedQuery_DB<QUERY> extends PreparedQuery_DS<QueryDataSource_
 			}
 			else {
 				if (!aggregateResultType.equals(input.getClass())) {
-					throw new IllegalStateException("Not of aggregated type " + aggregateResultType.getName() + ": " + input.getClass().getName());
+					ret = getDataSource().convertUnknownAggregateResult(aggregateResultType, input);
 				}
-
-				ret = input;
+				else {
+					ret = input;
+				}
 			}
 			
 			break;

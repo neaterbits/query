@@ -24,4 +24,12 @@ abstract class QueryDataSource_DB extends QueryDataSource_Base<QueryDataSource_D
 		return input;
 	}
 	
+	
+	Object convertUnknownAggregateResult(Class<?> aggregateResultType, Object input) {
+		if (!aggregateResultType.equals(input.getClass())) {
+			throw new IllegalStateException("Not of aggregated type " + aggregateResultType.getName() + ": " + input.getClass().getName());
+		}
+
+		return input;
+	}
 }

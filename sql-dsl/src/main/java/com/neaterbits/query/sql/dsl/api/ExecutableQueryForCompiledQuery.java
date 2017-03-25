@@ -84,12 +84,12 @@ final class ExecutableQueryForCompiledQuery extends ExecutableQueryForCompiledBa
 	}
 
 	@Override
-	public ENumericType getAggregateNumericInputType(CompiledQuery query) {
+	public EAggregateType getAggregateNumericInputType(CompiledQuery query) {
 		return ((CompiledQueryResult_Aggregate)query.getResult()).getInputNumericType();
 	}
 	
 	@Override
-	public ENumericType getAggregateNumericOutputType(CompiledQuery query) {
+	public EAggregateType getAggregateNumericOutputType(CompiledQuery query) {
 		return ((CompiledQueryResult_Aggregate)query.getResult()).getOutputNumericType();
 	}
 

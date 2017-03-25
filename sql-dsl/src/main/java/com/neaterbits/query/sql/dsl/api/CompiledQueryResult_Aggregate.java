@@ -26,11 +26,11 @@ final class CompiledQueryResult_Aggregate extends CompiledQueryResult {
 		return visitor.onAggregate(this, param);
 	}
 
-	final ENumericType getInputNumericType() {
+	final EAggregateType getInputNumericType() {
 		return original.getInputNumericType();
 	}
 
-	final ENumericType getOutputNumericType() {
+	final EAggregateType getOutputNumericType() {
 		return original.getOutputNumericType();
 	}
 

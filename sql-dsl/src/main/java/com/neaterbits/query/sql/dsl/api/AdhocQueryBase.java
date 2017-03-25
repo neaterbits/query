@@ -21,13 +21,13 @@ abstract class AdhocQueryBase<MODEL, QUERY extends AdhocQueryBase<MODEL, QUERY>>
 	
 	// For aggregate result
 	private EAggregateFunction aggregateFunction;
-	private ENumericType aggregateNumericInputType;
-	private ENumericType aggregateNumericOutputType;
+	private EAggregateType aggregateNumericInputType;
+	private EAggregateType aggregateNumericOutputType;
 
 	// For collection result
 	private ECollectionType collectionType;
 	
-	AdhocQueryBase(EAggregateFunction aggregateFunction, ENumericType aggregateNumericInputType, ENumericType aggregateNumericOutputType) {
+	AdhocQueryBase(EAggregateFunction aggregateFunction, EAggregateType aggregateNumericInputType, EAggregateType aggregateNumericOutputType) {
 		
 		if (aggregateFunction == null) {
 			throw new IllegalArgumentException("aggregateFunction == null");
@@ -99,12 +99,12 @@ abstract class AdhocQueryBase<MODEL, QUERY extends AdhocQueryBase<MODEL, QUERY>>
 	}
 
 	@Override
-	public final ENumericType getAggregateNumericInputType(QUERY query) {
+	public final EAggregateType getAggregateNumericInputType(QUERY query) {
 		return aggregateNumericInputType;
 	}
 
 	@Override
-	public final ENumericType getAggregateNumericOutputType(QUERY query) {
+	public final EAggregateType getAggregateNumericOutputType(QUERY query) {
 		return aggregateNumericOutputType;
 	}
 

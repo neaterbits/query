@@ -94,7 +94,7 @@ interface ExecutableQuery<QUERY> {
 	}
 
 
-	public static Object getZeroValue(ENumericType numericType) {
+	public static Object getZeroValue(EAggregateType numericType) {
 		
 		final Object ret;
 		
@@ -130,7 +130,7 @@ interface ExecutableQuery<QUERY> {
 	default Object getAggregateDefault(QUERY query) {
 
 		final  EAggregateFunction function = getAggregateResultFunction(query);
-		final  ENumericType numericOutputType = getAggregateNumericInputType(query);
+		final  EAggregateType numericOutputType = getAggregateNumericInputType(query);
 
 		final Object ret;
 
@@ -201,9 +201,9 @@ interface ExecutableQuery<QUERY> {
 
 	CompiledFieldReference getAggregateResultField(QUERY query);
 
-	ENumericType getAggregateNumericInputType(QUERY query);
+	EAggregateType getAggregateNumericInputType(QUERY query);
 
-	ENumericType getAggregateNumericOutputType(QUERY query);
+	EAggregateType getAggregateNumericOutputType(QUERY query);
 	
 	Object getAggregateResultValue(QUERY query, Object instance);
 	

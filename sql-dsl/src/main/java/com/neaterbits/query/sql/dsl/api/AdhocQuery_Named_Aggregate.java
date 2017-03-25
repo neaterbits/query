@@ -7,7 +7,7 @@ final class AdhocQuery_Named_Aggregate<MODEL> extends AdhocQuery_Named_Singular<
 				IAdhocNumericInstanceResult<MODEL, Object>{
 
 	AdhocQuery_Named_Aggregate(Function<?, ?> aggregateGetter, EAggregateFunction aggregateFunction,
-			ENumericType aggregateNumericInputType, ENumericType aggregateNumericOutputType) {
+			EAggregateType aggregateNumericInputType, EAggregateType aggregateNumericOutputType) {
 		super(aggregateGetter, aggregateFunction, aggregateNumericInputType, aggregateNumericOutputType);
 	}
 

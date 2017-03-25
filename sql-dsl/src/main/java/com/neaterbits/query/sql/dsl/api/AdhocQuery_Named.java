@@ -42,7 +42,7 @@ abstract class AdhocQuery_Named<MODEL, RESULT>
 	
 	abstract AdhocConditions<MODEL, RESULT, ?> createConditions(int level);
 
-	AdhocQuery_Named(Function<?, ?> aggregateGetter, EAggregateFunction aggregateFunction, ENumericType aggregateNumericInputType, ENumericType aggregateNumericOutputType) {
+	AdhocQuery_Named(Function<?, ?> aggregateGetter, EAggregateFunction aggregateFunction, EAggregateType aggregateNumericInputType, EAggregateType aggregateNumericOutputType) {
 		super(aggregateFunction, aggregateNumericInputType, aggregateNumericOutputType);
 
 		if (aggregateGetter == null) {

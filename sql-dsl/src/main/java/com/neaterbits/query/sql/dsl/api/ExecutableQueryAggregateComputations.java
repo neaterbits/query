@@ -208,7 +208,7 @@ abstract class ExecutableQueryAggregateComputations<QUERY> extends ExecuteQueryB
 	
 	private final Object computeSum(QUERY query, Object last, Object value) {
 		
-		final ENumericType numericType = q.getAggregateNumericInputType(query);
+		final EAggregateType numericType = q.getAggregateNumericInputType(query);
 		
 		final Object ret;
 		
@@ -277,7 +277,7 @@ abstract class ExecutableQueryAggregateComputations<QUERY> extends ExecuteQueryB
 	
 	private final Object computeMin(QUERY query, Object last, Object value) {
 		
-		final ENumericType numericType = q.getAggregateNumericInputType(query);
+		final EAggregateType numericType = q.getAggregateNumericInputType(query);
 		
 		final Object ret;
 		
@@ -361,7 +361,7 @@ abstract class ExecutableQueryAggregateComputations<QUERY> extends ExecuteQueryB
 	
 	private final Object computeMax(QUERY query, Object last, Object value) {
 		
-		final ENumericType numericType = q.getAggregateNumericInputType(query);
+		final EAggregateType numericType = q.getAggregateNumericInputType(query);
 		
 		final Object ret;
 		
@@ -446,7 +446,7 @@ abstract class ExecutableQueryAggregateComputations<QUERY> extends ExecuteQueryB
 
 	private final Object computeMinInstance(QUERY query, Object instance, Object last, Object value) {
 		
-		final ENumericType numericType = q.getAggregateNumericInputType(query);
+		final EAggregateType numericType = q.getAggregateNumericInputType(query);
 		
 		final MinMaxValueBase ret;
 		
@@ -544,7 +544,7 @@ abstract class ExecutableQueryAggregateComputations<QUERY> extends ExecuteQueryB
 	
 	private final Object computeMaxInstance(QUERY query, Object instance, Object last, Object value) {
 		
-		final ENumericType numericType = q.getAggregateNumericInputType(query);
+		final EAggregateType numericType = q.getAggregateNumericInputType(query);
 
 		final MinMaxValueBase ret;
 
@@ -673,7 +673,7 @@ abstract class ExecutableQueryAggregateComputations<QUERY> extends ExecuteQueryB
 	
 	private final Object computeAvg(QUERY query, Object last, Object value) {
 		
-		final ENumericType numericType = q.getAggregateNumericInputType(query);
+		final EAggregateType numericType = q.getAggregateNumericInputType(query);
 		
 		final AvgCollector ret;
 		

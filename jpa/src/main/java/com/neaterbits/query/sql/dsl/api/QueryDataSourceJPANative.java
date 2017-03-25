@@ -2,10 +2,10 @@ package com.neaterbits.query.sql.dsl.api;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.EntityManager;
-import javax.persistence.Query;
 
 import com.neaterbits.query.sql.dsl.api.entity.AttributeType;
 import com.neaterbits.query.sql.dsl.api.entity.IEntity;
@@ -210,6 +210,29 @@ public final class QueryDataSourceJPANative extends QueryDataSourceJPA {
 		else if (input instanceof Long) {
 			ret = input;
 		}
+		else {
+			throw new IllegalStateException("Neither Integer nor Long");
+		}
+
+		return ret;
+	}
+
+	@Override
+	Object convertUnknownAggregateResult(Class<?> aggregateResultType, Object input) {
+		if (!aggregateResultType.equals(Date.class)) {
+			throw new IllegalStateException("Expected Date");
+		}
+
+		final Object ret;
+
+		if (input instanceof java.sql.Timestamp) {
+			ret = new Date(((java.sql.Timestamp)input).getTime());
+		}
+		/*
+		else if (input instanceof Long) {
+			ret = input;
+		}
+		*/
 		else {
 			throw new IllegalStateException("Neither Integer nor Long");
 		}

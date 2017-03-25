@@ -10,7 +10,7 @@ abstract class AdhocQuery_Named_Singular<MODEL> extends AdhocQuery_Named<MODEL, 
 	implements IAdhocLogical_Where_Or_Join_Singular<MODEL, Object, Object> {
 
 	
-	AdhocQuery_Named_Singular(Function<?, ?> aggregateGetter, EAggregateFunction aggregateFunction, ENumericType aggregateNumericInputType, ENumericType aggregateNumericOutputType) {
+	AdhocQuery_Named_Singular(Function<?, ?> aggregateGetter, EAggregateFunction aggregateFunction, EAggregateType aggregateNumericInputType, EAggregateType aggregateNumericOutputType) {
 		super(aggregateGetter, aggregateFunction, aggregateNumericInputType, aggregateNumericOutputType);
 	}
 	

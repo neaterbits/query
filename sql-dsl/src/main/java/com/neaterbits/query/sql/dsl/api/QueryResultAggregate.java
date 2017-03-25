@@ -1,12 +1,13 @@
 package com.neaterbits.query.sql.dsl.api;
 
 import java.math.BigDecimal;
+import java.util.Date;
 
 abstract class QueryResultAggregate extends CollectedQueryResult {
 
 	private final Getter getter;
-	private final ENumericType inputNumericType;
-	private final ENumericType outputNumericType;
+	private final EAggregateType inputNumericType;
+	private final EAggregateType outputNumericType;
 	
 	abstract EAggregateFunction getAggregateFunction();
 	
@@ -24,23 +25,26 @@ abstract class QueryResultAggregate extends CollectedQueryResult {
 		this.outputNumericType = getNumericType(type);
 	}
 	
-	private static ENumericType getNumericType(Class<?> type) {
-		final ENumericType ret;
+	private static EAggregateType getNumericType(Class<?> type) {
+		final EAggregateType ret;
 		
 		if (type.equals(Short.class)) {
-			ret = ENumericType.SHORT;	
+			ret = EAggregateType.SHORT;	
 		}
 		else if (type.equals(Integer.class)) {
-			ret = ENumericType.INTEGER;
+			ret = EAggregateType.INTEGER;
 		}
 		else if (type.equals(Long.class)) {
-			ret = ENumericType.LONG;
+			ret = EAggregateType.LONG;
 		}
 		else if (type.equals(Double.class)) {
-			ret = ENumericType.DOUBLE;
+			ret = EAggregateType.DOUBLE;
 		}
 		else if (type.equals(BigDecimal.class)) {
-			ret = ENumericType.DECIMAL;
+			ret = EAggregateType.DECIMAL;
+		}
+		else if (type.equals(Date.class)) {
+			ret = EAggregateType.DATE;
 		}
 		else {
 			throw new IllegalArgumentException("Not a numeric type: " + type);
@@ -54,11 +58,11 @@ abstract class QueryResultAggregate extends CollectedQueryResult {
 		return getter;
 	}
 
-	final ENumericType getInputNumericType() {
+	final EAggregateType getInputNumericType() {
 		return inputNumericType;
 	}
 
-	final ENumericType getOutputNumericType() {
+	final EAggregateType getOutputNumericType() {
 		return outputNumericType;
 	}
 
