@@ -22,6 +22,21 @@ public class Coll8 {
 
 		return false;
 	}
+
+	public static <T> T find(Collection<T> coll, Predicate<T> predicate) {
+
+		if (coll == null) {
+			return null;
+		}
+
+		for (T elem : coll) {
+			if (predicate.test(elem)) {
+				return elem;
+			}
+		}
+
+		return null;
+	}
 	
 	public static <T, O> List<O> remap(Collection<T> list, Function<T, O> map) {
 		final List<O> ret = new ArrayList<>(list.size());

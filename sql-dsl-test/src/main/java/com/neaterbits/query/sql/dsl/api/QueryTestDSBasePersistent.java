@@ -1,10 +1,12 @@
 package com.neaterbits.query.sql.dsl.api;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.function.BiFunction;
 import java.util.function.Consumer;
 
 import com.neaterbits.query.sql.dsl.api.TransactionalDataStore;
+import com.neaterbits.query.util.java8.Coll8;
 
 public abstract class QueryTestDSBasePersistent<CTX, ENTITIES, TRANSACTION>
 
@@ -87,6 +89,9 @@ public abstract class QueryTestDSBasePersistent<CTX, ENTITIES, TRANSACTION>
 
 	private class Checker extends BaseChecker implements QueryTestDSCheck {
 		private final List<TestInstance> instances;
+		
+		private List<TestInstance> toRemoveInstances;
+		private List<Object> toRemove;
 
 		public Checker(List<TestInstance> instances) {
 			this.instances = instances;
@@ -113,6 +118,39 @@ public abstract class QueryTestDSBasePersistent<CTX, ENTITIES, TRANSACTION>
 				
 			}
 		}
+		
+		@Override
+		public QueryTestDSCheck remove(Object... instances) {
+
+			if (toRemove == null) {
+				toRemove = new ArrayList<>();
+			}
+			
+			for (Object o : instances) {
+				
+				if (o == null) {
+					throw new IllegalArgumentException("o == null");
+				}
+				
+				if (Coll8.has(this.instances, instance -> instance.getInstance() == o)) {
+					throw new IllegalStateException("Already among instancens: " + o);
+				}
+				
+				/*
+				
+				final TestInstance testInstance = Coll8.find(this.instances, instance -> instance.getInstance() == o);
+				
+				if (testInstance == null) {
+					throw new IllegalStateException("No test instance matching " + o + " in " + this.instances);
+				}
+				*/
+				
+				//toRemoveInstances.add(testInstance);
+				toRemove.add(o);
+			}
+			
+			return this;
+		}
 
 		@Override
 		public void check(Consumer<DataConfig> testBuilder) {
@@ -138,8 +176,33 @@ public abstract class QueryTestDSBasePersistent<CTX, ENTITIES, TRANSACTION>
 			try {
 				final TRANSACTION transaction = dataStore.beginTransaction(em);
 
-				for (TestInstance instance : instances) {
+				if (toRemove != null) {
+					for (Object o : toRemove) {
+						debug("pre-removing instance " + o);
 
+						dataStore.remove(em, o, dataStore.getPrimaryKey(o));
+					}
+				}
+				
+				if (toRemoveInstances != null) {
+					for (TestInstance instance : toRemoveInstances) {
+						debug("pre-removing testinstance " + instance.getInstance());
+
+						dataStore.remove(em, instance.getInstance(), instance.getPK());
+					}
+				}
+					
+
+				for (TestInstance instance : instances) {
+					
+					if (toRemoveInstances != null && Coll8.has(toRemoveInstances, i -> i.getInstance() == instance.getInstance())) {
+						// already removed
+						debug("skipping pre-removed " + instance.getInstance());
+						continue;
+					}
+
+					debug("removing " + instance.getInstance());
+					
 					dataStore.remove(em, instance.getInstance(), instance.getPK());
 				}
 				

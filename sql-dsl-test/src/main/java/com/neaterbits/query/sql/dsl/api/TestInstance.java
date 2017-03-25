@@ -44,4 +44,11 @@ final class TestInstance {
 
 		this.pk = pk;
 	}
+
+	@Override
+	public String toString() {
+		return "TestInstance [instance=" + instance + ", pk=" + pk + "]";
+	}
+	
+	
 }

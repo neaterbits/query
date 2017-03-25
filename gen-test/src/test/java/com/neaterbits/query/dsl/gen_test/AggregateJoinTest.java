@@ -30,7 +30,12 @@ public class AggregateJoinTest extends GEN_BaseTestCase {
     	final LandPlot land4 = new Uncultivated(new BigDecimal("345.43"));
 
     	farm1.setLandPlots(Arrays.asList(land1, land2));
+    	
+    	land1.setFarm(farm1);
+    	land2.setFarm(farm1);
+    	
     	farm2.setLandPlots(Arrays.asList(land3));
+    	land3.setFarm(farm2);
     	
     	// only landplots that belong to farms, so land4 should not be included in sum
     	// since doing innerjoin from farm to landplot
@@ -40,12 +45,13 @@ public class AggregateJoinTest extends GEN_BaseTestCase {
     			.build();
     	
     	store(farm1, farm2, land4)
-    	.dump(Farm.class)
+    	/*.dump(Farm.class)
     	.dump(LandPlot.class)
+    	*/
+    	.dump("select * from farm")
     	.dump("select * from land_plot")
+    	.remove(land1, land2, land3)
     	.checkAggregate(query, new BigDecimal("150.30"));
-    	
-    	
     	
     	//fortsett, innerjoin fra farm til landplot med aggregate på farm? for eksempel min og max TimeFounded eller lignende
     	assertThat(true).isEqualTo(false);

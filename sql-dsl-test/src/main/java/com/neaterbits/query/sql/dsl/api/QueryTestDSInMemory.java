@@ -41,6 +41,12 @@ public final class QueryTestDSInMemory extends QueryTestDS {
 		List<?> executeSql(String sql) {
 			throw new UnsupportedOperationException("sql not suppported");
 		}
+		
+		@Override
+		public QueryTestDSCheck remove(Object... instances) {
+			// Not removing instances since in-memory
+			return this;
+		}
 
 		@Override
 		void execute(Consumer<DataConfig> testBuilder) {

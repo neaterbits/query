@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 
+import com.neaterbits.query.util.java8.Coll8;
+
 
 public class QueryTestDSCombined extends QueryTestDS {
 
@@ -107,6 +109,7 @@ public class QueryTestDSCombined extends QueryTestDS {
 		private final List<QueryTestDSStore> stores;
 		private List<Class<?>> dumpEntity;
 		private List<String> dumpSql;
+		private List<Object> toRemove;
 		
 		Checker(Consumer<QueryTestDSBuilder> dsBuilder, List<QueryTestDSStore> stores) {
 			this.dsBuilder = dsBuilder;
@@ -153,6 +156,25 @@ public class QueryTestDSCombined extends QueryTestDS {
 
 			return this;
 		}
+		
+
+		@Override
+		public QueryTestDSCheck remove(Object... instances) {
+			
+			if (toRemove == null) {
+				toRemove = new ArrayList<>(instances.length);
+			}
+
+			for (Object o : instances) {
+				if (o == null) {
+					throw new IllegalArgumentException("o == null");
+				}
+
+				toRemove.add(o);
+			}
+			
+			return this;
+		}
 
 		@Override
 		public void check(Consumer<DataConfig> testBuilder) {
@@ -169,6 +191,10 @@ public class QueryTestDSCombined extends QueryTestDS {
 					for (String sql : dumpSql) {
 						dsCheck.dump(sql);
 					}
+				}
+				
+				if (toRemove != null) {
+					dsCheck.remove(toRemove.toArray(new Object[toRemove.size()]));
 				}
 
 				dsCheck.check(testBuilder);

@@ -11,7 +11,11 @@ public interface QueryTestDSCheck {
 
 	<T> QueryTestDSCheck dump(String sql);
 	
+	QueryTestDSCheck remove(Object ... instances);
+	
 	void check(Consumer<DataConfig> testBuilder);
+	
+	
 
 	<T> void checkOne(SingleBuilt<T> query, T expected);
 
