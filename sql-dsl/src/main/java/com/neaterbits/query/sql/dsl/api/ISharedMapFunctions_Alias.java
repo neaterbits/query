@@ -16,6 +16,7 @@ public interface ISharedMapFunctions_Alias<
 		LONG_RET		extends ISharedFunction_Next<MODEL, RESULT, RET>,
 		DOUBLE_RET		extends ISharedFunction_Next<MODEL, RESULT, RET>,
 		BIGDECIMAL_RET	extends ISharedFunction_Next<MODEL, RESULT, RET>,
+		DATE_RET		extends ISharedFunction_Next<MODEL, RESULT, RET>,
 		STRING_RET		extends ISharedFunction_Next<MODEL, RESULT, RET>
 	>
 
@@ -25,7 +26,7 @@ public interface ISharedMapFunctions_Alias<
 		ISharedFunctions_All_Transform_Alias<MODEL, RESULT, RET, SHORT_RET, INT_RET, LONG_RET, DOUBLE_RET, BIGDECIMAL_RET, STRING_RET>,
 
 		// Aggregates as well 
-		ISharedFunctions_Aggregate_Alias<SUM_LONG_RET, COUNT_RET, SHORT_RET, INT_RET, LONG_RET, DOUBLE_RET, BIGDECIMAL_RET>
+		ISharedFunctions_Aggregate_Alias<SUM_LONG_RET, COUNT_RET, SHORT_RET, INT_RET, LONG_RET, DOUBLE_RET, BIGDECIMAL_RET, DATE_RET>
 
 {
 

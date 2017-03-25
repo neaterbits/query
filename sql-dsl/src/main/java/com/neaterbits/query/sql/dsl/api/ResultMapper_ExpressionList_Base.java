@@ -24,6 +24,7 @@ abstract class ResultMapper_ExpressionList_Base<
 			NAMED_LONG_RET 	 	extends ISharedFunction_Next<MODEL, RESULT, NAMED_RET>,
 			NAMED_DOUBLE_RET   	extends ISharedFunction_Next<MODEL, RESULT, NAMED_RET>,
 			NAMED_BIGDECIMAL_RET  extends ISharedFunction_Next<MODEL, RESULT, NAMED_RET>,
+			NAMED_DATE_RET  extends ISharedFunction_Next<MODEL, RESULT, NAMED_RET>,
 			NAMED_STRING_RET  	extends ISharedFunction_Next<MODEL, RESULT, NAMED_RET>,
 			
 			ALIAS_SUM_LONG_RET  	extends ISharedFunction_Next<MODEL, RESULT, ALIAS_RET>,
@@ -34,6 +35,7 @@ abstract class ResultMapper_ExpressionList_Base<
 			ALIAS_LONG_RET 	 	extends ISharedFunction_Next<MODEL, RESULT, ALIAS_RET>,
 			ALIAS_DOUBLE_RET   	extends ISharedFunction_Next<MODEL, RESULT, ALIAS_RET>,
 			ALIAS_BIGDECIMAL_RET  extends ISharedFunction_Next<MODEL, RESULT, ALIAS_RET>,
+			ALIAS_DATE_RET  extends ISharedFunction_Next<MODEL, RESULT, ALIAS_RET>,
 			ALIAS_STRING_RET  extends ISharedFunction_Next<MODEL, RESULT, ALIAS_RET>
 
 			>
@@ -55,6 +57,7 @@ abstract class ResultMapper_ExpressionList_Base<
 				NAMED_LONG_RET,
 				NAMED_DOUBLE_RET,
 				NAMED_BIGDECIMAL_RET,
+				NAMED_DATE_RET,
 				NAMED_STRING_RET,
 				
 				ALIAS_SUM_LONG_RET,
@@ -65,6 +68,7 @@ abstract class ResultMapper_ExpressionList_Base<
 				ALIAS_LONG_RET,
 				ALIAS_DOUBLE_RET,
 				ALIAS_BIGDECIMAL_RET,
+				ALIAS_DATE_RET,
 				ALIAS_STRING_RET
 				> 
 
@@ -139,6 +143,7 @@ abstract class ResultMapper_ExpressionList_Base<
 				NAMED_LONG_RET,
 				NAMED_DOUBLE_RET,
 				NAMED_BIGDECIMAL_RET,
+				NAMED_DATE_RET,
 				
 				NAMED_SUM_LONG_RET,
 				NAMED_COUNT_RET,
@@ -147,7 +152,8 @@ abstract class ResultMapper_ExpressionList_Base<
 				NAMED_INTEGER_RET,
 				NAMED_LONG_RET,
 				NAMED_DOUBLE_RET,
-				NAMED_BIGDECIMAL_RET
+				NAMED_BIGDECIMAL_RET,
+				NAMED_DATE_RET
 			
 			>,
 			ISharedMapFunctions_Numeric_Named<
@@ -159,6 +165,7 @@ abstract class ResultMapper_ExpressionList_Base<
 				NAMED_DOUBLE_RET,
 				NAMED_DOUBLE_RET,
 				
+				NAMED_DOUBLE_RET,
 				NAMED_DOUBLE_RET,
 				NAMED_DOUBLE_RET,
 				NAMED_DOUBLE_RET,
@@ -183,6 +190,7 @@ abstract class ResultMapper_ExpressionList_Base<
 				NAMED_DOUBLE_RET,
 				NAMED_DOUBLE_RET,
 				NAMED_DOUBLE_RET,
+				NAMED_DOUBLE_RET,
 				NAMED_DOUBLE_RET
 				
 			>,
@@ -203,6 +211,7 @@ abstract class ResultMapper_ExpressionList_Base<
 				NAMED_LONG_RET,
 				NAMED_DOUBLE_RET,
 				NAMED_BIGDECIMAL_RET,
+				NAMED_DATE_RET,
 				
 				NAMED_SUM_LONG_RET,
 				NAMED_COUNT_RET,
@@ -211,7 +220,8 @@ abstract class ResultMapper_ExpressionList_Base<
 				NAMED_INTEGER_RET,
 				NAMED_LONG_RET,
 				NAMED_DOUBLE_RET,
-				NAMED_BIGDECIMAL_RET
+				NAMED_BIGDECIMAL_RET,
+				NAMED_DATE_RET
 				
 				>
 		{

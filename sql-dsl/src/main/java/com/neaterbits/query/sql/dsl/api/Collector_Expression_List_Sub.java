@@ -1,6 +1,7 @@
 package com.neaterbits.query.sql.dsl.api;
 
 import java.math.BigDecimal;
+import java.util.Date;
 
 final class Collector_Expression_List_Sub<
 
@@ -38,12 +39,14 @@ final class Collector_Expression_List_Sub<
 		ISharedSubOperandsBuilder_Numeric_Next_Named<MODEL, RESULT, Long, NAMED_RET>,
 		ISharedSubOperandsBuilder_Numeric_Next_Named<MODEL, RESULT, Double, NAMED_RET>,
 		ISharedSubOperandsBuilder_Numeric_Next_Named<MODEL, RESULT, BigDecimal, NAMED_RET>,
+		ISharedSubOperandsBuilder_Numeric_Next_Named<MODEL, RESULT, Date, NAMED_RET>,
 		ISharedSubOperandsBuilder_String_Next_Named<MODEL, RESULT, NAMED_RET>,
 
 
 		ISharedFunction_Next<MODEL, RESULT, ALIAS_RET>,
 		ISharedFunction_Next<MODEL, RESULT, ALIAS_RET>,
 		
+		ISharedFunction_Next<MODEL, RESULT, ALIAS_RET>,
 		ISharedFunction_Next<MODEL, RESULT, ALIAS_RET>,
 		ISharedFunction_Next<MODEL, RESULT, ALIAS_RET>,
 		ISharedFunction_Next<MODEL, RESULT, ALIAS_RET>,

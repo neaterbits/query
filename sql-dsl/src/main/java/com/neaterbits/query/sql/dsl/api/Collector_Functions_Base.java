@@ -17,7 +17,9 @@ abstract class Collector_Functions_Base<
 		NAMED_LONG_RET		extends ISharedFunction_Next<MODEL, RESULT, NAMED_RET>,
 		NAMED_DOUBLE_RET	extends ISharedFunction_Next<MODEL, RESULT, NAMED_RET>,
 		NAMED_BIGDECIMAL_RET extends ISharedFunction_Next<MODEL, RESULT, NAMED_RET>,
+		NAMED_DATE_RET extends ISharedFunction_Next<MODEL, RESULT, NAMED_RET>,
 		NAMED_STRING_RET 	extends ISharedFunction_Next<MODEL, RESULT, NAMED_RET>,
+		
 		
 		ALIAS_SUM_LONG_RET  extends ISharedFunction_Next<MODEL, RESULT, ALIAS_RET>,
 		ALIAS_COUNT_RET		extends ISharedFunction_Next<MODEL, RESULT, ALIAS_RET>,
@@ -26,6 +28,7 @@ abstract class Collector_Functions_Base<
 		ALIAS_LONG_RET    extends ISharedFunction_Next<MODEL, RESULT, ALIAS_RET>,
 		ALIAS_DOUBLE_RET  extends ISharedFunction_Next<MODEL, RESULT, ALIAS_RET>,
 		ALIAS_BIGDECIMAL_RET extends ISharedFunction_Next<MODEL, RESULT, ALIAS_RET>,
+		ALIAS_DATE_RET extends ISharedFunction_Next<MODEL, RESULT, ALIAS_RET>,
 		ALIAS_STRING_RET  extends ISharedFunction_Next<MODEL, RESULT, ALIAS_RET>
 		
 		>
@@ -43,7 +46,7 @@ abstract class Collector_Functions_Base<
 			NAMED_BIGDECIMAL_RET>,
 			
 		ISharedFunctions_String_Named<MODEL, RESULT, NAMED_RET, NAMED_STRING_RET>,
-		ISharedFunctions_Aggregate_Named<NAMED_SUM_LONG_RET, NAMED_COUNT_RET, NAMED_SHORT_RET, NAMED_INTEGER_RET, NAMED_LONG_RET, NAMED_DOUBLE_RET, NAMED_BIGDECIMAL_RET>,
+		ISharedFunctions_Aggregate_Named<NAMED_SUM_LONG_RET, NAMED_COUNT_RET, NAMED_SHORT_RET, NAMED_INTEGER_RET, NAMED_LONG_RET, NAMED_DOUBLE_RET, NAMED_BIGDECIMAL_RET, NAMED_DATE_RET>,
 	
 		ISharedFunctions_Arithmetic_Alias<
 			MODEL, RESULT,
@@ -57,7 +60,7 @@ abstract class Collector_Functions_Base<
 			
 			
 		ISharedFunctions_String_Alias<MODEL, RESULT, ALIAS_RET, ALIAS_STRING_RET>,
-		ISharedFunctions_Aggregate_Alias<ALIAS_SUM_LONG_RET, ALIAS_COUNT_RET, ALIAS_SHORT_RET, ALIAS_INTEGER_RET, ALIAS_LONG_RET, ALIAS_DOUBLE_RET, ALIAS_BIGDECIMAL_RET>
+		ISharedFunctions_Aggregate_Alias<ALIAS_SUM_LONG_RET, ALIAS_COUNT_RET, ALIAS_SHORT_RET, ALIAS_INTEGER_RET, ALIAS_LONG_RET, ALIAS_DOUBLE_RET, ALIAS_BIGDECIMAL_RET, ALIAS_DATE_RET>
 			
 {
 	
@@ -256,6 +259,11 @@ abstract class Collector_Functions_Base<
 	}
 
 	@Override
+	public final <T> NAMED_DATE_RET max(IFunctionDate<T> field) {
+		return addAndReturnType(Function_Aggregate.MAX, field);
+	}
+
+	@Override
 	public final <T> NAMED_SHORT_RET min(IFunctionShort<T> field) {
 		return addAndReturnType(Function_Aggregate.MIN, field);
 	}
@@ -428,6 +436,11 @@ abstract class Collector_Functions_Base<
 
 	@Override
 	public final ALIAS_BIGDECIMAL_RET max(ISupplierBigDecimal field) {
+		return addAndReturnType(Function_Aggregate.MAX, field);
+	}
+
+	@Override
+	public final ALIAS_DATE_RET max(ISupplierDate field) {
 		return addAndReturnType(Function_Aggregate.MAX, field);
 	}
 

@@ -1,6 +1,7 @@
 package com.neaterbits.query.sql.dsl.api;
 
 import java.math.BigDecimal;
+import java.util.Date;
 
 public interface ISharedResultMapper_All<MODEL, RESULT, 
 		NAMED_SOURCE extends ISharedSelectSourceBuilder<MODEL, RESULT>,
@@ -35,6 +36,7 @@ public interface ISharedResultMapper_All<MODEL, RESULT,
 				ISharedResultMap_OpsAndTo_Numeric_Named<MODEL, RESULT, Long, NAMED_SOURCE>,
 				ISharedResultMap_OpsAndTo_Numeric_Named<MODEL, RESULT, Double, NAMED_SOURCE>,
 				ISharedResultMap_OpsAndTo_Numeric_Named<MODEL, RESULT, BigDecimal, NAMED_SOURCE>,
+				ISharedResultMap_OpsAndTo_Numeric_Named<MODEL, RESULT, Date, NAMED_SOURCE>,
 				ISharedResultOps_String_Named<MODEL, RESULT, NAMED_SOURCE>,
 				
 				ISharedResultMapperTo<MODEL, RESULT, Long, NAMED_SOURCE>,
@@ -44,6 +46,7 @@ public interface ISharedResultMapper_All<MODEL, RESULT,
 				ISharedResultMapperTo<MODEL, RESULT, Long, NAMED_SOURCE>,
 				ISharedResultMapperTo<MODEL, RESULT, Double, NAMED_SOURCE>,
 				ISharedResultMapperTo<MODEL, RESULT, BigDecimal, NAMED_SOURCE>,
+				ISharedResultMapperTo<MODEL, RESULT, Date, NAMED_SOURCE>,
 				ISharedResultMapperTo<MODEL, RESULT, String,  NAMED_SOURCE>,
 				
 				// Alias functions
@@ -54,6 +57,7 @@ public interface ISharedResultMapper_All<MODEL, RESULT,
 				ISharedResultOps_Numeric_Alias<MODEL, RESULT, Long, ALIAS_SOURCE>,
 				ISharedResultOps_Numeric_Alias<MODEL, RESULT, Double, ALIAS_SOURCE>,
 				ISharedResultOps_Numeric_Alias<MODEL, RESULT, BigDecimal, ALIAS_SOURCE>,
+				ISharedResultOps_Numeric_Alias<MODEL, RESULT, Date, ALIAS_SOURCE>,
 				ISharedResultOps_String_Alias<MODEL, RESULT, ALIAS_SOURCE>,
 			
 				ISharedResultMapperTo<MODEL, RESULT, Long, ALIAS_SOURCE>,
@@ -63,6 +67,7 @@ public interface ISharedResultMapper_All<MODEL, RESULT,
 				ISharedResultMapperTo<MODEL, RESULT, Long, ALIAS_SOURCE>,
 				ISharedResultMapperTo<MODEL, RESULT, Double, ALIAS_SOURCE>,
 				ISharedResultMapperTo<MODEL, RESULT, BigDecimal, ALIAS_SOURCE>,
+				ISharedResultMapperTo<MODEL, RESULT, Date, ALIAS_SOURCE>,
 				ISharedResultMapperTo<MODEL, RESULT, String,  ALIAS_SOURCE>
 	>
 				

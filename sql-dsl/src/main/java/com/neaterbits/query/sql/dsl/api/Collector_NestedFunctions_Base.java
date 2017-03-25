@@ -19,6 +19,7 @@ abstract class Collector_NestedFunctions_Base<
 		NAMED_LONG_RET		extends ISharedFunction_Next<MODEL, RESULT, NAMED_RET>,
 		NAMED_DOUBLE_RET	extends ISharedFunction_Next<MODEL, RESULT, NAMED_RET>,
 		NAMED_BIGDECIMAL_RET extends ISharedFunction_Next<MODEL, RESULT, NAMED_RET>,
+		NAMED_DATE_RET extends ISharedFunction_Next<MODEL, RESULT, NAMED_RET>,
 		NAMED_STRING_RET 	extends ISharedFunction_Next<MODEL, RESULT, NAMED_RET>,
 		
 		
@@ -29,6 +30,7 @@ abstract class Collector_NestedFunctions_Base<
 		ALIAS_LONG_RET    extends ISharedFunction_Next<MODEL, RESULT, ALIAS_RET>,
 		ALIAS_DOUBLE_RET  extends ISharedFunction_Next<MODEL, RESULT, ALIAS_RET>,
 		ALIAS_BIGDECIMAL_RET extends ISharedFunction_Next<MODEL, RESULT, ALIAS_RET>,
+		ALIAS_DATE_RET extends ISharedFunction_Next<MODEL, RESULT, ALIAS_RET>,
 		ALIAS_STRING_RET  extends ISharedFunction_Next<MODEL, RESULT, ALIAS_RET>
 		
 		> extends Collector_Functions_Base<
@@ -46,6 +48,7 @@ abstract class Collector_NestedFunctions_Base<
 		NAMED_LONG_RET,
 		NAMED_DOUBLE_RET,
 		NAMED_BIGDECIMAL_RET,
+		NAMED_DATE_RET,
 		NAMED_STRING_RET,
 
 		ALIAS_SUM_LONG_RET,
@@ -55,6 +58,7 @@ abstract class Collector_NestedFunctions_Base<
 		ALIAS_LONG_RET,
 		ALIAS_DOUBLE_RET,
 		ALIAS_BIGDECIMAL_RET,
+		ALIAS_DATE_RET,
 		ALIAS_STRING_RET
 		
 		> {
@@ -90,7 +94,7 @@ abstract class Collector_NestedFunctions_Base<
 				*/
 	}
 	
-	Collector_NestedFunctions_Base(Collector_NestedFunctions_Base<MODEL, RESULT, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?> toCopy) {
+	Collector_NestedFunctions_Base(Collector_NestedFunctions_Base<MODEL, RESULT, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?> toCopy) {
 		this.functions = new ArrayList<>(toCopy.functions);
 	}
 

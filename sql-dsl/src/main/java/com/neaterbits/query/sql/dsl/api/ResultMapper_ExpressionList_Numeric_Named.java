@@ -1,6 +1,7 @@
 package com.neaterbits.query.sql.dsl.api;
 
 import java.math.BigDecimal;
+import java.util.Date;
 
 final class ResultMapper_ExpressionList_Numeric_Named< 
 		MODEL,
@@ -30,12 +31,14 @@ final class ResultMapper_ExpressionList_Numeric_Named<
 			ISharedResultMap_OpsAndTo_Numeric_Named<MODEL, RESULT, Long, RET>,
 			ISharedResultMap_OpsAndTo_Numeric_Named<MODEL, RESULT, Double, RET>,
 			ISharedResultMap_OpsAndTo_Numeric_Named<MODEL, RESULT, BigDecimal, RET>,
+			ISharedResultMap_OpsAndTo_Numeric_Named<MODEL, RESULT, Date, RET>,
 			ISharedResultMap_OpsAndTo_Numeric_Named<MODEL, RESULT, String, RET>,
 			
 
 			ISharedFunction_Next<MODEL, RESULT, ISharedFunction_After<MODEL, RESULT>>,
 			ISharedFunction_Next<MODEL, RESULT, ISharedFunction_After<MODEL, RESULT>>,
 			
+			ISharedFunction_Next<MODEL, RESULT, ISharedFunction_After<MODEL, RESULT>>,
 			ISharedFunction_Next<MODEL, RESULT, ISharedFunction_After<MODEL, RESULT>>,
 			ISharedFunction_Next<MODEL, RESULT, ISharedFunction_After<MODEL, RESULT>>,
 			ISharedFunction_Next<MODEL, RESULT, ISharedFunction_After<MODEL, RESULT>>,

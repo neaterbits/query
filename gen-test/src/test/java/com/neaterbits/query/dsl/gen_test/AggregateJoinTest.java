@@ -3,7 +3,10 @@ package com.neaterbits.query.dsl.gen_test;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.math.BigDecimal;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
+import java.util.Date;
 
 import org.junit.Test;
 import com.neaterbits.query.jpatest.GEN_BaseTestCase;
@@ -55,9 +58,56 @@ public class AggregateJoinTest extends GEN_BaseTestCase {
     	.remove(land1, land2, land3)
     	.checkAggregate(query, new BigDecimal("150.30"));
     	
+    }
+    
+    @Test
+    public void testAggregateSingleNamed_Left() {
     	
-    	//fortsett, innerjoin fra farm til landplot med aggregate på farm? for eksempel min og max TimeFounded eller lignende
-    	assertThat(true).isEqualTo(false);
+    	// Aggregate left-join
+    	final Farm farm1 = makeFarm("Farm1", "1928-09-02");
+    	final Farm farm2 = makeFarm("Farm2", "1974-02-29");
+    	final Farm farm3 = makeFarm("Farm3", "1839-03-22");
+
+    	final LandPlot land1 = new CropLand(new BigDecimal("9.30"));
+    	final LandPlot land2 = new Forest(new BigDecimal("40.5"));
+    	
+    	farm1.setLandPlots(Arrays.asList(land1));
+    	land1.setFarm(farm1);
+    	
+    	farm2.setLandPlots(Arrays.asList(land2));
+    	land2.setFarm(farm2);
+    	
+
+    	final SingleBuilt<Date> query
+	    	= select.max(Farm::getTimeFounded)
+				.innerJoin(Farm::getLandPlots)   
+				.build();
+	
+		store(farm1, farm2)
+		/*.dump(Farm.class)
+		.dump(LandPlot.class)
+		*/
+		
+		// remove to avoid delete constraints when deleting Farm (not cascade)
+		.remove(land1, land2)
+		.checkAggregate(query, new Date());
+		
+    }
+    
+    private static Farm makeFarm(String name, String timeFounded) {
+
+    	final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+
+    	final Farm farm = new Farm(name);
+
+    	try {
+    		farm.setTimeFounded(dateFormat.parse(timeFounded));
+    	}
+    	catch (ParseException ex) {
+    		throw new RuntimeException("Failed to parse \"" + timeFounded + "\"", ex);
+    	}
+
+    	return farm;
     }
 
 
@@ -86,7 +136,7 @@ public class AggregateJoinTest extends GEN_BaseTestCase {
     	// since doing innerjoin from farm to landplot
     	final SingleBuilt<BigDecimal> query
     		= select.sum(l::getHectares)
-    			.innerJoin(f::getLandPlots, l)   
+    			.innerJoin(f::getLandPlots, l)
     			.build();
     	
     	store(farm1, farm2, land4)

@@ -1,6 +1,7 @@
 package com.neaterbits.query.sql.dsl.api;
 
 import java.math.BigDecimal;
+import java.util.Date;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
@@ -15,6 +16,7 @@ final class ClassicSelect
 		IClassicResult_Numeric_Named<Long>,
 		IClassicResult_Numeric_Named<Double>,
 		IClassicResult_Numeric_Named<BigDecimal>,
+		IClassicResult_Numeric_Named<Date>,
 		
 		IClassicResult_Numeric_Alias<Long>,
 		IClassicResult_Numeric_Alias<Long>,
@@ -23,7 +25,8 @@ final class ClassicSelect
 		IClassicResult_Numeric_Alias<Integer>,
 		IClassicResult_Numeric_Alias<Long>,
 		IClassicResult_Numeric_Alias<Double>,
-		IClassicResult_Numeric_Alias<BigDecimal>		
+		IClassicResult_Numeric_Alias<BigDecimal>,		
+		IClassicResult_Numeric_Alias<Date>		
 	>
 
 	implements IClassic {

@@ -1,6 +1,7 @@
 package com.neaterbits.query.sql.dsl.api;
 
 import java.math.BigDecimal;
+import java.util.Date;
 
 public interface ISharedResult_Mapped_Named_Base<
 		MODEL, 
@@ -25,6 +26,7 @@ public interface ISharedResult_Mapped_Named_Base<
 		ISharedResultMap_OpsAndTo_Numeric_Named<MODEL, RESULT, Long, 	   RET>,
 		ISharedResultMap_OpsAndTo_Numeric_Named<MODEL, RESULT, Double,     RET>,
 		ISharedResultMap_OpsAndTo_Numeric_Named<MODEL, RESULT, BigDecimal, RET>,
+		ISharedResultMap_OpsAndTo_Numeric_Named<MODEL, RESULT, Date, 	   RET>,
 		ISharedResultOps_String_Named<MODEL, RESULT, RET>,
 		
 		ISharedResultMapperTo<MODEL, RESULT, Long, 		 RET>,
@@ -35,6 +37,7 @@ public interface ISharedResult_Mapped_Named_Base<
 		ISharedResultMapperTo<MODEL, RESULT, Long, 		 RET>,
 		ISharedResultMapperTo<MODEL, RESULT, Double,     RET>,
 		ISharedResultMapperTo<MODEL, RESULT, BigDecimal, RET>,
+		ISharedResultMapperTo<MODEL, RESULT, Date, 	     RET>,
 		ISharedResultMapperTo<MODEL, RESULT, String, 	 RET>
 	> map();
 	

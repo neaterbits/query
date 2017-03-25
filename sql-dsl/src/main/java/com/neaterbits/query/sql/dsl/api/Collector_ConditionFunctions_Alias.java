@@ -14,6 +14,7 @@ class Collector_ConditionFunctions_Alias<
 		LONG_RET    extends ISharedFunction_Next<MODEL, RESULT, RET>,
 		DOUBLE_RET  extends ISharedFunction_Next<MODEL, RESULT, RET>,
 		BIGDECIMAL_RET extends ISharedFunction_Next<MODEL, RESULT, RET>,
+		DATE_RET extends ISharedFunction_Next<MODEL, RESULT, RET>,
 		STRING_RET  extends ISharedFunction_Next<MODEL, RESULT, RET>>
 
 	extends Collector_NestedFunctions_Alias<
@@ -29,6 +30,7 @@ class Collector_ConditionFunctions_Alias<
 			LONG_RET,
 			DOUBLE_RET,
 			BIGDECIMAL_RET,
+			DATE_RET,
 			
 			STRING_RET> 
 

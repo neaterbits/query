@@ -1,6 +1,7 @@
 package com.neaterbits.query.sql.dsl.api;
 
 import java.math.BigDecimal;
+import java.util.Date;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
@@ -19,6 +20,7 @@ abstract class BaseSelect<
 		NAMED_LONG_RET,
 		NAMED_DOUBLE_RET,
 		NAMED_BIGDECIMAL_RET,
+		NAMED_DATE_RET,
 
 		
 		ALIAS_SUM_LONG_RET,
@@ -28,14 +30,15 @@ abstract class BaseSelect<
 		ALIAS_INT_RET,
 		ALIAS_LONG_RET,
 		ALIAS_DOUBLE_RET,
-		ALIAS_BIGDECIMAL_RET
+		ALIAS_BIGDECIMAL_RET,
+		ALIAS_DATE_RET
 		>
 
 	extends BaseQuery
 
 	implements ISQL<
-		NAMED_SUM_LONG_RET, NAMED_COUNT_RET, NAMED_SHORT_RET, NAMED_INT_RET, NAMED_LONG_RET, NAMED_DOUBLE_RET, NAMED_BIGDECIMAL_RET,
-		ALIAS_SUM_LONG_RET, ALIAS_COUNT_RET, ALIAS_SHORT_RET, ALIAS_INT_RET, ALIAS_LONG_RET, ALIAS_DOUBLE_RET, ALIAS_BIGDECIMAL_RET
+		NAMED_SUM_LONG_RET, NAMED_COUNT_RET, NAMED_SHORT_RET, NAMED_INT_RET, NAMED_LONG_RET, NAMED_DOUBLE_RET, NAMED_BIGDECIMAL_RET, NAMED_DATE_RET,
+		ALIAS_SUM_LONG_RET, ALIAS_COUNT_RET, ALIAS_SHORT_RET, ALIAS_INT_RET, ALIAS_LONG_RET, ALIAS_DOUBLE_RET, ALIAS_BIGDECIMAL_RET, ALIAS_DATE_RET
 		> 
 	
 	{
@@ -117,6 +120,10 @@ abstract class BaseSelect<
 		return max(field, BigDecimal.class, BigDecimal.class);
 	}
 		
+	@Override
+	public final <T> NAMED_DATE_RET max(IFunctionDate<T> field) {
+		return max(field, Date.class, Date.class);
+	}
 	
 	// ------------------------ Max ------------------------
 	
@@ -278,6 +285,10 @@ abstract class BaseSelect<
 		return max(field, BigDecimal.class, BigDecimal.class);
 	}
 		
+	@Override
+	public final ALIAS_DATE_RET max(ISupplierDate field) {
+		return max(field, Date.class, Date.class);
+	}
 	
 	// ------------------------ Max ------------------------
 	

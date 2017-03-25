@@ -1,6 +1,7 @@
 package com.neaterbits.query.sql.dsl.api;
 
 import java.math.BigDecimal;
+import java.util.Date;
 
 public interface IShortPrepared extends ISQL<
 		IShortPrepared_Numeric_Named<Long>,
@@ -11,6 +12,7 @@ public interface IShortPrepared extends ISQL<
 		IShortPrepared_Numeric_Named<Long>,
 		IShortPrepared_Numeric_Named<Double>,
 		IShortPrepared_Numeric_Named<BigDecimal>,
+		IShortPrepared_Numeric_Named<Date>,
 
 		IShortPrepared_Numeric_Alias<Long>,
 		IShortPrepared_Numeric_Alias<Long>,
@@ -19,7 +21,8 @@ public interface IShortPrepared extends ISQL<
 		IShortPrepared_Numeric_Alias<Integer>,
 		IShortPrepared_Numeric_Alias<Long>,
 		IShortPrepared_Numeric_Alias<Double>,
-		IShortPrepared_Numeric_Alias<BigDecimal>
+		IShortPrepared_Numeric_Alias<BigDecimal>,
+		IShortPrepared_Numeric_Alias<Date>
 		> {
 	
 	public static IShortPrepared get(DataConfig dataConfig) {

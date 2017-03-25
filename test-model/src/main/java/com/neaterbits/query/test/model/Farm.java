@@ -1,6 +1,7 @@
 package com.neaterbits.query.test.model;
 
 import java.util.Collection;
+import java.util.Date;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -22,6 +23,9 @@ public class Farm {
 	private String name;
 	private String farmId; //gård
 	private String subFarmId; // bruk
+	
+	private Date timeFounded;
+	
 	private Owner owner;
 	private Collection<LandPlot> landPlots;
 
@@ -107,7 +111,15 @@ public class Farm {
 		this.owner = owner;
 	}
 
- 
+	@Column(name="time_founded")
+	public Date getTimeFounded() {
+		return timeFounded;
+	}
+
+	public void setTimeFounded(Date timeFounded) {
+		this.timeFounded = timeFounded;
+	}
+
 	// TODO: landplot connected to multiple? probably too complex, this is just a demo model
 	// TODO: leasing ? can be seen as land.owner != farm.owner ? 
 	// TODO: but perhaps this could be a short-hand join

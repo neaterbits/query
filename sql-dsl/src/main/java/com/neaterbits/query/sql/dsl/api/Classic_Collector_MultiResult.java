@@ -1,6 +1,7 @@
 package com.neaterbits.query.sql.dsl.api;
 
 import java.math.BigDecimal;
+import java.util.Date;
 
 final class Classic_Collector_MultiResult<MODEL, RESULT>
 
@@ -127,6 +128,7 @@ final class Classic_Collector_MultiResult<MODEL, RESULT>
 				ISharedResultMap_OpsAndTo_Numeric_Named<MODEL, RESULT, Long, IClassicResult_Mapped_Multi_Named<MODEL, RESULT>>,
 				ISharedResultMap_OpsAndTo_Numeric_Named<MODEL, RESULT, Double, IClassicResult_Mapped_Multi_Named<MODEL, RESULT>>,
 				ISharedResultMap_OpsAndTo_Numeric_Named<MODEL, RESULT, BigDecimal, IClassicResult_Mapped_Multi_Named<MODEL, RESULT>>,
+				ISharedResultMap_OpsAndTo_Numeric_Named<MODEL, RESULT, Date, IClassicResult_Mapped_Multi_Named<MODEL, RESULT>>,
 				ISharedResultOps_String_Named<MODEL, RESULT, IClassicResult_Mapped_Multi_Named<MODEL, RESULT>>,
 				
 				ISharedResultMapperTo<MODEL, RESULT, Long, IClassicResult_Mapped_Multi_Named<MODEL, RESULT>>,
@@ -136,6 +138,7 @@ final class Classic_Collector_MultiResult<MODEL, RESULT>
 				ISharedResultMapperTo<MODEL, RESULT, Long, IClassicResult_Mapped_Multi_Named<MODEL, RESULT>>,
 				ISharedResultMapperTo<MODEL, RESULT, Double, IClassicResult_Mapped_Multi_Named<MODEL, RESULT>>,
 				ISharedResultMapperTo<MODEL, RESULT, BigDecimal, IClassicResult_Mapped_Multi_Named<MODEL, RESULT>>,
+				ISharedResultMapperTo<MODEL, RESULT, Date, IClassicResult_Mapped_Multi_Named<MODEL, RESULT>>,
 				ISharedResultMapperTo<MODEL, RESULT, String, IClassicResult_Mapped_Multi_Named<MODEL, RESULT>>,
 				
 				ISharedResultOps_Numeric_Alias<MODEL, RESULT, Long, IClassicResult_Mapped_Multi_Alias<MODEL, RESULT>>,
@@ -145,6 +148,7 @@ final class Classic_Collector_MultiResult<MODEL, RESULT>
 				ISharedResultOps_Numeric_Alias<MODEL, RESULT, Long, IClassicResult_Mapped_Multi_Alias<MODEL, RESULT>>,
 				ISharedResultOps_Numeric_Alias<MODEL, RESULT, Double, IClassicResult_Mapped_Multi_Alias<MODEL, RESULT>>,
 				ISharedResultOps_Numeric_Alias<MODEL, RESULT, BigDecimal, IClassicResult_Mapped_Multi_Alias<MODEL, RESULT>>,
+				ISharedResultOps_Numeric_Alias<MODEL, RESULT, Date, IClassicResult_Mapped_Multi_Alias<MODEL, RESULT>>,
 				
 				ISharedResultOps_String_Alias<MODEL, RESULT, IClassicResult_Mapped_Multi_Alias<MODEL, RESULT>>,
 				ISharedResultMapperTo<MODEL, RESULT, Long, IClassicResult_Mapped_Multi_Alias<MODEL, RESULT>>,
@@ -154,6 +158,7 @@ final class Classic_Collector_MultiResult<MODEL, RESULT>
 				ISharedResultMapperTo<MODEL, RESULT, Long, IClassicResult_Mapped_Multi_Alias<MODEL, RESULT>>,
 				ISharedResultMapperTo<MODEL, RESULT, Double, IClassicResult_Mapped_Multi_Alias<MODEL, RESULT>>,
 				ISharedResultMapperTo<MODEL, RESULT, BigDecimal, IClassicResult_Mapped_Multi_Alias<MODEL, RESULT>>,
+				ISharedResultMapperTo<MODEL, RESULT, Date, IClassicResult_Mapped_Multi_Alias<MODEL, RESULT>>,
 				ISharedResultMapperTo<MODEL, RESULT, String, IClassicResult_Mapped_Multi_Alias<MODEL, RESULT>>> map() {
 		throw new UnsupportedOperationException("TODO - map to result for classic");
 	}

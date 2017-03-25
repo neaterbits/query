@@ -1,6 +1,7 @@
 package com.neaterbits.query.sql.dsl.api;
 
 import java.math.BigDecimal;
+import java.util.Date;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
@@ -14,6 +15,7 @@ final class ShortSelect extends BaseShortSelect<
 		IShortBuilt_Numeric_Named<Long>,
 		IShortBuilt_Numeric_Named<Double>,
 		IShortBuilt_Numeric_Named<BigDecimal>,
+		IShortBuilt_Numeric_Named<Date>,
 		
 		IShortBuilt_Numeric_Alias<Long>,
 		IShortBuilt_Numeric_Alias<Long>,
@@ -22,7 +24,8 @@ final class ShortSelect extends BaseShortSelect<
 		IShortBuilt_Numeric_Alias<Integer>,
 		IShortBuilt_Numeric_Alias<Long>,
 		IShortBuilt_Numeric_Alias<Double>,
-		IShortBuilt_Numeric_Alias<BigDecimal>
+		IShortBuilt_Numeric_Alias<BigDecimal>,
+		IShortBuilt_Numeric_Alias<Date>
 	>
 
 	

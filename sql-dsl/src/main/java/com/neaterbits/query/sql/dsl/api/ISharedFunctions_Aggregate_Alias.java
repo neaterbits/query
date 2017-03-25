@@ -13,11 +13,12 @@ public interface ISharedFunctions_Aggregate_Alias<
 				INT_RET,
 				LONG_RET,
 				DOUBLE_RET,
-				BIGDECIMAL_RET>
+				BIGDECIMAL_RET,
+				DATE_RET>
 				
 		extends IShared_Aggregate_Sum_Alias_All<SUM_LONG_RET, BIGDECIMAL_RET>,
 				IShared_Aggregate_Count_Alias_All<COUNT_RET>,
-				IShared_Aggregate_Max_Alias<SHORT_RET, INT_RET, LONG_RET, BIGDECIMAL_RET>,
+				IShared_Aggregate_Max_Alias<SHORT_RET, INT_RET, LONG_RET, BIGDECIMAL_RET, DATE_RET>,
 				IShared_Aggregate_Min_Alias<SHORT_RET, INT_RET, LONG_RET, BIGDECIMAL_RET>,
 				IShared_Aggregate_Avg_Alias<SHORT_RET, INT_RET, LONG_RET, DOUBLE_RET, BIGDECIMAL_RET> {
 

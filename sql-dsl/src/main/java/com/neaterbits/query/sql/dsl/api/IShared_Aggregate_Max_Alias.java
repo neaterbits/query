@@ -1,6 +1,6 @@
 package com.neaterbits.query.sql.dsl.api;
 
-public interface IShared_Aggregate_Max_Alias<SHORT_RET, INT_RET, LONG_RET, BIGDECIMAL_RET> {
+public interface IShared_Aggregate_Max_Alias<SHORT_RET, INT_RET, LONG_RET, BIGDECIMAL_RET, DATE_RET> {
 
     SHORT_RET 		max(ISupplierShort field);
 	
@@ -10,4 +10,5 @@ public interface IShared_Aggregate_Max_Alias<SHORT_RET, INT_RET, LONG_RET, BIGDE
 
     BIGDECIMAL_RET 	max(ISupplierBigDecimal field);
 
+    DATE_RET 		max(ISupplierDate field);
 }

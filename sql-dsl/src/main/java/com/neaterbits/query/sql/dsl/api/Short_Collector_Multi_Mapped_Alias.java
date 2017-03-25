@@ -1,6 +1,7 @@
 package com.neaterbits.query.sql.dsl.api;
 
 import java.math.BigDecimal;
+import java.util.Date;
 
 final class Short_Collector_Multi_Mapped_Alias<MODEL, RESULT>
 		extends Short_Collector_Multi_Mapped_Any<MODEL, RESULT, ISharedProcessResult_After_GroupBy_Alias<MODEL, RESULT>>
@@ -37,6 +38,7 @@ final class Short_Collector_Multi_Mapped_Alias<MODEL, RESULT>
 			ISharedResultMap_OpsAndTo_Numeric_Alias<MODEL, RESULT, Long, IShortResult_Mapped_Multi_Alias<MODEL, RESULT>>,
 			ISharedResultMap_OpsAndTo_Numeric_Alias<MODEL, RESULT, Double, IShortResult_Mapped_Multi_Alias<MODEL, RESULT>>,
 			ISharedResultMap_OpsAndTo_Numeric_Alias<MODEL, RESULT, BigDecimal, IShortResult_Mapped_Multi_Alias<MODEL, RESULT>>,
+			ISharedResultMap_OpsAndTo_Numeric_Alias<MODEL, RESULT, Date, IShortResult_Mapped_Multi_Alias<MODEL, RESULT>>,
 			ISharedResultOps_String_Alias<MODEL, RESULT,  IShortResult_Mapped_Multi_Alias<MODEL, RESULT>>,
 			
 			ISharedResultMapperTo<MODEL, RESULT, Long, IShortResult_Mapped_Multi_Alias<MODEL, RESULT>>,
@@ -46,6 +48,7 @@ final class Short_Collector_Multi_Mapped_Alias<MODEL, RESULT>
 			ISharedResultMapperTo<MODEL, RESULT, Long, IShortResult_Mapped_Multi_Alias<MODEL, RESULT>>,
 			ISharedResultMapperTo<MODEL, RESULT, Double, IShortResult_Mapped_Multi_Alias<MODEL, RESULT>>,
 			ISharedResultMapperTo<MODEL, RESULT, BigDecimal, IShortResult_Mapped_Multi_Alias<MODEL, RESULT>>, 
+			ISharedResultMapperTo<MODEL, RESULT, Date, IShortResult_Mapped_Multi_Alias<MODEL, RESULT>>, 
 			ISharedResultMapperTo<MODEL, RESULT, String, IShortResult_Mapped_Multi_Alias<MODEL, RESULT>>
 	
 		> map() {

@@ -16,6 +16,7 @@ abstract class Collector_NestedFunctions_Alias<
 		LONG_RET    extends ISharedFunction_Next<MODEL, RESULT, RET>,
 		DOUBLE_RET  extends ISharedFunction_Next<MODEL, RESULT, RET>,
 		BIGDECIMAL_RET extends ISharedFunction_Next<MODEL, RESULT, RET>,
+		DATE_RET extends ISharedFunction_Next<MODEL, RESULT, RET>,
 		STRING_RET  extends ISharedFunction_Next<MODEL, RESULT, RET>
 		
 		>
@@ -35,6 +36,7 @@ abstract class Collector_NestedFunctions_Alias<
 				ISharedFunction_Next<MODEL, RESULT, ISharedFunction_After<MODEL, RESULT>>,
 				ISharedFunction_Next<MODEL, RESULT, ISharedFunction_After<MODEL, RESULT>>,
 				ISharedFunction_Next<MODEL, RESULT, ISharedFunction_After<MODEL, RESULT>>,
+				ISharedFunction_Next<MODEL, RESULT, ISharedFunction_After<MODEL, RESULT>>,
 				
 				SUM_LONG_RET,
 				COUNT_RET,
@@ -44,6 +46,7 @@ abstract class Collector_NestedFunctions_Alias<
 				LONG_RET,
 				DOUBLE_RET,
 				BIGDECIMAL_RET,
+				DATE_RET,
 				STRING_RET
 				>
 
@@ -78,7 +81,7 @@ abstract class Collector_NestedFunctions_Alias<
 		this.func = func;
 	}
 
-	Collector_NestedFunctions_Alias(Collector_NestedFunctions_Alias<MODEL, RESULT, RET, ?, ?, ?, ?, ?, ?, ?, ?> toCopy) {
+	Collector_NestedFunctions_Alias(Collector_NestedFunctions_Alias<MODEL, RESULT, RET, ?, ?, ?, ?, ?, ?, ?, ?, ?> toCopy) {
 		super(toCopy);
 
 		this.func = toCopy.func;
