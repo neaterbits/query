@@ -263,7 +263,7 @@ public class EntityJoinTest extends GEN_BaseTestCase {
 				new Farm(farm1.getId(), "Farm1"),
 				new Farm(farm2.getId(), "Farm2")));
     }
-    
+
     @Test
     public void testEntityMultiNamed_Farm_Left() {
     	final Farm farm1 = new Farm("Farm1");

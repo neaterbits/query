@@ -4,11 +4,15 @@ import java.lang.annotation.Annotation;
 import java.lang.reflect.AccessibleObject;
 import java.lang.reflect.Member;
 import java.lang.reflect.Method;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinColumns;
 import javax.persistence.ManyToOne;
@@ -29,6 +33,7 @@ import javax.persistence.metamodel.Type.PersistenceType;
 
 import com.neaterbits.query.sql.dsl.api.entity.AttributeType;
 import com.neaterbits.query.sql.dsl.api.entity.ComplexType;
+import com.neaterbits.query.sql.dsl.api.entity.ESubClassing;
 import com.neaterbits.query.sql.dsl.api.entity.EntityModel;
 import com.neaterbits.query.sql.dsl.api.entity.EntityUtil;
 import com.neaterbits.query.sql.dsl.api.entity.IdType;
@@ -821,6 +826,118 @@ public class JPAEntityModel implements EntityModel<
 
 		return found;
 	}
-	
+
+
+
+
+	@Override
+	public boolean isBaseType(ManagedType<?> managed) {
+
+		final boolean isBaseType;
+
+		if (managed.getPersistenceType() == PersistenceType.MAPPED_SUPERCLASS) {
+			isBaseType = true;;
+		}
+		else if (managed.getPersistenceType() == PersistenceType.ENTITY) {
+			
+			// May or may not be, depends on whether has inherited types
+			isBaseType = ! getDirectSubTypes(managed).isEmpty();
+		}
+		else {
+			isBaseType = false;
+		}
+
+		return isBaseType;
+	}
+
+
+	@Override
+	public boolean isSubType(ManagedType<?> managed) {
+		// Look at whether has super-type
+		
+		return ((IdentifiableType<?>)managed).getSupertype() != null;
+	}
+
+	@Override
+	public ManagedType<?> getDirectSuperType(ManagedType<?> managed) {
+
+		if (!isSubType(managed)) {
+			throw new IllegalStateException("not a subtype");
+		}
+		
+		return ((IdentifiableType<?>)managed).getSupertype();
+	}
+
+
+
+
+	@Override
+	public ESubClassing getSubClassing(ManagedType<?> managed) {
+		
+		final ESubClassing ret;
+		
+		// What type of subclassing is used?
+		switch (managed.getPersistenceType()) {
+		case MAPPED_SUPERCLASS:
+			ret = ESubClassing.MAPPED_SUPERCLASS;
+			break;
+			
+		case ENTITY:
+			// Must figure out by looking at inheritance strategy
+			final Inheritance inheritance = managed.getJavaType().getDeclaredAnnotation(Inheritance.class);
+			
+			if (inheritance == null) {
+				throw new IllegalStateException("No subclassing found for " + managed.getJavaType()); // ret = ESubClassing.NONE;
+			}
+			else {
+				switch (inheritance.strategy()) {
+				case JOINED:
+					ret = ESubClassing.JOINED;
+					break;
+				case SINGLE_TABLE:
+					ret = ESubClassing.SINGLE_TABLE;
+					break;
+				case TABLE_PER_CLASS:
+					ret = ESubClassing.TABLE_PER_CLASS;
+					break;
+				default:
+					throw new UnsupportedOperationException("Unknown inheritance type: " + inheritance.strategy());
+				}
+			}
+			
+			break;
+			
+		default:
+			throw new IllegalStateException("Unknown persistence type " + managed.getPersistenceType());
+		}
+		
+		
+		return ret;
+	}
+
+
+	@Override
+	public List<ManagedType<?>> getDirectSubTypes(ManagedType<?> managed) {
+
+		final List<ManagedType<?>> ret;
+
+		if (managed.getPersistenceType() == PersistenceType.ENTITY) {
+			ret = new ArrayList<>();
+
+			for (EntityType<?> entity : metamodel.getEntities()) {
+				
+				final IdentifiableType<?> superType = entity.getSupertype();
+				
+				if (superType != null && superType.equals(managed)) {
+					ret.add(entity);
+				}
+			}
+		}
+		else {
+			throw new IllegalStateException("Trying to get sub types of non-entity");
+		}
+		
+		return ret;
+	}
 }
 

@@ -6,6 +6,7 @@ import java.util.Date;
 import java.util.List;
 
 import javax.persistence.EntityManager;
+import javax.persistence.metamodel.ManagedType;
 
 import com.neaterbits.query.sql.dsl.api.entity.AttributeType;
 import com.neaterbits.query.sql.dsl.api.entity.IEntity;
@@ -132,6 +133,15 @@ public final class QueryDataSourceJPANative extends QueryDataSourceJPA {
 	}
 	
 	private Object mapOneEntity(IEntity entity, Object [] row) {
+		
+		final JPAEntityModel model = (JPAEntityModel)getEntityModelUtil().getModel();
+		
+		final ManagedType<?> type = model.getManaged(entity.getJavaType());
+		
+		if (model.isBaseType(type)) {
+			throw new IllegalStateException("entity type" + entity.getJavaType() + " is base type");
+		}
+		
 		final Object instance;
 		try {
 			instance = entity.getJavaType().newInstance();
