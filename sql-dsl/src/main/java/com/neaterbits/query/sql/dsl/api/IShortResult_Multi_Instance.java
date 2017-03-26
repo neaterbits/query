@@ -1,6 +1,6 @@
 package com.neaterbits.query.sql.dsl.api;
 
-public interface IShortResult_Multi<MODEL, RESULT>
+public interface IShortResult_Multi_Instance<MODEL, RESULT>
 
 	extends
 	
@@ -9,7 +9,9 @@ public interface IShortResult_Multi<MODEL, RESULT>
 		
 		
 		IShortLogical_WhereOrJoinInitial_MultiResult_Named<MODEL, RESULT>,
-		IShortLogical_WhereOrJoin_MultiResult_Entity_Alias<MODEL, RESULT>,
+		
+		// Cannot select alias entities here, since this are selected through separate calls 
+		//IShortLogical_WhereOrJoin_MultiResult_Entity_Alias<MODEL, RESULT>,
 		
 		// Cannot go to group-by from initial multi-result, because is no group-by for entities
 		// but we can go to order-by.

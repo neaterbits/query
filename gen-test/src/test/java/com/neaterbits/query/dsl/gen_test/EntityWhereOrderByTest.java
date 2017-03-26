@@ -25,13 +25,13 @@ public class EntityWhereOrderByTest extends GEN_BaseTestCase {
     @Test
     public void testEntitySingleAlias() {
 		verifyIsCompilable(
-				"f", Farm.class,
+				Farm.class, "f",
 				
 				"one(Farm.class)" + 
     			".where(f::getName).startsWith(\"Farm\")");
 		
 		verifyIsNotCompilable(
-				"f", Farm.class,
+				Farm.class, "f",
 				"one(Farm.class)" + 
     			".where(f::getName).startsWith(\"Farm\")" +
 				".orderBy(Farm::getName)");		
@@ -113,7 +113,7 @@ public class EntityWhereOrderByTest extends GEN_BaseTestCase {
     	
     	final Farm f = select.alias(Farm.class);
     	
-    	MultiBuilt<Farm> query = select.list(Farm.class)
+    	MultiBuilt<Farm> query = select.list(f)
     			.where(f::getName).startsWith("Farm")
     			.orderBy(f::getName)
     			.build(); 
@@ -139,7 +139,7 @@ public class EntityWhereOrderByTest extends GEN_BaseTestCase {
     					
     			));
 
-    	query = select.list(Farm.class)
+    	query = select.list(f)
     			
     			.where(f::getName).startsWith("Farm")
     			
@@ -162,7 +162,7 @@ public class EntityWhereOrderByTest extends GEN_BaseTestCase {
 
 
     	// Entities cannot be ordered by numeric index, since difficult to make sense of (order of attributes in class? very brittle) 
-    	verifyIsNotCompilable("f", Farm.class,
+    	verifyIsNotCompilable(Farm.class, "f",
     			"list(Farm.class)" +
     			".where(f::getName).startsWith(\"Farm\")" +
     			".orderBy(1, 3, 2)"    			

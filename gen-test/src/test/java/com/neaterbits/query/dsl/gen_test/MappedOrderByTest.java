@@ -27,12 +27,12 @@ public class MappedOrderByTest extends GEN_BaseTestCase {
     @Test
     public void testMappedSingleAlias() {
 		verifyIsCompilable(
-		    	"f", Farm.class,
+		    	Farm.class, "f",
 				"one(FarmInfo.class)" +
 				".map(f::getName).to(FarmInfo::setName)");
 
 		verifyIsNotCompilable(
-				"f", Farm.class,
+				Farm.class, "f",
 				"one(Farm.class)" + 
 				".map(f::getName).to(FarmInfo::setName)" +
 				".orderBy(f::getName)");		

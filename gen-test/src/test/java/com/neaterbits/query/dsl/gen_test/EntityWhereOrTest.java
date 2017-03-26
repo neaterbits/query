@@ -1,6 +1,5 @@
 package com.neaterbits.query.dsl.gen_test;
 
-import static org.assertj.core.api.Assertions.assertThat;
 import org.junit.Test;
 import com.neaterbits.query.jpatest.GEN_BaseTestCase;
 import com.neaterbits.query.sql.dsl.api.MultiBuilt;
@@ -46,7 +45,7 @@ public class EntityWhereOrTest extends GEN_BaseTestCase {
 
     	final Farm f = select.alias(Farm.class);
     	
-    	SingleBuilt<Farm> query = select.one(Farm.class)
+    	SingleBuilt<Farm> query = select.one(f)
     			.where(f::getName).contains("Hills")
     			.   or(f::getName).contains("Snowy")
     			.build(); 
@@ -57,7 +56,7 @@ public class EntityWhereOrTest extends GEN_BaseTestCase {
     	
     	
     	// In case drops initial clause
-    	query = select.one(Farm.class)
+    	query = select.one(f)
     			.where(f::getName).contains("Hills")
     			.   or(f::getName).contains("nonexistent")
     			.build(); 
@@ -97,7 +96,7 @@ public class EntityWhereOrTest extends GEN_BaseTestCase {
     	
     	final Farm f = select.alias(Farm.class);
     	
-    	final MultiBuilt<Farm> query = select.list(Farm.class)
+    	final MultiBuilt<Farm> query = select.list(f)
     			.where(f::getName).contains("Valley")
     			.   or(f::getName).contains("Snowy")
     			.build(); 

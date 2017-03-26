@@ -8,7 +8,7 @@ final class Classic_Collector_MultiEntityResult<MODEL, RESULT>
 			RESULT,
 			
 			ISQLLogical_WhereOrJoin_MultiEntity_Named<MODEL, RESULT>,
-			ISQLLogical_WhereOrJoin_MultiEntity_Alias<MODEL, RESULT>
+			IClassicLogical_WhereOrJoin_MultiEntity_Alias<MODEL, RESULT>
 			>
 	implements IClassicResult_Entity_Multi<MODEL, RESULT> {
 
@@ -22,7 +22,7 @@ final class Classic_Collector_MultiEntityResult<MODEL, RESULT>
 	}
 
 	@Override
-	ISQLLogical_WhereOrJoin_MultiEntity_Alias<MODEL, RESULT> createWhereOrJoinForAlias() {
+	IClassicLogical_WhereOrJoin_MultiEntity_Alias<MODEL, RESULT> createWhereOrJoinForAlias() {
 		return new Classic_Collector_WhereOrJoin_MultiEntity_Alias<>(this);
 	}
 

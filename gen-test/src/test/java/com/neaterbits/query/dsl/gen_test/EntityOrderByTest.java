@@ -25,12 +25,12 @@ public class EntityOrderByTest extends GEN_BaseTestCase {
     @Test
     public void testEntitySingleAlias() {
 		verifyIsCompilable(
-				"f", Farm.class,
+				Farm.class, "f",
 				
 				"one(Farm.class)");
 		
 		verifyIsNotCompilable(
-				"f", Farm.class,
+				Farm.class, "f",
 				"one(Farm.class)" + 
 				".orderBy(Farm::getName)");		
     }

@@ -71,7 +71,7 @@ final class ShortSelectPrepared extends BaseShortSelect<
 	}
 	
 	@Override
-	public <TYPE_RESULT> IShortResult_Single<SinglePrepared<TYPE_RESULT>, TYPE_RESULT> one(Class<TYPE_RESULT> cl) {
+	public <TYPE_RESULT> IShortResult_Single_Instance<SinglePrepared<TYPE_RESULT>, TYPE_RESULT> one(Class<TYPE_RESULT> cl) {
 		if (cl == null) {
 			throw new IllegalArgumentException("cl == null");
 		}	
@@ -82,7 +82,7 @@ final class ShortSelectPrepared extends BaseShortSelect<
 	}
 
 	@Override
-	public <TYPE_RESULT> IShortResult_Single<SinglePrepared<TYPE_RESULT>, TYPE_RESULT> oneOrNull(Class<TYPE_RESULT> cl) {
+	public <TYPE_RESULT> IShortResult_Single_Instance<SinglePrepared<TYPE_RESULT>, TYPE_RESULT> oneOrNull(Class<TYPE_RESULT> cl) {
 		if (cl == null) {
 			throw new IllegalArgumentException("cl == null");
 		}
@@ -93,7 +93,7 @@ final class ShortSelectPrepared extends BaseShortSelect<
 	}
 
 	@Override
-	public <TYPE_RESULT> IShortResult_Multi<MultiPrepared<TYPE_RESULT>, TYPE_RESULT> list(Class<TYPE_RESULT> cl) {
+	public <TYPE_RESULT> IShortResult_Multi_Instance<MultiPrepared<TYPE_RESULT>, TYPE_RESULT> list(Class<TYPE_RESULT> cl) {
 		if (cl == null) {
 			throw new IllegalArgumentException("cl == null");
 		}

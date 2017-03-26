@@ -29,13 +29,13 @@ public class MappedWhereOrderByTest extends GEN_BaseTestCase {
     @Test
     public void testMappedSingleAlias() {
 		verifyIsCompilable(
-		    	"f", Farm.class,
+		    	Farm.class, "f",
 				"one(FarmInfo.class)" +
 				".map(f::getName).to(FarmInfo::setName)" +
 				".where(f::getName).startsWith(\"Farm\")");
 
 		verifyIsNotCompilable(
-				"f", Farm.class,
+				Farm.class, "f",
 				"one(Farm.class)" + 
 				".map(f::getName).to(FarmInfo::setName)" +
     			".where(f::getName).startsWith(\"Farm\")" +

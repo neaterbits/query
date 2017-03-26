@@ -26,12 +26,12 @@ public class AggregateWhereOrderByTest extends GEN_BaseTestCase {
     public void testAggregateSingleAlias() {
     	
 		verifyIsCompilable(
-				"l", LandPlot.class,
+				LandPlot.class, "l",
 				"sum(l::getHectares)" + 
 				".where(l::getHectares).isEqualTo(new BigDecimal(\"1.2\"))");
 		
 		verifyIsNotCompilable(
-				"l", LandPlot.class,
+				LandPlot.class, "l",
 				"sum(l::getHectares)" + 
 				".where(l::getHectares).isEqualTo(new BigDecimal(\"1.2\"))" +
 				".orderBy(l::getHectares)");		

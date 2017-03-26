@@ -13,6 +13,9 @@ public interface ISharedLogical_And_Or_Alias<
 		extends
 			ISharedLogical_And_Alias_Base<MODEL, RESULT, AND_CLAUSES, NESTED_OR_CLAUSES>,
 			ISharedLogical_Or_Alias_Base<MODEL, RESULT, OR_CLAUSES, NESTED_AND_CLAUSES>,
+			
+			// TODO function and and()/or()
+			
 			ISharedLogical_Base<MODEL, RESULT> {
 
 }

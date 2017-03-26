@@ -76,7 +76,7 @@ public class EntityUtil {
 			final Method m = (Method)accessible;
 			
 			if (m.getParameterTypes().length != 0) {
-				throw new UnsupportedOperationException("Expected getter");
+				throw new UnsupportedOperationException("Expected getter for " + m);
 			}
 			
 			genericType = m.getGenericReturnType();

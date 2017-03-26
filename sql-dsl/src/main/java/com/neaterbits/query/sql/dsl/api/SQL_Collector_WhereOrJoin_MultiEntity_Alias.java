@@ -1,6 +1,9 @@
 package com.neaterbits.query.sql.dsl.api;
 
-abstract class SQL_Collector_WhereOrJoin_MultiEntity_Alias<MODEL, RESULT>
+abstract class SQL_Collector_WhereOrJoin_MultiEntity_Alias<
+			MODEL,
+			RESULT,
+			JOIN_CONDITION extends ISQLJoin_Condition_MultiEntity_Alias<MODEL, RESULT, JOIN_CONDITION>>
 
 		extends
 		SQL_Collector_WhereOrJoin_Alias_Base<
@@ -10,7 +13,7 @@ abstract class SQL_Collector_WhereOrJoin_MultiEntity_Alias<MODEL, RESULT>
 				
 				ISQLJoin_Condition_MultiEntity_Named<MODEL, RESULT, Object, Object>,
 				
-				ISQLJoin_Condition_MultiEntity_Alias<MODEL, RESULT>,
+				JOIN_CONDITION,
 
 				ISQLLogical_And_MultiEntity_Alias<MODEL, RESULT>,
 				ISQLLogical_Or_MultiEntity_Alias<MODEL, RESULT>,
@@ -18,7 +21,7 @@ abstract class SQL_Collector_WhereOrJoin_MultiEntity_Alias<MODEL, RESULT>
 				
 				ISharedProcessResult_After_GroupBy_Alias<MODEL, RESULT>>
 
-		implements ISQLLogical_WhereOrJoin_MultiEntity_Alias<MODEL, RESULT> {
+		implements ISQLLogical_WhereOrJoin_MultiEntity_Alias<MODEL, RESULT, JOIN_CONDITION> {
 
 	SQL_Collector_WhereOrJoin_MultiEntity_Alias(Collector_Base<MODEL> last) {
 		super(last);

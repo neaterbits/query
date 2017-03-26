@@ -11,6 +11,9 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.function.Consumer;
 
 import javax.tools.ToolProvider;
 
@@ -28,7 +31,25 @@ public class GEN_BaseTestCase extends BaseJPATest {
 		return javaFileName.substring(0, javaFileName.length() - ".java".length());
 	}
 	
-	private File writeToTempQueryClass(String alias, Class<?> aliasType, String s) {
+	private static class Alias {
+		private final Class<?> aliasType;
+		private final String alias;
+		
+		Alias(Class<?> aliasType, String alias) {
+			if (aliasType == null) {
+				throw new IllegalArgumentException("aliasType == null");
+			}
+			
+			if (alias == null) {
+				throw new IllegalArgumentException("alias == null");
+			}
+
+			this.aliasType = aliasType;
+			this.alias = alias;
+		}
+	}
+	
+	private File writeToTempQueryClass(List<Alias> aliases, String s) {
 
 		final File file; 
 
@@ -43,7 +64,7 @@ public class GEN_BaseTestCase extends BaseJPATest {
 		
 		try (CodeWriter codeWriter = new CodeWriter(new FileOutputStream(file))) {
 			
-			writeQueryClass(codeWriter, getJavaClassName(file), alias, aliasType, s);
+			writeQueryClass(codeWriter, getJavaClassName(file), aliases, s);
 			
 		}
 		catch (IOException ex) {
@@ -53,7 +74,7 @@ public class GEN_BaseTestCase extends BaseJPATest {
 		return file;
 	}
 
-	private void writeQueryClass(CodeWriter codeWriter, String className, String alias, Class<?> aliasType, String s) throws IOException {
+	private void writeQueryClass(CodeWriter codeWriter, String className, List<Alias> aliases, String s) throws IOException {
 		
 		codeWriter.append("package com.neaterbits.query.compiletest;").newLine();
 		
@@ -73,13 +94,15 @@ public class GEN_BaseTestCase extends BaseJPATest {
 		
 		codeWriter.newLine().newLine();
 
-		if (alias != null && aliasType != null) {
-		
-			codeWriter.append("private final ").append(aliasType.getName()).append(' ').append(alias).append(" = select.alias(").append(aliasType.getName()).append(".class);")
+		if (aliases != null) {
+			
+			for (Alias alias : aliases) {
+				codeWriter
+				
+					.append("private final ").append(alias.aliasType.getName()).append(' ').append(alias.alias)
+					.append(" = select.alias(").append(alias.aliasType.getName()).append(".class);")
 					.newLine();
-		}
-		else if (alias != null || aliasType != null) {
-			throw new IllegalArgumentException("one of alias or alias type set");
+			}
 		}
 
 		codeWriter.append("public void testMethod() {").newLine();
@@ -97,8 +120,33 @@ public class GEN_BaseTestCase extends BaseJPATest {
 			.newLine();
 	}
 	
-	private boolean doesCompile(String alias, Class<?> aliasType, String s) {
-		final File file = writeToTempQueryClass(alias, aliasType, s);
+	
+	private List<Alias> buildAliases(Consumer<AliasBuilder> aliasBuilder) {
+		
+		final List<Alias> ret = new ArrayList<>();
+		
+		final AliasBuilder ab = new AliasBuilder() {
+			
+			@Override
+			public AliasBuilder add(Class<?> aliasType, String alias) {
+
+				ret.add(new Alias(aliasType, alias));
+
+				return this;
+			}
+		};
+		
+		aliasBuilder.accept(ab);
+		
+		return ret;
+	}
+	
+	
+	private boolean doesCompile(Consumer<AliasBuilder> aliasBuilder, String s) {
+		
+		final List<Alias> aliases = aliasBuilder == null ? null : buildAliases(aliasBuilder);
+		
+		final File file = writeToTempQueryClass(aliases, s);
 
 		final String classFileName =  getJavaClassName(file)
 					+ ".class";
@@ -134,18 +182,31 @@ public class GEN_BaseTestCase extends BaseJPATest {
 	}
 	
 	protected final void verifyIsCompilable(String s) {
-		assertThat(doesCompile(null, null, s)).isEqualTo(true);
+		assertThat(doesCompile(null, s)).isEqualTo(true);
 	}
 	
 	protected final void verifyIsNotCompilable(String s) {
-		assertThat(doesCompile(null, null, s)).isEqualTo(false);
+		assertThat(doesCompile(null, s)).isEqualTo(false);
 	}
 
-	protected final void verifyIsCompilable(String alias, Class<?> aliasType, String s) {
-		assertThat(doesCompile(alias, aliasType, s)).isEqualTo(true);
+	protected final void verifyIsCompilable(Class<?> aliasType, String alias, String s) {
+		assertThat(doesCompile(ab -> ab.add(aliasType, alias), s)).isEqualTo(true);
 	}
 
-	protected final void verifyIsNotCompilable(String alias, Class<?> aliasType, String s) {
-		assertThat(doesCompile(alias, aliasType, s)).isEqualTo(false);
+	protected final void verifyIsNotCompilable(Class<?> aliasType, String alias, String s) {
+		assertThat(doesCompile(ab -> ab.add(aliasType, alias), s)).isEqualTo(false);
+	}
+
+	protected final void verifyIsCompilable(Consumer<AliasBuilder> aliasBuilder, String s) {
+		assertThat(doesCompile(aliasBuilder, s)).isEqualTo(true);
+	}
+
+	protected final void verifyIsNotCompilable(Consumer<AliasBuilder> aliasBuilder, String s) {
+		assertThat(doesCompile(aliasBuilder, s)).isEqualTo(false);
+	}
+	
+	@FunctionalInterface
+	protected interface AliasBuilder {
+		AliasBuilder add(Class<?> aliasType, String alias);
 	}
 }

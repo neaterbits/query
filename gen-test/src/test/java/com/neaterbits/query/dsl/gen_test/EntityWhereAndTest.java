@@ -39,6 +39,18 @@ public class EntityWhereAndTest extends GEN_BaseTestCase {
 
     @Test
     public void testEntitySingleAlias() {
+    	
+    	verifyIsNotCompilable(Farm.class, "f", 
+    			".one(Farm.class)" +
+    			".where(f::getName).contains(\"Hill\")" +
+    			".  and(f::getName).contains(\"Snowy\"))");
+    	
+    	
+    	verifyIsCompilable(Farm.class, "f", 
+    			".one(f)" +
+    			".where(f::getName).contains(\"Hill\")" +
+    			".  and(f::getName).contains(\"Snowy\"))");
+    	
     	final Farm farm1 = new Farm("Hill Valley");
     	final Farm farm2 = new Farm("Table Mountain");
     	final Farm farm3 = new Farm("Snowy Hills");
@@ -46,7 +58,7 @@ public class EntityWhereAndTest extends GEN_BaseTestCase {
     	final Farm f = select.alias(Farm.class);
     	
     	// Check opposite order as well in case drops initial where
-    	SingleBuilt<Farm> query = select.one(Farm.class)
+    	SingleBuilt<Farm> query = select.one(f)
     			.where(f::getName).contains("Hill")
     			.  and(f::getName).contains("Snowy")
     			.build(); 
@@ -54,7 +66,7 @@ public class EntityWhereAndTest extends GEN_BaseTestCase {
     	store(farm1, farm2, farm3)
     	.checkOne(query, () -> new Farm(farm3.getId(), "Snowy Hills"));
 
-    	query = select.one(Farm.class)
+    	query = select.one(f)
     			.where(f::getName).contains("Snowy")
     			.  and(f::getName).contains("Hill")
     			.build(); 
@@ -66,6 +78,7 @@ public class EntityWhereAndTest extends GEN_BaseTestCase {
 
     @Test
     public void testEntityMultiNamed() {
+	    	
     	final Farm farm1 = new Farm("Hill Valley");
     	final Farm farm2 = new Farm("Table Mountain");
     	final Farm farm3 = new Farm("Snowy Hills");
@@ -107,8 +120,18 @@ public class EntityWhereAndTest extends GEN_BaseTestCase {
     	final Farm farm3 = new Farm("Snowy Hills");
     	
     	final Farm f = select.alias(Farm.class);
+
+    	verifyIsNotCompilable(Farm.class, "f",
+    	    	".list(Farm.class)" +
+    			".where(f::getName).contains(\"Mountain\")" +
+    			".  and(f::getName).contains(\"l\")");
+        	
+    	verifyIsCompilable(Farm.class, "f",
+	    	".list(f)" +
+			".where(f::getName).contains(\"Mountain\")" +
+			".  and(f::getName).contains(\"l\")");
     	
-    	MultiBuilt<Farm> query = select.list(Farm.class)
+    	MultiBuilt<Farm> query = select.list(f)
     			.where(f::getName).contains("l")
     			.  and(f::getName).contains("Hi")
     			.build(); 
@@ -121,7 +144,7 @@ public class EntityWhereAndTest extends GEN_BaseTestCase {
 	    			new Farm(farm3.getId(), "Snowy Hills")));
 
     	// Check whether drops initial-clause as well
-    	query = select.list(Farm.class)
+    	query = select.list(f)
     			.where(f::getName).contains("Mountain")
     			.  and(f::getName).contains("l")
     			.build(); 

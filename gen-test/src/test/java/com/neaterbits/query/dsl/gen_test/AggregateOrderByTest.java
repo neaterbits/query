@@ -24,12 +24,12 @@ public class AggregateOrderByTest extends GEN_BaseTestCase {
     @Test
     public void testAggregateSingleAlias() {
 		verifyIsCompilable(
-				"l", LandPlot.class,
+				LandPlot.class, "l",
 				
 				"sum(l::getHectares)");
 		
 		verifyIsNotCompilable(
-				"l", LandPlot.class,
+				LandPlot.class, "l",
 				"sum(l::getHectares)" + 
 				".orderBy(l::getHectares)");		
     }

@@ -590,6 +590,17 @@ vil vi kunne switche i mappinga.
  - !! TODO !! bør avg() returnere Double for BigDecimal? virker rart. Vil dette fungere for Long også eller kan Long ha verdier 
 som er større enn double?
 
+- Alltid list alias for entity alias query
+   list(<alias>), one(<alias>), aldri list(<class>) eller one(<class). Så om er dette så går vi alltid til alias.
+  MEN !! Vi kan fortsatt ha list/one(<class>) som går til alias - men bare for mapped queries.
+Så ved where() så vet vi alltd om er named eller alias?
+Også for aggregate, siden oppgir felt. Så burde aldri ha where() på ukjent om er named eller alias(). men map() på ukjent named eller alias har vi.
+
+Men vi vet forskjell på Entity og Mapped ?
+Entity - Alias : alltid ved oppstart
+Entity - Named : alltid om ikke er mapped? Fra intial (så tregs initial)
+Mapped - Named : alltid om mapped på name
+Mapped - Alias : alltid om mapped på alias
 
 
 

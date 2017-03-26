@@ -4,9 +4,6 @@ import java.math.BigDecimal;
 
 abstract class Short_Collector_Single_Entity_Named<MODEL, RESULT>
 
-
-
-
 		extends Short_Collector_Single_Entity_Any<
 			MODEL,
 			RESULT,

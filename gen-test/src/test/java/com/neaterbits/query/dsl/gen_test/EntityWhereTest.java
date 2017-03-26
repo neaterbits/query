@@ -26,13 +26,23 @@ public class EntityWhereTest extends GEN_BaseTestCase {
 
     @Test
     public void testEntitySingleAlias() {
+    	
+    	verifyIsNotCompilable(Farm.class, "f",
+	    	"one(Farm.class)" +
+			".where(f::getName).startsWith(\"Table\")");
+
+    	verifyIsCompilable(Farm.class, "f",
+    	    	"one(f)" +
+    			".where(f::getName).startsWith(\"Table\")");
+        	
+    	
     	final Farm farm1 = new Farm("Hill Valley");
     	final Farm farm2 = new Farm("Table Mountain");
     	final Farm farm3 = new Farm("Snowy Hills");
 
     	final Farm f = select.alias(Farm.class);
     	
-    	final SingleBuilt<Farm> query = select.one(Farm.class)
+    	final SingleBuilt<Farm> query = select.one(f)
     			.where(f::getName).startsWith("Table")
     			.build(); 
 
@@ -65,13 +75,21 @@ public class EntityWhereTest extends GEN_BaseTestCase {
     @Test
     public void testEntityMultiAlias() {
     	
+    	verifyIsNotCompilable(Farm.class, "f",
+	    	"list(Farm.class)" +
+			".where(f::getName).contains(\"Hill\")");
+		
+    	verifyIsCompilable(Farm.class, "f",
+    	    	"list(f)" +
+    			".where(f::getName).contains(\"Hill\")");
+
     	final Farm farm1 = new Farm("Hill Valley");
     	final Farm farm2 = new Farm("Table Mountain");
     	final Farm farm3 = new Farm("Snowy Hills");
     	
     	final Farm f = select.alias(Farm.class);
     	
-    	final MultiBuilt<Farm> query = select.list(Farm.class)
+    	final MultiBuilt<Farm> query = select.list(f)
     			.where(f::getName).contains("Hill")
     			.build(); 
 

@@ -12,6 +12,13 @@ final class CompiledFieldReference extends CompiledQueryElement<CollectedItem> {
 	CompiledFieldReference(CollectedItem original, TypeMapSource source, CompiledGetter getter) {
 
 		super(original);
+		
+		final Class<?> methodType = getter.getGetterMethod().getDeclaringClass();
+		
+		if (!methodType.equals(source.getType())) {
+			throw new IllegalArgumentException("Mismatch in declarin lass and source type: " + methodType + " and " + source.getType());
+		}
+		
 
 		/* not necessary and not part of FieldExpression
 		if (original == null) {

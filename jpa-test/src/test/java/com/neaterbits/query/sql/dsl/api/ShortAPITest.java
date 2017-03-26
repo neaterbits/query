@@ -986,7 +986,17 @@ public class ShortAPITest extends BaseJPATest {
 		// then that becomes a many-to-may with a hidden table created by JPA
 		// eg. FARM_land_plot. So really a many-to-many relation
 		
-		// Should remove Farm from LandPlot probably
+		// Should remove Farm from LandPlot probably.
+		
+		// BUT !! can use separate set of classes for this that are name UniDirectional/BiDirectional or similar 
+		
+		assertThat(true).isEqualTo(false);
+	}
+	
+	@Test
+	public void testAndOrWithFunctionForNamedAndAlias() {
+
+		// and(). and or(). for entity, mapped for single and multi, see eg ISQLLogical_AndOr_SingleResult_Named and ISQLLogical_AndOr_SingleResult_Alias, these differ 
 		
 		assertThat(true).isEqualTo(false);
 	}

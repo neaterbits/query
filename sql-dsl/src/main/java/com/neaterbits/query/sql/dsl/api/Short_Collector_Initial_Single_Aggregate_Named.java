@@ -18,7 +18,7 @@ final class Short_Collector_Initial_Single_Aggregate_Named<RESULT>
 	}
 
 	@Override
-	<JOIN_FROM> IShortLogical_WhereOrJoin_SingleResult_Named<SingleBuilt<RESULT>, RESULT, JOIN_FROM> typedJoinCollector() {
+	<JOIN_FROM> IShortLogical_WhereOrJoin_SingleResult_Named<SingleBuilt<RESULT>, RESULT, JOIN_FROM> namedTypedJoinCollector() {
 		return new Short_Collector_Single_Aggregate_Named_TypedJoin<>(this);
 	}
 	

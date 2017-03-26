@@ -7,7 +7,7 @@ abstract class Short_Collector_Multi_Entity_Any<MODEL, RESULT, AFTER_GROUP_BY>
 		
 		
 		ISQLLogical_WhereOrJoin_MultiEntity_Named<MODEL,RESULT>,
-		ISQLLogical_WhereOrJoin_MultiEntity_Alias<MODEL,RESULT>,
+		ISQLLogical_WhereOrJoin_MultiEntity_Alias<MODEL,RESULT, IShortJoin_Condition_MultiEntity_Alias<MODEL, RESULT>>,
 		
 		IShortResult_Mapped_Multi_Named<MODEL, RESULT>,
 		IShortResult_Mapped_Multi_Alias<MODEL, RESULT>,
@@ -27,7 +27,7 @@ abstract class Short_Collector_Multi_Entity_Any<MODEL, RESULT, AFTER_GROUP_BY>
 		ISQLLogical_And_NonProcessResult_Alias<MODEL, RESULT>,
 		ISQLLogical_Or_NonProcessResult_Alias<MODEL, RESULT>,
 		
-		IShortJoin_Condition_MultiMapped_Alias<MODEL, RESULT>,
+		IShortJoin_Condition_MultiEntity_Alias<MODEL, RESULT>,
 		ISQLLogical_AndOr_MultiEntity_Alias<MODEL, RESULT>,
 		
 		AFTER_GROUP_BY

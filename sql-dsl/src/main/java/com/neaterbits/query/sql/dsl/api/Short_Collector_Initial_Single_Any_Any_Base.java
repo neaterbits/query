@@ -49,7 +49,8 @@ abstract class Short_Collector_Initial_Single_Any_Any_Base<MODEL, RESULT>
 			
 			//IShortLogical_WhereOrJoin_SingleResult_Entity_Named<MODEL, RESULT, RESULT>,
 			
-			IShortResult_Single<MODEL, RESULT>,
+			IShortResult_Single_Instance<MODEL, RESULT>,
+			IShortJoin_Single_Alias_Initial<MODEL, RESULT>,
 			IMappingCollector<MODEL, RESULT> {
 	
 	private final BaseQuery select;
@@ -290,15 +291,15 @@ abstract class Short_Collector_Initial_Single_Any_Any_Base<MODEL, RESULT>
 		return ret;
 	}
 
-	abstract <JOIN_FROM> IShortLogical_WhereOrJoin_SingleResult_Named<MODEL, RESULT, JOIN_FROM> typedJoinCollector();
-	
+	abstract <JOIN_FROM> IShortLogical_WhereOrJoin_SingleResult_Named<MODEL, RESULT, JOIN_FROM> namedTypedJoinCollector();
+
 	@Override
 	public final <JOIN_FROM, JOIN_TO, R extends Comparable<R>>
 		IShortLogical_WhereOrJoin_SingleResult_Named<MODEL, RESULT, JOIN_FROM> innerJoin(Function<JOIN_FROM, R> from, Function<JOIN_TO, R> to) {
 		
 		addInnerJoin(from, to);
 
-		return typedJoinCollector();
+		return namedTypedJoinCollector();
 	}
 
 	@Override
@@ -307,7 +308,7 @@ abstract class Short_Collector_Initial_Single_Any_Any_Base<MODEL, RESULT>
 		
 		addInnerJoin(collection);
 
-		return typedJoinCollector();
+		return namedTypedJoinCollector();
 	}
 
 	@Override
@@ -319,7 +320,7 @@ abstract class Short_Collector_Initial_Single_Any_Any_Base<MODEL, RESULT>
 
 		addInnerJoin(from, to, consumer);
 		
-		return typedJoinCollector();
+		return namedTypedJoinCollector();
 	}
 
 	@Override
@@ -330,7 +331,7 @@ abstract class Short_Collector_Initial_Single_Any_Any_Base<MODEL, RESULT>
 
 		addInnerJoin(collection, consumer);
 
-		return typedJoinCollector();
+		return namedTypedJoinCollector();
 	}
 
 	@Override
@@ -340,7 +341,7 @@ abstract class Short_Collector_Initial_Single_Any_Any_Base<MODEL, RESULT>
 
 		addLeftJoin(from, to);
 		
-		return typedJoinCollector();
+		return namedTypedJoinCollector();
 	}
 
 	@Override
@@ -350,7 +351,7 @@ abstract class Short_Collector_Initial_Single_Any_Any_Base<MODEL, RESULT>
 		
 		addLeftJoin(collection);
 		
-		return typedJoinCollector();
+		return namedTypedJoinCollector();
 	}
 
 	@Override
@@ -362,7 +363,7 @@ abstract class Short_Collector_Initial_Single_Any_Any_Base<MODEL, RESULT>
 
 		addLeftJoin(from, to, consumer);
 		
-		return typedJoinCollector();
+		return namedTypedJoinCollector();
 	}
 
 	@Override
@@ -373,7 +374,7 @@ abstract class Short_Collector_Initial_Single_Any_Any_Base<MODEL, RESULT>
 		
 		addLeftJoin(collection, consumer);
 		
-		return typedJoinCollector();
+		return namedTypedJoinCollector();
 	}
 
 

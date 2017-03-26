@@ -25,12 +25,13 @@ final class Short_Collector_Multi_Any_Any<MODEL, RESULT>
 			ISQLLogical_Or_MultiEntity_Alias<MODEL, RESULT>,
 			ISQLLogical_And_NonProcessResult_Alias<MODEL, RESULT>,
 			ISQLLogical_Or_NonProcessResult_Alias<MODEL, RESULT>,
-			ISQLJoin_Condition_MultiEntity_Alias<MODEL, RESULT>,
+			// ISQLJoin_Condition_MultiEntity_Alias<MODEL, RESULT>,
+			IShortJoin_Condition_MultiEntity_Alias<MODEL, RESULT>,
 			ISQLLogical_AndOr_MultiEntity_Alias<MODEL, RESULT>,
 
 			Void>
 
-	implements IShortResult_Multi<MODEL, RESULT> {
+	implements IShortResult_Multi_Instance<MODEL, RESULT> {
 
 
 	private final BaseQuery select;

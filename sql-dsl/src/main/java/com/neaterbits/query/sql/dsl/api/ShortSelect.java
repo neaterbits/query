@@ -41,9 +41,8 @@ final class ShortSelect extends BaseShortSelect<
 	}
 	
 	
-	// Aggregate helpers
 	@Override
-	public <RESULT> IShortResult_Single<SingleBuilt<RESULT>, RESULT> one(Class<RESULT> cl) {
+	public <RESULT> IShortResult_Single_Instance<SingleBuilt<RESULT>, RESULT> one(Class<RESULT> cl) {
 		if (cl == null) {
 			throw new IllegalArgumentException("cl == null");
 		}	
@@ -54,7 +53,7 @@ final class ShortSelect extends BaseShortSelect<
 	}
 
 	@Override
-	public <RESULT> IShortResult_Single<SingleBuilt<RESULT>, RESULT> oneOrNull(Class<RESULT> cl) {
+	public <RESULT> IShortResult_Single_Instance<SingleBuilt<RESULT>, RESULT> oneOrNull(Class<RESULT> cl) {
 		if (cl == null) {
 			throw new IllegalArgumentException("cl == null");
 		}
@@ -65,7 +64,7 @@ final class ShortSelect extends BaseShortSelect<
 	}
 
 	@Override
-	public <RESULT> IShortResult_Multi<MultiBuilt<RESULT>, RESULT> list(Class<RESULT> cl) {
+	public <RESULT> IShortResult_Multi_Instance<MultiBuilt<RESULT>, RESULT> list(Class<RESULT> cl) {
 		if (cl == null) {
 			throw new IllegalArgumentException("cl == null");
 		}
@@ -74,9 +73,59 @@ final class ShortSelect extends BaseShortSelect<
 
 		return new Short_Collector_Multi_Any_Any<MultiBuilt<RESULT>, RESULT>(this, selectSource, ECollectionType.LIST, multiQueryCollected());
 	}
+	
+	
+	private void checkAlias(Object alias) {
+		
+		if (alias == null) {
+			throw new IllegalArgumentException("alias == null");
+		}
 
+		if (!(alias instanceof IAlias)) {
+			throw new IllegalArgumentException("not an alias, must be instantiated with .alias(Class<?>) method");
+		}
+	}
 
 	
+	@Override
+	public <RESULT> IShortResult_Entity_Single_Alias<SingleBuilt<RESULT>, RESULT> one(RESULT alias) {
+
+		checkAlias(alias);
+		
+		final SharedSelectSource_Alias selectSource = new SharedSelectSource_Alias((IAlias)alias);
+
+		return new Short_Collector_Initial_Single_Entity_Alias<>(this, selectSource, singleQueryCollected());
+	}
+
+
+	@Override
+	public <TYPE_RESULT> IShortResult_Entity_Single_Alias<SingleBuilt<TYPE_RESULT>, TYPE_RESULT> oneOrNull(TYPE_RESULT alias) {
+
+		checkAlias(alias);
+		
+		final SharedSelectSource_Alias selectSource = new SharedSelectSource_Alias((IAlias)alias);
+
+		return new Short_Collector_Initial_Single_Entity_Alias<>(this, selectSource, singleQueryCollected());
+	}
+
+
+	@Override
+	public <RESULT> IShortResult_Entity_Multi_Alias<MultiBuilt<RESULT>, RESULT> list(RESULT alias) {
+		
+		checkAlias(alias);
+		
+		final SharedSelectSource_Alias selectSource = new SharedSelectSource_Alias((IAlias)alias);
+
+		final CollectedQueryResult_Entity_Multi result = new CollectedQueryResult_Entity_Multi(selectSource, ECollectionType.LIST);
+		
+		final Collector_Query<MultiBuilt<RESULT>> collector = new QueryCollectorImpl<>(this, multiQueryCollected(), result);
+		
+
+		return new Short_Collector_Multi_Entity_Alias<MultiBuilt<RESULT>, RESULT>(this, result, collector);
+	}
+
+	// Aggregate helpers
+
 	// --------------------------------- Named ---------------------------------
 	@Override
 	@SuppressWarnings("unchecked")

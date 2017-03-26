@@ -10,7 +10,7 @@ final class Short_Collector_Single_Any_Any_Instance<MODEL, RESULT>
 	}
 
 	@Override
-	<JOIN_FROM> Short_Collector_Single_Entity_Named_TypedJoin<MODEL, RESULT, JOIN_FROM> typedJoinCollector() {
+	<JOIN_FROM> Short_Collector_Single_Entity_Named_TypedJoin<MODEL, RESULT, JOIN_FROM> namedTypedJoinCollector() {
 		
 		// Went straight to join, so this is entity
 		

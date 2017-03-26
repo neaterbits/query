@@ -26,9 +26,18 @@ public interface IShort extends ISQL<
 
 	> {
 
-	<TYPE_RESULT> IShortResult_Single<SingleBuilt<TYPE_RESULT>, TYPE_RESULT> one(Class<TYPE_RESULT> cl);
+	/* Named queries, but map NOT be entity alias queries as should always use below prototype to select one particular alias*/
+	<TYPE_RESULT> IShortResult_Single_Instance<SingleBuilt<TYPE_RESULT>, TYPE_RESULT> one(Class<TYPE_RESULT> cl);
 
-	<TYPE_RESULT> IShortResult_Single<SingleBuilt<TYPE_RESULT>, TYPE_RESULT> oneOrNull(Class<TYPE_RESULT> cl);
+	<TYPE_RESULT> IShortResult_Single_Instance<SingleBuilt<TYPE_RESULT>, TYPE_RESULT> oneOrNull(Class<TYPE_RESULT> cl);
 
-	<TYPE_RESULT> IShortResult_Multi<MultiBuilt<TYPE_RESULT>, TYPE_RESULT> list(Class<TYPE_RESULT> cl);
+	<TYPE_RESULT> IShortResult_Multi_Instance<MultiBuilt<TYPE_RESULT>, TYPE_RESULT> list(Class<TYPE_RESULT> cl);
+
+	
+	/* Alias entity queries (always that - must select one of multiple aliases) */
+	<TYPE_RESULT> IShortResult_Entity_Single_Alias<SingleBuilt<TYPE_RESULT>, TYPE_RESULT> one(TYPE_RESULT alias);
+
+	<TYPE_RESULT> IShortResult_Entity_Single_Alias<SingleBuilt<TYPE_RESULT>, TYPE_RESULT> oneOrNull(TYPE_RESULT alias);
+
+	<TYPE_RESULT> IShortResult_Entity_Multi_Alias<MultiBuilt<TYPE_RESULT>, TYPE_RESULT> list(TYPE_RESULT alias);
 }
