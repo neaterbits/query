@@ -1000,4 +1000,13 @@ public class ShortAPITest extends BaseJPATest {
 		
 		assertThat(true).isEqualTo(false);
 	}
+	
+	@Test
+	public void testMultipleJoinsAtTopLevel() {
+		
+		// so that initial .*Join() returns value that also allows for join
+		
+
+		assertThat(true).isEqualTo(false);
+	}
 }

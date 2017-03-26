@@ -17,6 +17,10 @@ public class CropLand extends LandPlot {
 	public CropLand(BigDecimal hectares) {
 		super(hectares);
 	}
+	
+	public CropLand(Long id, BigDecimal hectares) {
+		super(id, hectares);
+	}
 
 	public Integer getYearCultivated() {
 		return yearCultivated;

@@ -2,6 +2,8 @@ package com.neaterbits.query.sql.dsl.api;
 
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.function.Consumer;
+import java.util.function.Function;
 
 final class Short_Collector_Multi_Any_Any<MODEL, RESULT>
 	extends Short_Collector_Any_Any_Any<
@@ -243,5 +245,102 @@ final class Short_Collector_Multi_Any_Any<MODEL, RESULT>
 	@Override
 	public ISharedFunctions_Transform_Initial_Named<MODEL, RESULT, ISQLLogical_AndOr_MultiEntity_Named<MODEL, RESULT>, ISharedCondition_Comparable_Common_All_Compilable<MODEL, RESULT, Short, ISQLLogical_AndOr_MultiEntity_Named<MODEL, RESULT>>, ISharedCondition_Comparable_Common_All_Compilable<MODEL, RESULT, Integer, ISQLLogical_AndOr_MultiEntity_Named<MODEL, RESULT>>, ISharedCondition_Comparable_Common_All_Compilable<MODEL, RESULT, Long, ISQLLogical_AndOr_MultiEntity_Named<MODEL, RESULT>>, ISharedCondition_Comparable_Common_All_Compilable<MODEL, RESULT, Double, ISQLLogical_AndOr_MultiEntity_Named<MODEL, RESULT>>, ISharedCondition_Comparable_Common_All_Compilable<MODEL, RESULT, BigDecimal, ISQLLogical_AndOr_MultiEntity_Named<MODEL, RESULT>>, ISharedCondition_Comparable_String_All_Compilable<MODEL, RESULT, ISQLLogical_AndOr_MultiEntity_Named<MODEL, RESULT>>> where() {
 		throw new UnsupportedOperationException("TODO");
+	}
+
+	
+	
+	//**************************************************************************
+	// Named entity join
+	//**************************************************************************
+
+	private <JOIN_FROM> IShortLogical_WhereOrJoin_MultiEntity_Named<MODEL, RESULT, JOIN_FROM> namedJoinResult() {
+		
+		final CollectedQueryResult_Entity_Multi result = new CollectedQueryResult_Entity_Multi(getSelectSource(), collectionType);
+		
+		return new Short_Collector_Multi_Entity_Named<>(select, result, getQueryCollector());
+	}
+	
+	
+	
+	
+	@Override
+	public <JOIN_FROM, JOIN_TO, R extends Comparable<R>> IShortLogical_WhereOrJoin_MultiEntity_Named<MODEL, RESULT, JOIN_FROM> innerJoin(Function<JOIN_FROM, R> from, Function<JOIN_TO, R> to) {
+		
+		addInnerJoin(from, to);
+		
+		return namedJoinResult();
+	}
+
+
+	@Override
+	public <JOIN_FROM, JOIN_TO> IShortLogical_WhereOrJoin_MultiEntity_Named<MODEL, RESULT, JOIN_FROM> innerJoin(CollectionFunction<JOIN_FROM, JOIN_TO> collection) {
+		
+		addInnerJoin(collection);
+		
+		return namedJoinResult();
+	}
+
+
+	@Override
+	public <JOIN_FROM, JOIN_TO, R extends Comparable<R>> IShortLogical_WhereOrJoin_MultiEntity_Named<MODEL, RESULT, JOIN_FROM> innerJoin(
+			Function<JOIN_FROM, R> from, Function<JOIN_TO, R> to,
+			Consumer<IShortJoin_Sub_Named<MODEL, RESULT, JOIN_TO, Void>> consumer) {
+		
+		addInnerJoin(from, to, consumer);
+
+		return namedJoinResult();
+	}
+
+
+	@Override
+	public <JOIN_FROM, JOIN_TO> IShortLogical_WhereOrJoin_MultiEntity_Named<MODEL, RESULT, JOIN_FROM> innerJoin(
+			CollectionFunction<JOIN_FROM, JOIN_TO> collection,
+			Consumer<IShortJoin_Sub_Named<MODEL, RESULT, JOIN_TO, Void>> consumer) {
+
+		addInnerJoin(collection, consumer);
+		
+		return namedJoinResult();
+	}
+
+
+	@Override
+	public <JOIN_FROM, JOIN_TO, R extends Comparable<R>> IShortLogical_WhereOrJoin_MultiEntity_Named<MODEL, RESULT, JOIN_FROM> leftJoin(
+			Function<JOIN_FROM, R> from, Function<JOIN_TO, R> to) {
+
+		addLeftJoin(from, to);
+		
+		return namedJoinResult();
+	}
+
+
+	@Override
+	public <JOIN_FROM, JOIN_TO> IShortLogical_WhereOrJoin_MultiEntity_Named<MODEL, RESULT, JOIN_FROM> leftJoin(
+			CollectionFunction<JOIN_FROM, JOIN_TO> collection) {
+		
+		addLeftJoin(collection);
+		
+		return namedJoinResult();
+	}
+
+
+	@Override
+	public <JOIN_FROM, JOIN_TO, R extends Comparable<R>> IShortLogical_WhereOrJoin_MultiEntity_Named<MODEL, RESULT, JOIN_FROM> leftJoin(
+			Function<JOIN_FROM, R> from, Function<JOIN_TO, R> to,
+			Consumer<IShortJoin_Sub_Named<MODEL, RESULT, JOIN_TO, Void>> consumer) {
+
+		addLeftJoin(from, to, consumer);
+		
+		return namedJoinResult();
+	}
+
+
+	@Override
+	public <JOIN_FROM, JOIN_TO> IShortLogical_WhereOrJoin_MultiEntity_Named<MODEL, RESULT, JOIN_FROM> leftJoin(
+			CollectionFunction<JOIN_FROM, JOIN_TO> collection,
+			Consumer<IShortJoin_Sub_Named<MODEL, RESULT, JOIN_TO, Void>> consumer) {
+		
+		addLeftJoin(collection, consumer);
+		
+		return namedJoinResult();
 	}
 }

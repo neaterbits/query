@@ -18,4 +18,8 @@ public class Uncultivated extends LandPlot {
 	public Uncultivated(BigDecimal hectares) {
 		super(hectares);
 	}
+
+	public Uncultivated(Long id, BigDecimal hectares) {
+		super(id, hectares);
+	}
 }
