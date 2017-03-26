@@ -1,9 +1,12 @@
 package com.neaterbits.query.sql.dsl.api;
 
 import java.lang.reflect.Method;
+import java.util.Arrays;
 import java.util.List;
 import java.util.function.Function;
 import java.util.function.Supplier;
+
+import com.neaterbits.query.util.java8.MethodUtil;
 
 final class CompiledSelectSources_Alias extends CompiledSelectSources<CompiledSelectSource_Alias> {
 
@@ -104,8 +107,8 @@ final class CompiledSelectSources_Alias extends CompiledSelectSources<CompiledSe
 
 			 final IAlias alias = aliasGetter.apply(source);
 			 lastMethod = alias.getLastInvokedMethod();
-			 
-			 if (lastMethod != null && lastMethod.getDeclaringClass().equals(alias.getType())) {
+
+			 if (lastMethod != null && MethodUtil.getClassWithOriginalPrototypeForMethod(lastMethod).equals(alias.getType())) {
 				 foundSelectSource = source;
 				 break;
 			 }

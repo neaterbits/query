@@ -1,5 +1,7 @@
 package com.neaterbits.query.sql.dsl.api;
 
+import com.neaterbits.query.util.java8.MethodUtil;
+
 final class CompiledFieldReference extends CompiledQueryElement<CollectedItem> {
 
 	private final TypeMapSource source;
@@ -13,7 +15,7 @@ final class CompiledFieldReference extends CompiledQueryElement<CollectedItem> {
 
 		super(original);
 		
-		final Class<?> methodType = getter.getGetterMethod().getDeclaringClass();
+		final Class<?> methodType = MethodUtil.getClassWithOriginalPrototypeForMethod(getter.getGetterMethod());
 		
 		if (!methodType.equals(source.getType())) {
 			throw new IllegalArgumentException("Mismatch in declarin lass and source type: " + methodType + " and " + source.getType());
