@@ -105,7 +105,7 @@ final class CompiledSelectSources_Alias extends CompiledSelectSources<CompiledSe
 			 final IAlias alias = aliasGetter.apply(source);
 			 lastMethod = alias.getLastInvokedMethod();
 			 
-			 if (lastMethod != null) {
+			 if (lastMethod != null && lastMethod.getDeclaringClass().equals(alias.getType())) {
 				 foundSelectSource = source;
 				 break;
 			 }
