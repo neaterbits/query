@@ -13,6 +13,8 @@ final class Short_Collector_Single_Entity_Named_TypedJoin<MODEL, RESULT, JOIN_FR
 
 	Short_Collector_Single_Entity_Named_TypedJoin(Short_Collector_Initial_Single_Any_Any_Base<MODEL, RESULT> input) {
 		super(input.getQueryCollector(), input.clauseCollector);
+		
+		getQueryCollector().setResult(new CollectedQueryResult_Entity_Single(input.getSelectSource()));
 	}
 		
 	private Short_Collector_Single_Entity_Named_TypedJoin(Collector_Query<MODEL> queryCollector, Collector_Clause clauseCollector) {
