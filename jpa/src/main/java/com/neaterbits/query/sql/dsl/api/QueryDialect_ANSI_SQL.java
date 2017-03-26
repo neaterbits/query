@@ -52,7 +52,24 @@ final class QueryDialect_ANSI_SQL<MANAGED, EMBEDDED, IDENTIFIABLE, ATTRIBUTE, CO
 
 		final String prefix = getEntityResultVarName(fieldReferenceType, sourceReference, entity);
 
-		appendFieldList(sb, entity, prefix);
+		if (entity.isBaseType()) {
+			// We have to select across multiple tables to get all subtype information since
+			// this may be a polymorphic query
+			
+			switch (entity.getSubClassing()) {
+			case SINGLE_TABLE:
+				// Simplest option for subclassing, just read all attributes since they're all in the one single table
+				appendFieldList(sb, entity, prefix, entity.getSingleTableSubclassingColumn());
+				break;
+				
+			default:
+				throw new UnsupportedOperationException("Unknown subclassing " + entity.getSubClassing());
+			}
+			
+		}
+		else {
+			appendFieldList(sb, entity, prefix);
+		}
 	}
 	
 	private String getEntityResultVarName(EFieldAccessType fieldReferenceType, SourceReference sourceReference, IEntity entity) {
@@ -76,7 +93,7 @@ final class QueryDialect_ANSI_SQL<MANAGED, EMBEDDED, IDENTIFIABLE, ATTRIBUTE, CO
 	}
 	
 	
-	private static void appendFieldList(QueryBuilder sb, IEntity entity, String prefix) {
+	private static void appendFieldList(QueryBuilder sb, IEntity entity, String prefix, String ... extraColumns) {
 		
 		QueryDataSourceJPANative.forEachResultColumn(entity, (attr, column, idx) -> {
 			
@@ -86,6 +103,16 @@ final class QueryDialect_ANSI_SQL<MANAGED, EMBEDDED, IDENTIFIABLE, ATTRIBUTE, CO
 
 			sb.append(prefix).append('.').append(column);
 		});
+		
+		for (String extraColumn : extraColumns) {
+			
+			if (extraColumn == null) {
+				throw new IllegalArgumentException("extraColumn == null");
+			}
+			
+			sb.append(", ");
+			sb.append(prefix).append('.').append(extraColumn);
+		}
 		
 		/*
 		

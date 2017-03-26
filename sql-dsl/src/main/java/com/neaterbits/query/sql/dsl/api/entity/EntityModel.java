@@ -73,6 +73,8 @@ public interface EntityModel<MANAGED, EMBEDDED, IDENTIFIABLE, ATTRIBUTE, ATTRIBU
 	
 	List<MANAGED> getDirectSubTypes(MANAGED managed);
 	
+	String getSingleTableSubClassingColumn(MANAGED managed);
+	
 	public default List<MANAGED> getAllLeafSubTypes(MANAGED managed) {
 		
 		final List<MANAGED> ret = new ArrayList<MANAGED>();

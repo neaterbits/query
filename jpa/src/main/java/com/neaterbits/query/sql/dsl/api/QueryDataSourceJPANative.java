@@ -133,29 +133,39 @@ public final class QueryDataSourceJPANative extends QueryDataSourceJPA {
 	}
 	
 	private Object mapOneEntity(IEntity entity, Object [] row) {
-		
-		final JPAEntityModel model = (JPAEntityModel)getEntityModelUtil().getModel();
-		
-		final ManagedType<?> type = model.getManaged(entity.getJavaType());
-		
-		if (model.isBaseType(type)) {
-			throw new IllegalStateException("entity type" + entity.getJavaType() + " is base type");
-		}
-		
-		final Object instance;
-		try {
-			instance = entity.getJavaType().newInstance();
-		} catch (InstantiationException | IllegalAccessException ex) {
-			throw new IllegalStateException("Failed to instantiate result entity of type " + entity.getJavaType(), ex);
-		}
-		
-		
-		// TODO: Should cache setters methods or lambdas in query indexed on rows so no need for reflection lookup for each instance
 
-		forEachResultColumn(entity, (attr, column , idx) -> {
-			attr.set(instance, row[idx]);
+		final Object instance;
+		
+		if (entity.isBaseType()) {
+			// We were selecting a base type and should do polymorphic result creation from selected columns
 			
-		});
+			switch (entity.getSubClassing()) {
+			case SINGLE_TABLE:
+				// We selected attributes from all rows in order
+				throw new IllegalArgumentException("Got type " + row[row.length - 1]);
+
+			default:
+				throw new UnsupportedOperationException("Unknown subclassing type " + entity.getSubClassing());
+			}
+			
+		}
+		else {
+			// Not a basetype, straightforward
+			try {
+				instance = entity.getJavaType().newInstance();
+			} catch (InstantiationException | IllegalAccessException ex) {
+				throw new IllegalStateException("Failed to instantiate result entity of type " + entity.getJavaType(), ex);
+			}
+			
+			
+			// TODO: Should cache setters methods or lambdas in query indexed on rows so no need for reflection lookup for each instance
+
+			forEachResultColumn(entity, (attr, column , idx) -> {
+				attr.set(instance, row[idx]);
+				
+			});
+		}
+		
 		
 		return instance;
 	}

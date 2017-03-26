@@ -41,8 +41,19 @@ public class EntityModelUtil<MANAGED, EMBEDDED, IDENTIFIABLE, ATTRIBUTE, COLL ex
 			throw new IllegalStateException("Type mismatch");
 		}
 
+		
 		if (managed != null) {
-			ret = new EntityImpl(type, managed);
+			final boolean isBaseType = model.isBaseType(managed);
+			
+			final ESubClassing subClassing = isBaseType ? model.getSubClassing(managed) : ESubClassing.NONE;
+		
+			String singleTableTypeColumn = 
+					
+					subClassing == ESubClassing.SINGLE_TABLE
+							? model.getSingleTableSubClassingColumn(managed)
+							: null;
+			
+			ret = new EntityImpl(type, managed, subClassing, singleTableTypeColumn);
 		}
 		else {
 			ret = null;
@@ -339,12 +350,35 @@ public class EntityModelUtil<MANAGED, EMBEDDED, IDENTIFIABLE, ATTRIBUTE, COLL ex
 	private class EntityImpl implements IEntity {
 		private final Class<?> javaType;
 		private final MANAGED managed;
+		private final ESubClassing subClassing;
+		private final String singleTableSubclassingColumn;
+		
 
-		public EntityImpl(Class<?> javaType, MANAGED managed) {
+		public EntityImpl(Class<?> javaType, MANAGED managed, ESubClassing subClassing, String singleTableSubclassingColumn) {
+			
+			if (javaType == null) {
+				throw new IllegalArgumentException("javaType == null");
+			}
+
+			if (managed == null) {
+				throw new IllegalArgumentException("managed == null");
+			}
+
+			if (subClassing == null) {
+				throw new IllegalArgumentException("subClassing == null");
+			}
+			
+			if (    subClassing == ESubClassing.SINGLE_TABLE
+				&& (singleTableSubclassingColumn == null || singleTableSubclassingColumn.trim().isEmpty())) {
+				throw new IllegalArgumentException("No single table column");
+			}
+
 			this.javaType = javaType;
 			this.managed = managed;
+			this.subClassing = subClassing;
+			this.singleTableSubclassingColumn = singleTableSubclassingColumn;
 		}
-
+		
 		@Override
 		public String getName() {
 			return model.getName(managed);
@@ -365,5 +399,22 @@ public class EntityModelUtil<MANAGED, EMBEDDED, IDENTIFIABLE, ATTRIBUTE, COLL ex
 		public Class<?> getJavaType() {
 			return javaType;
 		}
+
+		@Override
+		public boolean isBaseType() {
+			return subClassing != ESubClassing.NONE;
+		}
+
+		@Override
+		public ESubClassing getSubClassing() {
+			return subClassing;
+		}
+
+		@Override
+		public String getSingleTableSubclassingColumn() {
+			return singleTableSubclassingColumn;
+		}
+		
+		
 	}
 }

@@ -869,42 +869,50 @@ public class JPAEntityModel implements EntityModel<
 	}
 
 
-
-
 	@Override
 	public ESubClassing getSubClassing(ManagedType<?> managed) {
 		
+		if (!isBaseType(managed)) {
+			throw new IllegalArgumentException("only to be called for base types");
+		}
+
 		final ESubClassing ret;
-		
+
 		// What type of subclassing is used?
 		switch (managed.getPersistenceType()) {
 		case MAPPED_SUPERCLASS:
 			ret = ESubClassing.MAPPED_SUPERCLASS;
 			break;
-			
+
 		case ENTITY:
 			// Must figure out by looking at inheritance strategy
 			final Inheritance inheritance = managed.getJavaType().getDeclaredAnnotation(Inheritance.class);
-			
+
 			if (inheritance == null) {
-				throw new IllegalStateException("No subclassing found for " + managed.getJavaType()); // ret = ESubClassing.NONE;
+				// throw new IllegalStateException("No subclassing found for " + managed.getJavaType()); // ret = ESubClassing.NONE;
+				// looks like defaults to SINGLE_TABLE, at least in EclipseLink
+
+				ret = ESubClassing.SINGLE_TABLE;
 			}
 			else {
 				switch (inheritance.strategy()) {
+
 				case JOINED:
 					ret = ESubClassing.JOINED;
 					break;
+
 				case SINGLE_TABLE:
 					ret = ESubClassing.SINGLE_TABLE;
 					break;
+
 				case TABLE_PER_CLASS:
 					ret = ESubClassing.TABLE_PER_CLASS;
 					break;
+
 				default:
 					throw new UnsupportedOperationException("Unknown inheritance type: " + inheritance.strategy());
 				}
 			}
-			
 			break;
 			
 		default:
@@ -915,6 +923,19 @@ public class JPAEntityModel implements EntityModel<
 		return ret;
 	}
 
+	@Override
+	public String getSingleTableSubClassingColumn(ManagedType<?> managed) {
+		final String ret;
+		
+		if (managed.getClass().getName().startsWith("org.eclipse.persistence")) {
+			ret = "DTYPE";
+		}
+		else {
+			throw new UnsupportedOperationException("Unknown JPA provider");
+		}
+
+		return ret;
+	}
 
 	@Override
 	public List<ManagedType<?>> getDirectSubTypes(ManagedType<?> managed) {
