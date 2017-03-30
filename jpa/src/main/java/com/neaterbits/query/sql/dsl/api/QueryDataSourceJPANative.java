@@ -6,11 +6,12 @@ import java.util.Date;
 import java.util.List;
 
 import javax.persistence.EntityManager;
-import javax.persistence.metamodel.ManagedType;
 
 import com.neaterbits.query.sql.dsl.api.entity.AttributeType;
-import com.neaterbits.query.sql.dsl.api.entity.IEntity;
+import com.neaterbits.query.sql.dsl.api.entity.IEntityFields;
+import com.neaterbits.query.util.java8.Coll8;
 import com.neaterbits.query.sql.dsl.api.entity.IEntityAttribute;
+import com.neaterbits.query.sql.dsl.api.entity.IEntity;
 
 /**
  * JPA base data source, ie. JPA annotated entities but skips JPA and generates native ANSI SQL instead
@@ -62,8 +63,20 @@ public final class QueryDataSourceJPANative extends QueryDataSourceJPA {
 		return new QueryRunner_JPA_Native(jpaQuery);
 	}
 
-	static void forEachResultColumn(IEntity entity, EntityEachAttribute each) {
+	static void forEachInheritanceColumn(IEntity entity, EntityEachAttribute each) {
 		int idx = 0;
+		
+		idx = forEachEntityColumn(entity, idx, each);
+		
+		if (entity.isBaseType()) {
+			for (IEntityFields sub : entity.getSubEntitiesOrdered()) {
+				idx = forEachEntityColumn(sub, idx, each);
+			}
+		}
+	}
+
+	
+	static int forEachEntityColumn(IEntityFields entity, int idx, EntityEachAttribute each) {
 		
 		// Get all attributes in order
 		for (IEntityAttribute attr : entity.getAttributes()) {
@@ -83,7 +96,7 @@ public final class QueryDataSourceJPANative extends QueryDataSourceJPA {
 				throw new IllegalArgumentException("columns.length != 1");
 			}
 			
-			each.each(attr, columns[0], idx);
+			each.each(entity, attr, columns[0], idx);
 			
 			/*
 			
@@ -96,6 +109,8 @@ public final class QueryDataSourceJPANative extends QueryDataSourceJPA {
 			
 			++ idx;
 		}
+		
+		return idx;
 	}
 	
 	
@@ -132,6 +147,18 @@ public final class QueryDataSourceJPANative extends QueryDataSourceJPA {
 		return ret;
 	}
 	
+	private static Object instantiate(IEntityFields entity) {
+		final Object instance;
+
+		try {
+			instance = entity.getJavaType().newInstance();
+		} catch (InstantiationException | IllegalAccessException ex) {
+			throw new IllegalStateException("Failed to instantiate result entity of type " + entity.getJavaType(), ex);
+		}
+
+		return instance;
+	}
+	
 	private Object mapOneEntity(IEntity entity, Object [] row) {
 
 		final Object instance;
@@ -142,7 +169,27 @@ public final class QueryDataSourceJPANative extends QueryDataSourceJPA {
 			switch (entity.getSubClassing()) {
 			case SINGLE_TABLE:
 				// We selected attributes from all rows in order
-				throw new IllegalArgumentException("Got type " + row[row.length - 1]);
+				
+				// Map back inherited, must figure type to instantiate
+				
+				final String type = (String)row[row.length - 1];
+				
+				final IEntityFields sub = Coll8.find(entity.getSubEntitiesOrdered(), e -> e.getName().equals(type));
+				
+				if (sub == null) {
+					throw new IllegalStateException("No sub for inherited typed " + type);
+				}
+
+				instance = instantiate(sub);
+
+				forEachInheritanceColumn(entity, (e, attr, column, idx) -> {
+
+					if (e.getJavaType().isAssignableFrom(sub.getJavaType())) {
+						attr.set(instance, row[idx]);
+					}
+				});
+				break;
+
 
 			default:
 				throw new UnsupportedOperationException("Unknown subclassing type " + entity.getSubClassing());
@@ -151,16 +198,11 @@ public final class QueryDataSourceJPANative extends QueryDataSourceJPA {
 		}
 		else {
 			// Not a basetype, straightforward
-			try {
-				instance = entity.getJavaType().newInstance();
-			} catch (InstantiationException | IllegalAccessException ex) {
-				throw new IllegalStateException("Failed to instantiate result entity of type " + entity.getJavaType(), ex);
-			}
-			
+			instance = instantiate(entity);
 			
 			// TODO: Should cache setters methods or lambdas in query indexed on rows so no need for reflection lookup for each instance
 
-			forEachResultColumn(entity, (attr, column , idx) -> {
+			forEachEntityColumn(entity, 0, (e, attr, column, idx) -> {
 				attr.set(instance, row[idx]);
 				
 			});

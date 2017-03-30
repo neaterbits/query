@@ -44,16 +44,37 @@ public class EntityModelUtil<MANAGED, EMBEDDED, IDENTIFIABLE, ATTRIBUTE, COLL ex
 		
 		if (managed != null) {
 			final boolean isBaseType = model.isBaseType(managed);
+			final String singleTableTypeColumn;
 			
-			final ESubClassing subClassing = isBaseType ? model.getSubClassing(managed) : ESubClassing.NONE;
-		
-			String singleTableTypeColumn = 
+			final List<IEntityFields> subEntities;
+			final ESubClassing subClassing;
+			
+			if (isBaseType) {
+				subClassing = model.getSubClassing(managed); 				
+				singleTableTypeColumn = 
+						
+				subClassing == ESubClassing.SINGLE_TABLE
+						? model.getSingleTableSubClassingColumn(managed)
+						: null;
+						
+				final List<MANAGED> subTypes = model.getDirectSubTypes(managed);
+				
+				subEntities = new ArrayList<>(subTypes.size());
+				
+				for (MANAGED sub : subTypes) {
+					final IEntityFields subEntity = new EntityImpl(model.getJavaType(sub), sub, ESubClassing.NONE, null, null);
 					
-					subClassing == ESubClassing.SINGLE_TABLE
-							? model.getSingleTableSubClassingColumn(managed)
-							: null;
+					subEntities.add(subEntity);
+				}
+			}
+			else {
+				subClassing = ESubClassing.NONE;
+				subEntities = null;
+				singleTableTypeColumn = null;
+			}
 			
-			ret = new EntityImpl(type, managed, subClassing, singleTableTypeColumn);
+			
+			ret = new EntityImpl(type, managed, subClassing, singleTableTypeColumn, subEntities);
 		}
 		else {
 			ret = null;
@@ -117,7 +138,7 @@ public class EntityModelUtil<MANAGED, EMBEDDED, IDENTIFIABLE, ATTRIBUTE, COLL ex
 				try {
 					setter.invoke(instance, value);
 				} catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException ex) {
-					throw new IllegalStateException("Faield to invoke setter " + setter, ex);
+					throw new IllegalStateException("Failed to invoke setter " + setter, ex);
 				}
 			};
 		}
@@ -352,9 +373,10 @@ public class EntityModelUtil<MANAGED, EMBEDDED, IDENTIFIABLE, ATTRIBUTE, COLL ex
 		private final MANAGED managed;
 		private final ESubClassing subClassing;
 		private final String singleTableSubclassingColumn;
+		private final List<IEntityFields> subEntities;
 		
 
-		public EntityImpl(Class<?> javaType, MANAGED managed, ESubClassing subClassing, String singleTableSubclassingColumn) {
+		EntityImpl(Class<?> javaType, MANAGED managed, ESubClassing subClassing, String singleTableSubclassingColumn, List<IEntityFields> subEntities) {
 			
 			if (javaType == null) {
 				throw new IllegalArgumentException("javaType == null");
@@ -372,11 +394,23 @@ public class EntityModelUtil<MANAGED, EMBEDDED, IDENTIFIABLE, ATTRIBUTE, COLL ex
 				&& (singleTableSubclassingColumn == null || singleTableSubclassingColumn.trim().isEmpty())) {
 				throw new IllegalArgumentException("No single table column");
 			}
+			
+			if (subClassing == ESubClassing.NONE) {
+				if (subEntities != null && !subEntities.isEmpty()) {
+					throw new IllegalArgumentException("Got sub entities but for ESubClassing.NONE");
+				}
+			}
+			else {
+				if (subEntities == null || subEntities.isEmpty()) {
+					throw new IllegalStateException("No subentities for entity with subclass");
+				}
+			}
 
 			this.javaType = javaType;
 			this.managed = managed;
 			this.subClassing = subClassing;
 			this.singleTableSubclassingColumn = singleTableSubclassingColumn;
+			this.subEntities = subEntities;
 		}
 		
 		@Override
@@ -414,7 +448,10 @@ public class EntityModelUtil<MANAGED, EMBEDDED, IDENTIFIABLE, ATTRIBUTE, COLL ex
 		public String getSingleTableSubclassingColumn() {
 			return singleTableSubclassingColumn;
 		}
-		
-		
+
+		@Override
+		public List<IEntityFields> getSubEntitiesOrdered() {
+			return subEntities;
+		}
 	}
 }

@@ -290,7 +290,7 @@ public class JPAEntityModel implements EntityModel<
 			final OneToOne oneToOne = accessible.getAnnotation(OneToOne.class);
 
 			if (oneToOne == null) {
-				throw new IllegalStateException("oneToOne == null");
+				throw new IllegalStateException("oneToOne == null - TODO can reach here");
 			}
 			
 			targetEntity = getAssociationTarget(attribute);

@@ -109,7 +109,8 @@ public abstract class LandPlot {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((hectares == null) ? 0 : hectares.hashCode());
+		// not in hashcode dure to rounding -- result = prime * result + ((hectares == null) ? 0 : hectares.hashCode());
+		
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		return result;
 	}
@@ -126,7 +127,8 @@ public abstract class LandPlot {
 		if (hectares == null) {
 			if (other.hectares != null)
 				return false;
-		} else if (!hectares.equals(other.hectares))
+		//} else if (!hectares.equals(other.hectares))
+		} else if (hectares.compareTo(other.hectares) != 0)
 			return false;
 		if (id == null) {
 			if (other.id != null)

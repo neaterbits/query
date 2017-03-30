@@ -5,7 +5,9 @@ import java.math.BigDecimal;
 import java.util.Collection;
 import java.util.List;
 
+import com.neaterbits.query.sql.dsl.api.entity.ESubClassing;
 import com.neaterbits.query.sql.dsl.api.entity.EntityModelUtil;
+import com.neaterbits.query.sql.dsl.api.entity.IEntityFields;
 import com.neaterbits.query.sql.dsl.api.entity.IEntity;
 import com.neaterbits.query.sql.dsl.api.entity.Relation;
 
@@ -59,7 +61,7 @@ final class QueryDialect_ANSI_SQL<MANAGED, EMBEDDED, IDENTIFIABLE, ATTRIBUTE, CO
 			switch (entity.getSubClassing()) {
 			case SINGLE_TABLE:
 				// Simplest option for subclassing, just read all attributes since they're all in the one single table
-				appendFieldList(sb, entity, prefix, entity.getSingleTableSubclassingColumn());
+				appendFieldListInherited(sb, entity, prefix, entity.getSingleTableSubclassingColumn());
 				break;
 				
 			default:
@@ -72,7 +74,7 @@ final class QueryDialect_ANSI_SQL<MANAGED, EMBEDDED, IDENTIFIABLE, ATTRIBUTE, CO
 		}
 	}
 	
-	private String getEntityResultVarName(EFieldAccessType fieldReferenceType, SourceReference sourceReference, IEntity entity) {
+	private String getEntityResultVarName(EFieldAccessType fieldReferenceType, SourceReference sourceReference, IEntityFields entity) {
 		
 		final String ret;
 		
@@ -91,19 +93,8 @@ final class QueryDialect_ANSI_SQL<MANAGED, EMBEDDED, IDENTIFIABLE, ATTRIBUTE, CO
 
 		return ret;
 	}
-	
-	
-	private static void appendFieldList(QueryBuilder sb, IEntity entity, String prefix, String ... extraColumns) {
-		
-		QueryDataSourceJPANative.forEachResultColumn(entity, (attr, column, idx) -> {
-			
-			if (idx > 0) {
-				sb.append(", ");
-			}
 
-			sb.append(prefix).append('.').append(column);
-		});
-		
+	private static void appendExtraColumns(QueryBuilder sb, String prefix, String ... extraColumns) {
 		for (String extraColumn : extraColumns) {
 			
 			if (extraColumn == null) {
@@ -113,6 +104,43 @@ final class QueryDialect_ANSI_SQL<MANAGED, EMBEDDED, IDENTIFIABLE, ATTRIBUTE, CO
 			sb.append(", ");
 			sb.append(prefix).append('.').append(extraColumn);
 		}
+		
+	}
+	
+	private static void appendColumn(QueryBuilder sb, String prefix, int idx, String column) {
+		if (idx > 0) {
+			sb.append(", ");
+		}
+
+		sb.append(prefix).append('.').append(column);		
+	}
+
+	private static void appendFieldListInherited(QueryBuilder sb, IEntity entity, String prefix, String ... extraColumns) {
+		
+		if (entity.getSubClassing() != ESubClassing.SINGLE_TABLE) {
+			throw new IllegalStateException("Only single-table subclassing for now");
+		}
+
+		QueryDataSourceJPANative.forEachInheritanceColumn(entity, (e, attr, column, idx) -> {
+			
+			appendColumn(sb, prefix, idx, column);
+			
+		});
+		
+
+		appendExtraColumns(sb, prefix, extraColumns);
+	}
+
+	
+	private static void appendFieldList(QueryBuilder sb, IEntity entity, String prefix, String ... extraColumns) {
+		
+		QueryDataSourceJPANative.forEachEntityColumn(entity, 0, (e, attr, column, idx) -> {
+			
+			appendColumn(sb, prefix, idx, column);
+		});
+		
+
+		appendExtraColumns(sb, prefix, extraColumns);
 		
 		/*
 		

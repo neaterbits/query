@@ -3,6 +3,7 @@ package com.neaterbits.query.test.model.land;
 import java.math.BigDecimal;
 
 import javax.persistence.Entity;
+import javax.persistence.OneToOne;
 
 @Entity
 public class Forest extends LandPlot {
@@ -21,6 +22,7 @@ public class Forest extends LandPlot {
 		super(id, hectares);
 	}
 
+	@OneToOne
 	public SiteQuality getSiteQuality() {
 		return siteQuality;
 	}
