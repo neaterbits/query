@@ -50,6 +50,27 @@ public class MappedJoinTest extends GEN_BaseTestCase {
 
 
     @Test
+    public void testEntitySingleNamed_Farm_Left() {
+    	final Farm farm1 = new Farm("Farm1");
+    	
+    	final LandPlot land1 = new CropLand(new BigDecimal("9.30"));
+    	final LandPlot land2 = new Forest(new BigDecimal("40.5"));
+
+    	// only landplots that belong to farms, so land4 should not be included in sum
+    	// since doing innerjoin from farm to landplot
+    	final SingleBuilt<FarmLand> query
+    		= select.one(FarmLand.class)
+    			.map(Farm::getName)			.to(FarmLand::setFarmName)
+    			.map(LandPlot::getHectares) .to(FarmLand::setHectares)
+    			.leftJoin(Farm::getLandPlots)   
+    			.build();
+    	
+    	store(farm1, land1, land2)
+    	.checkOne(query, () -> new FarmLand("Farm1", null));
+    }
+    
+
+    @Test
     public void testMappedSingleAlias() {
     	final Farm farm1 = new Farm("Farm1");
     	final Farm farm2 = new Farm("Farm2");
@@ -66,7 +87,6 @@ public class MappedJoinTest extends GEN_BaseTestCase {
     	final Farm f = select.alias(Farm.class);
     	final LandPlot l = select.alias(LandPlot.class);
     	
-    	
     	// only landplots that belong to farms, so land4 should not be included in sum
     	// since doing innerjoin from farm to landplot
     	final SingleBuilt<FarmLand> query
@@ -82,6 +102,29 @@ public class MappedJoinTest extends GEN_BaseTestCase {
     	.checkOne(query, () -> new FarmLand("Farm1", new BigDecimal("40.5")));
     }
 
+    @Test
+    public void testEntitySingleAlias_Farm_Left() {
+    	final Farm farm1 = new Farm("Farm1");
+    	
+    	final LandPlot land1 = new CropLand(new BigDecimal("9.30"));
+    	final LandPlot land2 = new Forest(new BigDecimal("40.5"));
+
+    	final Farm f = select.alias(Farm.class);
+    	final LandPlot l = select.alias(LandPlot.class);
+    	
+    	// only landplots that belong to farms, so land4 should not be included in sum
+    	// since doing innerjoin from farm to landplot
+    	final SingleBuilt<FarmLand> query
+    		= select.one(FarmLand.class)
+    			.map(f::getName)			.to(FarmLand::setFarmName)
+    			.map(l::getHectares) .to(FarmLand::setHectares)
+    			.leftJoin(f::getLandPlots, l)   
+    			.build();
+    	
+    	store(farm1, land1, land2)
+    	.checkOne(query, () -> new FarmLand("Farm1", null));
+    }
+    
 
     @Test
     public void testMappedMultiNamed() {
