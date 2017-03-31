@@ -81,6 +81,7 @@ public class GEN_BaseTestCase extends BaseJPATest {
 		codeWriter.newLine().newLine();
 		codeWriter.append("import com.neaterbits.query.sql.dsl.api.IShort;").newLine();
 		codeWriter.append("import com.neaterbits.query.test.model.mapped.FarmInfo;").newLine();
+		codeWriter.append("import com.neaterbits.query.test.model.mapped.FarmLand;").newLine();
 		codeWriter.append("import com.neaterbits.query.test.model.Farm;").newLine();
 		codeWriter.append("import com.neaterbits.query.test.model.land.LandPlot;").newLine();
 		codeWriter.append("import java.math.BigDecimal;").newLine();

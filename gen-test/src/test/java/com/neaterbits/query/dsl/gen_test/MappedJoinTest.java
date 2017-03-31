@@ -21,6 +21,22 @@ public class MappedJoinTest extends GEN_BaseTestCase {
 
     @Test
     public void testMappedSingleNamed() {
+    	verifyIsNotCompilable(
+    			a -> a.add(Farm.class, "f").add(LandPlot.class, "l"),
+    			
+    			"one(FarmLand.class)" +
+    	    	".map(Farm::getName)	 .to(FarmLand::setFarmName)" +
+    	    	".map(LandPlot::getHectares) .to(FarmLand::setHectares)" +
+    			".innerJoin(f::getLandPlots, l)");
+
+    	verifyIsCompilable(
+    			a -> a.add(Farm.class, "f").add(LandPlot.class, "l"),
+    			
+    			"one(FarmLand.class)" +
+    	    	".map(Farm::getName)	 .to(FarmLand::setFarmName)" +
+    	    	".map(LandPlot::getHectares) .to(FarmLand::setHectares)" +
+    			".innerJoin(Farm::getLandPlots)");
+    	
     	final Farm farm1 = new Farm("Farm1");
     	final Farm farm2 = new Farm("Farm2");
     	
@@ -72,6 +88,23 @@ public class MappedJoinTest extends GEN_BaseTestCase {
 
     @Test
     public void testMappedSingleAlias() {
+    	
+    	verifyIsNotCompilable(
+    			a -> a.add(Farm.class, "f").add(LandPlot.class, "l"),
+    			
+    			"one(FarmLand.class)" +
+    	    	".map(f::getName)	 .to(FarmLand::setFarmName)" +
+    	    	".map(l::getHectares) .to(FarmLand::setHectares)" +
+    			".innerJoin(Farm::getLandPlots)");
+
+    	verifyIsCompilable(
+    			a -> a.add(Farm.class, "f").add(LandPlot.class, "l"),
+    			
+    			"one(FarmLand.class)" +
+    	    	".map(f::getName)	 .to(FarmLand::setFarmName)" +
+    	    	".map(l::getHectares) .to(FarmLand::setHectares)" +
+    			".innerJoin(f::getLandPlots, l)");
+    	
     	final Farm farm1 = new Farm("Farm1");
     	final Farm farm2 = new Farm("Farm2");
     	
