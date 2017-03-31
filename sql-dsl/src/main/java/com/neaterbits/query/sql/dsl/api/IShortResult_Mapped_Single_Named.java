@@ -4,7 +4,8 @@ public interface IShortResult_Mapped_Single_Named<MODEL, RESULT>
 	extends
 
 		ISharedResult_Mapped_Named_Base<MODEL, RESULT, IShortResult_Mapped_Single_Named<MODEL,RESULT>>,
-		ISQLLogical_WhereOrJoin_SingleResult_Named_And_Function<MODEL, RESULT>
+		ISQLLogical_WhereOrJoin_SingleResult_Named_And_Function<MODEL, RESULT>,
+		IShortJoin_Single_Named_Initial<MODEL, RESULT>
 {
 
 	

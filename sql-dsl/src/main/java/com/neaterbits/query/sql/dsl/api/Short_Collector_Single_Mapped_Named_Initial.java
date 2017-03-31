@@ -2,21 +2,22 @@ package com.neaterbits.query.sql.dsl.api;
 
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.function.Consumer;
+import java.util.function.Function;
 
-final class Short_Collector_Single_Mapped_Named<MODEL, RESULT>
+final class Short_Collector_Single_Mapped_Named_Initial<MODEL, RESULT>
 		extends Short_Collector_Single_Mapped_Any<MODEL, RESULT, ISharedProcessResult_After_GroupBy_Named<MODEL, RESULT>>
 
 		implements IShortResult_Mapped_Single_Named<MODEL, RESULT>,
-				
 				// when returning 'this' after where
 				ISQLLogical_AndOr_SingleResult_Named<MODEL, RESULT> {
 
-	Short_Collector_Single_Mapped_Named(BaseQuery select, CollectedQueryResult_Mapped_Single result, Collector_Query<MODEL> queryCollector) {
+	private final BaseQuery select;
+	
+	Short_Collector_Single_Mapped_Named_Initial(BaseQuery select, CollectedQueryResult_Mapped_Single result, Collector_Query<MODEL> queryCollector) {
 		super(select, result, queryCollector);
-	}
-
-	Short_Collector_Single_Mapped_Named(BaseQuery select, CollectedQueryResult_Entity_Single result, Collector_Query<MODEL> queryCollector) {
-		super(select, result, queryCollector);
+		
+		this.select = select;
 	}
 
 	@Override
@@ -105,5 +106,89 @@ final class Short_Collector_Single_Mapped_Named<MODEL, RESULT>
 		
 		
 		return new Collector_MapFunctions_ExpressionList_Named<>(this);
+	}
+
+	@Override
+	public <JOIN_FROM, JOIN_TO, R extends Comparable<R>> IShortLogical_WhereOrJoin_SingleResult_Named<MODEL, RESULT, JOIN_FROM>
+				innerJoin(Function<JOIN_FROM, R> from, Function<JOIN_TO, R> to) {
+					
+		addInnerJoin(from, to);
+
+		return joinResult();
+	}
+
+	@Override
+	public <JOIN_FROM, JOIN_TO> IShortLogical_WhereOrJoin_SingleResult_Named<MODEL, RESULT, JOIN_FROM>
+				innerJoin(CollectionFunction<JOIN_FROM, JOIN_TO> collection) {
+					
+		addInnerJoin(collection);
+
+		return joinResult();
+	}
+
+	@Override
+	public <JOIN_FROM, JOIN_TO, R extends Comparable<R>> IShortLogical_WhereOrJoin_SingleResult_Named<MODEL, RESULT, JOIN_FROM>
+				innerJoin(
+			Function<JOIN_FROM, R> from, Function<JOIN_TO, R> to,
+			Consumer<IShortJoin_Sub_Named<MODEL, RESULT, JOIN_TO, Void>> consumer) {
+
+		addInnerJoin(from, to, consumer);
+
+		return joinResult();
+	}
+
+	@Override
+	public <JOIN_FROM, JOIN_TO> IShortLogical_WhereOrJoin_SingleResult_Named<MODEL, RESULT, JOIN_FROM>
+				innerJoin(
+						
+			CollectionFunction<JOIN_FROM, JOIN_TO> collection,
+			Consumer<IShortJoin_Sub_Named<MODEL, RESULT, JOIN_TO, Void>> consumer) {
+
+		addInnerJoin(collection, consumer);
+
+		return joinResult();
+	}
+
+	@Override
+	public <JOIN_FROM, JOIN_TO, R extends Comparable<R>> IShortLogical_WhereOrJoin_SingleResult_Named<MODEL, RESULT, JOIN_FROM> 
+			leftJoin(Function<JOIN_FROM, R> from, Function<JOIN_TO, R> to) {
+				
+		addLeftJoin(from, to);
+
+		return joinResult();
+	}
+
+	@Override
+	public <JOIN_FROM, JOIN_TO> IShortLogical_WhereOrJoin_SingleResult_Named<MODEL, RESULT, JOIN_FROM>
+			leftJoin(CollectionFunction<JOIN_FROM, JOIN_TO> collection) {
+
+		addLeftJoin(collection);
+
+		return joinResult();
+	}
+
+	@Override
+	public <JOIN_FROM, JOIN_TO, R extends Comparable<R>> IShortLogical_WhereOrJoin_SingleResult_Named<MODEL, RESULT, JOIN_FROM>
+		leftJoin(
+			Function<JOIN_FROM, R> from, Function<JOIN_TO, R> to,
+			Consumer<IShortJoin_Sub_Named<MODEL, RESULT, JOIN_TO, Void>> consumer) {
+
+		addLeftJoin(from, to, consumer);
+
+		return joinResult();
+	}
+
+	@Override
+	public <JOIN_FROM, JOIN_TO> IShortLogical_WhereOrJoin_SingleResult_Named<MODEL, RESULT, JOIN_FROM> leftJoin(
+			CollectionFunction<JOIN_FROM, JOIN_TO> collection,
+			Consumer<IShortJoin_Sub_Named<MODEL, RESULT, JOIN_TO, Void>> consumer) {
+		
+		addLeftJoin(collection, consumer);
+		
+		return joinResult();
+	}
+
+	private <JOIN_FROM> Short_Collector_Single_Mapped_Named_TypedJoin<MODEL, RESULT, JOIN_FROM> joinResult() {
+		return new Short_Collector_Single_Mapped_Named_TypedJoin<>(select, (CollectedQueryResult_Mapped_Single)getQueryCollector().getResult(), getQueryCollector());
 	}
 }

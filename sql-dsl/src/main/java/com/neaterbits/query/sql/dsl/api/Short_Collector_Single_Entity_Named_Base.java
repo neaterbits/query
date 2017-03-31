@@ -2,7 +2,7 @@ package com.neaterbits.query.sql.dsl.api;
 
 import java.math.BigDecimal;
 
-abstract class Short_Collector_Single_Entity_Named<MODEL, RESULT>
+abstract class Short_Collector_Single_Entity_Named_Base<MODEL, RESULT>
 
 		extends Short_Collector_Single_Entity_Any<
 			MODEL,
@@ -13,7 +13,7 @@ abstract class Short_Collector_Single_Entity_Named<MODEL, RESULT>
 
 {
 
-	Short_Collector_Single_Entity_Named(Collector_Query<MODEL> queryCollector, Collector_Clause clauseCollector) {
+	Short_Collector_Single_Entity_Named_Base(Collector_Query<MODEL> queryCollector, Collector_Clause clauseCollector) {
 		super(queryCollector, clauseCollector);
 	}
 

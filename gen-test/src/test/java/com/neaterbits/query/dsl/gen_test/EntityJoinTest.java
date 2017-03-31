@@ -29,7 +29,7 @@ public class EntityJoinTest extends GEN_BaseTestCase {
     	final LandPlot land4 = new Uncultivated(new BigDecimal("345.43"));
 
     	// Only one landplot attached to farms
-    	farm1.setLandPlots(Arrays.asList(land1, land2));
+    	farm1.setLandPlots(Arrays.asList(land2));
     	land2.setFarm(farm1);
     	
     	// only landplots that belong to farms, so land4 should not be included in sum

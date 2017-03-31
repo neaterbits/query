@@ -84,7 +84,7 @@ abstract class Short_Collector_Initial_Single_Any_Any_Base<MODEL, RESULT>
 		
 		final CollectedQueryResult_Mapped_Single collectedQueryResult = new CollectedQueryResult_Mapped_Single(getResultType());
 		
-		return new Short_Collector_Single_Mapped_Named<MODEL, RESULT>(select, collectedQueryResult, getQueryCollector());
+		return new Short_Collector_Single_Mapped_Named_Initial<MODEL, RESULT>(select, collectedQueryResult, getQueryCollector());
 	}
 
 
@@ -116,20 +116,13 @@ abstract class Short_Collector_Initial_Single_Any_Any_Base<MODEL, RESULT>
 
 	@Override
 	Collector_Conditions_GroupBy<MODEL, RESULT, ?> getAfterWhereNamed() {
-		
-		// TODO: rename *MapToResult* here
-		final CollectedQueryResult_Entity_Single collectedQueryResult = new CollectedQueryResult_Entity_Single(getSelectSource());
-
-		return new Short_Collector_Single_Mapped_Named<>(select, collectedQueryResult, getQueryCollector());
+		return new Short_Collector_Initial_Single_Entity_Named<>(select, (SharedSelectSource_Named)getSelectSource(), getModelCompiler());
 	}
 
 
 	@Override
 	Collector_Conditions_GroupBy<MODEL, RESULT, ?> getAfterWhereAlias() {
-		// TODO: rename *MapToResult* here
-		final CollectedQueryResult_Entity_Single collectedQueryResult = new CollectedQueryResult_Entity_Single(getSelectSource());
-
-		return new Short_Collector_Single_Mapped_Alias<>(select, collectedQueryResult, getQueryCollector());
+		return new Short_Collector_Initial_Single_Entity_Alias<>(select, (SharedSelectSource_Alias)getSelectSource(), getModelCompiler());
 	}
 	
 	@Override
@@ -258,7 +251,7 @@ abstract class Short_Collector_Initial_Single_Any_Any_Base<MODEL, RESULT>
 		final Supplier<IMappingCollector<MODEL, RESULT>>
 
 		s1 = () -> {
-			return new Short_Collector_Single_Mapped_Named<MODEL, RESULT>(
+			return new Short_Collector_Single_Mapped_Named_Initial<MODEL, RESULT>(
 					select,
 					new CollectedQueryResult_Mapped_Single(getResultType()),
 					getQueryCollector());

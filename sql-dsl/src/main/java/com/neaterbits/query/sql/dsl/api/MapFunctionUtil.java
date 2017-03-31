@@ -84,7 +84,7 @@ class MapFunctionUtil {
 	@Deprecated
 	static <MODEL, RESULT> ISharedCollector_Functions_Callback<MODEL, RESULT, IShortResult_Mapped_Single_Named<MODEL, RESULT>>
 	
-		singleNamedCallback(Supplier<Short_Collector_Single_Mapped_Named<MODEL, RESULT>> supplier) {
+		singleNamedCallback(Supplier<Short_Collector_Single_Mapped_Named_Initial<MODEL, RESULT>> supplier) {
 		
 		return namedCallback(supplier);
 	}

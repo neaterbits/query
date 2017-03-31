@@ -5,7 +5,7 @@ import java.util.function.Consumer;
 import java.util.function.Function;
 
 final class Short_Collector_Single_Entity_Named_TypedJoin<MODEL, RESULT, JOIN_FROM>
-	extends Short_Collector_Single_Entity_Named<MODEL, RESULT> 
+	extends Short_Collector_Single_Entity_Named_Base<MODEL, RESULT> 
 	
 	implements IShortLogical_WhereOrJoin_SingleResult_Named<MODEL, RESULT, JOIN_FROM>
 	
@@ -98,6 +98,4 @@ final class Short_Collector_Single_Entity_Named_TypedJoin<MODEL, RESULT, JOIN_FR
 		
 		return addLeftJoin(collection, consumer);
 	}
-
-	
 }
