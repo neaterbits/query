@@ -91,7 +91,7 @@ class MapFunctionUtil {
 	
 	@Deprecated
 	static <MODEL, RESULT> ISharedCollector_Functions_Callback_Alias<MODEL, RESULT, IShortResult_Mapped_Single_Alias<MODEL, RESULT>>
-		singleAliasCallback(Supplier<Short_Collector_Single_Mapped_Alias<MODEL, RESULT>> supplier) {
+		singleAliasCallback(Supplier<Short_Collector_Single_Mapped_Alias_Initial<MODEL, RESULT>> supplier) {
 		
 		return aliasCallback(supplier);
 	}

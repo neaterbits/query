@@ -92,7 +92,7 @@ abstract class Short_Collector_Initial_Single_Any_Any_Base<MODEL, RESULT>
 	final IMappingCollector<MODEL, RESULT> getMapToResultAlias() {
 		final CollectedQueryResult_Mapped_Single collectedQueryResult = new CollectedQueryResult_Mapped_Single(getResultType());
 
-		return new Short_Collector_Single_Mapped_Alias<MODEL, RESULT>(select, collectedQueryResult, getQueryCollector());
+		return new Short_Collector_Single_Mapped_Alias_Initial<MODEL, RESULT>(select, collectedQueryResult, getQueryCollector());
 	}
 	
 	
@@ -261,7 +261,7 @@ abstract class Short_Collector_Initial_Single_Any_Any_Base<MODEL, RESULT>
 				
 		s2 = () -> {
 			return 
-					new Short_Collector_Single_Mapped_Alias<>(
+					new Short_Collector_Single_Mapped_Alias_Initial<>(
 					select,
 					new CollectedQueryResult_Mapped_Single(getResultType()),
 					getQueryCollector());

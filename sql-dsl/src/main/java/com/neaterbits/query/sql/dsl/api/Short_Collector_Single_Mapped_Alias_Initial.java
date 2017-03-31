@@ -2,8 +2,10 @@ package com.neaterbits.query.sql.dsl.api;
 
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.function.Consumer;
+import java.util.function.Supplier;
 
-final class Short_Collector_Single_Mapped_Alias<MODEL, RESULT> 
+final class Short_Collector_Single_Mapped_Alias_Initial<MODEL, RESULT> 
 	
 		extends Short_Collector_Single_Mapped_Any<MODEL, RESULT, ISharedProcessResult_After_GroupBy_Alias<MODEL, RESULT>>
 		implements 
@@ -11,12 +13,12 @@ final class Short_Collector_Single_Mapped_Alias<MODEL, RESULT>
 				// when returned 'this' after where
 				ISQLLogical_AndOr_SingleResult_Alias<MODEL, RESULT> {
 
-	Short_Collector_Single_Mapped_Alias(BaseQuery select, CollectedQueryResult_Mapped_Single result, Collector_Query<MODEL> queryCollector) {
-		super(select, result, queryCollector);
-	}
+	private final BaseQuery select;
 	
-	Short_Collector_Single_Mapped_Alias(BaseQuery select, CollectedQueryResult_Entity_Single result, Collector_Query<MODEL> queryCollector) {
+	Short_Collector_Single_Mapped_Alias_Initial(BaseQuery select, CollectedQueryResult_Mapped_Single result, Collector_Query<MODEL> queryCollector) {
 		super(select, result, queryCollector);
+		
+		this.select = select;
 	}
 
 	/*
@@ -84,5 +86,86 @@ final class Short_Collector_Single_Mapped_Alias<MODEL, RESULT>
 		> where() {
 
 		throw new UnsupportedOperationException("TODO");
+	}
+
+	@Override
+	public <R extends Comparable<R>> ISQLLogical_WhereOrJoin_SingleResult_Alias_And_Function<MODEL, RESULT>
+			innerJoin(Supplier<R> from, Supplier<R> to) {
+
+		addInnerJoin(from, to);
+
+		return joinResult();
+	}
+
+	@Override
+	public <JOIN_TO> ISQLLogical_WhereOrJoin_SingleResult_Alias_And_Function<MODEL, RESULT>
+			innerJoin(CollectionSupplier<JOIN_TO> collection, JOIN_TO alias) {
+
+		addInnerJoin(collection, alias);
+		
+		return joinResult();
+	}
+
+	@Override
+	public <R extends Comparable<R>> ISQLLogical_WhereOrJoin_SingleResult_Alias_And_Function<MODEL, RESULT>
+			innerJoin(Supplier<R> from, Supplier<R> to, Consumer<IShortJoin_Sub_Alias<MODEL, RESULT, Void>> consumer) {
+
+		
+		addInnerJoin(from, to, consumer);
+		
+		return joinResult();
+	}
+
+	@Override
+	public <JOIN_TO> ISQLLogical_WhereOrJoin_SingleResult_Alias_And_Function<MODEL, RESULT>
+			innerJoin(
+				CollectionSupplier<JOIN_TO> collection, JOIN_TO alias,
+				Consumer<IShortJoin_Sub_Alias<MODEL, RESULT, Void>> consumer) {
+
+		addInnerJoin(collection, alias, consumer);
+		
+		return joinResult();
+	}
+
+	@Override
+	public <R extends Comparable<R>> ISQLLogical_WhereOrJoin_SingleResult_Alias_And_Function<MODEL, RESULT>
+			leftJoin(Supplier<R> from, Supplier<R> to) {
+
+		addLeftJoin(from, to);
+		
+		return joinResult();
+	}
+
+	@Override
+	public <JOIN_TO> ISQLLogical_WhereOrJoin_SingleResult_Alias_And_Function<MODEL, RESULT>
+			leftJoin(CollectionSupplier<JOIN_TO> collection, JOIN_TO alias) {
+
+		
+		addLeftJoin(collection, alias);
+		
+		return joinResult();
+	}
+
+	@Override
+	public <R extends Comparable<R>> ISQLLogical_WhereOrJoin_SingleResult_Alias_And_Function<MODEL, RESULT>
+			leftJoin(Supplier<R> from, Supplier<R> to, Consumer<IShortJoin_Sub_Alias<MODEL, RESULT, Void>> consumer) {
+
+		addLeftJoin(from, to, consumer);
+		
+		return joinResult();
+	}
+
+	@Override
+	public <JOIN_TO> ISQLLogical_WhereOrJoin_SingleResult_Alias_And_Function<MODEL, RESULT> leftJoin(
+			CollectionSupplier<JOIN_TO> collection, JOIN_TO alias,
+			Consumer<IShortJoin_Sub_Alias<MODEL, RESULT, Void>> consumer) {
+
+		addLeftJoin(collection, alias, consumer);
+		
+		return joinResult();
+	}
+
+	private <JOIN_FROM> Short_Collector_Single_Mapped_Alias_TypedJoin<MODEL, RESULT, JOIN_FROM> joinResult() {
+		return new Short_Collector_Single_Mapped_Alias_TypedJoin<>(select, (CollectedQueryResult_Mapped_Single)getQueryCollector().getResult(), getQueryCollector());
 	}
 }
