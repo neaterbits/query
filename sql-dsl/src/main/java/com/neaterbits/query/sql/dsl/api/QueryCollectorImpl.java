@@ -55,6 +55,10 @@ class QueryCollectorImpl<MODEL> extends Collector_Query<MODEL> {
 			this.joins = queryCollector.getJoins();
 		}
 		
+		if (queryCollector.getMappings() != null) {
+			this.mappings = queryCollector.getMappings();
+		}
+
 		if (queryCollector.getClauses() != null) {
 			throw new IllegalStateException("clauses already set in source");
 		}

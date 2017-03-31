@@ -86,10 +86,11 @@ abstract class Short_Collector_Any_MappedOrEntity_Any<
 	Short_Collector_Any_MappedOrEntity_Any(BaseQuery select, CollectedQueryResult_Mapped result, Collector_Query<MODEL> queryCollector) {
 		super(new QueryCollectorImpl<MODEL>(select, queryCollector, result), new Collector_Clause(EConditionsClause.WHERE, ConditionsType.SINGLE));
 
-		final MappingCollector mappingCollector = new MappingCollector();
+		if (getQueryCollector().getMappings() == null) {
+			getQueryCollector().setMappings(new MappingCollector());
+		}
 
 		// Collect mappings, should ever only create one of these
-		getQueryCollector().setMappings(mappingCollector);
 		
 		this.gathering = EQueryResultGathering.MAPPED;
 	}
