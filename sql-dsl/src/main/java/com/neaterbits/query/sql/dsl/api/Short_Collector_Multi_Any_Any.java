@@ -80,7 +80,7 @@ final class Short_Collector_Multi_Any_Any<MODEL, RESULT>
 		
 		final CollectedQueryResult_Mapped_Multi collectedQueryResult = new CollectedQueryResult_Mapped_Multi(getResultType(), collectionType);
 		
-		return new Short_Collector_Multi_Mapped_Named<MODEL, RESULT>(select, collectedQueryResult, getQueryCollector());
+		return new Short_Collector_Multi_Mapped_Named_Initial<MODEL, RESULT>(select, collectedQueryResult, getQueryCollector());
 	}
 
 

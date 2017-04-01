@@ -33,22 +33,5 @@ abstract class SQL_Collector_WhereOrJoin_MultiMapped_Named<
 		return new SQL_Collector_And_MultiMapped_Named<>(this);
 	}
 
-	@SuppressWarnings("unchecked")
-	@Override
-	public <LEFT, RIGHT> ISQLJoin_Condition_MultiMapped_Named<MODEL, RESULT, LEFT, RIGHT>
-	
-			innerJoin(Class<LEFT> leftType, Class<RIGHT> rightType) {
-
-		return (ISQLJoin_Condition_MultiMapped_Named<MODEL, RESULT, LEFT, RIGHT>)super.innerJoinUtil(leftType, rightType);
-	}
-
-	@SuppressWarnings("unchecked")
-	@Override
-	public <LEFT, RIGHT> ISQLJoin_Condition_MultiMapped_Named<MODEL, RESULT, LEFT, RIGHT>
-		leftJoin(Class<LEFT> leftType, Class<RIGHT> rightType) {
-		
-		
-		return (ISQLJoin_Condition_MultiMapped_Named<MODEL, RESULT, LEFT, RIGHT>)super.leftJoinUtil(leftType, rightType);
-	}
 	
 }

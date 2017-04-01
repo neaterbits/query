@@ -22,7 +22,7 @@ public interface IShortResult_Multi_Instance<MODEL, RESULT>
 		// Should never have alias join directly here, as that should have done one(<alias) or list(<alias>) in that case
 		// IShortJoin_Multi_Alias_Initial<MODEL, RESULT>,
 		
-		IShortJoin_Multi_Named_Initial<MODEL, RESULT>,
+		IShortJoin_MultiEntity_Named_Initial<MODEL, RESULT>,
 		
 		
 		ISharedProcessResult_OrderBy_Entity_Named<MODEL, RESULT> {
