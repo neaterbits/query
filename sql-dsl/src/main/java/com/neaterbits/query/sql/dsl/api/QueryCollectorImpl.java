@@ -11,9 +11,6 @@ import java.util.function.Function;
 class QueryCollectorImpl<MODEL> extends Collector_Query<MODEL> {
 	
 
-	// The expected result type
-	private CollectedQueryResult result;
-	
 	// Optional mappings to map result to result type
 	private MappingCollector mappings;
 	
@@ -41,8 +38,6 @@ class QueryCollectorImpl<MODEL> extends Collector_Query<MODEL> {
 
 	QueryCollectorImpl(Collector_Query<MODEL> queryCollector, CollectedQueryResult result) {
 		super(queryCollector, result);
-		
-		this.result = result != null ? result :queryCollector.getResult();
 		
 		if (queryCollector.getSources() != null) {
 			this.sources = queryCollector.getSources();
@@ -73,9 +68,9 @@ class QueryCollectorImpl<MODEL> extends Collector_Query<MODEL> {
 	QueryCollectorImpl(BaseQuery baseQuery, ModelCompiler<MODEL> modelCompiler, CollectedQueryResult result) {
 		super(baseQuery, modelCompiler, result);
 		
+		/*
 		this.result = result;
 
-		/*
 		if (result != null) {
 			setResult(result);
 		}
@@ -95,7 +90,6 @@ class QueryCollectorImpl<MODEL> extends Collector_Query<MODEL> {
 
 		this.result = result;
 	}
-	*/
 
 	Class<?> getResultType() {
 		return result.getType();
@@ -104,6 +98,7 @@ class QueryCollectorImpl<MODEL> extends Collector_Query<MODEL> {
 	CollectedQueryResult getResult() {
 		return result;
 	}
+	*/
 
 	@Override
 	MappingCollector getMappings() {
@@ -278,7 +273,7 @@ class QueryCollectorImpl<MODEL> extends Collector_Query<MODEL> {
 
 	@Override
 	public String toString() {
-		return "QueryCollectorImpl [result=" + result + ", mappings=" + mappings + ", sources=" + sources + ", joins="
+		return "QueryCollectorImpl [result=" + getResult() + ", mappings=" + mappings + ", sources=" + sources + ", joins="
 				+ joins + ", clauses=" + clauses + ", groupByCollector=" + groupByCollector + ", orderByCollector="
 				+ orderByCollector + ", orderByColumns=" + Arrays.toString(orderByColumns) + "]";
 	}

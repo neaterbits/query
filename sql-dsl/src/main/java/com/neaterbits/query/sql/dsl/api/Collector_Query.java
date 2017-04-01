@@ -24,8 +24,6 @@ abstract class Collector_Query<MODEL> {
 	// Should always know result at beginning of query
 	private final CollectedQueryResult result;
 
-	abstract CollectedQueryResult getResult();
-	
 	//abstract void setResult(CollectedQueryResult result);
 	
 	abstract MappingCollector getMappings();
@@ -72,7 +70,8 @@ abstract class Collector_Query<MODEL> {
 			throw new IllegalArgumentException("Result neither from copy nor parameter");
 		}
 		
-		this.result = result;
+		// TODO: should perhaps always pass result in this constructor?
+		this.result = result != null ? result : toCopy.result;
 	}
 	
 	Collector_Query(BaseQuery baseQuery, ModelCompiler<MODEL> modelCompiler, CollectedQueryResult result) {
@@ -105,4 +104,13 @@ abstract class Collector_Query<MODEL> {
 	final QueryMetaModel getQueryMetaModel() {
 		return baseQuery.getQueryMetaModel();
 	}
+
+	final Class<?> getResultType() {
+		return result.getType();
+	}
+	
+	final CollectedQueryResult getResult() {
+		return result;
+	}
+	
 }
