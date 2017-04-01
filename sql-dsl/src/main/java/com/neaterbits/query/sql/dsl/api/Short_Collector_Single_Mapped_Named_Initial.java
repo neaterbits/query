@@ -12,12 +12,8 @@ final class Short_Collector_Single_Mapped_Named_Initial<MODEL, RESULT>
 				// when returning 'this' after where
 				ISQLLogical_AndOr_SingleResult_Named<MODEL, RESULT> {
 
-	private final BaseQuery select;
-	
-	Short_Collector_Single_Mapped_Named_Initial(BaseQuery select, CollectedQueryResult_Mapped_Single result, Collector_Query<MODEL> queryCollector) {
-		super(select, result, queryCollector);
-		
-		this.select = select;
+	Short_Collector_Single_Mapped_Named_Initial(Collector_Query<MODEL> queryCollector, CollectedQueryResult_Mapped_Single result) {
+		super(queryCollector, result);
 	}
 
 	@Override
@@ -180,6 +176,6 @@ final class Short_Collector_Single_Mapped_Named_Initial<MODEL, RESULT>
 	}
 
 	private <JOIN_FROM> Short_Collector_Single_Mapped_Named_TypedJoin<MODEL, RESULT, JOIN_FROM> joinResult() {
-		return new Short_Collector_Single_Mapped_Named_TypedJoin<>(select, (CollectedQueryResult_Mapped_Single)getQueryCollector().getResult(), getQueryCollector());
+		return new Short_Collector_Single_Mapped_Named_TypedJoin<>(getThisInitial());
 	}
 }

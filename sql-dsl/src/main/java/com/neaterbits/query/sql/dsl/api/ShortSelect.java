@@ -94,7 +94,7 @@ final class ShortSelect extends BaseShortSelect<
 		
 		final SharedSelectSource_Alias selectSource = new SharedSelectSource_Alias((IAlias)alias);
 
-		return new Short_Collector_Initial_Single_Entity_Alias<>(this, selectSource, singleQueryCollected());
+		return new Short_Collector_Initial_Single_Entity_Alias<>(this, singleQueryCollected(), new CollectedQueryResult_Entity_Single(selectSource), selectSource);
 	}
 
 
@@ -105,7 +105,7 @@ final class ShortSelect extends BaseShortSelect<
 		
 		final SharedSelectSource_Alias selectSource = new SharedSelectSource_Alias((IAlias)alias);
 
-		return new Short_Collector_Initial_Single_Entity_Alias<>(this, selectSource, singleQueryCollected());
+		return new Short_Collector_Initial_Single_Entity_Alias<>(this, singleQueryCollected(), new CollectedQueryResult_Entity_Single(selectSource), selectSource);
 	}
 
 
@@ -121,7 +121,7 @@ final class ShortSelect extends BaseShortSelect<
 		final Collector_Query<MultiBuilt<RESULT>> collector = new QueryCollectorImpl<>(this, multiQueryCollected(), result);
 		
 
-		return new Short_Collector_Multi_Entity_Alias<MultiBuilt<RESULT>, RESULT>(this, result, collector);
+		return new Short_Collector_Multi_Entity_Alias<MultiBuilt<RESULT>, RESULT>(collector, result);
 	}
 
 	// Aggregate helpers

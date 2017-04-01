@@ -77,8 +77,8 @@ abstract class Short_Collector_Any_Any_Any<
 
 	
 	
-	protected Short_Collector_Any_Any_Any(BaseQuery select, SharedSelectSource selectSource, ModelCompiler<MODEL> modelCompiler) {
-		super(new QueryCollectorImpl<MODEL>(select, modelCompiler, null), new Collector_Clause(EConditionsClause.WHERE, ConditionsType.SINGLE));
+	protected Short_Collector_Any_Any_Any(BaseQuery select, ModelCompiler<MODEL> modelCompiler, CollectedQueryResult result, SharedSelectSource selectSource) {
+		super(new QueryCollectorImpl<MODEL>(select, modelCompiler, result), new Collector_Clause(EConditionsClause.WHERE, ConditionsType.SINGLE));
 		
 		if (selectSource == null) {
 			throw new IllegalArgumentException("selectSource == null");
@@ -91,8 +91,9 @@ abstract class Short_Collector_Any_Any_Any<
 		this.selectSource = selectSource;
 		this.modelCompiler = modelCompiler;
 	}
-	
+
 	// TODO: for aggregates, perhaps separate baseclass?
+	@Deprecated
 	protected Short_Collector_Any_Any_Any(BaseQuery select, ModelCompiler<MODEL> modelCompiler) {
 		super(new QueryCollectorImpl<MODEL>(select, modelCompiler, null), new Collector_Clause(EConditionsClause.WHERE, ConditionsType.SINGLE));
 		

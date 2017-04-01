@@ -14,13 +14,19 @@ import com.neaterbits.query.sql.dsl.api.entity.QueryMetaModel;
  */
 
 abstract class Collector_Query<MODEL> {
-	
+
+	// Initial query instance
 	private final BaseQuery baseQuery;
+	
+	// Also knows how to compile query
 	private final ModelCompiler<MODEL> modelCompiler;
+
+	// Should always know result at beginning of query
+	private final CollectedQueryResult result;
 
 	abstract CollectedQueryResult getResult();
 	
-	abstract void setResult(CollectedQueryResult result);
+	//abstract void setResult(CollectedQueryResult result);
 	
 	abstract MappingCollector getMappings();
 	
@@ -48,13 +54,30 @@ abstract class Collector_Query<MODEL> {
 	
 	abstract Collected_OrderBy getOrderBy();
 	
-	Collector_Query(BaseQuery baseQuery, Collector_Query<MODEL> toCopy) {
-		
-		this.baseQuery = baseQuery;
+	Collector_Query(Collector_Query<MODEL> toCopy) {
+		this.baseQuery = toCopy.baseQuery;
 		this.modelCompiler = toCopy.modelCompiler;
+		this.result = toCopy.result;
+	}
+
+	Collector_Query(Collector_Query<MODEL> toCopy, CollectedQueryResult result) {
+		this.baseQuery = toCopy.baseQuery;
+		this.modelCompiler = toCopy.modelCompiler;
+		
+		if (toCopy.result != null && result != null) {
+			throw new IllegalArgumentException("Overriding result from copy, should only pass when existing result");
+		}
+
+		if (toCopy.result == null && result == null) {
+			throw new IllegalArgumentException("Result neither from copy nor parameter");
+		}
+		
+		this.result = result;
 	}
 	
-	Collector_Query(BaseQuery baseQuery, ModelCompiler<MODEL> modelCompiler) {
+	
+	
+	Collector_Query(BaseQuery baseQuery, ModelCompiler<MODEL> modelCompiler, CollectedQueryResult result) {
 		
 		if (baseQuery == null) {
 			throw new IllegalArgumentException("baseQuery == null");
@@ -64,15 +87,19 @@ abstract class Collector_Query<MODEL> {
 			throw new IllegalArgumentException("modelCompiler == null");
 		}
 		
+		if (result == null) {
+			throw new IllegalArgumentException("result == null");
+		}
 
 		this.baseQuery = baseQuery;
 		this.modelCompiler = modelCompiler;
+		this.result = result;
 	}
 
 	final EQueryStyle getQueryStyle() {
 		return baseQuery.getQueryStyle();
 	}
-
+	
 	final ModelCompiler<MODEL> getModelCompiler() {
 		return modelCompiler;
 	}

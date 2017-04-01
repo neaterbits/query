@@ -11,9 +11,8 @@ final class Short_Collector_Single_Aggregate_Alias_TypedJoin<MODEL, RESULT>
 			ISQLLogical_AndOr_SingleResult_Alias<MODEL, RESULT> {
 
 	
-	Short_Collector_Single_Aggregate_Alias_TypedJoin(BaseQuery select, CollectedQueryResult_Aggregate result,
-			Collector_Query<MODEL> queryCollector) {
-		super(select, result, queryCollector);
+	Short_Collector_Single_Aggregate_Alias_TypedJoin(Collector_Conditions_Initial<MODEL, RESULT, ISharedProcessResult_After_GroupBy_Named<MODEL, RESULT>> last) {
+		super(last);
 	}
 
 	@Override

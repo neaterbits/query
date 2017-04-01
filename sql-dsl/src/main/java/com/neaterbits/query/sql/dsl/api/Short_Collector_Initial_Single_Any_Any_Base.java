@@ -53,25 +53,16 @@ abstract class Short_Collector_Initial_Single_Any_Any_Base<MODEL, RESULT>
 			IShortJoin_Single_Alias_Initial<MODEL, RESULT>,
 			IMappingCollector<MODEL, RESULT> {
 	
+
 	private final BaseQuery select;
 	
-
-	Short_Collector_Initial_Single_Any_Any_Base(BaseQuery select, SharedSelectSource selectSource, ModelCompiler<MODEL> modelCompiler) {
-		super(select, selectSource, modelCompiler);
+	@Deprecated
+	Short_Collector_Initial_Single_Any_Any_Base(BaseQuery select, ModelCompiler<MODEL> modelCompiler, CollectedQueryResult result, SharedSelectSource selectSource) {
+		super(select, modelCompiler, result, selectSource);
 		
 		this.select = select;
 	}
 	
-	
-
-	// TODO: for aggregates, perhaps separate baseclass?
-	Short_Collector_Initial_Single_Any_Any_Base(BaseQuery select, ModelCompiler<MODEL> modelCompiler) {
-		super(select, modelCompiler);
-		
-		this.select = select;
-	}
-
-
 
 	@Override
 	CollectedQueryResult getResultWhenNotPresent() {
@@ -84,7 +75,7 @@ abstract class Short_Collector_Initial_Single_Any_Any_Base<MODEL, RESULT>
 		
 		final CollectedQueryResult_Mapped_Single collectedQueryResult = new CollectedQueryResult_Mapped_Single(getResultType());
 		
-		return new Short_Collector_Single_Mapped_Named_Initial<MODEL, RESULT>(select, collectedQueryResult, getQueryCollector());
+		return new Short_Collector_Single_Mapped_Named_Initial<MODEL, RESULT>(getQueryCollector(), collectedQueryResult);
 	}
 
 
@@ -92,7 +83,7 @@ abstract class Short_Collector_Initial_Single_Any_Any_Base<MODEL, RESULT>
 	final IMappingCollector<MODEL, RESULT> getMapToResultAlias() {
 		final CollectedQueryResult_Mapped_Single collectedQueryResult = new CollectedQueryResult_Mapped_Single(getResultType());
 
-		return new Short_Collector_Single_Mapped_Alias_Initial<MODEL, RESULT>(select, collectedQueryResult, getQueryCollector());
+		return new Short_Collector_Single_Mapped_Alias_Initial<MODEL, RESULT>(getQueryCollector(), collectedQueryResult);
 	}
 	
 	
@@ -116,13 +107,18 @@ abstract class Short_Collector_Initial_Single_Any_Any_Base<MODEL, RESULT>
 
 	@Override
 	Collector_Conditions_GroupBy<MODEL, RESULT, ?> getAfterWhereNamed() {
-		return new Short_Collector_Initial_Single_Entity_Named<>(select, (SharedSelectSource_Named)getSelectSource(), getModelCompiler());
+		
+		final SharedSelectSource_Named selectSource = (SharedSelectSource_Named)getSelectSource();
+		
+		return new Short_Collector_Initial_Single_Entity_Named<>(select, getModelCompiler(), new CollectedQueryResult_Entity_Single(selectSource), selectSource);
 	}
-
 
 	@Override
 	Collector_Conditions_GroupBy<MODEL, RESULT, ?> getAfterWhereAlias() {
-		return new Short_Collector_Initial_Single_Entity_Alias<>(select, (SharedSelectSource_Alias)getSelectSource(), getModelCompiler());
+		
+		final SharedSelectSource_Alias selectSource = (SharedSelectSource_Alias)getSelectSource();
+
+		return new Short_Collector_Initial_Single_Entity_Alias<>(select, getModelCompiler(), new CollectedQueryResult_Entity_Single(selectSource), selectSource);
 	}
 	
 	@Override
@@ -252,20 +248,18 @@ abstract class Short_Collector_Initial_Single_Any_Any_Base<MODEL, RESULT>
 
 		s1 = () -> {
 			return new Short_Collector_Single_Mapped_Named_Initial<MODEL, RESULT>(
-					select,
-					new CollectedQueryResult_Mapped_Single(getResultType()),
-					getQueryCollector());
-			};
+					getQueryCollector(),
+					new CollectedQueryResult_Mapped_Single(getResultType())
+				);
+		};
 
 		final Supplier<IMappingCollector<MODEL, RESULT>>
 				
 		s2 = () -> {
-			return 
-					new Short_Collector_Single_Mapped_Alias_Initial<>(
-					select,
-					new CollectedQueryResult_Mapped_Single(getResultType()),
-					getQueryCollector());
-			
+			return new Short_Collector_Single_Mapped_Alias_Initial<>(
+						getQueryCollector(),
+						new CollectedQueryResult_Mapped_Single(getResultType())
+				);
 		};
 		
 		

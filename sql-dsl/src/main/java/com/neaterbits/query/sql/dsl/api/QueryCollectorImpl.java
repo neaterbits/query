@@ -39,12 +39,8 @@ class QueryCollectorImpl<MODEL> extends Collector_Query<MODEL> {
 	private Collector_OrderBy<MODEL, ?> orderByCollector;
 	private int [] orderByColumns;
 
-	QueryCollectorImpl(BaseQuery baseQuery, Collector_Query<MODEL> queryCollector, CollectedQueryResult result) {
-		super(baseQuery, queryCollector);
-
-		if (result != null) {
-			setResult(result);
-		}
+	QueryCollectorImpl(Collector_Query<MODEL> queryCollector, CollectedQueryResult result) {
+		super(queryCollector, result);
 		
 		this.result = result;
 		
@@ -75,13 +71,16 @@ class QueryCollectorImpl<MODEL> extends Collector_Query<MODEL> {
 
 	
 	QueryCollectorImpl(BaseQuery baseQuery, ModelCompiler<MODEL> modelCompiler, CollectedQueryResult result) {
-		super(baseQuery, modelCompiler);
+		super(baseQuery, modelCompiler, result);
 
+		/*
 		if (result != null) {
 			setResult(result);
 		}
+		*/
 	}
 	
+	/*
 	@Override
 	void setResult(CollectedQueryResult result) {
 		if (result == null) {
@@ -94,6 +93,7 @@ class QueryCollectorImpl<MODEL> extends Collector_Query<MODEL> {
 
 		this.result = result;
 	}
+	*/
 
 	Class<?> getResultType() {
 		return result.getType();

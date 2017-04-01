@@ -11,13 +11,10 @@ final class Short_Collector_Multi_Mapped_Alias<MODEL, RESULT>
 	implements IShortResult_Mapped_Multi_Alias<MODEL, RESULT>,
 		ISQLLogical_AndOr_MultiMapped_Alias<MODEL, RESULT> {
 
-	Short_Collector_Multi_Mapped_Alias(BaseQuery select, CollectedQueryResult_Mapped_Multi result, Collector_Query<MODEL> queryCollector) {
-		super(select, result, queryCollector);
+	Short_Collector_Multi_Mapped_Alias(Collector_Query<MODEL> queryCollector, CollectedQueryResult_Mapped_Multi result) {
+		super(queryCollector, result);
 	}
 	
-	Short_Collector_Multi_Mapped_Alias(BaseQuery select, CollectedQueryResult_Entity_Multi result, Collector_Query<MODEL> queryCollector) {
-		super(select, result, queryCollector);
-	}
 
 	@Override
 	Collector_GroupBy<MODEL, RESULT> createGroupByCollector(Collector_Base<MODEL> last, int[] groupByColumns,

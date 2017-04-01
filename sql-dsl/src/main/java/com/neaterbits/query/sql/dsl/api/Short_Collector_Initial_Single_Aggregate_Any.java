@@ -4,14 +4,7 @@ abstract class Short_Collector_Initial_Single_Aggregate_Any<MODEL, RESULT>
 	extends Short_Collector_Initial_Single_Any_Any_Base<MODEL, RESULT> {
 	
 	Short_Collector_Initial_Single_Aggregate_Any(BaseQuery query, ModelCompiler<MODEL> modelCompiler, CollectedQueryResult_Aggregate result) {
-
-		super(query, modelCompiler);
-		
-		if (result == null) {
-			throw new IllegalArgumentException("result == null");
-		}
-		
-		getQueryCollector().setResult(result);
+		super(query, modelCompiler, result, null);
 	}
 
 

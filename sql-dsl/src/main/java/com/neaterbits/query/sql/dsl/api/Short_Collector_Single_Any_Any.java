@@ -30,16 +30,16 @@ abstract class Short_Collector_Single_Any_Any<MODEL, RESULT, AFTER_GROUP_BY>
 		
 		AFTER_GROUP_BY> {
 
-	Short_Collector_Single_Any_Any(BaseQuery select, CollectedQueryResult_Entity result, Collector_Query<MODEL> queryCollector) {
-		super(select, result, queryCollector);
+	Short_Collector_Single_Any_Any(Collector_Query<MODEL> queryCollector, CollectedQueryResult_Entity result) {
+		super(queryCollector, result);
 	}
 
-	Short_Collector_Single_Any_Any(BaseQuery select, CollectedQueryResult_Mapped result, Collector_Query<MODEL> queryCollector) {
-		super(select, result, queryCollector);
+	Short_Collector_Single_Any_Any(Collector_Query<MODEL> queryCollector, CollectedQueryResult_Mapped result) {
+		super(queryCollector, result);
 	}
 
-	Short_Collector_Single_Any_Any(BaseQuery select, CollectedQueryResult_Aggregate result, Collector_Query<MODEL> queryCollector) {
-		super(select, result, queryCollector);
+	Short_Collector_Single_Any_Any(Collector_Query<MODEL> queryCollector, CollectedQueryResult_Aggregate result) {
+		super(queryCollector, result);
 	}
 
 	

@@ -34,8 +34,8 @@ abstract class Short_Collector_Multi_Entity_Any<MODEL, RESULT, AFTER_GROUP_BY>
 	
 	> {
 
-	Short_Collector_Multi_Entity_Any(BaseQuery select, CollectedQueryResult_Entity result, Collector_Query<MODEL> queryCollector) {
-		super(select, result, queryCollector);
+	Short_Collector_Multi_Entity_Any(Collector_Query<MODEL> queryCollector, CollectedQueryResult_Entity result) {
+		super(queryCollector, result);
 	}
 
 

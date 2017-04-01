@@ -10,8 +10,8 @@ final class Short_Collector_Multi_Entity_Alias<MODEL, RESULT>
 
 	{
 
-	Short_Collector_Multi_Entity_Alias(BaseQuery select, CollectedQueryResult_Entity_Multi result, Collector_Query<MODEL> queryCollector) {
-		super(select, result, queryCollector);
+	Short_Collector_Multi_Entity_Alias(Collector_Query<MODEL> queryCollector, CollectedQueryResult_Entity_Multi result) {
+		super(queryCollector, result);
 	}
 
 	@Override

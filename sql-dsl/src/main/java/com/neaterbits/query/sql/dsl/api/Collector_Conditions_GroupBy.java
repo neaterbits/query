@@ -78,7 +78,8 @@ abstract class Collector_Conditions_GroupBy<MODEL, RESULT, AFTER_GROUP_BY>
 		clauseCollector.add(new CollectedCondition_Nested(subAndImpl));
 	}
 	
-	
+
+	// Whenever we do eg list(Foo.class), we must ask the subclass here
 	CollectedQueryResult getResultWhenNotPresent() {
 		throw new UnsupportedOperationException(getClass().getSimpleName() + ": Override this when not present - mostly when build() called when don't know yet if mapped or entity");
 	}
@@ -87,10 +88,10 @@ abstract class Collector_Conditions_GroupBy<MODEL, RESULT, AFTER_GROUP_BY>
 	public final MODEL build() {
 		
 		// Get collected query
-		final Collector_Query<MODEL> queryCollector = getQueryCollector();
+		Collector_Query<MODEL> queryCollector = getQueryCollector();
 
 		if (queryCollector.getResult() == null) {
-			queryCollector.setResult(getResultWhenNotPresent());
+			queryCollector = new QueryCollectorImpl<>(queryCollector, getResultWhenNotPresent());
 		}
 
 		// Now set clauses before compiling

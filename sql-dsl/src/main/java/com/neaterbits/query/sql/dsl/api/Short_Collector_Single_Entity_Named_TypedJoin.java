@@ -12,7 +12,7 @@ final class Short_Collector_Single_Entity_Named_TypedJoin<MODEL, RESULT, JOIN_FR
 	Short_Collector_Single_Entity_Named_TypedJoin(Short_Collector_Initial_Single_Any_Any_Base<MODEL, RESULT> input) {
 		super(input.getThisInitial());
 		
-		getQueryCollector().setResult(new CollectedQueryResult_Entity_Single(input.getSelectSource()));
+		//getQueryCollector().setResult(new CollectedQueryResult_Entity_Single(input.getSelectSource()));
 	}
 		
 	@Override

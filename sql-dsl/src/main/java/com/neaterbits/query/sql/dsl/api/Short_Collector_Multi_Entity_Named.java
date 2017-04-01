@@ -12,8 +12,8 @@ final class Short_Collector_Multi_Entity_Named<MODEL, RESULT, JOIN_TYPE>
 		IShortLogical_WhereOrJoin_MultiEntity_Named<MODEL, RESULT, JOIN_TYPE>
 {
 
-	Short_Collector_Multi_Entity_Named(BaseQuery select, CollectedQueryResult_Entity_Multi result, Collector_Query<MODEL> queryCollector) {
-		super(select, result, queryCollector);
+	Short_Collector_Multi_Entity_Named(Collector_Query<MODEL> queryCollector, CollectedQueryResult_Entity_Multi result) {
+		super(queryCollector, result);
 	}
 	
 	@Override

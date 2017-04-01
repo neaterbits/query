@@ -8,13 +8,8 @@ final class Short_Collector_Initial_Single_Aggregate_Alias<RESULT>
 	implements IShortBuilt_Numeric_Alias<RESULT>,
  		ISQLLogical_AndOr_SingleResult_Alias<SingleBuilt<RESULT>, RESULT> {
 
-	private final BaseQuery select;
-	
-	Short_Collector_Initial_Single_Aggregate_Alias(BaseQuery query, ModelCompiler<SingleBuilt<RESULT>> modelCompiler,
-		CollectedQueryResult_Aggregate result) {
+	Short_Collector_Initial_Single_Aggregate_Alias(BaseQuery query, ModelCompiler<SingleBuilt<RESULT>> modelCompiler, CollectedQueryResult_Aggregate result) {
 		super(query, modelCompiler, result);
-		
-		this.select = query;
 	}
 	
 	
@@ -44,7 +39,7 @@ final class Short_Collector_Initial_Single_Aggregate_Alias<RESULT>
 	
 	@Override
 	<JOIN_FROM> IShortLogical_WhereOrJoin_SingleResult_Alias<SingleBuilt<RESULT>, RESULT> aliasTypedJoinCollector() {
-		return new Short_Collector_Single_Aggregate_Alias_TypedJoin<>(select, (CollectedQueryResult_Aggregate)getQueryCollector().getResult(), getQueryCollector());
+		return new Short_Collector_Single_Aggregate_Alias_TypedJoin<>(getThisInitial());
 	}
 
 	@Override

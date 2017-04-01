@@ -8,8 +8,8 @@ final class Short_Collector_Initial_Single_Entity_Alias<MODEL, RESULT>
 		implements IShortResult_Entity_Single_Alias<MODEL, RESULT> {
 
 
-	Short_Collector_Initial_Single_Entity_Alias(BaseQuery select, SharedSelectSource_Alias selectSource, ModelCompiler<MODEL> modelCompiler) {
-		super(select, selectSource, modelCompiler);
+	Short_Collector_Initial_Single_Entity_Alias(BaseQuery select, ModelCompiler<MODEL> modelCompiler, CollectedQueryResult_Entity_Single result, SharedSelectSource_Alias selectSource) {
+		super(select, modelCompiler, result, selectSource);
 	}
 
 	@Override

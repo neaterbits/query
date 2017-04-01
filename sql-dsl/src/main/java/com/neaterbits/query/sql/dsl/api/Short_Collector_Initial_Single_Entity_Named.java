@@ -2,15 +2,17 @@ package com.neaterbits.query.sql.dsl.api;
 
 import java.math.BigDecimal;
 
-public class Short_Collector_Initial_Single_Entity_Named<MODEL, RESULT>
+final class Short_Collector_Initial_Single_Entity_Named<MODEL, RESULT>
 
 	extends Short_Collector_Initial_Single_Any_Any_Base<MODEL, RESULT> 
 
 	implements IShortResult_Entity_Single_Named<MODEL, RESULT> {
 
-	Short_Collector_Initial_Single_Entity_Named(BaseQuery select, SharedSelectSource_Named selectSource, ModelCompiler<MODEL> modelCompiler) {
-		super(select, selectSource, modelCompiler);
+	Short_Collector_Initial_Single_Entity_Named(BaseQuery select, ModelCompiler<MODEL> modelCompiler, CollectedQueryResult_Entity_Single result, SharedSelectSource_Named selectSource) {
+		super(select, modelCompiler, result, selectSource);
 	}
+	
+	
 
 	@Override
 	<JOIN_FROM> IShortLogical_WhereOrJoin_SingleResult_Named<MODEL, RESULT, JOIN_FROM> namedTypedJoinCollector() {

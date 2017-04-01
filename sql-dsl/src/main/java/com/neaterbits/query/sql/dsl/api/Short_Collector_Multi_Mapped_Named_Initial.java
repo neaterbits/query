@@ -11,12 +11,8 @@ final class Short_Collector_Multi_Mapped_Named_Initial<MODEL, RESULT>
 	implements IShortResult_Mapped_Multi_Named<MODEL, RESULT>,
 			ISQLLogical_AndOr_MultiMapped_Named<MODEL, RESULT>{
 
-	private final BaseQuery select;
-	
-	Short_Collector_Multi_Mapped_Named_Initial(BaseQuery select, CollectedQueryResult_Mapped_Multi result, Collector_Query<MODEL> queryCollector) {
-		super(select, result, queryCollector);
-		
-		this.select = select;
+	Short_Collector_Multi_Mapped_Named_Initial(Collector_Query<MODEL> queryCollector, CollectedQueryResult_Mapped_Multi result) {
+		super(queryCollector, result);
 	}
 
 
@@ -178,6 +174,8 @@ final class Short_Collector_Multi_Mapped_Named_Initial<MODEL, RESULT>
 	}
 
 	private <JOIN_FROM> Short_Collector_Multi_Mapped_Named_TypedJoin<MODEL, RESULT, JOIN_FROM> joinResult() {
-		return new Short_Collector_Multi_Mapped_Named_TypedJoin<>(select, (CollectedQueryResult_Mapped_Multi)getQueryCollector().getResult(), getQueryCollector());
+		
+		
+		return new Short_Collector_Multi_Mapped_Named_TypedJoin<>(getQueryCollector());
 	}
 }

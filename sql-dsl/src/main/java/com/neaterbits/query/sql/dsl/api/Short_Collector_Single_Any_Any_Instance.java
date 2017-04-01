@@ -6,7 +6,7 @@ final class Short_Collector_Single_Any_Any_Instance<MODEL, RESULT>
 	
 	Short_Collector_Single_Any_Any_Instance(BaseQuery select, SharedSelectSource selectSource,
 			ModelCompiler<MODEL> modelCompiler) {
-		super(select, selectSource, modelCompiler);
+		super(select, modelCompiler, null, selectSource);
 	}
 
 	@Override
