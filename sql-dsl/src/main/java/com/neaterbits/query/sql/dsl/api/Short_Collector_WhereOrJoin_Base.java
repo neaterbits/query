@@ -70,6 +70,9 @@ abstract class Short_Collector_WhereOrJoin_Base<
 		super(queryCollector, clauseCollector);
 	}
 
+	Short_Collector_WhereOrJoin_Base(Collector_Conditions_Initial<MODEL, RESULT, AFTER_GROUP_BY> last) {
+		super(last, EConditionsClause.WHERE);
+	}
 	
 	
 	/***********************************************************************

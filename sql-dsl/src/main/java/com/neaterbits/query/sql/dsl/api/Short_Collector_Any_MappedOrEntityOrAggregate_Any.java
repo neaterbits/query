@@ -80,6 +80,7 @@ abstract class Short_Collector_Any_MappedOrEntityOrAggregate_Any<
 	{
 	
 		
+	@Deprecated // should not be necessary here as is in result
 	private final EQueryResultGathering gathering;
 		
 		
@@ -109,6 +110,12 @@ abstract class Short_Collector_Any_MappedOrEntityOrAggregate_Any<
 		// do not set mapping collector
 		
 		this.gathering = EQueryResultGathering.AGGREGATE;
+	}
+	
+	Short_Collector_Any_MappedOrEntityOrAggregate_Any(Collector_Conditions_Initial<MODEL, RESULT, AFTER_GROUP_BY> last) {
+		super(last);
+		
+		this.gathering = last.getQueryCollector().getResult().getGathering();
 	}
 	
 	@Override

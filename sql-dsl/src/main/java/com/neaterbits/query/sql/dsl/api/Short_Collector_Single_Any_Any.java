@@ -42,6 +42,11 @@ abstract class Short_Collector_Single_Any_Any<MODEL, RESULT, AFTER_GROUP_BY>
 		super(select, result, queryCollector);
 	}
 
+	
+	Short_Collector_Single_Any_Any(Collector_Conditions_Initial<MODEL, RESULT, AFTER_GROUP_BY> last) {
+		super(last);
+	}
+	
 	@Override
 	final Collector_GroupBy<MODEL, RESULT> createGroupByCollector(Collector_Base<MODEL> last, int[] groupByColumns,
 			Collector_Conditions_GroupBy<MODEL, RESULT, ?> collectorConditions) {

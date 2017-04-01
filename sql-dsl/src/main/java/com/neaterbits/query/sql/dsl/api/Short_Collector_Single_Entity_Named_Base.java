@@ -13,17 +13,8 @@ abstract class Short_Collector_Single_Entity_Named_Base<MODEL, RESULT>
 
 {
 
-	Short_Collector_Single_Entity_Named_Base(Collector_Query<MODEL> queryCollector, Collector_Clause clauseCollector) {
-		super(queryCollector, clauseCollector);
-	}
-
-	@Override
-	Collector_GroupBy<MODEL, RESULT> createGroupByCollector(
-			Collector_Base<MODEL> last, 
-			int[] groupByColumns,
-			Collector_Conditions_GroupBy<MODEL, RESULT, ?> collectorConditions) {
-		
-		return new Collector_GroupBy_Named<>(last, groupByColumns, collectorConditions);
+	Short_Collector_Single_Entity_Named_Base(Collector_Conditions_Initial<MODEL, RESULT, ISharedProcessResult_After_GroupBy_Named<MODEL, RESULT>> last) {
+		super(last);
 	}
 
 	@Override

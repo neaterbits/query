@@ -1,5 +1,6 @@
 package com.neaterbits.query.sql.dsl.api;
 
+@Deprecated // not in use for now
 abstract class Short_Collector_Any_Entity_Any<
 			MODEL, 
 			RESULT,
