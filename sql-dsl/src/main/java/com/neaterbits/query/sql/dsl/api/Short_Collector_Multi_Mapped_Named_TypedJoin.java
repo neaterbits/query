@@ -8,7 +8,8 @@ public class Short_Collector_Multi_Mapped_Named_TypedJoin<MODEL, RESULT, JOIN_TY
 
 	extends Short_Collector_Multi_Mapped_Any<MODEL, RESULT, ISharedProcessResult_After_GroupBy_Named<MODEL, RESULT>>
 
-	implements IShortLogical_WhereOrJoin_MultiMapped_Named<MODEL, RESULT, JOIN_TYPE> {
+	implements IShortLogical_WhereOrJoin_MultiMapped_Named<MODEL, RESULT, JOIN_TYPE>,
+			   ISQLLogical_AndOr_MultiMapped_Named<MODEL, RESULT> {
 
 
 	Short_Collector_Multi_Mapped_Named_TypedJoin(Collector_Query<MODEL> queryCollector) {
@@ -99,5 +100,35 @@ public class Short_Collector_Multi_Mapped_Named_TypedJoin<MODEL, RESULT, JOIN_TY
 	Collector_GroupBy<MODEL, RESULT> createGroupByCollector(Collector_Base<MODEL> last, int[] groupByColumns,
 			Collector_Conditions_GroupBy<MODEL, RESULT, ?> collectorConditions) {
 		return new Collector_GroupBy_Named<>(last, groupByColumns, collectorConditions);
+	}
+
+	@Override
+	public ISharedFunctions_Transform_Initial_Named<
+			MODEL,
+			RESULT,
+			ISQLLogical_And_MultiMapped_Named<MODEL, RESULT>,
+			ISharedCondition_Comparable_Common_All<MODEL, RESULT, Short, ISQLLogical_And_MultiMapped_Named<MODEL, RESULT>>,
+			ISharedCondition_Comparable_Common_All<MODEL, RESULT, Integer, ISQLLogical_And_MultiMapped_Named<MODEL, RESULT>>,
+			ISharedCondition_Comparable_Common_All<MODEL, RESULT, Long, ISQLLogical_And_MultiMapped_Named<MODEL, RESULT>>,
+			ISharedCondition_Comparable_Common_All<MODEL, RESULT, Double, ISQLLogical_And_MultiMapped_Named<MODEL, RESULT>>,
+			ISharedCondition_Comparable_Common_All<MODEL, RESULT, BigDecimal, ISQLLogical_And_MultiMapped_Named<MODEL, RESULT>>,
+			ISharedCondition_Comparable_String_All<MODEL, RESULT, ISQLLogical_And_MultiMapped_Named<MODEL, RESULT>>
+		> and() {
+		throw new UnsupportedOperationException("TODO");
+	}
+
+	@Override
+	public ISharedFunctions_Transform_Initial_Named<
+			MODEL,
+			RESULT,
+			ISQLLogical_Or_MultiMapped_Named<MODEL, RESULT>,
+			ISharedCondition_Comparable_Common_All<MODEL, RESULT, Short, ISQLLogical_Or_MultiMapped_Named<MODEL, RESULT>>,
+			ISharedCondition_Comparable_Common_All<MODEL, RESULT, Integer, ISQLLogical_Or_MultiMapped_Named<MODEL, RESULT>>,
+			ISharedCondition_Comparable_Common_All<MODEL, RESULT, Long, ISQLLogical_Or_MultiMapped_Named<MODEL, RESULT>>,
+			ISharedCondition_Comparable_Common_All<MODEL, RESULT, Double, ISQLLogical_Or_MultiMapped_Named<MODEL, RESULT>>,
+			ISharedCondition_Comparable_Common_All<MODEL, RESULT, BigDecimal, ISQLLogical_Or_MultiMapped_Named<MODEL, RESULT>>,
+			ISharedCondition_Comparable_String_All<MODEL, RESULT, ISQLLogical_Or_MultiMapped_Named<MODEL, RESULT>>
+		> or() {
+		throw new UnsupportedOperationException("TODO");
 	}
 }

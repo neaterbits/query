@@ -6,7 +6,8 @@ final class Short_Collector_Single_Mapped_Alias_TypedJoin<MODEL, RESULT, JOIN_TY
 
 		extends Short_Collector_Single_Mapped_Any<MODEL, RESULT, ISharedProcessResult_After_GroupBy_Named<MODEL, RESULT>>
 		
-		implements IShortLogical_WhereOrJoin_SingleResult_Alias<MODEL, RESULT> {
+		implements IShortLogical_WhereOrJoin_SingleResult_Alias<MODEL, RESULT>,
+				   ISQLLogical_AndOr_SingleResult_Alias<MODEL, RESULT> {
 
 	Short_Collector_Single_Mapped_Alias_TypedJoin(Collector_Conditions_Initial<MODEL, RESULT, ISharedProcessResult_After_GroupBy_Named<MODEL, RESULT>> last) {
 		super(last);
