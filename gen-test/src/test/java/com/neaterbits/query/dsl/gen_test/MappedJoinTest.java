@@ -67,7 +67,7 @@ public class MappedJoinTest extends GEN_BaseTestCase {
 
 
     @Test
-    public void testEntitySingleNamed_Farm_Left() {
+    public void testMappedSingleNamed_Farm_Left() {
     	final Farm farm1 = new Farm("Farm1");
     	
     	final LandPlot land1 = new CropLand(new BigDecimal("9.30"));
@@ -137,7 +137,7 @@ public class MappedJoinTest extends GEN_BaseTestCase {
     }
 
     @Test
-    public void testEntitySingleAlias_Farm_Left() {
+    public void testMappedSingleAlias_Farm_Left() {
     	final Farm farm1 = new Farm("Farm1");
     	
     	final LandPlot land1 = new CropLand(new BigDecimal("9.30"));
@@ -195,6 +195,42 @@ public class MappedJoinTest extends GEN_BaseTestCase {
     				new FarmLand("Farm2", new BigDecimal("100.5"))));
     }
 
+    @Test
+    public void testMappedMultiNamed_Farm_Left() {
+    	final Farm farm1 = new Farm("Farm1");
+    	final Farm farm2 = new Farm("Farm2");
+    	final Farm farm3 = new Farm("Farm3");
+    	
+    	final LandPlot land1 = new CropLand(new BigDecimal("9.30"));
+    	final LandPlot land2 = new Forest(new BigDecimal("40.5"));
+    	final LandPlot land3 = new Uncultivated(new BigDecimal("100.5"));
+    	final LandPlot land4 = new Uncultivated(new BigDecimal("345.43"));
+
+    	farm1.setLandPlots(Arrays.asList(land1, land2));
+    	land1.setFarm(farm1);
+    	land2.setFarm(farm1);
+    	
+    	farm2.setLandPlots(Arrays.asList(land3));
+    	land3.setFarm(farm2);
+    	
+    	// only landplots that belong to farms, so land4 should not be included in sum
+    	// since doing innerjoin from farm to landplot
+    	final MultiBuilt<FarmLand> query
+    		= select.list(FarmLand.class)
+				.map(Farm::getName)			.to(FarmLand::setFarmName)
+				.map(LandPlot::getHectares) .to(FarmLand::setHectares)
+    			.leftJoin(Farm::getLandPlots)   
+    			.build();
+    	
+    	store(farm1, farm2, farm3, land4)
+    	.remove(land1, land2, land3)
+    	.checkListUnordered(query, () -> Arrays.asList(
+				new FarmLand("Farm1", new BigDecimal("9.30")),
+				new FarmLand("Farm1", new BigDecimal("40.5")),
+				new FarmLand("Farm2", new BigDecimal("100.5")),
+				new FarmLand("Farm3", null)));
+    }
+    
 
     @Test
     public void testMappedMultiAlias() {
@@ -232,5 +268,44 @@ public class MappedJoinTest extends GEN_BaseTestCase {
     				new FarmLand("Farm1", new BigDecimal("9.30")),
     				new FarmLand("Farm1", new BigDecimal("40.5")),
     				new FarmLand("Farm2", new BigDecimal("100.5"))));
+    }
+
+    @Test
+    public void testMappedMultiAlias_Farm_Left() {
+    	final Farm farm1 = new Farm("Farm1");
+    	final Farm farm2 = new Farm("Farm2");
+    	final Farm farm3 = new Farm("Farm3");
+    	
+    	final LandPlot land1 = new CropLand(new BigDecimal("9.30"));
+    	final LandPlot land2 = new Forest(new BigDecimal("40.5"));
+    	final LandPlot land3 = new Uncultivated(new BigDecimal("100.5"));
+    	final LandPlot land4 = new Uncultivated(new BigDecimal("345.43"));
+
+    	farm1.setLandPlots(Arrays.asList(land1, land2));
+    	land1.setFarm(farm1);
+    	land2.setFarm(farm1);
+    	
+    	farm2.setLandPlots(Arrays.asList(land3));
+    	land3.setFarm(farm2);
+
+    	final Farm 	   f = select.alias(Farm.class);
+    	final LandPlot l = select.alias(LandPlot.class);
+    	
+    	// only landplots that belong to farms, so land4 should not be included in sum
+    	// since doing innerjoin from farm to landplot
+    	final MultiBuilt<FarmLand> query
+    		= select.list(FarmLand.class)
+				.map(f::getName)	.to(FarmLand::setFarmName)
+				.map(l::getHectares).to(FarmLand::setHectares)
+    			.leftJoin(f::getLandPlots, l)   
+    			.build();
+    	
+    	store(farm1, farm2, farm3, land4)
+    	.remove(land1, land2, land3)
+    	.checkListUnordered(query, () -> Arrays.asList(
+				new FarmLand("Farm1", new BigDecimal("9.30")),
+				new FarmLand("Farm1", new BigDecimal("40.5")),
+				new FarmLand("Farm2", new BigDecimal("100.5")),
+				new FarmLand("Farm3", null)));
     }
 }
