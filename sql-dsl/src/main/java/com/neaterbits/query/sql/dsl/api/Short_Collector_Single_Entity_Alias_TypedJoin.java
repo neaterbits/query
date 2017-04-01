@@ -7,9 +7,8 @@ final class Short_Collector_Single_Entity_Alias_TypedJoin<MODEL, RESULT>
 
 	implements IShortLogical_WhereOrJoin_SingleResult_Alias<MODEL, RESULT> {
 
- 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	Short_Collector_Single_Entity_Alias_TypedJoin(Short_Collector_Initial_Single_Any_Any_Base<MODEL, RESULT> input) {
-		super((Collector_Conditions_Initial)input);
+		super(input.getThisInitial());
 
 		getQueryCollector().setResult(new CollectedQueryResult_Entity_Single(input.getSelectSource()));
 	}
