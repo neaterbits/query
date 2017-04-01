@@ -1,13 +1,12 @@
 package com.neaterbits.query.dsl.gen_test;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 
 import org.junit.Test;
 import com.neaterbits.query.jpatest.GEN_BaseTestCase;
 import com.neaterbits.query.sql.dsl.api.MultiBuilt;
 import com.neaterbits.query.sql.dsl.api.SingleBuilt;
 import com.neaterbits.query.test.model.Farm;
+import java.util.Arrays;
 
 
 public class EntityTest extends GEN_BaseTestCase {
@@ -21,12 +20,7 @@ public class EntityTest extends GEN_BaseTestCase {
     	final SingleBuilt<Farm> query = select.one(Farm.class).build(); 
 
     	store(s -> s.add(farm1))
-    	.check(ds ->
-    		checkSelectOneOrNull(
-    				ds,
-    				new Farm(farm1.getId(), "Hill Valley"),
-    				query, 
-    				q -> q.execute()));
+    	.checkOne(query, () -> new Farm(farm1.getId(), "Hill Valley"));
     }
 
 
@@ -46,18 +40,12 @@ public class EntityTest extends GEN_BaseTestCase {
     	
     	final MultiBuilt<Farm> query = select.list(Farm.class).build(); 
 
-    	store(s -> s
-				.add(farm1)
-				.add(farm2)
-				.add(farm3))
-    	.check(ds ->
-    		checkSelectListUnordered(
-    				ds,
-    				query, 
-    				q -> q.execute(),
+    	store(farm1, farm2, farm3)
+    	.checkListUnordered(query, () -> Arrays.asList(
     				new Farm(farm1.getId(), "Hill Valley"),
     				new Farm(farm2.getId(), "Table Mountain"),
-    				new Farm(farm3.getId(), "Snowy Hills")));
+    				new Farm(farm3.getId(), "Snowy Hills"))
+    	);
     }
 
 

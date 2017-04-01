@@ -72,6 +72,8 @@ class QueryCollectorImpl<MODEL> extends Collector_Query<MODEL> {
 	
 	QueryCollectorImpl(BaseQuery baseQuery, ModelCompiler<MODEL> modelCompiler, CollectedQueryResult result) {
 		super(baseQuery, modelCompiler, result);
+		
+		this.result = result;
 
 		/*
 		if (result != null) {

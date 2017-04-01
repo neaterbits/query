@@ -75,8 +75,6 @@ abstract class Collector_Query<MODEL> {
 		this.result = result;
 	}
 	
-	
-	
 	Collector_Query(BaseQuery baseQuery, ModelCompiler<MODEL> modelCompiler, CollectedQueryResult result) {
 		
 		if (baseQuery == null) {
@@ -85,10 +83,6 @@ abstract class Collector_Query<MODEL> {
 		
 		if (modelCompiler == null) {
 			throw new IllegalArgumentException("modelCompiler == null");
-		}
-		
-		if (result == null) {
-			throw new IllegalArgumentException("result == null");
 		}
 
 		this.baseQuery = baseQuery;

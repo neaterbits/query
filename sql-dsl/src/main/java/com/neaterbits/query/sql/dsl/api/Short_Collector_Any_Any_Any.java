@@ -80,7 +80,7 @@ abstract class Short_Collector_Any_Any_Any<
 	protected Short_Collector_Any_Any_Any(BaseQuery select, ModelCompiler<MODEL> modelCompiler, CollectedQueryResult result, SharedSelectSource selectSource) {
 		super(new QueryCollectorImpl<MODEL>(select, modelCompiler, result), new Collector_Clause(EConditionsClause.WHERE, ConditionsType.SINGLE));
 		
-		if (selectSource == null) {
+		if (selectSource == null && !(result instanceof CollectedQueryResult_Aggregate)) {
 			throw new IllegalArgumentException("selectSource == null");
 		}
 		
