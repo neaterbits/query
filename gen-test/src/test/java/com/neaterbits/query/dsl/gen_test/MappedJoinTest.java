@@ -1,7 +1,5 @@
 package com.neaterbits.query.dsl.gen_test;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 import java.math.BigDecimal;
 import java.util.Arrays;
 
@@ -162,6 +160,22 @@ public class MappedJoinTest extends GEN_BaseTestCase {
 
     @Test
     public void testMappedMultiNamed() {
+    	verifyIsNotCompilable(
+    			a -> a.add(Farm.class, "f").add(LandPlot.class, "l"),
+    			
+    			"list(FarmLand.class)" +
+    	    	".map(Farm::getName)	 .to(FarmLand::setFarmName)" +
+    	    	".map(LandPlot::getHectares) .to(FarmLand::setHectares)" +
+    			".innerJoin(f::getLandPlots, l)");
+
+    	verifyIsCompilable(
+    			a -> a.add(Farm.class, "f").add(LandPlot.class, "l"),
+    			
+    			"list(FarmLand.class)" +
+    	    	".map(Farm::getName)	 .to(FarmLand::setFarmName)" +
+    	    	".map(LandPlot::getHectares) .to(FarmLand::setHectares)" +
+    			".innerJoin(Farm::getLandPlots)");
+
     	final Farm farm1 = new Farm("Farm1");
     	final Farm farm2 = new Farm("Farm2");
     	final Farm farm3 = new Farm("Farm3");
@@ -234,6 +248,22 @@ public class MappedJoinTest extends GEN_BaseTestCase {
 
     @Test
     public void testMappedMultiAlias() {
+    	verifyIsNotCompilable(
+    			a -> a.add(Farm.class, "f").add(LandPlot.class, "l"),
+    			
+    			"list(FarmLand.class)" +
+    	    	".map(f::getName)	 .to(FarmLand::setFarmName)" +
+    	    	".map(l::getHectares) .to(FarmLand::setHectares)" +
+    			".innerJoin(Farm::getLandPlots)");
+
+    	verifyIsCompilable(
+    			a -> a.add(Farm.class, "f").add(LandPlot.class, "l"),
+    			
+    			"list(FarmLand.class)" +
+    	    	".map(f::getName)	 .to(FarmLand::setFarmName)" +
+    	    	".map(l::getHectares) .to(FarmLand::setHectares)" +
+    			".innerJoin(f::getLandPlots, l)");
+
     	final Farm farm1 = new Farm("Farm1");
     	final Farm farm2 = new Farm("Farm2");
     	final Farm farm3 = new Farm("Farm3");
