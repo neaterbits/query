@@ -229,7 +229,6 @@ public class EntityJoinTest extends GEN_BaseTestCase {
     				new CropLand	(land1.getId(), new BigDecimal("9.30")),
     				new Forest		(land2.getId(), new BigDecimal("40.5")),
     				new Uncultivated(land3.getId(), new BigDecimal("100.5"))));
-    	
     }
 
     @Test
