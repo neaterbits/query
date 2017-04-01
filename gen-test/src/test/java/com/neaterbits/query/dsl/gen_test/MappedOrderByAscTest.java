@@ -34,7 +34,7 @@ public class MappedOrderByAscTest extends GEN_BaseTestCase {
 
 		verifyIsNotCompilable(
 				Farm.class, "f",
-				"one(Farm.class)" + 
+				"one(FarmInfo.class)" + 
 				".map(f::getName).to(FarmInfo::setName)" +
 				".orderBy(f::getName)" +
 				".asc()");		
