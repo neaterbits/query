@@ -77,8 +77,12 @@ abstract class SQL_Collector_WhereOrJoin_Base<
 		{
 		
 			
-	SQL_Collector_WhereOrJoin_Base(Collector_Base<MODEL> last, EConditionsClause conditionsClause) {
+	SQL_Collector_WhereOrJoin_Base(Collector_Conditions_Initial<MODEL, RESULT, AFTER_GROUP_BY> last, EConditionsClause conditionsClause) {
 		super(last, conditionsClause);
+	}
+
+	SQL_Collector_WhereOrJoin_Base(Collector_Conditions_Initial<MODEL, RESULT, AFTER_GROUP_BY> last, EConditionsClause conditionsClause, CollectedQueryResult result) {
+		super(last, conditionsClause, result);
 	}
 
 

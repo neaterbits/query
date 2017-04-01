@@ -9,10 +9,12 @@ abstract class Classic_Collector_MapToResult_Base<
 	NAMED_MAP_RESULT extends ISharedSelectSourceBuilder<MODEL, RESULT>,
 	
 	NAMED_WHERE_OR_JOIN extends ISQLLogical_WhereOrJoin_Named_Base<MODEL, RESULT>,
-	ALIAS_WHERE_OR_JOIN extends ISQLLogical_WhereOrJoin_Alias_Base<MODEL, RESULT>> 
+	ALIAS_WHERE_OR_JOIN extends ISQLLogical_WhereOrJoin_Alias_Base<MODEL, RESULT>,
+	
+	AFTER_GROUP_BY> 
 
 
-	extends Classic_Collector_SelectSource<MODEL, RESULT, NAMED_WHERE_OR_JOIN, ALIAS_WHERE_OR_JOIN> 
+	extends Classic_Collector_SelectSource<MODEL, RESULT, NAMED_WHERE_OR_JOIN, ALIAS_WHERE_OR_JOIN, AFTER_GROUP_BY> 
 
 	implements IMappingCollector<MODEL, RESULT>,
 		ISharedResultMapper_Named<MODEL, RESULT, NAMED_MAP_RESULT>

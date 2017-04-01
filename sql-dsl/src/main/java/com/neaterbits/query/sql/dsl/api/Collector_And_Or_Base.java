@@ -4,7 +4,15 @@ abstract class Collector_And_Or_Base<MODEL, RESULT, AFTER_GROUP_BY>
 
 	extends Collector_Conditions_Initial<MODEL, RESULT, AFTER_GROUP_BY> {
 
-	Collector_And_Or_Base(Collector_Base<MODEL> last, EConditionsClause conditionsClause) {
+	Collector_And_Or_Base(Collector_Conditions_Initial<MODEL, RESULT, AFTER_GROUP_BY> last, EConditionsClause conditionsClause) {
+		super(last, conditionsClause);
+	}
+
+	Collector_And_Or_Base(Collector_Conditions_Initial<MODEL, RESULT, AFTER_GROUP_BY> last, EConditionsClause conditionsClause, CollectedQueryResult result) {
+		super(last, conditionsClause, result);
+	}
+	
+	Collector_And_Or_Base(Collector_GroupBy<MODEL, RESULT> last, EConditionsClause conditionsClause) {
 		super(last, conditionsClause);
 	}
 	

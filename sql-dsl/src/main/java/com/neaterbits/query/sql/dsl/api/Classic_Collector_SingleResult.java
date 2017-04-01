@@ -18,7 +18,9 @@ final class Classic_Collector_SingleResult<MODEL, RESULT>
 		IClassicLogical_WhereOrJoin_SingleResult_Alias_And_Function<MODEL, RESULT>,
 		
 		IClassicResult_Mapped_Single_Named<MODEL, RESULT>,
-		IClassicResult_Mapped_Single_Alias<MODEL, RESULT>
+		IClassicResult_Mapped_Single_Alias<MODEL, RESULT>,
+		
+		Void
 		>
 
 	implements IClassicResult_Single<MODEL, RESULT> {
@@ -36,7 +38,8 @@ final class Classic_Collector_SingleResult<MODEL, RESULT>
 					MODEL, RESULT,
 					IClassicResult_Mapped_Single_Named<MODEL, RESULT>,
 					ISQLLogical_WhereOrJoin_SingleResult_Named_And_Function<MODEL, RESULT>,
-					IClassicLogical_WhereOrJoin_SingleResult_Alias_And_Function<MODEL, RESULT>>
+					IClassicLogical_WhereOrJoin_SingleResult_Alias_And_Function<MODEL, RESULT>,
+					Void>
 	
 			createMapToResult() {
 		
@@ -45,12 +48,12 @@ final class Classic_Collector_SingleResult<MODEL, RESULT>
 
 	@Override
 	ISQLLogical_WhereOrJoin_SingleResult_Named_And_Function<MODEL, RESULT> createWhereOrJoinForNamed() {
-		return new Classic_Collector_WhereOrJoin_SingleResult_Named<>(this);
+		return new Classic_Collector_WhereOrJoin_SingleResult_Named<>(getThisInitial());
 	}
 
 	@Override
 	ISQLLogical_WhereOrJoin_SingleResult_Alias_And_Function<MODEL, RESULT> createWhereOrJoinForAlias() {
-		return new Classic_Collector_WhereOrJoin_SingleResult_Alias<>(this);
+		return new Classic_Collector_WhereOrJoin_SingleResult_Alias<>(getThisInitial());
 	}
 
 	@Override

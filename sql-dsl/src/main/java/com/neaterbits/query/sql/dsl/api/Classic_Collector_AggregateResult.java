@@ -14,7 +14,8 @@ abstract class Classic_Collector_AggregateResult<
 			MODEL,
 			RESULT,
 			NAMED_WHERE_OR_JOIN,
-			ALIAS_WHERE_OR_JOIN
+			ALIAS_WHERE_OR_JOIN,
+			Void
 			> {
 
 	Classic_Collector_AggregateResult(ClassicSelect classic, CollectedQueryResult result, ModelCompiler<MODEL> modelCompiler) {

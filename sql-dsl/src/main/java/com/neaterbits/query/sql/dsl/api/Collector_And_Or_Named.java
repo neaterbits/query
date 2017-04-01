@@ -64,10 +64,14 @@ abstract class Collector_And_Or_Named<
 			ISharedCondition_Comparable_String_All<MODEL, RESULT, OR_CLAUSES> */>{
 
     
-	Collector_And_Or_Named(Collector_Base<MODEL> last, EConditionsClause conditionsClause) {
+	Collector_And_Or_Named(Collector_Conditions_Initial<MODEL, RESULT, Void> last, EConditionsClause conditionsClause) {
 		super(last, conditionsClause);
 	}
-	
+
+	Collector_And_Or_Named(Collector_GroupBy<MODEL, RESULT> last, EConditionsClause conditionsClause) {
+		super(last, conditionsClause);
+	}
+
 	Collector_And_Or_Named(Collector_Query<MODEL> queryCollector, Collector_Clause collector) {
 		super(queryCollector, collector);
 	}
@@ -87,7 +91,7 @@ abstract class Collector_And_Or_Named<
 	>
 		and() {
 			
-			return andNamed();
+		return andNamed();
 	}
 
 

@@ -26,7 +26,7 @@ abstract class SQL_Collector_WhereOrJoin_SingleResult_Alias<
 		ISQLLogical_WhereOrJoin_SingleResult_Alias_And_Function<MODEL, RESULT>,
 		ISQLLogical_AndOr_SingleResult_Alias<MODEL, RESULT> {
 
-	SQL_Collector_WhereOrJoin_SingleResult_Alias(Collector_Base<MODEL> last) {
+	SQL_Collector_WhereOrJoin_SingleResult_Alias(Collector_Conditions_Initial<MODEL, RESULT, ISharedProcessResult_After_GroupBy_Alias<MODEL, RESULT>> last) {
 		super(last);
 	}
 

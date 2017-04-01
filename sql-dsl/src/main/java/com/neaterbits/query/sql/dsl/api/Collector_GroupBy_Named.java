@@ -2,7 +2,6 @@ package com.neaterbits.query.sql.dsl.api;
 
 import java.math.BigDecimal;
 import java.util.function.Function;
-import java.util.function.Supplier;
 
 final class Collector_GroupBy_Named<MODEL, RESULT> extends Collector_GroupBy<MODEL, RESULT>
 		

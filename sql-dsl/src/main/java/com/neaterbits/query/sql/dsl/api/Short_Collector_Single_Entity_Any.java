@@ -14,7 +14,7 @@ abstract class Short_Collector_Single_Entity_Any<
 			AFTER_GROUP_BY> 
 {
 
-	Short_Collector_Single_Entity_Any(Collector_Conditions_Initial<MODEL, RESULT, AFTER_GROUP_BY> last) {
-		super(last);
+	Short_Collector_Single_Entity_Any(Collector_Conditions_Initial<MODEL, RESULT, AFTER_GROUP_BY> last, CollectedQueryResult_Entity_Single result) {
+		super(last, result);
 	}
 }

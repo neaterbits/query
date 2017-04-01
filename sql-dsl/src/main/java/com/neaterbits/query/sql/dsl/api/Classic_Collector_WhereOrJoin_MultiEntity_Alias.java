@@ -6,7 +6,7 @@ final class Classic_Collector_WhereOrJoin_MultiEntity_Alias<MODEL, RESULT>
 
 	implements IClassicLogical_WhereOrJoin_MultiEntity_Alias<MODEL, RESULT>{
 
-	Classic_Collector_WhereOrJoin_MultiEntity_Alias(Collector_Base<MODEL> last) {
+	Classic_Collector_WhereOrJoin_MultiEntity_Alias(Collector_Conditions_Initial<MODEL, RESULT, Void> last) {
 		super(last);
 	}
 }

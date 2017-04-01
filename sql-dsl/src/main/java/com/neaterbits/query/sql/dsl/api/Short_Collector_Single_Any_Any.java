@@ -30,21 +30,27 @@ abstract class Short_Collector_Single_Any_Any<MODEL, RESULT, AFTER_GROUP_BY>
 		
 		AFTER_GROUP_BY> {
 
+	@Deprecated
 	Short_Collector_Single_Any_Any(Collector_Query<MODEL> queryCollector, CollectedQueryResult_Entity result) {
 		super(queryCollector, result);
 	}
 
+	@Deprecated
 	Short_Collector_Single_Any_Any(Collector_Query<MODEL> queryCollector, CollectedQueryResult_Mapped result) {
 		super(queryCollector, result);
 	}
 
+	@Deprecated
 	Short_Collector_Single_Any_Any(Collector_Query<MODEL> queryCollector, CollectedQueryResult_Aggregate result) {
 		super(queryCollector, result);
 	}
 
-	
 	Short_Collector_Single_Any_Any(Collector_Conditions_Initial<MODEL, RESULT, AFTER_GROUP_BY> last) {
 		super(last);
+	}
+	
+	Short_Collector_Single_Any_Any(Collector_Conditions_Initial<MODEL, RESULT, AFTER_GROUP_BY> last, CollectedQueryResult result) {
+		super(last, result);
 	}
 	
 	@Override

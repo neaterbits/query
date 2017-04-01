@@ -6,7 +6,7 @@ final class Classic_Collector_WhereOrJoin_MultiEntity_Named<MODEL, RESULT>
 			RESULT,
 			IClassicJoin_Condition_MultiEntity_Alias<MODEL, RESULT>> {
 
-	Classic_Collector_WhereOrJoin_MultiEntity_Named(Collector_Base<MODEL> last) {
-		super(last);
+	Classic_Collector_WhereOrJoin_MultiEntity_Named(Collector_Conditions_Initial<MODEL, RESULT, Void> last) {
+		super(last.getThisInitial());
 	}
 }

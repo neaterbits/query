@@ -10,7 +10,18 @@ abstract class Collector_Conditions_Base<MODEL, RESULT> extends Collector_Base<M
 	}
 	
 	Collector_Conditions_Base(Collector_Conditions_Initial<MODEL, RESULT, ?> last, ConditionsType newConditionsType) {
+		
 		super(last);
+		
+		if (last.clauseCollector.getConditionsType() != ConditionsType.SINGLE) {
+			throw new IllegalArgumentException("Only call this constructor after WHERE");
+		}
+		
+		this.clauseCollector = new Collector_Clause(last.clauseCollector, newConditionsType);
+	}
+
+	Collector_Conditions_Base(Collector_Conditions_Initial<MODEL, RESULT, ?> last, ConditionsType newConditionsType, CollectedQueryResult result) {
+		super(new QueryCollectorImpl<>(last.getQueryCollector(), result));
 		
 		if (last.clauseCollector.getConditionsType() != ConditionsType.SINGLE) {
 			throw new IllegalArgumentException("Only call this constructor after WHERE");
@@ -25,6 +36,12 @@ abstract class Collector_Conditions_Base<MODEL, RESULT> extends Collector_Base<M
 		this.clauseCollector = collector;
 	}
 	
+	Collector_Conditions_Base(Collector_Base<MODEL> last, Collector_Clause collector, CollectedQueryResult result) {
+		super(new QueryCollectorImpl<>(last.getQueryCollector(), result));
+
+		this.clauseCollector = collector;
+	}
+
 	Collector_Conditions_Base(Collector_Query<MODEL> queryCollector, Collector_Clause collector) {
 		super(queryCollector);
 		

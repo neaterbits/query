@@ -19,7 +19,7 @@ abstract class SQL_Collector_WhereOrJoin_MultiMapped_Named<
 
 		implements ISQLLogical_WhereOrJoin_MultiMapped_Named<MODEL, RESULT> {
 
-	SQL_Collector_WhereOrJoin_MultiMapped_Named(Collector_Base<MODEL> last) {
+	SQL_Collector_WhereOrJoin_MultiMapped_Named(Collector_Conditions_Initial<MODEL, RESULT, ISharedProcessResult_After_GroupBy_Named<MODEL, RESULT>> last) {
 		super(last);
 	}
 

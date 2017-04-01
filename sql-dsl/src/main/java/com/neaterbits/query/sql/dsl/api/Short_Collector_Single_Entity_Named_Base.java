@@ -13,8 +13,10 @@ abstract class Short_Collector_Single_Entity_Named_Base<MODEL, RESULT>
 
 {
 
-	Short_Collector_Single_Entity_Named_Base(Collector_Conditions_Initial<MODEL, RESULT, ISharedProcessResult_After_GroupBy_Named<MODEL, RESULT>> last) {
-		super(last);
+	Short_Collector_Single_Entity_Named_Base(
+			Collector_Conditions_Initial<MODEL, RESULT, ISharedProcessResult_After_GroupBy_Named<MODEL, RESULT>> last,
+			CollectedQueryResult_Entity_Single result) {
+		super(last, result);
 	}
 
 	@Override

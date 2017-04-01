@@ -75,7 +75,7 @@ abstract class SQL_Collector_WhereOrJoin_Alias_Base<
     				createNestedOr(Classic_Collector_And_Alias<MODEL, RESULT, AND_CLAUSES> andClauses);
 	*/ 
 			   
-	SQL_Collector_WhereOrJoin_Alias_Base(Collector_Base<MODEL> last) {
+	SQL_Collector_WhereOrJoin_Alias_Base(Collector_Conditions_Initial<MODEL, RESULT, THIS_AFTER_GROUP_BY> last) {
 		super(last, EConditionsClause.WHERE);
 	}
 

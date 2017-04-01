@@ -13,7 +13,7 @@ final class Collector_Having_Named<MODEL, RESULT> extends Collector_And_Or_Named
 
 	
 	
-	Collector_Having_Named(Collector_Base<MODEL> last) {
+	Collector_Having_Named(Collector_GroupBy<MODEL, RESULT> last) {
 		super(last, EConditionsClause.HAVING);
 	}
 

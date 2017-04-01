@@ -121,7 +121,7 @@ final class ShortSelect extends BaseShortSelect<
 		final Collector_Query<MultiBuilt<RESULT>> collector = new QueryCollectorImpl<>(this, multiQueryCollected(), result);
 		
 
-		return new Short_Collector_Multi_Entity_Alias<MultiBuilt<RESULT>, RESULT>(collector, result);
+		return new Short_Collector_Multi_Entity_Alias<MultiBuilt<RESULT>, RESULT>(collector, null);
 	}
 
 	// Aggregate helpers

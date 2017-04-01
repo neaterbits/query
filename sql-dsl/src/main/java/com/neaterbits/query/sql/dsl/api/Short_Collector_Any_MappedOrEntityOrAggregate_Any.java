@@ -125,6 +125,12 @@ abstract class Short_Collector_Any_MappedOrEntityOrAggregate_Any<
 		
 		this.gathering = last.getQueryCollector().getResult().getGathering();
 	}
+
+	Short_Collector_Any_MappedOrEntityOrAggregate_Any(Collector_Conditions_Initial<MODEL, RESULT, AFTER_GROUP_BY> last, CollectedQueryResult result) {
+		super(last, result);
+		
+		this.gathering = result != null ? result.getGathering() : last.getQueryCollector().getResult().getGathering();
+	}
 	
 	@Override
 	public final <T> ISharedResultMap_OpsAndTo_Numeric_Named<MODEL, RESULT, Short, NAMED_MAPPED> map(IFunctionShort<T> getter) {

@@ -2,8 +2,6 @@ package com.neaterbits.query.sql.dsl.api;
 
 import java.math.BigDecimal;
 
-import org.w3c.dom.DOMConfiguration;
-
 @Deprecated
 abstract class Collector_And_Or_Alias<
 			MODEL,
@@ -41,7 +39,7 @@ abstract class Collector_And_Or_Alias<
 			ISharedLogical_Or_Alias_Function<MODEL, RESULT, OR_CLAUSES, NESTED_AND_CLAUSES> {
 
     
-	Collector_And_Or_Alias(Collector_Base<MODEL> last, EConditionsClause conditionsClause) {
+	Collector_And_Or_Alias(Collector_Conditions_Initial<MODEL, RESULT, Void> last, EConditionsClause conditionsClause) {
 		super(last, conditionsClause);
 	}
 
@@ -49,6 +47,10 @@ abstract class Collector_And_Or_Alias<
 		super(queryCollector, collector);
 	}
 
+	Collector_And_Or_Alias(Collector_GroupBy<MODEL, RESULT> last, EConditionsClause conditionsClause) {
+		super(last, conditionsClause);
+	}
+	
 	
 	@Override
 	public final ISharedFunctions_Transform_Initial_Alias<

@@ -42,7 +42,7 @@ class QueryCollectorImpl<MODEL> extends Collector_Query<MODEL> {
 	QueryCollectorImpl(Collector_Query<MODEL> queryCollector, CollectedQueryResult result) {
 		super(queryCollector, result);
 		
-		this.result = result;
+		this.result = result != null ? result :queryCollector.getResult();
 		
 		if (queryCollector.getSources() != null) {
 			this.sources = queryCollector.getSources();

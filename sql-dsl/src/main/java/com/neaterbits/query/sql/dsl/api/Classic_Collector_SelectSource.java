@@ -5,9 +5,10 @@ abstract class Classic_Collector_SelectSource<
 				MODEL,
 				RESULT,
 				NAMED_WHERE_OR_JOIN extends ISQLLogical_WhereOrJoin_Named_Base<MODEL, RESULT>,
-				ALIAS_WHERE_OR_JOIN extends ISQLLogical_WhereOrJoin_Alias_Base<MODEL, RESULT>> 
+				ALIAS_WHERE_OR_JOIN extends ISQLLogical_WhereOrJoin_Alias_Base<MODEL, RESULT>,
+				AFTER_GROUP_BY> 
 
-		extends Collector_Base<MODEL>
+		extends Collector_Conditions_Initial<MODEL, RESULT, AFTER_GROUP_BY>
 		implements 
 				IClassic_From_Named_Base<MODEL, RESULT, NAMED_WHERE_OR_JOIN>,
 				IClassic_From_Alias_Base<MODEL, RESULT, ALIAS_WHERE_OR_JOIN>,
@@ -25,7 +26,7 @@ abstract class Classic_Collector_SelectSource<
 	abstract CollectedQueryResult getCollectedQueryResult();
 					
 	Classic_Collector_SelectSource(ClassicSelect classic, CollectedQueryResult result, ModelCompiler<MODEL> modelCompiler) {
-		super(new QueryCollectorImpl<MODEL>(classic, modelCompiler, result));
+		super(new QueryCollectorImpl<MODEL>(classic, modelCompiler, result), null);
 	}
 	
 	
@@ -88,6 +89,12 @@ abstract class Classic_Collector_SelectSource<
 		
 		return createWhereOrJoinForAlias();
 	}
+	@Override
+	final Collector_GroupBy<MODEL, RESULT> createGroupByCollector(Collector_Base<MODEL> last, int[] groupByColumns,
+			Collector_Conditions_GroupBy<MODEL, RESULT, ?> collectorConditions) {
+		throw new UnsupportedOperationException("TODO");
+	}
+
 	
 
 //	Class<?>[] getClasses() {

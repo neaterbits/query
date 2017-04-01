@@ -10,7 +10,7 @@ final class Classic_Collector_WhereOrJoin_MultiMapped_Named<MODEL, RESULT>
 
 {
 
-	Classic_Collector_WhereOrJoin_MultiMapped_Named(Collector_Base<MODEL> last) {
+	Classic_Collector_WhereOrJoin_MultiMapped_Named(Collector_Conditions_Initial<MODEL, RESULT, ISharedProcessResult_After_GroupBy_Named<MODEL, RESULT>> last) {
 		super(last);
 	}
 

@@ -24,7 +24,7 @@ abstract class SQL_Collector_WhereOrJoin_MultiMapped_Alias<
 		
 		implements ISQLLogical_WhereOrJoin_MultiMapped_Alias<MODEL, RESULT, ALIAS_JOIN_CONDITION> {
 		
-	SQL_Collector_WhereOrJoin_MultiMapped_Alias(Collector_Base<MODEL> last) {
+	SQL_Collector_WhereOrJoin_MultiMapped_Alias(Collector_Conditions_Initial<MODEL, RESULT, ISharedProcessResult_After_GroupBy_Alias<MODEL, RESULT>> last) {
 		super(last);
 	}
 

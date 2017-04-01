@@ -74,6 +74,11 @@ abstract class Short_Collector_WhereOrJoin_Base<
 		super(last, EConditionsClause.WHERE);
 	}
 	
+	Short_Collector_WhereOrJoin_Base(Collector_Conditions_Initial<MODEL, RESULT, AFTER_GROUP_BY> last, CollectedQueryResult result) {
+		super(last, EConditionsClause.WHERE, result);
+	}
+	
+	
 	
 	/***********************************************************************
 	 * Named join

@@ -23,7 +23,7 @@ abstract class SQL_Collector_WhereOrJoin_SingleResult_Named<
 				ISQLLogical_WhereOrJoin_SingleResult_Named_And_Function<MODEL, RESULT>,
 				ISQLLogical_AndOr_SingleResult_Named<MODEL, RESULT>{
 
-	SQL_Collector_WhereOrJoin_SingleResult_Named(Collector_Base<MODEL> last) {
+	SQL_Collector_WhereOrJoin_SingleResult_Named(Collector_Conditions_Initial<MODEL, RESULT, ISharedProcessResult_After_GroupBy_Named<MODEL, RESULT>> last) {
 		super(last);
 	}
 

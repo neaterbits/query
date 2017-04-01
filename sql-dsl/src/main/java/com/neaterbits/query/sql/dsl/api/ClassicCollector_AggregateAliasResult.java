@@ -28,7 +28,7 @@ final class ClassicCollector_AggregateAliasResult<TYPE>
 	
 	@Override
 	IClassicLogical_WhereOrJoin_SingleResult_Alias_And_Function<SingleBuilt<TYPE>, TYPE> createWhereOrJoinForAlias() {
-		return new Classic_Collector_WhereOrJoin_SingleResult_Alias<SingleBuilt<TYPE>, TYPE>(this);
+		return new Classic_Collector_WhereOrJoin_SingleResult_Alias<SingleBuilt<TYPE>, TYPE>(getThisInitial());
 	}
 	
 	@Override

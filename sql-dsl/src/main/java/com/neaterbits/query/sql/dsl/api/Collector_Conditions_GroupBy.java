@@ -48,8 +48,16 @@ abstract class Collector_Conditions_GroupBy<MODEL, RESULT, AFTER_GROUP_BY>
 		super(last, newConditionsType);
 	}
 
+	Collector_Conditions_GroupBy(Collector_Conditions_Initial<MODEL, RESULT, AFTER_GROUP_BY> last, ConditionsType newConditionsType, CollectedQueryResult result) {
+		super(last, newConditionsType, result);
+	}
+	
 	Collector_Conditions_GroupBy(Collector_Base<MODEL> last, Collector_Clause collector) {
 		super(last, collector);
+	}
+
+	Collector_Conditions_GroupBy(Collector_Base<MODEL> last, Collector_Clause collector, CollectedQueryResult result) {
+		super(last, collector, result);
 	}
 	
 	Collector_Conditions_GroupBy(Collector_Query<MODEL> queryCollector, Collector_Clause collector) {
