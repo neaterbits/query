@@ -286,6 +286,8 @@ abstract class Short_Collector_Initial_Single_Any_Any_Base<MODEL, RESULT>
 
 	abstract <JOIN_FROM> IShortLogical_WhereOrJoin_SingleResult_Named<MODEL, RESULT, JOIN_FROM> namedTypedJoinCollector();
 
+	abstract <JOIN_FROM> IShortLogical_WhereOrJoin_SingleResult_Alias<MODEL, RESULT> aliasTypedJoinCollector();
+
 	@Override
 	public final <JOIN_FROM, JOIN_TO, R extends Comparable<R>>
 		IShortLogical_WhereOrJoin_SingleResult_Named<MODEL, RESULT, JOIN_FROM> innerJoin(Function<JOIN_FROM, R> from, Function<JOIN_TO, R> to) {
@@ -376,7 +378,9 @@ abstract class Short_Collector_Initial_Single_Any_Any_Base<MODEL, RESULT>
 	public final <R extends Comparable<R>> ISQLLogical_WhereOrJoin_SingleResult_Alias_And_Function<MODEL, RESULT>
 			innerJoin(Supplier<R> from, Supplier<R> to) {
 
-		return addInnerJoin(from, to);
+		addInnerJoin(from, to);
+		
+		return aliasTypedJoinCollector();
 	}
 
 
@@ -385,7 +389,9 @@ abstract class Short_Collector_Initial_Single_Any_Any_Base<MODEL, RESULT>
 	public final <JOIN_TO> ISQLLogical_WhereOrJoin_SingleResult_Alias_And_Function<MODEL, RESULT>
 			innerJoin(CollectionSupplier<JOIN_TO> collection, JOIN_TO alias) {
 		
-		return addInnerJoin(collection, alias);
+		addInnerJoin(collection, alias);
+
+		return aliasTypedJoinCollector();
 	}
 
 
@@ -394,7 +400,9 @@ abstract class Short_Collector_Initial_Single_Any_Any_Base<MODEL, RESULT>
 	public final <R extends Comparable<R>> ISQLLogical_WhereOrJoin_SingleResult_Alias_And_Function<MODEL, RESULT>
 			innerJoin(Supplier<R> from, Supplier<R> to, Consumer<IShortJoin_Sub_Alias<MODEL, RESULT, Void>> consumer) {
 
-		return addInnerJoin(from, to, consumer);
+		addInnerJoin(from, to, consumer);
+
+		return aliasTypedJoinCollector();
 	}
 
 
@@ -403,7 +411,9 @@ abstract class Short_Collector_Initial_Single_Any_Any_Base<MODEL, RESULT>
 	public final <JOIN_TO> ISQLLogical_WhereOrJoin_SingleResult_Alias_And_Function<MODEL, RESULT>
 			innerJoin(CollectionSupplier<JOIN_TO> collection, JOIN_TO alias, Consumer<IShortJoin_Sub_Alias<MODEL, RESULT, Void>> consumer) {
 		
-		return addInnerJoin(collection, alias, consumer);
+		addInnerJoin(collection, alias, consumer);
+
+		return aliasTypedJoinCollector();
 	}
 
 
@@ -412,7 +422,9 @@ abstract class Short_Collector_Initial_Single_Any_Any_Base<MODEL, RESULT>
 	public final <R extends Comparable<R>> ISQLLogical_WhereOrJoin_SingleResult_Alias_And_Function<MODEL, RESULT>
 			leftJoin(Supplier<R> from, Supplier<R> to) {
 
-		return addLeftJoin(from, to);
+		addLeftJoin(from, to);
+		
+		return aliasTypedJoinCollector();
 	}
 
 
@@ -421,7 +433,9 @@ abstract class Short_Collector_Initial_Single_Any_Any_Base<MODEL, RESULT>
 	public final <JOIN_TO> ISQLLogical_WhereOrJoin_SingleResult_Alias_And_Function<MODEL, RESULT>
 			leftJoin(CollectionSupplier<JOIN_TO> collection, JOIN_TO alias) {
 		
-		return addLeftJoin(collection, alias);
+		addLeftJoin(collection, alias);
+
+		return aliasTypedJoinCollector();
 	}
 
 
@@ -429,7 +443,9 @@ abstract class Short_Collector_Initial_Single_Any_Any_Base<MODEL, RESULT>
 	public final <R extends Comparable<R>> ISQLLogical_WhereOrJoin_SingleResult_Alias_And_Function<MODEL, RESULT>
 			leftJoin(Supplier<R> from, Supplier<R> to, Consumer<IShortJoin_Sub_Alias<MODEL, RESULT, Void>> consumer) {
 
-		return addLeftJoin(from, to, consumer);
+		addLeftJoin(from, to, consumer);
+		
+		return aliasTypedJoinCollector();
 	}
 
 
@@ -438,6 +454,8 @@ abstract class Short_Collector_Initial_Single_Any_Any_Base<MODEL, RESULT>
 	public final <JOIN_TO> ISQLLogical_WhereOrJoin_SingleResult_Alias_And_Function<MODEL, RESULT>
 			leftJoin(CollectionSupplier<JOIN_TO> collection, JOIN_TO alias, Consumer<IShortJoin_Sub_Alias<MODEL, RESULT, Void>> consumer) {
 
-		return addLeftJoin(collection, alias, consumer);
+		addLeftJoin(collection, alias, consumer);
+
+		return aliasTypedJoinCollector();
 	}
 }

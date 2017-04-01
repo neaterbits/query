@@ -35,15 +35,6 @@ final class Short_Collector_Single_Mapped_Named_Initial<MODEL, RESULT>
 	}
 
 	@Override
-	Collector_GroupBy<MODEL, RESULT> createGroupByCollector(
-			Collector_Base<MODEL> last, 
-			int[] groupByColumns,
-			Collector_Conditions_GroupBy<MODEL, RESULT, ?> collectorConditions) {
-		
-		return new Collector_GroupBy_Named<>(last, groupByColumns, collectorConditions);
-	}
-
-	@Override
 	public ISharedFunctions_Transform_Initial_Named<
 				MODEL,
 				RESULT, 

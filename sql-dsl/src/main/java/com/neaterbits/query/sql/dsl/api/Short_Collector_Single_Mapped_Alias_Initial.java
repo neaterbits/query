@@ -33,13 +33,6 @@ final class Short_Collector_Single_Mapped_Alias_Initial<MODEL, RESULT>
 	*/
 
 	@Override
-	Collector_GroupBy<MODEL, RESULT> createGroupByCollector(Collector_Base<MODEL> last, int[] groupByColumns,
-			Collector_Conditions_GroupBy<MODEL, RESULT, ?> collectorConditions) {
-
-		return new Collector_GroupBy_Alias<>(last, groupByColumns, collectorConditions);
-	}
-
-	@Override
 	public ISharedMapFunctions_All_Alias<
 				MODEL,
 				RESULT,

@@ -12,12 +12,6 @@ final class Short_Collector_Single_Mapped_Alias_TypedJoin<MODEL, RESULT, JOIN_TY
 		super(select, result, queryCollector);
 	}
 	
-
-	@Override
-	Collector_GroupBy<MODEL, RESULT> createGroupByCollector(Collector_Base<MODEL> last, int[] groupByColumns, Collector_Conditions_GroupBy<MODEL, RESULT, ?> collectorConditions) {
-		throw new UnsupportedOperationException("No group-by for single queries");
-	}
-
 	@Override
 	public ISharedFunctions_Transform_Initial_Alias<
 				MODEL,

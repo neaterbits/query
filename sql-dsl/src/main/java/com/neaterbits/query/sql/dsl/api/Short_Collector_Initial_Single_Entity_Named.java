@@ -14,7 +14,14 @@ public class Short_Collector_Initial_Single_Entity_Named<MODEL, RESULT>
 
 	@Override
 	<JOIN_FROM> IShortLogical_WhereOrJoin_SingleResult_Named<MODEL, RESULT, JOIN_FROM> namedTypedJoinCollector() {
-		throw new UnsupportedOperationException("Not named");
+		throw new UnsupportedOperationException("N/A");
+	}
+	
+	
+
+	@Override
+	<JOIN_FROM> IShortLogical_WhereOrJoin_SingleResult_Alias<MODEL, RESULT> aliasTypedJoinCollector() {
+		throw new UnsupportedOperationException("Not alias");
 	}
 
 	@Override

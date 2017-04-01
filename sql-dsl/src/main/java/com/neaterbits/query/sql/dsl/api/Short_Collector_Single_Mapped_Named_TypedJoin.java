@@ -90,11 +90,4 @@ public class Short_Collector_Single_Mapped_Named_TypedJoin<MODEL, RESULT, JOIN_T
 		> where() {
 		return whereNamed();
 	}
-
-	@Override
-	Collector_GroupBy<MODEL, RESULT> createGroupByCollector(Collector_Base<MODEL> last, int[] groupByColumns,
-			Collector_Conditions_GroupBy<MODEL, RESULT, ?> collectorConditions) {
-
-		throw new UnsupportedOperationException("Not supported for single-queries");
-	}
 }

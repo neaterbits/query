@@ -3,7 +3,7 @@ package com.neaterbits.query.sql.dsl.api;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
-abstract class Short_Collector_Single_Aggregate_Any_TypedJoin<MODEL, RESULT, JOIN_FROM, RET_TYPE> 
+abstract class Short_Collector_Single_Aggregate_Named_TypedJoin_Base<MODEL, RESULT, JOIN_FROM, RET_TYPE> 
 
 	extends Short_Collector_WhereOrJoin_Base<
 			MODEL,
@@ -40,7 +40,7 @@ abstract class Short_Collector_Single_Aggregate_Any_TypedJoin<MODEL, RESULT, JOI
 	implements IShortJoin_Named_Base<MODEL, RESULT, JOIN_FROM, RET_TYPE>
 
 {
-	Short_Collector_Single_Aggregate_Any_TypedJoin(Short_Collector_Initial_Single_Aggregate_Any<MODEL, RESULT> initial) {
+	Short_Collector_Single_Aggregate_Named_TypedJoin_Base(Short_Collector_Initial_Single_Aggregate_Any<MODEL, RESULT> initial) {
 		super(initial.getQueryCollector(), initial.clauseCollector);
 	}
 

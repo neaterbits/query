@@ -23,6 +23,12 @@ final class Short_Collector_Initial_Single_Aggregate_Named<RESULT>
 	}
 	
 	
+	@Override
+	<JOIN_FROM> IShortLogical_WhereOrJoin_SingleResult_Alias<SingleBuilt<RESULT>, RESULT> aliasTypedJoinCollector() {
+		throw new UnsupportedOperationException("N/A");
+	}
+	
+	
 	/*
 	@Override
 	public <JOIN_FROM, JOIN_TO, R extends Comparable<R>> IShortLogical_WhereOrJoin_SingleResult_Named<SingleBuilt<RESULT>, RESULT, JOIN_FROM>
@@ -97,8 +103,6 @@ final class Short_Collector_Initial_Single_Aggregate_Named<RESULT>
 		return addLeftJoin(collection, consumer);
 	}
 	*/
-
-
 
 
 	@Override

@@ -1,5 +1,6 @@
 package com.neaterbits.query.sql.dsl.api;
 
+import java.util.Arrays;
 import java.util.function.Function;
 
 /**
@@ -270,5 +271,13 @@ class QueryCollectorImpl<MODEL> extends Collector_Query<MODEL> {
 		}
 
 		return ret;
+	}
+
+
+	@Override
+	public String toString() {
+		return "QueryCollectorImpl [result=" + result + ", mappings=" + mappings + ", sources=" + sources + ", joins="
+				+ joins + ", clauses=" + clauses + ", groupByCollector=" + groupByCollector + ", orderByCollector="
+				+ orderByCollector + ", orderByColumns=" + Arrays.toString(orderByColumns) + "]";
 	}
 }

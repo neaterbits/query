@@ -3,7 +3,7 @@ package com.neaterbits.query.sql.dsl.api;
 import java.math.BigDecimal;
 import java.util.function.Supplier;
 
-abstract class Short_Collector_Any_MappedOrEntity_Any<
+abstract class Short_Collector_Any_MappedOrEntityOrAggregate_Any<
 			MODEL, 
 			RESULT,
 			
@@ -83,7 +83,7 @@ abstract class Short_Collector_Any_MappedOrEntity_Any<
 	private final EQueryResultGathering gathering;
 		
 		
-	Short_Collector_Any_MappedOrEntity_Any(BaseQuery select, CollectedQueryResult_Mapped result, Collector_Query<MODEL> queryCollector) {
+	Short_Collector_Any_MappedOrEntityOrAggregate_Any(BaseQuery select, CollectedQueryResult_Mapped result, Collector_Query<MODEL> queryCollector) {
 		super(new QueryCollectorImpl<MODEL>(select, queryCollector, result), new Collector_Clause(EConditionsClause.WHERE, ConditionsType.SINGLE));
 
 		if (getQueryCollector().getMappings() == null) {
@@ -95,12 +95,20 @@ abstract class Short_Collector_Any_MappedOrEntity_Any<
 		this.gathering = EQueryResultGathering.MAPPED;
 	}
 
-	Short_Collector_Any_MappedOrEntity_Any(BaseQuery select, CollectedQueryResult_Entity result, Collector_Query<MODEL> queryCollector) {
+	Short_Collector_Any_MappedOrEntityOrAggregate_Any(BaseQuery select, CollectedQueryResult_Entity result, Collector_Query<MODEL> queryCollector) {
 		super(new QueryCollectorImpl<MODEL>(select, queryCollector, result), new Collector_Clause(EConditionsClause.WHERE, ConditionsType.SINGLE));
 		
 		// do not set mapping collector
 		
 		this.gathering = EQueryResultGathering.ENTITY;
+	}
+
+	Short_Collector_Any_MappedOrEntityOrAggregate_Any(BaseQuery select, QueryResultAggregate result, Collector_Query<MODEL> queryCollector) {
+		super(new QueryCollectorImpl<MODEL>(select, queryCollector, result), new Collector_Clause(EConditionsClause.WHERE, ConditionsType.SINGLE));
+		
+		// do not set mapping collector
+		
+		this.gathering = EQueryResultGathering.AGGREGATE;
 	}
 	
 	@Override

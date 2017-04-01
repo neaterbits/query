@@ -1,7 +1,7 @@
 package com.neaterbits.query.sql.dsl.api;
 
 abstract class Short_Collector_Multi_Mapped_Any<MODEL, RESULT, AFTER_GROUP_BY>
-	extends Short_Collector_Any_MappedOrEntity_Any<
+	extends Short_Collector_Any_MappedOrEntityOrAggregate_Any<
 		MODEL,
 		RESULT,
 		
