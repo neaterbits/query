@@ -41,7 +41,18 @@ public class MappedOrderByTest extends GEN_BaseTestCase {
 
     @Test
     public void testMappedMultiNamed() {
-    	final Farm farm1 = new Farm("Farm1", "main2", "sub3");
+		verifyIsCompilable(
+				"list(FarmInfo.class)" +
+				".map(Farm::getName).to(FarmInfo::setName)" +
+				".orderBy(Farm::getName)");
+		
+		verifyIsNotCompilable(
+				Farm.class, "f",
+				"list(FarmInfo.class)" + 
+				".map(Farm::getName).to(FarmInfo::setName)" +
+				".orderBy(f::getName)");		
+
+		final Farm farm1 = new Farm("Farm1", "main2", "sub3");
     	final Farm farm2 = new Farm("Farm2", "main1", null);
     	final Farm farm3 = new Farm("Farm3", "main2", "sub2");
     	final Farm farm4 = new Farm("Farm4", "main3", "sub2");
@@ -118,6 +129,18 @@ public class MappedOrderByTest extends GEN_BaseTestCase {
 
     @Test
     public void testMappedMultiAlias() {
+		verifyIsCompilable(
+				Farm.class, "f",
+				"list(FarmInfo.class)" +
+				".map(f::getName).to(FarmInfo::setName)" +
+				".orderBy(f::getName)");
+		
+		verifyIsNotCompilable(
+				Farm.class, "f",
+				"list(FarmInfo.class)" + 
+				".map(f::getName).to(FarmInfo::setName)" +
+				".orderBy(Farm::getName)");
+		
     	final Farm farm1 = new Farm("Farm1", "main2", "sub3");
     	final Farm farm2 = new Farm("Farm2", "main1", null);
     	final Farm farm3 = new Farm("Farm3", "main2", "sub2");
