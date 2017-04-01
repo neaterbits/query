@@ -1,8 +1,8 @@
 package com.neaterbits.query.sql.dsl.api;
 
-final class QueryResultAvg extends QueryResultAggregate {
+final class CollectedQueryResult_Avg extends CollectedQueryResult_Aggregate {
 
-	QueryResultAvg(Class<?> type, Getter getter) {
+	CollectedQueryResult_Avg(Class<?> type, Getter getter) {
 		super(type, getter);
 	}
 

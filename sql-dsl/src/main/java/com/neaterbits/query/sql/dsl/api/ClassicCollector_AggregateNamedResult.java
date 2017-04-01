@@ -13,7 +13,7 @@ final class ClassicCollector_AggregateNamedResult<TYPE>
 
 		implements IClassicResult_Numeric_Named<TYPE> {
 
-	ClassicCollector_AggregateNamedResult(ClassicSelect select, QueryResultAggregate result, ModelCompiler<SingleBuilt<TYPE>> modelCompiler) {
+	ClassicCollector_AggregateNamedResult(ClassicSelect select, CollectedQueryResult_Aggregate result, ModelCompiler<SingleBuilt<TYPE>> modelCompiler) {
 		super(select, result, modelCompiler);
 	}
 

@@ -104,7 +104,7 @@ abstract class Short_Collector_Any_MappedOrEntityOrAggregate_Any<
 		this.gathering = EQueryResultGathering.ENTITY;
 	}
 
-	Short_Collector_Any_MappedOrEntityOrAggregate_Any(BaseQuery select, QueryResultAggregate result, Collector_Query<MODEL> queryCollector) {
+	Short_Collector_Any_MappedOrEntityOrAggregate_Any(BaseQuery select, CollectedQueryResult_Aggregate result, Collector_Query<MODEL> queryCollector) {
 		super(new QueryCollectorImpl<MODEL>(select, queryCollector, result), new Collector_Clause(EConditionsClause.WHERE, ConditionsType.SINGLE));
 		
 		// do not set mapping collector

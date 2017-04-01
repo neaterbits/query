@@ -1,8 +1,8 @@
 package com.neaterbits.query.sql.dsl.api;
 
-final class QueryResultMin extends QueryResultAggregate {
+final class CollectedQueryResult_Min extends CollectedQueryResult_Aggregate {
 
-	QueryResultMin(Class<?> type, Getter getter) {
+	CollectedQueryResult_Min(Class<?> type, Getter getter) {
 		super(type, getter);
 	}
 

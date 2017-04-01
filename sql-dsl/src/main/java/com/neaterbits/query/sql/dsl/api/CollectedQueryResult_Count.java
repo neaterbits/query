@@ -1,8 +1,8 @@
 package com.neaterbits.query.sql.dsl.api;
 
-final class QueryResultCount extends QueryResultAggregate {
+final class CollectedQueryResult_Count extends CollectedQueryResult_Aggregate {
 
-	QueryResultCount(Class<?> type, Getter getter) {
+	CollectedQueryResult_Count(Class<?> type, Getter getter) {
 		super(type, getter);
 	}
 

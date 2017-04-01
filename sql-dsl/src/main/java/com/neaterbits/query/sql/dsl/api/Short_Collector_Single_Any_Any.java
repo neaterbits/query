@@ -38,7 +38,7 @@ abstract class Short_Collector_Single_Any_Any<MODEL, RESULT, AFTER_GROUP_BY>
 		super(select, result, queryCollector);
 	}
 
-	Short_Collector_Single_Any_Any(BaseQuery select, QueryResultAggregate result, Collector_Query<MODEL> queryCollector) {
+	Short_Collector_Single_Any_Any(BaseQuery select, CollectedQueryResult_Aggregate result, Collector_Query<MODEL> queryCollector) {
 		super(select, result, queryCollector);
 	}
 

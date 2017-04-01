@@ -431,8 +431,8 @@ final class CompiledQuery {
 		else if (result instanceof CollectedQueryResult_Entity) {
 			ret = new CompiledQueryResult_Entity((CollectedQueryResult_Entity)result);
 		}
-		else if (result instanceof QueryResultAggregate) {
-			ret = compileAggregateQueryResult((QueryResultAggregate)result, sourceLookup);
+		else if (result instanceof CollectedQueryResult_Aggregate) {
+			ret = compileAggregateQueryResult((CollectedQueryResult_Aggregate)result, sourceLookup);
 		}
 		else {
 			throw new UnsupportedOperationException("Unknown query result type " + result.getClass().getName());
@@ -441,7 +441,7 @@ final class CompiledQuery {
 		return ret;
 	}
 	
-	private static CompiledQueryResult_Aggregate compileAggregateQueryResult(QueryResultAggregate result, SelectSourceLookup sources) throws CompileException {
+	private static CompiledQueryResult_Aggregate compileAggregateQueryResult(CollectedQueryResult_Aggregate result, SelectSourceLookup sources) throws CompileException {
 
 		final CompiledFieldReference fieldReference = sources.makeFieldReference(result, result.getGetter());
 

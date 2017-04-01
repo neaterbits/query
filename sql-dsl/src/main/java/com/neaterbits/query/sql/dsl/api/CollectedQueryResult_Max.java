@@ -1,7 +1,7 @@
 package com.neaterbits.query.sql.dsl.api;
 
-final class QueryResultMax extends QueryResultAggregate {
-	QueryResultMax(Class<?> type, Getter getter) {
+final class CollectedQueryResult_Max extends CollectedQueryResult_Aggregate {
+	CollectedQueryResult_Max(Class<?> type, Getter getter) {
 		super(type, getter);
 	}
 

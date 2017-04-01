@@ -154,30 +154,30 @@ final class ClassicSelect
 	@Override
 	@SuppressWarnings("unchecked")
 	<T, NUM, RESULT, RET> RET sum(Function<T, NUM> field, Class<NUM> numCl, Class<RESULT> resultCl) {
-		return (RET)new ClassicCollector_AggregateNamedResult<>(this, new QueryResultSum(resultCl, new FunctionGetter(field)), singleQueryCompiled());
+		return (RET)new ClassicCollector_AggregateNamedResult<>(this, new CollectedQueryResult_Sum(resultCl, new FunctionGetter(field)), singleQueryCompiled());
 	}
 
 	@Override
 	@SuppressWarnings("unchecked")
 	<T, NUM, RESULT, RET> RET max(Function<T, NUM> field, Class<NUM> numCl, Class<RESULT> resultCl) {
-		return (RET)new ClassicCollector_AggregateNamedResult<>(this, new QueryResultMax(resultCl, new FunctionGetter(field)), singleQueryCompiled());
+		return (RET)new ClassicCollector_AggregateNamedResult<>(this, new CollectedQueryResult_Max(resultCl, new FunctionGetter(field)), singleQueryCompiled());
 	}
 
 	@Override
 	@SuppressWarnings("unchecked")
 	<T, NUM, RESULT, RET> RET min(Function<T, NUM> field, Class<NUM> numCl, Class<RESULT> resultCl) {
-		return (RET)new ClassicCollector_AggregateNamedResult<>(this, new QueryResultMin(resultCl, new FunctionGetter(field)), singleQueryCompiled());
+		return (RET)new ClassicCollector_AggregateNamedResult<>(this, new CollectedQueryResult_Min(resultCl, new FunctionGetter(field)), singleQueryCompiled());
 	}
 	
 	@Override
 	@SuppressWarnings("unchecked")
 	<T, NUM, RESULT, RET> RET avg(Function<T, NUM> field, Class<NUM> numCl, Class<RESULT> resultCl) {
-		return (RET)new ClassicCollector_AggregateNamedResult<>(this, new QueryResultAvg(resultCl, new FunctionGetter(field)), singleQueryCompiled());
+		return (RET)new ClassicCollector_AggregateNamedResult<>(this, new CollectedQueryResult_Avg(resultCl, new FunctionGetter(field)), singleQueryCompiled());
 	}
 
 	@Override
 	<T, NUM, RESULT> IClassicResult_Numeric_Named<Long> count(Function<T, NUM> field, Class<NUM> numCl, Class<RESULT> resultCl) {
-		return new ClassicCollector_AggregateNamedResult<>(this, new QueryResultCount(resultCl, new FunctionGetter(field)), singleQueryCompiled());
+		return new ClassicCollector_AggregateNamedResult<>(this, new CollectedQueryResult_Count(resultCl, new FunctionGetter(field)), singleQueryCompiled());
 	}
 	
 
@@ -186,29 +186,29 @@ final class ClassicSelect
 	@Override
 	@SuppressWarnings("unchecked")
 	<NUM, RESULT, RET> RET sum(Supplier<NUM> field, Class<NUM> numCl, Class<RESULT> resultCl) {
-		return (RET)new ClassicCollector_AggregateAliasResult<>(this, new QueryResultSum(resultCl, new SupplierGetter(field)), singleQueryCompiled());
+		return (RET)new ClassicCollector_AggregateAliasResult<>(this, new CollectedQueryResult_Sum(resultCl, new SupplierGetter(field)), singleQueryCompiled());
 	}
 
 	@Override
 	@SuppressWarnings("unchecked")
 	<NUM, RESULT, RET> RET max(Supplier<NUM> field, Class<NUM> numCl, Class<RESULT> resultCl) {
-		return (RET)new ClassicCollector_AggregateAliasResult<>(this, new QueryResultMax(resultCl, new SupplierGetter(field)), singleQueryCompiled());
+		return (RET)new ClassicCollector_AggregateAliasResult<>(this, new CollectedQueryResult_Max(resultCl, new SupplierGetter(field)), singleQueryCompiled());
 	}
 
 	@Override
 	@SuppressWarnings("unchecked")
 	<NUM, RESULT, RET> RET min(Supplier<NUM> field, Class<NUM> numCl, Class<RESULT> resultCl) {
-		return (RET)new ClassicCollector_AggregateAliasResult<>(this, new QueryResultMin(resultCl, new SupplierGetter(field)), singleQueryCompiled());
+		return (RET)new ClassicCollector_AggregateAliasResult<>(this, new CollectedQueryResult_Min(resultCl, new SupplierGetter(field)), singleQueryCompiled());
 	}
 	
 	@Override
 	@SuppressWarnings("unchecked")
 	<NUM, RESULT, RET> RET avg(Supplier<NUM> field, Class<NUM> numCl, Class<RESULT> resultCl) {
-		return (RET)new ClassicCollector_AggregateAliasResult<>(this, new QueryResultAvg(resultCl, new SupplierGetter(field)), singleQueryCompiled());
+		return (RET)new ClassicCollector_AggregateAliasResult<>(this, new CollectedQueryResult_Avg(resultCl, new SupplierGetter(field)), singleQueryCompiled());
 	}
 
 	@Override
 	<NUM, RESULT> IClassicResult_Numeric_Alias<Long> count(Supplier<NUM> field, Class<NUM> numCl, Class<RESULT> resultCl) {
-		return new ClassicCollector_AggregateAliasResult<>(this, new QueryResultCount(resultCl, new SupplierGetter(field)), singleQueryCompiled());
+		return new ClassicCollector_AggregateAliasResult<>(this, new CollectedQueryResult_Count(resultCl, new SupplierGetter(field)), singleQueryCompiled());
 	}
 }

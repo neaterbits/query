@@ -16,7 +16,7 @@ final class ClassicCollector_AggregateAliasResult<TYPE>
 	
 		implements IClassicResult_Numeric_Alias<TYPE> {
 	
-	ClassicCollector_AggregateAliasResult(ClassicSelect select, QueryResultAggregate result, ModelCompiler<SingleBuilt<TYPE>> modelCompiler) {
+	ClassicCollector_AggregateAliasResult(ClassicSelect select, CollectedQueryResult_Aggregate result, ModelCompiler<SingleBuilt<TYPE>> modelCompiler) {
 		super(select, result, modelCompiler);
 	}
 	

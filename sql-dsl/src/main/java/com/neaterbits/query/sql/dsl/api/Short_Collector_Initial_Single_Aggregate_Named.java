@@ -12,7 +12,7 @@ final class Short_Collector_Initial_Single_Aggregate_Named<RESULT>
 	Short_Collector_Initial_Single_Aggregate_Named(
 				BaseQuery query,
 				ModelCompiler<SingleBuilt<RESULT>> modelCompiler,
-				QueryResultAggregate result) {
+				CollectedQueryResult_Aggregate result) {
 		
 		super(query, modelCompiler, result);
 	}

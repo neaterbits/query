@@ -131,7 +131,7 @@ final class ShortSelect extends BaseShortSelect<
 	@SuppressWarnings("unchecked")
 	<T, NUM, RESULT, RET> RET sum(Function<T, NUM> field, Class<NUM> numCl, Class<RESULT> resultCl) {
 		
-		final QueryResultSum result = new QueryResultSum(resultCl, new FunctionGetter(field));
+		final CollectedQueryResult_Sum result = new CollectedQueryResult_Sum(resultCl, new FunctionGetter(field));
 		
 		return (RET)new Short_Collector_Initial_Single_Aggregate_Named<RESULT>(this, singleQueryCollected(), result);
 	}
@@ -139,7 +139,7 @@ final class ShortSelect extends BaseShortSelect<
 	@Override
 	@SuppressWarnings("unchecked")
 	<T, NUM, RESULT, RET> RET max(Function<T, NUM> field, Class<NUM> numCl, Class<RESULT> resultCl) {
-		final QueryResultMax result = new QueryResultMax(resultCl, new FunctionGetter(field));
+		final CollectedQueryResult_Max result = new CollectedQueryResult_Max(resultCl, new FunctionGetter(field));
 		
 		return (RET)new Short_Collector_Initial_Single_Aggregate_Named<RESULT>(this, singleQueryCollected(), result);
 	}
@@ -147,7 +147,7 @@ final class ShortSelect extends BaseShortSelect<
 	@Override
 	@SuppressWarnings("unchecked")
 	<T, NUM, RESULT, RET> RET min(Function<T, NUM> field, Class<NUM> numCl, Class<RESULT> resultCl) {
-		final QueryResultMin result = new QueryResultMin(resultCl, new FunctionGetter(field));
+		final CollectedQueryResult_Min result = new CollectedQueryResult_Min(resultCl, new FunctionGetter(field));
 		
 		return (RET)new Short_Collector_Initial_Single_Aggregate_Named<RESULT>(this, singleQueryCollected(), result);
 	}
@@ -155,7 +155,7 @@ final class ShortSelect extends BaseShortSelect<
 	@Override
 	@SuppressWarnings("unchecked")
 	<T, NUM, RESULT, RET> RET avg(Function<T, NUM> field, Class<NUM> numCl, Class<RESULT> resultCl) {
-		final QueryResultAvg result = new QueryResultAvg(resultCl, new FunctionGetter(field));
+		final CollectedQueryResult_Avg result = new CollectedQueryResult_Avg(resultCl, new FunctionGetter(field));
 		
 		return (RET)new Short_Collector_Initial_Single_Aggregate_Named<RESULT>(this, singleQueryCollected(), result);
 	}
@@ -163,7 +163,7 @@ final class ShortSelect extends BaseShortSelect<
 	@Override
 	@SuppressWarnings("unchecked")
 	<T, NUM, RESULT> IShortBuilt_Numeric_Named<Long> count(Function<T, NUM> field, Class<NUM> numCl, Class<RESULT> resultCl) {
-		final QueryResultCount result = new QueryResultCount(resultCl, new FunctionGetter(field));
+		final CollectedQueryResult_Count result = new CollectedQueryResult_Count(resultCl, new FunctionGetter(field));
 		
 		return (IShortBuilt_Numeric_Named<Long>)new Short_Collector_Initial_Single_Aggregate_Named<RESULT>(this, singleQueryCollected(), result);
 	}
@@ -173,7 +173,7 @@ final class ShortSelect extends BaseShortSelect<
 	@SuppressWarnings("unchecked")
 	<NUM, RESULT, RET> RET sum(Supplier<NUM> field, Class<NUM> numCl, Class<RESULT> resultCl) {
 		
-		final QueryResultSum result = new QueryResultSum(resultCl, new SupplierGetter(field));
+		final CollectedQueryResult_Sum result = new CollectedQueryResult_Sum(resultCl, new SupplierGetter(field));
 		
 		return (RET)new Short_Collector_Initial_Single_Aggregate_Alias<RESULT>(this, singleQueryCollected(), result);
 	}
@@ -181,7 +181,7 @@ final class ShortSelect extends BaseShortSelect<
 	@Override
 	@SuppressWarnings("unchecked")
 	<NUM, RESULT, RET> RET max(Supplier<NUM> field, Class<NUM> numCl, Class<RESULT> resultCl) {
-		final QueryResultMax result = new QueryResultMax(resultCl, new SupplierGetter(field));
+		final CollectedQueryResult_Max result = new CollectedQueryResult_Max(resultCl, new SupplierGetter(field));
 		
 		return (RET)new Short_Collector_Initial_Single_Aggregate_Alias<RESULT>(this, singleQueryCollected(), result);
 	}
@@ -189,7 +189,7 @@ final class ShortSelect extends BaseShortSelect<
 	@Override
 	@SuppressWarnings("unchecked")
 	<NUM, RESULT, RET> RET min(Supplier<NUM> field, Class<NUM> numCl, Class<RESULT> resultCl) {
-		final QueryResultMin result = new QueryResultMin(resultCl, new SupplierGetter(field));
+		final CollectedQueryResult_Min result = new CollectedQueryResult_Min(resultCl, new SupplierGetter(field));
 		
 		return (RET)new Short_Collector_Initial_Single_Aggregate_Alias<RESULT>(this, singleQueryCollected(), result);
 	}
@@ -197,7 +197,7 @@ final class ShortSelect extends BaseShortSelect<
 	@Override
 	@SuppressWarnings("unchecked")
 	<NUM, RESULT, RET> RET avg(Supplier<NUM> field, Class<NUM> numCl, Class<RESULT> resultCl) {
-		final QueryResultAvg result = new QueryResultAvg(resultCl, new SupplierGetter(field));
+		final CollectedQueryResult_Avg result = new CollectedQueryResult_Avg(resultCl, new SupplierGetter(field));
 		
 		return (RET)new Short_Collector_Initial_Single_Aggregate_Alias<RESULT>(this, singleQueryCollected(), result);
 	}
@@ -205,7 +205,7 @@ final class ShortSelect extends BaseShortSelect<
 	@Override
 	@SuppressWarnings("unchecked")
 	<NUM, RESULT> IShortBuilt_Numeric_Alias<Long> count(Supplier<NUM> field, Class<NUM> numCl, Class<RESULT> resultCl) {
-		final QueryResultCount result = new QueryResultCount(resultCl, new SupplierGetter(field));
+		final CollectedQueryResult_Count result = new CollectedQueryResult_Count(resultCl, new SupplierGetter(field));
 		
 		return (IShortBuilt_Numeric_Alias<Long>)new Short_Collector_Initial_Single_Aggregate_Alias<RESULT>(this, singleQueryCollected(), result);
 	}

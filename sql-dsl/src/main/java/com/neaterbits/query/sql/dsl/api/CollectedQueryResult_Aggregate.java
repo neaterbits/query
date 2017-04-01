@@ -3,7 +3,7 @@ package com.neaterbits.query.sql.dsl.api;
 import java.math.BigDecimal;
 import java.util.Date;
 
-abstract class QueryResultAggregate extends CollectedQueryResult {
+abstract class CollectedQueryResult_Aggregate extends CollectedQueryResult {
 
 	private final Getter getter;
 	private final EAggregateType inputNumericType;
@@ -11,7 +11,7 @@ abstract class QueryResultAggregate extends CollectedQueryResult {
 	
 	abstract EAggregateFunction getAggregateFunction();
 	
-	QueryResultAggregate(Class<?> type, Getter getter) {
+	CollectedQueryResult_Aggregate(Class<?> type, Getter getter) {
 		super(type);
 		
 		if (getter == null) {

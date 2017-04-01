@@ -4,9 +4,9 @@ final class CompiledQueryResult_Aggregate extends CompiledQueryResult {
 
 	private final CompiledFieldReference field;
 	
-	private final QueryResultAggregate original;
+	private final CollectedQueryResult_Aggregate original;
 	
-	CompiledQueryResult_Aggregate(QueryResultAggregate original, CompiledFieldReference field) {
+	CompiledQueryResult_Aggregate(CollectedQueryResult_Aggregate original, CompiledFieldReference field) {
 		super(original);
 		
 		if (field == null) {
