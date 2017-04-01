@@ -80,15 +80,19 @@ abstract class Short_Collector_Any_MappedOrEntityOrAggregate_Any<
 	{
 	
 		
-	@Deprecated // should not be necessary here as is in result
-	private final EQueryResultGathering gathering;
+	//@Deprecated // should not be necessary here as is in result
+	//private final EQueryResultGathering gathering;
 
 	Short_Collector_Any_MappedOrEntityOrAggregate_Any(Collector_Query<MODEL> queryCollector) {
 		super(queryCollector, new Collector_Clause(EConditionsClause.WHERE, ConditionsType.SINGLE));
 		
 		// do not set mapping collector
 		
-		this.gathering = queryCollector.getResult().getGathering();
+		//this.gathering = queryCollector.getResult().getGathering();
+	}
+	
+	private EQueryResultGathering getGathering() {
+		return getQueryCollector().getResult().getGathering();
 	}
 	
 		
@@ -101,7 +105,7 @@ abstract class Short_Collector_Any_MappedOrEntityOrAggregate_Any<
 
 		// Collect mappings, should ever only create one of these
 		
-		this.gathering = EQueryResultGathering.MAPPED;
+		//this.gathering = EQueryResultGathering.MAPPED;
 	}
 
 	Short_Collector_Any_MappedOrEntityOrAggregate_Any(Collector_Query<MODEL> queryCollector, CollectedQueryResult_Entity result) {
@@ -109,7 +113,7 @@ abstract class Short_Collector_Any_MappedOrEntityOrAggregate_Any<
 		
 		// do not set mapping collector
 		
-		this.gathering = EQueryResultGathering.ENTITY;
+		//this.gathering = EQueryResultGathering.ENTITY;
 	}
 
 	Short_Collector_Any_MappedOrEntityOrAggregate_Any(Collector_Query<MODEL> queryCollector, CollectedQueryResult_Aggregate result) {
@@ -117,19 +121,19 @@ abstract class Short_Collector_Any_MappedOrEntityOrAggregate_Any<
 		
 		// do not set mapping collector
 		
-		this.gathering = EQueryResultGathering.AGGREGATE;
+		//this.gathering = EQueryResultGathering.AGGREGATE;
 	}
 	
 	Short_Collector_Any_MappedOrEntityOrAggregate_Any(Collector_Conditions_Initial<MODEL, RESULT, AFTER_GROUP_BY> last) {
 		super(last);
 		
-		this.gathering = last.getQueryCollector().getResult().getGathering();
+		//this.gathering = last.getQueryCollector().getResult().getGathering();
 	}
 
 	Short_Collector_Any_MappedOrEntityOrAggregate_Any(Collector_Conditions_Initial<MODEL, RESULT, AFTER_GROUP_BY> last, CollectedQueryResult result) {
 		super(last, result);
 		
-		this.gathering = result != null ? result.getGathering() : last.getQueryCollector().getResult().getGathering();
+		//this.gathering = result != null ? result.getGathering() : last.getQueryCollector().getResult().getGathering();
 	}
 	
 	@Override
@@ -166,7 +170,7 @@ abstract class Short_Collector_Any_MappedOrEntityOrAggregate_Any<
 	@Override
 	public final MappingCollector getMappingCollector() {
 		
-		if (gathering != EQueryResultGathering.MAPPED) {
+		if (getGathering() != EQueryResultGathering.MAPPED) {
 			throw new IllegalStateException("Only to be called for mapped queries");
 		}
 
