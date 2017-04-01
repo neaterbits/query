@@ -5,7 +5,7 @@ import org.junit.Test;
 import com.neaterbits.query.jpatest.GEN_BaseTestCase;
 
 
-public class EntityOrderByOrderByDescTest extends GEN_BaseTestCase {
+public class EntityOrderByAscTest extends GEN_BaseTestCase {
 
 
     @Test

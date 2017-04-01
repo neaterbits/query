@@ -53,13 +53,13 @@ public enum GEN_Functionality {
 	ORDER_BY(false, true, ENTITY, MAPPED, JOIN, WHERE, AND, OR, GROUP_BY, HAVING),  
 
 	// Smoke-test for explicit order by
-	ORDER_BY_ASC(false, true, 
+	ASC(false, true, 
 			// exclude complex cases to avoid too many permutations
 			// since we're testing base orderby anyway
 			stack -> stack.size() == 2,
 			null,
 			ORDER_BY),
-	ORDER_BY_DESC(false, true,
+	DESC(false, true,
 			// exclude complex cases to avoid too many permutations
 			// since we're testing base orderby anyway
 			stack -> stack.size() == 2,

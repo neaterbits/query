@@ -5,29 +5,29 @@ import org.junit.Test;
 import com.neaterbits.query.jpatest.GEN_BaseTestCase;
 
 
-public class MappedOrderByOrderByDescTest extends GEN_BaseTestCase {
+public class EntityOrderByDescTest extends GEN_BaseTestCase {
 
 
     @Test
-    public void testMappedSingleNamed() {
+    public void testEntitySingleNamed() {
         assertThat(true).isEqualTo(false);
     }
 
 
     @Test
-    public void testMappedSingleAlias() {
+    public void testEntitySingleAlias() {
         assertThat(true).isEqualTo(false);
     }
 
 
     @Test
-    public void testMappedMultiNamed() {
+    public void testEntityMultiNamed() {
         assertThat(true).isEqualTo(false);
     }
 
 
     @Test
-    public void testMappedMultiAlias() {
+    public void testEntityMultiAlias() {
         assertThat(true).isEqualTo(false);
     }
 }
