@@ -47,12 +47,6 @@
 	// display: table;
 }
 
-.example_tab_right {
-	writing-mode: sideways-rl;
-	display: block;
-	padding-top: 1em;
-}
-
 .example_tab_left_layout {
 	display: block;
 }
@@ -77,7 +71,9 @@
 }
 */
 
-#example_tabs_left {
-//	float: right;
+.example_tabs_left_layout {
+	float: right;
+	
+	moz-margin-right: 20px;
 }
 

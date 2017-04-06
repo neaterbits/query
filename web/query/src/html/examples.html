@@ -7,6 +7,9 @@
 <link href="css/collection_query.css" type="text/css" rel="stylesheet">
 <link href="css/examples_common.css" type="text/css" rel="stylesheet">
 <link href="css/examples_layout_compat.css" type="text/css" rel="stylesheet">
+<!-- 
+<link href="css/examples_layout_flexbox.css" type="text/css" rel="stylesheet">
+ -->
 </head>
 
 
@@ -47,10 +50,14 @@
 				 style="display: table-cell; width: 10%; height: 100%; position: relative;">
 -->				 
 				 
-				 <div id="example_tabs_left">
-					<span id="tabbutton_plain"    	class="example_tab_left_layout example_tab_left_style" onclick="showExample('join', 'plain')">Plain</span>
-					<span id="tabbutton_joined"    	class="example_tab_left_layout example_tab_left_style" onclick="showExample('join', 'joined')">Joined</span>
-					<span id="tabbutton_subjoined"  class="example_tab_left_layout example_tab_left_style" onclick="showExample('join', 'subjoined')">Sub-Joined</span>
+				 <div id="example_tabs_left" class="example_tabs_left_layout">
+				 
+				 	<div id="example_tabs_left_workaround" style="display: inline-inline; position: relative;">
+						<span id="tabbutton_plain"    	class="example_tab_left_layout example_tab_left_style" onclick="showExample('join', 'plain')">Plain</span>
+						<span id="tabbutton_joined"    	class="example_tab_left_layout example_tab_left_style" onclick="showExample('join', 'joined')">Joined</span>
+						<span id="tabbutton_subjoined"  class="example_tab_left_layout example_tab_left_style" onclick="showExample('join', 'subjoined')">Sub-Joined</span>
+						
+					</div>
  				</div>
 			</div>
 	
