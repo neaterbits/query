@@ -1,0 +1,79 @@
+
+ - samme størrelse vertikalt : display: table;
+
+ - sentrere div horisontalt
+	margin-left: auto;
+	margin-right: auto;
+
+ - hover:
+	z-index: 100;
+	position: absolute; // for z-index to work
+
+ - kode
+	font-family: monospace;
+
+ - avrunda borders:
+
+	border-radius: 0.5em;
+
+
+ - gradient background:
+	background: linear-gradient(to bottom right, #88EE88, #DDFFDD);
+
+
+ - gradient border:
+
+  	-moz-border-image: -moz-linear-gradient(to bottom, #44CC66, #77EE77);
+
+
+ 
+  - annen cursor:
+	cursor: pointer;
+
+
+ - sentrere tekst horisontalt:
+	text-align: center;
+
+ - sentrere vetikalt:
+ 	display: table-cell;
+	vertical-align: middle;
+
+ - øverst i table-cell:
+	vertical-align: top;
+
+
+<div id="entity_plain_named">entity_plain_named</div>
+<div id="entity_plain_alias">entity_plain_named</div>
+<div id="entity_joined_named">entity_joined_named</div>
+<div id="entity_joined_alias">entity_joine_alias</div>
+<div id="entity_subjoined_named">entity_subjoined_named</div>
+<div id="entity_subjoined_alias">entity_subjoined_alias</div>
+
+<div id="mapped_plain_named">mapped_plain_named</div>
+<div id="mapped_plain_alias">mapped_plain_alias</div>
+<div id="mapped_joined_named">mapped_joined_named</div>
+<div id="mapped_joined_alias">mapped_joined_alias</div>
+<div id="mapped_subjoined_named">mapped_subjoined_named</div>
+<div id="mapped_subjoined_alias">mapped_subjoined_alias</div>
+
+<div id="aggregate_plain_named">aggregate_plain_named</div>
+<div id="aggregate_plain_alias">aggregate_plain_alias</div>
+<div id="aggregate_joined_named">aggregate_joined_named</div>
+<div id="aggregate_joined_alias">aggregate_joined_alias</div>
+<div id="aggregate_subjoined_named">aggregate_subjoined_named</div>
+<div id="aggregate_subjoined_alias">aggregate_subjoined_alias</div>
+
+<div id="grouping_plain_named">grouping_plain_named</div>
+<div id="grouping_plain_alias">grouping_plain_alias</div>
+<div id="grouping_joined_named">grouping_joined_named</div>
+<div id="grouping_joined_alias">grouping_joined_alias</div>
+<div id="grouping_subjoined_named">grouping_subjoined_named</div>
+<div id="grouping_subjoined_alias">grouping_subjoined_alias</div>
+
+
+	var selections_type  	= [ 'entity', 'mapped', 'aggregate', 'grouping' ];
+	var selections_join 	= [ 'plain', 'joined', 'sub_joined' ];
+	var selections_named 	= [ 'named', 'alias' ];
+
+
+

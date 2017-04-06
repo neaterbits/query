@@ -3,31 +3,192 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<base href="..">
+<link href="css/collection_query.css" type="text/css" rel="stylesheet">
 </head>
-<body>
 
-	<!-- 
-								 <span class="main_header2">Example to give a general idea:</span>
-								 <br/>
-										
-								 <pre class="java_code">
-	 List<Company> acmes = select.list(Company.class).where(Company::getName).like("%Acme%").get()"</pre>
-					
-								 <br/>
+
+<body style="width: 90%; height: 100%;" onload="showSelectedExample();">
+
+
+	<p>Click on the tabs below to see query examples for various combinations</p>								 
 	
-								 This will is equivalent to JPQL
-								 <br/>
-								 
-								 <pre class="sql_code">
- 	Query q = em.createQuery("SELECT c from Company c where c.name like "%acme%");
- 	List<Company> acmes = q.execute()</pre>
-								 
-								 <br/>
-								 
-								 The JPQL query is arguably simpler, but code is required to create the query 
-							 </p>
-							 
- -->							 
+	
+	
+	<!--  3x2 table -->
+	<div id="examples_div" style="display: table; height: 100%; width: 70%; margin-left: auto; margin-right: auto;">
+
+		<!-- Features at top -->
+		<div id="examples_top_tabbuttons" style="display: table-row; height:20%; ">
+		
+			<div style="display: table-cell;">
+				<!-- empty upper-left corner -->
+			</div>
+
+			<div style="display: table-cell;">
+				<span id="tabbutton_entity"    	class="tab example_tab_top" onclick="showExample('type', 'entity')">Entity</span>
+				<span id="tabbutton_mapped"     class="tab example_tab_top" onclick="showExample('type', 'mapped')">Mapped</span>
+				<span id="tabbutton_aggregate" 	class="tab example_tab_top" onclick="showExample('type', 'aggregate')">Aggregate</span>
+				<span id="tabbutton_grouped" 	class="tab example_tab_top" onclick="showExample('type', 'grouped')">Group By</span>
+			</div>
+
+			<div style="display: table-cell;">
+				<!-- empty upper-right corner -->
+			</div>
+		</div>
+
+		<div id = "examples_main" style="display: table-row; height: 80%; ">
+
+			<div id="examples_left_tabbuttons" style="display: table-cell; width: 10%; height: 100%;">
+<!-- 
+				<div style="display: table; height: 100%;">
+					<div style="display: table-row; height: 33%;">
+						<div style="">
+						
+ -->						
+							<span id="tabbutton_plain"    	class="example_tab_left" onclick="showExample('join', 'plain')">Plain</span>
+<!-- 
+						</div>
+					</div>
+					<div style="display: table-row; height: 33%;">
+						<div style="">
+ -->						
+							<span id="tabbutton_joined"    	class="example_tab_left" onclick="showExample('join', 'joined')">Joined</span>
+<!-- 
+						</div>
+					</div>
+					<div style="display: table-row; height: 33%;">
+						<div style="">
+ -->						
+							<span id="tabbutton_subjoined"  class="example_tab_left" onclick="showExample('join', 'subjoined')">Sub-Joined</span>
+<!-- 
+						</div>
+					</div>
+				</div>
+ -->						
+			</div>
+	
+			<div id="examples_display" style="display:table-cell; height: 100%; vertical-align: middle; text-align: center;">
+				<div id="example_entity_plain_named"		class="example">entity_plain_named</div>
+				<div id="example_entity_plain_alias"		class="example">entity_plain_named</div>
+				<div id="example_entity_joined_named"		class="example">entity_joined_named</div>
+				<div id="example_entity_joined_alias"		class="example">entity_joine_alias</div>
+				<div id="example_entity_subjoined_named"	class="example">entity_subjoined_named</div>
+				<div id="example_entity_subjoined_alias"	class="example">entity_subjoined_alias</div>
+				
+				<div id="example_mapped_plain_named"		class="example">mapped_plain_named</div>
+				<div id="example_mapped_plain_alias"		class="example">mapped_plain_alias</div>
+				<div id="example_mapped_joined_named"		class="example">mapped_joined_named</div>
+				<div id="example_mapped_joined_alias"		class="example">mapped_joined_alias</div>
+				<div id="example_mapped_subjoined_named"	class="example">mapped_subjoined_named</div>
+				<div id="example_mapped_subjoined_alias"	class="example">mapped_subjoined_alias</div>
+				
+				<div id="example_aggregate_plain_named"		class="example">aggregate_plain_named</div>
+				<div id="example_aggregate_plain_alias"		class="example">aggregate_plain_alias</div>
+				<div id="example_aggregate_joined_named"	class="example">aggregate_joined_named</div>
+				<div id="example_aggregate_joined_alias"	class="example">aggregate_joined_alias</div>
+				<div id="example_aggregate_subjoined_named"	class="example">aggregate_subjoined_named</div>
+				<div id="example_aggregate_subjoined_alias"	class="example">aggregate_subjoined_alias</div>
+				
+				<div id="example_grouping_plain_named"		class="example">grouping_plain_named</div>
+				<div id="example_grouping_plain_alias"		class="example">grouping_plain_alias</div>
+				<div id="example_grouping_joined_named"		class="example">grouping_joined_named</div>
+				<div id="example_grouping_joined_alias"		class="example">grouping_joined_alias</div>
+				<div id="example_grouping_subjoined_named"	class="example">grouping_subjoined_named</div>
+				<div id="example_grouping_subjoined_alias"	class="example">grouping_subjoined_alias</div>
+
+			</div>
+
+			<div id="examples_right_tabbuttons" style="display: table-cell; width: 10%;">
+				<span id="tabbutton_named"    	class="example_tab_right" onclick="showExample('named', 'named')">Named</span>
+				<span id="tabbutton_alias"    	class="example_tab_right" onclick="showExample('named', 'alias')">Alias</span>
+			</div>
+		</div>
+
+<!-- 
+		<div id="examples_bottom_tabbuttons" style="display: table-row;">
+		</div>
+-->
+
+	</div>
+	
+	<p>After div</p>
 
 </body>
+
+
+<script type="text/javascript">
+
+	var tab_selected_type   = 'mapped';
+	var tab_selected_join   = 'plain';
+	var tab_selected_named  = 'named';
+
+	var selections_type  	= [ 'entity', 'mapped', 'aggregate', 'grouping' ];
+	var selections_join 	= [ 'plain', 'joined', 'subjoined' ];
+	var selections_named 	= [ 'named', 'alias' ];
+
+	var tabs = ['tab_intro', 'tab_faq', 'tab_license' ]; // 'tab_example', 'tab_demo', 'tab_download' ];
+
+	function showExample(selectionType, selected) {
+	
+		if (selectionType === 'type') {
+			tab_selected_type = selected;
+		}
+		else if (selectionType === 'join') {
+			tab_selected_join = selected;
+		}
+		else if (selectionType === 'named') {
+			tab_selected_named = selected;
+		}
+		else {
+			alert('Unknown selection type ' + selectionType);
+		}
+
+		showSelectedExample();
+	}
+
+	function showSelectedExample() {
+		// Find the div to show by just combining the selections, hide all others,
+		// must loop over the complete matrix
+
+		for (var type_idx = 0; type_idx < selections_type.length; type_idx ++) {
+
+			for (var join_idx = 0; join_idx < selections_join.length; join_idx ++) {
+
+				for (var named_idx = 0; named_idx < selections_named.length; named_idx ++) {
+
+					var type  = selections_type[type_idx];
+					var join  = selections_join[join_idx];
+					var named = selections_named[named_idx];
+
+					var div_id = "example_" + type + "_" + join + "_" + named;
+
+					var example_div = document.getElementById(div_id);
+		
+					if (example_div === null) {
+						alert("no example div: " + example_div + ' for ' + div_id);
+					}
+					
+
+					var visible = 
+						   type  === tab_selected_type
+						&& join  === tab_selected_join
+						&& named === tab_selected_named
+						;
+						
+					/*
+					if (visible) {
+						alert('set ' + div_id + ' to visible');
+					}
+					*/
+						
+					example_div.hidden = !visible
+				}
+			}
+		}
+	}
+
+</script>
+
+
 </html>
