@@ -1,0 +1,37 @@
+@CHARSET "UTF-8";
+.examples_div {
+	margin-left: auto;
+	margin-right: auto;
+}
+
+
+.example_tab_left_style {
+	writing-mode: sideways-lr;
+	
+	padding-top: 1em;
+	padding-bottom: 1em;
+	
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+	
+	cursor: pointer;
+	
+	//border-bottom: 0px;
+
+
+	border-top-left-radius: 0.5em;
+	border-bottom-left-radius: 0.5em;
+	
+	//background: linear-gradient(to bottom, #44CC44, #88EE88);
+	background: linear-gradient(to right, #77CC77, #88EE88);
+	
+}
+
+
+
+
+#examples_display {
+	border: 1px solid;
+	
+	border-color: #44CC44;
+}

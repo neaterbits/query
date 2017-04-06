@@ -5,70 +5,56 @@
 <title>Insert title here</title>
 <base href="..">
 <link href="css/collection_query.css" type="text/css" rel="stylesheet">
+<link href="css/examples_common.css" type="text/css" rel="stylesheet">
+<link href="css/examples_layout_compat.css" type="text/css" rel="stylesheet">
 </head>
 
 
 <body style="width: 90%; height: 100%;" onload="showSelectedExample();">
 
-
 	<p>Click on the tabs below to see query examples for various combinations</p>								 
-	
-	
-	
+
 	<!--  3x2 table -->
-	<div id="examples_div" style="display: table; height: 100%; width: 70%; margin-left: auto; margin-right: auto;">
+	<div id="examples_div" class="examples_div_layout">
 
 		<!-- Features at top -->
-		<div id="examples_top_tabbuttons" style="display: table-row; height:20%; ">
-		
-			<div style="display: table-cell;">
+		<div id="examples_top_tabbuttons" class="examples_top_tabbuttons_layout">
+
+			<div class="examples_upper_left_layout">
 				<!-- empty upper-left corner -->
 			</div>
 
-			<div style="display: table-cell;">
+			<div class="examples_top_tabbuttons_cell_layout">
 				<span id="tabbutton_entity"    	class="tab example_tab_top" onclick="showExample('type', 'entity')">Entity</span>
 				<span id="tabbutton_mapped"     class="tab example_tab_top" onclick="showExample('type', 'mapped')">Mapped</span>
 				<span id="tabbutton_aggregate" 	class="tab example_tab_top" onclick="showExample('type', 'aggregate')">Aggregate</span>
 				<span id="tabbutton_grouped" 	class="tab example_tab_top" onclick="showExample('type', 'grouped')">Group By</span>
 			</div>
 
-			<div style="display: table-cell;">
+			<div class="examples_upper_right_layout">
 				<!-- empty upper-right corner -->
 			</div>
 		</div>
 
-		<div id = "examples_main" style="display: table-row; height: 80%; ">
+		<div id = "examples_main" class="examples_main_layout">
+<!-- 
+		style="display: table-row; height: 80%; position: relative;">
 
-			<div id="examples_left_tabbuttons" style="display: table-cell; width: 10%; height: 100%;">
-<!-- 
-				<div style="display: table; height: 100%;">
-					<div style="display: table-row; height: 33%;">
-						<div style="">
-						
- -->						
-							<span id="tabbutton_plain"    	class="example_tab_left" onclick="showExample('join', 'plain')">Plain</span>
-<!-- 
-						</div>
-					</div>
-					<div style="display: table-row; height: 33%;">
-						<div style="">
- -->						
-							<span id="tabbutton_joined"    	class="example_tab_left" onclick="showExample('join', 'joined')">Joined</span>
-<!-- 
-						</div>
-					</div>
-					<div style="display: table-row; height: 33%;">
-						<div style="">
- -->						
-							<span id="tabbutton_subjoined"  class="example_tab_left" onclick="showExample('join', 'subjoined')">Sub-Joined</span>
-<!-- 
-						</div>
-					</div>
-				</div>
- -->						
+ -->
+			<div id="examples_left_tabbuttons" class="examples_left_tabbuttons_cell_layout">
+			
+<!--  
+				 style="display: table-cell; width: 10%; height: 100%; position: relative;">
+-->				 
+				 
+				 <div id="example_tabs_left">
+					<span id="tabbutton_plain"    	class="example_tab_left_layout example_tab_left_style" onclick="showExample('join', 'plain')">Plain</span>
+					<span id="tabbutton_joined"    	class="example_tab_left_layout example_tab_left_style" onclick="showExample('join', 'joined')">Joined</span>
+					<span id="tabbutton_subjoined"  class="example_tab_left_layout example_tab_left_style" onclick="showExample('join', 'subjoined')">Sub-Joined</span>
+ 				</div>
 			</div>
 	
-			<div id="examples_display" style="display:table-cell; height: 100%; vertical-align: middle; text-align: center;">
+			<div id="examples_display" class="examples_display_layout">
 				<div id="example_entity_plain_named"		class="example">entity_plain_named</div>
 				<div id="example_entity_plain_alias"		class="example">entity_plain_named</div>
 				<div id="example_entity_joined_named"		class="example">entity_joined_named</div>
@@ -99,7 +85,7 @@
 
 			</div>
 
-			<div id="examples_right_tabbuttons" style="display: table-cell; width: 10%;">
+			<div id="examples_right_tabbuttons" class="examples_right_tabbuttons_cell_layout">
 				<span id="tabbutton_named"    	class="example_tab_right" onclick="showExample('named', 'named')">Named</span>
 				<span id="tabbutton_alias"    	class="example_tab_right" onclick="showExample('named', 'alias')">Alias</span>
 			</div>

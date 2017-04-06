@@ -9,13 +9,11 @@
 }
 
 #box {
-
 	padding-top	 : 1.7em;
 	padding-left : 2.5em;
 	padding-right : 2.5em;
 	padding-bottom : 1.7em;
 }
- 
 
 #outer {
 
@@ -56,21 +54,50 @@
 .tab {
 	font-size: 2.1 em;
 	padding: 0.2em;
-
-	background-color: #44CC44;
-
+	
 	border-top-left-radius: 0.5em;
 	border-top-right-radius: 0.5em;
-	
-	border-style: solid;
-	border-color: #40C140;
-	
-	border-bottom: 0px;
 
 	padding-left: 3em;
 	padding-right: 3em;
-	
+
 	cursor: pointer;
+}
+
+
+.tab_unselected {
+	// background-color: #44CC44;
+	
+	//border-style: solid;
+	//border-color: #40C140;
+	//border-color: #70C170;
+	//border-color: #44CC66;
+	//border-color: #77EE77;
+	
+	// from outer -moz-border-image: -moz-linear-gradient(to bottom right, #77EE77, #CCFFCC);
+	-moz-border-image: -moz-linear-gradient(to bottom, #44CC66, #77EE77);
+	
+	border-bottom: 0px;
+	
+	//background: linear-gradient(to bottom, #44CC44, #88EE88);
+	background: linear-gradient(to bottom, #77CC77, #88EE88);
+}
+
+.tab_selected {
+
+	//border-style: solid;
+	//border-color: #40C140;
+	//border-color: #70C170;
+	//border-color: #44CC66;
+	//border-color: #77EE77;
+
+	// from outer -moz-border-image: -moz-linear-gradient(to bottom right, #77EE77, #CCFFCC);
+	-moz-border-image: -moz-linear-gradient(to bottom, #44CC66, #77EE77);
+
+	border-bottom: 0px;
+
+	//background: linear-gradient(to bottom, #44CC44, #88EE88);
+	background: linear-gradient(to bottom, #77CC77, #88EE88);
 }
 
 .tab_page {
@@ -79,6 +106,9 @@
 	overflow: hidden;
 }
 
+.tab example_tab_top {
+	display: table-cell;
+}
 
 #tabpanel {
 	
