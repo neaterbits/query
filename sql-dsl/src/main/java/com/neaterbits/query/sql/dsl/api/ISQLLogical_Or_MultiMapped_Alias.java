@@ -7,6 +7,8 @@ public interface ISQLLogical_Or_MultiMapped_Alias<MODEL, RESULT>
 				ISQLLogical_Or_MultiMapped_Alias<MODEL, RESULT>,
 				ISQLLogical_And_NonProcessResult_Alias<MODEL, RESULT>>,
 				
+			ISharedProcessResult_All_Alias<MODEL, RESULT>,
+				
 			ISharedCompileEndClause<MODEL> {
 
 }

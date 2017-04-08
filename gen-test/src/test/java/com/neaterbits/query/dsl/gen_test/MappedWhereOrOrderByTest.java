@@ -15,18 +15,22 @@ public class MappedWhereOrOrderByTest extends GEN_BaseTestCase {
 		verifyIsCompilable(
 				"one(FarmInfo.class)" +
 				".map(Farm::getName).to(FarmInfo::setName)" +
-    			".where(Farm::getName).startsWith(\"Farm\")");
+    			".where(Farm::getName).startsWith(\"Farm\")" +
+				".or(Farm::getSubFarmId).endsWith(\"2\")"
+				);
 		
 		verifyIsCompilable(
 				"list(FarmInfo.class)" +
 				".map(Farm::getName).to(FarmInfo::setName)" +
     			".where(Farm::getName).startsWith(\"Farm\")" +
+				".and(Farm::getSubFarmId).endsWith(\"2\")" +
 				".orderBy(Farm::getName)");
 		
 		verifyIsNotCompilable(
 				"one(Farm.class)" + 
 				".map(Farm::getName).to(FarmInfo::setName)" +
     			".where(Farm::getName).startsWith(\"Farm\")" +
+				".or(Farm::getSubFarmId).endsWith(\"2\")" +
 				".orderBy(Farm::getName)");		
     }
 
@@ -36,13 +40,16 @@ public class MappedWhereOrOrderByTest extends GEN_BaseTestCase {
 		    	Farm.class, "f",
 				"one(FarmInfo.class)" +
 				".map(f::getName).to(FarmInfo::setName)" +
-				".where(f::getName).startsWith(\"Farm\")");
+				".where(f::getName).startsWith(\"Farm\")" +
+				".or(f::getSubFarmId).endsWith(\"2\")"
+				);
 
 		verifyIsCompilable(
 		    	Farm.class, "f",
 				"list(FarmInfo.class)" +
 				".map(f::getName).to(FarmInfo::setName)" +
 				".where(f::getName).startsWith(\"Farm\")" +
+				".or(f::getSubFarmId).endsWith(\"2\")" +
 				".orderBy(f::getName)");
 
 		verifyIsNotCompilable(
@@ -50,6 +57,7 @@ public class MappedWhereOrOrderByTest extends GEN_BaseTestCase {
 				"one(Farm.class)" + 
 				".map(f::getName).to(FarmInfo::setName)" +
     			".where(f::getName).startsWith(\"Farm\")" +
+				".or(f::getSubFarmId).endsWith(\"2\")" +
 				".orderBy(f::getName)");		
     }
 
@@ -70,7 +78,7 @@ public class MappedWhereOrOrderByTest extends GEN_BaseTestCase {
     	MultiBuilt<FarmInfo> query = select.list(FarmInfo.class)
     			.map(Farm::getName).to(FarmInfo::setName)
     			.where(Farm::getName).startsWith("Farm")
-    			  .and(Farm::getFarmId).endsWith("2")
+    			  .or(Farm::getFarmId).endsWith("2")
     			.orderBy(Farm::getName)
     			.build(); 
 
@@ -81,8 +89,13 @@ public class MappedWhereOrOrderByTest extends GEN_BaseTestCase {
     			
     			() -> expected( 
 					new FarmInfo("Farm1"),
+					new FarmInfo("Farm2"),
 					new FarmInfo("Farm3"),
-					new FarmInfo("Farm5")
+					new FarmInfo("Farm4"),
+					new FarmInfo("Farm5"),
+
+					new FarmInfo("Other2"),
+					new FarmInfo("Other5")
     			));
 
     	
@@ -91,8 +104,8 @@ public class MappedWhereOrOrderByTest extends GEN_BaseTestCase {
     			.map(Farm::getFarmId)	.to(FarmInfo::setFarmId)
     			.map(Farm::getSubFarmId).to(FarmInfo::setSubFarmId)
     			
-    			.where(Farm::getName).startsWith("Farm")
-    			  .and(Farm::getFarmId).endsWith("2")
+    			.where(Farm::getFarmId).isEqualTo("main2")
+    			   .or(Farm::getName).endsWith("3")
     			
     			.orderBy(Farm::getFarmId).and(Farm::getSubFarmId).and(Farm::getName)
     			.build(); 
@@ -106,15 +119,16 @@ public class MappedWhereOrOrderByTest extends GEN_BaseTestCase {
 					// TODO: null sorts last here, after sub2?? seems like it. check entity and named other tests as well
 					new FarmInfo("Farm5", "main2", ""),
 					new FarmInfo("Farm3", "main2", "sub2"),
-					new FarmInfo("Farm1", "main2", "sub3")
+					new FarmInfo("Farm1", "main2", "sub3"),
+					new FarmInfo("Other3", "other3", "sub2")
     			));
     	
     	query = select.list(FarmInfo.class)
     			.map(Farm::getFarmId)	.to(FarmInfo::setFarmId)
     			.map(Farm::getName)		.to(FarmInfo::setName)
     			.map(Farm::getSubFarmId).to(FarmInfo::setSubFarmId)
-    			.where(Farm::getName).startsWith("Farm")
-    			  .and(Farm::getFarmId).endsWith("2")
+    			.where(Farm::getFarmId).isEqualTo("main2")
+    				.or(Farm::getName).endsWith("3")
     			.orderBy(1, 3, 2)
     			.build();    	
 
@@ -126,7 +140,8 @@ public class MappedWhereOrOrderByTest extends GEN_BaseTestCase {
     			() -> expected( 
 					new FarmInfo("Farm5", "main2", ""),
 					new FarmInfo("Farm3", "main2", "sub2"),
-					new FarmInfo("Farm1", "main2", "sub3") // TODO null sort order?
+					new FarmInfo("Farm1", "main2", "sub3"),
+					new FarmInfo("Other3", "other3", "sub2") // TODO null sort order?
     			));
     }
 
@@ -150,7 +165,7 @@ public class MappedWhereOrOrderByTest extends GEN_BaseTestCase {
     	MultiBuilt<FarmInfo> query = select.list(FarmInfo.class)
     			.map(f::getName).to(FarmInfo::setName)
     			.where(f::getName).startsWith("Farm")
-    			  .and(f::getFarmId).endsWith("2")
+    			  .or(f::getFarmId).endsWith("2")
     			.orderBy(f::getName)
     			.build(); 
 
@@ -161,8 +176,13 @@ public class MappedWhereOrOrderByTest extends GEN_BaseTestCase {
     			
     			() -> expected( 
 					new FarmInfo("Farm1"),
+					new FarmInfo("Farm2"),
 					new FarmInfo("Farm3"),
-					new FarmInfo("Farm5")
+					new FarmInfo("Farm4"),
+					new FarmInfo("Farm5"),
+
+					new FarmInfo("Other2"),
+					new FarmInfo("Other5")
     			));
 
     	
@@ -171,8 +191,8 @@ public class MappedWhereOrOrderByTest extends GEN_BaseTestCase {
     			.map(f::getFarmId)	.to(FarmInfo::setFarmId)
     			.map(f::getSubFarmId).to(FarmInfo::setSubFarmId)
     			
-    			.where(f::getName).startsWith("Farm")
-    			  .and(f::getFarmId).endsWith("2")
+    			.where(f::getFarmId).isEqualTo("main2")
+    			   .or(f::getName).endsWith("3")
     			
     			.orderBy(f::getFarmId).and(f::getSubFarmId).and(f::getName)
     			.build(); 
@@ -186,15 +206,16 @@ public class MappedWhereOrOrderByTest extends GEN_BaseTestCase {
 					// TODO: null sorts last here, after sub2?? seems like it. check entity and named other tests as well
 					new FarmInfo("Farm5", "main2", ""),
 					new FarmInfo("Farm3", "main2", "sub2"),
-					new FarmInfo("Farm1", "main2", "sub3")
+					new FarmInfo("Farm1", "main2", "sub3"),
+					new FarmInfo("Other3", "other3", "sub2")
     			));
     	
     	query = select.list(FarmInfo.class)
-    			.map(f::getFarmId)	.to(FarmInfo::setFarmId)
-    			.map(f::getName)		.to(FarmInfo::setName)
+    			.map(f::getFarmId)	 .to(FarmInfo::setFarmId)
+    			.map(f::getName)	 .to(FarmInfo::setName)
     			.map(f::getSubFarmId).to(FarmInfo::setSubFarmId)
-    			.where(f::getName).startsWith("Farm")
-    			  .and(f::getFarmId).endsWith("2")
+    			.where(f::getFarmId).isEqualTo("main2")
+    				.or(f::getName).endsWith("3")
     			.orderBy(1, 3, 2)
     			.build();    	
 
@@ -206,7 +227,8 @@ public class MappedWhereOrOrderByTest extends GEN_BaseTestCase {
     			() -> expected( 
 					new FarmInfo("Farm5", "main2", ""),
 					new FarmInfo("Farm3", "main2", "sub2"),
-					new FarmInfo("Farm1", "main2", "sub3") // TODO null sort order?
+					new FarmInfo("Farm1", "main2", "sub3"),
+					new FarmInfo("Other3", "other3", "sub2") // TODO null sort order?
     			));
     }
 }
