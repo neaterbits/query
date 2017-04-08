@@ -6,6 +6,8 @@ public interface ISQLLogical_Or_MultiEntity_Alias<MODEL, RESULT>
 			RESULT,
 			ISQLLogical_Or_MultiEntity_Alias<MODEL, RESULT>,
 			ISQLLogical_And_NonProcessResult_Alias<MODEL, RESULT>>,
-			ISharedCompileEndClause<MODEL> {
+			ISharedCompileEndClause<MODEL>,
+			
+			ISharedProcessResult_OrderBy_Entity_Alias<MODEL, RESULT> {
 
 }
