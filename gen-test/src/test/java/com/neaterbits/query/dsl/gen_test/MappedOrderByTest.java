@@ -12,10 +12,15 @@ public class MappedOrderByTest extends GEN_BaseTestCase {
 
     @Test
     public void testMappedSingleNamed() {
-    	// Should test that is not compilable
 		verifyIsCompilable(
 				"one(FarmInfo.class)" +
 				".map(Farm::getName).to(FarmInfo::setName)");
+
+		verifyIsCompilable(
+				"list(FarmInfo.class)" +
+				".map(Farm::getName).to(FarmInfo::setName)" +
+				".orderBy(Farm::getName)"
+						);
 		
 		verifyIsNotCompilable(
 				"one(FarmInfo.class)" + 
@@ -30,6 +35,12 @@ public class MappedOrderByTest extends GEN_BaseTestCase {
 		    	Farm.class, "f",
 				"one(FarmInfo.class)" +
 				".map(f::getName).to(FarmInfo::setName)");
+
+		verifyIsCompilable(
+		    	Farm.class, "f",
+				"one(FarmInfo.class)" +
+				".map(f::getName).to(FarmInfo::setName)" + 
+				".orderBy(f::getName)");
 
 		verifyIsNotCompilable(
 				Farm.class, "f",

@@ -35,6 +35,7 @@ public class FarmInfo {
 
 	public FarmInfo(String name, String farmId, String subFarmId) {
 		
+		/*
 		if (name == null) {
 			throw new IllegalArgumentException("name == null");
 		}
@@ -42,6 +43,7 @@ public class FarmInfo {
 		if (farmId == null) {
 			throw new IllegalArgumentException("farmId == null");
 		}
+		*/
 		
 		this.name = name;
 		this.farmId = farmId;

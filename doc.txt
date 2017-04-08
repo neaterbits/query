@@ -538,6 +538,9 @@ W - parametere
  - fetch join
    kombinere i samme metodekall? .fetchInnerJoin(Company::getEmployees) eller .innerJoin().fetch(Company::getEmployees) eller fetch().innerJoin(Company::getEmployees) ? 
 
+   .fetch().innerJoin() er vel mest nærliggende? Må huske å kombinere med koden for dette med .
+
+ - isNull(), isNotNull()
 
  - result functions? dvs aggregates. count, etc
 
