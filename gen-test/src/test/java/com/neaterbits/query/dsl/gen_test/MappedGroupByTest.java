@@ -13,18 +13,18 @@ public class MappedGroupByTest extends GEN_BaseTestCase {
     public void testMappedSingleNamed() {
 		verifyIsCompilable(
 				"one(FarmInfo.class)" +
-				".map(Farm::getName).to(FarmInfo::setName)");
+				".map(Farm::getFarmId).to(FarmInfo::setFarmId)");
 
 		verifyIsCompilable(
 				"list(FarmInfo.class)" +
-				".map(Farm::getName).to(FarmInfo::setName)" +
-				".groupBy(Farm::getName)"
+				".map(Farm::getFarmId).to(FarmInfo::setFarmId)" +
+				".groupBy(Farm::getFarmId)"
 						);
 		
 		verifyIsNotCompilable(
 				"one(FarmInfo.class)" + 
-				".map(Farm::getName).to(FarmInfo::setName)" +
-				".groupBy(Farm::getName)");		
+				".map(Farm::getFarmId).to(FarmInfo::setFarmId)" +
+				".groupBy(Farm::getFarmId)");		
     }
 
     @Test
@@ -32,19 +32,19 @@ public class MappedGroupByTest extends GEN_BaseTestCase {
 		verifyIsCompilable(
 		    	Farm.class, "f",
 				"one(FarmInfo.class)" +
-				".map(f::getName).to(FarmInfo::setName)");
+				".map(f::getFarmId).to(FarmInfo::setFarmId)");
 
 		verifyIsCompilable(
 		    	Farm.class, "f",
-				"one(FarmInfo.class)" +
-				".map(f::getName).to(FarmInfo::setName)" + 
-				".groupBy(f::getName)");
+				"list(FarmInfo.class)" +
+				".map(f::getFarmId).to(FarmInfo::setFarmId)" + 
+				".groupBy(f::getFarmId)");
 
 		verifyIsNotCompilable(
 				Farm.class, "f",
 				"one(FarmInfo.class)" + 
-				".map(f::getName).to(FarmInfo::setName)" +
-				".groupBy(f::getName)");		
+				".map(f::getFarmId).to(FarmInfo::setFarmId)" +
+				".groupBy(f::getFarmId)");		
     }
 
 
