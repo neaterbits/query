@@ -2,8 +2,9 @@ package com.neaterbits.query.sql.dsl.api;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Stack;
 
-import com.neaterbits.util.Stack;
+import com.neaterbits.query.util.java8.Coll8;
 import com.neaterbits.util.StringUtils;
 
 public enum GEN_Functionality {
@@ -43,14 +44,42 @@ public enum GEN_Functionality {
 			true,
 
 			// Must be mapped query and have multi-dimension
-			stack -> stack.contains(GEN_Functionality.MAPPED),
-			(result, dimension, fieldAccess) -> dimension == EQueryResultDimension.MULTI && result == EQueryResultGathering.MAPPED,
+			// BUT: co
+			// stack -> stack.contains(GEN_Functionality.MAPPED),
+			// smoke-test after where
+			stack ->     stack.contains(GEN_Functionality.MAPPED)
+					|| ! (
+						   stack.contains(GEN_Functionality.AND)
+						|| stack.contains(GEN_Functionality.OR)
+						|| stack.contains(GEN_Functionality.WHERE_FUNCTION)
+						|| stack.contains(GEN_Functionality.AND_FUNCTION)
+						|| stack.contains(GEN_Functionality.OR_FUNCTION)
+
+						/* This doesn't really make any difference as only performs test for the level which it's at, not those 
+						 * of previous entries in stack
+						|| Coll8.has(stack, e -> e.name().equals("HAVING"))
+						|| Coll8.has(stack, e -> e.name().equals("ORDER_BY"))
+						|| Coll8.has(stack, e -> e.name().equals("ASC"))
+						|| Coll8.has(stack, e -> e.name().equals("DESC"))
+						 */
+						
+						),
+						
+			// Same here
+			//(result, dimension, fieldAccess) -> dimension == EQueryResultDimension.MULTI && result == EQueryResultGathering.MAPPED,
+			(result, dimension, fieldAccess) -> true,
 			
 			MAPPED, WHERE, WHERE_FUNCTION, AND, AND_FUNCTION, OR, OR_FUNCTION),
-	HAVING(false, true, GROUP_BY),
+	HAVING(false, true, 
+			stack -> stack.contains(GEN_Functionality.MAPPED),
+			(result, dimension, fieldAccess) -> true,
+			GROUP_BY),
 
 	// hmm.. only follow join if the former are specified. Perhaps should just pass criteria into this tree?
-	ORDER_BY(false, true, ENTITY, MAPPED, JOIN, WHERE, AND, OR, GROUP_BY, HAVING),  
+	ORDER_BY(false, true, 
+			stack -> stack.contains(GEN_Functionality.MAPPED) || !stack.contains(GEN_Functionality.GROUP_BY),
+			(result, dimension, fieldAccess) -> true,
+			ENTITY, MAPPED, JOIN, WHERE, AND, OR, GROUP_BY, HAVING),  
 
 	// Smoke-test for explicit order by
 	ASC(false, true, 

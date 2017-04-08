@@ -1,6 +1,6 @@
 package com.neaterbits.query.sql.dsl.api;
 
-import com.neaterbits.util.Stack;
+import java.util.Stack;
 
 // Whether available for one particular test
 @FunctionalInterface

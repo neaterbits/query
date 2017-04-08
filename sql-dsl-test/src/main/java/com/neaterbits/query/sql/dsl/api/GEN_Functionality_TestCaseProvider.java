@@ -1,8 +1,8 @@
 package com.neaterbits.query.sql.dsl.api;
 
+import java.util.Stack;
 import java.util.function.Consumer;
 
-import com.neaterbits.util.Stack;
 
 final class GEN_Functionality_TestCaseProvider extends GEN_TestCaseProvider {
 
@@ -51,7 +51,7 @@ final class GEN_Functionality_TestCaseProvider extends GEN_TestCaseProvider {
 				// Must check for all parts of stack, eg. no-single tet for group-by even if last element is having
 				final int num = stack.size();
 
-				if (functionality != stack.top()) {
+				if (functionality != stack.peek()) {
 					throw new IllegalStateException("Expected functionality to be top");
 				}
 				
@@ -72,7 +72,7 @@ final class GEN_Functionality_TestCaseProvider extends GEN_TestCaseProvider {
 		
 		// recurse downwards for all possibilties
 		
-		final GEN_Functionality cur = stack.top();
+		final GEN_Functionality cur = stack.peek();
 		
 		if (cur.isStop()) {
 			// Can emit for this
