@@ -12,7 +12,6 @@ public class MappedWhereOrderByTest extends GEN_BaseTestCase {
 
     @Test
     public void testMappedSingleNamed() {
-    	// Should test that is not compilable
 		verifyIsCompilable(
 				"one(FarmInfo.class)" +
 				".map(Farm::getName).to(FarmInfo::setName)" +
