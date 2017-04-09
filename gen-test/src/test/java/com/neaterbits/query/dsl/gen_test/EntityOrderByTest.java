@@ -4,7 +4,6 @@ import org.junit.Test;
 import com.neaterbits.query.jpatest.GEN_BaseTestCase;
 import com.neaterbits.query.sql.dsl.api.MultiBuilt;
 import com.neaterbits.query.test.model.Farm;
-import com.neaterbits.query.test.model.mapped.FarmInfo;
 
 
 public class EntityOrderByTest extends GEN_BaseTestCase {

@@ -3,6 +3,8 @@ package com.neaterbits.query.dsl.gen_test;
 import static org.assertj.core.api.Assertions.assertThat;
 import org.junit.Test;
 import com.neaterbits.query.jpatest.GEN_BaseTestCase;
+import com.neaterbits.query.test.model.Farm;
+import com.neaterbits.query.test.model.land.LandPlot;
 
 
 public class EntityJoinWhereGroupByTest extends GEN_BaseTestCase {
@@ -10,24 +12,65 @@ public class EntityJoinWhereGroupByTest extends GEN_BaseTestCase {
 
     @Test
     public void testEntitySingleNamed() {
-        assertThat(true).isEqualTo(false);
+    	
+    	verifyIsCompilable(
+    		  "one(Farm.class)"
+    		+ ".innerJoin(Farm::getLandPlots)"
+    		+ ".where(Farm::getName).startsWith(\"Farm\")");
+    	
+    	verifyIsNotCompilable(
+      		   "one(Farm.class)"
+    		+ ".innerJoin(Farm::getLandPlots)"
+      		+ ".where(Farm::getName).startsWith(\"Farm\")"
+      	    + ".groupBy(Farm::getName)");
     }
 
 
     @Test
     public void testEntitySingleAlias() {
-        assertThat(true).isEqualTo(false);
+    	verifyIsCompilable(
+	    		b -> b.add(Farm.class, "f").add(LandPlot.class, "l"),
+	      		  "one(f)"
+  	    		+ ".innerJoin(f::getLandPlots, l)"
+	      		+ ".where(f::getName).startsWith(\"Farm\")");
+      	
+      	verifyIsNotCompilable(
+	    		b -> b.add(Farm.class, "f").add(LandPlot.class, "l"),
+        		   "one(f)"
+	    		+ ".innerJoin(f::getLandPlots, l)"
+        		+ ".where(f::getName).startsWith(\"Farm\")"
+        	    + ".groupBy(f::getName)");
     }
 
 
     @Test
     public void testEntityMultiNamed() {
-        assertThat(true).isEqualTo(false);
+    	verifyIsCompilable(
+      		  "list(Farm.class)"
+    		+ ".innerJoin(Farm::getLandPlots)"
+      		+ ".where(Farm::getName).startsWith(\"Farm\")");
+      	
+      	verifyIsNotCompilable(
+    		   "list(Farm.class)"
+    		+ ".innerJoin(Farm::getLandPlots)"
+    		+ ".where(Farm::getName).startsWith(\"Farm\")"
+    	    + ".groupBy(Farm::getName)");
     }
 
 
     @Test
     public void testEntityMultiAlias() {
-        assertThat(true).isEqualTo(false);
+    	verifyIsCompilable(
+	    		b -> b.add(Farm.class, "f").add(LandPlot.class, "l"),
+	      		  "list(f)"
+  	    		+ ".innerJoin(f::getLandPlots, l)"
+	      		+ ".where(f::getName).startsWith(\"Farm\")");
+      	
+      	verifyIsNotCompilable(
+	    		b -> b.add(Farm.class, "f").add(LandPlot.class, "l"),
+        		   "list(f)"
+  	    		+ ".innerJoin(f::getLandPlots, l)"
+        		+ ".where(f::getName).startsWith(\"Farm\")"
+        	    + ".groupBy(f::getName)");
     }
 }
