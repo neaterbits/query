@@ -549,6 +549,8 @@ W - parametere
   * joins bør være nøsta, slik som for adhoc query
     - viser letterer den logiske traverseringen mellom tabellene
     - lettere å implementere API-messig også siden sub-joinene blir decoupled.
+
+ - having støtter ikke unresolved, se etter TODO i koden.
   
  - subselects
    * exists/not exists

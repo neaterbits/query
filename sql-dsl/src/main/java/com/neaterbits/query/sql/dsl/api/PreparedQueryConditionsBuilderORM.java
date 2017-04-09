@@ -116,8 +116,29 @@ final class PreparedQueryConditionsBuilderORM extends PreparedQueryConditionsBui
 		for (PreparedQueryCondition condition : getConditions()) {
 		
 			if (first) {
+				
+				
 				if (isAtRoot()) {
-					sb.append(' ').append("WHERE").append(' ');
+					// Cannot call getConditionsString() because type will have changed from SINGLE to eg OR
+					// when multiple conditions. So can only look at conditions clause
+					// final String initial = getConditionsString(type, getConditionsClause());
+					
+					final String initial;
+					
+					switch (getConditionsClause()) {
+					case WHERE:
+						initial = "WHERE";
+						break;
+
+					case HAVING:
+						initial = "HAVING";
+						break;
+						
+					default:
+						throw new IllegalStateException("Unknown conditions clause " + getConditionsClause());
+					}
+					
+					sb.append(' ').append(initial /* "WHERE" */).append(' ');
 				}
 				
 				first = false;

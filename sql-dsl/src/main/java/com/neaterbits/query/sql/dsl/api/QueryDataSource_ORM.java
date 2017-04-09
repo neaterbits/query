@@ -35,16 +35,16 @@ abstract class QueryDataSource_ORM<MANAGED, EMBEDDED, IDENTIFIABLE, ATTRIBUTE, C
 	@Override
 	final <QUERY> PreparedQuery_DS<QueryDataSource_DB> prepare(PreparedQueryBuilder builder, QueryDialect_SQL dialect, ExecutableQuery<QUERY> q, QUERY query) {
 	
-		final PreparedQueryBuilderORM sb = (PreparedQueryBuilderORM)builder;
+		final PreparedQueryBuilderORM<MANAGED, EMBEDDED, IDENTIFIABLE, ATTRIBUTE, COLL> sb = (PreparedQueryBuilderORM)builder;
 
 		final List<JoinConditionId> addJoinToWhere = sb.prepareInitial(q, query);
 		
 		// Prepare conditions if present
 		final PreparedQuery_DB<QUERY> ret;
+
+		final QueryParametersDistinct distinctParams = q.getDistinctParams(query);
 		
 		if (q.hasConditions(query)) {
-			
-		    final QueryParametersDistinct distinctParams = q.getDistinctParams(query);
 			
 			//final CompileConditionParam param = new CompileConditionParam(paramNameAssigner, em);
 
@@ -62,13 +62,13 @@ abstract class QueryDataSource_ORM<MANAGED, EMBEDDED, IDENTIFIABLE, ATTRIBUTE, C
 			}
 		}
 		else {
-			ret = makeCompleteQueryWithResultProcessing(q, query, null, sb);
+			ret = makeCompleteQueryWithResultProcessing(q, query, distinctParams, sb);
 		}
 
 		return ret;
 	}
 	
-	private <QUERY> PreparedQuery_DB<QUERY> makeCompleteQueryWithResultProcessing(ExecutableQuery<QUERY> q, QUERY query, QueryParametersDistinct distinctParams, PreparedQueryBuilderORM sb) {
+	private <QUERY> PreparedQuery_DB<QUERY> makeCompleteQueryWithResultProcessing(ExecutableQuery<QUERY> q, QUERY query, QueryParametersDistinct distinctParams, PreparedQueryBuilderORM<MANAGED, EMBEDDED, IDENTIFIABLE, ATTRIBUTE, COLL> sb) {
 
 		sb.addResultProcessing(q, query, distinctParams);
 

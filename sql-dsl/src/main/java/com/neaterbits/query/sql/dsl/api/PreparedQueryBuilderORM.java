@@ -314,6 +314,13 @@ final class PreparedQueryBuilderORM<MANAGED, EMBEDDED, IDENTIFIABLE, ATTRIBUTE, 
 			final ConditionsType conditionsType = qh.getConditionsType(query, 0, conditionIndices);
 			
 	    	prepareConditions(q, qh, query, conditionsType, conditionsBuilder, 0, conditionIndices, conditionSB);
+	    	
+	    	// TODO: half-way because we do not have parameters
+	    	resolveFromParams(conditionsBuilder, null);
+	    	
+	    	if (conditionsBuilder.hasUnresolved()) {
+	    		throw new IllegalStateException("TODO: having has unresolved conditions");
+	    	}
 		}
 		
 
