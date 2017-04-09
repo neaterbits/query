@@ -58,6 +58,11 @@ abstract class Collector_Or_Alias<
 	public final ISharedCondition_Comparable_Common_All<MODEL, RESULT, Long, OR_CLAUSES> or(ISupplierLong getter) {
 		return orAliasImplComparable(getter);
 	}
+	
+	@Override
+	public final ISharedCondition_Comparable_Common_All<MODEL, RESULT, BigDecimal, OR_CLAUSES> or(ISupplierBigDecimal getter) {
+		return orAliasImplComparable(getter);
+	}
 
 	@Override
 	public final ISharedCondition_Comparable_String_All<MODEL, RESULT, OR_CLAUSES> or(ISupplierString getter) {

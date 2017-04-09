@@ -37,7 +37,7 @@ public class AggregateWhereAndOrderByTest extends GEN_BaseTestCase {
 		verifyIsNotCompilable(
 				LandPlot.class, "l",
 				"sum(l::getHectares)" + 
-				".where(l::getHectares).isEqualTo(new BigDecimal(\"1.2\"))" +
+				".where(l::getHectares).isGreaterThan(new BigDecimal(\"1.2\"))" +
 				".  and(l::getHectares).isLessThan(new BigDecimal(\"1.3\"))" +
 				".orderBy(l::getHectares)");		
     }

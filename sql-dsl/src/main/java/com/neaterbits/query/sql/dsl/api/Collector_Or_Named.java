@@ -55,8 +55,12 @@ abstract class Collector_Or_Named<
 	}
 
 	@Override
-	public final <T> ISharedCondition_Comparable_Common_All<MODEL, RESULT, Long, OR_CLAUSES> or(
-			IFunctionLong<T> getter) {
+	public final <T> ISharedCondition_Comparable_Common_All<MODEL, RESULT, Long, OR_CLAUSES> or(IFunctionLong<T> getter) {
+		return orClassImplComparable(getter);
+	}
+	
+	@Override
+	public final <T> ISharedCondition_Comparable_Common_All<MODEL, RESULT, BigDecimal, OR_CLAUSES> or(IFunctionBigDecimal<T> getter) {
 		return orClassImplComparable(getter);
 	}
 

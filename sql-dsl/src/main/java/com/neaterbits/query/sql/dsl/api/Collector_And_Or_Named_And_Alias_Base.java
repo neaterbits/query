@@ -159,6 +159,11 @@ abstract class Collector_And_Or_Named_And_Alias_Base<
 
 
 	@Override
+	public final <T> ISharedCondition_Comparable_Common_All<MODEL, RESULT, BigDecimal, NAMED_OR_CLAUSES> or(IFunctionBigDecimal<T> getter) {
+		return orNamedClassImplComparable(new FieldExpression(getter));
+	}
+
+	@Override
 	public final <T> ISharedCondition_Comparable_String_All<MODEL, RESULT, NAMED_OR_CLAUSES> or(StringFunction<T> getter) {
 		return orNamedClassImplString(new FieldExpression(getter));
 	}
@@ -335,6 +340,11 @@ abstract class Collector_And_Or_Named_And_Alias_Base<
 		return orAliasImplComparable(getter);
 	}
 	
+	@Override
+	public final ISharedCondition_Comparable_Common_All<MODEL, RESULT, BigDecimal, ALIAS_OR_CLAUSES> or(ISupplierBigDecimal getter) {
+		return orAliasImplComparable(getter);
+	}
+
 	@Override
 	public final ISharedCondition_Comparable_String_All<MODEL, RESULT, ALIAS_OR_CLAUSES> or(ISupplierString getter) {
 	
