@@ -55,6 +55,45 @@ final class Short_Collector_Multi_Mapped_Alias<MODEL, RESULT>
 		return new Collector_MapFunctions_ExpressionList_Alias<>(this);
 	}
 
+	
+	
+	
+	@Override
+	public ISharedFunctions_Transform_Initial_Alias<
+			MODEL,
+			RESULT,
+			ISQLLogical_And_MultiMapped_Alias<MODEL, RESULT>,
+			ISharedCondition_Comparable_Common_All<MODEL, RESULT, Short, ISQLLogical_And_MultiMapped_Alias<MODEL, RESULT>>,
+			ISharedCondition_Comparable_Common_All<MODEL, RESULT, Integer, ISQLLogical_And_MultiMapped_Alias<MODEL, RESULT>>,
+			ISharedCondition_Comparable_Common_All<MODEL, RESULT, Long, ISQLLogical_And_MultiMapped_Alias<MODEL, RESULT>>,
+			ISharedCondition_Comparable_Common_All<MODEL, RESULT, Double, ISQLLogical_And_MultiMapped_Alias<MODEL, RESULT>>,
+			ISharedCondition_Comparable_Common_All<MODEL, RESULT, BigDecimal, ISQLLogical_And_MultiMapped_Alias<MODEL, RESULT>>,
+			ISharedCondition_Comparable_String_All<MODEL, RESULT, ISQLLogical_And_MultiMapped_Alias<MODEL, RESULT>>
+	
+			> and() {
+		
+		return andAlias();
+	}
+
+
+	@Override
+	public ISharedFunctions_Transform_Initial_Alias<
+			MODEL,
+			RESULT,
+			ISQLLogical_Or_MultiMapped_Alias<MODEL, RESULT>,
+			ISharedCondition_Comparable_Common_All<MODEL, RESULT, Short, ISQLLogical_Or_MultiMapped_Alias<MODEL, RESULT>>,
+			ISharedCondition_Comparable_Common_All<MODEL, RESULT, Integer, ISQLLogical_Or_MultiMapped_Alias<MODEL, RESULT>>,
+			ISharedCondition_Comparable_Common_All<MODEL, RESULT, Long, ISQLLogical_Or_MultiMapped_Alias<MODEL, RESULT>>,
+			ISharedCondition_Comparable_Common_All<MODEL, RESULT, Double, ISQLLogical_Or_MultiMapped_Alias<MODEL, RESULT>>,
+			ISharedCondition_Comparable_Common_All<MODEL, RESULT, BigDecimal, ISQLLogical_Or_MultiMapped_Alias<MODEL, RESULT>>,
+			ISharedCondition_Comparable_String_All<MODEL, RESULT, ISQLLogical_Or_MultiMapped_Alias<MODEL, RESULT>>
+	
+			> or() {
+
+		return orAlias();
+	}
+
+
 	@Override
 	public <R extends Comparable<R>> IShortResult_Mapped_Multi_Alias<MODEL, RESULT>
 			innerJoin(Supplier<R> from, Supplier<R> to) {

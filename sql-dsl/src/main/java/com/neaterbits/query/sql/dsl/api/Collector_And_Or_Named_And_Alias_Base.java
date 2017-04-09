@@ -40,13 +40,17 @@ abstract class Collector_And_Or_Named_And_Alias_Base<
 	implements
 		ISharedLogical_And_Named_All<MODEL, RESULT, NAMED_AND_CLAUSES, NAMED_NESTED_OR_CLAUSES>,
 		ISharedLogical_Or_Named_All<MODEL, RESULT, NAMED_OR_CLAUSES, NAMED_NESTED_AND_CLAUSES>,
+		ISharedLogical_And_Alias_Base<MODEL, RESULT, ALIAS_AND_CLAUSES, ALIAS_NESTED_OR_CLAUSES>,
+		ISharedLogical_Or_Alias_Base<MODEL, RESULT, ALIAS_OR_CLAUSES, ALIAS_NESTED_AND_CLAUSES>
+
+		/* Don't know why this was here, because it adds functions like or() and cannot be in shared named/alias baseclass due to signature collision  
 		ISharedLogical_And_Or_Alias<
 			MODEL,
 			RESULT,
 			ALIAS_AND_CLAUSES,
 			ALIAS_OR_CLAUSES,
 			ALIAS_NESTED_AND_CLAUSES,
-			ALIAS_NESTED_OR_CLAUSES>	{
+			ALIAS_NESTED_OR_CLAUSES> */	{
 
 				
 				
@@ -119,7 +123,6 @@ abstract class Collector_And_Or_Named_And_Alias_Base<
 				ISharedCondition_Comparable_String_All<MODEL, RESULT, NAMED_AND_CLAUSES>
 			> andNamed() {
 					
-		@SuppressWarnings({"unchecked", "rawtypes"})
 		final ISharedCollector_Functions_Callback<MODEL, RESULT, NAMED_AND_CLAUSES> cb
 				= new ISharedCollector_Functions_Callback<MODEL, RESULT, NAMED_AND_CLAUSES>() {
 		

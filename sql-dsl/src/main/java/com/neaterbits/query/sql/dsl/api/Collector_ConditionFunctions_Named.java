@@ -1,6 +1,5 @@
 package com.neaterbits.query.sql.dsl.api;
 
-import java.util.function.Function;
 
 final class Collector_ConditionFunctions_Named<
 		MODEL,
