@@ -73,6 +73,11 @@ abstract class Collector_And_Alias<
 	}
 
 	@Override
+	public final ISharedCondition_Comparable_Common_All<MODEL, RESULT, BigDecimal, AND_CLAUSES> and(ISupplierBigDecimal getter) {
+		return andAliasImplComparable(getter);
+	}
+
+	@Override
 	public final ISharedCondition_Comparable_String_All<MODEL, RESULT, AND_CLAUSES> and(ISupplierString getter) {
 		return andAliasImplString(null, getter);
 	}
