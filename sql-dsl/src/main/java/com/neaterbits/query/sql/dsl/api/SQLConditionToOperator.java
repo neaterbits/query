@@ -227,6 +227,9 @@ final class SQLConditionToOperator {
 			final String asString = dialect.getBigDecimalLiteral((BigDecimal)literal);
 			
 			append.apply(asString);
+		}
+		else if (literal instanceof Double) {
+			append.apply(String.valueOf((Double)literal));
 		} else {
 			throw new UnsupportedOperationException("Unknown literal of type " + literal.getClass().getName());
 		}

@@ -237,9 +237,11 @@ abstract class Collector_And_Or_Named_And_Alias_Base<
 	private <T, RR extends Comparable<RR>>
 		ISharedCondition_Comparable_Common_All<MODEL, RESULT, RR, NAMED_OR_CLAUSES>
 		
-		orNamedClassImplComparable(Expression expressions) {
+		orNamedClassImplComparable(Expression expression) {
 		
-		return orNamedClassImplComparable(expressions);
+		final Collector_Or_Named<MODEL, RESULT, NAMED_OR_CLAUSES, NAMED_NESTED_AND_CLAUSES, NAMED_NESTED_OR_CLAUSES, NAMED_AFTER_GROUP_BY> andClauses = createNamedOrCollector(); // new Classic_Collector_Or_Named<>(this);
+
+		return new Collector_Condition_Comparative<MODEL, RESULT, RR, NAMED_OR_CLAUSES>(andClauses, expression);
 	}
 
 	final ISharedCondition_Comparable_String_All<MODEL, RESULT, NAMED_OR_CLAUSES>

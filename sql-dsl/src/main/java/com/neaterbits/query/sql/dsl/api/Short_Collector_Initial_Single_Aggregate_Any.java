@@ -14,4 +14,14 @@ abstract class Short_Collector_Initial_Single_Aggregate_Any<MODEL, RESULT>
 
 		throw new UnsupportedOperationException("Not supported for aggregate queries");
 	}
+	
+	@Override
+	final Collector_Conditions_GroupBy<MODEL, RESULT, ?> getAfterWhereNamed() {
+		return this;
+	}
+
+	@Override
+	final Collector_Conditions_GroupBy<MODEL, RESULT, ?> getAfterWhereAlias() {
+		return this;
+	}
 }
