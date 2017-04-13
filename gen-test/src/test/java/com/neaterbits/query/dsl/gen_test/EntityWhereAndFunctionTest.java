@@ -43,6 +43,13 @@ public class EntityWhereAndFunctionTest extends GEN_BaseTestCase {
 
     	store(farm1, farm2, farm3)
     	.checkOne(query, () -> null);
+    	
+    	// Multiple functions
+		query = select.one(Farm.class)
+		.where(Farm::getName).contains("Hill V")
+		.   and().lower(Farm::getName).contains("l valley")
+		.   and().upper(Farm::getName).contains("L VALLEY")
+		.build(); 
     }
 
 
@@ -82,6 +89,13 @@ public class EntityWhereAndFunctionTest extends GEN_BaseTestCase {
 
     	store(farm1, farm2, farm3)
     	.checkOne(query, () -> null);
+
+    	// Multiple functions
+		query = select.one(f)
+		.where(f::getName).contains("Hill V")
+		.   and().lower(f::getName).contains("l valley")
+		.   and().upper(f::getName).contains("L VALLEY")
+		.build(); 
     }
 
 
@@ -116,6 +130,21 @@ public class EntityWhereAndFunctionTest extends GEN_BaseTestCase {
     			query,
     			
     			() -> none());    	
+
+    	// Multiple functions
+    	query = select.list(Farm.class)
+    			.where(Farm::getName).contains("y")
+    			.   and().lower(Farm::getName).contains("hill")
+    			.   and().upper(Farm::getName).contains("HILL")
+    			.build(); 
+
+    	store(farm1, farm2, farm3)
+    	.checkListUnordered(
+    			query,
+    			
+    			() -> expected( 
+					new Farm(farm1.getId(), "Hill Valley"),
+					new Farm(farm3.getId(), "Snowy Hills")));
     }
 
 
@@ -152,5 +181,20 @@ public class EntityWhereAndFunctionTest extends GEN_BaseTestCase {
     			query,
     			
     			() -> none());    	
+
+    	// Multiple functions
+    	query = select.list(f)
+    			.where(f::getName).contains("y")
+    			.   and().lower(f::getName).contains("hill")
+    			.   and().upper(f::getName).contains("HILL")
+    			.build(); 
+
+    	store(farm1, farm2, farm3)
+    	.checkListUnordered(
+    			query,
+    			
+    			() -> expected( 
+					new Farm(farm1.getId(), "Hill Valley"),
+					new Farm(farm3.getId(), "Snowy Hills")));
     }
 }

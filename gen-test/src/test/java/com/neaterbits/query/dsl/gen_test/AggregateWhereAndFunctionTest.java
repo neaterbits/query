@@ -13,7 +13,6 @@ import com.neaterbits.query.test.model.land.Uncultivated;
 
 public class AggregateWhereAndFunctionTest extends GEN_BaseTestCase {
 
-
     @Test
     public void testAggregateSingleNamed() {
 

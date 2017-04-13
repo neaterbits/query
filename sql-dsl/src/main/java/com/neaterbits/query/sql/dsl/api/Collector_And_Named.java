@@ -63,7 +63,7 @@ abstract class Collector_And_Named<
 	private ISharedCondition_Comparable_String_All<MODEL, RESULT, AND_CLAUSES>
 		andClassImplString(Expression expression) {
 
-			throw new UnsupportedOperationException("TODO");
+		return new Collector_Condition_String<MODEL, RESULT, AND_CLAUSES>(this, expression);
 	}
 	@Override
 	public final <T> ISharedCondition_Comparable_Common_All<MODEL, RESULT, Integer, AND_CLAUSES> and(IFunctionInteger<T> getter) {
