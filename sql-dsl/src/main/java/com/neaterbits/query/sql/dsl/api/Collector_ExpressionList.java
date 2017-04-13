@@ -319,7 +319,9 @@ abstract class Collector_ExpressionList<
 	private NamedFunctions named;
 	
 
-	private class AliasFunctions 
+	abstract AliasFunctions createAliasFunctions(ISharedCollector_Functions_Callback<MODEL, RESULT, ALIAS_RET> func);
+	
+	protected class AliasFunctions 
 	
 		extends Collector_NestedFunctions_Alias<
 					MODEL, RESULT, ALIAS_RET,
@@ -329,22 +331,17 @@ abstract class Collector_ExpressionList<
 	
 		implements ISharedFunction_Next<MODEL, RESULT, ALIAS_RET> {
 		
-			AliasFunctions(Collector_NestedFunctions_Alias<MODEL, RESULT, ALIAS_RET, ?, ?, ?, ?, ?, ?, ?, ?, ?> toCopy) {
+			protected AliasFunctions(Collector_NestedFunctions_Alias<MODEL, RESULT, ALIAS_RET, ?, ?, ?, ?, ?, ?, ?, ?, ?> toCopy) {
 				super(toCopy);
 			}
 		
-			AliasFunctions(ISharedCollector_Functions_Callback_Alias<MODEL, RESULT, ALIAS_RET> func) {
+			protected AliasFunctions(ISharedCollector_Functions_Callback<MODEL, RESULT, ALIAS_RET> func) {
 				super(func);
 			}
 		
 			@Override
 			ISharedFunction_Next<MODEL, RESULT, ALIAS_RET> getAliasNoParamNext() {
 				return Collector_ExpressionList.this.getAliasNoParamNext(this);
-			}
-
-			@Override
-			ISharedFunction_Next<MODEL, RESULT, ALIAS_RET> continueAfterAliasFunctions(Expression expression) {
-				throw new UnsupportedOperationException("TODO");
 			}
 		}
 		
@@ -386,6 +383,7 @@ abstract class Collector_ExpressionList<
 	
 	//*************** Arithmetic forwarding functions ***************
 
+	@SuppressWarnings("unchecked")
 	private NamedFunctions<?, ?, ?> assureNamedFunctions() {
 		
 		
@@ -414,10 +412,11 @@ abstract class Collector_ExpressionList<
 		return this.named;
 	}
 	
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	ISharedFunction_Next<MODEL, RESULT, NAMED_RET> addNamedFunctionResult(Expression expression) {
 		addExpression(expression);
 		
-		// must clear named-functionns as to collect new ones after operand
+		// must clear named-functions as to collect new ones after operand
 		this.named = null;
 
 		return (ISharedFunction_Next)this;
@@ -430,27 +429,22 @@ abstract class Collector_ExpressionList<
 		
 		if (this.alias == null) {
 			
-			final ISharedCollector_Functions_Callback_Alias<MODEL, RESULT, ALIAS_RET> callback
+			final ISharedCollector_Functions_Callback<MODEL, RESULT, ALIAS_RET> callback
 			
-				= new ISharedCollector_Functions_Callback_Alias<MODEL, RESULT, ALIAS_RET>() {
-					
-					
+				= new ISharedCollector_Functions_Callback<MODEL, RESULT, ALIAS_RET>() {
 
-					@Override
-					public ISharedFunction_Next<MODEL, RESULT, ALIAS_RET> onComparable(CollectedFunctions functions,
-							Supplier<? extends Comparable<?>> getter) {
-						throw new UnsupportedOperationException();
-					}
+				@Override
+				public ISharedFunction_Next<MODEL, RESULT, ALIAS_RET> onComparable(Expression expression) {
+					throw new UnsupportedOperationException("TODO");
+				}
 
-					@Override
-					public ISharedFunction_Next<MODEL, RESULT, ALIAS_RET> onString(CollectedFunctions functions,
-							ISupplierString getter) {
-						throw new UnsupportedOperationException();
-					}
-
+				@Override
+				public ISharedFunction_Next<MODEL, RESULT, ALIAS_RET> onString(Expression expression) {
+					throw new UnsupportedOperationException("TODO");
+				}
 			};
 			
-			this.alias = new AliasFunctions(callback);
+			this.alias = createAliasFunctions(callback);
 		}
 
 		return this.alias;

@@ -335,23 +335,16 @@ abstract class SQL_Collector_WhereOrJoin_Base<
 	
 			whereAlias() {
 		
-		@SuppressWarnings({"unchecked", "rawtypes"})
-		final ISharedCollector_Functions_Callback_Alias<MODEL, RESULT, ALIAS_AND_OR> cb
-				= new ISharedCollector_Functions_Callback_Alias<MODEL, RESULT, ALIAS_AND_OR>() {
-		
-			@Override
-			public ISharedCondition_Comparable_Common_Base<MODEL, RESULT, Comparable<?>, ALIAS_AND_OR>
-				onComparable(CollectedFunctions functions, Supplier<? extends Comparable<?>> getter) {
-				
-				return andAliasImplComparable(functions, (Supplier)getter);
-			}
-		
-			@Override
-			public ISharedCondition_Comparable_String_Base<MODEL, RESULT, ALIAS_AND_OR>
-				onString(CollectedFunctions functions, ISupplierString getter) {
+		final ISharedCollector_Functions_Callback<MODEL, RESULT, ALIAS_AND_OR> cb
+				= new ISharedCollector_Functions_Callback<MODEL, RESULT, ALIAS_AND_OR>() {
 					
-				final Expression expression =  makeExpression(functions, makeGetterExpression(getter));
-			
+			@Override
+			public ISharedFunction_Next<MODEL, RESULT, ALIAS_AND_OR> onComparable(Expression expression) {
+				return new Collector_Condition_Comparative<MODEL, RESULT, Integer /* just to set Comparable */, ALIAS_AND_OR>(SQL_Collector_WhereOrJoin_Base.this, expression);
+			}
+
+			@Override
+			public ISharedFunction_Next<MODEL, RESULT, ALIAS_AND_OR> onString(Expression expression) {
 				return new Collector_Condition_String<MODEL, RESULT, ALIAS_AND_OR> (SQL_Collector_WhereOrJoin_Base.this, expression);
 			}
 		};

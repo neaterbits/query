@@ -85,5 +85,9 @@ final class Collector_Expression_List_Sub<
 	NamedFunctions createNamedFunctions(ISharedCollector_Functions_Callback<MODEL, RESULT, NAMED_RET> func) {
 		return new NamedFunctions(func);
 	}
-}
 
+	@Override
+	AliasFunctions createAliasFunctions(ISharedCollector_Functions_Callback<MODEL, RESULT, ALIAS_RET> func) {
+		return new AliasFunctions(func);
+	}
+}

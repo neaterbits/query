@@ -31,21 +31,16 @@ abstract class Collector_Or_Alias<
 
 	private <RR extends Comparable<RR>> ISharedCondition_Comparable_Common_All<MODEL, RESULT, RR, OR_CLAUSES> orAliasImplComparable(Supplier<RR> getter) {
 		
-		return orAliasImplComparable(null, getter);
+		return orAliasImplComparable(makeGetterExpression(getter));
 	}
 
-	private <RR extends Comparable<RR>> ISharedCondition_Comparable_Common_All<MODEL, RESULT, RR, OR_CLAUSES> orAliasImplComparable(CollectedFunctions functions, Supplier<RR> getter) {
-		
-		final Expression expression = makeExpression(functions, makeGetterExpression(getter));
+	private <RR extends Comparable<RR>> ISharedCondition_Comparable_Common_All<MODEL, RESULT, RR, OR_CLAUSES> orAliasImplComparable(Expression expression) {
 		
 		return new Collector_Condition_Comparative<MODEL, RESULT, RR, OR_CLAUSES>(this, expression);
 	}
 	
-	private ISharedCondition_Comparable_String_All<MODEL, RESULT, OR_CLAUSES>
-		orAliasImplString(CollectedFunctions functions, ISupplierString getter) {
+	private ISharedCondition_Comparable_String_All<MODEL, RESULT, OR_CLAUSES> orAliasImplString(Expression expression) {
 
-		final Expression expression = makeExpression(functions, makeGetterExpression(getter));
-			
 		return new Collector_Condition_String<MODEL, RESULT, OR_CLAUSES>(this, expression);
 	}
 
@@ -67,7 +62,7 @@ abstract class Collector_Or_Alias<
 	@Override
 	public final ISharedCondition_Comparable_String_All<MODEL, RESULT, OR_CLAUSES> or(ISupplierString getter) {
 		
-		return orAliasImplString(null, getter);
+		return orAliasImplString(makeGetterExpression(getter));
 	}
 
 	private final <T extends ISharedLogical_And<MODEL, RESULT>>
@@ -98,18 +93,16 @@ abstract class Collector_Or_Alias<
 			ISharedCondition_Comparable_Common_All<MODEL, RESULT, BigDecimal, OR_CLAUSES>,
 			ISharedCondition_Comparable_String_All<MODEL, RESULT, OR_CLAUSES>> or() {
 
-		@SuppressWarnings({ "unchecked", "rawtypes" })
-		final ISharedCollector_Functions_Callback_Alias<MODEL, RESULT, OR_CLAUSES> cb = new ISharedCollector_Functions_Callback_Alias<MODEL, RESULT, OR_CLAUSES>() {
+		final ISharedCollector_Functions_Callback<MODEL, RESULT, OR_CLAUSES> cb = new ISharedCollector_Functions_Callback<MODEL, RESULT, OR_CLAUSES>() {
 
 			@Override
-			public ISharedCondition_Comparable_Common_All<MODEL, RESULT, Comparable<?>, OR_CLAUSES> onComparable(CollectedFunctions functions, Supplier getter) {
-
-				return orAliasImplComparable(functions, (Supplier)getter);
+			public ISharedFunction_Next<MODEL, RESULT, OR_CLAUSES> onComparable(Expression expression) {
+				return orAliasImplComparable(expression);
 			}
 
 			@Override
-			public ISharedCondition_Comparable_String_Base<MODEL, RESULT, OR_CLAUSES> onString(CollectedFunctions functions, ISupplierString getter) {
-				return orAliasImplString(functions, getter);
+			public ISharedFunction_Next<MODEL, RESULT, OR_CLAUSES> onString(Expression expression) {
+				return orAliasImplString(expression);
 			}
 		};
 

@@ -210,33 +210,49 @@ abstract class Collector_NestedFunctions_Base<
 	
 	/*********************** Alias ***********************/
 
-	abstract ISharedFunction_Next<MODEL, RESULT, ALIAS_RET> continueAfterAliasFunctions(Expression expression);
+	abstract ISharedFunction_Next<MODEL, RESULT, ALIAS_RET> continueAfterAliasComparableFunctions(Expression expression);
+	abstract ISharedFunction_Next<MODEL, RESULT, ALIAS_RET> continueAfterAliasStringFunctions(Expression expression);
 		
+	/*
 	private <R extends Comparable<?>> ISharedFunction_Next<MODEL, RESULT, ALIAS_RET> addAlias(FunctionBase function, Supplier<R> getter) {
 		
 		final Expression expression = createFunctionExpression(function, new FieldExpression(getter));
 		
 		return continueAfterAliasFunctions(expression);
 	}
+	*/
+
+	private <R extends Comparable<?>> Expression addAlias(FunctionBase function, Supplier<R> getter) {
+		
+		final Expression expression = createFunctionExpression(function, new FieldExpression(getter));
+		
+		return expression;
+	}
 	
 	@Override
 	final <R extends Comparable<?>> ISharedFunction_Next<MODEL, RESULT, ALIAS_RET>
 			abstractaddAndReturnComparable(Function_Arithmetic function, Supplier<R> getter) {
 				
-		return addAlias(function, getter);
+		final Expression expression =  addAlias(function, getter);
+		
+		return continueAfterAliasComparableFunctions(expression);
 	}
 
 	@Override
 	final <R extends Comparable<?>> ISharedFunction_Next<MODEL, RESULT, ALIAS_RET>
 			abstractaddAndReturnComparable(Function_Aggregate function, Supplier<R> getter) {
 
-		return addAlias(function, getter);
+		final Expression expression = addAlias(function, getter);
+		
+		return continueAfterAliasComparableFunctions(expression);
 	}
 
 	@Override
 	final ISharedFunction_Next<MODEL, RESULT, ALIAS_RET> addAndReturnString(Function_String function, ISupplierString getter) {
 		
-		return addAlias(function, getter);
+		final Expression expression = addAlias(function, getter);
+		
+		return continueAfterAliasStringFunctions(expression);
 	}
 }
 

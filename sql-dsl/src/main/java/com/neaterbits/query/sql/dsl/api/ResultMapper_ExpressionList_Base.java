@@ -126,7 +126,7 @@ abstract class ResultMapper_ExpressionList_Base<
 		*/
 	}
 
-	private class ResultMapper_Functions extends
+	private class ResultMapper_Named_Functions extends
 	
 		NamedFunctions<
 			ISharedMapFunctions_Numeric_Named<
@@ -226,7 +226,7 @@ abstract class ResultMapper_ExpressionList_Base<
 				>
 		{
 
-		ResultMapper_Functions(ISharedCollector_Functions_Callback<MODEL, RESULT, NAMED_RET> func) {
+		ResultMapper_Named_Functions(ISharedCollector_Functions_Callback<MODEL, RESULT, NAMED_RET> func) {
 			super(func);
 		}
 	}
@@ -234,6 +234,109 @@ abstract class ResultMapper_ExpressionList_Base<
 	@Override
 	final NamedFunctions createNamedFunctions(
 			ISharedCollector_Functions_Callback<MODEL, RESULT, NAMED_RET> func) {
-		return new ResultMapper_Functions(func);
+		return new ResultMapper_Named_Functions(func);
+	}
+
+	private class ResultMapper_Alias_Functions extends
+	
+		AliasFunctions /* <  
+			ISharedMapFunctions_Numeric_Alias<
+				MODEL,
+				RESULT,
+				
+				ALIAS_RET,
+				
+				ALIAS_SUM_LONG_RET,
+				ALIAS_COUNT_RET,
+				
+				ALIAS_SHORT_RET,
+				ALIAS_INTEGER_RET,
+				ALIAS_LONG_RET,
+				ALIAS_DOUBLE_RET,
+				ALIAS_BIGDECIMAL_RET,
+				ALIAS_DATE_RET,
+				
+				ALIAS_SUM_LONG_RET,
+				ALIAS_COUNT_RET,
+				
+				ALIAS_SHORT_RET,
+				ALIAS_INTEGER_RET,
+				ALIAS_LONG_RET,
+				ALIAS_DOUBLE_RET,
+				ALIAS_BIGDECIMAL_RET,
+				ALIAS_DATE_RET
+			
+			>,
+			ISharedMapFunctions_Numeric_Alias<
+				MODEL,
+				RESULT,
+				
+				ALIAS_RET,
+	
+				ALIAS_DOUBLE_RET,
+				ALIAS_DOUBLE_RET,
+				
+				ALIAS_DOUBLE_RET,
+				ALIAS_DOUBLE_RET,
+				ALIAS_DOUBLE_RET,
+				ALIAS_DOUBLE_RET,
+				ALIAS_DOUBLE_RET,
+				ALIAS_DOUBLE_RET,
+	
+				
+				
+				ALIAS_DOUBLE_RET,
+				ALIAS_DOUBLE_RET,
+				
+				ALIAS_DOUBLE_RET,
+				ALIAS_DOUBLE_RET,
+				ALIAS_DOUBLE_RET,
+				ALIAS_DOUBLE_RET,
+				ALIAS_DOUBLE_RET,
+				ALIAS_DOUBLE_RET
+				
+			>,
+			ISharedFunctions_String_Named<MODEL, RESULT, NAMED_RET, NAMED_STRING_RET>
+		>*/
+	
+	implements ISharedMapFunctions_Numeric_Alias<
+				MODEL,
+				RESULT,
+				
+				ALIAS_RET,
+				
+				ALIAS_SUM_LONG_RET,
+				ALIAS_COUNT_RET,
+				
+				ALIAS_SHORT_RET,
+				ALIAS_INTEGER_RET,
+				ALIAS_LONG_RET,
+				ALIAS_DOUBLE_RET,
+				ALIAS_BIGDECIMAL_RET,
+				ALIAS_DATE_RET,
+				
+				ALIAS_SUM_LONG_RET,
+				ALIAS_COUNT_RET,
+				
+				ALIAS_SHORT_RET,
+				ALIAS_INTEGER_RET,
+				ALIAS_LONG_RET,
+				ALIAS_DOUBLE_RET,
+				ALIAS_BIGDECIMAL_RET,
+				ALIAS_DATE_RET
+				
+				>
+		{
+	
+		ResultMapper_Alias_Functions(ISharedCollector_Functions_Callback<MODEL, RESULT, ALIAS_RET> func) {
+			super(func);
+		}
+	}
+		
+	@Override
+	AliasFunctions createAliasFunctions(
+			ISharedCollector_Functions_Callback<MODEL, RESULT, ALIAS_RET> func) {
+		
+		return new ResultMapper_Alias_Functions(func);
 	}
 }

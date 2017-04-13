@@ -2,6 +2,7 @@ package com.neaterbits.query.sql.dsl.api;
 
 import java.util.function.Supplier;
 
+@Deprecated // Should always return expressions? eg. ISharedCollector_Functions_Callback
 public interface ISharedCollector_Functions_Callback_Alias<
 		MODEL,
 		RESULT,

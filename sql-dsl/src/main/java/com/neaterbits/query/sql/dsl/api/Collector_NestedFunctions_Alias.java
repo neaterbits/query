@@ -69,9 +69,9 @@ abstract class Collector_NestedFunctions_Alias<
 
 {
 
-	private final ISharedCollector_Functions_Callback_Alias<MODEL, RESULT, RET> func;
+	private final ISharedCollector_Functions_Callback<MODEL, RESULT, RET> func;
 
-	Collector_NestedFunctions_Alias(ISharedCollector_Functions_Callback_Alias<MODEL, RESULT, RET> func /* , Collector_NestedFunctions_Base<MODEL, RESULT> last */) {
+	Collector_NestedFunctions_Alias(ISharedCollector_Functions_Callback<MODEL, RESULT, RET> func /* , Collector_NestedFunctions_Base<MODEL, RESULT> last */) {
 		//super(last);
 
 		if (func == null) {
@@ -86,8 +86,17 @@ abstract class Collector_NestedFunctions_Alias<
 
 		this.func = toCopy.func;
 	}
-	
 
+	@Override
+	final ISharedFunction_Next<MODEL, RESULT, RET> continueAfterAliasComparableFunctions(Expression expression) {
+		return func.onComparable(expression);
+	}
+
+	@Override
+	final ISharedFunction_Next<MODEL, RESULT, RET> continueAfterAliasStringFunctions(Expression expression) {
+		return func.onString(expression);
+	}
+	
 	/*
 	@SuppressWarnings("unchecked")
 	final <VALUE extends Comparable<?>, TYPE extends ISharedFunction_Next<MODEL, RESULT, RET>>  

@@ -38,13 +38,7 @@ class Collector_ConditionFunctions_Alias<
 
 {
 	
-	Collector_ConditionFunctions_Alias(ISharedCollector_Functions_Callback_Alias<MODEL, RESULT, RET> func) {
+	Collector_ConditionFunctions_Alias(ISharedCollector_Functions_Callback<MODEL, RESULT, RET> func) {
 		super(func);
-		//super(func, null);
-	}
-
-	@Override
-	ISharedFunction_Next<MODEL, RESULT, RET> continueAfterAliasFunctions(Expression expression) {
-		throw new UnsupportedOperationException("TODO");
 	}
 }

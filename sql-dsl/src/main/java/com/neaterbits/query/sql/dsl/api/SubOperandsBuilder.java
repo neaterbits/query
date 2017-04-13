@@ -137,4 +137,19 @@ abstract class SubOperandsBuilder<
 			ISharedCollector_Functions_Callback<MODEL, RESULT, NAMED_RET> func) {
 		return new SubNamedFunctions(func);
 	}
+
+
+	private class SubAliasFunctions extends AliasFunctions
+	
+		implements ISharedSubOperandsBuilder_NoParam_Alias {
+
+		SubAliasFunctions(ISharedCollector_Functions_Callback func) {
+			super(func);
+		}
+	}
+	
+	@Override
+	final AliasFunctions createAliasFunctions(ISharedCollector_Functions_Callback<MODEL, RESULT, ALIAS_RET> func) {
+		return new SubAliasFunctions(func);
+	}
 }

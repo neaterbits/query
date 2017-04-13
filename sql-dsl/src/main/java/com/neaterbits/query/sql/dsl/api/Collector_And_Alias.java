@@ -39,26 +39,24 @@ abstract class Collector_And_Alias<
 			NESTED_OR_CLAUSES extends ISharedLogical_Or_Alias<MODEL, RESULT>>
 		
 			ISharedCondition_Comparable_Common_All<MODEL, RESULT, RR, M_AND_CLAUSES> andAliasImplComparable(Supplier<RR> getter) {
-		
-		return andAliasImplComparable(null, getter);
+
+		return andAliasImplComparable(makeGetterExpression(getter));
 	}
 
 	private <RR extends Comparable<RR>,
 		M_AND_CLAUSES extends ISharedLogical_And_Alias_Base<MODEL, RESULT, M_AND_CLAUSES, NESTED_OR_CLAUSES>,
 		NESTED_OR_CLAUSES extends ISharedLogical_Or_Alias<MODEL, RESULT>>
 		
-		ISharedCondition_Comparable_Common_All<MODEL, RESULT, RR, M_AND_CLAUSES> andAliasImplComparable(CollectedFunctions functions, Supplier<RR> getter) {
+		ISharedCondition_Comparable_Common_All<MODEL, RESULT, RR, M_AND_CLAUSES> andAliasImplComparable(Expression expression) {
 
-		final Expression expression = makeExpression(functions, makeGetterExpression(getter));
+		//final Expression expression = makeExpression(functions, makeGetterExpression(getter));
 		
 		return new Collector_Condition_Comparative<MODEL, RESULT, RR, M_AND_CLAUSES>(this, expression);
 	}
 
 	private ISharedCondition_Comparable_String_All<MODEL, RESULT, AND_CLAUSES>
-		andAliasImplString(CollectedFunctions functions, ISupplierString getter) {
+		andAliasImplString(Expression expression) {
 		
-		final Expression expression = makeExpression(functions, makeGetterExpression(getter));
-			
 		return new Collector_Condition_String<MODEL, RESULT, AND_CLAUSES>(this, expression);
 	}
 		
@@ -79,7 +77,7 @@ abstract class Collector_And_Alias<
 
 	@Override
 	public final ISharedCondition_Comparable_String_All<MODEL, RESULT, AND_CLAUSES> and(ISupplierString getter) {
-		return andAliasImplString(null, getter);
+		return andAliasImplString(makeGetterExpression(getter));
 	}
 
 
@@ -105,22 +103,17 @@ abstract class Collector_And_Alias<
 				ISharedCondition_Comparable_String_All<MODEL, RESULT, AND_CLAUSES>> and() {
 
 					
-		@SuppressWarnings({"unchecked", "rawtypes"})
-		final ISharedCollector_Functions_Callback_Alias<MODEL, RESULT, AND_CLAUSES> cb
-				= new ISharedCollector_Functions_Callback_Alias<MODEL, RESULT, AND_CLAUSES>() {
+		final ISharedCollector_Functions_Callback<MODEL, RESULT, AND_CLAUSES> cb
+				= new ISharedCollector_Functions_Callback<MODEL, RESULT, AND_CLAUSES>() {
 
 			@Override
-			public ISharedCondition_Comparable_Common_Base<MODEL, RESULT, Comparable<?>, AND_CLAUSES>
-				onComparable(CollectedFunctions functions, Supplier getter) {
-				
-				return andAliasImplComparable(functions, (Supplier)getter);
+			public ISharedFunction_Next<MODEL, RESULT, AND_CLAUSES> onComparable(Expression expression) {
+				return andAliasImplComparable(expression);
 			}
 
 			@Override
-			public ISharedCondition_Comparable_String_Base<MODEL, RESULT, AND_CLAUSES>
-				onString(CollectedFunctions functions, ISupplierString getter) {
-				
-				return andAliasImplString(functions, getter);
+			public ISharedFunction_Next<MODEL, RESULT, AND_CLAUSES> onString(Expression expression) {
+				return andAliasImplString(expression);
 			}
 		};
 
