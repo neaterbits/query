@@ -44,6 +44,16 @@ public class EntityWhereOrFunctionTest extends GEN_BaseTestCase {
 
     	store(farm1, farm2, farm3)
     	.checkOne(query, () -> new Farm(farm1.getId(), "Hill Valley"));
+    	
+    	// Multiple, more of a compile test
+    	query = select.one(Farm.class)
+    			.where(Farm::getName).contains("Hill V")
+    			.   or().lower(Farm::getName).contains("l valley")
+    			.   or().upper(Farm::getName).contains("L VALLEY")
+    			.build(); 
+
+    	store(farm1, farm2, farm3)
+    	.checkOne(query, () -> new Farm(farm1.getId(), "Hill Valley"));
     }
 
 
@@ -83,6 +93,16 @@ public class EntityWhereOrFunctionTest extends GEN_BaseTestCase {
 
     	store(farm1, farm2, farm3)
     	.checkOne(query, () -> new Farm(farm1.getId(), "Hill Valley"));
+
+    	// Multiple, more of a compile test
+    	query = select.one(f)
+    			.where(f::getName).contains("Hill V")
+    			.   or().lower(f::getName).contains("l valley")
+    			.   or().upper(f::getName).contains("L VALLEY")
+    			.build(); 
+
+    	store(farm1, farm2, farm3)
+    	.checkOne(query, () -> new Farm(farm1.getId(), "Hill Valley"));
     }
 
 
@@ -116,7 +136,23 @@ public class EntityWhereOrFunctionTest extends GEN_BaseTestCase {
     			query,
     			
     			() -> expected( 
-					new Farm(farm1.getId(), "Hill Valley")));    	
+					new Farm(farm1.getId(), "Hill Valley")));
+    	
+    	query = select.list(Farm.class)
+    			.where(Farm::getName).contains("Valley")
+    			.   or().lower(Farm::getName).contains("snowy")
+    			.   or().upper(Farm::getName).contains("SNOWY")
+    			.build(); 
+
+    	// Multiple or's, more of a compile test
+    	store(farm1, farm2, farm3)
+    	.checkListUnordered(
+    			query,
+    			
+    			() -> expected( 
+					new Farm(farm1.getId(), "Hill Valley"),
+					new Farm(farm3.getId(), "Snowy Hills")));
+    	
     }
 
 
@@ -153,5 +189,20 @@ public class EntityWhereOrFunctionTest extends GEN_BaseTestCase {
     			
     			() -> expected( 
 					new Farm(farm1.getId(), "Hill Valley")));    	
+
+    	query = select.list(f)
+    			.where(f::getName).contains("Valley")
+    			.   or().lower(f::getName).contains("snowy")
+    			.   or().upper(f::getName).contains("SNOWY")
+    			.build(); 
+
+    	// Multiple or's, more of a compile test
+    	store(farm1, farm2, farm3)
+    	.checkListUnordered(
+    			query,
+    			
+    			() -> expected( 
+					new Farm(farm1.getId(), "Hill Valley"),
+					new Farm(farm3.getId(), "Snowy Hills")));
     }
 }
