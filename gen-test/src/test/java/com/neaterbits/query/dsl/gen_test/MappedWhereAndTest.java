@@ -9,7 +9,6 @@ import com.neaterbits.query.test.model.mapped.FarmInfo;
 
 public class MappedWhereAndTest extends GEN_BaseTestCase {
 
-
     @Test
     public void testMappedSingleNamed() {
 
