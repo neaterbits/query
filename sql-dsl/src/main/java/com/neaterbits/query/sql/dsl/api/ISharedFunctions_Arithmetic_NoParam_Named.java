@@ -1,5 +1,6 @@
 package com.neaterbits.query.sql.dsl.api;
 
+@Deprecated // not in use it seems?
 public interface ISharedFunctions_Arithmetic_NoParam_Named<
 		MODEL,
 		RESULT,

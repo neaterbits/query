@@ -17,8 +17,13 @@ abstract class Collector_NestedFunctions_Alias<
 		DOUBLE_RET  extends ISharedFunction_Next<MODEL, RESULT, RET>,
 		BIGDECIMAL_RET extends ISharedFunction_Next<MODEL, RESULT, RET>,
 		DATE_RET extends ISharedFunction_Next<MODEL, RESULT, RET>,
-		STRING_RET  extends ISharedFunction_Next<MODEL, RESULT, RET>
+		STRING_RET  extends ISharedFunction_Next<MODEL, RESULT, RET>,
 		
+		NO_PARAM_ARITHMETIC_SAME_TYPE_RET,
+		NO_PARAM_ARITHMETIC_DOUBLE_RET,
+		
+		NO_PARAM_STRING_RET
+	
 		>
 
 		extends Collector_NestedFunctions_Base<
@@ -50,9 +55,12 @@ abstract class Collector_NestedFunctions_Alias<
 				STRING_RET
 				>
 
-		implements ISharedFunctions_Transform_Initial_Alias<MODEL, RESULT, RET, SHORT_RET, INTEGER_RET, LONG_RET, DOUBLE_RET, BIGDECIMAL_RET, STRING_RET>,
+		implements 
 		
-			ISharedFunctions_Initial_And_NoParam_Alias<
+		ISharedFunctions_Transform_Initial_Alias<MODEL, RESULT, RET, SHORT_RET, INTEGER_RET, LONG_RET, DOUBLE_RET, BIGDECIMAL_RET, STRING_RET>,
+		
+		/*
+		ISharedFunctions_Initial_And_NoParam_Alias<
 					MODEL,
 					RESULT,
 					
@@ -64,8 +72,12 @@ abstract class Collector_NestedFunctions_Alias<
 					DOUBLE_RET,
 					BIGDECIMAL_RET,
 					STRING_RET
-					>
-
+					>,
+					*/
+		// ISharedFunctions_Arithmetic_NoParam_Alias<MODEL, RESULT, RET, SHORT_RET, INTEGER_RET, LONG_RET, DOUBLE_RET, BIGDECIMAL_RET>
+					
+		ISharedFunctions_Arithmetic_NoParam_Base<MODEL, RESULT, NO_PARAM_ARITHMETIC_SAME_TYPE_RET, NO_PARAM_ARITHMETIC_DOUBLE_RET>,
+		ISharedFunctions_String_NoParam_Base<MODEL, RESULT, NO_PARAM_STRING_RET>
 
 {
 
@@ -81,7 +93,7 @@ abstract class Collector_NestedFunctions_Alias<
 		this.func = func;
 	}
 
-	Collector_NestedFunctions_Alias(Collector_NestedFunctions_Alias<MODEL, RESULT, RET, ?, ?, ?, ?, ?, ?, ?, ?, ?> toCopy) {
+	Collector_NestedFunctions_Alias(Collector_NestedFunctions_Alias<MODEL, RESULT, RET, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?> toCopy) {
 		super(toCopy);
 
 		this.func = toCopy.func;
@@ -146,26 +158,25 @@ abstract class Collector_NestedFunctions_Alias<
 
 	@Override
 	@SuppressWarnings("unchecked")
-	public final ISharedFunctions_String_Alias<MODEL, RESULT, RET, STRING_RET> lower() {
-		addNoParam(Function_String_Lower.INSTANCE);
-
-		return (ISharedFunctions_String_Alias<MODEL, RESULT, RET, STRING_RET>)getAliasNoParamNext();
+	public final NO_PARAM_STRING_RET lower() {
+		return (NO_PARAM_STRING_RET)getAliasNoParamNext();
 	}
+	
+	@Override
+	@SuppressWarnings("unchecked")
+	public final NO_PARAM_STRING_RET upper() {
+		addNoParam(Function_String_Upper.INSTANCE);
+
+		return (NO_PARAM_STRING_RET)getAliasNoParamNext();
+	}
+
 
 	@Override
 	@SuppressWarnings("unchecked")
-		public final ISharedFunctions_String_Alias<MODEL, RESULT, RET, STRING_RET> upper() {
-		addNoParam(Function_String_Upper.INSTANCE);
-
-		return (ISharedFunctions_String_Alias<MODEL, RESULT, RET, STRING_RET>)getAliasNoParamNext();
-	}
-
-	@Override
-	@SuppressWarnings({"unchecked", "rawtypes"})
-	public final ISharedFunctions_Arithmetic_Alias<MODEL, RESULT, RET, SHORT_RET, INTEGER_RET, LONG_RET, DOUBLE_RET, BIGDECIMAL_RET> abs() {
+	public final NO_PARAM_ARITHMETIC_SAME_TYPE_RET abs() {
 		addNoParam(Function_Arithmetic_Abs.INSTANCE);
 
-		return (ISharedFunctions_Arithmetic_Alias)getAliasNoParamNext();
+		return (NO_PARAM_ARITHMETIC_SAME_TYPE_RET)getAliasNoParamNext();
 	}
 
 	/*
@@ -178,19 +189,19 @@ abstract class Collector_NestedFunctions_Alias<
 	*/
 
 	@Override
-	@SuppressWarnings({"unchecked", "rawtypes"})
-	public final ISharedFunctions_Arithmetic_Alias<MODEL, RESULT, RET, DOUBLE_RET, DOUBLE_RET, DOUBLE_RET, DOUBLE_RET, DOUBLE_RET> sqrt() {
+	@SuppressWarnings("unchecked")
+	public final NO_PARAM_ARITHMETIC_DOUBLE_RET sqrt() {
 		addNoParam(Function_Arithmetic_Sqrt.INSTANCE);
 
-		return (ISharedFunctions_Arithmetic_Alias)getAliasNoParamNext();
+		return (NO_PARAM_ARITHMETIC_DOUBLE_RET)getAliasNoParamNext();
 	}
 	
 
 	@Override
 	@SuppressWarnings("unchecked")
-	public final ISharedFunctions_String_Alias<MODEL, RESULT, RET, STRING_RET> trim() {
+	public final NO_PARAM_STRING_RET trim() {
 		addNoParam(Function_String_Trim.INSTANCE);
 
-		return (ISharedFunctions_String_Alias<MODEL, RESULT, RET, STRING_RET>)getAliasNoParamNext();
+		return (NO_PARAM_STRING_RET)getAliasNoParamNext();
 	}
 }

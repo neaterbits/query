@@ -3,7 +3,6 @@ package com.neaterbits.query.sql.dsl.api;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.Supplier;
 
 abstract class Collector_ExpressionList<
 		MODEL,
@@ -321,17 +320,26 @@ abstract class Collector_ExpressionList<
 
 	abstract AliasFunctions createAliasFunctions(ISharedCollector_Functions_Callback<MODEL, RESULT, ALIAS_RET> func);
 	
-	protected class AliasFunctions 
+	protected class AliasFunctions<
+		NO_PARAM_ARITHMETIC_SAME_TYPE_RET,
+		NO_PARAM_ARITHMETIC_DOUBLE_RET,
+		
+		NO_PARAM_STRING_RET>
 	
 		extends Collector_NestedFunctions_Alias<
 					MODEL, RESULT, ALIAS_RET,
 					
-					ALIAS_SUM_LONG_RET, ALIAS_COUNT_RET, ALIAS_SHORT_RET, ALIAS_INTEGER_RET, ALIAS_LONG_RET, ALIAS_DOUBLE_RET, ALIAS_BIGDECIMAL_RET, ALIAS_DATE_RET, ALIAS_STRING_RET
+					ALIAS_SUM_LONG_RET, ALIAS_COUNT_RET, ALIAS_SHORT_RET, ALIAS_INTEGER_RET, ALIAS_LONG_RET, ALIAS_DOUBLE_RET, ALIAS_BIGDECIMAL_RET, ALIAS_DATE_RET, ALIAS_STRING_RET,
+					
+					NO_PARAM_ARITHMETIC_SAME_TYPE_RET,
+					NO_PARAM_ARITHMETIC_DOUBLE_RET,
+					
+					NO_PARAM_STRING_RET
 					> 
 	
 		implements ISharedFunction_Next<MODEL, RESULT, ALIAS_RET> {
 		
-			protected AliasFunctions(Collector_NestedFunctions_Alias<MODEL, RESULT, ALIAS_RET, ?, ?, ?, ?, ?, ?, ?, ?, ?> toCopy) {
+			protected AliasFunctions(Collector_NestedFunctions_Alias<MODEL, RESULT, ALIAS_RET, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?> toCopy) {
 				super(toCopy);
 			}
 		
@@ -383,7 +391,6 @@ abstract class Collector_ExpressionList<
 	
 	//*************** Arithmetic forwarding functions ***************
 
-	@SuppressWarnings("unchecked")
 	private NamedFunctions<?, ?, ?> assureNamedFunctions() {
 		
 		
@@ -409,7 +416,10 @@ abstract class Collector_ExpressionList<
 			this.named = createNamedFunctions(callback);
 		}
 
-		return this.named;
+		@SuppressWarnings("unchecked")
+		final NamedFunctions<?, ?, ?> ret = this.named;
+		
+		return ret;
 	}
 	
 	@SuppressWarnings({ "unchecked", "rawtypes" })
@@ -423,7 +433,7 @@ abstract class Collector_ExpressionList<
 	}
 	
 
-	private AliasFunctions assureAliasFunctions() {
+	private AliasFunctions<?, ?, ?> assureAliasFunctions() {
 		
 		setAliased();
 		
@@ -446,8 +456,11 @@ abstract class Collector_ExpressionList<
 			
 			this.alias = createAliasFunctions(callback);
 		}
+		
+		@SuppressWarnings("unchecked")
+		final AliasFunctions<?, ?, ?> ret = this.alias;
 
-		return this.alias;
+		return ret;
 	}
 	
 	

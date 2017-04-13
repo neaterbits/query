@@ -239,7 +239,7 @@ abstract class ResultMapper_ExpressionList_Base<
 
 	private class ResultMapper_Alias_Functions extends
 	
-		AliasFunctions /* <  
+		AliasFunctions<  
 			ISharedMapFunctions_Numeric_Alias<
 				MODEL,
 				RESULT,
@@ -297,7 +297,7 @@ abstract class ResultMapper_ExpressionList_Base<
 				
 			>,
 			ISharedFunctions_String_Named<MODEL, RESULT, NAMED_RET, NAMED_STRING_RET>
-		>*/
+		>
 	
 	implements ISharedMapFunctions_Numeric_Alias<
 				MODEL,

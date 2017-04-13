@@ -1,5 +1,6 @@
 package com.neaterbits.query.sql.dsl.api;
 
+@Deprecated // not in use?
 final class Collector_MapFunctions_Alias<
 		MODEL,
 		RESULT,
@@ -38,7 +39,11 @@ final class Collector_MapFunctions_Alias<
 		DOUBLE_RET,
 		BIGDECIMAL_RET,
 		DATE_RET,
-		STRING_RET> 
+		STRING_RET,
+		
+		Void,
+		Void,
+		Void> 
 	
 	
 		implements 
