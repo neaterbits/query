@@ -34,6 +34,16 @@ public class EntityWhereOrFunctionTest extends GEN_BaseTestCase {
 
     	store(farm1, farm2, farm3)
     	.checkOne(query, () -> new Farm(farm1.getId(), "Hill Valley"));
+
+    	// Other way around
+		query = select.one(Farm.class)
+    			
+    			.where(Farm::getName).contains("nonexistent")
+    			.   or().lower(Farm::getName).contains("l valley")
+    			.build(); 
+
+    	store(farm1, farm2, farm3)
+    	.checkOne(query, () -> new Farm(farm1.getId(), "Hill Valley"));
     }
 
 
@@ -64,6 +74,15 @@ public class EntityWhereOrFunctionTest extends GEN_BaseTestCase {
     	
     	store(farm1, farm2, farm3)
     	.checkOne(query, () -> new Farm(farm3.getId(), "Snowy Hills"));
+
+    	// Other way around
+		query = select.one(f)
+    			.where(f::getName).contains("nonexistent")
+    			.   or().lower(f::getName).contains("l valley")
+    			.build(); 
+
+    	store(farm1, farm2, farm3)
+    	.checkOne(query, () -> new Farm(farm1.getId(), "Hill Valley"));
     }
 
 

@@ -1,6 +1,7 @@
 package com.neaterbits.query.sql.dsl.api;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.function.Consumer;
 
@@ -51,6 +52,9 @@ public abstract class BaseJPATest extends BaseSQLAPITest {
     	return Arrays.asList(elements);
     }
 
+	protected static <T> List<T> none() {
+		return Collections.emptyList();
+    }
 	
 	protected static final QueryTestDSCheck store(Object ...objects) {
 		return store(s -> {
