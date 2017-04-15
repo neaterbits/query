@@ -15,7 +15,7 @@ final class Short_Collector_Multi_Mapped_Named_Initial<MODEL, RESULT>
 		super(queryCollector, result);
 	}
 
-
+	
 	@Override
 	Collector_GroupBy<MODEL, RESULT> createGroupByCollector(Collector_Base<MODEL> last, int[] groupByColumns,
 			Collector_Conditions_GroupBy<MODEL, RESULT, ?> collectorConditions) {

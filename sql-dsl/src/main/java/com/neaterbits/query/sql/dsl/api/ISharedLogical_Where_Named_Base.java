@@ -29,13 +29,37 @@ public interface ISharedLogical_Where_Named_Base<
 
 	extends ISharedLogical_Where<MODEL, RESULT> {
 
+	
+						
+	<T> BOOLEAN_CLAUSE where(IFunctionBoolean<T> func);
+						
+	<T> BYTE_CLAUSE where(IFunctionByte<T> func);
+
+	<T> SHORT_CLAUSE where(IFunctionShort<T> func);
+
 	<T> INTEGER_CLAUSE where(IFunctionInteger<T> func);
 
 	<T> LONG_CLAUSE where(IFunctionLong<T> func);
 
+	<T> BIGINTEGER_CLAUSE where(IFunctionBigInteger<T> func);
+
+	<T> FLOAT_CLAUSE where(IFunctionFloat<T> func);
+
+	<T> DOUBLE_CLAUSE where(IFunctionDouble<T> func);
+	
 	<T> BIGDECIMAL_CLAUSE where(IFunctionBigDecimal<T> func);
 
 	<T> STRING_CLAUSE where(StringFunction<T> func);
     
+	<T> DATE_CLAUSE where(IFunctionDate<T> func);
 
+	<T> CALENDAR_CLAUSE where(IFunctionCalendar<T> func);
+
+	<T> SQLDATE_CLAUSE where(IFunctionSQLDate<T> func);
+
+	<T> SQLTIME_CLAUSE where(IFunctionSQLTime<T> func);
+
+	<T> SQLTIMESTAMP_CLAUSE where(IFunctionSQLTimestamp<T> func);
+	
+	<T> BYTEARRAY_CLAUSE where(IFunctionByteArray<T> func);
 }
