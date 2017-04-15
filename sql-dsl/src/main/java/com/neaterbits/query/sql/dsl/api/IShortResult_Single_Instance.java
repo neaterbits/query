@@ -6,7 +6,7 @@ public interface IShortResult_Single_Instance<MODEL, RESULT>
 		IShortResult_Mapped_Single_All<MODEL, RESULT>,
 
 		
-		ISQLLogical_WhereOrJoin_SingleResult_Named<MODEL, RESULT>,
+		IShortLogical_WhereOrJoinInitial_SingleResult_Named<MODEL, RESULT>,
 		IShortJoin_Single_Named_Initial<MODEL, RESULT>
 		
 		/* NEVER join direct on alias, only if mapped via alias because entity queries should be mapped by themselves
