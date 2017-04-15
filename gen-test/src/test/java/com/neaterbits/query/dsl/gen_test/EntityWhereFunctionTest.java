@@ -77,6 +77,12 @@ public class EntityWhereFunctionTest extends GEN_BaseTestCase {
     @Test
     public void testEntityMultiAlias() {
     	
+    	assertThat(true).isEqualTo(false);
+    	
+    	// TODO: Comment in at below, and fix conflicts in implementatinos
+    	// sql-dsl/src/main/java/com/neaterbits/query/sql/dsl/api/ISQLLogical_WhereOrJoin_MultiEntity_Alias_And_Function.java
+    	
+    	/*
     	verifyIsNotCompilable(Farm.class, "f",
 	    	"list(Farm.class)" +
 			".where(f::getName).contains(\"Hill\")");
@@ -101,5 +107,7 @@ public class EntityWhereFunctionTest extends GEN_BaseTestCase {
     			() -> expected(
 	    			new Farm(farm1.getId(), "Hill Valley"),
 	    			new Farm(farm3.getId(), "Snowy Hills")));
+	    			
+		*/
     }
 }
