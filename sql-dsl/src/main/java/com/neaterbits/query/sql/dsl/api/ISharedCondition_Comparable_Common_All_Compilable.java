@@ -1,5 +1,6 @@
 package com.neaterbits.query.sql.dsl.api;
 
+@Deprecated // useful?
 public interface ISharedCondition_Comparable_Common_All_Compilable<
 				MODEL,
 				RESULT,
