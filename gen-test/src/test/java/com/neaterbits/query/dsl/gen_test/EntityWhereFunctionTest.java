@@ -13,6 +13,11 @@ public class EntityWhereFunctionTest extends GEN_BaseTestCase {
 
     @Test
     public void testEntitySingleNamed() {
+    	assertThat(true).isEqualTo(false);
+
+    	// TODO: enable function in IShortLogical_WhereOrJoinInitial_SingleResult_Named and fix conflicts
+    	
+    	/*
     	final Farm farm1 = new Farm("Hill Valley");
     	final Farm farm2 = new Farm("Table Mountain");
     	final Farm farm3 = new Farm("Snowy Hills");
@@ -24,6 +29,7 @@ public class EntityWhereFunctionTest extends GEN_BaseTestCase {
 
     	store(farm1, farm2, farm3)
     	.checkOne(query, () -> new Farm(farm2.getId(), "Table Mountain"));
+    	*/
     }
 
     @Test
@@ -108,6 +114,6 @@ public class EntityWhereFunctionTest extends GEN_BaseTestCase {
 	    			new Farm(farm1.getId(), "Hill Valley"),
 	    			new Farm(farm3.getId(), "Snowy Hills")));
 	    			
-		*/
+			*/
     }
 }
