@@ -1,6 +1,7 @@
 package com.neaterbits.query.sql.dsl.api;
 
 import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.function.Supplier;
 
 abstract class SQL_Collector_WhereOrJoin_Base<
@@ -359,26 +360,61 @@ abstract class SQL_Collector_WhereOrJoin_Base<
 		
 		return this;
 	}
-			
+
 	//implemented in subclass @Override
-	public final ISharedCondition_Comparable_Common_All<
-				MODEL,
-				RESULT,
-				Integer,
-				ALIAS_AND_OR> where(ISupplierInteger func) {
+	public final ISharedCondition_Comparable_Common_All<MODEL, RESULT, Boolean, ALIAS_AND_OR> where(ISupplierBoolean func) {
+	
+		return new Collector_Condition_Comparative<MODEL, RESULT, Boolean, ALIAS_AND_OR>(getAfterWhereAlias(), makeGetterExpression(func));
+	}
+	
+	//implemented in subclass @Override
+	public final ISharedCondition_Comparable_Common_All<MODEL, RESULT, Byte, ALIAS_AND_OR> where(ISupplierByte func) {
+	
+		return new Collector_Condition_Comparative<MODEL, RESULT, Byte, ALIAS_AND_OR>(getAfterWhereAlias(), makeGetterExpression(func));
+	}
+	
+	//implemented in subclass @Override
+	public final ISharedCondition_Comparable_Common_All<MODEL, RESULT, Short, ALIAS_AND_OR> where(ISupplierShort func) {
+	
+		return new Collector_Condition_Comparative<MODEL, RESULT, Short, ALIAS_AND_OR>(getAfterWhereAlias(), makeGetterExpression(func));
+	}
+	
+	//implemented in subclass @Override
+	public final ISharedCondition_Comparable_Common_All<MODEL, RESULT, Integer, ALIAS_AND_OR> where(ISupplierInteger func) {
 	
 		return new Collector_Condition_Comparative<MODEL, RESULT, Integer, ALIAS_AND_OR>(getAfterWhereAlias(), makeGetterExpression(func));
 	}
 
 	//implemented in subclass @Override
-	public final ISharedCondition_Comparable_Common_All<
-				MODEL,
-				RESULT,
-				BigDecimal,
-				ALIAS_AND_OR> where(ISupplierBigDecimal func) {
+	public final ISharedCondition_Comparable_Common_All<MODEL, RESULT, Long, ALIAS_AND_OR> where(ISupplierLong func) {
+	
+		return new Collector_Condition_Comparative<MODEL, RESULT, Long, ALIAS_AND_OR>(getAfterWhereAlias(), makeGetterExpression(func));
+	}
+
+	//implemented in subclass @Override
+	public final ISharedCondition_Comparable_Common_All<MODEL, RESULT, BigInteger, ALIAS_AND_OR> where(ISupplierBigInteger func) {
+	
+		return new Collector_Condition_Comparative<MODEL, RESULT, BigInteger, ALIAS_AND_OR>(getAfterWhereAlias(), makeGetterExpression(func));
+	}
+
+	//implemented in subclass @Override
+	public final ISharedCondition_Comparable_Common_All<MODEL, RESULT, Float, ALIAS_AND_OR> where(ISupplierFloat func) {
+	
+		return new Collector_Condition_Comparative<MODEL, RESULT, Float, ALIAS_AND_OR>(getAfterWhereAlias(), makeGetterExpression(func));
+	}
+	
+	//implemented in subclass @Override
+	public final ISharedCondition_Comparable_Common_All<MODEL, RESULT, Double, ALIAS_AND_OR> where(ISupplierDouble func) {
+	
+		return new Collector_Condition_Comparative<MODEL, RESULT, Double, ALIAS_AND_OR>(getAfterWhereAlias(), makeGetterExpression(func));
+	}
+
+	//implemented in subclass @Override
+	public final ISharedCondition_Comparable_Common_All<MODEL, RESULT, BigDecimal, ALIAS_AND_OR> where(ISupplierBigDecimal func) {
 	
 		return new Collector_Condition_Comparative<MODEL, RESULT, BigDecimal, ALIAS_AND_OR>(getAfterWhereAlias(), makeGetterExpression(func));
 	}	
+
 	
 	// implemented in subclass @Override
 	public final ISharedCondition_Comparable_String_All<
@@ -389,4 +425,39 @@ abstract class SQL_Collector_WhereOrJoin_Base<
 		return new Collector_Condition_String<MODEL, RESULT, ALIAS_AND_OR>(getAfterWhereAlias(), makeGetterExpression(supplier));
 	}
 
+	//implemented in subclass @Override
+	public final ISharedCondition_Comparable_Common_All<MODEL, RESULT, java.util.Date, ALIAS_AND_OR> where(ISupplierDate func) {
+	
+		return new Collector_Condition_Comparative<MODEL, RESULT, java.util.Date, ALIAS_AND_OR>(getAfterWhereAlias(), makeGetterExpression(func));
+	}
+
+	//implemented in subclass @Override
+	public final ISharedCondition_Comparable_Common_All<MODEL, RESULT, java.util.Calendar, ALIAS_AND_OR> where(ISupplierCalendar func) {
+	
+		return new Collector_Condition_Comparative<MODEL, RESULT, java.util.Calendar, ALIAS_AND_OR>(getAfterWhereAlias(), makeGetterExpression(func));
+	}
+
+	//implemented in subclass @Override
+	public final ISharedCondition_SQLTimeType_All<MODEL, RESULT, java.sql.Date, ALIAS_AND_OR> where(ISupplierSQLDate func) {
+	
+		return new Collector_Condition_SQLTimeType<MODEL, RESULT, java.sql.Date, ALIAS_AND_OR>(getAfterWhereAlias(), makeGetterExpression(func));
+	}
+
+	//implemented in subclass @Override
+	public final ISharedCondition_SQLTimeType_All<MODEL, RESULT, java.sql.Time, ALIAS_AND_OR> where(ISupplierSQLTime func) {
+	
+		return new Collector_Condition_SQLTimeType<MODEL, RESULT, java.sql.Time, ALIAS_AND_OR>(getAfterWhereAlias(), makeGetterExpression(func));
+	}
+
+	//implemented in subclass @Override
+	public final ISharedCondition_SQLTimeType_All<MODEL, RESULT, java.sql.Timestamp, ALIAS_AND_OR> where(ISupplierSQLTimestamp func) {
+	
+		return new Collector_Condition_SQLTimeType<MODEL, RESULT, java.sql.Timestamp, ALIAS_AND_OR>(getAfterWhereAlias(), makeGetterExpression(func));
+	}
+	
+	//implemented in subclass @Override
+	public final ISharedCondition_ByteArray_All<MODEL, RESULT, ALIAS_AND_OR> where(ISupplierByteArray func) {
+	
+		return new Collector_Condition_ByteArray<MODEL, RESULT, ALIAS_AND_OR>(getAfterWhereAlias(), makeGetterExpression(func));
+	}
 }

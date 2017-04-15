@@ -184,7 +184,7 @@ abstract class Collector_Condition_Equality<MODEL, RESULT, R, L extends ISharedL
 	}
 
 	@Override
-	public L in(InParam<R> param) {
+	public final L in(InParam<R> param) {
 		return addCondition(new CollectedCondition_In(lhs, new ConditionValue_Param(param)));
 	}
 }
