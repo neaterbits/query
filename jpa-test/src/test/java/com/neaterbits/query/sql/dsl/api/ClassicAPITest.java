@@ -22,9 +22,6 @@ import com.neaterbits.query.jpatest.model.Role;
 import com.neaterbits.query.sql.dsl.api.BaseJPATest;
 
 public class ClassicAPITest extends BaseJPATest {
-
-	
-
 	
 	@Test
     public void testNameBased() {

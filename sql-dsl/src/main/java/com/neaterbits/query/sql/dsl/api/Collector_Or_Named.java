@@ -1,6 +1,7 @@
 package com.neaterbits.query.sql.dsl.api;
 
 import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
@@ -47,15 +48,54 @@ abstract class Collector_Or_Named<
 		
 		return new Collector_Condition_String<MODEL, RESULT, OR_CLAUSES>(this, expression);
 	}
+	
+	private <T, RR> ISharedCondition_SQLTimeType_All<MODEL, RESULT, RR, OR_CLAUSES> orClassImplSQLTimeType(Function<T, RR> getter) {
+			
+		return new Collector_Condition_SQLTimeType<>(this, makeGetterExpression(getter));
+	}
+	
+	private <T> ISharedCondition_ByteArray_All<MODEL, RESULT, OR_CLAUSES> orClassImplByteArray(Function<T, byte []> getter) {
+		
+		return new Collector_Condition_ByteArray<>(this, makeGetterExpression(getter));
+	}
 
 	@Override
-	public final <T> ISharedCondition_Comparable_Common_All<MODEL, RESULT, Integer, OR_CLAUSES> or(
-			IFunctionInteger<T> getter) {
+	public final <T> ISharedCondition_Comparable_Common_All<MODEL, RESULT, Boolean, OR_CLAUSES> or(IFunctionBoolean<T> getter) {
+		return orClassImplComparable(getter);
+	}
+
+	@Override
+	public final <T> ISharedCondition_Comparable_Common_All<MODEL, RESULT, Byte, OR_CLAUSES> or(IFunctionByte<T> getter) {
+		return orClassImplComparable(getter);
+	}
+
+	@Override
+	public final <T> ISharedCondition_Comparable_Common_All<MODEL, RESULT, Short, OR_CLAUSES> or(IFunctionShort<T> getter) {
+		return orClassImplComparable(getter);
+	}
+
+	@Override
+	public final <T> ISharedCondition_Comparable_Common_All<MODEL, RESULT, Integer, OR_CLAUSES> or(IFunctionInteger<T> getter) {
 		return orClassImplComparable(getter);
 	}
 
 	@Override
 	public final <T> ISharedCondition_Comparable_Common_All<MODEL, RESULT, Long, OR_CLAUSES> or(IFunctionLong<T> getter) {
+		return orClassImplComparable(getter);
+	}
+	
+	@Override
+	public final <T> ISharedCondition_Comparable_Common_All<MODEL, RESULT, BigInteger, OR_CLAUSES> or(IFunctionBigInteger<T> getter) {
+		return orClassImplComparable(getter);
+	}
+	
+	@Override
+	public final <T> ISharedCondition_Comparable_Common_All<MODEL, RESULT, Float, OR_CLAUSES> or(IFunctionFloat<T> getter) {
+		return orClassImplComparable(getter);
+	}
+
+	@Override
+	public final <T> ISharedCondition_Comparable_Common_All<MODEL, RESULT, Double, OR_CLAUSES> or(IFunctionDouble<T> getter) {
 		return orClassImplComparable(getter);
 	}
 	
@@ -69,6 +109,36 @@ abstract class Collector_Or_Named<
 		return orClassImplString(new FieldExpression(getter));
 	}
 
+	@Override
+	public final <T> ISharedCondition_Comparable_Common_All<MODEL, RESULT, java.util.Date, OR_CLAUSES> or(IFunctionDate<T> getter) {
+		return orClassImplComparable(getter);
+	}
+
+	@Override
+	public final <T> ISharedCondition_Comparable_Common_All<MODEL, RESULT, java.util.Calendar, OR_CLAUSES> or(IFunctionCalendar<T> getter) {
+		return orClassImplComparable(getter);
+	}
+
+	@Override
+	public final <T> ISharedCondition_SQLTimeType_All<MODEL, RESULT, java.sql.Date, OR_CLAUSES> or(IFunctionSQLDate<T> getter) {
+		return orClassImplSQLTimeType(getter);
+	}
+	
+	@Override
+	public final <T> ISharedCondition_SQLTimeType_All<MODEL, RESULT, java.sql.Time, OR_CLAUSES> or(IFunctionSQLTime<T> getter) {
+		return orClassImplSQLTimeType(getter);
+	}
+
+	@Override
+	public final <T> ISharedCondition_SQLTimeType_All<MODEL, RESULT, java.sql.Timestamp, OR_CLAUSES> or(IFunctionSQLTimestamp<T> getter) {
+		return orClassImplSQLTimeType(getter);
+	}
+	
+	@Override
+	public final <T> ISharedCondition_ByteArray_All<MODEL, RESULT, OR_CLAUSES> or(IFunctionByteArray<T> getter) {
+		return orClassImplByteArray(getter);
+	}
+	
 	private final <T extends ISharedLogical_And<MODEL, RESULT>> void addNestedAndImpl(Consumer<T> orBuilder) {
 		super.addNestedAndImpl(orBuilder, createNestedAndCollector(this)); // new Classic_Collector_And_NonProcessResult_Named<MODEL, RESULT>(this));
 	}

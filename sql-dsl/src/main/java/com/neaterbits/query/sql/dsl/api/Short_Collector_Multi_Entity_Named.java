@@ -1,6 +1,7 @@
 package com.neaterbits.query.sql.dsl.api;
 
 import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
@@ -30,11 +31,26 @@ final class Short_Collector_Multi_Entity_Named<MODEL, RESULT, JOIN_TYPE>
 				ISQLLogical_Or_MultiEntity_Named<MODEL, RESULT>,
 				ISharedCondition_Comparable_Common_All<MODEL, RESULT, Short,
 				ISQLLogical_Or_MultiEntity_Named<MODEL, RESULT>>,
+				/*
+				ISharedCondition_Comparable_Common_All<MODEL, RESULT, Boolean, ISQLLogical_Or_MultiEntity_Named<MODEL, RESULT>>,
+				ISharedCondition_Comparable_Common_All<MODEL, RESULT, Byte, ISQLLogical_Or_MultiEntity_Named<MODEL, RESULT>>,
+				ISharedCondition_Comparable_Common_All<MODEL, RESULT, Short, ISQLLogical_Or_MultiEntity_Named<MODEL, RESULT>>,
+				*/
 				ISharedCondition_Comparable_Common_All<MODEL, RESULT, Integer, ISQLLogical_Or_MultiEntity_Named<MODEL, RESULT>>,
 				ISharedCondition_Comparable_Common_All<MODEL, RESULT, Long, ISQLLogical_Or_MultiEntity_Named<MODEL, RESULT>>,
+				//ISharedCondition_Comparable_Common_All<MODEL, RESULT, BigInteger, ISQLLogical_Or_MultiEntity_Named<MODEL, RESULT>>,
 				ISharedCondition_Comparable_Common_All<MODEL, RESULT, Double, ISQLLogical_Or_MultiEntity_Named<MODEL, RESULT>>,
 				ISharedCondition_Comparable_Common_All<MODEL, RESULT, BigDecimal, ISQLLogical_Or_MultiEntity_Named<MODEL, RESULT>>,
-				ISharedCondition_Comparable_String_All<MODEL, RESULT, ISQLLogical_Or_MultiEntity_Named<MODEL, RESULT>>> 
+				ISharedCondition_Comparable_String_All<MODEL, RESULT, ISQLLogical_Or_MultiEntity_Named<MODEL, RESULT>>/*,
+				
+				ISharedCondition_Comparable_Common_All<MODEL, RESULT, java.util.Date, ISQLLogical_Or_MultiEntity_Named<MODEL, RESULT>>,
+				ISharedCondition_Comparable_Common_All<MODEL, RESULT, java.util.Calendar, ISQLLogical_Or_MultiEntity_Named<MODEL, RESULT>>,
+				ISharedCondition_SQLTimeType_All<MODEL, RESULT, java.sql.Date, ISQLLogical_Or_MultiEntity_Named<MODEL, RESULT>>,
+				ISharedCondition_SQLTimeType_All<MODEL, RESULT, java.sql.Time, ISQLLogical_Or_MultiEntity_Named<MODEL, RESULT>>,
+				ISharedCondition_SQLTimeType_All<MODEL, RESULT, java.sql.Timestamp, ISQLLogical_Or_MultiEntity_Named<MODEL, RESULT>>,
+				ISharedCondition_ByteArray_All<MODEL, RESULT, ISQLLogical_Or_MultiEntity_Named<MODEL, RESULT>>
+				*/
+				> 
 	
 			or() {
 		
