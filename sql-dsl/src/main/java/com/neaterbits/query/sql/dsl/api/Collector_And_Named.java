@@ -1,6 +1,7 @@
 package com.neaterbits.query.sql.dsl.api;
 
 import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
@@ -65,6 +66,30 @@ abstract class Collector_And_Named<
 
 		return new Collector_Condition_String<MODEL, RESULT, AND_CLAUSES>(this, expression);
 	}
+
+	private <T, RR> ISharedCondition_SQLTimeType_All<MODEL, RESULT, RR, AND_CLAUSES> andClassImplSQLTimeType(Function<T, RR> getter) {
+		return new Collector_Condition_SQLTimeType<MODEL, RESULT, RR, AND_CLAUSES>(this, makeGetterExpression(getter));
+	}
+
+	private <T> ISharedCondition_ByteArray_All<MODEL, RESULT, AND_CLAUSES> andClassImplByteArray(Function<T, byte []> getter) {
+		return new Collector_Condition_ByteArray<MODEL, RESULT, AND_CLAUSES>(this, makeGetterExpression(getter));
+	}
+		
+	@Override
+	public final <T> ISharedCondition_Comparable_Common_All<MODEL, RESULT, Boolean, AND_CLAUSES> and(IFunctionBoolean<T> getter) {
+		return andClassImplComparable(getter);
+	}
+
+	@Override
+	public final <T> ISharedCondition_Comparable_Common_All<MODEL, RESULT, Byte, AND_CLAUSES> and(IFunctionByte<T> getter) {
+		return andClassImplComparable(getter);
+	}
+
+	@Override
+	public final <T> ISharedCondition_Comparable_Common_All<MODEL, RESULT, Short, AND_CLAUSES> and(IFunctionShort<T> getter) {
+		return andClassImplComparable(getter);
+	}
+
 	@Override
 	public final <T> ISharedCondition_Comparable_Common_All<MODEL, RESULT, Integer, AND_CLAUSES> and(IFunctionInteger<T> getter) {
 		return andClassImplComparable(getter);
@@ -72,6 +97,21 @@ abstract class Collector_And_Named<
 
 	@Override
 	public final <T> ISharedCondition_Comparable_Common_All<MODEL, RESULT, Long, AND_CLAUSES> and(IFunctionLong<T> getter) {
+		return andClassImplComparable(getter);
+	}
+
+	@Override
+	public final <T> ISharedCondition_Comparable_Common_All<MODEL, RESULT, BigInteger, AND_CLAUSES> and(IFunctionBigInteger<T> getter) {
+		return andClassImplComparable(getter);
+	}
+
+	@Override
+	public final <T> ISharedCondition_Comparable_Common_All<MODEL, RESULT, Float, AND_CLAUSES> and(IFunctionFloat<T> getter) {
+		return andClassImplComparable(getter);
+	}
+
+	@Override
+	public final <T> ISharedCondition_Comparable_Common_All<MODEL, RESULT, Double, AND_CLAUSES> and(IFunctionDouble<T> getter) {
 		return andClassImplComparable(getter);
 	}
 
@@ -85,6 +125,36 @@ abstract class Collector_And_Named<
 		return new Collector_Condition_String<MODEL, RESULT, AND_CLAUSES>(this, makeGetterExpression(getter));
 	}
 
+	@Override
+	public final <T> ISharedCondition_Comparable_Common_All<MODEL, RESULT, java.util.Date, AND_CLAUSES> and(IFunctionDate<T> getter) {
+		return andClassImplComparable(getter);
+	}
+
+	@Override
+	public final <T> ISharedCondition_Comparable_Common_All<MODEL, RESULT, java.util.Calendar, AND_CLAUSES> and(IFunctionCalendar<T> getter) {
+		return andClassImplComparable(getter);
+	}
+
+	@Override
+	public final <T> ISharedCondition_SQLTimeType_All<MODEL, RESULT, java.sql.Date, AND_CLAUSES> and(IFunctionSQLDate<T> getter) {
+		return andClassImplSQLTimeType(getter);
+	}
+
+	@Override
+	public final <T> ISharedCondition_SQLTimeType_All<MODEL, RESULT, java.sql.Time, AND_CLAUSES> and(IFunctionSQLTime<T> getter) {
+		return andClassImplSQLTimeType(getter);
+	}
+	
+	@Override
+	public final <T> ISharedCondition_SQLTimeType_All<MODEL, RESULT, java.sql.Timestamp, AND_CLAUSES> and(IFunctionSQLTimestamp<T> getter) {
+		return andClassImplSQLTimeType(getter);
+	}
+
+	@Override
+	public final <T> ISharedCondition_ByteArray_All<MODEL, RESULT, AND_CLAUSES> and(IFunctionByteArray<T> getter) {
+		return andClassImplByteArray(getter);
+	}
+	
 	@SuppressWarnings("unchecked")
 	@Override
 	public final AND_CLAUSES andNest(ISharedNestedOrConsumerNamed<MODEL, RESULT, NESTED_OR_CLAUSES> orBuilder) {
