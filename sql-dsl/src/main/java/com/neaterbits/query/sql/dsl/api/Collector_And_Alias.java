@@ -1,6 +1,7 @@
 package com.neaterbits.query.sql.dsl.api;
 
 import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 
@@ -59,7 +60,34 @@ abstract class Collector_And_Alias<
 		
 		return new Collector_Condition_String<MODEL, RESULT, AND_CLAUSES>(this, expression);
 	}
+
+	private <RR> ISharedCondition_SQLTimeType_All<MODEL, RESULT, RR, AND_CLAUSES>
+		andAliasImplSQLTimeType(Supplier<RR> getter) {
 		
+		return new Collector_Condition_SQLTimeType<MODEL, RESULT, RR, AND_CLAUSES>(this, makeGetterExpression(getter));
+	}
+		
+	private <RR> ISharedCondition_ByteArray_All<MODEL, RESULT, AND_CLAUSES>
+		andAliasImplByteArray(Supplier<byte[]> getter) {
+		
+		return new Collector_Condition_ByteArray<MODEL, RESULT, AND_CLAUSES>(this, makeGetterExpression(getter));
+	}
+
+	@Override
+	public final ISharedCondition_Comparable_Common_All<MODEL, RESULT, Boolean, AND_CLAUSES> and(ISupplierBoolean getter) {
+		return andAliasImplComparable(getter);
+	}
+
+	@Override
+	public final ISharedCondition_Comparable_Common_All<MODEL, RESULT, Byte, AND_CLAUSES> and(ISupplierByte getter) {
+		return andAliasImplComparable(getter);
+	}
+
+	@Override
+	public final ISharedCondition_Comparable_Common_All<MODEL, RESULT, Short, AND_CLAUSES> and(ISupplierShort getter) {
+		return andAliasImplComparable(getter);
+	}
+
 	@Override
 	public final ISharedCondition_Comparable_Common_All<MODEL, RESULT, Integer, AND_CLAUSES> and(ISupplierInteger getter) {
 		return andAliasImplComparable(getter);
@@ -71,6 +99,21 @@ abstract class Collector_And_Alias<
 	}
 
 	@Override
+	public final ISharedCondition_Comparable_Common_All<MODEL, RESULT, BigInteger, AND_CLAUSES> and(ISupplierBigInteger getter) {
+		return andAliasImplComparable(getter);
+	}
+
+	@Override
+	public final ISharedCondition_Comparable_Common_All<MODEL, RESULT, Float, AND_CLAUSES> and(ISupplierFloat getter) {
+		return andAliasImplComparable(getter);
+	}
+	
+	@Override
+	public final ISharedCondition_Comparable_Common_All<MODEL, RESULT, Double, AND_CLAUSES> and(ISupplierDouble getter) {
+		return andAliasImplComparable(getter);
+	}
+	
+	@Override
 	public final ISharedCondition_Comparable_Common_All<MODEL, RESULT, BigDecimal, AND_CLAUSES> and(ISupplierBigDecimal getter) {
 		return andAliasImplComparable(getter);
 	}
@@ -80,7 +123,36 @@ abstract class Collector_And_Alias<
 		return andAliasImplString(makeGetterExpression(getter));
 	}
 
+	@Override
+	public final ISharedCondition_Comparable_Common_All<MODEL, RESULT, java.util.Date, AND_CLAUSES> and(ISupplierDate getter) {
+		return andAliasImplComparable(getter);
+	}
 
+	@Override
+	public final ISharedCondition_Comparable_Common_All<MODEL, RESULT, java.util.Calendar, AND_CLAUSES> and(ISupplierCalendar getter) {
+		return andAliasImplComparable(getter);
+	}
+	
+	@Override
+	public final ISharedCondition_SQLTimeType_All<MODEL, RESULT, java.sql.Date, AND_CLAUSES> and(ISupplierSQLDate getter) {
+		return andAliasImplSQLTimeType(getter);
+	}
+
+	@Override
+	public final ISharedCondition_SQLTimeType_All<MODEL, RESULT, java.sql.Time, AND_CLAUSES> and(ISupplierSQLTime getter) {
+		return andAliasImplSQLTimeType(getter);
+	}
+	
+	@Override
+	public final ISharedCondition_SQLTimeType_All<MODEL, RESULT, java.sql.Timestamp, AND_CLAUSES> and(ISupplierSQLTimestamp getter) {
+		return andAliasImplSQLTimeType(getter);
+	}
+
+	@Override
+	public final ISharedCondition_ByteArray_All<MODEL, RESULT, AND_CLAUSES> and(ISupplierByteArray getter) {
+		return andAliasImplByteArray(getter);
+	}
+	
 	@SuppressWarnings("unchecked")
 	@Override
 	public final AND_CLAUSES andNest(ISharedNestedOrConsumerAlias<MODEL, RESULT, NESTED_OR_CLAUSES> orBuilder) {

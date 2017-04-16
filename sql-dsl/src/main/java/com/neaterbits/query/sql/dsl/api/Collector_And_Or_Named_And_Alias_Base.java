@@ -381,6 +381,21 @@ abstract class Collector_And_Or_Named_And_Alias_Base<
 	
 	
 	@Override
+	public final ISharedCondition_Comparable_Common_All<MODEL, RESULT, Boolean, ALIAS_AND_CLAUSES> and(ISupplierBoolean getter) {
+		return andAliasImplComparable(getter);
+	}
+	
+	@Override
+	public final ISharedCondition_Comparable_Common_All<MODEL, RESULT, Byte, ALIAS_AND_CLAUSES> and(ISupplierByte getter) {
+		return andAliasImplComparable(getter);
+	}
+	
+	@Override
+	public final ISharedCondition_Comparable_Common_All<MODEL, RESULT, Short, ALIAS_AND_CLAUSES> and(ISupplierShort getter) {
+		return andAliasImplComparable(getter);
+	}
+	
+	@Override
 	public final ISharedCondition_Comparable_Common_All<MODEL, RESULT, Integer, ALIAS_AND_CLAUSES> and(ISupplierInteger getter) {
 		return andAliasImplComparable(getter);
 	}
@@ -391,8 +406,53 @@ abstract class Collector_And_Or_Named_And_Alias_Base<
 	}
 	
 	@Override
+	public final ISharedCondition_Comparable_Common_All<MODEL, RESULT, BigInteger, ALIAS_AND_CLAUSES> and(ISupplierBigInteger getter) {
+		return andAliasImplComparable(getter);
+	}
+
+	@Override
+	public final ISharedCondition_Comparable_Common_All<MODEL, RESULT, Float, ALIAS_AND_CLAUSES> and(ISupplierFloat getter) {
+		return andAliasImplComparable(getter);
+	}
+	
+	@Override
+	public final ISharedCondition_Comparable_Common_All<MODEL, RESULT, Double, ALIAS_AND_CLAUSES> and(ISupplierDouble getter) {
+		return andAliasImplComparable(getter);
+	}
+
+	@Override
 	public final ISharedCondition_Comparable_Common_All<MODEL, RESULT, BigDecimal, ALIAS_AND_CLAUSES> and(ISupplierBigDecimal getter) {
 		return andAliasImplComparable(getter);
+	}
+
+	@Override
+	public final ISharedCondition_Comparable_Common_All<MODEL, RESULT, java.util.Date, ALIAS_AND_CLAUSES> and(ISupplierDate getter) {
+		return andAliasImplComparable(getter);
+	}
+	
+	@Override
+	public final ISharedCondition_Comparable_Common_All<MODEL, RESULT, java.util.Calendar, ALIAS_AND_CLAUSES> and(ISupplierCalendar getter) {
+		return andAliasImplComparable(getter);
+	}
+	
+	@Override
+	public final ISharedCondition_SQLTimeType_All<MODEL, RESULT, java.sql.Date, ALIAS_AND_CLAUSES> and(ISupplierSQLDate getter) {
+		return andAliasImplSQLTimeType(getter);
+	}
+	
+	@Override
+	public final ISharedCondition_SQLTimeType_All<MODEL, RESULT, java.sql.Time, ALIAS_AND_CLAUSES> and(ISupplierSQLTime getter) {
+		return andAliasImplSQLTimeType(getter);
+	}
+
+	@Override
+	public final ISharedCondition_SQLTimeType_All<MODEL, RESULT, java.sql.Timestamp, ALIAS_AND_CLAUSES> and(ISupplierSQLTimestamp getter) {
+		return andAliasImplSQLTimeType(getter);
+	}
+
+	@Override
+	public final ISharedCondition_ByteArray_All<MODEL, RESULT, ALIAS_AND_CLAUSES> and(ISupplierByteArray getter) {
+		return andAliasImplByteArray(getter);
 	}
 
 	@Override
@@ -535,16 +595,27 @@ abstract class Collector_And_Or_Named_And_Alias_Base<
 	}
 		
 		
-	final 
-	
-		ISharedCondition_Comparable_String_All<MODEL, RESULT, ALIAS_AND_CLAUSES>
-			andAliasImplString(Expression expression) {
+	final ISharedCondition_Comparable_String_All<MODEL, RESULT, ALIAS_AND_CLAUSES> andAliasImplString(Expression expression) {
 		
 		final Collector_And_Alias<MODEL, RESULT, ALIAS_AND_CLAUSES, ALIAS_NESTED_AND_CLAUSES, ALIAS_NESTED_OR_CLAUSES, ALIAS_AFTER_GROUP_BY> andClauses = createAliasAndCollector(); // new Classic_Collector_And_Alias<>(this);
 		
 		return new Collector_Condition_String<MODEL, RESULT, ALIAS_AND_CLAUSES>(andClauses, expression);
 	}
-	
+
+	final <RR> ISharedCondition_SQLTimeType_All<MODEL, RESULT, RR, ALIAS_AND_CLAUSES> andAliasImplSQLTimeType(Supplier<RR> getter) {
+		
+		final Collector_And_Alias<MODEL, RESULT, ALIAS_AND_CLAUSES, ALIAS_NESTED_AND_CLAUSES, ALIAS_NESTED_OR_CLAUSES, ALIAS_AFTER_GROUP_BY> andClauses = createAliasAndCollector(); // new Classic_Collector_And_Alias<>(this);
+		
+		return new Collector_Condition_SQLTimeType<MODEL, RESULT, RR, ALIAS_AND_CLAUSES>(andClauses, makeGetterExpression(getter));
+	}
+
+	final ISharedCondition_ByteArray_All<MODEL, RESULT, ALIAS_AND_CLAUSES> andAliasImplByteArray(Supplier<byte []> getter) {
+		
+		final Collector_And_Alias<MODEL, RESULT, ALIAS_AND_CLAUSES, ALIAS_NESTED_AND_CLAUSES, ALIAS_NESTED_OR_CLAUSES, ALIAS_AFTER_GROUP_BY> andClauses = createAliasAndCollector(); // new Classic_Collector_And_Alias<>(this);
+		
+		return new Collector_Condition_ByteArray<MODEL, RESULT, ALIAS_AND_CLAUSES>(andClauses, makeGetterExpression(getter));
+	}
+
 	// ------------------------  OR helpers ------------------------
 	private final <RR extends Comparable<RR>>
 	
