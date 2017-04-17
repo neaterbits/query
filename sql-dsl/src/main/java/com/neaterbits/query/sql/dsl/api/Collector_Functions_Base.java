@@ -215,6 +215,12 @@ abstract class Collector_Functions_Base<
 	}
 	
 	// ********* Aggregate methods *********
+
+	@Override
+	public final <T> NAMED_DOUBLE_RET avg(IFunctionByte<T> field) {
+		return addAndReturnType(Function_Aggregate.AVG, field);
+	}
+
 	@Override
 	public final <T> NAMED_DOUBLE_RET avg(IFunctionShort<T> field) {
 		return addAndReturnType(Function_Aggregate.AVG, field);
@@ -227,6 +233,21 @@ abstract class Collector_Functions_Base<
 
 	@Override
 	public final <T> NAMED_DOUBLE_RET avg(IFunctionLong<T> field) {
+		return addAndReturnType(Function_Aggregate.AVG, field);
+	}
+
+	@Override
+	public final <T> NAMED_DOUBLE_RET avg(IFunctionBigInteger<T> field) {
+		return addAndReturnType(Function_Aggregate.AVG, field);
+	}
+
+	@Override
+	public final <T> NAMED_DOUBLE_RET avg(IFunctionFloat<T> field) {
+		return addAndReturnType(Function_Aggregate.AVG, field);
+	}
+
+	@Override
+	public final <T> NAMED_DOUBLE_RET avg(IFunctionDouble<T> field) {
 		return addAndReturnType(Function_Aggregate.AVG, field);
 	}
 
@@ -441,6 +462,12 @@ abstract class Collector_Functions_Base<
 	}
 
 	// ********* Aggregate methods *********
+
+	@Override
+	public final ALIAS_DOUBLE_RET avg(ISupplierByte field) {
+		return addAndReturnType(Function_Aggregate.AVG, field);
+	}
+
 	@Override
 	public final ALIAS_DOUBLE_RET avg(ISupplierShort field) {
 		return addAndReturnType(Function_Aggregate.AVG, field);
@@ -453,6 +480,21 @@ abstract class Collector_Functions_Base<
 
 	@Override
 	public final ALIAS_DOUBLE_RET avg(ISupplierLong field) {
+		return addAndReturnType(Function_Aggregate.AVG, field);
+	}
+
+	@Override
+	public final ALIAS_DOUBLE_RET avg(ISupplierBigInteger field) {
+		return addAndReturnType(Function_Aggregate.AVG, field);
+	}
+
+	@Override
+	public final ALIAS_DOUBLE_RET avg(ISupplierFloat field) {
+		return addAndReturnType(Function_Aggregate.AVG, field);
+	}
+
+	@Override
+	public final ALIAS_DOUBLE_RET avg(ISupplierDouble field) {
 		return addAndReturnType(Function_Aggregate.AVG, field);
 	}
 

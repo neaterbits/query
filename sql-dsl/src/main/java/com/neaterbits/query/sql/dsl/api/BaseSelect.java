@@ -6,8 +6,6 @@ import java.util.Date;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
-import org.w3c.dom.DOMConfiguration;
-
 import com.neaterbits.query.sql.dsl.api.entity.QueryMetaModel;
 
 abstract class BaseSelect<
@@ -229,6 +227,11 @@ abstract class BaseSelect<
 	abstract <T, NUM, RESULT, RET> RET avg(Function<T, NUM> field, Class<NUM> numCl, Class<RESULT> resultCl);
 
 	@Override
+	public final <T> NAMED_DOUBLE_RET avg(IFunctionByte<T> field) {
+		return avg(field, Byte.class, Double.class);
+	}
+
+	@Override
 	public final <T> NAMED_DOUBLE_RET avg(IFunctionShort<T> field) {
 		return avg(field, Short.class, Double.class);
 	}
@@ -241,6 +244,21 @@ abstract class BaseSelect<
 	@Override
 	public final <T> NAMED_DOUBLE_RET avg(IFunctionLong<T> field) {
 		return avg(field, Long.class, Double.class);
+	}
+
+	@Override
+	public final <T> NAMED_DOUBLE_RET avg(IFunctionBigInteger<T> field) {
+		return avg(field, BigInteger.class, Double.class);
+	}
+
+	@Override
+	public final <T> NAMED_DOUBLE_RET avg(IFunctionFloat<T> field) {
+		return avg(field, Float.class, Double.class);
+	}
+
+	@Override
+	public final <T> NAMED_DOUBLE_RET avg(IFunctionDouble<T> field) {
+		return avg(field, Double.class, Double.class);
 	}
 
 	@Override
@@ -439,6 +457,11 @@ abstract class BaseSelect<
 	abstract <NUM, RESULT, RET> RET avg(Supplier<NUM> field, Class<NUM> numCl, Class<RESULT> resultCl);
 
 	@Override
+	public final ALIAS_DOUBLE_RET avg(ISupplierByte field) {
+		return avg(field, Byte.class, Double.class);
+	}
+
+	@Override
 	public final ALIAS_DOUBLE_RET avg(ISupplierShort field) {
 		return avg(field, Short.class, Double.class);
 	}
@@ -451,6 +474,21 @@ abstract class BaseSelect<
 	@Override
 	public final ALIAS_DOUBLE_RET avg(ISupplierLong field) {
 		return avg(field, Long.class, Double.class);
+	}
+
+	@Override
+	public final ALIAS_DOUBLE_RET avg(ISupplierBigInteger field) {
+		return avg(field, BigInteger.class, Double.class);
+	}
+
+	@Override
+	public final ALIAS_DOUBLE_RET avg(ISupplierFloat field) {
+		return avg(field, Float.class, Double.class);
+	}
+
+	@Override
+	public final ALIAS_DOUBLE_RET avg(ISupplierDouble field) {
+		return avg(field, Double.class, Double.class);
 	}
 
 	@Override

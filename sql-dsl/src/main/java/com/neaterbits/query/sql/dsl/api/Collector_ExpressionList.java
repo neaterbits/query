@@ -555,10 +555,14 @@ abstract class Collector_ExpressionList<
 	//*************** Aggregate forwarding functions ***************
 	
 	@Override
-	public final <T> NAMED_DOUBLE_RET avg(IFunctionShort<T> field) {
+	public final <T> NAMED_DOUBLE_RET avg(IFunctionByte<T> field) {
 		return assureNamedFunctions().avg(field);
 	}
 
+	@Override
+	public final <T> NAMED_DOUBLE_RET avg(IFunctionShort<T> field) {
+		return assureNamedFunctions().avg(field);
+	}
 
 	@Override
 	public final <T> NAMED_DOUBLE_RET avg(IFunctionInteger<T> field) {
@@ -567,6 +571,21 @@ abstract class Collector_ExpressionList<
 
 	@Override
 	public final <T> NAMED_DOUBLE_RET avg(IFunctionLong<T> field) {
+		return assureNamedFunctions().avg(field);
+	}
+
+	@Override
+	public final <T> NAMED_DOUBLE_RET avg(IFunctionBigInteger<T> field) {
+		return assureNamedFunctions().avg(field);
+	}
+
+	@Override
+	public final <T> NAMED_DOUBLE_RET avg(IFunctionFloat<T> field) {
+		return assureNamedFunctions().avg(field);
+	}
+
+	@Override
+	public final <T> NAMED_DOUBLE_RET avg(IFunctionDouble<T> field) {
 		return assureNamedFunctions().avg(field);
 	}
 
@@ -782,6 +801,11 @@ abstract class Collector_ExpressionList<
 	//*************** Aggregate forwarding functions ***************
 
 	@Override
+	public final ALIAS_DOUBLE_RET avg(ISupplierByte field) {
+		return assureAliasFunctions().avg(field);
+	}
+
+	@Override
 	public final ALIAS_DOUBLE_RET avg(ISupplierShort field) {
 		return assureAliasFunctions().avg(field);
 	}
@@ -793,6 +817,21 @@ abstract class Collector_ExpressionList<
 
 	@Override
 	public final ALIAS_DOUBLE_RET avg(ISupplierLong field) {
+		return assureAliasFunctions().avg(field);
+	}
+
+	@Override
+	public final ALIAS_DOUBLE_RET avg(ISupplierBigInteger field) {
+		return assureAliasFunctions().avg(field);
+	}
+
+	@Override
+	public final ALIAS_DOUBLE_RET avg(ISupplierFloat field) {
+		return assureAliasFunctions().avg(field);
+	}
+
+	@Override
+	public final ALIAS_DOUBLE_RET avg(ISupplierDouble field) {
 		return assureAliasFunctions().avg(field);
 	}
 
