@@ -49,7 +49,10 @@ abstract class Short_Collector_Initial_Single_Any_Any_Base<MODEL, RESULT>
 			
 			//IShortLogical_WhereOrJoin_SingleResult_Entity_Named<MODEL, RESULT, RESULT>,
 			
-			IShortResult_Single_Instance<MODEL, RESULT>,
+			//IShortResult_Single_Instance<MODEL, RESULT>,
+			IShortResult_Mapped_Single_All<MODEL, RESULT>,
+			IShortJoin_Single_Named_Initial<MODEL, RESULT>,
+	
 			IShortJoin_Single_Alias_Initial<MODEL, RESULT>,
 			IMappingCollector<MODEL, RESULT> {
 	

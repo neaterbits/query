@@ -1,7 +1,10 @@
 package com.neaterbits.query.sql.dsl.api;
 
+import java.math.BigDecimal;
+
 final class Short_Collector_Single_Any_Any_Instance<MODEL, RESULT>
-		extends Short_Collector_Initial_Single_Any_Any_Base<MODEL, RESULT> {
+		extends Short_Collector_Initial_Single_Any_Any_Base<MODEL, RESULT>
+			implements IShortResult_Single_Instance<MODEL, RESULT> {
 	
 	
 	Short_Collector_Single_Any_Any_Instance(BaseQuery select, SharedSelectSource selectSource,
@@ -23,6 +26,20 @@ final class Short_Collector_Single_Any_Any_Instance<MODEL, RESULT>
 		// from patterm above
 		throw new UnsupportedOperationException("TODO");
 	}
-	
-	
+
+	@Override
+	public ISharedFunctions_Transform_Initial_Named<
+			MODEL,
+			RESULT, 
+			ISQLLogical_AndOr_SingleResult_Named<MODEL, RESULT>,
+			ISharedCondition_Comparable_Common_All_Compilable<MODEL, RESULT, Short, ISQLLogical_AndOr_SingleResult_Named<MODEL, RESULT>>, 
+			ISharedCondition_Comparable_Common_All_Compilable<MODEL, RESULT, Integer, ISQLLogical_AndOr_SingleResult_Named<MODEL, RESULT>>,
+			ISharedCondition_Comparable_Common_All_Compilable<MODEL, RESULT, Long, ISQLLogical_AndOr_SingleResult_Named<MODEL, RESULT>>, 
+			ISharedCondition_Comparable_Common_All_Compilable<MODEL, RESULT, Double, ISQLLogical_AndOr_SingleResult_Named<MODEL, RESULT>>,
+			ISharedCondition_Comparable_Common_All_Compilable<MODEL, RESULT, BigDecimal, ISQLLogical_AndOr_SingleResult_Named<MODEL, RESULT>>,
+			ISharedCondition_Comparable_String_All_Compilable<MODEL, RESULT, ISQLLogical_AndOr_SingleResult_Named<MODEL, RESULT>>
+		> where() {
+
+		return whereNamed();
+	}
 }

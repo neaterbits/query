@@ -38,7 +38,8 @@ final class Short_Collector_Initial_Single_Entity_Alias<MODEL, RESULT>
 			ISharedCondition_Comparable_String_All<MODEL, RESULT, ISQLLogical_AndOr_SingleResult_Alias<MODEL, RESULT>>
 
 		> where() {
-		throw new UnsupportedOperationException("TODO");
+		
+		return whereAlias();
 	}
 
 	@Override

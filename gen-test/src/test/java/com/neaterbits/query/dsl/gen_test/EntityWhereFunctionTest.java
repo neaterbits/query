@@ -1,7 +1,5 @@
 package com.neaterbits.query.dsl.gen_test;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 import org.junit.Test;
 
 import com.neaterbits.query.jpatest.GEN_BaseTestCase;
@@ -15,10 +13,14 @@ public class EntityWhereFunctionTest extends GEN_BaseTestCase {
 
     @Test
     public void testEntitySingleNamed() {
-    	assertThat(true).isEqualTo(false);
+    	verifyIsNotCompilable(Farm.class, "f",
+    	    	"one(f)" +
+    			".where().lower(Farm::getName).startsWith(\"table\")");
 
-    	// TODO: enable function in IShortLogical_WhereOrJoinInitial_SingleResult_Named and fix conflicts
-    	/*
+    	verifyIsCompilable(
+    	    	"one(Farm.class)" +
+    			".where().lower(Farm::getName).startsWith(\"table\")");
+
     	final Farm farm1 = new Farm("Hill Valley");
     	final Farm farm2 = new Farm("Table Mountain");
     	final Farm farm3 = new Farm("Snowy Hills");
@@ -30,7 +32,6 @@ public class EntityWhereFunctionTest extends GEN_BaseTestCase {
 
     	store(farm1, farm2, farm3)
     	.checkOne(query, () -> new Farm(farm2.getId(), "Table Mountain"));
-    	*/
     }
 
     @Test
@@ -52,7 +53,7 @@ public class EntityWhereFunctionTest extends GEN_BaseTestCase {
     	final Farm f = select.alias(Farm.class);
     	
     	final SingleBuilt<Farm> query = select.one(f)
-    			.where().lower(f::getName).startsWith("Table")
+    			.where().lower(f::getName).startsWith("table")
     			.build(); 
 
     	store(farm1, farm2, farm3)
