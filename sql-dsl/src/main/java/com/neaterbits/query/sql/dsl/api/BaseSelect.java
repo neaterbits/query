@@ -1,6 +1,7 @@
 package com.neaterbits.query.sql.dsl.api;
 
 import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.Date;
 import java.util.function.Function;
 import java.util.function.Supplier;
@@ -15,30 +16,44 @@ abstract class BaseSelect<
 		
 		// for other types aggregates, we return the same result as the input type, eg.
 		// max of short-type will never be > short type
+		NAMED_BYTE_RET,
 		NAMED_SHORT_RET,
 		NAMED_INT_RET,
 		NAMED_LONG_RET,
+		NAMED_BIGINTEGER_RET,
+		NAMED_FLOAT_RET,
 		NAMED_DOUBLE_RET,
 		NAMED_BIGDECIMAL_RET,
 		NAMED_DATE_RET,
+		NAMED_CALENDAR_RET,
+		NAMED_SQLDATE_RET,
+		NAMED_SQLTIME_RET,
+		NAMED_SQLTIMESTAMP_RET,
 
 		
 		ALIAS_SUM_LONG_RET,
 		ALIAS_COUNT_RET,
 		
+		ALIAS_BYTE_RET,
 		ALIAS_SHORT_RET,
 		ALIAS_INT_RET,
 		ALIAS_LONG_RET,
+		ALIAS_BIGINTEGER_RET,
+		ALIAS_FLOAT_RET,
 		ALIAS_DOUBLE_RET,
 		ALIAS_BIGDECIMAL_RET,
-		ALIAS_DATE_RET
+		ALIAS_DATE_RET,
+		ALIAS_CALENDAR_RET,
+		ALIAS_SQLDATE_RET,
+		ALIAS_SQLTIME_RET,
+		ALIAS_SQLTIMESTAMP_RET
 		>
 
 	extends BaseQuery
 
 	implements ISQL<
-		NAMED_SUM_LONG_RET, NAMED_COUNT_RET, NAMED_SHORT_RET, NAMED_INT_RET, NAMED_LONG_RET, NAMED_DOUBLE_RET, NAMED_BIGDECIMAL_RET, NAMED_DATE_RET,
-		ALIAS_SUM_LONG_RET, ALIAS_COUNT_RET, ALIAS_SHORT_RET, ALIAS_INT_RET, ALIAS_LONG_RET, ALIAS_DOUBLE_RET, ALIAS_BIGDECIMAL_RET, ALIAS_DATE_RET
+		NAMED_SUM_LONG_RET, NAMED_COUNT_RET, NAMED_BYTE_RET, NAMED_SHORT_RET, NAMED_INT_RET, NAMED_LONG_RET, NAMED_BIGINTEGER_RET, NAMED_FLOAT_RET, NAMED_DOUBLE_RET, NAMED_BIGDECIMAL_RET, NAMED_DATE_RET, NAMED_CALENDAR_RET, NAMED_SQLDATE_RET, NAMED_SQLTIME_RET, NAMED_SQLTIMESTAMP_RET,
+		ALIAS_SUM_LONG_RET, ALIAS_COUNT_RET, ALIAS_BYTE_RET, ALIAS_SHORT_RET, ALIAS_INT_RET, ALIAS_LONG_RET, ALIAS_BIGINTEGER_RET, ALIAS_FLOAT_RET, ALIAS_DOUBLE_RET, ALIAS_BIGDECIMAL_RET, ALIAS_DATE_RET, ALIAS_CALENDAR_RET, ALIAS_SQLDATE_RET, ALIAS_SQLTIME_RET, ALIAS_SQLTIMESTAMP_RET
 		> 
 	
 	{
@@ -290,7 +305,7 @@ abstract class BaseSelect<
 		return max(field, Date.class, Date.class);
 	}
 	
-	// ------------------------ Max ------------------------
+	// ------------------------ Min ------------------------
 	
 	/*
 	private <T, NUM, RESULT> IClassicResult_Numeric_Named<RESULT> min(Function<T, NUM> field, Class<NUM> numCl, Class<RESULT> resultCl) {
@@ -299,6 +314,11 @@ abstract class BaseSelect<
 	*/
 	
 	abstract <NUM, RESULT, RET> RET min(Supplier<NUM> field, Class<NUM> numCl, Class<RESULT> resultCl);
+
+	@Override
+	public final ALIAS_BYTE_RET min(ISupplierByte field) {
+		return min(field, Byte.class, Byte.class);
+	}
 
 	@Override
 	public final ALIAS_SHORT_RET min(ISupplierShort field) {
@@ -316,8 +336,28 @@ abstract class BaseSelect<
 	}
 
 	@Override
+	public final ALIAS_BIGINTEGER_RET min(ISupplierBigInteger field) {
+		return min(field, BigInteger.class, BigInteger.class);
+	}
+
+	@Override
+	public final ALIAS_FLOAT_RET min(ISupplierFloat field) {
+		return min(field, Float.class, Float.class);
+	}
+
+	@Override
+	public final ALIAS_DOUBLE_RET min(ISupplierDouble field) {
+		return min(field, Double.class, Double.class);
+	}
+
+	@Override
 	public final ALIAS_BIGDECIMAL_RET min(ISupplierBigDecimal field) {
 		return min(field, BigDecimal.class, BigDecimal.class);
+	}
+
+	@Override
+	public final ALIAS_DATE_RET min(ISupplierDate field) {
+		return min(field, java.util.Date.class, java.util.Date.class);
 	}
 
 	// ------------------------ Avg ------------------------

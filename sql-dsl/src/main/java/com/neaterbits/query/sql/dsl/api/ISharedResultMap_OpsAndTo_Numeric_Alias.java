@@ -11,15 +11,10 @@ public interface ISharedResultMap_OpsAndTo_Numeric_Alias<
 				MODEL,
 				RESULT,
 				
-				R,
-				
 				RET,
 				
 				ISharedResultMap_OpsAndTo_Numeric_Alias<MODEL, RESULT, R, RET>
 			>
-
 {
-
-
 
 }

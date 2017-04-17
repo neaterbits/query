@@ -1,6 +1,7 @@
 package com.neaterbits.query.sql.dsl.api;
 
 import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.Date;
 import java.util.function.Function;
 import java.util.function.Supplier;
@@ -11,22 +12,36 @@ final class ClassicSelect
 		IClassicResult_Numeric_Named<Long>,
 		IClassicResult_Numeric_Named<Long>,
 		
+		IClassicResult_Numeric_Named<Byte>,
 		IClassicResult_Numeric_Named<Short>,
 		IClassicResult_Numeric_Named<Integer>,
 		IClassicResult_Numeric_Named<Long>,
+		IClassicResult_Numeric_Named<BigInteger>,
+		IClassicResult_Numeric_Named<Float>,
 		IClassicResult_Numeric_Named<Double>,
 		IClassicResult_Numeric_Named<BigDecimal>,
-		IClassicResult_Numeric_Named<Date>,
+		IClassicResult_Numeric_Named<java.util.Date>,
+		IClassicResult_Numeric_Named<java.util.Calendar>,
+		IClassicResult_Numeric_Named<java.sql.Date>,
+		IClassicResult_Numeric_Named<java.sql.Time>,
+		IClassicResult_Numeric_Named<java.sql.Timestamp>,
 		
 		IClassicResult_Numeric_Alias<Long>,
 		IClassicResult_Numeric_Alias<Long>,
 		
+		IClassicResult_Numeric_Alias<Byte>,
 		IClassicResult_Numeric_Alias<Short>,
 		IClassicResult_Numeric_Alias<Integer>,
 		IClassicResult_Numeric_Alias<Long>,
+		IClassicResult_Numeric_Alias<BigInteger>,
+		IClassicResult_Numeric_Alias<Float>,
 		IClassicResult_Numeric_Alias<Double>,
 		IClassicResult_Numeric_Alias<BigDecimal>,		
-		IClassicResult_Numeric_Alias<Date>		
+		IClassicResult_Numeric_Alias<java.util.Date>,		
+		IClassicResult_Numeric_Alias<java.util.Calendar>,		
+		IClassicResult_Numeric_Alias<java.sql.Date>,		
+		IClassicResult_Numeric_Alias<java.sql.Time>,		
+		IClassicResult_Numeric_Alias<java.sql.Timestamp>		
 	>
 
 	implements IClassic {

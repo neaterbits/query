@@ -1,7 +1,7 @@
 package com.neaterbits.query.sql.dsl.api;
 
 import java.math.BigDecimal;
-import java.util.Date;
+import java.math.BigInteger;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
@@ -10,22 +10,36 @@ final class ShortSelect extends BaseShortSelect<
 		IShortBuilt_Numeric_Named<Long>,
 		IShortBuilt_Numeric_Named<Long>,
 		
+		IShortBuilt_Numeric_Named<Byte>,
 		IShortBuilt_Numeric_Named<Short>,
 		IShortBuilt_Numeric_Named<Integer>,
 		IShortBuilt_Numeric_Named<Long>,
+		IShortBuilt_Numeric_Named<BigInteger>,
+		IShortBuilt_Numeric_Named<Float>,
 		IShortBuilt_Numeric_Named<Double>,
 		IShortBuilt_Numeric_Named<BigDecimal>,
-		IShortBuilt_Numeric_Named<Date>,
-		
+		IShortBuilt_Numeric_Named<java.util.Date>,
+		IShortBuilt_Numeric_Named<java.util.Calendar>,
+		IShortBuilt_Numeric_Named<java.sql.Date>,
+		IShortBuilt_Numeric_Named<java.sql.Time>,
+		IShortBuilt_Numeric_Named<java.sql.Timestamp>,
+
 		IShortBuilt_Numeric_Alias<Long>,
 		IShortBuilt_Numeric_Alias<Long>,
 		
+		IShortBuilt_Numeric_Alias<Byte>,
 		IShortBuilt_Numeric_Alias<Short>,
 		IShortBuilt_Numeric_Alias<Integer>,
 		IShortBuilt_Numeric_Alias<Long>,
+		IShortBuilt_Numeric_Alias<BigInteger>,
+		IShortBuilt_Numeric_Alias<Float>,
 		IShortBuilt_Numeric_Alias<Double>,
 		IShortBuilt_Numeric_Alias<BigDecimal>,
-		IShortBuilt_Numeric_Alias<Date>
+		IShortBuilt_Numeric_Alias<java.util.Date>,
+		IShortBuilt_Numeric_Alias<java.util.Calendar>,
+		IShortBuilt_Numeric_Alias<java.sql.Date>,
+		IShortBuilt_Numeric_Alias<java.sql.Time>,
+		IShortBuilt_Numeric_Alias<java.sql.Timestamp>
 	>
 
 	

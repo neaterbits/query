@@ -24,7 +24,6 @@ public interface ISharedSubOperandsBuilder_Numeric_Next_Named<
 		ISharedOperands_Numeric_Named<
 			MODEL,
 			RESULT,
-			R,
 			AFTER,
 			ISharedSubOperandsBuilder_Numeric_Next_Named<MODEL, RESULT, R, AFTER>> {
 }

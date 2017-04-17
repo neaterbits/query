@@ -20,25 +20,39 @@ abstract class Collector_ExpressionList<
 		NAMED_SUM_LONG_RET  	extends ISharedFunction_Next<MODEL, RESULT, NAMED_RET>,
 		NAMED_COUNT_RET       extends ISharedFunction_Next<MODEL, RESULT, NAMED_RET>,
 
+		NAMED_BYTE_RET  	extends ISharedFunction_Next<MODEL, RESULT, NAMED_RET>,
 		NAMED_SHORT_RET  	extends ISharedFunction_Next<MODEL, RESULT, NAMED_RET>,
 		NAMED_INTEGER_RET  	extends ISharedFunction_Next<MODEL, RESULT, NAMED_RET>,
 		NAMED_LONG_RET 	 	extends ISharedFunction_Next<MODEL, RESULT, NAMED_RET>,
+		NAMED_BIGINTEGER_RET extends ISharedFunction_Next<MODEL, RESULT, NAMED_RET>,
+		NAMED_FLOAT_RET 	 extends ISharedFunction_Next<MODEL, RESULT, NAMED_RET>,
 		NAMED_DOUBLE_RET   	extends ISharedFunction_Next<MODEL, RESULT, NAMED_RET>,
 		NAMED_BIGDECIMAL_RET  extends ISharedFunction_Next<MODEL, RESULT, NAMED_RET>,
-		NAMED_DATE_RET  extends ISharedFunction_Next<MODEL, RESULT, NAMED_RET>,
 		NAMED_STRING_RET  	extends ISharedFunction_Next<MODEL, RESULT, NAMED_RET>,
+		NAMED_DATE_RET  	extends ISharedFunction_Next<MODEL, RESULT, NAMED_RET>,
+		NAMED_CALENDAR_RET  extends ISharedFunction_Next<MODEL, RESULT, NAMED_RET>,
+		NAMED_SQLDATE_RET  	extends ISharedFunction_Next<MODEL, RESULT, NAMED_RET>,
+		NAMED_SQLTIME_RET  	extends ISharedFunction_Next<MODEL, RESULT, NAMED_RET>,
+		NAMED_SQLTIMESTAMP_RET  extends ISharedFunction_Next<MODEL, RESULT, NAMED_RET>,
 
 
 		ALIAS_SUM_LONG_RET  extends ISharedFunction_Next<MODEL, RESULT, ALIAS_RET>,
 		ALIAS_COUNT_RET     extends ISharedFunction_Next<MODEL, RESULT, ALIAS_RET>,
 		
+		ALIAS_BYTE_RET  	extends ISharedFunction_Next<MODEL, RESULT, ALIAS_RET>,
 		ALIAS_SHORT_RET  	extends ISharedFunction_Next<MODEL, RESULT, ALIAS_RET>,
 		ALIAS_INTEGER_RET  	extends ISharedFunction_Next<MODEL, RESULT, ALIAS_RET>,
 		ALIAS_LONG_RET 	 	extends ISharedFunction_Next<MODEL, RESULT, ALIAS_RET>,
+		ALIAS_BIGINTEGER_RET 	 	extends ISharedFunction_Next<MODEL, RESULT, ALIAS_RET>,
+		ALIAS_FLOAT_RET 	 	extends ISharedFunction_Next<MODEL, RESULT, ALIAS_RET>,
 		ALIAS_DOUBLE_RET   	extends ISharedFunction_Next<MODEL, RESULT, ALIAS_RET>,
 		ALIAS_BIGDECIMAL_RET  extends ISharedFunction_Next<MODEL, RESULT, ALIAS_RET>,
-		ALIAS_DATE_RET  extends ISharedFunction_Next<MODEL, RESULT, ALIAS_RET>,
-		ALIAS_STRING_RET  extends ISharedFunction_Next<MODEL, RESULT, ALIAS_RET>
+		ALIAS_STRING_RET  	extends ISharedFunction_Next<MODEL, RESULT, ALIAS_RET>,
+		ALIAS_DATE_RET  	extends ISharedFunction_Next<MODEL, RESULT, ALIAS_RET>,
+		ALIAS_CALENDAR_RET  extends ISharedFunction_Next<MODEL, RESULT, ALIAS_RET>,
+		ALIAS_SQLDATE_RET  	extends ISharedFunction_Next<MODEL, RESULT, ALIAS_RET>,
+		ALIAS_SQLTIME_RET  	extends ISharedFunction_Next<MODEL, RESULT, ALIAS_RET>,
+		ALIAS_SQLTIMESTAMP_RET  extends ISharedFunction_Next<MODEL, RESULT, ALIAS_RET>
 	>
 
 	extends Collector_ExpressionList_Base<MODEL, RESULT, R, OPERAND_RET> 
@@ -46,10 +60,10 @@ abstract class Collector_ExpressionList<
 	//Implement both Numeric and String in this baseclass 
 	implements 
 	
-			   ISharedOperands_Numeric_Named<MODEL, RESULT, R, OPERAND_RET, NUMERIC_OPERAND_NEXT>,
+			   ISharedOperands_Numeric_Named<MODEL, RESULT, OPERAND_RET, NUMERIC_OPERAND_NEXT>,
 			   ISharedOperands_String_Named<MODEL, RESULT, OPERAND_RET, STRING_OPERAND_NEXT>, 
 
-			   ISharedOperands_Numeric_Alias<MODEL, RESULT, R, OPERAND_RET, NUMERIC_OPERAND_NEXT>,
+			   ISharedOperands_Numeric_Alias<MODEL, RESULT, OPERAND_RET, NUMERIC_OPERAND_NEXT>,
 			   ISharedOperands_String_Alias<MODEL, RESULT, OPERAND_RET, STRING_OPERAND_NEXT>,
 			   
 
@@ -88,7 +102,7 @@ abstract class Collector_ExpressionList<
 				   ALIAS_DOUBLE_RET,
 				   ALIAS_BIGDECIMAL_RET
 			   >,
-			   ISharedFunctions_Aggregate_Alias<ALIAS_SUM_LONG_RET, ALIAS_COUNT_RET, ALIAS_SHORT_RET, ALIAS_INTEGER_RET, ALIAS_LONG_RET, ALIAS_DOUBLE_RET, ALIAS_BIGDECIMAL_RET, ALIAS_DATE_RET>,
+			   ISharedFunctions_Aggregate_Alias<ALIAS_SUM_LONG_RET, ALIAS_COUNT_RET, ALIAS_BYTE_RET, ALIAS_SHORT_RET, ALIAS_INTEGER_RET, ALIAS_LONG_RET, ALIAS_BIGINTEGER_RET, ALIAS_FLOAT_RET, ALIAS_DOUBLE_RET, ALIAS_BIGDECIMAL_RET, ALIAS_DATE_RET>,
 			   ISharedFunctions_String_Alias<MODEL, RESULT, ALIAS_RET, ALIAS_STRING_RET> {
 
 	private EFieldAccessType fieldAccessType;
@@ -114,8 +128,12 @@ abstract class Collector_ExpressionList<
 	}
 	
 	Collector_ExpressionList(Collector_ExpressionList<MODEL, RESULT, R, OPERAND_RET,
-			?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,
-			?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?
+			?, ?,
+			?, ?,
+			?, ?,
+		    ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,
+			?, ?,
+			?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?
 					> toCopy) {
 		super(toCopy);
 		
@@ -293,7 +311,7 @@ abstract class Collector_ExpressionList<
 		extends Collector_NestedFunctions_Named<
 					MODEL, RESULT, NAMED_RET,
 					
-					NAMED_SUM_LONG_RET, NAMED_COUNT_RET, NAMED_SHORT_RET, NAMED_INTEGER_RET, NAMED_LONG_RET, NAMED_DOUBLE_RET, NAMED_BIGDECIMAL_RET, NAMED_DATE_RET, NAMED_STRING_RET,
+					NAMED_SUM_LONG_RET, NAMED_COUNT_RET, NAMED_BYTE_RET, NAMED_SHORT_RET, NAMED_INTEGER_RET, NAMED_LONG_RET, NAMED_BIGINTEGER_RET, NAMED_FLOAT_RET, NAMED_DOUBLE_RET, NAMED_BIGDECIMAL_RET, NAMED_STRING_RET, NAMED_DATE_RET, NAMED_CALENDAR_RET, NAMED_SQLDATE_RET, NAMED_SQLTIME_RET, NAMED_SQLTIMESTAMP_RET,
 					
 					NO_PARAM_ARITHMETIC_SAME_TYPE_RET,
 					NO_PARAM_ARITHMETIC_DOUBLE_RET,
@@ -329,7 +347,7 @@ abstract class Collector_ExpressionList<
 		extends Collector_NestedFunctions_Alias<
 					MODEL, RESULT, ALIAS_RET,
 					
-					ALIAS_SUM_LONG_RET, ALIAS_COUNT_RET, ALIAS_SHORT_RET, ALIAS_INTEGER_RET, ALIAS_LONG_RET, ALIAS_DOUBLE_RET, ALIAS_BIGDECIMAL_RET, ALIAS_DATE_RET, ALIAS_STRING_RET,
+					ALIAS_SUM_LONG_RET, ALIAS_COUNT_RET, ALIAS_BYTE_RET, ALIAS_SHORT_RET, ALIAS_INTEGER_RET, ALIAS_LONG_RET, ALIAS_BIGINTEGER_RET, ALIAS_FLOAT_RET, ALIAS_DOUBLE_RET, ALIAS_BIGDECIMAL_RET, ALIAS_STRING_RET, ALIAS_DATE_RET, ALIAS_CALENDAR_RET, ALIAS_SQLDATE_RET, ALIAS_SQLTIME_RET, ALIAS_SQLTIMESTAMP_RET,
 					
 					NO_PARAM_ARITHMETIC_SAME_TYPE_RET,
 					NO_PARAM_ARITHMETIC_DOUBLE_RET,
@@ -339,7 +357,11 @@ abstract class Collector_ExpressionList<
 	
 		implements ISharedFunction_Next<MODEL, RESULT, ALIAS_RET> {
 		
-			protected AliasFunctions(Collector_NestedFunctions_Alias<MODEL, RESULT, ALIAS_RET, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?> toCopy) {
+			protected AliasFunctions(Collector_NestedFunctions_Alias<
+								MODEL, RESULT, ALIAS_RET,
+								?, ?,
+								?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,
+								?, ?, ?> toCopy) {
 				super(toCopy);
 			}
 		
@@ -780,6 +802,11 @@ abstract class Collector_ExpressionList<
 	}
 
 	@Override
+	public final ALIAS_BYTE_RET min(ISupplierByte field) {
+		return assureAliasFunctions().min(field);
+	}
+
+	@Override
 	public final ALIAS_SHORT_RET min(ISupplierShort field) {
 		return assureAliasFunctions().min(field);
 	}
@@ -795,9 +822,30 @@ abstract class Collector_ExpressionList<
 	}
 
 	@Override
+	public final ALIAS_BIGINTEGER_RET min(ISupplierBigInteger field) {
+		return assureAliasFunctions().min(field);
+	}
+
+	@Override
+	public final ALIAS_FLOAT_RET min(ISupplierFloat field) {
+		return assureAliasFunctions().min(field);
+	}
+
+	@Override
+	public final ALIAS_DOUBLE_RET min(ISupplierDouble field) {
+		return assureAliasFunctions().min(field);
+	}
+
+	@Override
 	public final ALIAS_BIGDECIMAL_RET min(ISupplierBigDecimal field) {
 		return assureAliasFunctions().min(field);
 	}
+	
+	@Override
+	public final ALIAS_DATE_RET min(ISupplierDate field) {
+		return assureAliasFunctions().min(field);
+	}
+	
 
 	@Override
 	public final ALIAS_SUM_LONG_RET sum(ISupplierShort field) {

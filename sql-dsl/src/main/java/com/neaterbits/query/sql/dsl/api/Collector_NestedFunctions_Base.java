@@ -14,24 +14,40 @@ abstract class Collector_NestedFunctions_Base<
 		
 		NAMED_SUM_LONG_RET  extends ISharedFunction_Next<MODEL, RESULT, NAMED_RET>,
 		NAMED_COUNT_RET		extends ISharedFunction_Next<MODEL, RESULT, NAMED_RET>,
+		
+		NAMED_BYTE_RET		extends ISharedFunction_Next<MODEL, RESULT, NAMED_RET>,
 		NAMED_SHORT_RET		extends ISharedFunction_Next<MODEL, RESULT, NAMED_RET>,
 		NAMED_INTEGER_RET	extends ISharedFunction_Next<MODEL, RESULT, NAMED_RET>,
 		NAMED_LONG_RET		extends ISharedFunction_Next<MODEL, RESULT, NAMED_RET>,
+		NAMED_BIGINTEGER_RET extends ISharedFunction_Next<MODEL, RESULT, NAMED_RET>,
+		NAMED_FLOAT_RET		extends ISharedFunction_Next<MODEL, RESULT, NAMED_RET>,
 		NAMED_DOUBLE_RET	extends ISharedFunction_Next<MODEL, RESULT, NAMED_RET>,
 		NAMED_BIGDECIMAL_RET extends ISharedFunction_Next<MODEL, RESULT, NAMED_RET>,
-		NAMED_DATE_RET extends ISharedFunction_Next<MODEL, RESULT, NAMED_RET>,
 		NAMED_STRING_RET 	extends ISharedFunction_Next<MODEL, RESULT, NAMED_RET>,
+		NAMED_DATE_RET extends ISharedFunction_Next<MODEL, RESULT, NAMED_RET>,
+		NAMED_CALENDAR_RET extends ISharedFunction_Next<MODEL, RESULT, NAMED_RET>,
+		NAMED_SQLDATE_RET extends ISharedFunction_Next<MODEL, RESULT, NAMED_RET>,
+		NAMED_SQLTIME_RET extends ISharedFunction_Next<MODEL, RESULT, NAMED_RET>,
+		NAMED_SQLTIMESTAMP_RET extends ISharedFunction_Next<MODEL, RESULT, NAMED_RET>,
 		
 		
 		ALIAS_SUM_LONG_RET  extends ISharedFunction_Next<MODEL, RESULT, ALIAS_RET>,
 		ALIAS_COUNT_RET		extends ISharedFunction_Next<MODEL, RESULT, ALIAS_RET>,
-		ALIAS_SHORT_RET extends ISharedFunction_Next<MODEL, RESULT, ALIAS_RET>,
-		ALIAS_INTEGER_RET extends ISharedFunction_Next<MODEL, RESULT, ALIAS_RET>,
-		ALIAS_LONG_RET    extends ISharedFunction_Next<MODEL, RESULT, ALIAS_RET>,
-		ALIAS_DOUBLE_RET  extends ISharedFunction_Next<MODEL, RESULT, ALIAS_RET>,
+
+		ALIAS_BYTE_RET 		extends ISharedFunction_Next<MODEL, RESULT, ALIAS_RET>,
+		ALIAS_SHORT_RET 	extends ISharedFunction_Next<MODEL, RESULT, ALIAS_RET>,
+		ALIAS_INTEGER_RET 	extends ISharedFunction_Next<MODEL, RESULT, ALIAS_RET>,
+		ALIAS_LONG_RET    	extends ISharedFunction_Next<MODEL, RESULT, ALIAS_RET>,
+		ALIAS_BIGINTEGER_RET    extends ISharedFunction_Next<MODEL, RESULT, ALIAS_RET>,
+		ALIAS_FLOAT_RET    	extends ISharedFunction_Next<MODEL, RESULT, ALIAS_RET>,
+		ALIAS_DOUBLE_RET  	extends ISharedFunction_Next<MODEL, RESULT, ALIAS_RET>,
 		ALIAS_BIGDECIMAL_RET extends ISharedFunction_Next<MODEL, RESULT, ALIAS_RET>,
-		ALIAS_DATE_RET extends ISharedFunction_Next<MODEL, RESULT, ALIAS_RET>,
-		ALIAS_STRING_RET  extends ISharedFunction_Next<MODEL, RESULT, ALIAS_RET>
+		ALIAS_STRING_RET  	extends ISharedFunction_Next<MODEL, RESULT, ALIAS_RET>,
+		ALIAS_DATE_RET 		extends ISharedFunction_Next<MODEL, RESULT, ALIAS_RET>,
+		ALIAS_CALENDAR_RET 	extends ISharedFunction_Next<MODEL, RESULT, ALIAS_RET>,
+		ALIAS_SQLDATE_RET 		extends ISharedFunction_Next<MODEL, RESULT, ALIAS_RET>,
+		ALIAS_SQLTIME_RET 		extends ISharedFunction_Next<MODEL, RESULT, ALIAS_RET>,
+		ALIAS_SQLTIMESTAMP_RET 	extends ISharedFunction_Next<MODEL, RESULT, ALIAS_RET>
 		
 		> extends Collector_Functions_Base<
 		
@@ -43,23 +59,39 @@ abstract class Collector_NestedFunctions_Base<
 
 		NAMED_SUM_LONG_RET,
 		NAMED_COUNT_RET,
+		
+		NAMED_BYTE_RET,
 		NAMED_SHORT_RET,
 		NAMED_INTEGER_RET,
 		NAMED_LONG_RET,
+		NAMED_BIGINTEGER_RET,
+		NAMED_FLOAT_RET,
 		NAMED_DOUBLE_RET,
 		NAMED_BIGDECIMAL_RET,
-		NAMED_DATE_RET,
 		NAMED_STRING_RET,
+		NAMED_DATE_RET,
+		NAMED_CALENDAR_RET,
+		NAMED_SQLDATE_RET,
+		NAMED_SQLTIME_RET,
+		NAMED_SQLTIMESTAMP_RET,
 
 		ALIAS_SUM_LONG_RET,
 		ALIAS_COUNT_RET,
+
+		ALIAS_BYTE_RET,
 		ALIAS_SHORT_RET,
 		ALIAS_INTEGER_RET,
 		ALIAS_LONG_RET,
+		ALIAS_BIGINTEGER_RET,
+		ALIAS_FLOAT_RET,
 		ALIAS_DOUBLE_RET,
 		ALIAS_BIGDECIMAL_RET,
+		ALIAS_STRING_RET,
 		ALIAS_DATE_RET,
-		ALIAS_STRING_RET
+		ALIAS_CALENDAR_RET,
+		ALIAS_SQLDATE_RET,
+		ALIAS_SQLTIME_RET,
+		ALIAS_SQLTIMESTAMP_RET
 		
 		> {
 	
@@ -94,7 +126,12 @@ abstract class Collector_NestedFunctions_Base<
 				*/
 	}
 	
-	Collector_NestedFunctions_Base(Collector_NestedFunctions_Base<MODEL, RESULT, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?> toCopy) {
+	Collector_NestedFunctions_Base(Collector_NestedFunctions_Base<
+				MODEL, RESULT, ?, ?,
+				?, ?,
+				?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,
+				?, ?,
+				?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?> toCopy) {
 		this.functions = new ArrayList<>(toCopy.functions);
 	}
 

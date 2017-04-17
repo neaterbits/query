@@ -6,8 +6,6 @@ public interface ISharedOperands_Numeric_Common<
 	MODEL,
 	RESULT,
 	
-	R extends Comparable<R>,
-	
 	RET extends ISharedFunction_After<MODEL, RESULT>,
 	
 	TYPE_RET extends ISharedFunction_Next<MODEL, RESULT, RET>

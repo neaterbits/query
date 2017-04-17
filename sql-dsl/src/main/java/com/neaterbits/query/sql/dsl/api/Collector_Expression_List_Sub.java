@@ -1,6 +1,7 @@
 package com.neaterbits.query.sql.dsl.api;
 
 import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.Date;
 
 final class Collector_Expression_List_Sub<
@@ -34,18 +35,32 @@ final class Collector_Expression_List_Sub<
 		ISharedSubOperandsBuilder_Numeric_Next_Named<MODEL, RESULT, Long, NAMED_RET>,
 		ISharedSubOperandsBuilder_Numeric_Next_Named<MODEL, RESULT, Long, NAMED_RET>,
 
+		ISharedSubOperandsBuilder_Numeric_Next_Named<MODEL, RESULT, Byte, NAMED_RET>,
 		ISharedSubOperandsBuilder_Numeric_Next_Named<MODEL, RESULT, Short, NAMED_RET>,
 		ISharedSubOperandsBuilder_Numeric_Next_Named<MODEL, RESULT, Integer, NAMED_RET>,
 		ISharedSubOperandsBuilder_Numeric_Next_Named<MODEL, RESULT, Long, NAMED_RET>,
+		ISharedSubOperandsBuilder_Numeric_Next_Named<MODEL, RESULT, BigInteger, NAMED_RET>,
+		ISharedSubOperandsBuilder_Numeric_Next_Named<MODEL, RESULT, Float, NAMED_RET>,
 		ISharedSubOperandsBuilder_Numeric_Next_Named<MODEL, RESULT, Double, NAMED_RET>,
 		ISharedSubOperandsBuilder_Numeric_Next_Named<MODEL, RESULT, BigDecimal, NAMED_RET>,
-		ISharedSubOperandsBuilder_Numeric_Next_Named<MODEL, RESULT, Date, NAMED_RET>,
 		ISharedSubOperandsBuilder_String_Next_Named<MODEL, RESULT, NAMED_RET>,
+		ISharedSubOperandsBuilder_Numeric_Next_Named<MODEL, RESULT, java.util.Date, NAMED_RET>,
+		ISharedSubOperandsBuilder_Numeric_Next_Named<MODEL, RESULT, java.util.Calendar, NAMED_RET>,
+		ISharedSubOperandsBuilder_NumericSQLTimeType_Next_Named<MODEL, RESULT, java.sql.Date, NAMED_RET>,
+		ISharedSubOperandsBuilder_NumericSQLTimeType_Next_Named<MODEL, RESULT, java.sql.Time, NAMED_RET>,
+		ISharedSubOperandsBuilder_NumericSQLTimeType_Next_Named<MODEL, RESULT, java.sql.Timestamp, NAMED_RET>,
 
 
 		ISharedFunction_Next<MODEL, RESULT, ALIAS_RET>,
 		ISharedFunction_Next<MODEL, RESULT, ALIAS_RET>,
 		
+		ISharedFunction_Next<MODEL, RESULT, ALIAS_RET>,
+		ISharedFunction_Next<MODEL, RESULT, ALIAS_RET>,
+		ISharedFunction_Next<MODEL, RESULT, ALIAS_RET>,
+		ISharedFunction_Next<MODEL, RESULT, ALIAS_RET>,
+		ISharedFunction_Next<MODEL, RESULT, ALIAS_RET>,
+		ISharedFunction_Next<MODEL, RESULT, ALIAS_RET>,
+		ISharedFunction_Next<MODEL, RESULT, ALIAS_RET>,
 		ISharedFunction_Next<MODEL, RESULT, ALIAS_RET>,
 		ISharedFunction_Next<MODEL, RESULT, ALIAS_RET>,
 		ISharedFunction_Next<MODEL, RESULT, ALIAS_RET>,

@@ -6,15 +6,13 @@ public interface ISharedOperands_Numeric_Named<
 	MODEL,
 	RESULT,
 	
-	R extends Comparable<R>,
-	
 	RET extends ISharedFunction_After<MODEL, RESULT>,
 
 	TYPE_RET extends ISharedFunction_Next<MODEL, RESULT, RET>
 
-	> extends ISharedOperands_Numeric_Common<MODEL, RESULT, R, RET, TYPE_RET> {
+	> extends ISharedOperands_Numeric_Common<MODEL, RESULT, RET, TYPE_RET> {
 	
-	/* We need types for all to make sure one can add integer-field and short-fild.
+	/* We need types for all to make sure one can add integer-field and short-field.
 	 * But we only need one return-type (for now)
 	 * 
 	 *  

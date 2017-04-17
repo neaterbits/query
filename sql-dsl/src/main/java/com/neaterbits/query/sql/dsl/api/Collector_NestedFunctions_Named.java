@@ -22,13 +22,20 @@ abstract class Collector_NestedFunctions_Named<
 				SUM_LONG_RET extends ISharedFunction_Next<MODEL, RESULT, RET>,
 				COUNT_RET extends ISharedFunction_Next<MODEL, RESULT, RET>,
 				
-				SHORT_RET extends ISharedFunction_Next<MODEL, RESULT, RET>,
-				INTEGER_RET extends ISharedFunction_Next<MODEL, RESULT, RET>,
-				LONG_RET	 extends ISharedFunction_Next<MODEL, RESULT, RET>,
-				DOUBLE_RET	 extends ISharedFunction_Next<MODEL, RESULT, RET>,
-				BIGDECIMAL_RET extends ISharedFunction_Next<MODEL, RESULT, RET>,
-				DATE_RET extends ISharedFunction_Next<MODEL, RESULT, RET>,
-				STRING_RET  extends ISharedFunction_Next<MODEL, RESULT, RET>,
+				BYTE_RET 		extends ISharedFunction_Next<MODEL, RESULT, RET>,
+				SHORT_RET 		extends ISharedFunction_Next<MODEL, RESULT, RET>,
+				INTEGER_RET 	extends ISharedFunction_Next<MODEL, RESULT, RET>,
+				LONG_RET	 	extends ISharedFunction_Next<MODEL, RESULT, RET>,
+				BIGINTEGER_RET	extends ISharedFunction_Next<MODEL, RESULT, RET>,
+				FLOAT_RET	 	extends ISharedFunction_Next<MODEL, RESULT, RET>,
+				DOUBLE_RET	 	extends ISharedFunction_Next<MODEL, RESULT, RET>,
+				BIGDECIMAL_RET 	extends ISharedFunction_Next<MODEL, RESULT, RET>,
+				STRING_RET  	extends ISharedFunction_Next<MODEL, RESULT, RET>,
+				DATE_RET 		extends ISharedFunction_Next<MODEL, RESULT, RET>,
+				CALENDAR_RET 	extends ISharedFunction_Next<MODEL, RESULT, RET>,
+				SQLDATE_RET 	extends ISharedFunction_Next<MODEL, RESULT, RET>,
+				SQLTIME_RET 	extends ISharedFunction_Next<MODEL, RESULT, RET>,
+				SQLTIMESTAMP_RET extends ISharedFunction_Next<MODEL, RESULT, RET>,
 				
 				NO_PARAM_ARITHMETIC_SAME_TYPE_RET,
 				NO_PARAM_ARITHMETIC_DOUBLE_RET,
@@ -47,14 +54,29 @@ abstract class Collector_NestedFunctions_Named<
 				SUM_LONG_RET,
 				COUNT_RET,
 				
+				BYTE_RET,
 				SHORT_RET,
 				INTEGER_RET,
 				LONG_RET,
+				BIGINTEGER_RET,
+				FLOAT_RET,
 				DOUBLE_RET,
 				BIGDECIMAL_RET,
-				DATE_RET,
 				STRING_RET,
+				DATE_RET,
+				CALENDAR_RET,
+				SQLDATE_RET,
+				SQLTIME_RET,
+				SQLTIMESTAMP_RET,
 				
+				ISharedFunction_Next<MODEL, RESULT, ISharedFunction_After<MODEL, RESULT>>,
+				ISharedFunction_Next<MODEL, RESULT, ISharedFunction_After<MODEL, RESULT>>,
+				
+				ISharedFunction_Next<MODEL, RESULT, ISharedFunction_After<MODEL, RESULT>>,
+				ISharedFunction_Next<MODEL, RESULT, ISharedFunction_After<MODEL, RESULT>>,
+				ISharedFunction_Next<MODEL, RESULT, ISharedFunction_After<MODEL, RESULT>>,
+				ISharedFunction_Next<MODEL, RESULT, ISharedFunction_After<MODEL, RESULT>>,
+				ISharedFunction_Next<MODEL, RESULT, ISharedFunction_After<MODEL, RESULT>>,
 				ISharedFunction_Next<MODEL, RESULT, ISharedFunction_After<MODEL, RESULT>>,
 				ISharedFunction_Next<MODEL, RESULT, ISharedFunction_After<MODEL, RESULT>>,
 				ISharedFunction_Next<MODEL, RESULT, ISharedFunction_After<MODEL, RESULT>>,
@@ -91,7 +113,13 @@ abstract class Collector_NestedFunctions_Named<
 		this.func = func;
 	}
 	
-	Collector_NestedFunctions_Named(Collector_NestedFunctions_Named<MODEL, RESULT, RET, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?> toCopy) {
+	Collector_NestedFunctions_Named(Collector_NestedFunctions_Named<
+			MODEL, RESULT, RET,
+			?, ?,
+			?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 
+			?, ?, ?
+		> toCopy) {
+
 		super(toCopy);
 		
 		this.func = toCopy.func;

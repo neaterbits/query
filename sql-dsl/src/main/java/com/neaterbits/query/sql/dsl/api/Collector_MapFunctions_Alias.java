@@ -14,13 +14,20 @@ final class Collector_MapFunctions_Alias<
 		
 		// for other types aggregates, we return the same result as the input type, eg.
 		// max of short-type will never be > short type
+		BYTE_RET 	extends ISharedFunction_Next<MODEL, RESULT, RET>,
 		SHORT_RET 	extends ISharedFunction_Next<MODEL, RESULT, RET>,
 		INT_RET 	extends ISharedFunction_Next<MODEL, RESULT, RET>, 
 		LONG_RET 	extends ISharedFunction_Next<MODEL, RESULT, RET>,
+		BIGINTEGER_RET extends ISharedFunction_Next<MODEL, RESULT, RET>,
+		FLOAT_RET 	extends ISharedFunction_Next<MODEL, RESULT, RET>,
 		DOUBLE_RET 	extends ISharedFunction_Next<MODEL, RESULT, RET>,
 		BIGDECIMAL_RET extends ISharedFunction_Next<MODEL, RESULT, RET>,
+		STRING_RET 	extends ISharedFunction_Next<MODEL, RESULT, RET>,
 		DATE_RET extends ISharedFunction_Next<MODEL, RESULT, RET>,
-		STRING_RET 	extends ISharedFunction_Next<MODEL, RESULT, RET>
+		CALENDAR_RET extends ISharedFunction_Next<MODEL, RESULT, RET>,
+		SQLDATE_RET extends ISharedFunction_Next<MODEL, RESULT, RET>,
+		SQLTIME_RET extends ISharedFunction_Next<MODEL, RESULT, RET>,
+		SQLTIMESTAMP_RET extends ISharedFunction_Next<MODEL, RESULT, RET>
 	>
 
 
@@ -33,13 +40,20 @@ final class Collector_MapFunctions_Alias<
 		SUM_LONG_RET,
 		COUNT_RET,
 
+		BYTE_RET,
 		SHORT_RET,
 		INT_RET,
 		LONG_RET,
+		BIGINTEGER_RET,
+		FLOAT_RET,
 		DOUBLE_RET,
 		BIGDECIMAL_RET,
-		DATE_RET,
 		STRING_RET,
+		DATE_RET,
+		CALENDAR_RET,
+		SQLDATE_RET,
+		SQLTIME_RET,
+		SQLTIMESTAMP_RET,
 		
 		Void,
 		Void,
@@ -48,7 +62,7 @@ final class Collector_MapFunctions_Alias<
 	
 		implements 
 		
-			ISharedMapFunctions_Alias<MODEL, RESULT, RET, SUM_LONG_RET, COUNT_RET, SHORT_RET, INT_RET, LONG_RET, DOUBLE_RET, BIGDECIMAL_RET, DATE_RET, STRING_RET>
+			ISharedMapFunctions_Alias<MODEL, RESULT, RET, SUM_LONG_RET, COUNT_RET, BYTE_RET, SHORT_RET, INT_RET, LONG_RET, BIGINTEGER_RET, FLOAT_RET, DOUBLE_RET, BIGDECIMAL_RET, STRING_RET, DATE_RET, CALENDAR_RET, SQLDATE_RET, SQLTIME_RET, SQLTIMESTAMP_RET>
 	
 	{
 

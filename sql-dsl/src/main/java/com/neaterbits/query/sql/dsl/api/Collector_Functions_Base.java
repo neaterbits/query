@@ -12,24 +12,40 @@ abstract class Collector_Functions_Base<
 		
 		NAMED_SUM_LONG_RET  extends ISharedFunction_Next<MODEL, RESULT, NAMED_RET>,
 		NAMED_COUNT_RET		extends ISharedFunction_Next<MODEL, RESULT, NAMED_RET>,
+		
+		NAMED_BYTE_RET		extends ISharedFunction_Next<MODEL, RESULT, NAMED_RET>,
 		NAMED_SHORT_RET		extends ISharedFunction_Next<MODEL, RESULT, NAMED_RET>,
 		NAMED_INTEGER_RET	extends ISharedFunction_Next<MODEL, RESULT, NAMED_RET>,
 		NAMED_LONG_RET		extends ISharedFunction_Next<MODEL, RESULT, NAMED_RET>,
+		NAMED_BIGINTEGER_RET		extends ISharedFunction_Next<MODEL, RESULT, NAMED_RET>,
+		NAMED_FLOAR_RET		extends ISharedFunction_Next<MODEL, RESULT, NAMED_RET>,
 		NAMED_DOUBLE_RET	extends ISharedFunction_Next<MODEL, RESULT, NAMED_RET>,
 		NAMED_BIGDECIMAL_RET extends ISharedFunction_Next<MODEL, RESULT, NAMED_RET>,
-		NAMED_DATE_RET extends ISharedFunction_Next<MODEL, RESULT, NAMED_RET>,
 		NAMED_STRING_RET 	extends ISharedFunction_Next<MODEL, RESULT, NAMED_RET>,
+		NAMED_DATE_RET 		extends ISharedFunction_Next<MODEL, RESULT, NAMED_RET>,
+		NAMED_CALENDAR_RET 	extends ISharedFunction_Next<MODEL, RESULT, NAMED_RET>,
+		NAMED_SQLDATE_RET 	extends ISharedFunction_Next<MODEL, RESULT, NAMED_RET>,
+		NAMED_SQLTIME_RET 	extends ISharedFunction_Next<MODEL, RESULT, NAMED_RET>,
+		NAMED_SQLTIMESTAMP_RET extends ISharedFunction_Next<MODEL, RESULT, NAMED_RET>,
 		
 		
 		ALIAS_SUM_LONG_RET  extends ISharedFunction_Next<MODEL, RESULT, ALIAS_RET>,
 		ALIAS_COUNT_RET		extends ISharedFunction_Next<MODEL, RESULT, ALIAS_RET>,
-		ALIAS_SHORT_RET extends ISharedFunction_Next<MODEL, RESULT, ALIAS_RET>,
-		ALIAS_INTEGER_RET extends ISharedFunction_Next<MODEL, RESULT, ALIAS_RET>,
-		ALIAS_LONG_RET    extends ISharedFunction_Next<MODEL, RESULT, ALIAS_RET>,
-		ALIAS_DOUBLE_RET  extends ISharedFunction_Next<MODEL, RESULT, ALIAS_RET>,
+
+		ALIAS_BYTE_RET 		extends ISharedFunction_Next<MODEL, RESULT, ALIAS_RET>,
+		ALIAS_SHORT_RET 	extends ISharedFunction_Next<MODEL, RESULT, ALIAS_RET>,
+		ALIAS_INTEGER_RET 	extends ISharedFunction_Next<MODEL, RESULT, ALIAS_RET>,
+		ALIAS_LONG_RET    	extends ISharedFunction_Next<MODEL, RESULT, ALIAS_RET>,
+		ALIAS_BIGINTEGER_RET extends ISharedFunction_Next<MODEL, RESULT, ALIAS_RET>,
+		ALIAS_FLOAT_RET    	extends ISharedFunction_Next<MODEL, RESULT, ALIAS_RET>,
+		ALIAS_DOUBLE_RET  	extends ISharedFunction_Next<MODEL, RESULT, ALIAS_RET>,
 		ALIAS_BIGDECIMAL_RET extends ISharedFunction_Next<MODEL, RESULT, ALIAS_RET>,
-		ALIAS_DATE_RET extends ISharedFunction_Next<MODEL, RESULT, ALIAS_RET>,
-		ALIAS_STRING_RET  extends ISharedFunction_Next<MODEL, RESULT, ALIAS_RET>
+		ALIAS_STRING_RET  	extends ISharedFunction_Next<MODEL, RESULT, ALIAS_RET>,
+		ALIAS_DATE_RET 		extends ISharedFunction_Next<MODEL, RESULT, ALIAS_RET>,
+		ALIAS_CALENDAR_RET 	extends ISharedFunction_Next<MODEL, RESULT, ALIAS_RET>,
+		ALIAS_SQLDATE_RET 	extends ISharedFunction_Next<MODEL, RESULT, ALIAS_RET>,
+		ALIAS_SQLTIME_RET 	extends ISharedFunction_Next<MODEL, RESULT, ALIAS_RET>,
+		ALIAS_SQLTIMESTAMP_RET extends ISharedFunction_Next<MODEL, RESULT, ALIAS_RET>
 		
 		>
 
@@ -60,7 +76,8 @@ abstract class Collector_Functions_Base<
 			
 			
 		ISharedFunctions_String_Alias<MODEL, RESULT, ALIAS_RET, ALIAS_STRING_RET>,
-		ISharedFunctions_Aggregate_Alias<ALIAS_SUM_LONG_RET, ALIAS_COUNT_RET, ALIAS_SHORT_RET, ALIAS_INTEGER_RET, ALIAS_LONG_RET, ALIAS_DOUBLE_RET, ALIAS_BIGDECIMAL_RET, ALIAS_DATE_RET>
+		ISharedFunctions_Aggregate_Alias<ALIAS_SUM_LONG_RET, ALIAS_COUNT_RET,
+				ALIAS_BYTE_RET, ALIAS_SHORT_RET, ALIAS_INTEGER_RET, ALIAS_LONG_RET, ALIAS_BIGINTEGER_RET, ALIAS_FLOAT_RET, ALIAS_DOUBLE_RET, ALIAS_BIGDECIMAL_RET, ALIAS_DATE_RET>
 			
 {
 	
@@ -445,6 +462,11 @@ abstract class Collector_Functions_Base<
 	}
 
 	@Override
+	public final ALIAS_BYTE_RET min(ISupplierByte field) {
+		return addAndReturnType(Function_Aggregate.MIN, field);
+	}
+
+	@Override
 	public final ALIAS_SHORT_RET min(ISupplierShort field) {
 		return addAndReturnType(Function_Aggregate.MIN, field);
 	}
@@ -460,7 +482,27 @@ abstract class Collector_Functions_Base<
 	}
 
 	@Override
+	public final ALIAS_BIGINTEGER_RET min(ISupplierBigInteger field) {
+		return addAndReturnType(Function_Aggregate.MIN, field);
+	}
+
+	@Override
+	public final ALIAS_FLOAT_RET min(ISupplierFloat field) {
+		return addAndReturnType(Function_Aggregate.MIN, field);
+	}
+
+	@Override
+	public final ALIAS_DOUBLE_RET min(ISupplierDouble field) {
+		return addAndReturnType(Function_Aggregate.MIN, field);
+	}
+
+	@Override
 	public final ALIAS_BIGDECIMAL_RET min(ISupplierBigDecimal field) {
+		return addAndReturnType(Function_Aggregate.MIN, field);
+	}
+
+	@Override
+	public final ALIAS_DATE_RET min(ISupplierDate field) {
 		return addAndReturnType(Function_Aggregate.MIN, field);
 	}
 
