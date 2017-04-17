@@ -19,7 +19,7 @@ public interface ISharedFunctions_Aggregate_Named<
 				BIGDECIMAL_RET,
 				DATE_RET>
 
-		extends IShared_Aggregate_Sum_Named_All<SUM_LONG_RET, BIGDECIMAL_RET>,
+		extends IShared_Aggregate_Sum_Named_All<SUM_LONG_RET, BIGINTEGER_RET, DOUBLE_RET, BIGDECIMAL_RET>,
 				IShared_Aggregate_Count_Named_All<COUNT_RET>,
 				IShared_Aggregate_Max_Named<BYTE_RET, SHORT_RET, INT_RET, LONG_RET, BIGINTEGER_RET, FLOAT_RET, DOUBLE_RET, BIGDECIMAL_RET, DATE_RET>,
 				IShared_Aggregate_Min_Named<BYTE_RET, SHORT_RET, INT_RET, LONG_RET, BIGINTEGER_RET, FLOAT_RET, DOUBLE_RET, BIGDECIMAL_RET, DATE_RET>,

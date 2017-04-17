@@ -1,6 +1,7 @@
 package com.neaterbits.query.sql.dsl.api;
 
 import java.math.BigDecimal;
+import java.math.BigInteger;
 
 public interface IShortSelect {
 
@@ -36,7 +37,7 @@ public interface IShortSelect {
     	return ShortSelect.selectImpl.sum(field);
     }
 
-    public static <T> IShortBuilt_Numeric_Named<Long> sum(IFunctionLong<T> field) {
+    public static <T> IShortBuilt_Numeric_Named<BigInteger> sum(IFunctionLong<T> field) {
     	return ShortSelect.selectImpl.sum(field);
     }
 

@@ -367,6 +367,11 @@ abstract class Collector_Functions_Base<
 	}
 
 	@Override
+	public final <T> NAMED_SUM_LONG_RET sum(IFunctionByte<T> field) {
+		return addAndReturnType(Function_Aggregate.SUM, field);
+	}
+
+	@Override
 	public final <T> NAMED_SUM_LONG_RET sum(IFunctionShort<T> field) {
 		return addAndReturnType(Function_Aggregate.SUM, field);
 	}
@@ -377,7 +382,22 @@ abstract class Collector_Functions_Base<
 	}
 
 	@Override
-	public final <T> NAMED_SUM_LONG_RET sum(IFunctionLong<T> field) {
+	public final <T> NAMED_BIGINTEGER_RET sum(IFunctionLong<T> field) {
+		return addAndReturnType(Function_Aggregate.SUM, field);
+	}
+
+	@Override
+	public final <T> NAMED_BIGINTEGER_RET sum(IFunctionBigInteger<T> field) {
+		return addAndReturnType(Function_Aggregate.SUM, field);
+	}
+
+	@Override
+	public final <T> NAMED_DOUBLE_RET sum(IFunctionFloat<T> field) {
+		return addAndReturnType(Function_Aggregate.SUM, field);
+	}
+
+	@Override
+	public final <T> NAMED_DOUBLE_RET sum(IFunctionDouble<T> field) {
 		return addAndReturnType(Function_Aggregate.SUM, field);
 	}
 
@@ -614,6 +634,11 @@ abstract class Collector_Functions_Base<
 	}
 
 	@Override
+	public final ALIAS_SUM_LONG_RET sum(ISupplierByte field) {
+		return addAndReturnType(Function_Aggregate.SUM, field);
+	}
+
+	@Override
 	public final ALIAS_SUM_LONG_RET sum(ISupplierShort field) {
 		return addAndReturnType(Function_Aggregate.SUM, field);
 	}
@@ -624,7 +649,22 @@ abstract class Collector_Functions_Base<
 	}
 
 	@Override
-	public final ALIAS_SUM_LONG_RET sum(ISupplierLong field) {
+	public final ALIAS_BIGINTEGER_RET sum(ISupplierLong field) {
+		return addAndReturnType(Function_Aggregate.SUM, field);
+	}
+
+	@Override
+	public final ALIAS_BIGINTEGER_RET sum(ISupplierBigInteger field) {
+		return addAndReturnType(Function_Aggregate.SUM, field);
+	}
+
+	@Override
+	public final ALIAS_DOUBLE_RET sum(ISupplierFloat field) {
+		return addAndReturnType(Function_Aggregate.SUM, field);
+	}
+
+	@Override
+	public final ALIAS_DOUBLE_RET sum(ISupplierDouble field) {
 		return addAndReturnType(Function_Aggregate.SUM, field);
 	}
 
@@ -632,5 +672,4 @@ abstract class Collector_Functions_Base<
 	public final ALIAS_BIGDECIMAL_RET sum(ISupplierBigDecimal field) {
 		return addAndReturnType(Function_Aggregate.SUM, field);
 	}
-	
 }

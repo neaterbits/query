@@ -705,6 +705,11 @@ abstract class Collector_ExpressionList<
 	}
 
 	@Override
+	public final <T> NAMED_SUM_LONG_RET sum(IFunctionByte<T> field) {
+		return assureNamedFunctions().sum(field);
+	}
+
+	@Override
 	public final <T> NAMED_SUM_LONG_RET sum(IFunctionShort<T> field) {
 		return assureNamedFunctions().sum(field);
 	}
@@ -715,7 +720,22 @@ abstract class Collector_ExpressionList<
 	}
 
 	@Override
-	public final <T> NAMED_SUM_LONG_RET sum(IFunctionLong<T> field) {
+	public final <T> NAMED_BIGINTEGER_RET sum(IFunctionLong<T> field) {
+		return assureNamedFunctions().sum(field);
+	}
+
+	@Override
+	public final <T> NAMED_BIGINTEGER_RET sum(IFunctionBigInteger<T> field) {
+		return assureNamedFunctions().sum(field);
+	}
+
+	@Override
+	public final <T> NAMED_DOUBLE_RET sum(IFunctionFloat<T> field) {
+		return assureNamedFunctions().sum(field);
+	}
+
+	@Override
+	public final <T> NAMED_DOUBLE_RET sum(IFunctionDouble<T> field) {
 		return assureNamedFunctions().sum(field);
 	}
 
@@ -952,6 +972,11 @@ abstract class Collector_ExpressionList<
 	
 
 	@Override
+	public final ALIAS_SUM_LONG_RET sum(ISupplierByte field) {
+		return assureAliasFunctions().sum(field);
+	}
+
+	@Override
 	public final ALIAS_SUM_LONG_RET sum(ISupplierShort field) {
 		return assureAliasFunctions().sum(field);
 	}
@@ -962,7 +987,22 @@ abstract class Collector_ExpressionList<
 	}
 
 	@Override
-	public final ALIAS_SUM_LONG_RET sum(ISupplierLong field) {
+	public final ALIAS_BIGINTEGER_RET sum(ISupplierLong field) {
+		return assureAliasFunctions().sum(field);
+	}
+
+	@Override
+	public final ALIAS_BIGINTEGER_RET sum(ISupplierBigInteger field) {
+		return assureAliasFunctions().sum(field);
+	}
+
+	@Override
+	public final ALIAS_DOUBLE_RET sum(ISupplierFloat field) {
+		return assureAliasFunctions().sum(field);
+	}
+
+	@Override
+	public final ALIAS_DOUBLE_RET sum(ISupplierDouble field) {
 		return assureAliasFunctions().sum(field);
 	}
 

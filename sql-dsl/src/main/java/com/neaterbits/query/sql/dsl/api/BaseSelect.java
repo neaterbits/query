@@ -82,7 +82,10 @@ abstract class BaseSelect<
 
 	abstract <T, NUM, RESULT, RET> RET sum(Function<T, NUM> field, Class<NUM> numCl, Class<RESULT> resultCl);
 	
-
+	@Override
+	public final <T> NAMED_SUM_LONG_RET sum(IFunctionByte<T> field) {
+		return sum(field, Byte.class, Long.class);
+	}
 
 	@Override
 	public final <T> NAMED_SUM_LONG_RET sum(IFunctionShort<T> field) {
@@ -95,8 +98,23 @@ abstract class BaseSelect<
 	}
 	
 	@Override
-	public final <T> NAMED_SUM_LONG_RET sum(IFunctionLong<T> field) {
-		return sum(field, Long.class, Long.class);
+	public final <T> NAMED_BIGINTEGER_RET sum(IFunctionLong<T> field) {
+		return sum(field, Long.class, BigInteger.class);
+	}
+
+	@Override
+	public final <T> NAMED_BIGINTEGER_RET sum(IFunctionBigInteger<T> field) {
+		return sum(field, BigInteger.class, BigInteger.class);
+	}
+
+	@Override
+	public final <T> NAMED_DOUBLE_RET sum(IFunctionFloat<T> field) {
+		return sum(field, Float.class, Double.class);
+	}
+
+	@Override
+	public final <T> NAMED_DOUBLE_RET sum(IFunctionDouble<T> field) {
+		return sum(field, Double.class, Double.class);
 	}
 
 	@Override
@@ -316,6 +334,11 @@ abstract class BaseSelect<
 	
 
 	@Override
+	public final ALIAS_SUM_LONG_RET sum(ISupplierByte field) {
+		return sum(field, Byte.class, Long.class);
+	}
+
+	@Override
 	public final ALIAS_SUM_LONG_RET sum(ISupplierShort field) {
 		return sum(field, Short.class, Long.class);
 	}
@@ -326,8 +349,23 @@ abstract class BaseSelect<
 	}
 	
 	@Override
-	public final ALIAS_SUM_LONG_RET sum(ISupplierLong field) {
-		return sum(field, Long.class, Long.class);
+	public final ALIAS_BIGINTEGER_RET sum(ISupplierLong field) {
+		return sum(field, Long.class, BigInteger.class);
+	}
+
+	@Override
+	public final ALIAS_BIGINTEGER_RET sum(ISupplierBigInteger field) {
+		return sum(field, BigInteger.class, BigInteger.class);
+	}
+	
+	@Override
+	public final ALIAS_DOUBLE_RET sum(ISupplierFloat field) {
+		return sum(field, Float.class, Double.class);
+	}
+
+	@Override
+	public final ALIAS_DOUBLE_RET sum(ISupplierDouble field) {
+		return sum(field, Double.class, Double.class);
 	}
 
 	@Override
