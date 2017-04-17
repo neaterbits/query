@@ -595,6 +595,11 @@ abstract class Collector_ExpressionList<
 	}
 
 	@Override
+	public final <T> NAMED_COUNT_RET count(IFunctionByte<T> field) {
+		return assureNamedFunctions().count(field);
+	}
+
+	@Override
 	public final <T> NAMED_COUNT_RET count(IFunctionShort<T> field) {
 		return assureNamedFunctions().count(field);
 	}
@@ -606,6 +611,21 @@ abstract class Collector_ExpressionList<
 
 	@Override
 	public final <T> NAMED_COUNT_RET count(IFunctionLong<T> field) {
+		return assureNamedFunctions().count(field);
+	}
+
+	@Override
+	public final <T> NAMED_COUNT_RET count(IFunctionBigInteger<T> field) {
+		return assureNamedFunctions().count(field);
+	}
+
+	@Override
+	public final <T> NAMED_COUNT_RET count(IFunctionFloat<T> field) {
+		return assureNamedFunctions().count(field);
+	}
+
+	@Override
+	public final <T> NAMED_COUNT_RET count(IFunctionDouble<T> field) {
 		return assureNamedFunctions().count(field);
 	}
 
@@ -861,6 +881,11 @@ abstract class Collector_ExpressionList<
 	}
 
 	@Override
+	public final ALIAS_COUNT_RET count(ISupplierByte field) {
+		return assureAliasFunctions().count(field);
+	}
+
+	@Override
 	public final ALIAS_COUNT_RET count(ISupplierShort field) {
 		return assureAliasFunctions().count(field);
 	}
@@ -872,6 +897,21 @@ abstract class Collector_ExpressionList<
 
 	@Override
 	public final ALIAS_COUNT_RET count(ISupplierLong field) {
+		return assureAliasFunctions().count(field);
+	}
+
+	@Override
+	public final ALIAS_COUNT_RET count(ISupplierBigInteger field) {
+		return assureAliasFunctions().count(field);
+	}
+
+	@Override
+	public final ALIAS_COUNT_RET count(ISupplierFloat field) {
+		return assureAliasFunctions().count(field);
+	}
+
+	@Override
+	public final ALIAS_COUNT_RET count(ISupplierDouble field) {
 		return assureAliasFunctions().count(field);
 	}
 

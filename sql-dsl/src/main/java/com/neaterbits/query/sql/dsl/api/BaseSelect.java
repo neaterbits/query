@@ -296,6 +296,11 @@ abstract class BaseSelect<
 	
 
 	@Override
+	public final <T> NAMED_COUNT_RET count(IFunctionByte<T> field) {
+		return count(field, Byte.class, Long.class);
+	}
+
+	@Override
 	public final <T> NAMED_COUNT_RET count(IFunctionShort<T> field) {
 		return count(field, Short.class, Long.class);
 	}
@@ -308,6 +313,21 @@ abstract class BaseSelect<
 	@Override
 	public final <T> NAMED_COUNT_RET count(IFunctionLong<T> field) {
 		return count(field, Long.class, Long.class);
+	}
+
+	@Override
+	public final <T> NAMED_COUNT_RET count(IFunctionBigInteger<T> field) {
+		return count(field, BigInteger.class, Long.class);
+	}
+
+	@Override
+	public final <T> NAMED_COUNT_RET count(IFunctionFloat<T> field) {
+		return count(field, Float.class, Long.class);
+	}
+
+	@Override
+	public final <T> NAMED_COUNT_RET count(IFunctionDouble<T> field) {
+		return count(field, Double.class, Long.class);
 	}
 
 	@Override
@@ -546,6 +566,11 @@ abstract class BaseSelect<
 	
 
 	@Override
+	public final ALIAS_COUNT_RET count(ISupplierByte field) {
+		return count(field, Byte.class, Long.class);
+	}
+
+	@Override
 	public final ALIAS_COUNT_RET count(ISupplierShort field) {
 		return count(field, Short.class, Long.class);
 	}
@@ -558,6 +583,21 @@ abstract class BaseSelect<
 	@Override
 	public final ALIAS_COUNT_RET count(ISupplierLong field) {
 		return count(field, Long.class, Long.class);
+	}
+
+	@Override
+	public final ALIAS_COUNT_RET count(ISupplierBigInteger field) {
+		return count(field, BigInteger.class, Long.class);
+	}
+
+	@Override
+	public final ALIAS_COUNT_RET count(ISupplierFloat field) {
+		return count(field, Float.class, Long.class);
+	}
+
+	@Override
+	public final ALIAS_COUNT_RET count(ISupplierDouble field) {
+		return count(field, Double.class, Long.class);
 	}
 
 	@Override

@@ -257,6 +257,11 @@ abstract class Collector_Functions_Base<
 	}
 
 	@Override
+	public final <T> NAMED_COUNT_RET count(IFunctionByte<T> field) {
+		return addAndReturnType(Function_Aggregate.COUNT, field);
+	}
+
+	@Override
 	public final <T> NAMED_COUNT_RET count(IFunctionShort<T> field) {
 		return addAndReturnType(Function_Aggregate.COUNT, field);
 	}
@@ -268,6 +273,21 @@ abstract class Collector_Functions_Base<
 
 	@Override
 	public final <T> NAMED_COUNT_RET count(IFunctionLong<T> field) {
+		return addAndReturnType(Function_Aggregate.COUNT, field);
+	}
+
+	@Override
+	public final <T> NAMED_COUNT_RET count(IFunctionBigInteger<T> field) {
+		return addAndReturnType(Function_Aggregate.COUNT, field);
+	}
+
+	@Override
+	public final <T> NAMED_COUNT_RET count(IFunctionFloat<T> field) {
+		return addAndReturnType(Function_Aggregate.COUNT, field);
+	}
+
+	@Override
+	public final <T> NAMED_COUNT_RET count(IFunctionDouble<T> field) {
 		return addAndReturnType(Function_Aggregate.COUNT, field);
 	}
 
@@ -524,6 +544,11 @@ abstract class Collector_Functions_Base<
 	}
 
 	@Override
+	public final ALIAS_COUNT_RET count(ISupplierByte field) {
+		return addAndReturnType(Function_Aggregate.COUNT, field);
+	}
+
+	@Override
 	public final ALIAS_COUNT_RET count(ISupplierShort field) {
 		return addAndReturnType(Function_Aggregate.COUNT, field);
 	}
@@ -535,6 +560,21 @@ abstract class Collector_Functions_Base<
 
 	@Override
 	public final ALIAS_COUNT_RET count(ISupplierLong field) {
+		return addAndReturnType(Function_Aggregate.COUNT, field);
+	}
+
+	@Override
+	public final ALIAS_COUNT_RET count(ISupplierBigInteger field) {
+		return addAndReturnType(Function_Aggregate.COUNT, field);
+	}
+
+	@Override
+	public final ALIAS_COUNT_RET count(ISupplierFloat field) {
+		return addAndReturnType(Function_Aggregate.COUNT, field);
+	}
+
+	@Override
+	public final ALIAS_COUNT_RET count(ISupplierDouble field) {
 		return addAndReturnType(Function_Aggregate.COUNT, field);
 	}
 
