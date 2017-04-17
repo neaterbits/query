@@ -12,6 +12,9 @@ public interface ISharedSubOperandsBuilder_Named<MODEL, RESULT, R extends Compar
 				ISharedSubOperand_Numeric_Ops_Named<MODEL, RESULT, R, AFTER>,
 				ISharedSubOperand_Numeric_Ops_Named<MODEL, RESULT, R, AFTER>,
 				ISharedSubOperand_Numeric_Ops_Named<MODEL, RESULT, R, AFTER>,
+				ISharedSubOperand_Numeric_Ops_Named<MODEL, RESULT, R, AFTER>,
+				ISharedSubOperand_Numeric_Ops_Named<MODEL, RESULT, R, AFTER>,
+				ISharedSubOperand_Numeric_Ops_Named<MODEL, RESULT, R, AFTER>,
 				ISharedSubOperand_Numeric_Ops_Named<MODEL, RESULT, R, AFTER>
 			>,
 			ISharedFunctions_Arithmetic_NoParam_Base<

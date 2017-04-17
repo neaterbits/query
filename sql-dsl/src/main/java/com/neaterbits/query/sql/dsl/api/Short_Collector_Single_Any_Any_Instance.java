@@ -1,6 +1,7 @@
 package com.neaterbits.query.sql.dsl.api;
 
 import java.math.BigDecimal;
+import java.math.BigInteger;
 
 final class Short_Collector_Single_Any_Any_Instance<MODEL, RESULT>
 		extends Short_Collector_Initial_Single_Any_Any_Base<MODEL, RESULT>
@@ -32,9 +33,12 @@ final class Short_Collector_Single_Any_Any_Instance<MODEL, RESULT>
 			MODEL,
 			RESULT, 
 			ISQLLogical_AndOr_SingleResult_Named<MODEL, RESULT>,
+			ISharedCondition_Comparable_Common_All_Compilable<MODEL, RESULT, Byte, ISQLLogical_AndOr_SingleResult_Named<MODEL, RESULT>>, 
 			ISharedCondition_Comparable_Common_All_Compilable<MODEL, RESULT, Short, ISQLLogical_AndOr_SingleResult_Named<MODEL, RESULT>>, 
 			ISharedCondition_Comparable_Common_All_Compilable<MODEL, RESULT, Integer, ISQLLogical_AndOr_SingleResult_Named<MODEL, RESULT>>,
 			ISharedCondition_Comparable_Common_All_Compilable<MODEL, RESULT, Long, ISQLLogical_AndOr_SingleResult_Named<MODEL, RESULT>>, 
+			ISharedCondition_Comparable_Common_All_Compilable<MODEL, RESULT, BigInteger, ISQLLogical_AndOr_SingleResult_Named<MODEL, RESULT>>, 
+			ISharedCondition_Comparable_Common_All_Compilable<MODEL, RESULT, Float, ISQLLogical_AndOr_SingleResult_Named<MODEL, RESULT>>, 
 			ISharedCondition_Comparable_Common_All_Compilable<MODEL, RESULT, Double, ISQLLogical_AndOr_SingleResult_Named<MODEL, RESULT>>,
 			ISharedCondition_Comparable_Common_All_Compilable<MODEL, RESULT, BigDecimal, ISQLLogical_AndOr_SingleResult_Named<MODEL, RESULT>>,
 			ISharedCondition_Comparable_String_All_Compilable<MODEL, RESULT, ISQLLogical_AndOr_SingleResult_Named<MODEL, RESULT>>

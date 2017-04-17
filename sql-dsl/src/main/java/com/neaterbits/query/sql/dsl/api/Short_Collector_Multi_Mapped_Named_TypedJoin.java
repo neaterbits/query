@@ -1,6 +1,7 @@
 package com.neaterbits.query.sql.dsl.api;
 
 import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
@@ -85,9 +86,12 @@ public class Short_Collector_Multi_Mapped_Named_TypedJoin<MODEL, RESULT, JOIN_TY
 			MODEL,
 			RESULT,
 			ISQLLogical_AndOr_MultiMapped_Named<MODEL, RESULT>, 
+			ISharedCondition_Comparable_Common_All_Compilable<MODEL, RESULT, Byte, ISQLLogical_AndOr_MultiMapped_Named<MODEL, RESULT>>,
 			ISharedCondition_Comparable_Common_All_Compilable<MODEL, RESULT, Short, ISQLLogical_AndOr_MultiMapped_Named<MODEL, RESULT>>,
 			ISharedCondition_Comparable_Common_All_Compilable<MODEL, RESULT, Integer, ISQLLogical_AndOr_MultiMapped_Named<MODEL, RESULT>>,
 			ISharedCondition_Comparable_Common_All_Compilable<MODEL, RESULT, Long, ISQLLogical_AndOr_MultiMapped_Named<MODEL, RESULT>>,
+			ISharedCondition_Comparable_Common_All_Compilable<MODEL, RESULT, BigInteger, ISQLLogical_AndOr_MultiMapped_Named<MODEL, RESULT>>,
+			ISharedCondition_Comparable_Common_All_Compilable<MODEL, RESULT, Float, ISQLLogical_AndOr_MultiMapped_Named<MODEL, RESULT>>,
 			ISharedCondition_Comparable_Common_All_Compilable<MODEL, RESULT, Double, ISQLLogical_AndOr_MultiMapped_Named<MODEL, RESULT>>, 
 			ISharedCondition_Comparable_Common_All_Compilable<MODEL, RESULT, BigDecimal, ISQLLogical_AndOr_MultiMapped_Named<MODEL, RESULT>>,
 			ISharedCondition_Comparable_String_All_Compilable<MODEL, RESULT, ISQLLogical_AndOr_MultiMapped_Named<MODEL, RESULT>>
@@ -107,9 +111,12 @@ public class Short_Collector_Multi_Mapped_Named_TypedJoin<MODEL, RESULT, JOIN_TY
 			MODEL,
 			RESULT,
 			ISQLLogical_And_MultiMapped_Named<MODEL, RESULT>,
+			ISharedCondition_Comparable_Common_All<MODEL, RESULT, Byte, ISQLLogical_And_MultiMapped_Named<MODEL, RESULT>>,
 			ISharedCondition_Comparable_Common_All<MODEL, RESULT, Short, ISQLLogical_And_MultiMapped_Named<MODEL, RESULT>>,
 			ISharedCondition_Comparable_Common_All<MODEL, RESULT, Integer, ISQLLogical_And_MultiMapped_Named<MODEL, RESULT>>,
 			ISharedCondition_Comparable_Common_All<MODEL, RESULT, Long, ISQLLogical_And_MultiMapped_Named<MODEL, RESULT>>,
+			ISharedCondition_Comparable_Common_All<MODEL, RESULT, BigInteger, ISQLLogical_And_MultiMapped_Named<MODEL, RESULT>>,
+			ISharedCondition_Comparable_Common_All<MODEL, RESULT, Float, ISQLLogical_And_MultiMapped_Named<MODEL, RESULT>>,
 			ISharedCondition_Comparable_Common_All<MODEL, RESULT, Double, ISQLLogical_And_MultiMapped_Named<MODEL, RESULT>>,
 			ISharedCondition_Comparable_Common_All<MODEL, RESULT, BigDecimal, ISQLLogical_And_MultiMapped_Named<MODEL, RESULT>>,
 			ISharedCondition_Comparable_String_All<MODEL, RESULT, ISQLLogical_And_MultiMapped_Named<MODEL, RESULT>>
@@ -122,9 +129,12 @@ public class Short_Collector_Multi_Mapped_Named_TypedJoin<MODEL, RESULT, JOIN_TY
 			MODEL,
 			RESULT,
 			ISQLLogical_Or_MultiMapped_Named<MODEL, RESULT>,
+			ISharedCondition_Comparable_Common_All<MODEL, RESULT, Byte, ISQLLogical_Or_MultiMapped_Named<MODEL, RESULT>>,
 			ISharedCondition_Comparable_Common_All<MODEL, RESULT, Short, ISQLLogical_Or_MultiMapped_Named<MODEL, RESULT>>,
 			ISharedCondition_Comparable_Common_All<MODEL, RESULT, Integer, ISQLLogical_Or_MultiMapped_Named<MODEL, RESULT>>,
 			ISharedCondition_Comparable_Common_All<MODEL, RESULT, Long, ISQLLogical_Or_MultiMapped_Named<MODEL, RESULT>>,
+			ISharedCondition_Comparable_Common_All<MODEL, RESULT, BigInteger, ISQLLogical_Or_MultiMapped_Named<MODEL, RESULT>>,
+			ISharedCondition_Comparable_Common_All<MODEL, RESULT, Float, ISQLLogical_Or_MultiMapped_Named<MODEL, RESULT>>,
 			ISharedCondition_Comparable_Common_All<MODEL, RESULT, Double, ISQLLogical_Or_MultiMapped_Named<MODEL, RESULT>>,
 			ISharedCondition_Comparable_Common_All<MODEL, RESULT, BigDecimal, ISQLLogical_Or_MultiMapped_Named<MODEL, RESULT>>,
 			ISharedCondition_Comparable_String_All<MODEL, RESULT, ISQLLogical_Or_MultiMapped_Named<MODEL, RESULT>>

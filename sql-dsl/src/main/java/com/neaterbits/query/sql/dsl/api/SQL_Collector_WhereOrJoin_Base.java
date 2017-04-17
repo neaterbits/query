@@ -176,9 +176,12 @@ abstract class SQL_Collector_WhereOrJoin_Base<
 		RESULT,
 		NAMED_AND_OR,
 	
+		ISharedCondition_Comparable_Common_All_Compilable<MODEL, RESULT, Byte, NAMED_AND_OR>,
 		ISharedCondition_Comparable_Common_All_Compilable<MODEL, RESULT, Short, NAMED_AND_OR>,
 		ISharedCondition_Comparable_Common_All_Compilable<MODEL, RESULT, Integer, NAMED_AND_OR>,
 		ISharedCondition_Comparable_Common_All_Compilable<MODEL, RESULT, Long, NAMED_AND_OR>,
+		ISharedCondition_Comparable_Common_All_Compilable<MODEL, RESULT, BigInteger, NAMED_AND_OR>,
+		ISharedCondition_Comparable_Common_All_Compilable<MODEL, RESULT, Float, NAMED_AND_OR>,
 		ISharedCondition_Comparable_Common_All_Compilable<MODEL, RESULT, Double, NAMED_AND_OR>,
 		ISharedCondition_Comparable_Common_All_Compilable<MODEL, RESULT, BigDecimal, NAMED_AND_OR>,
 		ISharedCondition_Comparable_String_All_Compilable<MODEL, RESULT, NAMED_AND_OR>> 
@@ -402,9 +405,12 @@ abstract class SQL_Collector_WhereOrJoin_Base<
 			MODEL, RESULT,
 			ALIAS_AND_OR,
 			
+			ISharedCondition_Comparable_Common_All<MODEL, RESULT, Byte, ALIAS_AND_OR>,
 			ISharedCondition_Comparable_Common_All<MODEL, RESULT, Short, ALIAS_AND_OR>,
 			ISharedCondition_Comparable_Common_All<MODEL, RESULT, Integer, ALIAS_AND_OR>,
 			ISharedCondition_Comparable_Common_All<MODEL, RESULT, Long, ALIAS_AND_OR>,
+			ISharedCondition_Comparable_Common_All<MODEL, RESULT, BigInteger, ALIAS_AND_OR>,
+			ISharedCondition_Comparable_Common_All<MODEL, RESULT, Float, ALIAS_AND_OR>,
 			ISharedCondition_Comparable_Common_All<MODEL, RESULT, Double, ALIAS_AND_OR>,
 			ISharedCondition_Comparable_Common_All<MODEL, RESULT, BigDecimal, ALIAS_AND_OR>,
 			ISharedCondition_Comparable_String_All<MODEL, RESULT, ALIAS_AND_OR>

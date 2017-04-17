@@ -1,6 +1,7 @@
 package com.neaterbits.query.sql.dsl.api;
 
 import java.math.BigDecimal;
+import java.math.BigInteger;
 
 public interface ISharedLogical_Or_Alias_Function<
 		MODEL,
@@ -14,9 +15,12 @@ public interface ISharedLogical_Or_Alias_Function<
 		MODEL,
 		RESULT,
 		OR_CLAUSES,
+		ISharedCondition_Comparable_Common_All<MODEL, RESULT, Byte, OR_CLAUSES>,
 		ISharedCondition_Comparable_Common_All<MODEL, RESULT, Short, OR_CLAUSES>,
 		ISharedCondition_Comparable_Common_All<MODEL, RESULT, Integer, OR_CLAUSES>,
 		ISharedCondition_Comparable_Common_All<MODEL, RESULT, Long, OR_CLAUSES>,
+		ISharedCondition_Comparable_Common_All<MODEL, RESULT, BigInteger, OR_CLAUSES>,
+		ISharedCondition_Comparable_Common_All<MODEL, RESULT, Float, OR_CLAUSES>,
 		ISharedCondition_Comparable_Common_All<MODEL, RESULT, Double, OR_CLAUSES>,
 		ISharedCondition_Comparable_Common_All<MODEL, RESULT, BigDecimal, OR_CLAUSES>,
 		ISharedCondition_Comparable_String_All<MODEL, RESULT, OR_CLAUSES>>

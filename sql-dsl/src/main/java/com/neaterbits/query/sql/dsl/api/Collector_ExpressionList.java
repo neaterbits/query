@@ -69,7 +69,7 @@ abstract class Collector_ExpressionList<
 
 
 
-	// Also implememnts all functions and just forwards them, so that we can always 
+	// Also implements all functions and just forwards them, so that we can always 
 	// just instantiate an expression list wherever expressions are to be collected
 			   
 	// NOTE! We do not bother about types here since Java does not keep generic-types at runtime in any case
@@ -80,9 +80,12 @@ abstract class Collector_ExpressionList<
 	
 				   NAMED_RET,
 				   
+				   NAMED_BYTE_RET,
 				   NAMED_SHORT_RET,
 				   NAMED_INTEGER_RET,
 				   NAMED_LONG_RET,
+				   NAMED_BIGINTEGER_RET,
+				   NAMED_FLOAT_RET,
 				   NAMED_DOUBLE_RET,
 				   NAMED_BIGDECIMAL_RET
 				   >,
@@ -96,9 +99,12 @@ abstract class Collector_ExpressionList<
 	
 				   ALIAS_RET,
 				   
+				   ALIAS_BYTE_RET,
 				   ALIAS_SHORT_RET,
 				   ALIAS_INTEGER_RET,
 				   ALIAS_LONG_RET,
+				   ALIAS_BIGINTEGER_RET,
+				   ALIAS_FLOAT_RET,
 				   ALIAS_DOUBLE_RET,
 				   ALIAS_BIGDECIMAL_RET
 			   >,
@@ -487,6 +493,11 @@ abstract class Collector_ExpressionList<
 	
 	
 	@Override
+	public final <T> NAMED_BYTE_RET abs(IFunctionByte<T> getter) {
+		return assureNamedFunctions().abs(getter);
+	}
+
+	@Override
 	public final <T> NAMED_SHORT_RET abs(IFunctionShort<T> getter) {
 		return assureNamedFunctions().abs(getter);
 	}
@@ -498,6 +509,21 @@ abstract class Collector_ExpressionList<
 
 	@Override
 	public final <T> NAMED_LONG_RET abs(IFunctionLong<T> getter) {
+		return assureNamedFunctions().abs(getter);
+	}
+
+	@Override
+	public final <T> NAMED_BIGINTEGER_RET abs(IFunctionBigInteger<T> getter) {
+		return assureNamedFunctions().abs(getter);
+	}
+
+	@Override
+	public final <T> NAMED_FLOAT_RET abs(IFunctionFloat<T> getter) {
+		return assureNamedFunctions().abs(getter);
+	}
+
+	@Override
+	public final <T> NAMED_DOUBLE_RET abs(IFunctionDouble<T> getter) {
 		return assureNamedFunctions().abs(getter);
 	}
 
@@ -527,6 +553,11 @@ abstract class Collector_ExpressionList<
 	}
 
 	@Override
+	public final <T> NAMED_DOUBLE_RET sqrt(IFunctionByte<T> getter) {
+		return assureNamedFunctions().sqrt(getter);
+	}
+
+	@Override
 	public final <T> NAMED_DOUBLE_RET sqrt(IFunctionShort<T> getter) {
 		return assureNamedFunctions().sqrt(getter);
 	}
@@ -538,6 +569,21 @@ abstract class Collector_ExpressionList<
 
 	@Override
 	public final <T> NAMED_DOUBLE_RET sqrt(IFunctionLong<T> getter) {
+		return assureNamedFunctions().sqrt(getter);
+	}
+
+	@Override
+	public final <T> NAMED_DOUBLE_RET sqrt(IFunctionBigInteger<T> getter) {
+		return assureNamedFunctions().sqrt(getter);
+	}
+
+	@Override
+	public final <T> NAMED_DOUBLE_RET sqrt(IFunctionFloat<T> getter) {
+		return assureNamedFunctions().sqrt(getter);
+	}
+
+	@Override
+	public final <T> NAMED_DOUBLE_RET sqrt(IFunctionDouble<T> getter) {
 		return assureNamedFunctions().sqrt(getter);
 	}
 
@@ -786,11 +832,16 @@ abstract class Collector_ExpressionList<
 
 	//*************** Arithmetic forwarding functions ***************
 
+
+	@Override
+	public final <T> ALIAS_BYTE_RET abs(ISupplierByte getter) {
+		return assureAliasFunctions().abs(getter);
+	}
+
 	@Override
 	public final <T> ALIAS_SHORT_RET abs(ISupplierShort getter) {
 		return assureAliasFunctions().abs(getter);
 	}
-
 
 	@Override
 	public final <T> ALIAS_INTEGER_RET abs(ISupplierInteger getter) {
@@ -799,6 +850,16 @@ abstract class Collector_ExpressionList<
 
 	@Override
 	public final <T> ALIAS_LONG_RET abs(ISupplierLong getter) {
+		return assureAliasFunctions().abs(getter);
+	}
+
+	@Override
+	public final <T> ALIAS_BIGINTEGER_RET abs(ISupplierBigInteger getter) {
+		return assureAliasFunctions().abs(getter);
+	}
+
+	@Override
+	public final <T> ALIAS_FLOAT_RET abs(ISupplierFloat getter) {
 		return assureAliasFunctions().abs(getter);
 	}
 
@@ -813,6 +874,11 @@ abstract class Collector_ExpressionList<
 	}
 
 	@Override
+	public final <T> ALIAS_DOUBLE_RET sqrt(ISupplierByte getter) {
+		return assureAliasFunctions().sqrt(getter);
+	}
+
+	@Override
 	public final <T> ALIAS_DOUBLE_RET sqrt(ISupplierShort getter) {
 		return assureAliasFunctions().sqrt(getter);
 	}
@@ -824,6 +890,16 @@ abstract class Collector_ExpressionList<
 
 	@Override
 	public final <T> ALIAS_DOUBLE_RET sqrt(ISupplierLong getter) {
+		return assureAliasFunctions().sqrt(getter);
+	}
+
+	@Override
+	public final <T> ALIAS_DOUBLE_RET sqrt(ISupplierBigInteger getter) {
+		return assureAliasFunctions().sqrt(getter);
+	}
+
+	@Override
+	public final <T> ALIAS_DOUBLE_RET sqrt(ISupplierFloat getter) {
 		return assureAliasFunctions().sqrt(getter);
 	}
 

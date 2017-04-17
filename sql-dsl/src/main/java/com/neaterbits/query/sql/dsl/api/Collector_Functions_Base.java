@@ -55,9 +55,12 @@ abstract class Collector_Functions_Base<
 			MODEL, RESULT,
 		
 			NAMED_RET,
+			NAMED_BYTE_RET,
 			NAMED_SHORT_RET,
 			NAMED_INTEGER_RET,
 			NAMED_LONG_RET,
+			NAMED_BIGINTEGER_RET,
+			NAMED_FLOAT_RET,
 			NAMED_DOUBLE_RET,
 			NAMED_BIGDECIMAL_RET>,
 			
@@ -68,9 +71,12 @@ abstract class Collector_Functions_Base<
 			MODEL, RESULT,
 	
 			ALIAS_RET,
+			ALIAS_BYTE_RET,
 			ALIAS_SHORT_RET,
 			ALIAS_INTEGER_RET,
 			ALIAS_LONG_RET,
+			ALIAS_BIGINTEGER_RET,
+			ALIAS_FLOAT_RET,
 			ALIAS_DOUBLE_RET,
 			ALIAS_BIGDECIMAL_RET>,
 			
@@ -147,7 +153,11 @@ abstract class Collector_Functions_Base<
 		return (NAMED_STRING_RET)addAndReturnString(Function_String_Trim.INSTANCE, getter);
 	}
 	
-	
+	@Override
+	public final <T> NAMED_BYTE_RET abs(IFunctionByte<T> getter) {
+		return addAndReturnType(Function_Arithmetic_Abs.INSTANCE, getter);
+	}
+
 	@Override
 	public final <T> NAMED_SHORT_RET abs(IFunctionShort<T> getter) {
 		return addAndReturnType(Function_Arithmetic_Abs.INSTANCE, getter);
@@ -163,10 +173,29 @@ abstract class Collector_Functions_Base<
 		return addAndReturnType(Function_Arithmetic_Abs.INSTANCE, getter);
 	}
 	
+	@Override
+	public final <T> NAMED_BIGINTEGER_RET abs(IFunctionBigInteger<T> getter) {
+		return addAndReturnType(Function_Arithmetic_Abs.INSTANCE, getter);
+	}
+	
+	@Override
+	public final <T> NAMED_FLOAT_RET abs(IFunctionFloat<T> getter) {
+		return addAndReturnType(Function_Arithmetic_Abs.INSTANCE, getter);
+	}
+	
+	@Override
+	public final <T> NAMED_DOUBLE_RET abs(IFunctionDouble<T> getter) {
+		return addAndReturnType(Function_Arithmetic_Abs.INSTANCE, getter);
+	}
 	
 	@Override
 	public final <T> NAMED_BIGDECIMAL_RET abs(IFunctionBigDecimal<T> getter) {
 		return addAndReturnType(Function_Arithmetic_Abs.INSTANCE, getter);
+	}
+
+	@Override
+	public final <T> NAMED_DOUBLE_RET sqrt(IFunctionByte<T> getter) {
+		return addAndReturnType(Function_Arithmetic_Sqrt.INSTANCE, getter);
 	}
 
 	@Override
@@ -181,6 +210,21 @@ abstract class Collector_Functions_Base<
 
 	@Override
 	public final <T> NAMED_DOUBLE_RET sqrt(IFunctionLong<T> getter) {
+		return addAndReturnType(Function_Arithmetic_Sqrt.INSTANCE, getter);
+	}
+
+	@Override
+	public final <T> NAMED_DOUBLE_RET sqrt(IFunctionBigInteger<T> getter) {
+		return addAndReturnType(Function_Arithmetic_Sqrt.INSTANCE, getter);
+	}
+
+	@Override
+	public final <T> NAMED_DOUBLE_RET sqrt(IFunctionFloat<T> getter) {
+		return addAndReturnType(Function_Arithmetic_Sqrt.INSTANCE, getter);
+	}
+
+	@Override
+	public final <T> NAMED_DOUBLE_RET sqrt(IFunctionDouble<T> getter) {
 		return addAndReturnType(Function_Arithmetic_Sqrt.INSTANCE, getter);
 	}
 
@@ -452,6 +496,11 @@ abstract class Collector_Functions_Base<
 	}
 
 	@Override
+	public final <T> ALIAS_BYTE_RET abs(ISupplierByte getter) {
+		return addAndReturnType(Function_Arithmetic_Abs.INSTANCE, getter);
+	}
+
+	@Override
 	public final <T> ALIAS_SHORT_RET abs(ISupplierShort getter) {
 		return addAndReturnType(Function_Arithmetic_Abs.INSTANCE, getter);
 	}
@@ -467,6 +516,16 @@ abstract class Collector_Functions_Base<
 	}
 
 	@Override
+	public final <T> ALIAS_BIGINTEGER_RET abs(ISupplierBigInteger getter) {
+		return addAndReturnType(Function_Arithmetic_Abs.INSTANCE, getter);
+	}
+
+	@Override
+	public final <T> ALIAS_FLOAT_RET abs(ISupplierFloat getter) {
+		return addAndReturnType(Function_Arithmetic_Abs.INSTANCE, getter);
+	}
+
+	@Override
 	public final <T> ALIAS_DOUBLE_RET abs(ISupplierDouble getter) {
 		return addAndReturnType(Function_Arithmetic_Abs.INSTANCE, getter);
 	}
@@ -474,6 +533,11 @@ abstract class Collector_Functions_Base<
 	@Override
 	public final <T> ALIAS_BIGDECIMAL_RET abs(ISupplierBigDecimal getter) {
 		return addAndReturnType(Function_Arithmetic_Abs.INSTANCE, getter);
+	}
+
+	@Override
+	public final <T> ALIAS_DOUBLE_RET sqrt(ISupplierByte getter) {
+		return addAndReturnType(Function_Arithmetic_Sqrt.INSTANCE, getter);
 	}
 
 	@Override
@@ -488,6 +552,16 @@ abstract class Collector_Functions_Base<
 
 	@Override
 	public final <T> ALIAS_DOUBLE_RET sqrt(ISupplierLong getter) {
+		return addAndReturnType(Function_Arithmetic_Sqrt.INSTANCE, getter);
+	}
+
+	@Override
+	public final <T> ALIAS_DOUBLE_RET sqrt(ISupplierBigInteger getter) {
+		return addAndReturnType(Function_Arithmetic_Sqrt.INSTANCE, getter);
+	}
+
+	@Override
+	public final <T> ALIAS_DOUBLE_RET sqrt(ISupplierFloat getter) {
 		return addAndReturnType(Function_Arithmetic_Sqrt.INSTANCE, getter);
 	}
 

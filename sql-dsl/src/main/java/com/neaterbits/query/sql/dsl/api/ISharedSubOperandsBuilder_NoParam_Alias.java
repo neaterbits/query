@@ -14,6 +14,9 @@ public interface ISharedSubOperandsBuilder_NoParam_Alias<MODEL, RESULT, T, AFTER
 			ISharedSubOperandsBuilder_NoParam_End_Alias<MODEL, RESULT, T, AFTER>,
 			ISharedSubOperandsBuilder_NoParam_End_Alias<MODEL, RESULT, T, AFTER>,
 			ISharedSubOperandsBuilder_NoParam_End_Alias<MODEL, RESULT, T, AFTER>,
+			ISharedSubOperandsBuilder_NoParam_End_Alias<MODEL, RESULT, T, AFTER>,
+			ISharedSubOperandsBuilder_NoParam_End_Alias<MODEL, RESULT, T, AFTER>,
+			ISharedSubOperandsBuilder_NoParam_End_Alias<MODEL, RESULT, T, AFTER>,
 			ISharedSubOperandsBuilder_NoParam_End_Alias<MODEL, RESULT, T, AFTER>
 	>,
 

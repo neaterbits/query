@@ -90,7 +90,7 @@ abstract class Collector_NestedFunctions_Named<
 
 	implements
 	
-		ISharedFunctions_Transform_Initial_Named<MODEL, RESULT, RET, SHORT_RET, INTEGER_RET, LONG_RET, DOUBLE_RET, BIGDECIMAL_RET, STRING_RET>,
+		ISharedFunctions_Transform_Initial_Named<MODEL, RESULT, RET, BYTE_RET, SHORT_RET, INTEGER_RET, LONG_RET, BIGINTEGER_RET, FLOAT_RET, DOUBLE_RET, BIGDECIMAL_RET, STRING_RET>,
 	
 			//ISharedFunctions_Arithmetic_NoParam_Base<MODEL, RESULT, RET, NO_PARAM_SHORT_RET, NO_PARAM_INTEGER_RET, NO_PARAM_LONG_RET, NO_PARAM_DOUBLE_RET, NO_PARAM_BIGDECIMAL_RET>,
 			// ISharedFunctions_String_NoParam_Base<MODEL, RESULT, RET, NO_PARAM_STRING_RET>

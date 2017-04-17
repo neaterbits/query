@@ -36,7 +36,7 @@ public interface ISharedMapFunctions_Numeric_Named<
 
 	extends 
 	
-		ISharedFunctions_Arithmetic_Named<MODEL, RESULT, RET, SHORT_RET, INT_RET, LONG_RET, DOUBLE_RET, BIGDECIMAL_RET>,
+		ISharedFunctions_Arithmetic_Named<MODEL, RESULT, RET, BYTE_RET, SHORT_RET, INT_RET, LONG_RET, BIGINTEGER_RET, FLOAT_RET, DOUBLE_RET, BIGDECIMAL_RET>,
 		ISharedFunctions_Aggregate_Named<SUM_LONG_RET, COUNT_RET, BYTE_RET, SHORT_RET, INT_RET, LONG_RET, BIGINTEGER_RET, FLOAT_RET, DOUBLE_RET, BIGDECIMAL_RET, DATE_RET>,
 	
 		ISharedFunctions_Arithmetic_NoParam_Base<MODEL, RESULT,
