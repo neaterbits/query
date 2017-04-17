@@ -1,7 +1,6 @@
 package com.neaterbits.query.sql.dsl.api;
 
 import java.lang.reflect.Array;
-import java.nio.channels.UnsupportedAddressTypeException;
 import java.util.List;
 
 class ConditionEvaluator_Comparable extends ConditionAdapterComparableBase<ConditionValuesScratch, Boolean> {

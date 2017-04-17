@@ -3,10 +3,6 @@ package com.neaterbits.query.sql.dsl.api;
 import java.util.List;
 import java.util.function.Function;
 
-import com.neaterbits.query.sql.dsl.api.MultiBuilt;
-import com.neaterbits.query.sql.dsl.api.ISharedPreparedQueryOps;
-import com.neaterbits.query.sql.dsl.api.SingleBuilt;
-
 public abstract class BaseSQLAPITest {
 
 	protected final <T> void checkSelectOneOrNull(DataConfig ds, T expected, SingleBuilt<T> query, Function<ISharedPreparedQueryOps<T>, T> execute) {

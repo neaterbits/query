@@ -1,12 +1,12 @@
 package com.neaterbits.query.sql.dsl.api;
 import static com.neaterbits.query.sql.dsl.api.IClassicSelect.alias;
 import static com.neaterbits.query.sql.dsl.api.IClassicSelect.intParam;
-import static com.neaterbits.query.sql.dsl.api.IClassicSelect.oneFrom;
-import static com.neaterbits.query.sql.dsl.api.IClassicSelect.listFrom;
-import static com.neaterbits.query.sql.dsl.api.IClassicSelect.sum;
 import static com.neaterbits.query.sql.dsl.api.IClassicSelect.list;
+import static com.neaterbits.query.sql.dsl.api.IClassicSelect.listFrom;
 import static com.neaterbits.query.sql.dsl.api.IClassicSelect.one;
+import static com.neaterbits.query.sql.dsl.api.IClassicSelect.oneFrom;
 import static com.neaterbits.query.sql.dsl.api.IClassicSelect.oneOrNull;
+import static com.neaterbits.query.sql.dsl.api.IClassicSelect.sum;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.math.BigDecimal;
@@ -19,7 +19,6 @@ import com.neaterbits.query.jpatest.model.Company;
 import com.neaterbits.query.jpatest.model.Employee;
 import com.neaterbits.query.jpatest.model.Person;
 import com.neaterbits.query.jpatest.model.Role;
-import com.neaterbits.query.sql.dsl.api.BaseJPATest;
 
 public class ClassicAPITest extends BaseJPATest {
 	

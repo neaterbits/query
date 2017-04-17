@@ -7,8 +7,8 @@ import java.util.List;
 
 import com.neaterbits.query.sql.dsl.api.entity.ESubClassing;
 import com.neaterbits.query.sql.dsl.api.entity.EntityModelUtil;
-import com.neaterbits.query.sql.dsl.api.entity.IEntityFields;
 import com.neaterbits.query.sql.dsl.api.entity.IEntity;
+import com.neaterbits.query.sql.dsl.api.entity.IEntityFields;
 import com.neaterbits.query.sql.dsl.api.entity.Relation;
 
 final class QueryDialect_ANSI_SQL<MANAGED, EMBEDDED, IDENTIFIABLE, ATTRIBUTE, COLL extends Collection<ATTRIBUTE>>

@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.function.BiFunction;
 import java.util.function.Consumer;
 
-import com.neaterbits.query.sql.dsl.api.TransactionalDataStore;
 import com.neaterbits.query.util.java8.Coll8;
 
 public abstract class QueryTestDSBasePersistent<CTX, ENTITIES, TRANSACTION>

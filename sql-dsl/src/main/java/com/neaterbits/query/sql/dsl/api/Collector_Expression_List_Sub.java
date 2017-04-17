@@ -2,7 +2,6 @@ package com.neaterbits.query.sql.dsl.api;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
-import java.util.Date;
 
 final class Collector_Expression_List_Sub<
 

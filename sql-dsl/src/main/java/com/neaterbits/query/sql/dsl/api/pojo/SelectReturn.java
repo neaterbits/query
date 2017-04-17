@@ -2,8 +2,8 @@ package com.neaterbits.query.sql.dsl.api.pojo;
 
 import com.neaterbits.query.sql.dsl.api.CollectionModel;
 import com.neaterbits.query.sql.dsl.api.ISQLLogical_AndOr_SingleResult_Named;
-import com.neaterbits.query.sql.dsl.api.SingleModel;
 import com.neaterbits.query.sql.dsl.api.ISQLLogical_Where_Named_Base;
+import com.neaterbits.query.sql.dsl.api.SingleModel;
 
 
 public interface SelectReturn<MODEL extends CollectionModel<T>, T> {

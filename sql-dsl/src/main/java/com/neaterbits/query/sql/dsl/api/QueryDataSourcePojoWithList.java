@@ -2,7 +2,6 @@ package com.neaterbits.query.sql.dsl.api;
 
 import java.util.Collection;
 
-import com.neaterbits.query.sql.dsl.api.QueryDataSource_Pojo_Base;
 import com.neaterbits.query.sql.dsl.api.entity.QueryMetaModel;
 
 public class QueryDataSourcePojoWithList extends QueryDataSource_Pojo_Base {

@@ -1,20 +1,17 @@
 package com.neaterbits.query.sql.dsl.api;
 
-import static com.neaterbits.query.sql.dsl.api.IShortSelect.oneOrNull;
-
-
 import static com.neaterbits.query.sql.dsl.api.IShortSelect.list;
+import static com.neaterbits.query.sql.dsl.api.IShortSelect.oneOrNull;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import java.math.BigDecimal;
 import java.util.function.Function;
 
 import org.junit.Test;
-import static org.assertj.core.api.Assertions.assertThat;
 
 import com.neaterbits.query.jpatest.model.Company;
 import com.neaterbits.query.jpatest.model.Employee;
 import com.neaterbits.query.jpatest.model.Person;
-import com.neaterbits.query.sql.dsl.api.BaseJPATest;
 
 
 

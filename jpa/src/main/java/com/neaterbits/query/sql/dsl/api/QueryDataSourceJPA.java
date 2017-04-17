@@ -3,7 +3,6 @@ package com.neaterbits.query.sql.dsl.api;
 import java.util.Set;
 
 import javax.persistence.EntityManager;
-import javax.persistence.Query;
 import javax.persistence.metamodel.Attribute;
 import javax.persistence.metamodel.EmbeddableType;
 import javax.persistence.metamodel.IdentifiableType;

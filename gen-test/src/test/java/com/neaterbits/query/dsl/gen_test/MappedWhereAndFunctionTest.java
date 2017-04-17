@@ -1,7 +1,7 @@
 package com.neaterbits.query.dsl.gen_test;
 
-import static org.assertj.core.api.Assertions.assertThat;
 import org.junit.Test;
+
 import com.neaterbits.query.jpatest.GEN_BaseTestCase;
 import com.neaterbits.query.sql.dsl.api.MultiBuilt;
 import com.neaterbits.query.test.model.Farm;

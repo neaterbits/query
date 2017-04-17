@@ -8,10 +8,10 @@ import java.util.List;
 import javax.persistence.EntityManager;
 
 import com.neaterbits.query.sql.dsl.api.entity.AttributeType;
+import com.neaterbits.query.sql.dsl.api.entity.IEntity;
+import com.neaterbits.query.sql.dsl.api.entity.IEntityAttribute;
 import com.neaterbits.query.sql.dsl.api.entity.IEntityFields;
 import com.neaterbits.query.util.java8.Coll8;
-import com.neaterbits.query.sql.dsl.api.entity.IEntityAttribute;
-import com.neaterbits.query.sql.dsl.api.entity.IEntity;
 
 /**
  * JPA base data source, ie. JPA annotated entities but skips JPA and generates native ANSI SQL instead

@@ -1,9 +1,5 @@
 package com.neaterbits.query.sql.dsl.api;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-
 final class SubExpressionUtil {
 
 	static <MODEL, RESULT, R extends Comparable<R>, CLAUSE> FunctionExpression addSubNumericForFunction(Function_Arithmetic function, ISharedSubOperandsFunction_Named<MODEL, RESULT, R> sub /*, Collector_NestedFunctions_Base<MODEL, RESULT> last */) {

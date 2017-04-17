@@ -1,10 +1,6 @@
 package com.neaterbits.query.jpatest;
 
 
-import com.neaterbits.query.sql.dsl.api.BaseJPATest;
-import com.neaterbits.query.sql.dsl.api.CodeWriter;
-import com.neaterbits.query.sql.dsl.api.IShort;
-
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.io.File;
@@ -19,6 +15,10 @@ import java.util.List;
 import java.util.function.Consumer;
 
 import javax.tools.ToolProvider;
+
+import com.neaterbits.query.sql.dsl.api.BaseJPATest;
+import com.neaterbits.query.sql.dsl.api.CodeWriter;
+import com.neaterbits.query.sql.dsl.api.IShort;
 
 public class GEN_BaseTestCase extends BaseJPATest {
 

@@ -1,12 +1,14 @@
 package com.neaterbits.query.dsl.gen_test;
 
 
+import java.util.Arrays;
+
 import org.junit.Test;
+
 import com.neaterbits.query.jpatest.GEN_BaseTestCase;
 import com.neaterbits.query.sql.dsl.api.MultiBuilt;
 import com.neaterbits.query.sql.dsl.api.SingleBuilt;
 import com.neaterbits.query.test.model.Farm;
-import java.util.Arrays;
 
 
 public class EntityTest extends GEN_BaseTestCase {

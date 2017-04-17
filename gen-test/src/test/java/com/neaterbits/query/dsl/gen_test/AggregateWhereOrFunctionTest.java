@@ -4,6 +4,7 @@ package com.neaterbits.query.dsl.gen_test;
 import java.math.BigDecimal;
 
 import org.junit.Test;
+
 import com.neaterbits.query.jpatest.GEN_BaseTestCase;
 import com.neaterbits.query.sql.dsl.api.SingleBuilt;
 import com.neaterbits.query.test.model.land.CropLand;

@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.Date;
 
 import org.junit.Test;
+
 import com.neaterbits.query.sql.dsl.api.SingleBuilt;
 import com.neaterbits.query.test.model.Farm;
 import com.neaterbits.query.test.model.land.CropLand;

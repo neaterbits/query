@@ -1,6 +1,7 @@
 package com.neaterbits.query.dsl.gen_test;
 
 import org.junit.Test;
+
 import com.neaterbits.query.jpatest.GEN_BaseTestCase;
 import com.neaterbits.query.test.model.Farm;
 import com.neaterbits.query.test.model.land.LandPlot;

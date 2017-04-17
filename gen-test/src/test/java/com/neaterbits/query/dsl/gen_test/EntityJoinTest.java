@@ -5,6 +5,7 @@ import java.math.BigDecimal;
 import java.util.Arrays;
 
 import org.junit.Test;
+
 import com.neaterbits.query.jpatest.GEN_BaseTestCase;
 import com.neaterbits.query.sql.dsl.api.MultiBuilt;
 import com.neaterbits.query.sql.dsl.api.SingleBuilt;

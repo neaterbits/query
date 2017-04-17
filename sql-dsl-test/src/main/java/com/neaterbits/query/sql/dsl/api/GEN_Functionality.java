@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Stack;
 
-import com.neaterbits.query.util.java8.Coll8;
 import com.neaterbits.util.StringUtils;
 
 public enum GEN_Functionality {

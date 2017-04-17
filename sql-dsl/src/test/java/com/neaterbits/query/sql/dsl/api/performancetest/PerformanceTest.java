@@ -1,5 +1,10 @@
 package com.neaterbits.query.sql.dsl.api.performancetest;
 
+import static com.neaterbits.query.sql.dsl.api.Adhoc.list;
+import static com.neaterbits.query.sql.dsl.api.Adhoc.max;
+import static com.neaterbits.query.sql.dsl.api.Adhoc.maxInstance;
+import static com.neaterbits.query.sql.dsl.api.Adhoc.sum;
+
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
@@ -8,11 +13,6 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 import org.junit.Test;
-
-import static com.neaterbits.query.sql.dsl.api.Adhoc.max;
-import static com.neaterbits.query.sql.dsl.api.Adhoc.maxInstance;
-import static com.neaterbits.query.sql.dsl.api.Adhoc.sum;
-import static com.neaterbits.query.sql.dsl.api.Adhoc.list;
 
 import com.neaterbits.query.sql.dsl.api.Foo;
 

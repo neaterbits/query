@@ -3,7 +3,6 @@ package com.neaterbits.query.test.model.ownership;
 import java.util.List;
 
 import javax.persistence.ManyToMany;
-import javax.persistence.OneToMany;
 
 import com.neaterbits.query.test.model.Person;
 

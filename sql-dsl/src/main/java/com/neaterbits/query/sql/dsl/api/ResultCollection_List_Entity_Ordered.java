@@ -1,10 +1,8 @@
 package com.neaterbits.query.sql.dsl.api;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.Comparator;
-import java.util.SortedMap;
 
 import com.google.inject.internal.Function;
 
