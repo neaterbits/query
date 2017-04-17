@@ -6,6 +6,8 @@ import java.util.Date;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
+import org.w3c.dom.DOMConfiguration;
+
 import com.neaterbits.query.sql.dsl.api.entity.QueryMetaModel;
 
 abstract class BaseSelect<
@@ -116,6 +118,11 @@ abstract class BaseSelect<
 	abstract <T, NUM, RESULT, RET> RET max(Function<T, NUM> field, Class<NUM> numCl, Class<RESULT> resultCl);
 
 	@Override
+	public final <T> NAMED_BYTE_RET max(IFunctionByte<T> field) {
+		return max(field, Byte.class, Byte.class);
+	}
+
+	@Override
 	public final <T> NAMED_SHORT_RET max(IFunctionShort<T> field) {
 		return max(field, Short.class, Short.class);
 	}
@@ -128,6 +135,21 @@ abstract class BaseSelect<
 	@Override
 	public final <T> NAMED_LONG_RET max(IFunctionLong<T> field) {
 		return max(field, Long.class, Long.class);
+	}
+
+	@Override
+	public final <T> NAMED_BIGINTEGER_RET max(IFunctionBigInteger<T> field) {
+		return max(field, BigInteger.class, BigInteger.class);
+	}
+
+	@Override
+	public final <T> NAMED_FLOAT_RET max(IFunctionFloat<T> field) {
+		return max(field, Float.class, Float.class);
+	}
+
+	@Override
+	public final <T> NAMED_DOUBLE_RET max(IFunctionDouble<T> field) {
+		return max(field, Double.class, Double.class);
 	}
 
 	@Override
@@ -151,6 +173,11 @@ abstract class BaseSelect<
 	abstract <T, NUM, RESULT, RET> RET min(Function<T, NUM> field, Class<NUM> numCl, Class<RESULT> resultCl);
 
 	@Override
+	public final <T> NAMED_BYTE_RET min(IFunctionByte<T> field) {
+		return min(field, Byte.class, Byte.class);
+	}
+
+	@Override
 	public final <T> NAMED_SHORT_RET min(IFunctionShort<T> field) {
 		return min(field, Short.class, Short.class);
 	}
@@ -166,10 +193,31 @@ abstract class BaseSelect<
 	}
 
 	@Override
+	public final <T> NAMED_BIGINTEGER_RET min(IFunctionBigInteger<T> field) {
+		return min(field, BigInteger.class, BigInteger.class);
+	}
+
+	@Override
+	public final <T> NAMED_FLOAT_RET min(IFunctionFloat<T> field) {
+		return min(field, Float.class, Float.class);
+	}
+
+	@Override
+	public final <T> NAMED_DOUBLE_RET min(IFunctionDouble<T> field) {
+		return min(field, Double.class, Double.class);
+	}
+
+	@Override
 	public final <T> NAMED_BIGDECIMAL_RET min(IFunctionBigDecimal<T> field) {
 		return min(field, BigDecimal.class, BigDecimal.class);
 	}
 
+	@Override
+	public final <T> NAMED_DATE_RET min(IFunctionDate<T> field) {
+		return min(field, java.util.Date.class, java.util.Date.class);
+	}
+
+	
 	// ------------------------ Avg ------------------------
 
 	/*
@@ -281,6 +329,11 @@ abstract class BaseSelect<
 	abstract <NUM, RESULT, RET> RET max(Supplier<NUM> field, Class<NUM> numCl, Class<RESULT> resultCl);
 
 	@Override
+	public final ALIAS_BYTE_RET max(ISupplierByte field) {
+		return max(field, Byte.class, Byte.class);
+	}
+
+	@Override
 	public final ALIAS_SHORT_RET max(ISupplierShort field) {
 		return max(field, Short.class, Short.class);
 	}
@@ -293,6 +346,21 @@ abstract class BaseSelect<
 	@Override
 	public final ALIAS_LONG_RET max(ISupplierLong field) {
 		return max(field, Long.class, Long.class);
+	}
+
+	@Override
+	public final ALIAS_BIGINTEGER_RET max(ISupplierBigInteger field) {
+		return max(field, BigInteger.class, BigInteger.class);
+	}
+
+	@Override
+	public final ALIAS_FLOAT_RET max(ISupplierFloat field) {
+		return max(field, Float.class, Float.class);
+	}
+
+	@Override
+	public final ALIAS_DOUBLE_RET max(ISupplierDouble field) {
+		return max(field, Double.class, Double.class);
 	}
 
 	@Override

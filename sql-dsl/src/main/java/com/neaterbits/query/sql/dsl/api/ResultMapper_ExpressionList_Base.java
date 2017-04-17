@@ -168,9 +168,12 @@ abstract class ResultMapper_ExpressionList_Base<
 				NAMED_SUM_LONG_RET,
 				NAMED_COUNT_RET,
 				
+				NAMED_BYTE_RET,
 				NAMED_SHORT_RET,
 				NAMED_INTEGER_RET,
 				NAMED_LONG_RET,
+				NAMED_BIGINTEGER_RET,
+				NAMED_FLOAT_RET,
 				NAMED_DOUBLE_RET,
 				NAMED_BIGDECIMAL_RET,
 				NAMED_DATE_RET,
@@ -178,9 +181,12 @@ abstract class ResultMapper_ExpressionList_Base<
 				NAMED_SUM_LONG_RET,
 				NAMED_COUNT_RET,
 				
+				NAMED_BYTE_RET,
 				NAMED_SHORT_RET,
 				NAMED_INTEGER_RET,
 				NAMED_LONG_RET,
+				NAMED_BIGINTEGER_RET,
+				NAMED_FLOAT_RET,
 				NAMED_DOUBLE_RET,
 				NAMED_BIGDECIMAL_RET,
 				NAMED_DATE_RET
@@ -195,6 +201,9 @@ abstract class ResultMapper_ExpressionList_Base<
 				NAMED_DOUBLE_RET,
 				NAMED_DOUBLE_RET,
 				
+				NAMED_DOUBLE_RET,
+				NAMED_DOUBLE_RET,
+				NAMED_DOUBLE_RET,
 				NAMED_DOUBLE_RET,
 				NAMED_DOUBLE_RET,
 				NAMED_DOUBLE_RET,
@@ -221,6 +230,9 @@ abstract class ResultMapper_ExpressionList_Base<
 				NAMED_DOUBLE_RET,
 				NAMED_DOUBLE_RET,
 				NAMED_DOUBLE_RET,
+				NAMED_DOUBLE_RET,
+				NAMED_DOUBLE_RET,
+				NAMED_DOUBLE_RET,
 				NAMED_DOUBLE_RET
 				
 			>,
@@ -235,10 +247,13 @@ abstract class ResultMapper_ExpressionList_Base<
 				
 				NAMED_SUM_LONG_RET,
 				NAMED_COUNT_RET,
-				
+			
+				NAMED_BYTE_RET,
 				NAMED_SHORT_RET,
 				NAMED_INTEGER_RET,
 				NAMED_LONG_RET,
+				NAMED_BIGINTEGER_RET,
+				NAMED_FLOAT_RET,
 				NAMED_DOUBLE_RET,
 				NAMED_BIGDECIMAL_RET,
 				NAMED_DATE_RET,
@@ -246,9 +261,12 @@ abstract class ResultMapper_ExpressionList_Base<
 				NAMED_SUM_LONG_RET,
 				NAMED_COUNT_RET,
 				
+				NAMED_BYTE_RET,
 				NAMED_SHORT_RET,
 				NAMED_INTEGER_RET,
 				NAMED_LONG_RET,
+				NAMED_BIGINTEGER_RET,
+				NAMED_FLOAT_RET,
 				NAMED_DOUBLE_RET,
 				NAMED_BIGDECIMAL_RET,
 				NAMED_DATE_RET

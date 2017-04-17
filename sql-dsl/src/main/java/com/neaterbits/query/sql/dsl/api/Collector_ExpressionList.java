@@ -87,7 +87,7 @@ abstract class Collector_ExpressionList<
 				   NAMED_BIGDECIMAL_RET
 				   >,
 			   
-			   ISharedFunctions_Aggregate_Named<NAMED_SUM_LONG_RET, NAMED_COUNT_RET, NAMED_SHORT_RET, NAMED_INTEGER_RET, NAMED_LONG_RET, NAMED_DOUBLE_RET, NAMED_BIGDECIMAL_RET, NAMED_DATE_RET>,
+			   ISharedFunctions_Aggregate_Named<NAMED_SUM_LONG_RET, NAMED_COUNT_RET, NAMED_BYTE_RET, NAMED_SHORT_RET, NAMED_INTEGER_RET, NAMED_LONG_RET, NAMED_BIGINTEGER_RET, NAMED_FLOAT_RET, NAMED_DOUBLE_RET, NAMED_BIGDECIMAL_RET, NAMED_DATE_RET>,
 			   ISharedFunctions_String_Named<MODEL, RESULT, NAMED_RET, NAMED_STRING_RET>,
 			   
 			   ISharedFunctions_Arithmetic_Alias<
@@ -596,6 +596,11 @@ abstract class Collector_ExpressionList<
 	}
 
 	@Override
+	public final <T> NAMED_BYTE_RET max(IFunctionByte<T> field) {
+		return assureNamedFunctions().max(field);
+	}
+
+	@Override
 	public final <T> NAMED_SHORT_RET max(IFunctionShort<T> field) {
 		return assureNamedFunctions().max(field);
 	}
@@ -611,6 +616,21 @@ abstract class Collector_ExpressionList<
 	}
 
 	@Override
+	public final <T> NAMED_BIGINTEGER_RET max(IFunctionBigInteger<T> field) {
+		return assureNamedFunctions().max(field);
+	}
+
+	@Override
+	public final <T> NAMED_FLOAT_RET max(IFunctionFloat<T> field) {
+		return assureNamedFunctions().max(field);
+	}
+
+	@Override
+	public final <T> NAMED_DOUBLE_RET max(IFunctionDouble<T> field) {
+		return assureNamedFunctions().max(field);
+	}
+
+	@Override
 	public final <T> NAMED_BIGDECIMAL_RET max(IFunctionBigDecimal<T> field) {
 		return assureNamedFunctions().max(field);
 	}
@@ -618,6 +638,11 @@ abstract class Collector_ExpressionList<
 	@Override
 	public final <T> NAMED_DATE_RET max(IFunctionDate<T> field) {
 		return assureNamedFunctions().max(field);
+	}
+
+	@Override
+	public final <T> NAMED_BYTE_RET min(IFunctionByte<T> field) {
+		return assureNamedFunctions().min(field);
 	}
 
 	@Override
@@ -636,7 +661,27 @@ abstract class Collector_ExpressionList<
 	}
 
 	@Override
+	public final <T> NAMED_BIGINTEGER_RET min(IFunctionBigInteger<T> field) {
+		return assureNamedFunctions().min(field);
+	}
+
+	@Override
+	public final <T> NAMED_FLOAT_RET min(IFunctionFloat<T> field) {
+		return assureNamedFunctions().min(field);
+	}
+
+	@Override
+	public final <T> NAMED_DOUBLE_RET min(IFunctionDouble<T> field) {
+		return assureNamedFunctions().min(field);
+	}
+
+	@Override
 	public final <T> NAMED_BIGDECIMAL_RET min(IFunctionBigDecimal<T> field) {
+		return assureNamedFunctions().min(field);
+	}
+
+	@Override
+	public final <T> NAMED_DATE_RET min(IFunctionDate<T> field) {
 		return assureNamedFunctions().min(field);
 	}
 
@@ -777,6 +822,11 @@ abstract class Collector_ExpressionList<
 	}
 
 	@Override
+	public final ALIAS_BYTE_RET max(ISupplierByte field) {
+		return assureAliasFunctions().max(field);
+	}
+
+	@Override
 	public final ALIAS_SHORT_RET max(ISupplierShort field) {
 		return assureAliasFunctions().max(field);
 	}
@@ -788,6 +838,21 @@ abstract class Collector_ExpressionList<
 
 	@Override
 	public final ALIAS_LONG_RET max(ISupplierLong field) {
+		return assureAliasFunctions().max(field);
+	}
+
+	@Override
+	public final ALIAS_BIGINTEGER_RET max(ISupplierBigInteger field) {
+		return assureAliasFunctions().max(field);
+	}
+
+	@Override
+	public final ALIAS_FLOAT_RET max(ISupplierFloat field) {
+		return assureAliasFunctions().max(field);
+	}
+
+	@Override
+	public final ALIAS_DOUBLE_RET max(ISupplierDouble field) {
 		return assureAliasFunctions().max(field);
 	}
 

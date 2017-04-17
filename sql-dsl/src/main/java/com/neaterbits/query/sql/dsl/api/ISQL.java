@@ -2,7 +2,7 @@ package com.neaterbits.query.sql.dsl.api;
 
 public interface ISQL<
 		// for sums, we return Long for short and int so must differentiate from other aggregate
-		// fuctions, this is because sum may wrap over limits of type
+		// functions, this is because sum may wrap over limits of type
 		NAMED_SUM_LONG_RET,
 		NAMED_COUNT_RET,
 		
@@ -45,9 +45,12 @@ public interface ISQL<
 			NAMED_SUM_LONG_RET,
 			NAMED_COUNT_RET,
 			
+			NAMED_BYTE_RET,
 			NAMED_SHORT_RET,
 			NAMED_INT_RET,
 			NAMED_LONG_RET,
+			NAMED_BIGINTEGER_RET,
+			NAMED_FLOAT_RET,
 			NAMED_DOUBLE_RET,
 			NAMED_BIGDECIMAL_RET,
 			NAMED_DATE_RET

@@ -1,6 +1,7 @@
 package com.neaterbits.query.sql.dsl.api;
 
 import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.Date;
 import java.util.function.Consumer;
 import java.util.function.Function;
@@ -30,9 +31,12 @@ final class Short_Collector_Multi_Mapped_Named_Initial<MODEL, RESULT>
 			
 			ISharedResultMap_OpsAndTo_Numeric_Named<MODEL, RESULT, Long, IShortResult_Mapped_Multi_Named<MODEL, RESULT>>,
 			ISharedResultMap_OpsAndTo_Numeric_Named<MODEL, RESULT, Long, IShortResult_Mapped_Multi_Named<MODEL, RESULT>>,
+			ISharedResultMap_OpsAndTo_Numeric_Named<MODEL, RESULT, Byte, IShortResult_Mapped_Multi_Named<MODEL, RESULT>>,
 			ISharedResultMap_OpsAndTo_Numeric_Named<MODEL, RESULT, Short, IShortResult_Mapped_Multi_Named<MODEL, RESULT>>,
 			ISharedResultMap_OpsAndTo_Numeric_Named<MODEL, RESULT, Integer, IShortResult_Mapped_Multi_Named<MODEL, RESULT>>,
 			ISharedResultMap_OpsAndTo_Numeric_Named<MODEL, RESULT, Long, IShortResult_Mapped_Multi_Named<MODEL, RESULT>>,
+			ISharedResultMap_OpsAndTo_Numeric_Named<MODEL, RESULT, BigInteger, IShortResult_Mapped_Multi_Named<MODEL, RESULT>>,
+			ISharedResultMap_OpsAndTo_Numeric_Named<MODEL, RESULT, Float, IShortResult_Mapped_Multi_Named<MODEL, RESULT>>,
 			ISharedResultMap_OpsAndTo_Numeric_Named<MODEL, RESULT, Double, IShortResult_Mapped_Multi_Named<MODEL, RESULT>>,
 			ISharedResultMap_OpsAndTo_Numeric_Named<MODEL, RESULT, BigDecimal, IShortResult_Mapped_Multi_Named<MODEL, RESULT>>,
 			ISharedResultMap_OpsAndTo_Numeric_Named<MODEL, RESULT, Date, IShortResult_Mapped_Multi_Named<MODEL, RESULT>>,
@@ -40,9 +44,12 @@ final class Short_Collector_Multi_Mapped_Named_Initial<MODEL, RESULT>
 			
 			ISharedResultMapperTo<MODEL, RESULT, Long, IShortResult_Mapped_Multi_Named<MODEL, RESULT>>,
 			ISharedResultMapperTo<MODEL, RESULT, Long, IShortResult_Mapped_Multi_Named<MODEL, RESULT>>,
+			ISharedResultMapperTo<MODEL, RESULT, Byte, IShortResult_Mapped_Multi_Named<MODEL, RESULT>>,
 			ISharedResultMapperTo<MODEL, RESULT, Short, IShortResult_Mapped_Multi_Named<MODEL, RESULT>>,
 			ISharedResultMapperTo<MODEL, RESULT, Integer, IShortResult_Mapped_Multi_Named<MODEL, RESULT>>,
 			ISharedResultMapperTo<MODEL, RESULT, Long, IShortResult_Mapped_Multi_Named<MODEL, RESULT>>,
+			ISharedResultMapperTo<MODEL, RESULT, BigInteger, IShortResult_Mapped_Multi_Named<MODEL, RESULT>>,
+			ISharedResultMapperTo<MODEL, RESULT, Float, IShortResult_Mapped_Multi_Named<MODEL, RESULT>>,
 			ISharedResultMapperTo<MODEL, RESULT, Double, IShortResult_Mapped_Multi_Named<MODEL, RESULT>>,
 			ISharedResultMapperTo<MODEL, RESULT, BigDecimal, IShortResult_Mapped_Multi_Named<MODEL, RESULT>>,
 			ISharedResultMapperTo<MODEL, RESULT, Date, IShortResult_Mapped_Multi_Named<MODEL, RESULT>>,

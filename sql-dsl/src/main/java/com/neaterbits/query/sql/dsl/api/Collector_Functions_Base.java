@@ -17,8 +17,8 @@ abstract class Collector_Functions_Base<
 		NAMED_SHORT_RET		extends ISharedFunction_Next<MODEL, RESULT, NAMED_RET>,
 		NAMED_INTEGER_RET	extends ISharedFunction_Next<MODEL, RESULT, NAMED_RET>,
 		NAMED_LONG_RET		extends ISharedFunction_Next<MODEL, RESULT, NAMED_RET>,
-		NAMED_BIGINTEGER_RET		extends ISharedFunction_Next<MODEL, RESULT, NAMED_RET>,
-		NAMED_FLOAR_RET		extends ISharedFunction_Next<MODEL, RESULT, NAMED_RET>,
+		NAMED_BIGINTEGER_RET extends ISharedFunction_Next<MODEL, RESULT, NAMED_RET>,
+		NAMED_FLOAT_RET		extends ISharedFunction_Next<MODEL, RESULT, NAMED_RET>,
 		NAMED_DOUBLE_RET	extends ISharedFunction_Next<MODEL, RESULT, NAMED_RET>,
 		NAMED_BIGDECIMAL_RET extends ISharedFunction_Next<MODEL, RESULT, NAMED_RET>,
 		NAMED_STRING_RET 	extends ISharedFunction_Next<MODEL, RESULT, NAMED_RET>,
@@ -62,7 +62,7 @@ abstract class Collector_Functions_Base<
 			NAMED_BIGDECIMAL_RET>,
 			
 		ISharedFunctions_String_Named<MODEL, RESULT, NAMED_RET, NAMED_STRING_RET>,
-		ISharedFunctions_Aggregate_Named<NAMED_SUM_LONG_RET, NAMED_COUNT_RET, NAMED_SHORT_RET, NAMED_INTEGER_RET, NAMED_LONG_RET, NAMED_DOUBLE_RET, NAMED_BIGDECIMAL_RET, NAMED_DATE_RET>,
+		ISharedFunctions_Aggregate_Named<NAMED_SUM_LONG_RET, NAMED_COUNT_RET, NAMED_BYTE_RET, NAMED_SHORT_RET, NAMED_INTEGER_RET, NAMED_LONG_RET, NAMED_BIGINTEGER_RET, NAMED_FLOAT_RET, NAMED_DOUBLE_RET, NAMED_BIGDECIMAL_RET, NAMED_DATE_RET>,
 	
 		ISharedFunctions_Arithmetic_Alias<
 			MODEL, RESULT,
@@ -256,6 +256,11 @@ abstract class Collector_Functions_Base<
 	}
 
 	@Override
+	public final <T> NAMED_BYTE_RET max(IFunctionByte<T> field) {
+		return addAndReturnType(Function_Aggregate.MAX, field);
+	}
+
+	@Override
 	public final <T> NAMED_SHORT_RET max(IFunctionShort<T> field) {
 		return addAndReturnType(Function_Aggregate.MAX, field);
 	}
@@ -271,6 +276,21 @@ abstract class Collector_Functions_Base<
 	}
 
 	@Override
+	public final <T> NAMED_BIGINTEGER_RET max(IFunctionBigInteger<T> field) {
+		return addAndReturnType(Function_Aggregate.MAX, field);
+	}
+
+	@Override
+	public final <T> NAMED_FLOAT_RET max(IFunctionFloat<T> field) {
+		return addAndReturnType(Function_Aggregate.MAX, field);
+	}
+
+	@Override
+	public final <T> NAMED_DOUBLE_RET max(IFunctionDouble<T> field) {
+		return addAndReturnType(Function_Aggregate.MAX, field);
+	}
+
+	@Override
 	public final <T> NAMED_BIGDECIMAL_RET max(IFunctionBigDecimal<T> field) {
 		return addAndReturnType(Function_Aggregate.MAX, field);
 	}
@@ -278,6 +298,11 @@ abstract class Collector_Functions_Base<
 	@Override
 	public final <T> NAMED_DATE_RET max(IFunctionDate<T> field) {
 		return addAndReturnType(Function_Aggregate.MAX, field);
+	}
+
+	@Override
+	public final <T> NAMED_BYTE_RET min(IFunctionByte<T> field) {
+		return addAndReturnType(Function_Aggregate.MIN, field);
 	}
 
 	@Override
@@ -296,7 +321,27 @@ abstract class Collector_Functions_Base<
 	}
 
 	@Override
+	public final <T> NAMED_BIGINTEGER_RET min(IFunctionBigInteger<T> field) {
+		return addAndReturnType(Function_Aggregate.MIN, field);
+	}
+
+	@Override
+	public final <T> NAMED_FLOAT_RET min(IFunctionFloat<T> field) {
+		return addAndReturnType(Function_Aggregate.MIN, field);
+	}
+
+	@Override
+	public final <T> NAMED_DOUBLE_RET min(IFunctionDouble<T> field) {
+		return addAndReturnType(Function_Aggregate.MIN, field);
+	}
+
+	@Override
 	public final <T> NAMED_BIGDECIMAL_RET min(IFunctionBigDecimal<T> field) {
+		return addAndReturnType(Function_Aggregate.MIN, field);
+	}
+
+	@Override
+	public final <T> NAMED_DATE_RET min(IFunctionDate<T> field) {
 		return addAndReturnType(Function_Aggregate.MIN, field);
 	}
 
@@ -437,6 +482,11 @@ abstract class Collector_Functions_Base<
 	}
 
 	@Override
+	public final ALIAS_BYTE_RET max(ISupplierByte field) {
+		return addAndReturnType(Function_Aggregate.MAX, field);
+	}
+
+	@Override
 	public final ALIAS_SHORT_RET max(ISupplierShort field) {
 		return addAndReturnType(Function_Aggregate.MAX, field);
 	}
@@ -448,6 +498,21 @@ abstract class Collector_Functions_Base<
 
 	@Override
 	public final ALIAS_LONG_RET max(ISupplierLong field) {
+		return addAndReturnType(Function_Aggregate.MAX, field);
+	}
+
+	@Override
+	public final ALIAS_BIGINTEGER_RET max(ISupplierBigInteger field) {
+		return addAndReturnType(Function_Aggregate.MAX, field);
+	}
+
+	@Override
+	public final ALIAS_FLOAT_RET max(ISupplierFloat field) {
+		return addAndReturnType(Function_Aggregate.MAX, field);
+	}
+
+	@Override
+	public final ALIAS_DOUBLE_RET max(ISupplierDouble field) {
 		return addAndReturnType(Function_Aggregate.MAX, field);
 	}
 
