@@ -192,15 +192,17 @@ abstract class SQL_Collector_WhereOrJoin_Base<
 			@Override
 			public ISharedCondition_Comparable_Common_Base<MODEL, RESULT, Comparable<?>, NAMED_AND_OR>
 				onComparable(Expression expression) {
-				
-				return (ISharedCondition_Comparable_Common_Base)andNamedClassImplComparable(expression);
+
+				return (ISharedCondition_Comparable_Common_Base)new Collector_Condition_Comparative<MODEL, RESULT, Integer, NAMED_AND_OR>(getAfterWhereNamed(), expression);
+
+				// return (ISharedCondition_Comparable_Common_Base)andNamedClassImplComparable(expression);
 			}
 		
 			@Override
 			public ISharedCondition_Comparable_String_Base<MODEL, RESULT, NAMED_AND_OR>
 				onString(Expression expression) {
 				
-				return new Collector_Condition_String<MODEL, RESULT, NAMED_AND_OR> (SQL_Collector_WhereOrJoin_Base.this, expression);
+				return new Collector_Condition_String<MODEL, RESULT, NAMED_AND_OR> (getAfterWhereNamed(), expression);
 			}
 		};
 		

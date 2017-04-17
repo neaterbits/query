@@ -18,7 +18,6 @@ public class EntityWhereFunctionTest extends GEN_BaseTestCase {
     	assertThat(true).isEqualTo(false);
 
     	// TODO: enable function in IShortLogical_WhereOrJoinInitial_SingleResult_Named and fix conflicts
-    	
     	/*
     	final Farm farm1 = new Farm("Hill Valley");
     	final Farm farm2 = new Farm("Table Mountain");
@@ -64,12 +63,20 @@ public class EntityWhereFunctionTest extends GEN_BaseTestCase {
     @Test
     public void testEntityMultiNamed() {
     	
+    	verifyIsNotCompilable(Farm.class, "f",
+    	    	"list(f)" +
+    			".where().lower(Farm::getName).contains(\"hill\")");
+    		
+    	verifyIsCompilable(
+    	    	"list(Farm.class)" +
+    			".where().lower(Farm::getName).contains(\"hill\")");
+
     	final Farm farm1 = new Farm("Hill Valley");
     	final Farm farm2 = new Farm("Table Mountain");
     	final Farm farm3 = new Farm("Snowy Hills");
     	
     	final MultiBuilt<Farm> query = select.list(Farm.class)
-    			.where().lower(Farm::getName).contains("Hill")
+    			.where().lower(Farm::getName).contains("hill")
     			.build(); 
 
     	store(farm1, farm2, farm3)
@@ -85,19 +92,13 @@ public class EntityWhereFunctionTest extends GEN_BaseTestCase {
     @Test
     public void testEntityMultiAlias() {
     	
-    	assertThat(true).isEqualTo(false);
-    	
-    	// TODO: Comment in at below, and fix conflicts in implementatinos
-    	// sql-dsl/src/main/java/com/neaterbits/query/sql/dsl/api/ISQLLogical_WhereOrJoin_MultiEntity_Alias_And_Function.java
-    	
-    	/*
     	verifyIsNotCompilable(Farm.class, "f",
 	    	"list(Farm.class)" +
-			".where(f::getName).contains(\"Hill\")");
+			".where().lower(f::getName).contains(\"hill\")");
 		
     	verifyIsCompilable(Farm.class, "f",
     	    	"list(f)" +
-    			".where(f::getName).contains(\"Hill\")");
+    			".where().lower(f::getName).contains(\"hill\")");
 
     	final Farm farm1 = new Farm("Hill Valley");
     	final Farm farm2 = new Farm("Table Mountain");
@@ -106,7 +107,7 @@ public class EntityWhereFunctionTest extends GEN_BaseTestCase {
     	final Farm f = select.alias(Farm.class);
     	
     	final MultiBuilt<Farm> query = select.list(f)
-    			.where().lower(f::getName).contains("Hill")
+    			.where().lower(f::getName).contains("hill")
     			.build(); 
 
     	store(farm1, farm2, farm3)
@@ -116,6 +117,5 @@ public class EntityWhereFunctionTest extends GEN_BaseTestCase {
 	    			new Farm(farm1.getId(), "Hill Valley"),
 	    			new Farm(farm3.getId(), "Snowy Hills")));
 	    			
-			*/
     }
 }
