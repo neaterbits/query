@@ -94,7 +94,7 @@ final class Short_Collector_Single_Mapped_Alias_Initial<MODEL, RESULT>
 	
 		> where() {
 
-		throw new UnsupportedOperationException("TODO");
+		return whereAlias();
 	}
 	
 	@Override
