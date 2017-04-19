@@ -28,12 +28,12 @@ public class EntityWhereOrderByTest extends GEN_BaseTestCase {
 		verifyIsCompilable(
 				Farm.class, "f",
 				
-				"one(Farm.class)" + 
+				"one(f)" + 
     			".where(f::getName).startsWith(\"Farm\")");
 		
 		verifyIsNotCompilable(
 				Farm.class, "f",
-				"one(Farm.class)" + 
+				"one(f)" + 
     			".where(f::getName).startsWith(\"Farm\")" +
 				".orderBy(Farm::getName)");		
     }
