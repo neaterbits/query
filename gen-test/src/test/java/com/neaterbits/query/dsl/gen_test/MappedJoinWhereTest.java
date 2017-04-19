@@ -86,7 +86,7 @@ public class MappedJoinWhereTest extends GEN_BaseTestCase {
     	land2.setFarm(farm2);
     	
     	farm2.setLandPlots(Arrays.asList(land3));
-    	land2.setFarm(farm2);
+    	land3.setFarm(farm2);
 
     	// only landplots that belong to farms, so land4 should not be included in sum
     	// since doing innerjoin from farm to landplot
