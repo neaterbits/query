@@ -101,7 +101,7 @@ abstract class BaseChecker implements QueryTestDSCheck {
 	}
 
 	@Override
-	public final <T> void checkOne(SingleBuilt<T> query, T expected) {
+	public final <T> void checkOneValue(SingleBuilt<T> query, T expected) {
 		check(ds -> Checks.checkSelectOneOrNull(ds, expected, query, q -> q.execute()));
 	}
 
@@ -113,7 +113,7 @@ abstract class BaseChecker implements QueryTestDSCheck {
 	@Override
 	public <T extends Comparable<T>> void checkAggregate(SingleBuilt<T> query, T expected) {
 		
-		checkOne(query, expected);
+		checkOneValue(query, expected);
 		
 	}
 

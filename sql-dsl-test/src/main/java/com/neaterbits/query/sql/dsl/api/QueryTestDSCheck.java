@@ -17,7 +17,7 @@ public interface QueryTestDSCheck {
 	
 	
 
-	<T> void checkOne(SingleBuilt<T> query, T expected);
+	<T> void checkOneValue(SingleBuilt<T> query, T expected);
 
 	// When must lazy-initialize with ID
 	<T> void checkOne(SingleBuilt<T> query, Supplier<T> expected);

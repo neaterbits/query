@@ -26,7 +26,7 @@ public class MappedWhereTest extends GEN_BaseTestCase {
     			.build(); 
 
     	store(farm1, farm2, farm3)
-    	.checkOne(query, new FarmInfo("Table Mountain"));
+    	.checkOneValue(query, new FarmInfo("Table Mountain"));
     }
 
 
@@ -46,7 +46,7 @@ public class MappedWhereTest extends GEN_BaseTestCase {
     			.build(); 
 
     	store(farm1, farm2, farm3)
-    	.checkOne(query, new FarmInfo("Table Mountain"));
+    	.checkOneValue(query, new FarmInfo("Table Mountain"));
     }
 
 

@@ -34,7 +34,7 @@ public class MappedWhereOrTest extends GEN_BaseTestCase {
 
     	// Store out of order
     	store(other5, farm2, farm4, other2, other4, farm3, other1, farm5, farm1, other3)
-    	.checkOne(query, new FarmInfo("Farm4"));
+    	.checkOneValue(query, new FarmInfo("Farm4"));
     }
 
 
@@ -63,7 +63,7 @@ public class MappedWhereOrTest extends GEN_BaseTestCase {
 
     	// Store out of order
     	store(other5, farm2, farm4, other2, other4, farm3, other1, farm5, farm1, other3)
-    	.checkOne(query, new FarmInfo("Farm4"));
+    	.checkOneValue(query, new FarmInfo("Farm4"));
     }
 
 
