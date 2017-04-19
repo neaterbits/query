@@ -22,7 +22,8 @@ public class AggregateWhereTest extends GEN_BaseTestCase {
     	final LandPlot land3 = new Uncultivated(new BigDecimal("100.5"));
     	final LandPlot land4 = new Uncultivated(new BigDecimal("213.5"));
 
-    	verifyIsNotCompilable(LandPlot.class, "l", "sum(LandPlot::getHectares).where(l::getHectares).isLessThan(new BigDecimal(\"99.5\")");
+    	verifyIsNotCompilable(LandPlot.class, "l",
+    			"sum(LandPlot::getHectares).where(l::getHectares).isLessThan(new BigDecimal(\"99.5\")");
     	    	
     	// sum for all landplots
     	final SingleBuilt<BigDecimal> sumQuery

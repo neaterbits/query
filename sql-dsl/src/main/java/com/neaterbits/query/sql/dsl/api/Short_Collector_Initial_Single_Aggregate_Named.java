@@ -123,7 +123,8 @@ final class Short_Collector_Initial_Single_Aggregate_Named<RESULT>
 				ISharedCondition_Comparable_String_All_Compilable<SingleBuilt<RESULT>, RESULT, ISQLLogical_AndOr_SingleResult_Named<SingleBuilt<RESULT>, RESULT>>
 
 		> where() {
-		throw new UnsupportedOperationException("TODO");
+		
+		return whereNamed();
 	}
 
 	@Override

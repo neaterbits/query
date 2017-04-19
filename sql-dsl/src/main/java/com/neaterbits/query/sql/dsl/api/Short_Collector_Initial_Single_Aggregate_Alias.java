@@ -59,7 +59,7 @@ final class Short_Collector_Initial_Single_Aggregate_Alias<RESULT>
 			ISharedCondition_Comparable_String_All<SingleBuilt<RESULT>, RESULT, ISQLLogical_AndOr_SingleResult_Alias<SingleBuilt<RESULT>, RESULT>>
 	
 			> where() {
-		throw new UnsupportedOperationException("TODO");
+		return whereAlias();
 	}
 
 
