@@ -63,5 +63,9 @@ public class FarmLand {
 			return false;
 		return true;
 	}
-	
+
+	@Override
+	public String toString() {
+		return "FarmLand [farmName=" + farmName + ", hectares=" + hectares + "]";
+	}
 }
