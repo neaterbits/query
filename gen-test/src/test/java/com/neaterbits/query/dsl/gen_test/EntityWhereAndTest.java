@@ -42,15 +42,15 @@ public class EntityWhereAndTest extends GEN_BaseTestCase {
     public void testEntitySingleAlias() {
     	
     	verifyIsNotCompilable(Farm.class, "f", 
-    			".one(Farm.class)" +
+    			"one(Farm.class)" +
     			".where(f::getName).contains(\"Hill\")" +
-    			".  and(f::getName).contains(\"Snowy\"))");
+    			".  and(f::getName).contains(\"Snowy\")");
     	
     	
     	verifyIsCompilable(Farm.class, "f", 
-    			".one(f)" +
+    			"one(f)" +
     			".where(f::getName).contains(\"Hill\")" +
-    			".  and(f::getName).contains(\"Snowy\"))");
+    			".  and(f::getName).contains(\"Snowy\")");
     	
     	final Farm farm1 = new Farm("Hill Valley");
     	final Farm farm2 = new Farm("Table Mountain");
@@ -123,12 +123,12 @@ public class EntityWhereAndTest extends GEN_BaseTestCase {
     	final Farm f = select.alias(Farm.class);
 
     	verifyIsNotCompilable(Farm.class, "f",
-    	    	".list(Farm.class)" +
+    	    	"list(Farm.class)" +
     			".where(f::getName).contains(\"Mountain\")" +
     			".  and(f::getName).contains(\"l\")");
         	
     	verifyIsCompilable(Farm.class, "f",
-	    	".list(f)" +
+	    	"list(f)" +
 			".where(f::getName).contains(\"Mountain\")" +
 			".  and(f::getName).contains(\"l\")");
     	
