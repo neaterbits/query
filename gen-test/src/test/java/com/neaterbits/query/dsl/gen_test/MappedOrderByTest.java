@@ -39,7 +39,7 @@ public class MappedOrderByTest extends GEN_BaseTestCase {
 
 		verifyIsCompilable(
 		    	Farm.class, "f",
-				"one(FarmInfo.class)" +
+				"list(FarmInfo.class)" +
 				".map(f::getName).to(FarmInfo::setName)" + 
 				".orderBy(f::getName)");
 
