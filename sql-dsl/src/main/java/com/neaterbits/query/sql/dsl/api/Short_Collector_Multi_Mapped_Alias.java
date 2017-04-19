@@ -74,7 +74,9 @@ final class Short_Collector_Multi_Mapped_Alias<MODEL, RESULT>
 
 	@Override
 	public ISharedFunctions_Transform_Initial_Alias<
-			MODEL, RESULT, ISQLLogical_AndOr_MultiMapped_Alias<MODEL, RESULT>,
+			MODEL,
+			RESULT,
+			ISQLLogical_AndOr_MultiMapped_Alias<MODEL, RESULT>,
 			ISharedCondition_Comparable_Common_All<MODEL, RESULT, Byte, ISQLLogical_AndOr_MultiMapped_Alias<MODEL, RESULT>>,
 			ISharedCondition_Comparable_Common_All<MODEL, RESULT, Short, ISQLLogical_AndOr_MultiMapped_Alias<MODEL, RESULT>>,
 			ISharedCondition_Comparable_Common_All<MODEL, RESULT, Integer, ISQLLogical_AndOr_MultiMapped_Alias<MODEL, RESULT>>,
