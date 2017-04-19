@@ -65,6 +65,28 @@ final class Short_Collector_Multi_Mapped_Named_Initial<MODEL, RESULT>
 
 		return new Collector_MapFunctions_ExpressionList_Named<>(this);
 	}
+	
+	
+
+	@Override
+	public ISharedFunctions_Transform_Initial_Named<
+			MODEL,
+			RESULT,
+			ISQLLogical_AndOr_MultiMapped_Named<MODEL, RESULT>,
+			ISharedCondition_Comparable_Common_All_Compilable<MODEL, RESULT, Byte, ISQLLogical_AndOr_MultiMapped_Named<MODEL, RESULT>>,
+			ISharedCondition_Comparable_Common_All_Compilable<MODEL, RESULT, Short, ISQLLogical_AndOr_MultiMapped_Named<MODEL, RESULT>>,
+			ISharedCondition_Comparable_Common_All_Compilable<MODEL, RESULT, Integer, ISQLLogical_AndOr_MultiMapped_Named<MODEL, RESULT>>,
+			ISharedCondition_Comparable_Common_All_Compilable<MODEL, RESULT, Long, ISQLLogical_AndOr_MultiMapped_Named<MODEL, RESULT>>,
+			ISharedCondition_Comparable_Common_All_Compilable<MODEL, RESULT, BigInteger, ISQLLogical_AndOr_MultiMapped_Named<MODEL, RESULT>>,
+			ISharedCondition_Comparable_Common_All_Compilable<MODEL, RESULT, Float, ISQLLogical_AndOr_MultiMapped_Named<MODEL, RESULT>>,
+			ISharedCondition_Comparable_Common_All_Compilable<MODEL, RESULT, Double, ISQLLogical_AndOr_MultiMapped_Named<MODEL, RESULT>>, 
+			ISharedCondition_Comparable_Common_All_Compilable<MODEL, RESULT, BigDecimal, ISQLLogical_AndOr_MultiMapped_Named<MODEL, RESULT>>,
+			ISharedCondition_Comparable_String_All_Compilable<MODEL, RESULT, ISQLLogical_AndOr_MultiMapped_Named<MODEL, RESULT>>
+		> where() {
+
+		return whereNamed();
+	}
+
 
 	@Override
 	public ISharedFunctions_Transform_Initial_Named<
