@@ -3,8 +3,7 @@ package com.neaterbits.query.sql.dsl.api;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Comparator;
-
-import com.google.inject.internal.Function;
+import java.util.function.Function;
 
 public class ResultCollection_List_Entity_Ordered<QUERY> extends ArrayList<Object> implements ResultCollection {
 
