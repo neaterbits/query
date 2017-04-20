@@ -2,10 +2,9 @@ package com.neaterbits.query.sql.dsl.api;
 
 import java.lang.reflect.Method;
 import java.math.BigDecimal;
-import java.util.Collection;
 import java.util.List;
 
-import com.neaterbits.query.sql.dsl.api.entity.EntityModelUtil;
+import com.neaterbits.query.sql.dsl.api.entity.IEntityModelUtil;
 import com.neaterbits.query.sql.dsl.api.entity.Relation;
 
 abstract class QueryDialect_SQL extends QueryDialect_Base {
@@ -52,10 +51,21 @@ abstract class QueryDialect_SQL extends QueryDialect_Base {
 
 	abstract void addSelectSource(QueryBuilder sb, EFieldAccessType fieldReferenceType, SourceReference ref);
 
-	abstract <MANAGED, EMBEDDED, IDENTIFIABLE, ATTRIBUTE, COLL extends Collection<ATTRIBUTE>>
-			String getFieldNameForGetter(EntityModelUtil<MANAGED, EMBEDDED, IDENTIFIABLE, ATTRIBUTE, COLL> entityModelUtil, Class<?> type, Method getter);
+	abstract String getFieldNameForGetter(IEntityModelUtil entityModelUtil, Class<?> type, Method getter);
 
 	abstract String getBigDecimalLiteral(BigDecimal value);
+
+	final IEntityModelUtil entityModelUtil;
+
+	protected QueryDialect_SQL(IEntityModelUtil entityModelUtil) {
+		
+		if (entityModelUtil == null) {
+			throw new IllegalArgumentException("entityModelUtil == null");
+		}
+
+		this.entityModelUtil = entityModelUtil;
+	}
+	
 	
 	// **************************** Some abstract methods conditions ****************************
 	

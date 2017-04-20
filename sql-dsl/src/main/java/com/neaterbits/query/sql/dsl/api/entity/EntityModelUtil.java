@@ -10,7 +10,8 @@ import java.util.Collection;
 import java.util.List;
 import java.util.function.BiConsumer;
 
-public class EntityModelUtil<MANAGED, EMBEDDED, IDENTIFIABLE, ATTRIBUTE, COLL extends Collection<ATTRIBUTE>> {
+public class EntityModelUtil<MANAGED, EMBEDDED, IDENTIFIABLE, ATTRIBUTE, COLL extends Collection<ATTRIBUTE>> 
+	implements IEntityModelUtil {
 
 	private final EntityModel<MANAGED, EMBEDDED, IDENTIFIABLE, ATTRIBUTE, COLL> model;
 
@@ -27,6 +28,7 @@ public class EntityModelUtil<MANAGED, EMBEDDED, IDENTIFIABLE, ATTRIBUTE, COLL ex
 		return model;
 	}
 	
+	@Override
 	public IEntity getEntityInfo(Class<?> type) {
 		
 		if (type == null) {
@@ -81,6 +83,18 @@ public class EntityModelUtil<MANAGED, EMBEDDED, IDENTIFIABLE, ATTRIBUTE, COLL ex
 		}
 
 		return ret;
+	}
+	
+	
+
+	@Override
+	public final String getEntityFieldNameForGetter(Class<?> type, Method getter) {
+		return getModel().getEntityFieldNameForGetter(type, getter);
+	}
+
+	@Override
+	public final String getColumnNameForGetter(Class<?> type, Method getter) {
+		return getModel().getColumnNameForGetter(type, getter);
 	}
 
 	List<EntityAttribute> getAttributes(MANAGED managed) {

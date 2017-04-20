@@ -2,14 +2,17 @@ package com.neaterbits.query.sql.dsl.api;
 
 import java.lang.reflect.Method;
 import java.math.BigDecimal;
-import java.util.Collection;
 import java.util.List;
 import java.util.function.Consumer;
 
-import com.neaterbits.query.sql.dsl.api.entity.EntityModelUtil;
+import com.neaterbits.query.sql.dsl.api.entity.IEntityModelUtil;
 import com.neaterbits.query.sql.dsl.api.entity.Relation;
 
 final class QueryDialect_JPQL extends QueryDialect_SQL {
+	
+	QueryDialect_JPQL(IEntityModelUtil entityModelUtil) {
+		super(entityModelUtil);
+	}
 
 	@Override
 	boolean supportsNonRelationJoins() {
@@ -122,10 +125,8 @@ final class QueryDialect_JPQL extends QueryDialect_SQL {
 	}
 
 	@Override
-	<MANAGED, EMBEDDED, IDENTIFIABLE, ATTRIBUTE, COLL extends Collection<ATTRIBUTE>>
-		String getFieldNameForGetter(EntityModelUtil<MANAGED, EMBEDDED, IDENTIFIABLE, ATTRIBUTE, COLL> entityModelUtil, Class<?> type, Method getter) {
-
-		return entityModelUtil.getModel().getEntityFieldNameForGetter(type, getter);
+	String getFieldNameForGetter(IEntityModelUtil entityModelUtil, Class<?> type, Method getter) {
+		return entityModelUtil.getEntityFieldNameForGetter(type, getter);
 	}
 
 	@Override

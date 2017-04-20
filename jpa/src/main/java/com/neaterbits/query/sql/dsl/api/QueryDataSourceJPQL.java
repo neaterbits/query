@@ -66,6 +66,6 @@ public final class QueryDataSourceJPQL extends QueryDataSourceJPA {
 
 	@Override
 	protected QueryDialect_SQL getDialect() {
-		return new QueryDialect_JPQL();
+		return new QueryDialect_JPQL(getEntityModelUtil());
 	}
 }

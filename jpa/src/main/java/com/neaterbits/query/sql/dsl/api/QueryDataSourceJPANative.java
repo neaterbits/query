@@ -226,7 +226,7 @@ public final class QueryDataSourceJPANative extends QueryDataSourceJPA {
 
 	@Override
 	protected QueryDialect_SQL getDialect() {
-		return new QueryDialect_ANSI_SQL<>(getEntityModelUtil());
+		return new QueryDialect_ANSI_SQL(getEntityModelUtil());
 	}
 
 	@Override

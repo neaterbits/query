@@ -2,28 +2,18 @@ package com.neaterbits.query.sql.dsl.api;
 
 import java.lang.reflect.Method;
 import java.math.BigDecimal;
-import java.util.Collection;
 import java.util.List;
 
 import com.neaterbits.query.sql.dsl.api.entity.ESubClassing;
-import com.neaterbits.query.sql.dsl.api.entity.EntityModelUtil;
 import com.neaterbits.query.sql.dsl.api.entity.IEntity;
 import com.neaterbits.query.sql.dsl.api.entity.IEntityFields;
+import com.neaterbits.query.sql.dsl.api.entity.IEntityModelUtil;
 import com.neaterbits.query.sql.dsl.api.entity.Relation;
 
-final class QueryDialect_ANSI_SQL<MANAGED, EMBEDDED, IDENTIFIABLE, ATTRIBUTE, COLL extends Collection<ATTRIBUTE>>
+final class QueryDialect_ANSI_SQL extends QueryDialect_SQL {
 
-	extends QueryDialect_SQL {
-
-	private final EntityModelUtil<MANAGED, EMBEDDED, IDENTIFIABLE, ATTRIBUTE, COLL> entityModelUtil;
-
-	QueryDialect_ANSI_SQL(EntityModelUtil<MANAGED, EMBEDDED, IDENTIFIABLE, ATTRIBUTE, COLL> entityModelUtil) {
-			
-		if (entityModelUtil == null) {
-			throw new IllegalArgumentException("entityModelUtil == null");
-		}
-
-		this.entityModelUtil = entityModelUtil;
+	QueryDialect_ANSI_SQL(IEntityModelUtil entityModelUtil) {
+		super(entityModelUtil);
 	}
 
 	@Override
@@ -366,11 +356,8 @@ final class QueryDialect_ANSI_SQL<MANAGED, EMBEDDED, IDENTIFIABLE, ATTRIBUTE, CO
 	}
 
 	@Override
-	<M, E, I, A, C extends Collection<A>>
-	
-		String getFieldNameForGetter(EntityModelUtil<M, E, I, A, C> entityModelUtil, Class<?> type, Method getter) {
-		
-		return entityModelUtil.getModel().getColumnNameForGetter(type, getter);
+	String getFieldNameForGetter(IEntityModelUtil entityModelUtil, Class<?> type, Method getter) {
+		return entityModelUtil.getColumnNameForGetter(type, getter);
 	}
 
 	@Override
