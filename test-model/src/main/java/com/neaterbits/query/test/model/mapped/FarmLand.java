@@ -1,10 +1,12 @@
 package com.neaterbits.query.test.model.mapped;
 
 import java.math.BigDecimal;
+import java.util.Date;
 
 public class FarmLand {
 
 	private String farmName;
+	private Date timeFarmFounded;
 	private BigDecimal hectares;
 
 	public FarmLand() {
@@ -30,6 +32,15 @@ public class FarmLand {
 
 	public void setHectares(BigDecimal hectares) {
 		this.hectares = hectares;
+	}
+	
+
+	public Date getTimeFarmFounded() {
+		return timeFarmFounded;
+	}
+
+	public void setTimeFarmFounded(Date timeFarmFounded) {
+		this.timeFarmFounded = timeFarmFounded;
 	}
 
 	@Override

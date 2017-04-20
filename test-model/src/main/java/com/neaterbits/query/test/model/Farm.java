@@ -12,6 +12,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.Temporal;
 
 import com.neaterbits.query.test.model.land.LandPlot;
 import com.neaterbits.query.test.model.ownership.Owner;
