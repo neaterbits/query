@@ -45,7 +45,7 @@ class MapFunctionUtil {
 		
 				final IMappingCollector<MODEL, RESULT> impl = named(expression, supplier);
 				
-				return new ResultMapper_ExpressionList_Numeric_Named<>(expression, impl);
+				return new ResultMapper_ExpressionList_NonString_Named<>(expression, impl);
 
 			}
 		

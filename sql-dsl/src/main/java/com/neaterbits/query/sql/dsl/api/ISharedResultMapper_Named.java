@@ -17,14 +17,15 @@ public interface ISharedResultMapper_Named<MODEL, RESULT, SOURCE extends IShared
 
 	<T> ISharedResultMap_OpsAndTo_Numeric_Named<MODEL, RESULT, Short, SOURCE>      map(IFunctionShort<T> getter);
 	<T> ISharedResultMap_OpsAndTo_Numeric_Named<MODEL, RESULT, Integer, SOURCE>    map(IFunctionInteger<T> getter);
-	<T> ISharedResultMap_OpsAndTo_Numeric_Named<MODEL, RESULT, Long, SOURCE>	      map(IFunctionLong<T> getter);
+	<T> ISharedResultMap_OpsAndTo_Numeric_Named<MODEL, RESULT, Long, SOURCE>	   map(IFunctionLong<T> getter);
 	<T> ISharedResultMap_OpsAndTo_Numeric_Named<MODEL, RESULT, BigDecimal, SOURCE> map(IFunctionBigDecimal<T> getter);
 
 
 	// String maps to "to" without arithmetic ops (though concat could have been plus-variant like in Java instead of a nested-call)
 	<T> ISharedResultOps_String_Named<MODEL, RESULT, SOURCE> map(StringFunction<T> getter);
 
-
+	<T> ISharedResultMap_OpsAndTo_Numeric_Named<MODEL, RESULT, java.util.Date, SOURCE> map(IFunctionDate<T> getter);
+	
 	// TODO ISharedResultOps_Numeric_Named<MODEL, RESULT, BigDecimal, SOURCE> mapOf(ISharedSubOperandsFunction_Named<MODEL, RESULT, BigDecimal> sub);
 	
 	//<T> ISharedResultMapperTo<MODEL, RESULT, Integer, SOURCE> map(IFunctionInteger<T> getter);

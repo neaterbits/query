@@ -1,5 +1,6 @@
 package com.neaterbits.query.sql.dsl.api;
 
+@Deprecated // Necessary with String-specific?
 final class ResultMapper_ExpressionList_String_Named<
 		MODEL,
 		RESULT,

@@ -3,7 +3,7 @@ package com.neaterbits.query.sql.dsl.api;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 
-final class ResultMapper_ExpressionList_Numeric_Named< 
+final class ResultMapper_ExpressionList_NonString_Named< 
 		MODEL,
 		RESULT,
 		R extends Comparable<R>,
@@ -68,7 +68,7 @@ final class ResultMapper_ExpressionList_Numeric_Named<
 	private final IMappingCollector<MODEL, RESULT> impl;
 	
 	// TODO go over constructor calls and use static utility methods? 
-	ResultMapper_ExpressionList_Numeric_Named(Expression expression, IMappingCollector<MODEL, RESULT> impl) {
+	ResultMapper_ExpressionList_NonString_Named(Expression expression, IMappingCollector<MODEL, RESULT> impl) {
 		super(expression /*, impl */, EFieldAccessType.NAMED);
 
 		if (impl == null) {

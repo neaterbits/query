@@ -1,6 +1,7 @@
 package com.neaterbits.query.sql.dsl.api;
 
 import java.math.BigDecimal;
+import java.util.Date;
 
 abstract class Classic_Collector_MapToResult_Base<
 	MODEL,
@@ -36,26 +37,31 @@ abstract class Classic_Collector_MapToResult_Base<
 
 	@Override
 	public final <T> ISharedResultMap_OpsAndTo_Numeric_Named<MODEL, RESULT, Short, NAMED_MAP_RESULT> map(IFunctionShort<T> getter) {
-		return new ResultMapper_ExpressionList_Numeric_Named<>(new FieldExpression(getter), this);
+		return new ResultMapper_ExpressionList_NonString_Named<>(new FieldExpression(getter), this);
 	}
 
 	@Override
 	public final <T> ISharedResultMap_OpsAndTo_Numeric_Named<MODEL, RESULT, Integer, NAMED_MAP_RESULT> map(IFunctionInteger<T> getter) {
-		return new ResultMapper_ExpressionList_Numeric_Named<>(new FieldExpression(getter), this);
+		return new ResultMapper_ExpressionList_NonString_Named<>(new FieldExpression(getter), this);
 	}
 
 	@Override
 	public final <T> ISharedResultMap_OpsAndTo_Numeric_Named<MODEL, RESULT, Long, NAMED_MAP_RESULT> map(IFunctionLong<T> getter) {
-		return new ResultMapper_ExpressionList_Numeric_Named<>(new FieldExpression(getter), this);
+		return new ResultMapper_ExpressionList_NonString_Named<>(new FieldExpression(getter), this);
 	}
 
 	@Override
 	public final <T> ISharedResultMap_OpsAndTo_Numeric_Named<MODEL, RESULT, BigDecimal, NAMED_MAP_RESULT> map(IFunctionBigDecimal<T> getter) {
-		return new ResultMapper_ExpressionList_Numeric_Named<>(new FieldExpression(getter), this);
+		return new ResultMapper_ExpressionList_NonString_Named<>(new FieldExpression(getter), this);
 	}
 
 	@Override
 	public final <T> ISharedResultOps_String_Named<MODEL, RESULT, NAMED_MAP_RESULT> map(StringFunction<T> getter) {
 		return new ResultMapper_ExpressionList_String_Named<>(new FieldExpression(getter), this);
+	}
+
+	@Override
+	public final <T> ISharedResultMap_OpsAndTo_Numeric_Named<MODEL, RESULT, Date, NAMED_MAP_RESULT> map(IFunctionDate<T> getter) {
+		return new ResultMapper_ExpressionList_NonString_Named<>(new FieldExpression(getter), this);
 	}
 }

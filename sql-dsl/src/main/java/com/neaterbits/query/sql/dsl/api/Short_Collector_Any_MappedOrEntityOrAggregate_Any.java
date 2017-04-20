@@ -1,6 +1,7 @@
 package com.neaterbits.query.sql.dsl.api;
 
 import java.math.BigDecimal;
+import java.util.Date;
 import java.util.function.Supplier;
 
 abstract class Short_Collector_Any_MappedOrEntityOrAggregate_Any<
@@ -138,27 +139,32 @@ abstract class Short_Collector_Any_MappedOrEntityOrAggregate_Any<
 	
 	@Override
 	public final <T> ISharedResultMap_OpsAndTo_Numeric_Named<MODEL, RESULT, Short, NAMED_MAPPED> map(IFunctionShort<T> getter) {
-		return new ResultMapper_ExpressionList_Numeric_Named<>(new FieldExpression(getter), this);
+		return new ResultMapper_ExpressionList_NonString_Named<>(new FieldExpression(getter), this);
 	}
 
 	@Override
 	public final <T> ISharedResultMap_OpsAndTo_Numeric_Named<MODEL, RESULT, Integer, NAMED_MAPPED> map(IFunctionInteger<T> getter) {
-		return new ResultMapper_ExpressionList_Numeric_Named<>(new FieldExpression(getter), this);
+		return new ResultMapper_ExpressionList_NonString_Named<>(new FieldExpression(getter), this);
 	}
 
 	@Override
 	public final <T> ISharedResultMap_OpsAndTo_Numeric_Named<MODEL, RESULT, Long, NAMED_MAPPED> map(IFunctionLong<T> getter) {
-		return new ResultMapper_ExpressionList_Numeric_Named<>(new FieldExpression(getter), this);
+		return new ResultMapper_ExpressionList_NonString_Named<>(new FieldExpression(getter), this);
 	}
 
 	@Override
 	public final <T> ISharedResultMap_OpsAndTo_Numeric_Named<MODEL, RESULT, BigDecimal, NAMED_MAPPED> map(IFunctionBigDecimal<T> getter) {
-		return new ResultMapper_ExpressionList_Numeric_Named<>(new FieldExpression(getter), this);
+		return new ResultMapper_ExpressionList_NonString_Named<>(new FieldExpression(getter), this);
 	}
 
 	@Override
 	public final <T> ISharedResultOps_String_Named<MODEL, RESULT, NAMED_MAPPED> map(StringFunction<T> getter) {
 		return new ResultMapper_ExpressionList_String_Named<>(new FieldExpression(getter), this);
+	}
+
+	@Override
+	public final <T> ISharedResultMap_OpsAndTo_Numeric_Named<MODEL, RESULT, Date, NAMED_MAPPED> map(IFunctionDate<T> getter) {
+		return new ResultMapper_ExpressionList_NonString_Named<>(new FieldExpression(getter), this);
 	}
 
 	@Override
