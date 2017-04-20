@@ -2,6 +2,8 @@ package com.neaterbits.query.sql.dsl.api;
 
 import java.util.List;
 
+import com.neaterbits.query.sql.dsl.api.entity.IEntityModelUtil;
+
 final class JPAConditionNativeInUnresolved extends SQLConditionUnresolved {
 
 	private final BaseParamImpl<?> param;
@@ -17,7 +19,7 @@ final class JPAConditionNativeInUnresolved extends SQLConditionUnresolved {
 	}
 
 	@Override
-	void resolve(QueryDialect_SQL dialect, QueryBuilder sb, ParamValueResolver paramValueResolver) {
+	void resolve(CompiledFieldReference field, IEntityModelUtil entityModelUtil, QueryDialect_SQL dialect, QueryBuilder sb, ParamValueResolver paramValueResolver) {
 		
 		final Object value = paramValueResolver.resolveParam(param);
 		
@@ -38,7 +40,7 @@ final class JPAConditionNativeInUnresolved extends SQLConditionUnresolved {
 				sb.append(',');
 			}
 
-			SQLConditionToOperator.appendLiteral(dialect, list.get(i), sb::append);
+			SQLConditionToOperator.appendLiteral(field, entityModelUtil, dialect, list.get(i), sb::append);
 		}
 		
 		sb.append(')');

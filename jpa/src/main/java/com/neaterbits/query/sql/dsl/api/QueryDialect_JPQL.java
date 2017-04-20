@@ -101,7 +101,7 @@ final class QueryDialect_JPQL extends QueryDialect_SQL {
 
 	@Override
 	final ConditionStringBuilder makeConditionStringBuilder(QueryParametersDistinct distinctParams) {
-		return new ConditionStringBuilder_JPQL(this, distinctParams);
+		return new ConditionStringBuilder_JPQL(this, entityModelUtil, distinctParams);
 	}
 	
 	private String getSourceTypeName(Class<?> javaType) {

@@ -49,13 +49,13 @@ final class PreparedQueryBuilderORM<MANAGED, EMBEDDED, IDENTIFIABLE, ATTRIBUTE, 
 	
 
 	final PreparedQueryConditionsBuilder createConditionsBuilder(QueryDialect_SQL dialect, EConditionsClause conditionsClause, boolean atRoot) {
-		return new PreparedQueryConditionsBuilderORM(dialect, conditionsClause, atRoot);
+		return new PreparedQueryConditionsBuilderORM(dialect, entityModelUtil, conditionsClause, atRoot);
 	}
 
 	private static final SQLConditionToOperator conditionToOperator = new SQLConditionToOperator();
 	
-	private <QUERY> PreparedQueryComparisonRHS convertCondition(EClauseOperator operator, ConditionValue value, ConditionStringBuilder sb) {
-		return conditionToOperator.convert(operator, value, sb);
+	private <QUERY> PreparedQueryComparisonRHS convertCondition(CompiledFieldReference field, EClauseOperator operator, ConditionValue value, ConditionStringBuilder sb) {
+		return conditionToOperator.convert(field, operator, value, sb);
 	}
 	
 	@Override
@@ -761,9 +761,9 @@ final class PreparedQueryBuilderORM<MANAGED, EMBEDDED, IDENTIFIABLE, ATTRIBUTE, 
 					
 
 			// Operator and value
-			final PreparedQueryComparisonRHS preparedCondition = convertCondition(operator, value, conditionSB);
+			final PreparedQueryComparisonRHS preparedCondition = convertCondition(lhs, operator, value, conditionSB);
 
-			final PreparedQueryConditionComparison prepared = new PreparedQueryConditionComparison(lhsFunctions, left, preparedCondition);
+			final PreparedQueryConditionComparison prepared = new PreparedQueryConditionComparison(lhsFunctions, lhs, left, preparedCondition);
 
 			sub.addComparisonCondition(original, prepared);
 			
@@ -813,9 +813,9 @@ final class PreparedQueryBuilderORM<MANAGED, EMBEDDED, IDENTIFIABLE, ATTRIBUTE, 
 				
 
 				// Operator and value
-				final PreparedQueryComparisonRHS preparedCondition = convertCondition(operator, value, conditionSB);
+				final PreparedQueryComparisonRHS preparedCondition = convertCondition(lhs, operator, value, conditionSB);
 
-				final PreparedQueryConditionComparison prepared = new PreparedQueryConditionComparison(lhsFunctions, left, preparedCondition);
+				final PreparedQueryConditionComparison prepared = new PreparedQueryConditionComparison(lhsFunctions, lhs, left, preparedCondition);
 
 				sub.addComparisonCondition(original, prepared);
 				

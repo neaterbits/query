@@ -4,7 +4,9 @@ import java.lang.annotation.Annotation;
 import java.lang.reflect.AccessibleObject;
 import java.lang.reflect.Member;
 import java.lang.reflect.Method;
+import java.sql.Date;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -18,6 +20,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
 import javax.persistence.metamodel.Attribute;
 import javax.persistence.metamodel.Attribute.PersistentAttributeType;
 import javax.persistence.metamodel.BasicType;
@@ -33,6 +36,7 @@ import javax.persistence.metamodel.Type.PersistenceType;
 import com.neaterbits.query.sql.dsl.api.entity.AttributeType;
 import com.neaterbits.query.sql.dsl.api.entity.ComplexType;
 import com.neaterbits.query.sql.dsl.api.entity.ESubClassing;
+import com.neaterbits.query.sql.dsl.api.entity.ETemporalType;
 import com.neaterbits.query.sql.dsl.api.entity.EntityModel;
 import com.neaterbits.query.sql.dsl.api.entity.EntityUtil;
 import com.neaterbits.query.sql.dsl.api.entity.IdType;
@@ -589,12 +593,12 @@ public class JPAEntityModel implements EntityModel<
 			
 			targetEntity = getAssociationTarget(attribute);
 			
-			// Loop over all ManyToOne attribues with target here
+			// Loop over all ManyToOne attributes with target here
 			corresponding = findOneToManyWithTarget(targetEntity, attribute.getDeclaringType().getJavaType());
-			
 			break;
 
 		case MANY_TO_MANY:
+
 		default:
 			throw new UnsupportedOperationException("Unknown target entity type " + attribute.getPersistentAttributeType());
 		}
@@ -788,6 +792,75 @@ public class JPAEntityModel implements EntityModel<
 		return ret;
 	}
 	
+	@Override
+	public ETemporalType getTemporalTypeForGetter(Class<?> type, Method getter) {
+		final EntityType<?> entityType = metamodel.entity(type);
+
+		if (entityType == null) {
+			throw new IllegalStateException("No entity type for " + type);
+		}
+
+		final Attribute<?, ?> attr = findAttr(entityType, getter);
+
+		if (attr == null) {
+			throw new IllegalArgumentException("No attribute for getter " + getter);
+		}
+
+		
+		// Get default and at the same type check that is a time based attribute
+		final Class<?> javaType = attr.getJavaType();
+		
+		// Does it have a @Temporal annotation ?
+		final ETemporalType defaultType;
+
+		if (javaType.equals(java.util.Date.class)) {
+			defaultType = ETemporalType.TIMESTAMP;
+		}
+		else if (javaType.equals(Calendar.class)) {
+			defaultType = ETemporalType.TIMESTAMP;
+		}
+		else if (javaType.equals(java.sql.Date.class)) {
+			defaultType = ETemporalType.DATE;
+		}
+		else if (javaType.equals(java.sql.Time.class)) {
+			defaultType = ETemporalType.TIME;
+		}
+		else if (javaType.equals(java.sql.Timestamp.class)) {
+			defaultType = ETemporalType.TIMESTAMP;
+		}
+		else {
+			throw new IllegalStateException("Unknown temporal type: " + javaType.getName() + " in attr " + attr.getName() + " of type " + javaType.getName());
+		}
+
+		final Temporal temporal = getAnnotation(attr, Temporal.class);
+
+		final ETemporalType temporalType;
+
+		if (temporal == null) {
+			temporalType = defaultType;
+		}
+		else {
+			switch (temporal.value()) {
+			case DATE:
+				temporalType = ETemporalType.DATE;
+				break;
+
+			case TIME:
+				temporalType = ETemporalType.TIME;
+				break;
+
+			case TIMESTAMP:
+				temporalType = ETemporalType.TIMESTAMP;
+				break;
+
+			default:
+				throw new IllegalStateException("Unknown temporal type " + temporal.value() + " for attribute " + attr.getName() + " of " + javaType.getName());
+			}
+		}
+		
+		return temporalType;
+	}
+
 	private static <T extends Annotation> T getAnnotation(Attribute<?, ?> attr, Class<T> annotationClass) {
 		
 		final T ret;

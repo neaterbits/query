@@ -1,5 +1,7 @@
 package com.neaterbits.query.sql.dsl.api;
 
+import com.neaterbits.query.sql.dsl.api.entity.IEntityModelUtil;
+
 final class SQLConditionLikeWithParamUnresolved extends SQLConditionUnresolved {
 
 	private final boolean wildcardBefore;
@@ -19,7 +21,7 @@ final class SQLConditionLikeWithParamUnresolved extends SQLConditionUnresolved {
 	}
 
 	@Override
-	void resolve(QueryDialect_SQL dialect, QueryBuilder sb, ParamValueResolver resolver) {
+	void resolve(CompiledFieldReference field, IEntityModelUtil entityModelUtil, QueryDialect_SQL dialect, QueryBuilder sb, ParamValueResolver resolver) {
 
 		if (resolver == null) {
 			throw new IllegalArgumentException("resolver == null");

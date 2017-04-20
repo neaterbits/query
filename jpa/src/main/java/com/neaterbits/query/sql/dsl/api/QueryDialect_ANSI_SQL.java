@@ -346,7 +346,7 @@ final class QueryDialect_ANSI_SQL extends QueryDialect_SQL {
 
 	@Override
 	final ConditionStringBuilder makeConditionStringBuilder(QueryParametersDistinct distinctParams) {
-		return new ConditionStringBuilder_Native(this, distinctParams);
+		return new ConditionStringBuilder_Native(this, entityModelUtil, distinctParams);
 	}
 	
 	private String getTableName(Class<?> javaType) {

@@ -1,5 +1,7 @@
 package com.neaterbits.query.sql.dsl.api;
 
+import com.neaterbits.query.sql.dsl.api.entity.IEntityModelUtil;
+
 final class SQLConditionResolved extends SQLCondition {
 
 	private final Param<?> anyResolvedParam;
@@ -16,7 +18,7 @@ final class SQLConditionResolved extends SQLCondition {
 	}
 
 	@Override
-	void resolve(QueryDialect_SQL dialect, QueryBuilder sb, ParamValueResolver resolver) {
+	void resolve(CompiledFieldReference field, IEntityModelUtil entityModelUtil, QueryDialect_SQL dialect, QueryBuilder sb, ParamValueResolver resolver) {
 		sb.append(getConditionResolvedPrefix());
 	}
 

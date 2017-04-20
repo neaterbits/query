@@ -1,14 +1,15 @@
 package com.neaterbits.query.sql.dsl.api;
 
+import com.neaterbits.query.sql.dsl.api.entity.IEntityModelUtil;
+
 final class ConditionStringBuilder_Native extends ConditionStringBuilder {
 
 	private final QueryParametersDistinct distinctParams;
 	
 	
-	ConditionStringBuilder_Native(QueryDialect_SQL dialect, QueryParametersDistinct distinctParams) {
-		
-		super(dialect);
-		
+	ConditionStringBuilder_Native(QueryDialect_SQL dialect, IEntityModelUtil entityModelUtil, QueryParametersDistinct distinctParams) {
+		super(dialect, entityModelUtil);
+
 		if (distinctParams == null) {
 			throw new IllegalArgumentException("distinctParams == null");
 		}

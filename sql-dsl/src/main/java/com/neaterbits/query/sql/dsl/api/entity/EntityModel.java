@@ -58,8 +58,8 @@ public interface EntityModel<MANAGED, EMBEDDED, IDENTIFIABLE, ATTRIBUTE, ATTRIBU
 	
 	// TODO: can be removed or refactored to pass MANAGED?
 	String getEntityFieldNameForGetter(Class<?> type, Method getter);
-	
 	String getColumnNameForGetter(Class<?> type, Method getter);
+	ETemporalType getTemporalTypeForGetter(Class<?> type, Method getter);
 	
 	boolean isBaseType(MANAGED managed);
 

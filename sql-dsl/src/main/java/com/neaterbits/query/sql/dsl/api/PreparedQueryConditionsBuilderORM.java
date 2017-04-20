@@ -2,6 +2,8 @@ package com.neaterbits.query.sql.dsl.api;
 
 import java.util.List;
 
+import com.neaterbits.query.sql.dsl.api.entity.IEntityModelUtil;
+
 /**
  * Common base class for ORM queries / native ANSI SQL due to commonalities
  * 
@@ -12,24 +14,29 @@ import java.util.List;
 final class PreparedQueryConditionsBuilderORM extends PreparedQueryConditionsBuilder {
 
 	private final QueryDialect_SQL dialect;
+	private final IEntityModelUtil entityModelUtil;
 	private final QueryBuilder sb;
 	
 	
-	PreparedQueryConditionsBuilderORM(QueryDialect_SQL dialect, EConditionsClause conditionsClause, boolean atRoot) {
+	PreparedQueryConditionsBuilderORM(QueryDialect_SQL dialect, IEntityModelUtil entityModelUtil, EConditionsClause conditionsClause, boolean atRoot) {
 		super(conditionsClause, atRoot);
 
 		if (dialect == null) {
 			throw new IllegalArgumentException("dialect == null");
 		}
 		
+		if (entityModelUtil == null) {
+			throw new IllegalArgumentException("entityModelUtil == null");
+		}
 
 		this.dialect = dialect;
+		this.entityModelUtil = entityModelUtil;
 		this.sb = new QueryBuilder();
 	}
 	
 	@Override
 	PreparedQueryConditionsBuilder createConditionsBuilder(EConditionsClause conditionsClause, boolean atRoot) {
-		return new PreparedQueryConditionsBuilderORM(dialect, conditionsClause, atRoot);
+		return new PreparedQueryConditionsBuilderORM(dialect, entityModelUtil, conditionsClause, atRoot);
 	}
 
 	
@@ -176,7 +183,7 @@ final class PreparedQueryConditionsBuilderORM extends PreparedQueryConditionsBui
 				
 				sb.append(' ');
 
-				comparison.getRhs().resolve(dialect, sb, resolver);
+				comparison.getRhs().resolve(comparison.getCompiledLhs(), entityModelUtil, dialect, sb, resolver);
 			}
 			else {
 				throw new UnsupportedOperationException("Unknown condition type " + condition.getClass().getSimpleName());

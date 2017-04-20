@@ -27,7 +27,7 @@ public class EntityModelUtil<MANAGED, EMBEDDED, IDENTIFIABLE, ATTRIBUTE, COLL ex
 	public EntityModel<MANAGED, EMBEDDED, IDENTIFIABLE, ATTRIBUTE, COLL> getModel() {
 		return model;
 	}
-	
+
 	@Override
 	public IEntity getEntityInfo(Class<?> type) {
 		
@@ -95,6 +95,11 @@ public class EntityModelUtil<MANAGED, EMBEDDED, IDENTIFIABLE, ATTRIBUTE, COLL ex
 	@Override
 	public final String getColumnNameForGetter(Class<?> type, Method getter) {
 		return getModel().getColumnNameForGetter(type, getter);
+	}
+
+	@Override
+	public ETemporalType getTemporalTypeForGetter(Class<?> type, Method getter) {
+		return getModel().getTemporalTypeForGetter(type, getter);
 	}
 
 	List<EntityAttribute> getAttributes(MANAGED managed) {

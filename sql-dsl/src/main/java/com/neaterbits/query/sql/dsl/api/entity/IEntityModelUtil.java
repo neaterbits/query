@@ -9,4 +9,6 @@ public interface IEntityModelUtil {
 	String getEntityFieldNameForGetter(Class<?> type, Method getter);
 
 	String getColumnNameForGetter(Class<?> type, Method getter);
+
+	ETemporalType getTemporalTypeForGetter(Class<?> type, Method getter);
 }
