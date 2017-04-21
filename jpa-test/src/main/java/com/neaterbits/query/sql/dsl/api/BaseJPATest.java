@@ -57,10 +57,10 @@ public abstract class BaseJPATest extends BaseSQLAPITest {
 	protected static final QueryTestDSCheck store(Consumer<QueryTestDSBuilder> b) {
 		return new QueryTestDSCombined()
 				
-				.add(jpqlDSDerby)
-				.add(nativeDSDerby)
 				.add(jpqlDShsqldb)
 				.add(nativeDShsqldb)
+				.add(jpqlDSDerby)
+				.add(nativeDSDerby)
 				
 				// TODO: test support for in-memory later
 				//.add(inMemory)

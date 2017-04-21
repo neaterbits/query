@@ -1495,4 +1495,43 @@ Men hva om er avhengig av noe lenger fremme i pathen ? Er her NA_CASE kan anvend
 =====
 
 
+!! created collector Short_Collector_Multi_Any_Any with collector QueryCollectorImpl [result=null, mappings=null, sources=null, joins=null, clauses=null, groupByCollector=null, orderByCollector=null, orderByColumns=null]
+!! created collector Short_Collector_Multi_Mapped_Named_Initial with collector QueryCollectorImpl [result=com.neaterbits.query.sql.dsl.api.CollectedQueryResult_Mapped_Multi@c1fa7d4, mappings=null, sources=null, joins=null, clauses=null, groupByCollector=null, orderByCollector=null, orderByColumns=null]
+
+!! created collector SQL_Collector_And_MultiMapped_Named from SQL_Collector_And_MultiMapped_Named with collector QueryCollectorImpl [result=com.neaterbits.query.sql.dsl.api.CollectedQueryResult_Mapped_Multi@c1fa7d4, mappings=com.neaterbits.query.sql.dsl.api.MappingCollector@3f1ddac2, sources=null, joins=null, clauses=null, groupByCollector=null, orderByCollector=null, orderByColumns=null]
+
+!! created collector Collector_GroupBy_Named from Collector_GroupBy_Named with collector QueryCollectorImpl [result=com.neaterbits.query.sql.dsl.api.CollectedQueryResult_Mapped_Multi@c1fa7d4,
+ mappings=com.neaterbits.query.sql.dsl.api.MappingCollector@3f1ddac2, sources=null, joins=null, clauses=null, groupByCollector=null, orderByCollector=null, orderByColumns=null]
+
+
+!! created collector Collector_Having_Named from Collector_Having_Named with collector QueryCollectorImpl [result=com.neaterbits.query.sql.dsl.api.CollectedQueryResult_Mapped_Multi@c1fa7d4, mappings=com.neaterbits.query.sql.dsl.api.MappingCollector@3f1ddac2, sources=null, joins=null, clauses=null, groupByCollector=com.neaterbits.query.sql.dsl.api.Collector_GroupBy_Named@4bafe935, 
+
+orderByCollector=null, orderByColumns=null]
+
+
+
+- having er  i annen clause, så må enten returnere claus-en som sendte oss dit, eller så noe annet.
+Issue er at vi samler conditions i Collector_Conditions_Base og da sletter vi de gamle tydeligvis, siden de ikke settes etter at vi gjør having().
+
+ * sette der i QueryCollectorImpl?
+ * alltid sette i QueryCollectorImpl? Vet ikke om er conditions eller having. Hva er beste måte å differensiere her?
+
+Vi må vite om er having eller where i det vi instansierer og så må all collection bare kalles på query-collectoren? Men vet altså ikke hvilken vi er i.
+
+Kunne alltid satt conditions når vi exiter
+ => groupBy
+ => orderBy
+ => build()
+
+.having()
+
+Evt abstract-metode som returnerer hvor den skal lagre clause ved construction.
+Kan sette de i begynnelsen også men krever at vet at er conditions, og ganske mange steder instansierer.
+
+abstract-methode fungerer dårlig, se på ConditionsClause? Kan se på original-clause? eller type.
+Må alltid ha type i Collector_Clause, så kan bruke denne til å sette? Dvs EConditionsClause.
+
+Collector_Clause har alltid dette, men denne lagres unna.
+
+
 

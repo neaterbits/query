@@ -103,6 +103,7 @@ abstract class Collector_Conditions_GroupBy<MODEL, RESULT, AFTER_GROUP_BY>
 		}
 
 		// Now set clauses before compiling
+		// TODO: is this necessary after setting in below clause?
 		if (clauseCollector.getConditionsClause() == EConditionsClause.WHERE) {
 			queryCollector.setClauses(clauseCollector);
 		}
@@ -112,24 +113,33 @@ abstract class Collector_Conditions_GroupBy<MODEL, RESULT, AFTER_GROUP_BY>
 	}
 	
 	
+	@SuppressWarnings("unchecked")
+	private <T> T prepareGroupBy(Collector_GroupBy<MODEL, ?> groupByCollector) {
+		
+		getQueryCollector().setGroupBy(groupByCollector);
+		
+		if (clauseCollector != null) {
+			// Must set clauses so are stored
+			getQueryCollector().setClauses(clauseCollector);
+		}
+		
+		return (T)groupByCollector;
+	}
+	
 
-	// Overriden by interfaces further down in the hierarchy
+	// Overridden by interfaces further down in the hierarchy
 	public final <T, R> ISharedProcessResult_After_GroupBy_Or_List_Named<MODEL, RESULT> groupBy(Function<T, R> field) {
 		
 		final Collector_GroupBy_Named<MODEL, RESULT> groupByCollector = new Collector_GroupBy_Named<>(this, new FunctionGetter(field), this);
 		
-		getQueryCollector().setGroupBy(groupByCollector);
-		
-		return (ISharedProcessResult_After_GroupBy_Or_List_Named<MODEL, RESULT>)groupByCollector;
+		return prepareGroupBy(groupByCollector);
 	}
 
 	public final <R> ISharedProcessResult_After_GroupBy_Or_List_Alias<MODEL, RESULT> groupBy(Supplier<R> field) {
 		
 		final Collector_GroupBy_Alias<MODEL, RESULT> groupByCollector = new Collector_GroupBy_Alias<>(this, new SupplierGetter(field), this);
-		
-		getQueryCollector().setGroupBy(groupByCollector);
-		
-		return (ISharedProcessResult_After_GroupBy_Or_List_Alias<MODEL, RESULT>)groupByCollector;
+
+		return prepareGroupBy(groupByCollector);
 	}
 	
 	@SuppressWarnings("unchecked")
@@ -137,7 +147,7 @@ abstract class Collector_Conditions_GroupBy<MODEL, RESULT, AFTER_GROUP_BY>
 
 		final Collector_GroupBy<MODEL, RESULT> groupByCollector = createGroupByCollector(this, Arrays.copyOf(resultColumns, resultColumns.length), this);;
 
-		getQueryCollector().setGroupBy(groupByCollector);
+		prepareGroupBy(groupByCollector);
 
 		return (AFTER_GROUP_BY)this;
 	}

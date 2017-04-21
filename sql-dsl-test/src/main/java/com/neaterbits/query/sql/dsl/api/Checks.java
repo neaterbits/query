@@ -88,7 +88,12 @@ final class Checks {
         assertThat(query).isNotNull();
 
         assertThat(result).isNotNull();
-        assertThat(result.size()).isEqualTo(expected.size());
+        
+        if (result.size() != expected.size()) {
+        	throw new AssertionError("Exptected result set of size " + expected.size() + ", got " + result.size() + " (expected: " + expected + ", got " + result + ")");
+        }
+
+        //assertThat(result.size()).isEqualTo(expected.size());
 		
         return result;
 	}

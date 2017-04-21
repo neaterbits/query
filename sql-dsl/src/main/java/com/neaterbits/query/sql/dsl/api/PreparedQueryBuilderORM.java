@@ -286,7 +286,7 @@ final class PreparedQueryBuilderORM<MANAGED, EMBEDDED, IDENTIFIABLE, ATTRIBUTE, 
 
 		return ret;
 	}
-	
+
 	final <QUERY> void addResultProcessing(ExecutableQuery<QUERY> q, QUERY query, QueryParametersDistinct distinctParams) {
 		// Check whether we should do result-processing and add that
 		final int numGroupBy = q.getGroupByFieldCount(query);
@@ -296,12 +296,12 @@ final class PreparedQueryBuilderORM<MANAGED, EMBEDDED, IDENTIFIABLE, ATTRIBUTE, 
 		}
 
 		if (q.hasHaving(query)) {
-			
+
 			// Create conditions 
 			final ExecutableQueryConditions<QUERY> qh = q.getExecutableQueryHaving();
-			
+
 	    	final int maxDepth = qh.getConditionsMaxDepth(query);
-	    	
+
 	    	final int [] conditionIndices = new int[maxDepth];
 
 			final PreparedQueryConditionsBuilder conditionsBuilder = createConditionsBuilder(dialect, EConditionsClause.HAVING, true);
@@ -312,32 +312,30 @@ final class PreparedQueryBuilderORM<MANAGED, EMBEDDED, IDENTIFIABLE, ATTRIBUTE, 
 
 			final ConditionStringBuilder conditionSB = dialect.makeConditionStringBuilder(distinctParams);
 			final ConditionsType conditionsType = qh.getConditionsType(query, 0, conditionIndices);
-			
+
 	    	prepareConditions(q, qh, query, conditionsType, conditionsBuilder, 0, conditionIndices, conditionSB);
-	    	
+
 	    	// TODO: half-way because we do not have parameters
 	    	resolveFromParams(conditionsBuilder, null);
-	    	
+
 	    	if (conditionsBuilder.hasUnresolved()) {
 	    		throw new IllegalStateException("TODO: having has unresolved conditions");
 	    	}
 		}
-		
 
 		final int numOrderBy = q.getOrderByFieldCount(query);
-		
+
 		if (numOrderBy > 0) {
-			
+
 			final List<FieldReference> fieldReferences = getFieldReferences(q, query, numOrderBy, q::getOrderByField);
 			final List<OrderByReference> orderByReferences = new ArrayList<>(numOrderBy);
-			
+
 			for (int i = 0; i < numOrderBy; ++ i) {
-				
 				final ESortOrder sortOrder = q.getOrderBySortOrder(query, i);
-				
+
 				orderByReferences.add(new OrderByReference(fieldReferences.get(i), sortOrder));
 			}
-			
+
 			dialect.appendOrderBy(s, orderByReferences);
 		}
 	}
@@ -355,7 +353,6 @@ final class PreparedQueryBuilderORM<MANAGED, EMBEDDED, IDENTIFIABLE, ATTRIBUTE, 
 		final int [] fromSelectSources;
 		
 		final int numSources = q.getAllSourceCount(query);
-		
 		
 		if (q.hasJoins(query)) {
 			
