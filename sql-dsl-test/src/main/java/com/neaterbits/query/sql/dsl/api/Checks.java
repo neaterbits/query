@@ -90,7 +90,7 @@ final class Checks {
         assertThat(result).isNotNull();
         
         if (result.size() != expected.size()) {
-        	throw new AssertionError("Exptected result set of size " + expected.size() + ", got " + result.size() + " (expected: " + expected + ", got " + result + ")");
+        	throw new AssertionError("Expected result set of size " + expected.size() + ", got " + result.size() + " (expected: " + expected + ", got " + result + ")");
         }
 
         //assertThat(result.size()).isEqualTo(expected.size());
