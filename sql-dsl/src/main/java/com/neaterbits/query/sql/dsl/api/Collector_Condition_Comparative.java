@@ -107,7 +107,7 @@ class Collector_Condition_Comparative<MODEL, RESULT, R extends Comparable<R>, L 
 	}
 
 	@Override
-	public final L isLesserOrEqualTo(ValParam<R> value) {
+	public final L isLessOrEqualTo(ValParam<R> value) {
 		if (value == null) {
 			throw new IllegalArgumentException("value == null");
 		}
