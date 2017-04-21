@@ -54,7 +54,7 @@ class QueryCollectorImpl<MODEL> extends Collector_Query<MODEL> {
 		}
 
 		if (queryCollector.getClauses() != null) {
-			throw new IllegalStateException("clauses already set in source");
+			this.clauses = (Collector_Clause)queryCollector.getClauses();
 		}
 		
 		if (queryCollector.getGroupBy() != null) {
@@ -169,17 +169,31 @@ class QueryCollectorImpl<MODEL> extends Collector_Query<MODEL> {
 			throw new IllegalArgumentException("type == null");
 		}
 		
-		if (type != EConditionsClause.WHERE) {
-			throw new IllegalArgumentException("Expected WHERE: " + type);
+		final ICollectorClause ret;
+		
+		switch (type) {
+		case HAVING: // do not store
+			ret = new Collector_Clause(type, ConditionsType.SINGLE);
+			break;
+			
+		case WHERE:
+			if (this.clauses != null) {
+				
+				// TODO for now allow adding if not conditions
+				if (!this.clauses.isEmpty()) {
+					throw new IllegalStateException("clauses already set");
+				}
+			}
+	
+			this.clauses = new Collector_Clause(type, ConditionsType.SINGLE);
+			ret = clauses;
+			break;
+
+		default:
+			throw new IllegalArgumentException("Unexpected type: " + type);
 		}
 
-		if (this.clauses != null) {
-			throw new IllegalStateException("clauses already set");
-		}
-
-		this.clauses = new Collector_Clause(type, ConditionsType.SINGLE);
-
-		return clauses;
+		return ret;
 	}
 	
 	@Override
@@ -295,7 +309,7 @@ class QueryCollectorImpl<MODEL> extends Collector_Query<MODEL> {
 	private static final class Collector_Clause implements ICollectorClause {
 		
 	    private final EConditionsClause conditionsClause;		
-		private final ConditionsType conditionsType;
+		private ConditionsType conditionsType;
 		private final List<CollectedCondition> conditions;
 
 		Collector_Clause(Collector_Clause whereClauses, ConditionsType newConditionsType) {
@@ -357,7 +371,17 @@ class QueryCollectorImpl<MODEL> extends Collector_Query<MODEL> {
 		
 		@Override
 		public ICollectorClause addConditionsType(ConditionsType conditionsType) {
-			throw new UnsupportedOperationException("TODO");
+			if (this.conditionsType != ConditionsType.SINGLE) {
+				throw new IllegalStateException("Only to be called for initial: " + this.conditionsType);
+			}
+			
+			if (conditions.size() != 1) {
+				throw new IllegalStateException("Expected excatly one condition");
+			}
+			
+			this.conditionsType = conditionsType;
+			
+			return this;
 		}
 
 		@Override
