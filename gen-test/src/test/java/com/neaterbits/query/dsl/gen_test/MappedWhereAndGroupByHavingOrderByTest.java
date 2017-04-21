@@ -33,7 +33,7 @@ public class MappedWhereAndGroupByHavingOrderByTest extends GEN_BaseTestCase {
     			.where(Farm::getSubFarmId).isEqualTo("sub2")
     			.and(Farm::getFarmId).endsWith("3")
     			.groupBy(Farm::getFarmId).and(Farm::getSubFarmId)
-    			.having(Farm::getFarmId).contains("other")
+    			.having(Farm::getFarmId).contains("oth").and(Farm::getFarmId).contains("er")
     			.orderBy(Farm::getFarmId).desc().and(Farm::getSubFarmId)
     			.build(); 
     	
@@ -74,7 +74,7 @@ public class MappedWhereAndGroupByHavingOrderByTest extends GEN_BaseTestCase {
     			.where  (f::getSubFarmId).isEqualTo("sub2")
     			.and    (f::getFarmId).endsWith("3")
     			.groupBy(f::getFarmId).and(f::getSubFarmId)
-    			.having (f::getFarmId).contains("other")
+    			.having (f::getFarmId).contains("oth").and(f::getFarmId).contains("er")
     			.orderBy(f::getFarmId).desc().and(f::getSubFarmId)
     			.build(); 
     	
