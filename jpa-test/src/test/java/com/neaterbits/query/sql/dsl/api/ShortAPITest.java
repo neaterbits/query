@@ -1006,4 +1006,15 @@ public class ShortAPITest extends BaseJPATest {
 
 		assertThat(true).isEqualTo(false);
 	}
+
+	@Test
+	public void test_Or_And_AfterHaving() {
+
+		// must test a few variations variations of this, but can probably keep it simple
+		// as to what is before, eg no where-clause or joins
+
+		assertThat(true).isEqualTo(false);
+	}
+
 }
+
