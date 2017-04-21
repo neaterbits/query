@@ -84,7 +84,7 @@ abstract class Classic_Collector_Result<
 	}
 
 	@Override
-	public <T> ISharedResultOps_String_Named<MODEL, RESULT, MAPPED_SOURCE_NAMED> map(StringFunction<T> getter) {
+	public <T> ISharedResultOps_String_Named<MODEL, RESULT, MAPPED_SOURCE_NAMED> map(IFunctionString<T> getter) {
 		return new ResultMapper_ExpressionList_String_Named<>(new FieldExpression(getter), createMapToResult());
 	}
 

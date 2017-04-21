@@ -121,7 +121,7 @@ abstract class Collector_And_Named<
 	}
 
 	@Override
-	public final <T> ISharedCondition_Comparable_String_All<MODEL, RESULT, AND_CLAUSES> and(StringFunction<T> getter) {
+	public final <T> ISharedCondition_Comparable_String_All<MODEL, RESULT, AND_CLAUSES> and(IFunctionString<T> getter) {
 		return new Collector_Condition_String<MODEL, RESULT, AND_CLAUSES>(this, makeGetterExpression(getter));
 	}
 

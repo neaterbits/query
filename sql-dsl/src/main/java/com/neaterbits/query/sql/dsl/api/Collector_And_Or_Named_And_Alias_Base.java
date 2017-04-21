@@ -140,7 +140,7 @@ abstract class Collector_And_Or_Named_And_Alias_Base<
 	}
 
 	@Override
-	public final <T> ISharedCondition_Comparable_String_All<MODEL, RESULT, NAMED_AND_CLAUSES> and(StringFunction<T> getter) {
+	public final <T> ISharedCondition_Comparable_String_All<MODEL, RESULT, NAMED_AND_CLAUSES> and(IFunctionString<T> getter) {
 		return andNamedClassImplString(new FieldExpression(getter));
 	}
 
@@ -260,7 +260,7 @@ abstract class Collector_And_Or_Named_And_Alias_Base<
 	}
 
 	@Override
-	public final <T> ISharedCondition_Comparable_String_All<MODEL, RESULT, NAMED_OR_CLAUSES> or(StringFunction<T> getter) {
+	public final <T> ISharedCondition_Comparable_String_All<MODEL, RESULT, NAMED_OR_CLAUSES> or(IFunctionString<T> getter) {
 		return orNamedClassImplString(new FieldExpression(getter));
 	}
 

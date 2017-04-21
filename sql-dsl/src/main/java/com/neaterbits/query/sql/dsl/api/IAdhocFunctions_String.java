@@ -8,12 +8,12 @@ public interface IAdhocFunctions_String<
 		
 		STRING_CLAUSE extends ISharedCondition_Comparable_String_Value<MODEL, RESULT, RET>> {
 		
-		STRING_CLAUSE lower(StringFunction<ENTITY> getter);
+		STRING_CLAUSE lower(IFunctionString<ENTITY> getter);
 		IAdhocFunctions_String<MODEL, RESULT, ENTITY, RET, STRING_CLAUSE> lower();
 		
-		STRING_CLAUSE upper(StringFunction<ENTITY> getter);
+		STRING_CLAUSE upper(IFunctionString<ENTITY> getter);
 		IAdhocFunctions_String<MODEL, RESULT, ENTITY, RET, STRING_CLAUSE> upper();
 		
-		STRING_CLAUSE trim(StringFunction<ENTITY> getter);
+		STRING_CLAUSE trim(IFunctionString<ENTITY> getter);
 		IAdhocFunctions_String<MODEL, RESULT, ENTITY, RET, STRING_CLAUSE> trim();
 }

@@ -102,7 +102,7 @@ abstract class Collector_Functions_Base<
 
 	abstract <T, R extends Comparable<?>> ISharedFunction_Next<MODEL, RESULT, NAMED_RET> abstractaddAndReturnComparable(Function_Aggregate function, Function<T, R> getter);
 	
-	abstract <T> ISharedFunction_Next<MODEL, RESULT, NAMED_RET> addAndReturnString(Function_String function, StringFunction<T> getter);
+	abstract <T> ISharedFunction_Next<MODEL, RESULT, NAMED_RET> addAndReturnString(Function_String function, IFunctionString<T> getter);
 	
 	abstract <R extends Comparable<R>, CLAUSE> CLAUSE addSubNumeric(Function_Arithmetic function, ISharedSubOperandsFunction_Named<MODEL, RESULT, R> sub);
 	
@@ -136,20 +136,20 @@ abstract class Collector_Functions_Base<
 	
 	@Override
 	@SuppressWarnings("unchecked")
-	public final <T> NAMED_STRING_RET lower(StringFunction<T> getter) {
+	public final <T> NAMED_STRING_RET lower(IFunctionString<T> getter) {
 		return (NAMED_STRING_RET)addAndReturnString(Function_String_Lower.INSTANCE, getter);
 	}
 
 
 	@Override
 	@SuppressWarnings("unchecked")
-	public final <T> NAMED_STRING_RET upper(StringFunction<T> getter) {
+	public final <T> NAMED_STRING_RET upper(IFunctionString<T> getter) {
 		return (NAMED_STRING_RET)addAndReturnString(Function_String_Upper.INSTANCE, getter);
 	}
 
 	@Override
 	@SuppressWarnings("unchecked")
-	public final <T> NAMED_STRING_RET trim(StringFunction<T> getter) {
+	public final <T> NAMED_STRING_RET trim(IFunctionString<T> getter) {
 		return (NAMED_STRING_RET)addAndReturnString(Function_String_Trim.INSTANCE, getter);
 	}
 	

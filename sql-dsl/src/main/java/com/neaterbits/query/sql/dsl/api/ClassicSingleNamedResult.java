@@ -36,7 +36,7 @@ final class ClassicSingleNamedResult<MODEL, RESULT>
 
 	@Override
 	public ISharedCondition_Comparable_String_All<MODEL, RESULT, IClassicSingleAndOrLogicalClausesNamed<MODEL, RESULT>>
-			where(StringFunction<RESULT> func) {
+			where(IFunctionString<RESULT> func) {
 
 		return new Collector_Condition_String<MODEL, RESULT, IClassicSingleAndOrLogicalClausesNamed<MODEL,RESULT>>(this, makeGetterExpression(func));
 	}
@@ -53,7 +53,7 @@ final class ClassicSingleNamedResult<MODEL, RESULT>
 
 	@Override
 	public ISharedCondition_Comparable_String_All<MODEL, RESULT, IClassicSingleAndClausesNamed<MODEL, RESULT>>
-			and(StringFunction<RESULT> getter) {
+			and(IFunctionString<RESULT> getter) {
 
 		final SQL_Collector_And_Named_Single<MODEL, RESULT> andClauses = new SQL_Collector_And_Named_Single<>(this);
 		
@@ -72,7 +72,7 @@ final class ClassicSingleNamedResult<MODEL, RESULT>
 
 	@Override
 	public ISharedCondition_Comparable_String_All<MODEL, RESULT, IClassicSingleOrClausesNamed<MODEL, RESULT>>
-			or(StringFunction<RESULT> getter) {
+			or(IFunctionString<RESULT> getter) {
 
 		final Classic_Collector_Or_Named_Single<MODEL, RESULT> orClauses = new Classic_Collector_Or_Named_Single<>(this);
 

@@ -173,7 +173,7 @@ abstract class AdhocConditions<MODEL, RESULT, QUERY extends AdhocQuery_Named<MOD
 	
 	@Override
 	@SuppressWarnings({"unchecked", "rawtypes"})
-	public final ISharedCondition_Comparable_String_Value<MODEL, RESULT, IAdhocLogical_Or<MODEL, RESULT, Object>> or(StringFunction<Object> getter) {
+	public final ISharedCondition_Comparable_String_Value<MODEL, RESULT, IAdhocLogical_Or<MODEL, RESULT, Object>> or(IFunctionString<Object> getter) {
 		return (ISharedCondition_Comparable_String_Value)addCondition(ConditionsType.OR, null, getter, null);
 	}
 
@@ -224,7 +224,7 @@ abstract class AdhocConditions<MODEL, RESULT, QUERY extends AdhocQuery_Named<MOD
 
 	@Override
 	@SuppressWarnings({"unchecked", "rawtypes"})
-	public final ISharedCondition_Comparable_String_Value<MODEL, RESULT, IAdhocLogical_And<MODEL, RESULT, Object>> and(StringFunction<Object> getter) {
+	public final ISharedCondition_Comparable_String_Value<MODEL, RESULT, IAdhocLogical_And<MODEL, RESULT, Object>> and(IFunctionString<Object> getter) {
 		return (ISharedCondition_Comparable_String_Value)addCondition(ConditionsType.AND, null, getter, null);
 	}
 	
@@ -276,7 +276,7 @@ abstract class AdhocConditions<MODEL, RESULT, QUERY extends AdhocQuery_Named<MOD
 	@SuppressWarnings({"unchecked", "rawtypes"})
 	public ISharedCondition_Comparable_String_Base<MODEL, RESULT, AdhocConditions<MODEL, RESULT, QUERY>>
 	
-			onString(AdhocFunctions<MODEL, RESULT, ?, ?, ?, ?, ?> functions, StringFunction<?> getter) {
+			onString(AdhocFunctions<MODEL, RESULT, ?, ?, ?, ?, ?> functions, IFunctionString<?> getter) {
 
 		addCondition(functions.getConditionsType(), functions, getter, null);
 

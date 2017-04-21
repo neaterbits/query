@@ -218,7 +218,7 @@ abstract class Collector_NestedFunctions_Base<
 	}
 
 	@Override
-	final <T> ISharedFunction_Next<MODEL, RESULT, NAMED_RET> addAndReturnString(Function_String function, StringFunction<T> getter) {
+	final <T> ISharedFunction_Next<MODEL, RESULT, NAMED_RET> addAndReturnString(Function_String function, IFunctionString<T> getter) {
 		final Expression expression = addNamed(function, getter);
 		
 		return continueAfterNamedStringFunctions(expression);

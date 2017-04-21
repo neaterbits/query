@@ -22,7 +22,7 @@ public interface ISharedOperands_String_Named<
 	<T> TYPE_RET plus(Param<R> param);
 	*/
 	
-	<T> TYPE_RET concat(StringFunction<T> getter);
+	<T> TYPE_RET concat(IFunctionString<T> getter);
 	//<T> TYPE_RET plus(ISharedSubOperandsBuilder<Short> builder);
 	//<T> TYPE_RET plus(Param<Short> param);
 

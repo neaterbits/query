@@ -17,7 +17,7 @@ public interface IAdhocLogical_And<MODEL, RESULT, ENTITY>
 			and(IFunctionBigDecimal<ENTITY> func);
 	
 	ISharedCondition_Comparable_String_Value<MODEL, RESULT, IAdhocLogical_And<MODEL, RESULT, ENTITY>>
-			and(StringFunction<ENTITY> getter);
+			and(IFunctionString<ENTITY> getter);
 
     IAdhocFunctions_Initial<
     		MODEL,

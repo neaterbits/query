@@ -9,7 +9,7 @@ interface IAdhocFunctions_Callback<MODEL, RESULT, RET extends ISharedLogical_Bas
 {
 	ISharedFunction_Next<MODEL, RESULT, RET> onComparable(AdhocFunctions<MODEL, RESULT, ?, ?, ?, ?, ?> functions, Function<?, ? extends Comparable<?>> getter);
 
-	ISharedFunction_Next<MODEL, RESULT, RET> onString(AdhocFunctions<MODEL, RESULT, ?, ?, ?, ?, ?> functions, StringFunction<?> getter);
+	ISharedFunction_Next<MODEL, RESULT, RET> onString(AdhocFunctions<MODEL, RESULT, ?, ?, ?, ?, ?> functions, IFunctionString<?> getter);
 	
 
 }

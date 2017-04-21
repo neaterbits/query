@@ -49,7 +49,7 @@ public interface ISharedLogical_Where_Named_Base<
 	
 	<T> BIGDECIMAL_CLAUSE where(IFunctionBigDecimal<T> func);
 
-	<T> STRING_CLAUSE where(StringFunction<T> func);
+	<T> STRING_CLAUSE where(IFunctionString<T> func);
     
 	<T> DATE_CLAUSE where(IFunctionDate<T> func);
 

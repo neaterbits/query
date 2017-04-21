@@ -56,7 +56,7 @@ final class Collector_GroupBy_Named<MODEL, RESULT> extends Collector_GroupBy<MOD
 	}
 
 	@Override
-	public final <T> ISharedCondition_Comparable_String_All<MODEL, RESULT, ISharedProcessResult_Having_And_Or_Named<MODEL, RESULT>> having(StringFunction<T> getter) {
+	public final <T> ISharedCondition_Comparable_String_All<MODEL, RESULT, ISharedProcessResult_Having_And_Or_Named<MODEL, RESULT>> having(IFunctionString<T> getter) {
 
 		instantiateHaving();
 

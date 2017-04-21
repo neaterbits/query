@@ -12,7 +12,7 @@ public interface IAdhocWhere<MODEL, RESULT, ENTITY, AND_OR_CLAUSES extends IAdho
 
 	ISharedCondition_Comparable_Common_Value<MODEL, RESULT, BigDecimal, AND_OR_CLAUSES> where(IFunctionBigDecimal<ENTITY> func);
 
-	ISharedCondition_Comparable_String_Value<MODEL, RESULT, AND_OR_CLAUSES> where(StringFunction<ENTITY> func);
+	ISharedCondition_Comparable_String_Value<MODEL, RESULT, AND_OR_CLAUSES> where(IFunctionString<ENTITY> func);
 
 	IAdhocFunctions_Initial<
 			MODEL,

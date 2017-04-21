@@ -17,7 +17,7 @@ final class SQL_Collector_And_Named_Single<
 	}
 
 	@Override
-	public ISharedCondition_Comparable_String_All<MODEL, RESULT, IClassicSingleAndClausesNamed<MODEL, RESULT>> and(StringFunction<RESULT> getter) {
+	public ISharedCondition_Comparable_String_All<MODEL, RESULT, IClassicSingleAndClausesNamed<MODEL, RESULT>> and(IFunctionString<RESULT> getter) {
 		return new Collector_Condition_String<MODEL, RESULT, IClassicSingleAndClausesNamed<MODEL,RESULT>>(this, makeGetterExpression(getter));
 	}
 

@@ -9,10 +9,10 @@ public interface ISharedFunctions_String_Named<
 
 > {
 
-    <T> STRING_CLAUSE lower(StringFunction<T> getter);
+    <T> STRING_CLAUSE lower(IFunctionString<T> getter);
 
-    <T> STRING_CLAUSE upper(StringFunction<T> getter);
+    <T> STRING_CLAUSE upper(IFunctionString<T> getter);
 
-    <T> STRING_CLAUSE trim(StringFunction<T> getter);
+    <T> STRING_CLAUSE trim(IFunctionString<T> getter);
 	
 }

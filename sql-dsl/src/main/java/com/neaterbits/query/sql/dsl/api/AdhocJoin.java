@@ -189,7 +189,7 @@ final class AdhocJoin<MODEL, RESULT>
 
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Override
-	public ISharedCondition_Comparable_String_Value<MODEL, RESULT, IAdhocLogical_And_Or<MODEL, RESULT, Object>> where(StringFunction<Object> func) {
+	public ISharedCondition_Comparable_String_Value<MODEL, RESULT, IAdhocLogical_And_Or<MODEL, RESULT, Object>> where(IFunctionString<Object> func) {
 
 		addWhere(func);
 
@@ -471,7 +471,7 @@ final class AdhocJoin<MODEL, RESULT>
 
 	@Override
 	@SuppressWarnings({"unchecked", "rawtypes"})
-	public final ISharedCondition_Comparable_String_Value<MODEL, RESULT, IAdhocLogical_Or<MODEL, RESULT, Object>> or(StringFunction<Object> getter) {
+	public final ISharedCondition_Comparable_String_Value<MODEL, RESULT, IAdhocLogical_Or<MODEL, RESULT, Object>> or(IFunctionString<Object> getter) {
 		return (ISharedCondition_Comparable_String_Value)addConditionNoFunctions(ConditionsType.OR, getter);
 	}
 
@@ -495,7 +495,7 @@ final class AdhocJoin<MODEL, RESULT>
 
 	@Override
 	@SuppressWarnings({"unchecked", "rawtypes"})
-	public final ISharedCondition_Comparable_String_Value<MODEL, RESULT, IAdhocLogical_And<MODEL, RESULT, Object>> and(StringFunction<Object> getter) {
+	public final ISharedCondition_Comparable_String_Value<MODEL, RESULT, IAdhocLogical_And<MODEL, RESULT, Object>> and(IFunctionString<Object> getter) {
 		return (ISharedCondition_Comparable_String_Value)addConditionNoFunctions(ConditionsType.AND, getter);
 	}
 
@@ -562,7 +562,7 @@ final class AdhocJoin<MODEL, RESULT>
 
 	@Override
 	public ISharedCondition_Comparable_String_Base<MODEL, RESULT, ISharedLogical_Base<MODEL, RESULT>> onString(
-			AdhocFunctions<MODEL, RESULT, ?, ?, ?, ?, ?> functions, StringFunction<?> getter) {
+			AdhocFunctions<MODEL, RESULT, ?, ?, ?, ?, ?> functions, IFunctionString<?> getter) {
 
 		addConditionCollectedFunctions(functions.getConditionsType(), functions, getter);
 		

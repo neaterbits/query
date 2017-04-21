@@ -6,6 +6,6 @@ public interface IClassicSingleWhereClauseBuilderNamed<MODEL, RESULT> extends IS
 
 	<R extends Comparable<R>> ISharedCondition_Equality_All<MODEL, RESULT, R, IClassicSingleAndOrLogicalClausesNamed<MODEL, RESULT>> where(Function<RESULT, R> func);
 	
-    ISharedCondition_Comparable_String_All<MODEL, RESULT, IClassicSingleAndOrLogicalClausesNamed<MODEL, RESULT>> where(StringFunction<RESULT> func);
+    ISharedCondition_Comparable_String_All<MODEL, RESULT, IClassicSingleAndOrLogicalClausesNamed<MODEL, RESULT>> where(IFunctionString<RESULT> func);
 	
 }

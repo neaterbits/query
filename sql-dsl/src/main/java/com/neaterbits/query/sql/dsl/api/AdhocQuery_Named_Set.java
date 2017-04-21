@@ -53,7 +53,7 @@ final class AdhocQuery_Named_Set<MODEL>
 
 	@Override
 	@SuppressWarnings({ "unchecked", "rawtypes" })
-	public ISharedCondition_Comparable_String_Value<MODEL, Set<Object>, IAdhocLogical_And_Or_Set<MODEL, Object, Set<Object>>> where(StringFunction<Object> func) {
+	public ISharedCondition_Comparable_String_Value<MODEL, Set<Object>, IAdhocLogical_And_Or_Set<MODEL, Object, Set<Object>>> where(IFunctionString<Object> func) {
 
 		return (ISharedCondition_Comparable_String_Value)addWhereGetter(func);
 	}

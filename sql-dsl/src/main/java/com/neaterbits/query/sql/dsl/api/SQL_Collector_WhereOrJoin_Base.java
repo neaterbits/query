@@ -319,7 +319,7 @@ abstract class SQL_Collector_WhereOrJoin_Base<
 	}
 
 	// implemented in subclass @Override
-	public final <T> ISharedCondition_Comparable_String_All_Compilable<MODEL, RESULT, NAMED_AND_OR> where(StringFunction<T> getter) {
+	public final <T> ISharedCondition_Comparable_String_All_Compilable<MODEL, RESULT, NAMED_AND_OR> where(IFunctionString<T> getter) {
 		
 		return new Collector_Condition_String<MODEL, RESULT, NAMED_AND_OR>(getAfterWhereNamed(), makeGetterExpression(getter));
 	}

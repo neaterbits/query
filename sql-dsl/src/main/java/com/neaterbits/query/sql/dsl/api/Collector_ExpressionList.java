@@ -272,7 +272,7 @@ abstract class Collector_ExpressionList<
 
 	@Override
 	@SuppressWarnings("unchecked")
-	public final <T> STRING_OPERAND_NEXT concat(StringFunction<T> getter) {
+	public final <T> STRING_OPERAND_NEXT concat(IFunctionString<T> getter) {
 		addField(Operator.CONCAT, getter);
 
 		return (STRING_OPERAND_NEXT)this;
@@ -811,17 +811,17 @@ abstract class Collector_ExpressionList<
 	}
 
 	@Override
-	public final <T> NAMED_STRING_RET lower(StringFunction<T> getter) {
+	public final <T> NAMED_STRING_RET lower(IFunctionString<T> getter) {
 		return assureNamedFunctions().lower(getter);
 	}
 
 	@Override
-	public final <T> NAMED_STRING_RET upper(StringFunction<T> getter) {
+	public final <T> NAMED_STRING_RET upper(IFunctionString<T> getter) {
 		return assureNamedFunctions().upper(getter);
 	}
 
 	@Override
-	public final <T> NAMED_STRING_RET trim(StringFunction<T> getter) {
+	public final <T> NAMED_STRING_RET trim(IFunctionString<T> getter) {
 		return assureNamedFunctions().trim(getter);
 	}
 

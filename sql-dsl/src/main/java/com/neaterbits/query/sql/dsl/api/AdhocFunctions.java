@@ -107,7 +107,7 @@ final class AdhocFunctions<
 	}
 		
 	@SuppressWarnings("unchecked")
-	private STRING_CLAUSE onString(Function_String f, StringFunction<?> getter) {
+	private STRING_CLAUSE onString(Function_String f, IFunctionString<?> getter) {
 		add(f);
 		
 		return (STRING_CLAUSE)listener.onString(this, getter);
@@ -168,7 +168,7 @@ final class AdhocFunctions<
 	**************************************************************************/
 
 	@Override
-	public STRING_CLAUSE lower(StringFunction<ENTITY> getter) {
+	public STRING_CLAUSE lower(IFunctionString<ENTITY> getter) {
 		return onString(Function_String_Lower.INSTANCE, getter);
 	}
 
@@ -182,7 +182,7 @@ final class AdhocFunctions<
 	}
 
 	@Override
-	public STRING_CLAUSE upper(StringFunction<ENTITY> getter) {
+	public STRING_CLAUSE upper(IFunctionString<ENTITY> getter) {
 		setScalarType(ScalarType.STRING);
 		
 		return onString(Function_String_Upper.INSTANCE, getter);
@@ -198,7 +198,7 @@ final class AdhocFunctions<
 	}
 
 	@Override
-	public STRING_CLAUSE trim(StringFunction<ENTITY> getter) {
+	public STRING_CLAUSE trim(IFunctionString<ENTITY> getter) {
 		setScalarType(ScalarType.STRING);
 
 		return onString(Function_String_Trim.INSTANCE, getter);

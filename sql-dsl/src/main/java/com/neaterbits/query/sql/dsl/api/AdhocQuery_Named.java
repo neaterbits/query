@@ -532,7 +532,7 @@ abstract class AdhocQuery_Named<MODEL, RESULT>
 
 	@Override
 	public final ISharedCondition_Comparable_String_Base<MODEL, RESULT, ISharedLogical_Base<MODEL, RESULT>> onString(
-			AdhocFunctions<MODEL, RESULT, ?, ?, ?, ?, ?> functions, StringFunction<?> getter) {
+			AdhocFunctions<MODEL, RESULT, ?, ?, ?, ?, ?> functions, IFunctionString<?> getter) {
 		return addWhere(functions, getter);
 	}
 

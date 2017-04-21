@@ -47,7 +47,7 @@ public interface ISharedLogical_Or_Named_Base<
 
     <T> BIGDECIMAL_CLAUSE or(IFunctionBigDecimal<T> getter);
 
-    <T> STRING_CLAUSE or(StringFunction<T> getter);
+    <T> STRING_CLAUSE or(IFunctionString<T> getter);
     
     <T> DATE_CLAUSE or(IFunctionDate<T> getter);
     

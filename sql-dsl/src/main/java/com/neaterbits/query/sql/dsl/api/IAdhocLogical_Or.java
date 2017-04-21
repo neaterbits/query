@@ -18,7 +18,7 @@ public interface IAdhocLogical_Or<MODEL, RESULT, ENTITY>
 
 	
 	ISharedCondition_Comparable_String_Value<MODEL, RESULT, IAdhocLogical_Or<MODEL, RESULT, ENTITY>>
-			or(StringFunction<ENTITY> getter);
+			or(IFunctionString<ENTITY> getter);
 
     IAdhocFunctions_Initial<
 			MODEL,

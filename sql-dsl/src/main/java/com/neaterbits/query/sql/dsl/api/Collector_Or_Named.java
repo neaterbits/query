@@ -105,7 +105,7 @@ abstract class Collector_Or_Named<
 	}
 
 	@Override
-	public final <T> ISharedCondition_Comparable_String_All<MODEL, RESULT, OR_CLAUSES> or(StringFunction<T> getter) {
+	public final <T> ISharedCondition_Comparable_String_All<MODEL, RESULT, OR_CLAUSES> or(IFunctionString<T> getter) {
 		return orClassImplString(new FieldExpression(getter));
 	}
 

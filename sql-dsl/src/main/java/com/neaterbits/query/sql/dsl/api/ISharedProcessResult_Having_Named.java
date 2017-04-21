@@ -20,6 +20,6 @@ public interface ISharedProcessResult_Having_Named<MODEL, RESULT>
 		having(IFunctionBigDecimal<T> getter);
 	
 	<T> ISharedCondition_Comparable_String_All<MODEL, RESULT, ISharedProcessResult_Having_And_Or_Named<MODEL, RESULT>>
-		having(StringFunction<T> getter);
+		having(IFunctionString<T> getter);
 	
 }

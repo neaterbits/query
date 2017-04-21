@@ -16,7 +16,7 @@ final class Classic_Collector_Or_Named_Single<MODEL, RESULT>
 	}
 
 	@Override
-	public ISharedCondition_Comparable_String_All<MODEL, RESULT, IClassicSingleOrClausesNamed<MODEL, RESULT>> or(StringFunction<RESULT> getter) {
+	public ISharedCondition_Comparable_String_All<MODEL, RESULT, IClassicSingleOrClausesNamed<MODEL, RESULT>> or(IFunctionString<RESULT> getter) {
 		return new Collector_Condition_String<MODEL, RESULT, IClassicSingleOrClausesNamed<MODEL,RESULT>>(this, makeGetterExpression(getter));
 	}
 	@Override
