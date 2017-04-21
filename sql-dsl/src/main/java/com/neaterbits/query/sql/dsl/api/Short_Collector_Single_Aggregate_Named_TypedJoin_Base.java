@@ -41,7 +41,7 @@ abstract class Short_Collector_Single_Aggregate_Named_TypedJoin_Base<MODEL, RESU
 
 {
 	Short_Collector_Single_Aggregate_Named_TypedJoin_Base(Short_Collector_Initial_Single_Aggregate_Any<MODEL, RESULT> initial) {
-		super(initial.getQueryCollector(), initial.clauseCollector);
+		super(initial);
 	}
 
 	@Override

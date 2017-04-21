@@ -1,6 +1,8 @@
 package com.neaterbits.query.sql.dsl.api;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.function.Function;
 
 /**
@@ -162,17 +164,22 @@ class QueryCollectorImpl<MODEL> extends Collector_Query<MODEL> {
 	}
 
 	@Override
-	void setClauses(Collector_Clause clauses) {
-		
-		if (clauses == null) {
-			throw new IllegalArgumentException("clauses == null");
+	ICollectorClause addConditionClauses(EConditionsClause type) {
+		if (type == null) {
+			throw new IllegalArgumentException("type == null");
 		}
 		
+		if (type != EConditionsClause.WHERE) {
+			throw new IllegalArgumentException("Expected WHERE: " + type);
+		}
+
 		if (this.clauses != null) {
 			throw new IllegalStateException("clauses already set");
 		}
-		
-		this.clauses = clauses;
+
+		this.clauses = new Collector_Clause(type, ConditionsType.SINGLE);
+
+		return clauses;
 	}
 	
 	@Override
@@ -186,6 +193,8 @@ class QueryCollectorImpl<MODEL> extends Collector_Query<MODEL> {
 		
 		return groupBy;
 	}
+
+
 
 
 	@Override
@@ -276,5 +285,103 @@ class QueryCollectorImpl<MODEL> extends Collector_Query<MODEL> {
 		return "QueryCollectorImpl [result=" + getResult() + ", mappings=" + mappings + ", sources=" + sources + ", joins="
 				+ joins + ", clauses=" + clauses + ", groupByCollector=" + groupByCollector + ", orderByCollector="
 				+ orderByCollector + ", orderByColumns=" + Arrays.toString(orderByColumns) + "]";
+	}
+
+	/**
+	 * Collects clauses in a query
+	 *
+	 */
+
+	private static final class Collector_Clause implements ICollectorClause {
+		
+	    private final EConditionsClause conditionsClause;		
+		private final ConditionsType conditionsType;
+		private final List<CollectedCondition> conditions;
+
+		Collector_Clause(Collector_Clause whereClauses, ConditionsType newConditionsType) {
+			
+			
+			if (newConditionsType != ConditionsType.AND && newConditionsType != ConditionsType.OR) {
+				throw new IllegalArgumentException("expected AND or OR conditions type: " + newConditionsType);
+			}
+			
+			if (whereClauses.conditionsType != ConditionsType.SINGLE) {
+				throw new IllegalArgumentException("Expected where clause");
+			}
+			
+			if (whereClauses.conditions.size() != 1) {
+				throw new IllegalArgumentException("expected exactly one condition collected, got " + whereClauses.conditions.size());
+			}
+
+			this.conditionsClause = whereClauses.conditionsClause;
+			this.conditionsType = newConditionsType;
+			this.conditions = new ArrayList<>(whereClauses.conditions); // keep condition from WHERE clause
+		}
+
+		Collector_Clause(EConditionsClause conditionsClause, ConditionsType conditionsType) {
+			
+			if (conditionsClause == null) {
+				throw new IllegalArgumentException("conditionsClause == null");
+			}
+
+			if (conditionsType == null) {
+				throw new IllegalArgumentException("conditionsType == null");
+			}
+
+			this.conditionsClause = conditionsClause;
+			this.conditionsType = conditionsType;
+			this.conditions = new ArrayList<CollectedCondition>();
+		}
+		
+		
+		@Override
+		public boolean isEmpty() {
+			return conditions.isEmpty();
+		}
+		
+		@Override
+		public EConditionsClause getConditionsClause() {
+			return conditionsClause;
+		}
+
+		@Override
+		public ConditionsType getConditionsType() {
+			return conditionsType;
+		}
+
+
+		@Override
+		public List<CollectedCondition> getConditions() {
+			return conditions;
+		}
+		
+		@Override
+		public ICollectorClause addConditionsType(ConditionsType conditionsType) {
+			throw new UnsupportedOperationException("TODO");
+		}
+
+		@Override
+		public void add(CollectedCondition_Nested nested) {
+			addCollectedCondition(nested);
+		}
+
+		@Override
+		public void add(CollectedCondition_NonNested nonNested) {
+			addCollectedCondition(nonNested);
+		}
+
+		private void addCollectedCondition(CollectedCondition condition) {
+			
+			if (conditionsType == ConditionsType.SINGLE && !conditions.isEmpty()) {
+				throw new IllegalStateException("Trying to add to SINGLE-condition, should create new one");
+			}
+			
+
+			if (condition == null) {
+				throw new IllegalArgumentException("condition == null");
+			}
+
+			conditions.add(condition);
+		}
 	}
 }

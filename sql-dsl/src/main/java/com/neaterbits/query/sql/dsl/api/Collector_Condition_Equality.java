@@ -59,7 +59,7 @@ abstract class Collector_Condition_Equality<MODEL, RESULT, R, L extends ISharedL
 		return addConditionInt(condition);
 	}
 	
-	final L addConditionInt(CollectedCondition condition) {
+	final L addConditionInt(CollectedCondition_NonNested condition) {
 		if (condition == null) {
 			throw new IllegalArgumentException("condition == null");
 		}

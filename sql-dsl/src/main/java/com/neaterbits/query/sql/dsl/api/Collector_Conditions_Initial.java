@@ -11,21 +11,33 @@ abstract class Collector_Conditions_Initial<
 		> extends Collector_Conditions_GroupBy<MODEL, RESULT, AFTER_GROUP_BY> {
 
 	Collector_Conditions_Initial(Collector_Conditions_Initial<MODEL, RESULT, AFTER_GROUP_BY> last, EConditionsClause conditionsClause) {
-		super(last, new Collector_Clause(conditionsClause, ConditionsType.SINGLE));
+		super(last, last.getQueryCollector().addConditionClauses(conditionsClause));
 	}
 
 	Collector_Conditions_Initial(Collector_Conditions_Initial<MODEL, RESULT, AFTER_GROUP_BY> last, EConditionsClause conditionsClause, CollectedQueryResult result) {
-		super(last, new Collector_Clause(conditionsClause, ConditionsType.SINGLE), result);
+		super(last, last.getQueryCollector().addConditionClauses(conditionsClause), result);
 	}
 	
 
-	Collector_Conditions_Initial(Collector_Query<MODEL> queryCollector, Collector_Clause collector) {
+	@Deprecated // TODO necessary?
+	Collector_Conditions_Initial(Collector_Query<MODEL> queryCollector, ICollectorClause collector) {
 		
 		super(queryCollector, collector);
 	}
+
+	Collector_Conditions_Initial(Collector_Query<MODEL> queryCollector) {
+		super(queryCollector, null);
+	}
+
+	Collector_Conditions_Initial(Collector_Query<MODEL> queryCollector, EConditionsClause conditionsClause) {
+		
+		super(queryCollector, queryCollector.addConditionClauses(conditionsClause));
+	}
+
 	
+	@Deprecated // TODO in use?
 	Collector_Conditions_Initial(Collector_GroupBy<MODEL, RESULT> last, EConditionsClause conditionsClause) {
-		super(last, new Collector_Clause(conditionsClause, ConditionsType.SINGLE));
+		super(last, last.getQueryCollector().addConditionClauses(conditionsClause));
 	}
 	
 	

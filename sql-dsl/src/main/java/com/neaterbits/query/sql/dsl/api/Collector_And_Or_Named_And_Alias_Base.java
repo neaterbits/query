@@ -67,7 +67,7 @@ abstract class Collector_And_Or_Named_And_Alias_Base<
 		super(last, conditionsClause, result);
 	}
 
-	Collector_And_Or_Named_And_Alias_Base(Collector_Query<MODEL> queryCollector, Collector_Clause collector) {
+	Collector_And_Or_Named_And_Alias_Base(Collector_Query<MODEL> queryCollector, ICollectorClause collector) {
 		super(queryCollector, collector);
 	}
 	

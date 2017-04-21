@@ -345,7 +345,7 @@ final class CompiledQuery {
 		if (collector.getGroupBy() != null) {
 			compiledGroupBy = compileMappedResultProcessingFields(collector.getGroupBy(), mappings, sources, (fields, indices, getters) -> new CompiledGroupBy(indices, getters) );
 
-			final Collector_Clause having = collector.getGroupBy().getHaving();
+			final ICollectorClause having = collector.getGroupBy().getHaving();
 			
 			if (having != null) {
 				final CompiledConditions havingConditions = compileConditions(having, sources,0);
@@ -895,7 +895,7 @@ final class CompiledQuery {
 		return ret;
 	}
 	
-	private static CompiledConditions compileConditions(Collector_Clause clauses, SelectSourceLookup sources, int level)
+	private static CompiledConditions compileConditions(ICollectorClause clauses, SelectSourceLookup sources, int level)
 		throws CompileException {
 
 		final List<CollectedCondition> list = clauses.getConditions();

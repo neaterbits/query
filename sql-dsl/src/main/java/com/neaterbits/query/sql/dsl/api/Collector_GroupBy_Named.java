@@ -10,7 +10,7 @@ final class Collector_GroupBy_Named<MODEL, RESULT> extends Collector_GroupBy<MOD
 	private Collector_Having_Named<MODEL, RESULT> having;
 
 	@Override
-	Collector_Clause getHaving() {
+	ICollectorClause getHaving() {
 		return having != null ? having.clauseCollector : null;
 	}
 

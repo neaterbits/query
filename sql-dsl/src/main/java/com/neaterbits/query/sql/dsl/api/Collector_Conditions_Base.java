@@ -3,7 +3,7 @@ package com.neaterbits.query.sql.dsl.api;
 abstract class Collector_Conditions_Base<MODEL, RESULT> extends Collector_Base<MODEL> {
 
 
-	final Collector_Clause clauseCollector;
+	final ICollectorClause clauseCollector;
 
 	final EConditionsClause getConditionsClause() {
 		return clauseCollector.getConditionsClause();
@@ -17,7 +17,7 @@ abstract class Collector_Conditions_Base<MODEL, RESULT> extends Collector_Base<M
 			throw new IllegalArgumentException("Only call this constructor after WHERE");
 		}
 		
-		this.clauseCollector = new Collector_Clause(last.clauseCollector, newConditionsType);
+		this.clauseCollector = last.clauseCollector.addConditionsType(newConditionsType);	
 	}
 
 	Collector_Conditions_Base(Collector_Conditions_Initial<MODEL, RESULT, ?> last, ConditionsType newConditionsType, CollectedQueryResult result) {
@@ -27,24 +27,36 @@ abstract class Collector_Conditions_Base<MODEL, RESULT> extends Collector_Base<M
 			throw new IllegalArgumentException("Only call this constructor after WHERE");
 		}
 		
-		this.clauseCollector = new Collector_Clause(last.clauseCollector, newConditionsType);
+		this.clauseCollector = last.clauseCollector.addConditionsType(newConditionsType);
 	}
 
-	Collector_Conditions_Base(Collector_Base<MODEL> last, Collector_Clause collector) {
+	// for nested-queries?
+	
+	@Deprecated // TODO can be removed?
+	Collector_Conditions_Base(Collector_Base<MODEL> last, ICollectorClause collector) {
 		super(last);
 
 		this.clauseCollector = collector;
 	}
 	
-	Collector_Conditions_Base(Collector_Base<MODEL> last, Collector_Clause collector, CollectedQueryResult result) {
+	@Deprecated // TODO can be removed?
+	Collector_Conditions_Base(Collector_Base<MODEL> last, ICollectorClause collector, CollectedQueryResult result) {
 		super(new QueryCollectorImpl<>(last.getQueryCollector(), result));
 
 		this.clauseCollector = collector;
 	}
 
-	Collector_Conditions_Base(Collector_Query<MODEL> queryCollector, Collector_Clause collector) {
+	@Deprecated // TODO can be removed?
+	Collector_Conditions_Base(Collector_Query<MODEL> queryCollector, ICollectorClause collector) {
 		super(queryCollector);
 		
 		this.clauseCollector = collector;
 	}
+	
+	Collector_Conditions_Base(Collector_Query<MODEL> queryCollector, ICollectorClause collector, ConditionsType conditionsType) {
+		super(queryCollector);
+
+		this.clauseCollector = collector.addConditionsType(conditionsType);
+	}
+	
 }

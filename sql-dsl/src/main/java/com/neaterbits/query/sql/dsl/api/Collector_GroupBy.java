@@ -14,7 +14,7 @@ abstract class Collector_GroupBy<MODEL, RESULT>
 
  	{
 	
-	abstract Collector_Clause getHaving();
+	abstract ICollectorClause getHaving();
 
 	private final int [] groupByColumns;
 	

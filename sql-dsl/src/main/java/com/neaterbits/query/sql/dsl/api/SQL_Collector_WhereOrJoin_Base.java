@@ -79,17 +79,17 @@ abstract class SQL_Collector_WhereOrJoin_Base<
 		{
 		
 			
-	SQL_Collector_WhereOrJoin_Base(Collector_Conditions_Initial<MODEL, RESULT, AFTER_GROUP_BY> last, EConditionsClause conditionsClause) {
-		super(last, conditionsClause);
+	SQL_Collector_WhereOrJoin_Base(Collector_Conditions_Initial<MODEL, RESULT, AFTER_GROUP_BY> last) {
+		super(last, EConditionsClause.WHERE);
 	}
 
-	SQL_Collector_WhereOrJoin_Base(Collector_Conditions_Initial<MODEL, RESULT, AFTER_GROUP_BY> last, EConditionsClause conditionsClause, CollectedQueryResult result) {
-		super(last, conditionsClause, result);
+	SQL_Collector_WhereOrJoin_Base(Collector_Conditions_Initial<MODEL, RESULT, AFTER_GROUP_BY> last, CollectedQueryResult result) {
+		super(last, EConditionsClause.WHERE, result);
 	}
 
 
-	SQL_Collector_WhereOrJoin_Base(Collector_Query<MODEL> queryCollector, Collector_Clause collector) {
-		super(queryCollector, collector);
+	SQL_Collector_WhereOrJoin_Base(Collector_Query<MODEL> queryCollector) {
+		super(queryCollector, queryCollector.addConditionClauses(EConditionsClause.WHERE));
 	}
 	
 			

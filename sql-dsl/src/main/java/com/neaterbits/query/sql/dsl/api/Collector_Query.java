@@ -38,9 +38,9 @@ abstract class Collector_Query<MODEL> {
 	
 	abstract CollectedSelectSource getSources();
 
-	abstract void setClauses(Collector_Clause clauses);
+	//abstract void setClauses(Collector_Clause clauses);
 
-	abstract Collector_Clause getClauses();
+	abstract ICollectorClause getClauses();
 
 	abstract void setGroupBy(Collector_GroupBy<MODEL, ?> groupBy);
 	
@@ -51,6 +51,9 @@ abstract class Collector_Query<MODEL> {
 	abstract Collected_GroupBy getGroupBy();
 	
 	abstract Collected_OrderBy getOrderBy();
+	
+	abstract ICollectorClause addConditionClauses(EConditionsClause type);
+	
 	
 	Collector_Query(Collector_Query<MODEL> toCopy) {
 		this.baseQuery = toCopy.baseQuery;

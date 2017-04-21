@@ -66,16 +66,21 @@ abstract class Short_Collector_WhereOrJoin_Base<
 
 	{
 				
-	Short_Collector_WhereOrJoin_Base(Collector_Query<MODEL> queryCollector, Collector_Clause clauseCollector) {
+		/*
+	Short_Collector_WhereOrJoin_Base(Collector_Query<MODEL> queryCollector, ICollectorClause clause) {
 		super(queryCollector, clauseCollector);
+	}
+	*/
+	Short_Collector_WhereOrJoin_Base(Collector_Query<MODEL> queryCollector) {
+		super(queryCollector);
 	}
 
 	Short_Collector_WhereOrJoin_Base(Collector_Conditions_Initial<MODEL, RESULT, AFTER_GROUP_BY> last) {
-		super(last, EConditionsClause.WHERE);
+		super(last);
 	}
 	
 	Short_Collector_WhereOrJoin_Base(Collector_Conditions_Initial<MODEL, RESULT, AFTER_GROUP_BY> last, CollectedQueryResult result) {
-		super(last, EConditionsClause.WHERE, result);
+		super(last, result);
 	}
 	
 	

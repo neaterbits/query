@@ -13,7 +13,7 @@ final class ClassicSingleNamedResult<MODEL, RESULT>
 	ClassicSingleNamedResult(ClassicSelect select, CollectedQueryResult result, ModelCompiler<MODEL> modelCompiler) {
 		super(
 				makeCollector(select, modelCompiler, result),
-				new Collector_Clause(EConditionsClause.WHERE, ConditionsType.SINGLE));
+				EConditionsClause.WHERE);
 	}
 	
 	private static <M> Collector_Query<M> makeCollector(ClassicSelect select, ModelCompiler<M> modelCompiler, CollectedQueryResult result) {

@@ -9,7 +9,7 @@ abstract class Collector_Or<MODEL, RESULT, AFTER_GROUP_BY>
 	}
 
 	Collector_Or(Collector_Conditions_Intermediate<MODEL, RESULT, AFTER_GROUP_BY> qe) {
-		super(qe.getQueryCollector(), new Collector_Clause(qe.getConditionsClause(), ConditionsType.OR));
+		super(qe.getQueryCollector(), qe.clauseCollector, ConditionsType.OR);
 
 		if (qe.clauseCollector != null && !qe.clauseCollector.isEmpty()) {
 			throw new IllegalStateException("Not copying non-empty clause-collector");

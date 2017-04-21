@@ -66,7 +66,7 @@ abstract class SQL_Collector_WhereOrJoin_Named_Base<
 					
 
 	SQL_Collector_WhereOrJoin_Named_Base(Collector_Conditions_Initial<MODEL, RESULT, ISharedProcessResult_After_GroupBy_Named<MODEL, RESULT>> last) {
-		super(last, EConditionsClause.WHERE);
+		super(last);
 	}
 
 	

@@ -85,7 +85,7 @@ abstract class Short_Collector_Any_MappedOrEntityOrAggregate_Any<
 	//private final EQueryResultGathering gathering;
 
 	Short_Collector_Any_MappedOrEntityOrAggregate_Any(Collector_Query<MODEL> queryCollector) {
-		super(queryCollector, new Collector_Clause(EConditionsClause.WHERE, ConditionsType.SINGLE));
+		super(queryCollector);
 		
 		// do not set mapping collector
 		
@@ -98,7 +98,7 @@ abstract class Short_Collector_Any_MappedOrEntityOrAggregate_Any<
 	
 		
 	Short_Collector_Any_MappedOrEntityOrAggregate_Any(Collector_Query<MODEL> queryCollector, CollectedQueryResult_Mapped result) {
-		super(new QueryCollectorImpl<MODEL>(queryCollector, result), new Collector_Clause(EConditionsClause.WHERE, ConditionsType.SINGLE));
+		super(new QueryCollectorImpl<MODEL>(queryCollector, result));
 
 		if (getQueryCollector().getMappings() == null) {
 			getQueryCollector().setMappings(new MappingCollector());
@@ -110,7 +110,7 @@ abstract class Short_Collector_Any_MappedOrEntityOrAggregate_Any<
 	}
 
 	Short_Collector_Any_MappedOrEntityOrAggregate_Any(Collector_Query<MODEL> queryCollector, CollectedQueryResult_Entity result) {
-		super(new QueryCollectorImpl<MODEL>(queryCollector, result), new Collector_Clause(EConditionsClause.WHERE, ConditionsType.SINGLE));
+		super(new QueryCollectorImpl<MODEL>(queryCollector, result));
 		
 		// do not set mapping collector
 		
@@ -118,7 +118,7 @@ abstract class Short_Collector_Any_MappedOrEntityOrAggregate_Any<
 	}
 
 	Short_Collector_Any_MappedOrEntityOrAggregate_Any(Collector_Query<MODEL> queryCollector, CollectedQueryResult_Aggregate result) {
-		super(new QueryCollectorImpl<MODEL>(queryCollector, result), new Collector_Clause(EConditionsClause.WHERE, ConditionsType.SINGLE));
+		super(new QueryCollectorImpl<MODEL>(queryCollector, result));
 		
 		// do not set mapping collector
 		

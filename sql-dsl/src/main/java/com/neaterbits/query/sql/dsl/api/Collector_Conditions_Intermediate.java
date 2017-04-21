@@ -7,11 +7,19 @@ abstract class Collector_Conditions_Intermediate<MODEL, RESULT, AFTER_GROUP_BY>
 		super(last, newConditionsType);
 	}
 
-	Collector_Conditions_Intermediate(Collector_Base<MODEL> last, Collector_Clause collector) {
+	@Deprecated // TODO can be removed?
+	Collector_Conditions_Intermediate(Collector_Base<MODEL> last, ICollectorClause collector) {
 		super(last, collector);
 	}
-
-	Collector_Conditions_Intermediate(Collector_Query<MODEL> queryCollector, Collector_Clause collector) {
+	
+	@Deprecated // TODO can be removed?
+	Collector_Conditions_Intermediate(Collector_Query<MODEL> queryCollector, ICollectorClause collector) {
 		super(queryCollector, collector);
 	}
+
+	@Deprecated // TODO can be  switched for passing higher-level type?
+	Collector_Conditions_Intermediate(Collector_Query<MODEL> queryCollector, ICollectorClause collector, ConditionsType conditionsType) {
+		super(queryCollector, collector, conditionsType);
+	}
+
 }

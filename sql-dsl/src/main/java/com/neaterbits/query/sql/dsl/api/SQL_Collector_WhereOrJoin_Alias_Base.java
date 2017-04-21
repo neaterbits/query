@@ -86,7 +86,7 @@ abstract class SQL_Collector_WhereOrJoin_Alias_Base<
 	*/ 
 			   
 	SQL_Collector_WhereOrJoin_Alias_Base(Collector_Conditions_Initial<MODEL, RESULT, THIS_AFTER_GROUP_BY> last) {
-		super(last, EConditionsClause.WHERE);
+		super(last);
 	}
 
 

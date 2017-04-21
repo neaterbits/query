@@ -12,11 +12,13 @@ abstract class Collector_And_Or_Base<MODEL, RESULT, AFTER_GROUP_BY>
 		super(last, conditionsClause, result);
 	}
 	
+	@Deprecated // TODO necessary?
 	Collector_And_Or_Base(Collector_GroupBy<MODEL, RESULT> last, EConditionsClause conditionsClause) {
 		super(last, conditionsClause);
 	}
 	
-	Collector_And_Or_Base(Collector_Query<MODEL> queryCollector, Collector_Clause collector) {
+	@Deprecated // TODO necessary?
+	Collector_And_Or_Base(Collector_Query<MODEL> queryCollector, ICollectorClause collector) {
 		super(queryCollector, collector);
 	}
 }

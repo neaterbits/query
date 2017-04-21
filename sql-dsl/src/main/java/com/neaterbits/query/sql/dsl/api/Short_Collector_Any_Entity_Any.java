@@ -63,7 +63,7 @@ abstract class Short_Collector_Any_Entity_Any<
 			AFTER_GROUP_BY> 
 	{
 
-	Short_Collector_Any_Entity_Any(Collector_Query<MODEL> queryCollector, Collector_Clause clauseCollector) {
-		super(queryCollector, clauseCollector);
+	Short_Collector_Any_Entity_Any(Collector_Query<MODEL> queryCollector) {
+		super(queryCollector);
 	}
 }

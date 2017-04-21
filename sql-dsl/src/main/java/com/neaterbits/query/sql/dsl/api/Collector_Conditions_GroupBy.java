@@ -52,18 +52,25 @@ abstract class Collector_Conditions_GroupBy<MODEL, RESULT, AFTER_GROUP_BY>
 		super(last, newConditionsType, result);
 	}
 	
-	Collector_Conditions_GroupBy(Collector_Base<MODEL> last, Collector_Clause collector) {
+	@Deprecated // TODO can be removed?
+	Collector_Conditions_GroupBy(Collector_Base<MODEL> last, ICollectorClause collector) {
 		super(last, collector);
 	}
 
-	Collector_Conditions_GroupBy(Collector_Base<MODEL> last, Collector_Clause collector, CollectedQueryResult result) {
+	@Deprecated // TODO can be removed?
+	Collector_Conditions_GroupBy(Collector_Base<MODEL> last, ICollectorClause collector, CollectedQueryResult result) {
 		super(last, collector, result);
 	}
 	
-	Collector_Conditions_GroupBy(Collector_Query<MODEL> queryCollector, Collector_Clause collector) {
+	@Deprecated // TODO can be removed?
+	Collector_Conditions_GroupBy(Collector_Query<MODEL> queryCollector, ICollectorClause collector) {
 		super(queryCollector, collector);
 	}
-
+	
+	Collector_Conditions_GroupBy(Collector_Query<MODEL> queryCollector, ICollectorClause collector, ConditionsType conditionsType) {
+		super(queryCollector, collector, conditionsType);
+	}
+	
 	@SuppressWarnings("unchecked")
 	final <T extends ISharedLogical_Or<MODEL, RESULT>, IMPL extends Collector_Conditions_GroupBy<MODEL, RESULT, AFTER_GROUP_BY>>
 		void addNestedOrImpl(Consumer<T> orBuilder, IMPL subOrImpl) {
@@ -104,9 +111,11 @@ abstract class Collector_Conditions_GroupBy<MODEL, RESULT, AFTER_GROUP_BY>
 
 		// Now set clauses before compiling
 		// TODO: is this necessary after setting in below clause?
+		/*
 		if (clauseCollector.getConditionsClause() == EConditionsClause.WHERE) {
 			queryCollector.setClauses(clauseCollector);
 		}
+		*/
 
 		// Compile into model (better name for this operation?)
 		return queryCollector.getModelCompiler().compile(queryCollector);
@@ -118,10 +127,12 @@ abstract class Collector_Conditions_GroupBy<MODEL, RESULT, AFTER_GROUP_BY>
 		
 		getQueryCollector().setGroupBy(groupByCollector);
 		
+		/* should already be set
 		if (clauseCollector != null) {
 			// Must set clauses so are stored
 			getQueryCollector().setClauses(clauseCollector);
 		}
+		*/
 		
 		return (T)groupByCollector;
 	}

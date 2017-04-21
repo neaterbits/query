@@ -27,7 +27,7 @@ final class Collector_GroupBy_Alias<MODEL, RESULT> extends Collector_GroupBy<MOD
 	}
 	
 	@Override
-	Collector_Clause getHaving() {
+	ICollectorClause getHaving() {
 		return having != null ? having.clauseCollector : null;
 	}
 
