@@ -55,7 +55,7 @@ public class MappedWhereOrGroupByHavingOrderByTest extends GEN_BaseTestCase {
 
     @Test
    	public void testMappedMultiAlias() {
-    	final Farm farm1 = new Farm("Farm1", "main2", "sub3");
+	   	final Farm farm1 = new Farm("Farm1", "main2", "sub3");
 	   	final Farm farm2 = new Farm("Farm2", "main1", null);
 	   	final Farm farm3 = new Farm("Farm3", "main2", "sub2");
 	   	final Farm farm4 = new Farm("Farm4", "main3", "sub2");
@@ -66,17 +66,17 @@ public class MappedWhereOrGroupByHavingOrderByTest extends GEN_BaseTestCase {
 	   	final Farm other3 = new Farm("Other3", "other3", "sub2");
 	   	final Farm other4 = new Farm("Other4", "other1", null);
 	   	final Farm other5 = new Farm("Other5", "other2", "sub1");
-	
+
 	   	final Farm f = select.alias(Farm.class);
 	   	
-	   	MultiBuilt<FarmInfo> query = select.list(FarmInfo.class)
+	   	final MultiBuilt<FarmInfo> query = select.list(FarmInfo.class)
 	   			.map(f::getFarmId).to(FarmInfo::setFarmId)
 	   			.map(f::getSubFarmId).to(FarmInfo::setSubFarmId)
-	   			
 	   			.where(f::getSubFarmId).isEqualTo("sub2")
-	   			.or(f::getName).isEqualTo("Other1")
-	   			
+	   			.   or(f::getName).isEqualTo("Other1")
 	   			.groupBy(f::getFarmId).and(f::getSubFarmId)
+	   			.having(f::getFarmId).endsWith("2")
+	   			 .   or(f::getSubFarmId).endsWith("1")
 	   			.orderBy(f::getFarmId).desc().and(f::getSubFarmId)
 	   			.build(); 
 	   	
@@ -87,9 +87,9 @@ public class MappedWhereOrGroupByHavingOrderByTest extends GEN_BaseTestCase {
 	   			
 	   			() -> expected( 
 						new FarmInfo(null, "other4", "sub1"),
-						new FarmInfo(null, "other3", "sub2"),
+						//new FarmInfo(null, "other3", "sub2"),
 						new FarmInfo(null, "other2", "sub2"),
-						new FarmInfo(null, "main3",  "sub2"),
+						//new FarmInfo(null, "main3",  "sub2"),
 						new FarmInfo(null, "main2",  "sub2")
 	   			));
    }
