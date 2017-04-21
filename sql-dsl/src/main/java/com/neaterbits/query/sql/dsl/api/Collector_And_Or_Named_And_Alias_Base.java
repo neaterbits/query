@@ -315,15 +315,12 @@ abstract class Collector_And_Or_Named_And_Alias_Base<
 				= new ISharedCollector_Functions_Callback<MODEL, RESULT, NAMED_OR_CLAUSES>() {
 		
 			@Override
-			public ISharedCondition_Comparable_Common_Base<MODEL, RESULT, Comparable<?>, NAMED_OR_CLAUSES>
-				onComparable(Expression expression) {
-				
+			public ISharedCondition_Comparable_Common_Base<MODEL, RESULT, Comparable<?>, NAMED_OR_CLAUSES> onComparable(Expression expression) {
 				return (ISharedCondition_Comparable_Common_All)orNamedClassImplComparable(expression);
 			}
 		
 			@Override
-			public ISharedCondition_Comparable_String_Base<MODEL, RESULT, NAMED_OR_CLAUSES> 
-				onString(Expression expression) {
+			public ISharedCondition_Comparable_String_Base<MODEL, RESULT, NAMED_OR_CLAUSES> onString(Expression expression) {
 				return (ISharedCondition_Comparable_String_Base)orNamedClassImplString(expression);
 			}
 		};
