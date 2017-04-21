@@ -25,10 +25,6 @@ public interface IShortSelect {
 		return ShortSelect.selectImpl.alias(aliasType);
     }
     
-    public static <T> Alias<T> aliasAlias(Class<T> aliasType) {
-		return ShortSelect.selectImpl.aliasAlias(aliasType);
-    }
-
     public static <T> IShortBuilt_Numeric_Named<Long> sum(IFunctionShort<T> field) {
     	return ShortSelect.selectImpl.sum(field);
     }

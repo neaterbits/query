@@ -148,18 +148,6 @@ abstract class BaseQuery implements IQueryPreparation {
 		}
     }
     
-	
-	@Override
-    public final <T> Alias<T> aliasAlias(Class<T> aliasType) {
-		if (aliasType == null) {
-			throw new IllegalArgumentException("aliasType == null");
-		}
-
-		final AliasImpl<T> alias = new AliasImpl<T>(aliasType);
-
-		return alias;
-    }
-
 	@Override
     public final <T> ValParam<T> param(Class<T> paramType) {
 		if (paramType == null) {

@@ -11,8 +11,7 @@ abstract class Classic_Collector_SelectSource<
 		extends Collector_Conditions_Initial<MODEL, RESULT, AFTER_GROUP_BY>
 		implements 
 				IClassic_From_Named_Base<MODEL, RESULT, NAMED_WHERE_OR_JOIN>,
-				IClassic_From_Alias_Base<MODEL, RESULT, ALIAS_WHERE_OR_JOIN>,
-				IShared_From_AliasAlias<MODEL, RESULT> {
+				IClassic_From_Alias_Base<MODEL, RESULT, ALIAS_WHERE_OR_JOIN> {
 
 //	private Class<?> [] classes;
 //	private Alias<?> [] aliases;
@@ -54,24 +53,6 @@ abstract class Classic_Collector_SelectSource<
 		//final Classic_Collector_Where_Or_Join_Named<MODEL, RESULT> ret = new Classic_Collector_Where_Or_Join_Named<MODEL, RESULT>(this);
 		
 		return createWhereOrJoinForNamed();
-	}
-
-	@Override
-	public final ISharedLogical_Where<MODEL, RESULT> from(Alias<?> ... aliases) {
-//		if (classes.length == 0) {
-//			throw new IllegalArgumentException("no classes");
-//		}
-//
-//		this.classes = null;
-//		this.aliases = aliases;
-
-		assureCollectedResult();
-
-		getQueryCollector().setSources(new CollectedSelectSource_AliasAliases(aliases));
-
-		// final Classic_Collector_WhereOrJoin_Alias_Base<MODEL, RESULT, ?> ret = new Classic_Collector_WhereOrJoin_Alias_Base<MODEL, RESULT>(this);
-		
-		return createWhereOrJoinForAlias();
 	}
 
 	@Override

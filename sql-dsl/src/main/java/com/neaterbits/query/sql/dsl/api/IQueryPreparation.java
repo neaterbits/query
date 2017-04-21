@@ -4,8 +4,6 @@ public interface IQueryPreparation {
 
 	<T> T alias(Class<T> aliasType);
 	
-    <T> Alias<T> aliasAlias(Class<T> aliasType);
-
     <T> Param<T> param(Class<T> paramType);
     
     <T> InParam<T> inParam(Class<T> paramType);

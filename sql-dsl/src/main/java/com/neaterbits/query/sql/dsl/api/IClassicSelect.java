@@ -47,10 +47,6 @@ public interface IClassicSelect {
 		return ClassicSelect.selectImpl.alias(aliasType);
     }
     
-    public static <T> Alias<T> aliasAlias(Class<T> aliasType) {
-		return ClassicSelect.selectImpl.aliasAlias(aliasType);
-    }
-
     public static <T> IClassicResult_Numeric_Named<Long> sum(IFunctionShort<T> field) {
     	return ClassicSelect.selectImpl.sum(field);
     }
