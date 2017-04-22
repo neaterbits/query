@@ -826,6 +826,11 @@ abstract class Collector_ExpressionList<
 	}
 
 	@Override
+	public final <T> NAMED_STRING_RET substring(IFunctionString<T> getter, int start, int length) {
+		return assureNamedFunctions().substring(getter, start, length);
+	}
+
+	@Override
 	public final <T> NAMED_STRING_RET concat(IFunctionString<T> getter1, IFunctionString<T> getter2) {
 		return assureNamedFunctions().concat(getter1, getter2);
 	}
@@ -1166,6 +1171,11 @@ abstract class Collector_ExpressionList<
 	@Override
 	public final <T> ALIAS_STRING_RET trim(ISupplierString getter) {
 		return assureAliasFunctions().trim(getter);
+	}
+
+	@Override
+	public final <T> ALIAS_STRING_RET substring(ISupplierString getter, int start, int length) {
+		return assureAliasFunctions().substring(getter, start, length);
 	}
 
 	@Override

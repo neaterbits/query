@@ -1017,7 +1017,7 @@ public class ShortAPITest extends BaseJPATest {
 	}
 
 	@Test
-	public void testConcat() {
+	public void testSubstring() {
 
 		// must test a few variations variations of this, but can probably keep it simple
 		// as to what is before, eg no where-clause or joins
@@ -1028,12 +1028,12 @@ public class ShortAPITest extends BaseJPATest {
 
 		final SingleBuilt<CompanyResultVO> acmeQuery = select
 				.one(CompanyResultVO.class)
-				.map().concat(Company::getName, "_name").to(CompanyResultVO::setName)
+				.map().substring(Company::getName, 1, 2).to(CompanyResultVO::setName)
 				.where(Company::getName).isEqualTo("Acme1")
 				.build();
 		
 		store(acme1, acme2, foo).
-		checkOneValue(acmeQuery, new CompanyResultVO("Acme1_name"));
+		checkOneValue(acmeQuery, new CompanyResultVO("Ac"));
 	}
 }
 

@@ -18,7 +18,7 @@ public interface ISharedFunctions_String_Alias<
 
 	<T> STRING_CLAUSE trim(ISupplierString getter);
 
-    //<T> STRING_CLAUSE substring(ISupplierString getter, int start, int length);
+    <T> STRING_CLAUSE substring(ISupplierString getter, int start, int length);
 	
     @Deprecated // there is a concat operand for strings
     <T> STRING_CLAUSE concat(ISupplierString getter1, ISupplierString getter2);

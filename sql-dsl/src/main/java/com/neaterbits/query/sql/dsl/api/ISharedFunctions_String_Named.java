@@ -14,6 +14,8 @@ public interface ISharedFunctions_String_Named<
     <T> STRING_CLAUSE upper(IFunctionString<T> getter);
 
     <T> STRING_CLAUSE trim(IFunctionString<T> getter);
+
+    <T> STRING_CLAUSE substring(IFunctionString<T> getter, int start, int length);
     
     @Deprecated // there is a concat operand for strings
     <T> STRING_CLAUSE concat(IFunctionString<T> getter1, IFunctionString<T> getter2);

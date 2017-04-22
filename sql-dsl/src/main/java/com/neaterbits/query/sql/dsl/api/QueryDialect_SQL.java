@@ -175,6 +175,11 @@ abstract class QueryDialect_SQL extends QueryDialect_Base {
 		}
 
 		@Override
+		public String onStringLower(Function_String_Lower function, Void param) {
+			return "lower";
+		}
+
+		@Override
 		public String onStringUpper(Function_String_Upper function, Void param) {
 			return "upper";
 		}
@@ -183,12 +188,12 @@ abstract class QueryDialect_SQL extends QueryDialect_Base {
 		public String onStringTrim(Function_String_Trim function, Void param) {
 			return "trim";
 		}
-		
+
 		@Override
-		public String onStringLower(Function_String_Lower function, Void param) {
-			return "lower";
+		public String onStringSubstring(Function_String_Substring function, Void param) {
+			return "substring";
 		}
-		
+
 		@Override
 		public String onArithmeticSqrt(Function_Arithmetic_Sqrt function, Void param) {
 			return "sqrt";

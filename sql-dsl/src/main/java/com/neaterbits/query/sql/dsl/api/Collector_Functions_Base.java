@@ -158,6 +158,12 @@ abstract class Collector_Functions_Base<
 
 	@Override
 	@SuppressWarnings("unchecked")
+	public final <T> NAMED_STRING_RET substring(IFunctionString<T> getter, int start, int length) {
+		return (NAMED_STRING_RET)addAndReturnForNamedStringExpressions(Function_String_Substring.INSTANCE, new FieldExpression(getter), new ValueExpression(start), new ValueExpression(length));
+	}
+
+	@Override
+	@SuppressWarnings("unchecked")
 	public final <T> NAMED_STRING_RET concat(IFunctionString<T> getter1, IFunctionString<T> getter2) {
 		return (NAMED_STRING_RET)addAndReturnForNamedStringExpressions(Function_String_Concat.INSTANCE, new FieldExpression(getter1), new FieldExpression(getter2));
 	}
@@ -527,6 +533,12 @@ abstract class Collector_Functions_Base<
 		return (ALIAS_STRING_RET) addAndReturnString(Function_String_Trim.INSTANCE, getter);
 	}
 
+	@Override
+	@SuppressWarnings("unchecked")
+	public final <T> ALIAS_STRING_RET substring(ISupplierString getter, int start, int length) {
+		return (ALIAS_STRING_RET)addAndReturnForAliasStringExpressions(Function_String_Substring.INSTANCE, new FieldExpression(getter), new ValueExpression(start), new ValueExpression(length));
+	}
+	
 	@Override
 	public final <T> ALIAS_STRING_RET concat(ISupplierString getter1, ISupplierString getter2) {
 		return (ALIAS_STRING_RET)addAndReturnForAliasStringExpressions(Function_String_Concat.INSTANCE, new FieldExpression(getter1), new FieldExpression(getter2));
