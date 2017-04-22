@@ -188,6 +188,23 @@ final class QueryDialect_ANSI_SQL extends QueryDialect_SQL {
 			sb.append(' ').append(to.getVarName());
 		}
 	}
+	
+	
+
+	@Override
+	String getFunctionName(FunctionBase function) {
+		
+		final String ret;
+		
+		if (function instanceof Function_String_Substring) {
+			ret = "substr";
+		}
+		else {
+			ret = super.getFunctionName(function);;
+		}
+
+		return ret;
+	}
 
 	@Override
 	void addComparisonJoin(QueryBuilder sb, List<JoinFieldComparison> fieldComparisons, SourceReference from, SourceReference to) {
