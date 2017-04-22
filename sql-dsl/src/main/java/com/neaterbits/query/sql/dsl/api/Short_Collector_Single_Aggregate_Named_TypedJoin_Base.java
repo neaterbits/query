@@ -35,7 +35,7 @@ abstract class Short_Collector_Single_Aggregate_Named_TypedJoin_Base<MODEL, RESU
 
 	@Override
 	final Collector_Or_Named<MODEL, RESULT, ISQLLogical_Or_NonProcessResult_Named<MODEL, RESULT>, ISQLLogical_And_NonProcessResult_Named<MODEL, RESULT>, ISQLLogical_Or_NonProcessResult_Named<MODEL, RESULT>, ISharedProcessResult_After_GroupBy_Named<MODEL, RESULT>> createNamedOrCollector() {
-		throw new UnsupportedOperationException("TODO");
+		return new SQL_Collector_Or_NonProcessResult_Named<>(getThisInitial());
 	}
 
 	@Override
@@ -45,12 +45,12 @@ abstract class Short_Collector_Single_Aggregate_Named_TypedJoin_Base<MODEL, RESU
 
 	@Override
 	final Collector_Or_Alias<MODEL, RESULT, ISQLLogical_Or_NonProcessResult_Alias<MODEL, RESULT>, ISQLLogical_And_NonProcessResult_Alias<MODEL, RESULT>, ISQLLogical_Or_NonProcessResult_Alias<MODEL, RESULT>, ISharedProcessResult_After_GroupBy_Alias<MODEL, RESULT>> createAliasOrCollector() {
-		throw new UnsupportedOperationException("TODO");
+		throw new UnsupportedOperationException("N/A");
 	}
 
 	@Override
 	final Collector_And_Alias<MODEL, RESULT, ISQLLogical_And_NonProcessResult_Alias<MODEL, RESULT>, ISQLLogical_And_NonProcessResult_Alias<MODEL, RESULT>, ISQLLogical_Or_NonProcessResult_Alias<MODEL, RESULT>, ISharedProcessResult_After_GroupBy_Alias<MODEL, RESULT>> createAliasAndCollector() {
-		throw new UnsupportedOperationException("TODO");
+		throw new UnsupportedOperationException("N/A");
 	}
 
 	@Override
