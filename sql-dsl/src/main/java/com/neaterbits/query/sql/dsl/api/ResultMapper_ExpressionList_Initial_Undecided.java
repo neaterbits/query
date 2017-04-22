@@ -205,9 +205,10 @@ class ResultMapper_ExpressionList_Initial_Undecided<
 			NO_PARAM_ALIAS_SQLDATE_RET,
 			NO_PARAM_ALIAS_SQLTIME_RET,
 			NO_PARAM_ALIAS_SQLTIMESTAMP_RET
-		>,
+		>
+	//,
 			
-	ISharedResultMap_OpsAndTo_Comparable_Named<MODEL, RESULT, Integer, ISharedFunction_After<MODEL,RESULT>>
+	//ISharedResultMap_OpsAndTo_Comparable_Named<MODEL, RESULT, Integer, ISharedFunction_After<MODEL,RESULT>>
 	//ISharedResultOps_String_Named<MODEL, RESULT, ISharedFunction_After<MODEL,RESULT>>
 		
 		/*, TODO
@@ -233,6 +234,8 @@ class ResultMapper_ExpressionList_Initial_Undecided<
 		this.getNamed = getNamed;
 		this.getAliased = getAliased;
 	}
+	
+	
 
 	@Override
 	IMappingCollector<MODEL, RESULT> getMappingCollector(EFieldAccessType fieldAccessType) {
@@ -717,11 +720,17 @@ class ResultMapper_ExpressionList_Initial_Undecided<
 	*/
 
 
+	@Override
+	ISharedFunction_Next<MODEL, RESULT, NAMED_RET> getNamedComparableFunctionNext(Expression expression) {
+		return new ResultMapper_ExpressionList_Comparable_Named<>(expression, getMappingCollector(EFieldAccessType.NAMED));
+	}
 
 
 
-
-
+	@Override
+	ISharedFunction_Next<MODEL, RESULT, NAMED_RET> getNamedStringFunctionNext(Expression expression) {
+		return new ResultMapper_ExpressionList_String_Named<>(expression, getMappingCollector(EFieldAccessType.NAMED));
+	}
 
 
 

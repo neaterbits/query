@@ -432,12 +432,16 @@ abstract class Collector_ExpressionList<
 
 					@Override
 					public ISharedFunction_Next<MODEL, RESULT, NAMED_RET> onComparable(Expression expression) {
-						return addNamedFunctionResult(expression);
+						addNamedFunctionResult(expression);
+						
+						return getNamedComparableFunctionNext(expression);
 					}
 
 					@Override
 					public ISharedFunction_Next<MODEL, RESULT, NAMED_RET> onString(Expression expression) {
-						return addNamedFunctionResult(expression);
+						addNamedFunctionResult(expression);
+						
+						return getNamedStringFunctionNext(expression);
 					}
 			};
 			
@@ -449,15 +453,23 @@ abstract class Collector_ExpressionList<
 		
 		return ret;
 	}
+
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	ISharedFunction_Next<MODEL, RESULT, NAMED_RET> getNamedComparableFunctionNext(Expression expression) {
+		return (ISharedFunction_Next)this;
+	}
 	
 	@SuppressWarnings({ "unchecked", "rawtypes" })
-	ISharedFunction_Next<MODEL, RESULT, NAMED_RET> addNamedFunctionResult(Expression expression) {
+	ISharedFunction_Next<MODEL, RESULT, NAMED_RET> getNamedStringFunctionNext(Expression expression) {
+		return (ISharedFunction_Next)this;
+	}
+	
+	
+	private final void addNamedFunctionResult(Expression expression) {
 		addExpression(expression);
 		
 		// must clear named-functions as to collect new ones after operand
 		this.named = null;
-
-		return (ISharedFunction_Next)this;
 	}
 	
 

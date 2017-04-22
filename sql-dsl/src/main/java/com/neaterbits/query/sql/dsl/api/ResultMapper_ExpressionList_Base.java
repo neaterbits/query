@@ -424,7 +424,7 @@ abstract class ResultMapper_ExpressionList_Base<
 	}
 		
 	@Override
-	AliasFunctions createAliasFunctions(
+	final AliasFunctions createAliasFunctions(
 			ISharedCollector_Functions_Callback<MODEL, RESULT, ALIAS_RET> func) {
 		
 		return new ResultMapper_Alias_Functions(func);
