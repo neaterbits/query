@@ -36,7 +36,7 @@ abstract class ResultMapper_ExpressionList_Initial_Alias<
 			ISharedFunction_After<MODEL, RESULT>,
 			RET,
 			
-			ISharedResultMap_OpsAndTo_Numeric_Alias<MODEL, RESULT, Integer, RET>,
+			ISharedResultMap_OpsAndTo_Comparable_Alias<MODEL, RESULT, Integer, RET>,
 			ISharedResultOps_String_Alias<MODEL, RESULT, RET>,
 
 			ISharedFunction_Next<MODEL, RESULT, ISharedFunction_After<MODEL, RESULT>>,
@@ -93,7 +93,7 @@ abstract class ResultMapper_ExpressionList_Initial_Alias<
 	@Override
 	IMappingCollector<MODEL, RESULT> getMappingCollector(EFieldAccessType fieldAccessType) {
 		if (fieldAccessType != EFieldAccessType.ALIAS) {
-			throw new IllegalStateException("Expected alias");
+			throw new IllegalStateException("Expected alias, got " + fieldAccessType);
 		}
 		
 		return impl;

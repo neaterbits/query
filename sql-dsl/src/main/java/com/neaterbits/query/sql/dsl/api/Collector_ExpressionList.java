@@ -186,7 +186,7 @@ abstract class Collector_ExpressionList<
 	}
 
 	private void setAliased() {
-		setAccessType(EFieldAccessType.NAMED);
+		setAccessType(EFieldAccessType.ALIAS);
 	}
 	
 	final EFieldAccessType getFieldAccessType() {
@@ -195,15 +195,25 @@ abstract class Collector_ExpressionList<
 	
 	
 	@SuppressWarnings("unchecked")
-	final <CLAUSE> CLAUSE absNoParam() {
+	final <CLAUSE> CLAUSE absNamedNoParam() {
 		return (CLAUSE)assureNamedFunctions().abs();
 	}
 
 	@SuppressWarnings("unchecked")
-	final <CLAUSE> CLAUSE sqrtNoParam() {
+	final <CLAUSE> CLAUSE sqrtNamedNoParam() {
 		return (CLAUSE)assureNamedFunctions().sqrt();
 	}
 
+	@SuppressWarnings("unchecked")
+	final <CLAUSE> CLAUSE absAliasNoParam() {
+		return (CLAUSE)assureAliasFunctions().abs();
+	}
+
+	@SuppressWarnings("unchecked")
+	final <CLAUSE> CLAUSE sqrtAliasNoParam() {
+		return (CLAUSE)assureAliasFunctions().sqrt();
+	}
+	
 	@Override
 	@SuppressWarnings("unchecked")
 	public final <T> NUMERIC_OPERAND_NEXT plus(IFunctionShort<T> getter) {
@@ -473,6 +483,25 @@ abstract class Collector_ExpressionList<
 	}
 	
 
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	ISharedFunction_Next<MODEL, RESULT, ALIAS_RET> getAliasComparableFunctionNext(Expression expression) {
+		return (ISharedFunction_Next)this;
+	}
+	
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	ISharedFunction_Next<MODEL, RESULT, ALIAS_RET> getAliasStringFunctionNext(Expression expression) {
+		return (ISharedFunction_Next)this;
+	}
+	
+	
+	private final void addAliasFunctionResult(Expression expression) {
+		addExpression(expression);
+		
+		// must clear alias-functions as to collect new ones after operand
+		this.alias = null;
+	}
+	
+
 	private AliasFunctions<?, ?, ?> assureAliasFunctions() {
 		
 		setAliased();
@@ -485,12 +514,16 @@ abstract class Collector_ExpressionList<
 
 				@Override
 				public ISharedFunction_Next<MODEL, RESULT, ALIAS_RET> onComparable(Expression expression) {
-					throw new UnsupportedOperationException("TODO");
+					addAliasFunctionResult(expression);
+					
+					return getAliasComparableFunctionNext(expression);
 				}
 
 				@Override
 				public ISharedFunction_Next<MODEL, RESULT, ALIAS_RET> onString(Expression expression) {
-					throw new UnsupportedOperationException("TODO");
+					addAliasFunctionResult(expression);
+					
+					return getAliasStringFunctionNext(expression);
 				}
 			};
 			

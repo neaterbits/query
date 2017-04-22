@@ -23,11 +23,11 @@ public class SubOperandsBuilder_NoParam_Alias<
 	
 	@Override
 	public ISharedSubOperandsBuilder_NoParam_Alias<MODEL, RESULT, R, ALIAS_RET> abs() {
-		return super.absNoParam();
+		return super.absAliasNoParam();
 	}
 
 	@Override
 	public ISharedSubOperandsBuilder_NoParam_Alias<MODEL, RESULT, Double, ALIAS_RET> sqrt() {
-		return super.sqrtNoParam();
+		return super.sqrtAliasNoParam();
 	}
 }

@@ -19,11 +19,11 @@ final class SubOperandsBuilder_NoParam_Named<
 
 	@Override
 	public ISharedSubOperandsBuilder_NoParam_Named<MODEL, RESULT, R, NAMED_RET> abs() {
-		return super.absNoParam();
+		return super.absNamedNoParam();
 	}
 
 	@Override
 	public ISharedSubOperandsBuilder_NoParam_Named<MODEL, RESULT, Double, NAMED_RET> sqrt() {
-		return super.sqrtNoParam();
+		return super.sqrtNamedNoParam();
 	}
 }

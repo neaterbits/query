@@ -18,7 +18,7 @@ final class ResultMapper_ExpressionList_String_Named<
 		ISharedFunction_After<MODEL, RESULT>,
 
 		
-		ISharedResultOps_String_Named<MODEL, RESULT, AFTER>,
+		ISharedFunction_Next<MODEL, RESULT, AFTER>, // Comparable
 		ISharedResultOps_String_Named<MODEL, RESULT, AFTER>,
 		
 		ISharedFunction_Next<MODEL, RESULT, AFTER>,

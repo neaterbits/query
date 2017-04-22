@@ -1,6 +1,6 @@
 package com.neaterbits.query.sql.dsl.api;
 
-public interface ISharedResultMap_OpsAndTo_NumericSQLTimeType_Alias<
+public interface ISharedResultMap_OpsAndTo_SQLTimeType_Alias<
 		MODEL,
 		RESULT,
 		R, //  extends Comparable<R>,
@@ -15,7 +15,7 @@ public interface ISharedResultMap_OpsAndTo_NumericSQLTimeType_Alias<
 				
 				RET,
 				
-				ISharedResultMap_OpsAndTo_NumericSQLTimeType_Alias<MODEL, RESULT, R, RET>
+				ISharedResultMap_OpsAndTo_SQLTimeType_Alias<MODEL, RESULT, R, RET>
 			>
 
 {

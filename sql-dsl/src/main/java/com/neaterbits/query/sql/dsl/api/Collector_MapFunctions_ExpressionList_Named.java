@@ -85,7 +85,7 @@ final class Collector_MapFunctions_ExpressionList_Named<
 			
 		> abs() {
 			
-		return super.absNoParam();
+		return super.absNamedNoParam();
 	}
 
 	@Override
@@ -96,7 +96,7 @@ final class Collector_MapFunctions_ExpressionList_Named<
 			NO_PARAM_DOUBLE_RET, NO_PARAM_DOUBLE_RET,
 			NO_PARAM_DOUBLE_RET, NO_PARAM_DOUBLE_RET, NO_PARAM_DOUBLE_RET, NO_PARAM_DOUBLE_RET, NO_PARAM_DOUBLE_RET, NO_PARAM_DOUBLE_RET, NO_PARAM_DOUBLE_RET, NO_PARAM_DOUBLE_RET, NO_PARAM_DOUBLE_RET> sqrt() {
 				
-		return super.sqrtNoParam();
+		return super.sqrtNamedNoParam();
 	}
 	
 	@Override

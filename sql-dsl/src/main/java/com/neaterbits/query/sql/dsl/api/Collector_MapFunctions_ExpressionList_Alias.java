@@ -66,7 +66,7 @@ final class Collector_MapFunctions_ExpressionList_Alias<
 		// May be called ".to()" here if we just collect functions 
 		//ISharedResultMapperTo<MODEL, RESULT, Comparable, RET>
 		
-		ISharedResultMap_OpsAndTo_Numeric_Alias<MODEL, RESULT, Integer, RET>
+		ISharedResultMap_OpsAndTo_Comparable_Alias<MODEL, RESULT, Integer, RET>
 
 {
 
@@ -84,7 +84,7 @@ final class Collector_MapFunctions_ExpressionList_Alias<
 			NO_PARAM_BYTE_RET, NO_PARAM_SHORT_RET, NO_PARAM_INT_RET, NO_PARAM_LONG_RET, NO_PARAM_BIGINTEGER_RET, NO_PARAM_FLOAT_RET, NO_PARAM_DOUBLE_RET, NO_PARAM_BIGDECIMAL_RET, NO_PARAM_DATE_RET, NO_PARAM_CALENDAR_RET, NO_PARAM_SQLDATE_RET, NO_PARAM_SQLTIME_RET, NO_PARAM_SQLTIMESTAMP_RET
 			
 			> abs() {
-		return super.absNoParam();
+		return super.absAliasNoParam();
 	}
 	
 	@Override
@@ -96,7 +96,7 @@ final class Collector_MapFunctions_ExpressionList_Alias<
 			NO_PARAM_DOUBLE_RET, NO_PARAM_DOUBLE_RET, NO_PARAM_DOUBLE_RET, NO_PARAM_DOUBLE_RET, NO_PARAM_DOUBLE_RET, NO_PARAM_DOUBLE_RET, NO_PARAM_DOUBLE_RET, NO_PARAM_DOUBLE_RET, NO_PARAM_DOUBLE_RET, NO_PARAM_DOUBLE_RET, NO_PARAM_DOUBLE_RET, NO_PARAM_DOUBLE_RET, NO_PARAM_DOUBLE_RET
 			
 			> sqrt() {
-		return super.sqrtNoParam();
+		return super.sqrtAliasNoParam();
 	}
 	
 	@Override

@@ -735,6 +735,19 @@ class ResultMapper_ExpressionList_Initial_Undecided<
 
 
 	@Override
+	ISharedFunction_Next<MODEL, RESULT, ALIAS_RET> getAliasComparableFunctionNext(Expression expression) {
+		return new ResultMapper_ExpressionList_Comparable_Alias<>(expression, getMappingCollector(EFieldAccessType.ALIAS));
+	}
+
+
+	@Override
+	ISharedFunction_Next<MODEL, RESULT, ALIAS_RET> getAliasStringFunctionNext(Expression expression) {
+		return new ResultMapper_ExpressionList_String_Alias<>(expression, getMappingCollector(EFieldAccessType.ALIAS));
+	}
+
+
+
+	@Override
 	@SuppressWarnings({"unchecked", "rawtypes"})
 	public ISharedNumericFunctions_Initial<
 	
