@@ -288,7 +288,7 @@ abstract class Collector_Functions_Base<
 	}
 
 	@Override
-	public final <T> NAMED_BIGDECIMAL_RET absOfDecimal(ISharedSubOperandsFunction_BigDecimal_Named<MODEL, RESULT> sub) {
+	public final <T> NAMED_BIGDECIMAL_RET absOfBigDecimal(ISharedSubOperandsFunction_BigDecimal_Named<MODEL, RESULT> sub) {
 		return addSubNumeric(Function_Arithmetic_Abs.INSTANCE, sub);
 	}
 

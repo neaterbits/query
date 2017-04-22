@@ -413,7 +413,7 @@ public class ShortAPITest extends BaseJPATest {
 				.map(Company::getStockPrice).to(CompanyResultVO::setStockPrice)
 				.map()
 						.abs()
-						.absOfDecimal(
+						.absOfBigDecimal(
 								e -> e.abs(Company::getStockPrice))
 
 					.to(CompanyResultVO::setStockPrice)

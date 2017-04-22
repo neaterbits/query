@@ -30,7 +30,7 @@ public interface ISharedFunctions_Arithmetic_Named<
 	<T> SHORT_RET 		absOfShort(ISharedSubOperandsFunction_Short_Named<MODEL, RESULT> sub);
 	<T> INTEGER_RET 	absOfInteger(ISharedSubOperandsFunction_Integer_Named<MODEL, RESULT> sub);
 	<T> LONG_RET 		absOfLong(ISharedSubOperandsFunction_Long_Named<MODEL, RESULT> sub);
-	<T> BIGDECIMAL_RET 	absOfDecimal(ISharedSubOperandsFunction_BigDecimal_Named<MODEL, RESULT> sub);
+	<T> BIGDECIMAL_RET 	absOfBigDecimal(ISharedSubOperandsFunction_BigDecimal_Named<MODEL, RESULT> sub);
 	
 
 	// sqrt always returns double

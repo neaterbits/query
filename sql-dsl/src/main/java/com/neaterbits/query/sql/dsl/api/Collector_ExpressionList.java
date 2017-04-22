@@ -560,8 +560,8 @@ abstract class Collector_ExpressionList<
 	}
 
 	@Override
-	public final <T> NAMED_BIGDECIMAL_RET absOfDecimal(ISharedSubOperandsFunction_BigDecimal_Named<MODEL, RESULT> sub) {
-		return assureNamedFunctions().absOfDecimal(sub);
+	public final <T> NAMED_BIGDECIMAL_RET absOfBigDecimal(ISharedSubOperandsFunction_BigDecimal_Named<MODEL, RESULT> sub) {
+		return assureNamedFunctions().absOfBigDecimal(sub);
 	}
 
 	@Override
