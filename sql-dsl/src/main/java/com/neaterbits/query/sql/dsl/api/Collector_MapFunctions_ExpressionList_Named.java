@@ -65,7 +65,7 @@ final class Collector_MapFunctions_ExpressionList_Named<
 		    // May be called ".to()" here if we just collect functions 
 		    //ISharedResultMapperTo<MODEL, RESULT, Comparable, RET>
 			
-		    ISharedResultMap_OpsAndTo_Numeric_Named<MODEL, RESULT, Integer, RET>
+		    ISharedResultMap_OpsAndTo_Comparable_Named<MODEL, RESULT, Integer, RET>
 			
 			{
 

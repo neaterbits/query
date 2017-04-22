@@ -36,7 +36,7 @@ abstract class ResultMapper_ExpressionList_Initial_Named<
 		RET,
 		ISharedFunction_After<MODEL, RESULT>,
 		
-		ISharedResultMap_OpsAndTo_Numeric_Named<MODEL, RESULT, Integer, RET>,
+		ISharedResultMap_OpsAndTo_Comparable_Named<MODEL, RESULT, Integer, RET>,
 		ISharedResultOps_String_Named<MODEL, RESULT, RET>,
 
 		

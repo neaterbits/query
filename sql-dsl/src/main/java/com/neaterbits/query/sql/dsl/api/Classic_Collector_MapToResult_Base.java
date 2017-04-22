@@ -1,7 +1,7 @@
 package com.neaterbits.query.sql.dsl.api;
 
 import java.math.BigDecimal;
-import java.util.Date;
+import java.math.BigInteger;
 
 abstract class Classic_Collector_MapToResult_Base<
 	MODEL,
@@ -36,23 +36,48 @@ abstract class Classic_Collector_MapToResult_Base<
 	}
 
 	@Override
-	public final <T> ISharedResultMap_OpsAndTo_Numeric_Named<MODEL, RESULT, Short, NAMED_MAP_RESULT> map(IFunctionShort<T> getter) {
-		return new ResultMapper_ExpressionList_NonString_Named<>(new FieldExpression(getter), this);
+	public final <T> ISharedResultMap_OpsAndTo_Comparable_Named<MODEL, RESULT, Boolean, NAMED_MAP_RESULT> map(IFunctionBoolean<T> getter) {
+		return new ResultMapper_ExpressionList_Comparable_Named<>(new FieldExpression(getter), this);
+	}
+	
+	@Override
+	public final <T> ISharedResultMap_OpsAndTo_Comparable_Named<MODEL, RESULT, Byte, NAMED_MAP_RESULT> map(IFunctionByte<T> getter) {
+		return new ResultMapper_ExpressionList_Comparable_Named<>(new FieldExpression(getter), this);
 	}
 
 	@Override
-	public final <T> ISharedResultMap_OpsAndTo_Numeric_Named<MODEL, RESULT, Integer, NAMED_MAP_RESULT> map(IFunctionInteger<T> getter) {
-		return new ResultMapper_ExpressionList_NonString_Named<>(new FieldExpression(getter), this);
+	public final <T> ISharedResultMap_OpsAndTo_Comparable_Named<MODEL, RESULT, Short, NAMED_MAP_RESULT> map(IFunctionShort<T> getter) {
+		return new ResultMapper_ExpressionList_Comparable_Named<>(new FieldExpression(getter), this);
 	}
 
 	@Override
-	public final <T> ISharedResultMap_OpsAndTo_Numeric_Named<MODEL, RESULT, Long, NAMED_MAP_RESULT> map(IFunctionLong<T> getter) {
-		return new ResultMapper_ExpressionList_NonString_Named<>(new FieldExpression(getter), this);
+	public final <T> ISharedResultMap_OpsAndTo_Comparable_Named<MODEL, RESULT, Integer, NAMED_MAP_RESULT> map(IFunctionInteger<T> getter) {
+		return new ResultMapper_ExpressionList_Comparable_Named<>(new FieldExpression(getter), this);
 	}
 
 	@Override
-	public final <T> ISharedResultMap_OpsAndTo_Numeric_Named<MODEL, RESULT, BigDecimal, NAMED_MAP_RESULT> map(IFunctionBigDecimal<T> getter) {
-		return new ResultMapper_ExpressionList_NonString_Named<>(new FieldExpression(getter), this);
+	public final <T> ISharedResultMap_OpsAndTo_Comparable_Named<MODEL, RESULT, Long, NAMED_MAP_RESULT> map(IFunctionLong<T> getter) {
+		return new ResultMapper_ExpressionList_Comparable_Named<>(new FieldExpression(getter), this);
+	}
+
+	@Override
+	public final <T> ISharedResultMap_OpsAndTo_Comparable_Named<MODEL, RESULT, BigInteger, NAMED_MAP_RESULT> map(IFunctionBigInteger<T> getter) {
+		return new ResultMapper_ExpressionList_Comparable_Named<>(new FieldExpression(getter), this);
+	}
+
+	@Override
+	public final <T> ISharedResultMap_OpsAndTo_Comparable_Named<MODEL, RESULT, Float, NAMED_MAP_RESULT> map(IFunctionFloat<T> getter) {
+		return new ResultMapper_ExpressionList_Comparable_Named<>(new FieldExpression(getter), this);
+	}
+
+	@Override
+	public final <T> ISharedResultMap_OpsAndTo_Comparable_Named<MODEL, RESULT, Double, NAMED_MAP_RESULT> map(IFunctionDouble<T> getter) {
+		return new ResultMapper_ExpressionList_Comparable_Named<>(new FieldExpression(getter), this);
+	}
+
+	@Override
+	public final <T> ISharedResultMap_OpsAndTo_Comparable_Named<MODEL, RESULT, BigDecimal, NAMED_MAP_RESULT> map(IFunctionBigDecimal<T> getter) {
+		return new ResultMapper_ExpressionList_Comparable_Named<>(new FieldExpression(getter), this);
 	}
 
 	@Override
@@ -61,7 +86,27 @@ abstract class Classic_Collector_MapToResult_Base<
 	}
 
 	@Override
-	public final <T> ISharedResultMap_OpsAndTo_Numeric_Named<MODEL, RESULT, Date, NAMED_MAP_RESULT> map(IFunctionDate<T> getter) {
-		return new ResultMapper_ExpressionList_NonString_Named<>(new FieldExpression(getter), this);
+	public final <T> ISharedResultMap_OpsAndTo_Comparable_Named<MODEL, RESULT, java.util.Date, NAMED_MAP_RESULT> map(IFunctionDate<T> getter) {
+		return new ResultMapper_ExpressionList_Comparable_Named<>(new FieldExpression(getter), this);
+	}
+
+	@Override
+	public final <T> ISharedResultMap_OpsAndTo_Comparable_Named<MODEL, RESULT, java.util.Calendar, NAMED_MAP_RESULT> map(IFunctionCalendar<T> getter) {
+		return new ResultMapper_ExpressionList_Comparable_Named<>(new FieldExpression(getter), this);
+	}
+
+	@Override
+	public final <T> ISharedResultMap_OpsAndTo_SQLTimeType_Named<MODEL, RESULT, java.sql.Date, NAMED_MAP_RESULT> map(IFunctionSQLDate<T> getter) {
+		return new ResultMapper_ExpressionList_SQLTimeType_Named<>(new FieldExpression(getter), this);
+	}
+
+	@Override
+	public final <T> ISharedResultMap_OpsAndTo_SQLTimeType_Named<MODEL, RESULT, java.sql.Time, NAMED_MAP_RESULT> map(IFunctionSQLTime<T> getter) {
+		return new ResultMapper_ExpressionList_SQLTimeType_Named<>(new FieldExpression(getter), this);
+	}
+
+	@Override
+	public final <T> ISharedResultMap_OpsAndTo_SQLTimeType_Named<MODEL, RESULT, java.sql.Timestamp, NAMED_MAP_RESULT> map(IFunctionSQLTimestamp<T> getter) {
+		return new ResultMapper_ExpressionList_SQLTimeType_Named<>(new FieldExpression(getter), this);
 	}
 }

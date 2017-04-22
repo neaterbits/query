@@ -89,7 +89,7 @@ class ResultMapper_ExpressionList_Initial_Undecided<
 			NAMED_RET,
 			ALIAS_RET,
 			
-			ISharedResultMap_OpsAndTo_Numeric_Named<MODEL, RESULT, Integer, ISharedFunction_After<MODEL, RESULT>>,
+			ISharedResultMap_OpsAndTo_Comparable_Named<MODEL, RESULT, Integer, ISharedFunction_After<MODEL, RESULT>>,
 			ISharedFunction_Next<MODEL, RESULT, ISharedFunction_After<MODEL, RESULT>>,
 			
 			
@@ -207,7 +207,7 @@ class ResultMapper_ExpressionList_Initial_Undecided<
 			NO_PARAM_ALIAS_SQLTIMESTAMP_RET
 		>,
 			
-	ISharedResultMap_OpsAndTo_Numeric_Named<MODEL, RESULT, Integer, ISharedFunction_After<MODEL,RESULT>>
+	ISharedResultMap_OpsAndTo_Comparable_Named<MODEL, RESULT, Integer, ISharedFunction_After<MODEL,RESULT>>
 		
 		/*, TODO
 	ISharedResultOps_Numeric_Alias<MODEL, RESULT, Integer, ISharedFunction_After<MODEL, RESULT> > */ {

@@ -8,7 +8,7 @@ import java.util.function.Supplier;
 abstract class Collector_ExpressionList_Base<
 		MODEL,
 		RESULT,
-		R extends Comparable<R>,
+		R, // extends Comparable<R>,
 		SOURCE extends ISharedFunction_After<MODEL, RESULT>>
 
 	extends CollectedItem {

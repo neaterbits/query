@@ -5,7 +5,7 @@ import java.util.function.BiConsumer;
 abstract class ResultMapper_ExpressionList_Base<
 			MODEL,
 			RESULT,
-			R extends Comparable<R>, 
+			R, //extends Comparable<R>, 
 			
 			OPERAND_RET extends ISharedFunction_After<MODEL, RESULT>,
 			
