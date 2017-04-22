@@ -48,7 +48,8 @@ final class Short_Collector_Single_Aggregate_Named_TypedJoin<MODEL, RESULT, JOIN
 			ISharedCondition_Comparable_Common_All<MODEL, RESULT, BigDecimal, ISQLLogical_Or_NonProcessResult_Named<MODEL, RESULT>>,
 			ISharedCondition_Comparable_String_All<MODEL, RESULT, ISQLLogical_Or_NonProcessResult_Named<MODEL, RESULT>>
 		> or() {
-		throw new UnsupportedOperationException("TODO");
+
+		return orNamed();
 	}
 
 	@Override
@@ -66,6 +67,7 @@ final class Short_Collector_Single_Aggregate_Named_TypedJoin<MODEL, RESULT, JOIN
 			ISharedCondition_Comparable_Common_All<MODEL, RESULT, BigDecimal, ISQLLogical_And_NonProcessResult_Named<MODEL, RESULT>>,
 			ISharedCondition_Comparable_String_All<MODEL, RESULT, ISQLLogical_And_NonProcessResult_Named<MODEL, RESULT>>
 		> and() {
+
 		return andNamed();
 	}
 }
