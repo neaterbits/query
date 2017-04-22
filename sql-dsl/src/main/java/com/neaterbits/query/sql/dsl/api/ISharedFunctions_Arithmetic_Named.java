@@ -27,9 +27,13 @@ public interface ISharedFunctions_Arithmetic_Named<
 	<T> DOUBLE_RET 		abs(IFunctionDouble<T> getter);
 	<T> BIGDECIMAL_RET 	abs(IFunctionBigDecimal<T> getter);
 
+	<T> BYTE_RET 		absOfByte(ISharedSubOperandsFunction_Byte_Named<MODEL, RESULT> sub);
 	<T> SHORT_RET 		absOfShort(ISharedSubOperandsFunction_Short_Named<MODEL, RESULT> sub);
 	<T> INTEGER_RET 	absOfInteger(ISharedSubOperandsFunction_Integer_Named<MODEL, RESULT> sub);
 	<T> LONG_RET 		absOfLong(ISharedSubOperandsFunction_Long_Named<MODEL, RESULT> sub);
+	<T> BIGINTEGER_RET 	absOfBigInteger(ISharedSubOperandsFunction_BigInteger_Named<MODEL, RESULT> sub);
+	<T> FLOAT_RET 		absOfFloat(ISharedSubOperandsFunction_Float_Named<MODEL, RESULT> sub);
+	<T> DOUBLE_RET 		absOfDouble(ISharedSubOperandsFunction_Double_Named<MODEL, RESULT> sub);
 	<T> BIGDECIMAL_RET 	absOfBigDecimal(ISharedSubOperandsFunction_BigDecimal_Named<MODEL, RESULT> sub);
 	
 

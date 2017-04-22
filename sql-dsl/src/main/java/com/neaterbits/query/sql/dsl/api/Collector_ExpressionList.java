@@ -545,6 +545,11 @@ abstract class Collector_ExpressionList<
 	}
 
 	@Override
+	public final <T> NAMED_BYTE_RET absOfByte(ISharedSubOperandsFunction_Byte_Named<MODEL, RESULT> sub) {
+		return assureNamedFunctions().absOfByte(sub);
+	}
+
+	@Override
 	public final <T> NAMED_SHORT_RET absOfShort(ISharedSubOperandsFunction_Short_Named<MODEL, RESULT> sub) {
 		return assureNamedFunctions().absOfShort(sub);
 	}
@@ -557,6 +562,21 @@ abstract class Collector_ExpressionList<
 	@Override
 	public final <T> NAMED_LONG_RET absOfLong(ISharedSubOperandsFunction_Long_Named<MODEL, RESULT> sub) {
 		return assureNamedFunctions().absOfLong(sub);
+	}
+
+	@Override
+	public final <T> NAMED_BIGINTEGER_RET absOfBigInteger(ISharedSubOperandsFunction_BigInteger_Named<MODEL, RESULT> sub) {
+		return assureNamedFunctions().absOfBigInteger(sub);
+	}
+
+	@Override
+	public final <T> NAMED_FLOAT_RET absOfFloat(ISharedSubOperandsFunction_Float_Named<MODEL, RESULT> sub) {
+		return assureNamedFunctions().absOfFloat(sub);
+	}
+
+	@Override
+	public final <T> NAMED_DOUBLE_RET absOfDouble(ISharedSubOperandsFunction_Double_Named<MODEL, RESULT> sub) {
+		return assureNamedFunctions().absOfDouble(sub);
 	}
 
 	@Override
