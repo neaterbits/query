@@ -11,6 +11,7 @@ interface FunctionVisitor<T, R> {
 
 	R onStringTrim(Function_String_Trim function, T param);
 	
+	R onStringConcat(Function_String_Concat function, T param);
 	
 	// Arithmetic
 	R onArithmeticAbs(Function_Arithmetic_Abs function, T param);

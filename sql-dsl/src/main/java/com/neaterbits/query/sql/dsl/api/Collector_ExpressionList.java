@@ -825,7 +825,31 @@ abstract class Collector_ExpressionList<
 		return assureNamedFunctions().trim(getter);
 	}
 
-		
+	@Override
+	public final <T> NAMED_STRING_RET concat(IFunctionString<T> getter1, IFunctionString<T> getter2) {
+		return assureNamedFunctions().concat(getter1, getter2);
+	}
+
+	@Override
+	public final <T> NAMED_STRING_RET concat(IFunctionString<T> getter, String value) {
+		return assureNamedFunctions().concat(getter, value);
+	}
+
+	@Override
+	public final <T> NAMED_STRING_RET concat(String value, IFunctionString<T> getter) {
+		return assureNamedFunctions().concat(value, getter);
+	}
+
+	@Override
+	public final <T> NAMED_STRING_RET concat(IFunctionString<T> getter, Param<String> param) {
+		return assureNamedFunctions().concat(getter, param);
+	}
+
+	@Override
+	public final <T> NAMED_STRING_RET concat(Param<String> param, IFunctionString<T> getter) {
+		return assureNamedFunctions().concat(param, getter);
+	}
+
 	/****************************************************************
 	 * Alias
 	 ***************************************************************/
@@ -1142,5 +1166,30 @@ abstract class Collector_ExpressionList<
 	@Override
 	public final <T> ALIAS_STRING_RET trim(ISupplierString getter) {
 		return assureAliasFunctions().trim(getter);
+	}
+
+	@Override
+	public final <T> ALIAS_STRING_RET concat(ISupplierString getter1, ISupplierString getter2) {
+		return assureAliasFunctions().concat(getter1, getter2);
+	}
+
+	@Override
+	public final <T> ALIAS_STRING_RET concat(ISupplierString getter, String value) {
+		return assureAliasFunctions().concat(getter, value);
+	}
+
+	@Override
+	public final <T> ALIAS_STRING_RET concat(String value, ISupplierString getter) {
+		return assureAliasFunctions().concat(value, getter);
+	}
+
+	@Override
+	public final <T> ALIAS_STRING_RET concat(ISupplierString getter, Param<String> param) {
+		return assureAliasFunctions().concat(getter, param);
+	}
+
+	@Override
+	public final <T> ALIAS_STRING_RET concat(Param<String> param, ISupplierString getter) {
+		return assureAliasFunctions().concat(param, getter);
 	}
 }

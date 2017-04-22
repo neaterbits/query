@@ -208,6 +208,7 @@ class ResultMapper_ExpressionList_Initial_Undecided<
 		>,
 			
 	ISharedResultMap_OpsAndTo_Comparable_Named<MODEL, RESULT, Integer, ISharedFunction_After<MODEL,RESULT>>
+	//ISharedResultOps_String_Named<MODEL, RESULT, ISharedFunction_After<MODEL,RESULT>>
 		
 		/*, TODO
 	ISharedResultOps_Numeric_Alias<MODEL, RESULT, Integer, ISharedFunction_After<MODEL, RESULT> > */ {

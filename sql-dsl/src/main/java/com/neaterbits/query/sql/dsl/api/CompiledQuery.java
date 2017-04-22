@@ -608,6 +608,11 @@ final class CompiledQuery {
 		public CompiledExpression onValue(ValueExpression value, SelectSourceLookup param) {
 			return new CompiledValueExpression(value.getValue());
 		}
+
+		@Override
+		public CompiledExpression onParam(ParamExpression param, SelectSourceLookup visitorParam) {
+			throw new UnsupportedOperationException("TODO");
+		}
 	};
 	
 	

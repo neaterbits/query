@@ -198,6 +198,11 @@ abstract class QueryDialect_SQL extends QueryDialect_Base {
 		public String onArithmeticAbs(Function_Arithmetic_Abs function, Void param) {
 			return "abs";
 		}
+
+		@Override
+		public String onStringConcat(Function_String_Concat function, Void param) {
+			return "concat";
+		}
 	};
 	
 }

@@ -1016,5 +1016,24 @@ public class ShortAPITest extends BaseJPATest {
 		assertThat(true).isEqualTo(false);
 	}
 
+	@Test
+	public void testConcat() {
+
+		// must test a few variations variations of this, but can probably keep it simple
+		// as to what is before, eg no where-clause or joins
+
+		final Company acme1 = new Company(1, "Acme1", new BigDecimal("153.2"));
+		final Company acme2 = new Company(2, "Acme2", new BigDecimal("96.7"));
+		final Company foo = new Company(3, "Foo", new BigDecimal("35.6"));
+
+		final SingleBuilt<CompanyResultVO> acmeQuery = select
+				.one(CompanyResultVO.class)
+				.map().concat(Company::getName, "_name").to(CompanyResultVO::setName)
+				.where(Company::getName).isEqualTo("Acme1")
+				.build();
+		
+		store(acme1, acme2, foo).
+		checkOneValue(acmeQuery, new CompanyResultVO("Acme1_name"));
+	}
 }
 

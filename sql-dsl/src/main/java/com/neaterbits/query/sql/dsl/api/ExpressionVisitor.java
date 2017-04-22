@@ -8,6 +8,8 @@ public interface ExpressionVisitor<T, R> {
 	
 	R onValue(ValueExpression value, T param);
 
+	R onParam(ParamExpression param, T visitorParam);
+
 	R onFunction(FunctionExpression function, T param);
 
 	R onNestedFunctionCalls(NestedFunctionCallsExpression nested, T param);

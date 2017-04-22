@@ -104,6 +104,8 @@ abstract class Collector_Functions_Base<
 	
 	abstract <T> ISharedFunction_Next<MODEL, RESULT, NAMED_RET> addAndReturnString(Function_String function, IFunctionString<T> getter);
 	
+	abstract ISharedFunction_Next<MODEL, RESULT, NAMED_RET> addAndReturnForNamedStringExpressions(Function_String function, Expression ... expressions);
+	
 	abstract <R extends Comparable<R>, CLAUSE> CLAUSE addSubNumeric(Function_Arithmetic function, ISharedSubOperandsFunction_Named<MODEL, RESULT, R> sub);
 	
 	abstract <CLAUSE> CLAUSE addSubString(Function_String function, ISharedSubOperandsFunction_String_Named<MODEL, RESULT> sub);
@@ -123,16 +125,17 @@ abstract class Collector_Functions_Base<
 	abstract <R extends Comparable<?>> ISharedFunction_Next<MODEL, RESULT, ALIAS_RET> abstractaddAndReturnComparable(Function_Arithmetic function, Supplier<R> getter);
 
 	abstract <R extends Comparable<?>> ISharedFunction_Next<MODEL, RESULT, ALIAS_RET> abstractaddAndReturnComparable(Function_Aggregate function, Supplier<R> getter);
-	
+
 	abstract ISharedFunction_Next<MODEL, RESULT, ALIAS_RET> addAndReturnString(Function_String function, ISupplierString getter);
 
-	
+	abstract ISharedFunction_Next<MODEL, RESULT, ALIAS_RET> addAndReturnForAliasStringExpressions(Function_String function, Expression ... expressions);
+
 	//********************************************************************
 	//* Named
 	//********************************************************************
 
 	
-	// ********* Arithmetic methods *********
+	// ********* Functions *********
 	
 	@Override
 	@SuppressWarnings("unchecked")
@@ -152,7 +155,37 @@ abstract class Collector_Functions_Base<
 	public final <T> NAMED_STRING_RET trim(IFunctionString<T> getter) {
 		return (NAMED_STRING_RET)addAndReturnString(Function_String_Trim.INSTANCE, getter);
 	}
-	
+
+	@Override
+	@SuppressWarnings("unchecked")
+	public final <T> NAMED_STRING_RET concat(IFunctionString<T> getter1, IFunctionString<T> getter2) {
+		return (NAMED_STRING_RET)addAndReturnForNamedStringExpressions(Function_String_Concat.INSTANCE, new FieldExpression(getter1), new FieldExpression(getter2));
+	}
+
+	@Override
+	@SuppressWarnings("unchecked")
+	public final <T> NAMED_STRING_RET concat(IFunctionString<T> getter, String value) {
+		return (NAMED_STRING_RET)addAndReturnForNamedStringExpressions(Function_String_Concat.INSTANCE, new FieldExpression(getter), new ValueExpression(value));
+	}
+
+	@Override
+	@SuppressWarnings("unchecked")
+	public final <T> NAMED_STRING_RET concat(String value, IFunctionString<T> getter) {
+		return (NAMED_STRING_RET)addAndReturnForNamedStringExpressions(Function_String_Concat.INSTANCE, new ValueExpression(value), new FieldExpression(getter));
+	}
+
+	@Override
+	@SuppressWarnings("unchecked")
+	public final <T> NAMED_STRING_RET concat(IFunctionString<T> getter, Param<String> param) {
+		return (NAMED_STRING_RET)addAndReturnForNamedStringExpressions(Function_String_Concat.INSTANCE, new FieldExpression(getter), new ParamExpression(param));
+	}
+
+	@Override
+	@SuppressWarnings("unchecked")
+	public final <T> NAMED_STRING_RET concat(Param<String> param, IFunctionString<T> getter) {
+		return (NAMED_STRING_RET)addAndReturnForNamedStringExpressions(Function_String_Concat.INSTANCE, new ParamExpression(param), new FieldExpression(getter));
+	}
+
 	@Override
 	public final <T> NAMED_BYTE_RET abs(IFunctionByte<T> getter) {
 		return addAndReturnType(Function_Arithmetic_Abs.INSTANCE, getter);
@@ -474,14 +507,13 @@ abstract class Collector_Functions_Base<
 	//* Alias
 	//********************************************************************
 	
-	// ********* Arithmetic methods *********
+	// ********* Functions *********
 	
 	@Override
 	@SuppressWarnings("unchecked")
 	public final <T> ALIAS_STRING_RET lower(ISupplierString getter) {
 		return (ALIAS_STRING_RET) addAndReturnString(Function_String_Lower.INSTANCE, getter);
 	}
-
 
 	@Override
 	@SuppressWarnings("unchecked")
@@ -493,6 +525,31 @@ abstract class Collector_Functions_Base<
 	@SuppressWarnings("unchecked")
 	public final <T> ALIAS_STRING_RET trim(ISupplierString getter) {
 		return (ALIAS_STRING_RET) addAndReturnString(Function_String_Trim.INSTANCE, getter);
+	}
+
+	@Override
+	public final <T> ALIAS_STRING_RET concat(ISupplierString getter1, ISupplierString getter2) {
+		return (ALIAS_STRING_RET)addAndReturnForAliasStringExpressions(Function_String_Concat.INSTANCE, new FieldExpression(getter1), new FieldExpression(getter2));
+	}
+
+	@Override
+	public final <T> ALIAS_STRING_RET concat(ISupplierString getter, String value) {
+		return (ALIAS_STRING_RET)addAndReturnForAliasStringExpressions(Function_String_Concat.INSTANCE, new FieldExpression(getter), new ValueExpression(value));
+	}
+
+	@Override
+	public final <T> ALIAS_STRING_RET concat(String value, ISupplierString getter) {
+		return (ALIAS_STRING_RET)addAndReturnForAliasStringExpressions(Function_String_Concat.INSTANCE, new ValueExpression(value), new FieldExpression(getter));
+	}
+
+	@Override
+	public final <T> ALIAS_STRING_RET concat(ISupplierString getter, Param<String> param) {
+		return (ALIAS_STRING_RET)addAndReturnForAliasStringExpressions(Function_String_Concat.INSTANCE, new FieldExpression(getter), new ParamExpression(param));
+	}
+
+	@Override
+	public final <T> ALIAS_STRING_RET concat(Param<String> param, ISupplierString getter) {
+		return (ALIAS_STRING_RET)addAndReturnForAliasStringExpressions(Function_String_Concat.INSTANCE, new ParamExpression(param), new FieldExpression(getter));
 	}
 
 	@Override
