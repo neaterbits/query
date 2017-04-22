@@ -30,7 +30,7 @@ final class Short_Collector_Single_Aggregate_Named_TypedJoin<MODEL, RESULT, JOIN
 			ISharedCondition_Comparable_String_All_Compilable<MODEL, RESULT, ISQLLogical_AndOr_SingleResult_Named<MODEL, RESULT>>
 		> where() {
 
-		throw new UnsupportedOperationException("TODO");
+		return whereNamed();
 	}
 
 	@Override
