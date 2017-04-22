@@ -36,14 +36,8 @@ public class AggregateJoinWhereAndTest extends GEN_Farm_BaseTestCase {
     	
     	farm2.setLandPlots(Arrays.asList(land3));
     	land3.setFarm(farm2);
-    	/*
-    	farm3.setLandPlots(Arrays.asList(land4));
-    	land4.setFarm(farm3);
-    	*/
     	
     	
-    	// only landplots that belong to farms, so land4 should not be included in sum
-    	// since doing innerjoin from farm to landplot
     	final SingleBuilt<BigDecimal> query
     		= select.sum(LandPlot::getHectares)
     			.innerJoin(Farm::getLandPlots)
@@ -52,7 +46,6 @@ public class AggregateJoinWhereAndTest extends GEN_Farm_BaseTestCase {
     			.build();
     	
     	store(farm1, farm2, farm3, land4)
-    	// remove to avoid delete constraints when deleting Farm (not cascade)
     	.remove(land1, land2, land3)
     	.checkAggregate(query, new BigDecimal("150.3"));
     }
