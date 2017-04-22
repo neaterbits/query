@@ -3,44 +3,33 @@ package com.neaterbits.query.sql.dsl.api;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
-abstract class Short_Collector_Single_Aggregate_Named_TypedJoin_Base<MODEL, RESULT, JOIN_FROM, RET_TYPE> 
+abstract class Short_Collector_Single_Aggregate_Named_TypedJoin_Base<MODEL, RESULT, JOIN_FROM, RET_TYPE>
 
-	extends Short_Collector_WhereOrJoin_Base<
-			MODEL,
-			RESULT,
-			
-			IShortLogical_WhereOrJoin_SingleResult_Named<MODEL, RESULT, RESULT>,
-			IShortLogical_WhereOrJoin_SingleResult_Alias<MODEL, RESULT>,
-			/*
-			ISQLLogical_WhereOrJoin_SingleResult_Named_And_Function<MODEL, RESULT>,
-			ISQLLogical_WhereOrJoin_SingleResult_Alias_And_Function<MODEL, RESULT>,
-			*/
-						/*
-			IShortResult_Mapped_Single_Named<MODEL, RESULT>,
-			IShortResult_Mapped_Single_Alias<MODEL, RESULT>,
-			*/
-			
-			ISQLLogical_And_NonProcessResult_Named<MODEL, RESULT>,
-			ISQLLogical_Or_NonProcessResult_Named<MODEL, RESULT>,
-			ISQLLogical_And_NonProcessResult_Named<MODEL, RESULT>,
-			ISQLLogical_Or_NonProcessResult_Named<MODEL, RESULT>,
-			ISQLJoin_Condition_SingleResult_Named<MODEL, RESULT, Object, Object>,
-			ISQLLogical_AndOr_SingleResult_Named<MODEL, RESULT>,
-			
-			ISQLLogical_And_NonProcessResult_Alias<MODEL, RESULT>,
-			ISQLLogical_Or_NonProcessResult_Alias<MODEL, RESULT>,
-			ISQLLogical_And_NonProcessResult_Alias<MODEL, RESULT>,
-			ISQLLogical_Or_NonProcessResult_Alias<MODEL, RESULT>,
-			IShortJoin_Condition_SingleResult_Alias<MODEL, RESULT>,
-			ISQLLogical_AndOr_SingleResult_Alias<MODEL, RESULT>,
-			
-			Void
-			>
+		extends Short_Collector_WhereOrJoin_Base<MODEL, RESULT,
 
-	implements IShortJoin_Named_Base<MODEL, RESULT, JOIN_FROM, RET_TYPE>
+				IShortLogical_WhereOrJoin_SingleResult_Named<MODEL, RESULT, RESULT>, IShortLogical_WhereOrJoin_SingleResult_Alias<MODEL, RESULT>,
+				/*
+				 * ISQLLogical_WhereOrJoin_SingleResult_Named_And_Function<
+				 * MODEL, RESULT>,
+				 * ISQLLogical_WhereOrJoin_SingleResult_Alias_And_Function<
+				 * MODEL, RESULT>,
+				 */
+				/*
+				 * IShortResult_Mapped_Single_Named<MODEL, RESULT>,
+				 * IShortResult_Mapped_Single_Alias<MODEL, RESULT>,
+				 */
+
+				ISQLLogical_And_NonProcessResult_Named<MODEL, RESULT>, ISQLLogical_Or_NonProcessResult_Named<MODEL, RESULT>, ISQLLogical_And_NonProcessResult_Named<MODEL, RESULT>, ISQLLogical_Or_NonProcessResult_Named<MODEL, RESULT>, ISQLJoin_Condition_SingleResult_Named<MODEL, RESULT, Object, Object>, ISQLLogical_AndOr_SingleResult_Named<MODEL, RESULT>,
+
+				ISQLLogical_And_NonProcessResult_Alias<MODEL, RESULT>, ISQLLogical_Or_NonProcessResult_Alias<MODEL, RESULT>, ISQLLogical_And_NonProcessResult_Alias<MODEL, RESULT>, ISQLLogical_Or_NonProcessResult_Alias<MODEL, RESULT>, IShortJoin_Condition_SingleResult_Alias<MODEL, RESULT>, ISQLLogical_AndOr_SingleResult_Alias<MODEL, RESULT>,
+
+				Void>
+
+		implements IShortJoin_Named_Base<MODEL, RESULT, JOIN_FROM, RET_TYPE>
 
 {
-	Short_Collector_Single_Aggregate_Named_TypedJoin_Base(Short_Collector_Initial_Single_Aggregate_Any<MODEL, RESULT> initial) {
+	Short_Collector_Single_Aggregate_Named_TypedJoin_Base(
+			Short_Collector_Initial_Single_Aggregate_Any<MODEL, RESULT> initial) {
 		super(initial);
 	}
 
@@ -51,7 +40,7 @@ abstract class Short_Collector_Single_Aggregate_Named_TypedJoin_Base<MODEL, RESU
 
 	@Override
 	final Collector_And_Named<MODEL, RESULT, ISQLLogical_And_NonProcessResult_Named<MODEL, RESULT>, ISQLLogical_And_NonProcessResult_Named<MODEL, RESULT>, ISQLLogical_Or_NonProcessResult_Named<MODEL, RESULT>, ISharedProcessResult_After_GroupBy_Named<MODEL, RESULT>> createNamedAndCollector() {
-		throw new UnsupportedOperationException("TODO");
+		return new SQL_Collector_And_NonProcessResult_Named<>(getThisInitial());
 	}
 
 	@Override
@@ -72,58 +61,56 @@ abstract class Short_Collector_Single_Aggregate_Named_TypedJoin_Base<MODEL, RESU
 	}
 
 	@Override
-	public final <JOIN_TO, R extends Comparable<R>> RET_TYPE
-		innerJoin(Function<JOIN_FROM, R> from, Function<JOIN_TO, R> to) {
-		
+	public final <JOIN_TO, R extends Comparable<R>> RET_TYPE innerJoin(Function<JOIN_FROM, R> from,
+			Function<JOIN_TO, R> to) {
+
 		return addInnerJoin(from, to);
 	}
 
 	@Override
-	public final <JOIN_TO> RET_TYPE
-		innerJoin(CollectionFunction<JOIN_FROM, JOIN_TO> collection) {
-		
+	public final <JOIN_TO> RET_TYPE innerJoin(CollectionFunction<JOIN_FROM, JOIN_TO> collection) {
+
 		return addInnerJoin(collection);
 	}
 
 	@Override
-	public final <JOIN_TO, R extends Comparable<R>> RET_TYPE
-		innerJoin(Function<JOIN_FROM, R> from, Function<JOIN_TO, R> to, Consumer<IShortJoin_Sub_Named<MODEL, RESULT, JOIN_TO, Void>> consumer) {
-		
+	public final <JOIN_TO, R extends Comparable<R>> RET_TYPE innerJoin(Function<JOIN_FROM, R> from,
+			Function<JOIN_TO, R> to, Consumer<IShortJoin_Sub_Named<MODEL, RESULT, JOIN_TO, Void>> consumer) {
+
 		return addInnerJoin(from, to, consumer);
 	}
 
 	@Override
-	public final <JOIN_TO> RET_TYPE
-		innerJoin(CollectionFunction<JOIN_FROM, JOIN_TO> collection, Consumer<IShortJoin_Sub_Named<MODEL, RESULT, JOIN_TO, Void>> consumer) {
-		
+	public final <JOIN_TO> RET_TYPE innerJoin(CollectionFunction<JOIN_FROM, JOIN_TO> collection,
+			Consumer<IShortJoin_Sub_Named<MODEL, RESULT, JOIN_TO, Void>> consumer) {
+
 		return addInnerJoin(collection, consumer);
 	}
 
 	@Override
-	public final <JOIN_TO, R extends Comparable<R>> RET_TYPE
-		leftJoin(Function<JOIN_FROM, R> from, Function<JOIN_TO, R> to) {
-		
+	public final <JOIN_TO, R extends Comparable<R>> RET_TYPE leftJoin(Function<JOIN_FROM, R> from,
+			Function<JOIN_TO, R> to) {
+
 		return addLeftJoin(from, to);
 	}
 
 	@Override
-	public final <JOIN_TO> RET_TYPE
-		leftJoin(CollectionFunction<JOIN_FROM, JOIN_TO> collection) {
-		
+	public final <JOIN_TO> RET_TYPE leftJoin(CollectionFunction<JOIN_FROM, JOIN_TO> collection) {
+
 		return addLeftJoin(collection);
 	}
 
 	@Override
-	public final <JOIN_TO, R extends Comparable<R>> RET_TYPE
-		leftJoin(Function<JOIN_FROM, R> from, Function<JOIN_TO, R> to, Consumer<IShortJoin_Sub_Named<MODEL, RESULT, JOIN_TO, Void>> consumer) {
-		
+	public final <JOIN_TO, R extends Comparable<R>> RET_TYPE leftJoin(Function<JOIN_FROM, R> from,
+			Function<JOIN_TO, R> to, Consumer<IShortJoin_Sub_Named<MODEL, RESULT, JOIN_TO, Void>> consumer) {
+
 		return addLeftJoin(from, to, consumer);
 	}
 
 	@Override
-	public final <JOIN_TO> RET_TYPE
-		leftJoin(CollectionFunction<JOIN_FROM, JOIN_TO> collection, Consumer<IShortJoin_Sub_Named<MODEL, RESULT, JOIN_TO, Void>> consumer) {
-		
+	public final <JOIN_TO> RET_TYPE leftJoin(CollectionFunction<JOIN_FROM, JOIN_TO> collection,
+			Consumer<IShortJoin_Sub_Named<MODEL, RESULT, JOIN_TO, Void>> consumer) {
+
 		return addLeftJoin(collection);
 	}
 }

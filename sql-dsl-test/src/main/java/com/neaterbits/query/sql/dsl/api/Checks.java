@@ -31,7 +31,9 @@ final class Checks {
     			final BigDecimal resultDecimal = (BigDecimal)result;
     			final BigDecimal expectedDecimal = (BigDecimal)expected;
     			
-    			assertThat(resultDecimal.compareTo(expectedDecimal)).isEqualTo(0);
+    			if (resultDecimal.compareTo(expectedDecimal) != 0) {
+    				throw new AssertionError("Mismatch between decimals: expected " + expectedDecimal + " and result " + resultDecimal);
+    			}
     		}
     		else {
     			assertThat(result).isEqualTo(expected);
