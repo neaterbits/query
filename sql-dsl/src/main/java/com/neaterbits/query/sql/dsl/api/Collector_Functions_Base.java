@@ -130,6 +130,8 @@ abstract class Collector_Functions_Base<
 
 	abstract ISharedFunction_Next<MODEL, RESULT, ALIAS_RET> addAndReturnForAliasStringExpressions(Function_String function, Expression ... expressions);
 
+	abstract <R extends Comparable<R>, CLAUSE> CLAUSE addSubNumeric(Function_Arithmetic function, ISharedSubOperandsFunction_Alias<MODEL, RESULT, R> sub);
+
 	//********************************************************************
 	//* Named
 	//********************************************************************
@@ -622,6 +624,46 @@ abstract class Collector_Functions_Base<
 	@Override
 	public final <T> ALIAS_BIGDECIMAL_RET abs(ISupplierBigDecimal getter) {
 		return addAndReturnType(Function_Arithmetic_Abs.INSTANCE, getter);
+	}
+	
+	@Override
+	public final <T> ALIAS_BYTE_RET absOfByte(ISharedSubOperandsFunction_Byte_Alias<MODEL, RESULT> sub) {
+		return addSubNumeric(Function_Arithmetic_Abs.INSTANCE, sub);
+	}
+
+	@Override
+	public final <T> ALIAS_SHORT_RET absOfShort(ISharedSubOperandsFunction_Short_Alias<MODEL, RESULT> sub) {
+		return addSubNumeric(Function_Arithmetic_Abs.INSTANCE, sub);
+	}
+
+	@Override
+	public final <T> ALIAS_INTEGER_RET absOfInteger(ISharedSubOperandsFunction_Integer_Alias<MODEL, RESULT> sub) {
+		return addSubNumeric(Function_Arithmetic_Abs.INSTANCE, sub);
+	}
+
+	@Override
+	public final <T> ALIAS_LONG_RET absOfLong(ISharedSubOperandsFunction_Long_Alias<MODEL, RESULT> sub) {
+		return addSubNumeric(Function_Arithmetic_Abs.INSTANCE, sub);
+	}
+
+	@Override
+	public final <T> ALIAS_BIGINTEGER_RET absOfBigInteger(ISharedSubOperandsFunction_BigInteger_Alias<MODEL, RESULT> sub) {
+		return addSubNumeric(Function_Arithmetic_Abs.INSTANCE, sub);
+	}
+
+	@Override
+	public final <T> ALIAS_FLOAT_RET absOfFloat(ISharedSubOperandsFunction_Float_Alias<MODEL, RESULT> sub) {
+		return addSubNumeric(Function_Arithmetic_Abs.INSTANCE, sub);
+	}
+
+	@Override
+	public final <T> ALIAS_DOUBLE_RET absOfDouble(ISharedSubOperandsFunction_Double_Alias<MODEL, RESULT> sub) {
+		return addSubNumeric(Function_Arithmetic_Abs.INSTANCE, sub);
+	}
+
+	@Override
+	public final <T> ALIAS_BIGDECIMAL_RET absOfBigDecimal(ISharedSubOperandsFunction_BigDecimal_Alias<MODEL, RESULT> sub) {
+		return addSubNumeric(Function_Arithmetic_Abs.INSTANCE, sub);
 	}
 
 	@Override

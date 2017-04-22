@@ -935,6 +935,46 @@ abstract class Collector_ExpressionList<
 	}
 
 	@Override
+	public final <T> ALIAS_BYTE_RET absOfByte(ISharedSubOperandsFunction_Byte_Alias<MODEL, RESULT> sub) {
+		return assureAliasFunctions().absOfByte(sub);
+	}
+
+	@Override
+	public final <T> ALIAS_SHORT_RET absOfShort(ISharedSubOperandsFunction_Short_Alias<MODEL, RESULT> sub) {
+		return assureAliasFunctions().absOfShort(sub);
+	}
+
+	@Override
+	public final <T> ALIAS_INTEGER_RET absOfInteger(ISharedSubOperandsFunction_Integer_Alias<MODEL, RESULT> sub) {
+		return assureAliasFunctions().absOfInteger(sub);
+	}
+
+	@Override
+	public final <T> ALIAS_LONG_RET absOfLong(ISharedSubOperandsFunction_Long_Alias<MODEL, RESULT> sub) {
+		return assureAliasFunctions().absOfLong(sub);
+	}
+
+	@Override
+	public final <T> ALIAS_BIGINTEGER_RET absOfBigInteger(ISharedSubOperandsFunction_BigInteger_Alias<MODEL, RESULT> sub) {
+		return assureAliasFunctions().absOfBigInteger(sub);
+	}
+
+	@Override
+	public final <T> ALIAS_FLOAT_RET absOfFloat(ISharedSubOperandsFunction_Float_Alias<MODEL, RESULT> sub) {
+		return assureAliasFunctions().absOfFloat(sub);
+	}
+
+	@Override
+	public final <T> ALIAS_DOUBLE_RET absOfDouble(ISharedSubOperandsFunction_Double_Alias<MODEL, RESULT> sub) {
+		return assureAliasFunctions().absOfDouble(sub);
+	}
+
+	@Override
+	public final <T> ALIAS_BIGDECIMAL_RET absOfBigDecimal(ISharedSubOperandsFunction_BigDecimal_Alias<MODEL, RESULT> sub) {
+		return assureAliasFunctions().absOfBigDecimal(sub);
+	}
+
+	@Override
 	public final <T> ALIAS_DOUBLE_RET sqrt(ISupplierByte getter) {
 		return assureAliasFunctions().sqrt(getter);
 	}

@@ -10,7 +10,10 @@ abstract class SubOperandsBuilder_Initial<
 		AFTER extends ISharedFunction_After<MODEL,RESULT>,
 		
 		NAMED_RET extends ISharedFunction_After<MODEL, RESULT>,
-		ALIAS_RET extends ISharedFunction_After<MODEL, RESULT>
+		ALIAS_RET extends ISharedFunction_After<MODEL, RESULT>,
+		
+		NUMERIC_OPERAND_NEXT   extends ISharedFunction_Next<MODEL, RESULT, AFTER>,
+		STRING_OPERAND_NEXT    extends ISharedFunction_Next<MODEL, RESULT, AFTER>
 	>
 
 	extends SubOperandsBuilder<
@@ -23,9 +26,10 @@ abstract class SubOperandsBuilder_Initial<
 			
 			NAMED_RET,
 			ALIAS_RET,
+
+			NUMERIC_OPERAND_NEXT,
+			STRING_OPERAND_NEXT,
 			
-			ISharedSubOperandsBuilder_Numeric_Next_Named<MODEL,RESULT,R,AFTER>,
-			ISharedFunction_Next<MODEL, RESULT, AFTER>,
 			
 			ISharedSubOperand_Numeric_Ops_Named<MODEL, RESULT, R, NAMED_RET>,
 			ISharedSubOperand_Numeric_Ops_Named<MODEL, RESULT, R, NAMED_RET>,
@@ -64,7 +68,6 @@ abstract class SubOperandsBuilder_Initial<
 			ISharedSubOperand_NumericSQLTimeType_Ops_Alias<MODEL, RESULT, R, ALIAS_RET>
 			>
 
-		implements ISharedSubOperandsBuilder_Numeric_Next_Named<MODEL, RESULT, R, AFTER>
  {
 
  }

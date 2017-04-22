@@ -400,7 +400,7 @@ public class ShortAPITest extends BaseJPATest {
 
 	
 	@Test
-    public void testArithmeticSubOf() {
+    public void testArithmeticSubOfNamed() {
 		
 		final Company acme1 = new Company(1, "Acme1", new BigDecimal("49"));
 		final Company acme2 = new Company(2, "Acme2", new BigDecimal("121"));
@@ -425,6 +425,33 @@ public class ShortAPITest extends BaseJPATest {
 		acmeQuery.prepare(jpqlJPADerby).execute();
 	}
 
+	@Test
+    public void testArithmeticSubOfAlias() {
+		
+		final Company acme1 = new Company(1, "Acme1", new BigDecimal("49"));
+		final Company acme2 = new Company(2, "Acme2", new BigDecimal("121"));
+		final Company acme3 = new Company(3, "Acme2", new BigDecimal("256"));
+		final Company foo = new Company(4, "Foo", new BigDecimal("35.6"));
+		
+		final Company c = select.alias(Company.class);
+		
+		final SingleBuilt<CompanyResultVO> acmeQuery = select
+				.one(CompanyResultVO.class)
+				
+				.map(c::getStockPrice).to(CompanyResultVO::setStockPrice)
+				.map()
+						.abs()
+						.absOfBigDecimal(
+								e -> e.abs(c::getStockPrice))
+
+					.to(CompanyResultVO::setStockPrice)
+
+				//.mapOf(e -> e.abs(c::getStockPrice)).to(CompanyAggregatesVO::setAvgStockPrice)
+
+				.build();
+
+		acmeQuery.prepare(jpqlJPADerby).execute();
+	}
 	
 	@Test
     public void testArithmetic() {

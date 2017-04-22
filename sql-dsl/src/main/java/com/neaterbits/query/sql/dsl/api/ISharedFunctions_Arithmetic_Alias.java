@@ -27,7 +27,16 @@ public interface ISharedFunctions_Arithmetic_Alias<
 	<T> DOUBLE_RET 	abs(ISupplierDouble getter);
 	<T> BIGDECIMAL_RET abs(ISupplierBigDecimal getter);
 
+	<T> BYTE_RET 		absOfByte(ISharedSubOperandsFunction_Byte_Alias<MODEL, RESULT> sub);
+	<T> SHORT_RET 		absOfShort(ISharedSubOperandsFunction_Short_Alias<MODEL, RESULT> sub);
+	<T> INTEGER_RET 	absOfInteger(ISharedSubOperandsFunction_Integer_Alias<MODEL, RESULT> sub);
+	<T> LONG_RET 		absOfLong(ISharedSubOperandsFunction_Long_Alias<MODEL, RESULT> sub);
+	<T> BIGINTEGER_RET 	absOfBigInteger(ISharedSubOperandsFunction_BigInteger_Alias<MODEL, RESULT> sub);
+	<T> FLOAT_RET 		absOfFloat(ISharedSubOperandsFunction_Float_Alias<MODEL, RESULT> sub);
+	<T> DOUBLE_RET 		absOfDouble(ISharedSubOperandsFunction_Double_Alias<MODEL, RESULT> sub);
+	<T> BIGDECIMAL_RET 	absOfBigDecimal(ISharedSubOperandsFunction_BigDecimal_Alias<MODEL, RESULT> sub);
 
+	
 	// sqrt() always return double-type
 	<T> DOUBLE_RET sqrt(ISupplierByte getter);
 	<T> DOUBLE_RET sqrt(ISupplierShort getter);

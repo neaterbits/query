@@ -74,7 +74,7 @@ final class Short_Collector_Single_Mapped_Alias_Initial<MODEL, RESULT>
 
 		> map() {
 
-		throw new UnsupportedOperationException("TODO");
+		return new Collector_MapFunctions_ExpressionList_Alias<>(this);
 	}
 
 	@Override

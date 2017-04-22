@@ -329,5 +329,18 @@ abstract class Collector_NestedFunctions_Base<
 		return continueAfterAliasStringFunctions(expression);
 	}
 	
+	@Override
+	@SuppressWarnings("unchecked")
+	final <R extends Comparable<R>, CLAUSE> CLAUSE addSubNumeric(Function_Arithmetic function, ISharedSubOperandsFunction_Alias<MODEL, RESULT, R> sub) {
+		
+		// Must build sub-functions with parameters
+		final FunctionExpression expression = SubExpressionUtil.addSubNumericForFunction(function, sub);
+		
+		functions.add(expression);
+		
+		final Expression collected = collectExpression();
+
+		return (CLAUSE)continueAfterAliasComparableFunctions(collected);
+	}
 }
 
