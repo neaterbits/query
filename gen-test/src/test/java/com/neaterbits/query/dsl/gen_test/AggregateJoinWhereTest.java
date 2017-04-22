@@ -45,19 +45,13 @@ public class AggregateJoinWhereTest extends GEN_Farm_BaseTestCase {
     			.build();
     	
     	store(farm1, farm2, land4)
-    	/*.dump(Farm.class)
-    	.dump(LandPlot.class)
-    	*/
-    	.dump("select * from farm")
-    	.dump("select * from land_plot")
-    	
     	// remove to avoid delete constraints when deleting Farm (not cascade)
     	.remove(land1, land2, land3)
     	.checkAggregate(query, new BigDecimal("49.80"));
     }
     
     @Test
-    public void testAggregateSingleNamed_Inner() {
+    public void testAggregateSingleNamed_WhereLandPlot_Inner() {
     	
     	// Aggregate left-join
     	final Farm farm1 = makeFarm("Farm1", "1928-09-02");
@@ -87,7 +81,7 @@ public class AggregateJoinWhereTest extends GEN_Farm_BaseTestCase {
     }
 
     @Test
-    public void testAggregateSingleNamed_Left() {
+    public void testAggregateSingleNamed_WhereLandPlot_Left() {
     	
     	// Aggregate left-join
     	final Farm farm1 = makeFarm("Farm1", "1928-09-02");
@@ -120,7 +114,64 @@ public class AggregateJoinWhereTest extends GEN_Farm_BaseTestCase {
 		.checkAggregate(query, date("1974-02-29"));
     }
     
+    @Test
+    public void testAggregateSingleNamed_WhereFarm_Inner() {
+    	
+    	// Aggregate left-join
+    	final Farm farm1 = makeFarm("Farm1", "1928-09-02");
+    	final Farm farm2 = makeFarm("Farm2", "1974-02-29");
+    	final Farm farm3 = makeFarm("Farm3", "2004-03-22");
 
+    	final LandPlot land1 = new CropLand(new BigDecimal("9.30"));
+    	final LandPlot land2 = new Forest(new BigDecimal("40.5"));
+    	
+    	farm1.setLandPlots(Arrays.asList(land1));
+    	land1.setFarm(farm1);
+    	
+    	farm2.setLandPlots(Arrays.asList(land2));
+    	land2.setFarm(farm2);
+    	
+
+    	final SingleBuilt<Date> query
+	    	= select.max(Farm::getTimeFounded)
+				.innerJoin(Farm::getLandPlots)
+				.where(Farm::getTimeFounded).isGreaterThan(date("1950-01-01"))
+				.build();
+	
+		store(farm1, farm2, farm3)
+		.remove(land1, land2)
+		.checkAggregate(query, date("1974-02-29"));
+    }
+
+    @Test
+    public void testAggregateSingleNamed_WhereFarm_Left() {
+    	
+    	// Aggregate left-join
+    	final Farm farm1 = makeFarm("Farm1", "1928-09-02");
+    	final Farm farm2 = makeFarm("Farm2", "1974-02-29");
+    	final Farm farm3 = makeFarm("Farm3", "2004-03-22");
+
+    	final LandPlot land1 = new CropLand(new BigDecimal("9.30"));
+    	final LandPlot land2 = new Forest(new BigDecimal("40.5"));
+    	
+    	farm1.setLandPlots(Arrays.asList(land1));
+    	land1.setFarm(farm1);
+    	
+    	farm2.setLandPlots(Arrays.asList(land2));
+    	land2.setFarm(farm2);
+    	
+
+    	final SingleBuilt<Date> query
+	    	= select.max(Farm::getTimeFounded)
+				.leftJoin(Farm::getLandPlots)
+				.where(Farm::getTimeFounded).isGreaterThan(date("1950-01-01"))
+				.build();
+	
+		store(farm1, farm2, farm3)
+		.remove(land1, land2)
+		.checkAggregate(query, date("2004-03-22"));
+    }
+    
     @Test
     public void testAggregateSingleAlias() {
     	final Farm farm1 = new Farm("Farm1");
@@ -163,7 +214,7 @@ public class AggregateJoinWhereTest extends GEN_Farm_BaseTestCase {
     }
     
     @Test
-    public void testAggregateSingleAlias_Inner() {
+    public void testAggregateSingleAlias_WhereLandPlot_Inner() {
     	
     	// Aggregate left-join
     	final Farm farm1 = makeFarm("Farm1", "1928-09-02");
@@ -196,7 +247,7 @@ public class AggregateJoinWhereTest extends GEN_Farm_BaseTestCase {
     }
 
     @Test
-    public void testAggregateSingleAlias_Left() {
+    public void testAggregateSingleAlias_WhereLandPlot_Left() {
     	
     	// Aggregate left-join
     	final Farm farm1 = makeFarm("Farm1", "1928-09-02");
@@ -222,13 +273,71 @@ public class AggregateJoinWhereTest extends GEN_Farm_BaseTestCase {
 				.build();
 	
 		store(farm1, farm2, farm3)
-		/*.dump(Farm.class)
-		.dump(LandPlot.class)
-		*/
-		
 		// remove to avoid delete constraints when deleting Farm (not cascade)
 		.remove(land1, land2)
 		.checkAggregate(query, date("1974-02-29"));
+    }
+    
+    @Test
+    public void testAggregateSingleAlias_WhereFarm_Inner() {
+    	
+    	// Aggregate left-join
+    	final Farm farm1 = makeFarm("Farm1", "1928-09-02");
+    	final Farm farm2 = makeFarm("Farm2", "1974-02-29");
+    	final Farm farm3 = makeFarm("Farm3", "2004-03-22");
+
+    	final LandPlot land1 = new CropLand(new BigDecimal("9.30"));
+    	final LandPlot land2 = new Forest(new BigDecimal("40.5"));
+    	
+    	farm1.setLandPlots(Arrays.asList(land1));
+    	land1.setFarm(farm1);
+    	
+    	farm2.setLandPlots(Arrays.asList(land2));
+    	land2.setFarm(farm2);
+    	
+    	final Farm     f = select.alias(Farm.class);
+    	final LandPlot l = select.alias(LandPlot.class);
+
+    	final SingleBuilt<Date> query
+	    	= select.max(f::getTimeFounded)
+				.innerJoin(f::getLandPlots, l)
+				.where(f::getTimeFounded).isGreaterThan(date("1950-01-01"))
+				.build();
+	
+		store(farm1, farm2, farm3)
+		.remove(land1, land2)
+		.checkAggregate(query, date("1974-02-29"));
+    }
+
+    @Test
+    public void testAggregateSingleAlias_WhereFarm_Left() {
+    	
+    	// Aggregate left-join
+    	final Farm farm1 = makeFarm("Farm1", "1928-09-02");
+    	final Farm farm2 = makeFarm("Farm2", "1974-02-29");
+    	final Farm farm3 = makeFarm("Farm3", "2004-03-22");
+
+    	final LandPlot land1 = new CropLand(new BigDecimal("9.30"));
+    	final LandPlot land2 = new Forest(new BigDecimal("40.5"));
+    	
+    	farm1.setLandPlots(Arrays.asList(land1));
+    	land1.setFarm(farm1);
+    	
+    	farm2.setLandPlots(Arrays.asList(land2));
+    	land2.setFarm(farm2);
+    	
+    	final Farm     f = select.alias(Farm.class);
+    	final LandPlot l = select.alias(LandPlot.class);
+
+    	final SingleBuilt<Date> query
+	    	= select.max(f::getTimeFounded)
+				.leftJoin(f::getLandPlots, l)
+				.where(f::getTimeFounded).isGreaterThan(date("1950-01-01"))
+				.build();
+	
+		store(farm1, farm2, farm3)
+		.remove(land1, land2)
+		.checkAggregate(query, date("2004-03-22"));
     }
     
 }
