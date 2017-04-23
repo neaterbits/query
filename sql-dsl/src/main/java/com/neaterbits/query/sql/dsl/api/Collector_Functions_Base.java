@@ -763,6 +763,46 @@ abstract class Collector_Functions_Base<
 	}
 	
 	@Override
+	public final <T> ALIAS_DOUBLE_RET sqrtOf(ISharedSubOperandsFunction_Byte_Alias<MODEL, RESULT> sub) {
+		return addSubNumeric(Function_Arithmetic_Sqrt.INSTANCE, sub);
+	}
+
+	@Override
+	public final <T> ALIAS_DOUBLE_RET sqrtOf(ISharedSubOperandsFunction_Short_Alias<MODEL, RESULT> sub) {
+		return addSubNumeric(Function_Arithmetic_Sqrt.INSTANCE, sub);
+	}
+
+	@Override
+	public final <T> ALIAS_DOUBLE_RET sqrtOf(ISharedSubOperandsFunction_Integer_Alias<MODEL, RESULT> sub) {
+		return addSubNumeric(Function_Arithmetic_Sqrt.INSTANCE, sub);
+	}
+
+	@Override
+	public final <T> ALIAS_DOUBLE_RET sqrtOf(ISharedSubOperandsFunction_BigInteger_Alias<MODEL, RESULT> sub) {
+		return addSubNumeric(Function_Arithmetic_Sqrt.INSTANCE, sub);
+	}
+
+	@Override
+	public final <T> ALIAS_DOUBLE_RET sqrtOf(ISharedSubOperandsFunction_Long_Alias<MODEL, RESULT> sub) {
+		return addSubNumeric(Function_Arithmetic_Sqrt.INSTANCE, sub);
+	}
+
+	@Override
+	public final <T> ALIAS_DOUBLE_RET sqrtOf(ISharedSubOperandsFunction_Float_Alias<MODEL, RESULT> sub) {
+		return addSubNumeric(Function_Arithmetic_Sqrt.INSTANCE, sub);
+	}
+
+	@Override
+	public final <T> ALIAS_DOUBLE_RET sqrtOf(ISharedSubOperandsFunction_Double_Alias<MODEL, RESULT> sub) {
+		return addSubNumeric(Function_Arithmetic_Sqrt.INSTANCE, sub);
+	}
+
+	@Override
+	public final <T> ALIAS_DOUBLE_RET sqrtOf(ISharedSubOperandsFunction_BigDecimal_Alias<MODEL, RESULT> sub) {
+		return addSubNumeric(Function_Arithmetic_Sqrt.INSTANCE, sub);
+	}
+
+	@Override
 	@SuppressWarnings("unchecked")
 	public final <T> ALIAS_INTEGER_RET mod(ISupplierInteger getter, int value) {
 		return (ALIAS_INTEGER_RET)addAndReturnForAliasNumericExpressions(Function_Arithmetic_Mod.INSTANCE, new FieldExpression(getter), new ValueExpression(value));
