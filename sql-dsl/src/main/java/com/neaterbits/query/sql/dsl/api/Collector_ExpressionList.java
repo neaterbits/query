@@ -658,10 +658,44 @@ abstract class Collector_ExpressionList<
 	}
 
 	@Override
+	public final <T> NAMED_DOUBLE_RET sqrtOf(ISharedSubOperandsFunction_Byte_Named<MODEL, RESULT> sub) {
+		return assureNamedFunctions().sqrtOf(sub);
+	}
+
+	@Override
+	public final <T> NAMED_DOUBLE_RET sqrtOf(ISharedSubOperandsFunction_Short_Named<MODEL, RESULT> sub) {
+		return assureNamedFunctions().sqrtOf(sub);
+	}
+
+	@Override
+	public final <T> NAMED_DOUBLE_RET sqrtOf(ISharedSubOperandsFunction_Integer_Named<MODEL, RESULT> sub) {
+		return assureNamedFunctions().sqrtOf(sub);
+	}
+
+	@Override
+	public final <T> NAMED_DOUBLE_RET sqrtOf(ISharedSubOperandsFunction_BigInteger_Named<MODEL, RESULT> sub) {
+		return assureNamedFunctions().sqrtOf(sub);
+	}
+
+	@Override
+	public final <T> NAMED_DOUBLE_RET sqrtOf(ISharedSubOperandsFunction_Long_Named<MODEL, RESULT> sub) {
+		return assureNamedFunctions().sqrtOf(sub);
+	}
+
+	@Override
+	public final <T> NAMED_DOUBLE_RET sqrtOf(ISharedSubOperandsFunction_Float_Named<MODEL, RESULT> sub) {
+		return assureNamedFunctions().sqrtOf(sub);
+	}
+
+	@Override
 	public final <T> NAMED_DOUBLE_RET sqrtOf(ISharedSubOperandsFunction_Double_Named<MODEL, RESULT> sub) {
 		return assureNamedFunctions().sqrtOf(sub);
 	}
 
+	@Override
+	public final <T> NAMED_DOUBLE_RET sqrtOf(ISharedSubOperandsFunction_BigDecimal_Named<MODEL, RESULT> sub) {
+		return assureNamedFunctions().sqrtOf(sub);
+	}
 	
 	//*************** Aggregate forwarding functions ***************
 	
