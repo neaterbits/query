@@ -23,6 +23,13 @@ public interface ISharedSubOperandsBuilder_Alias<MODEL, RESULT, R extends Compar
 					
 					ISharedSubOperandsBuilder_NoParam_Alias<MODEL, RESULT, R, AFTER>,
 					ISharedSubOperandsBuilder_NoParam_Alias<MODEL, RESULT, Double, AFTER>
+		>,
+		ISharedFunctions_String_Alias<
+					MODEL,
+					RESULT,
+					AFTER,
+					ISharedSubOperand_Numeric_Ops_Alias<MODEL, RESULT, R, AFTER>,
+					ISharedSubOperand_String_Ops_Alias<MODEL, RESULT, AFTER>
 		>
 
 		{

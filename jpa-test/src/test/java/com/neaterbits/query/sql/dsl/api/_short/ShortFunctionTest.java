@@ -34,9 +34,37 @@ public class ShortFunctionTest extends BaseJPATest {
 				.build();
 		
 		store(acme1, acme2)
-		.checkListUnordered(acmeQuery, new NameLength("Acme", 4), new NameLength("Acme Inc.", 9));
+		.checkListUnordered(acmeQuery, 
+				new NameLength("Acme", 2),  		// (4 + 1) % 3 => 2
+				new NameLength("Acme Inc.", 1)); 	// (9 + 1) % 3 => 1
 	}
+	
+	
 
+	@Test // Test that can combine mod and length functions
+	public void testModAndLengthAlias() {
+		final Company acme1 = new Company(1, "Acme", new BigDecimal("49"));
+		final Company acme2 = new Company(2, "Acme Inc.", new BigDecimal("121"));
+
+		final Company c = select.alias(Company.class);
+
+		final MultiBuilt<NameLength> acmeQuery = select
+				.list(NameLength.class)
+				
+				.map(c::getName).to(NameLength::setName)
+				//.map().modOf(b -> b.lower(Company::getName) ).to(NameLength::setLength)
+				
+				//fortsett her, fikse slik at kun returnerer
+				.map().modOf(b -> b.length(c::getName).plus((short)1), 3).to(NameLength::setLength)
+
+				.build();
+		
+		store(acme1, acme2)
+		.checkListUnordered(acmeQuery, 
+				new NameLength("Acme", 2),  		// (4 + 1) % 3 => 2
+				new NameLength("Acme Inc.", 1)); 	// (9 + 1) % 3 => 1
+	}
+	
 	// Test that can call nested function as first entry after map()
 	// this is a problematic case since we have not yet decided whether named or aliased
 	@Test 
@@ -275,23 +303,6 @@ public class ShortFunctionTest extends BaseJPATest {
 		.checkListUnordered(acmeQuery, new NameLength("Acme", 4), new NameLength("Acme Inc.", 9));
 	}
 
-	@Test
-    public void testModLengthNamed() {
-		final Company acme1 = new Company(1, "Acme", new BigDecimal("49"));
-		final Company acme2 = new Company(2, "Acme Inc.", new BigDecimal("121"));
-
-		MultiBuilt<NameLength> acmeQuery = select
-				.list(NameLength.class)
-				
-				.map(Company::getName).to(NameLength::setName)
-				//.map().modOf(b -> b.lower(Company::getName) ).to(NameLength::setLength)
-				.map().modOf(b -> b.length(Company::getName).plus((short)1), 3).to(NameLength::setLength)
-
-				.build();
-		
-		store(acme1, acme2)
-		.checkListUnordered(acmeQuery, new NameLength("Acme", 4), new NameLength("Acme Inc.", 9));
-	}
 
 	@Test
     public void testLengthAlias() {
@@ -304,7 +315,7 @@ public class ShortFunctionTest extends BaseJPATest {
 				.list(NameLength.class)
 				
 				.map(c::getName).to(NameLength::setName)
-				.map().length(c::getName).to(NameLength::setLength)
+				.map().modOf(b -> b.length(c::getName).plus((short)1), 3).to(NameLength::setLength)
 
 				.build();
 		

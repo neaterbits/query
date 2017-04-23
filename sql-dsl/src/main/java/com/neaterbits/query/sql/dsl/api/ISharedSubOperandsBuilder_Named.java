@@ -29,7 +29,7 @@ public interface ISharedSubOperandsBuilder_Named<MODEL, RESULT, R extends Compar
 			ISharedFunctions_String_Named<
 				MODEL, RESULT, AFTER,
 				ISharedSubOperand_Numeric_Ops_Named<MODEL, RESULT, R, AFTER>, 
-				ISharedSubOperand_Numeric_Ops_Named<MODEL, RESULT, R, AFTER>>
+				ISharedSubOperand_String_Ops_Named<MODEL, RESULT, AFTER>>
 
 				{
 
