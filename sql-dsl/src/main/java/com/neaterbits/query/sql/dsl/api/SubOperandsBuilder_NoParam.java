@@ -34,6 +34,7 @@ abstract class SubOperandsBuilder_NoParam<
 		
 		ISharedSubOperandsBuilder_NoParam_End_Named<MODEL, RESULT, R, NAMED_RET>,
 		ISharedSubOperandsBuilder_NoParam_End_Named<MODEL, RESULT, R, NAMED_RET>,
+		ISharedSubOperandsBuilder_NoParam_End_Named<MODEL, RESULT, R, NAMED_RET>,
 		
 		ISharedSubOperandsBuilder_NoParam_End_Named<MODEL, RESULT, R, NAMED_RET>, 
 		ISharedSubOperandsBuilder_NoParam_End_Named<MODEL, RESULT, R, NAMED_RET>,
@@ -50,6 +51,7 @@ abstract class SubOperandsBuilder_NoParam<
 		ISharedSubOperandsBuilder_NoParam_End_Named<MODEL, RESULT, R, NAMED_RET>,
 		ISharedSubOperandsBuilder_NoParam_End_Named<MODEL, RESULT, R, NAMED_RET>,
 		
+		ISharedSubOperandsBuilder_NoParam_End_Alias<MODEL, RESULT, R, ALIAS_RET>,
 		ISharedSubOperandsBuilder_NoParam_End_Alias<MODEL, RESULT, R, ALIAS_RET>,
 		ISharedSubOperandsBuilder_NoParam_End_Alias<MODEL, RESULT, R, ALIAS_RET>,
 		

@@ -175,6 +175,12 @@ abstract class QueryDialect_SQL extends QueryDialect_Base {
 		}
 
 		@Override
+		public String onStringLength(Function_String_Length function, Void param) {
+			return "length";
+		}
+
+
+		@Override
 		public String onStringLower(Function_String_Lower function, Void param) {
 			return "lower";
 		}

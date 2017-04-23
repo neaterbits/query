@@ -112,6 +112,8 @@ final class Short_Collector_Initial_Single_Aggregate_Named<RESULT>
 				RESULT,
 				
 				ISQLLogical_AndOr_SingleResult_Named<SingleBuilt<RESULT>, RESULT>, 
+				ISharedCondition_Comparable_Common_All_Compilable<SingleBuilt<RESULT>, RESULT, Integer, ISQLLogical_AndOr_SingleResult_Named<SingleBuilt<RESULT>, RESULT>>,
+
 				ISharedCondition_Comparable_Common_All_Compilable<SingleBuilt<RESULT>, RESULT, Byte, ISQLLogical_AndOr_SingleResult_Named<SingleBuilt<RESULT>, RESULT>>,
 				ISharedCondition_Comparable_Common_All_Compilable<SingleBuilt<RESULT>, RESULT, Short, ISQLLogical_AndOr_SingleResult_Named<SingleBuilt<RESULT>, RESULT>>,
 				ISharedCondition_Comparable_Common_All_Compilable<SingleBuilt<RESULT>, RESULT, Integer, ISQLLogical_AndOr_SingleResult_Named<SingleBuilt<RESULT>, RESULT>>,
@@ -132,6 +134,8 @@ final class Short_Collector_Initial_Single_Aggregate_Named<RESULT>
 			SingleBuilt<RESULT>,
 			RESULT,
 			ISQLLogical_And_NonProcessResult_Named<SingleBuilt<RESULT>, RESULT>,
+			ISharedCondition_Comparable_Common_All<SingleBuilt<RESULT>, RESULT, Integer, ISQLLogical_And_NonProcessResult_Named<SingleBuilt<RESULT>, RESULT>>, 
+			
 			ISharedCondition_Comparable_Common_All<SingleBuilt<RESULT>, RESULT, Byte, ISQLLogical_And_NonProcessResult_Named<SingleBuilt<RESULT>, RESULT>>,
 			ISharedCondition_Comparable_Common_All<SingleBuilt<RESULT>, RESULT, Short, ISQLLogical_And_NonProcessResult_Named<SingleBuilt<RESULT>, RESULT>>,
 			ISharedCondition_Comparable_Common_All<SingleBuilt<RESULT>, RESULT, Integer, ISQLLogical_And_NonProcessResult_Named<SingleBuilt<RESULT>, RESULT>>, 
@@ -152,6 +156,8 @@ final class Short_Collector_Initial_Single_Aggregate_Named<RESULT>
 			SingleBuilt<RESULT>,
 			RESULT,
 			ISQLLogical_Or_NonProcessResult_Named<SingleBuilt<RESULT>, RESULT>,
+			ISharedCondition_Comparable_Common_All<SingleBuilt<RESULT>, RESULT, Integer, ISQLLogical_Or_NonProcessResult_Named<SingleBuilt<RESULT>, RESULT>>,
+			
 			ISharedCondition_Comparable_Common_All<SingleBuilt<RESULT>, RESULT, Byte, ISQLLogical_Or_NonProcessResult_Named<SingleBuilt<RESULT>, RESULT>>,
 			ISharedCondition_Comparable_Common_All<SingleBuilt<RESULT>, RESULT, Short, ISQLLogical_Or_NonProcessResult_Named<SingleBuilt<RESULT>, RESULT>>,
 			ISharedCondition_Comparable_Common_All<SingleBuilt<RESULT>, RESULT, Integer, ISQLLogical_Or_NonProcessResult_Named<SingleBuilt<RESULT>, RESULT>>,

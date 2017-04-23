@@ -8,6 +8,9 @@ public interface ISharedFunctions_Initial_All<
 		
 		RET extends ISharedLogical_Base<MODEL, RESULT>,
 		
+		LENGTH_RET extends ISharedCondition_Comparable_Common_Base<MODEL, RESULT, Integer, RET>,
+
+		
 		BYTE_RET extends ISharedCondition_Comparable_Common_Base<MODEL, RESULT, Byte, RET>,
 		SHORT_RET extends ISharedCondition_Comparable_Common_Base<MODEL, RESULT, Short, RET>,
 		INTEGER_RET extends ISharedCondition_Comparable_Common_Base<MODEL, RESULT, Integer, RET>,
@@ -20,8 +23,8 @@ public interface ISharedFunctions_Initial_All<
 
 	extends 
 
-		ISharedFunctions_Transform_Initial_Named<MODEL, RESULT, RET, BYTE_RET, SHORT_RET, INTEGER_RET, LONG_RET, BIGINTEGER_RET, FLOAT_RET, DOUBLE_RET, BIGDECIMAL_RET, STRING_RET>,
-		ISharedFunctions_Transform_Initial_Alias<MODEL, RESULT, RET, BYTE_RET, SHORT_RET, INTEGER_RET, LONG_RET, BIGINTEGER_RET, FLOAT_RET, DOUBLE_RET, BIGDECIMAL_RET, STRING_RET>
+		ISharedFunctions_Transform_Initial_Named<MODEL, RESULT, RET, LENGTH_RET, BYTE_RET, SHORT_RET, INTEGER_RET, LONG_RET, BIGINTEGER_RET, FLOAT_RET, DOUBLE_RET, BIGDECIMAL_RET, STRING_RET>,
+		ISharedFunctions_Transform_Initial_Alias<MODEL, RESULT, RET, LENGTH_RET, BYTE_RET, SHORT_RET, INTEGER_RET, LONG_RET, BIGINTEGER_RET, FLOAT_RET, DOUBLE_RET, BIGDECIMAL_RET, STRING_RET>
 
 {
 

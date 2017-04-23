@@ -12,6 +12,8 @@ public interface ISharedLogical_Where_Named_Function<
 			MODEL,
 			RESULT,
 			AND_OR,
+			ISharedCondition_Comparable_Common_All_Compilable<MODEL, RESULT, Integer, AND_OR>,
+
 			ISharedCondition_Comparable_Common_All_Compilable<MODEL, RESULT, Byte, AND_OR>,
 			ISharedCondition_Comparable_Common_All_Compilable<MODEL, RESULT, Short, AND_OR>,
 			ISharedCondition_Comparable_Common_All_Compilable<MODEL, RESULT, Integer, AND_OR>,

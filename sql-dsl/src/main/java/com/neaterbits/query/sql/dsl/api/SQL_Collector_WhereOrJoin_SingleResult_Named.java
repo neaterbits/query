@@ -43,6 +43,8 @@ abstract class SQL_Collector_WhereOrJoin_SingleResult_Named<
 			MODEL,
 			RESULT,
 			ISQLLogical_And_NonProcessResult_Named<MODEL, RESULT>,
+			ISharedCondition_Comparable_Common_All<MODEL, RESULT, Integer,ISQLLogical_And_NonProcessResult_Named<MODEL, RESULT>>,
+			
 			ISharedCondition_Comparable_Common_All<MODEL, RESULT, Byte,ISQLLogical_And_NonProcessResult_Named<MODEL, RESULT>>, 
 			ISharedCondition_Comparable_Common_All<MODEL, RESULT, Short,ISQLLogical_And_NonProcessResult_Named<MODEL, RESULT>>, 
 			ISharedCondition_Comparable_Common_All<MODEL, RESULT, Integer,ISQLLogical_And_NonProcessResult_Named<MODEL, RESULT>>, 
@@ -63,6 +65,8 @@ abstract class SQL_Collector_WhereOrJoin_SingleResult_Named<
 			MODEL,
 			RESULT,
 			ISQLLogical_Or_NonProcessResult_Named<MODEL, RESULT>,
+			ISharedCondition_Comparable_Common_All<MODEL, RESULT, Integer, ISQLLogical_Or_NonProcessResult_Named<MODEL, RESULT>>,
+			
 			ISharedCondition_Comparable_Common_All<MODEL, RESULT, Byte, ISQLLogical_Or_NonProcessResult_Named<MODEL, RESULT>>,
 			ISharedCondition_Comparable_Common_All<MODEL, RESULT, Short, ISQLLogical_Or_NonProcessResult_Named<MODEL, RESULT>>,
 			ISharedCondition_Comparable_Common_All<MODEL, RESULT, Integer, ISQLLogical_Or_NonProcessResult_Named<MODEL, RESULT>>,

@@ -175,6 +175,7 @@ abstract class SQL_Collector_WhereOrJoin_Base<
 		MODEL,
 		RESULT,
 		NAMED_AND_OR,
+		ISharedCondition_Comparable_Common_All_Compilable<MODEL, RESULT, Integer, NAMED_AND_OR>,
 	
 		ISharedCondition_Comparable_Common_All_Compilable<MODEL, RESULT, Byte, NAMED_AND_OR>,
 		ISharedCondition_Comparable_Common_All_Compilable<MODEL, RESULT, Short, NAMED_AND_OR>,
@@ -404,6 +405,7 @@ abstract class SQL_Collector_WhereOrJoin_Base<
 	final ISharedFunctions_Transform_Initial_Alias<
 			MODEL, RESULT,
 			ALIAS_AND_OR,
+			ISharedCondition_Comparable_Common_All<MODEL, RESULT, Integer, ALIAS_AND_OR>,
 			
 			ISharedCondition_Comparable_Common_All<MODEL, RESULT, Byte, ALIAS_AND_OR>,
 			ISharedCondition_Comparable_Common_All<MODEL, RESULT, Short, ALIAS_AND_OR>,

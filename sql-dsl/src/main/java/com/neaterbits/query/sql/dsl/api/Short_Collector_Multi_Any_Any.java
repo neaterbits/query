@@ -167,6 +167,8 @@ final class Short_Collector_Multi_Any_Any<MODEL, RESULT>
 
 				ISharedResultMap_OpsAndTo_Comparable_Named<MODEL, RESULT, Long, IShortResult_Mapped_Multi_Named<MODEL, RESULT>>,
 				ISharedResultMap_OpsAndTo_Comparable_Named<MODEL, RESULT, Long, IShortResult_Mapped_Multi_Named<MODEL, RESULT>>,
+				ISharedResultMap_OpsAndTo_Comparable_Named<MODEL, RESULT, Integer, IShortResult_Mapped_Multi_Named<MODEL, RESULT>>,
+
 				ISharedResultMap_OpsAndTo_Comparable_Named<MODEL, RESULT, Byte, IShortResult_Mapped_Multi_Named<MODEL, RESULT>>,
 				ISharedResultMap_OpsAndTo_Comparable_Named<MODEL, RESULT, Short, IShortResult_Mapped_Multi_Named<MODEL, RESULT>>,
 				ISharedResultMap_OpsAndTo_Comparable_Named<MODEL, RESULT, Integer, IShortResult_Mapped_Multi_Named<MODEL, RESULT>>,
@@ -184,6 +186,8 @@ final class Short_Collector_Multi_Any_Any<MODEL, RESULT>
 				
 				ISharedResultMapperTo<MODEL, RESULT, Long, IShortResult_Mapped_Multi_Named<MODEL, RESULT>>,
 				ISharedResultMapperTo<MODEL, RESULT, Long, IShortResult_Mapped_Multi_Named<MODEL, RESULT>>,
+				ISharedResultMapperTo<MODEL, RESULT, Integer, IShortResult_Mapped_Multi_Named<MODEL, RESULT>>,
+				
 				ISharedResultMapperTo<MODEL, RESULT, Byte, IShortResult_Mapped_Multi_Named<MODEL, RESULT>>,
 				ISharedResultMapperTo<MODEL, RESULT, Short, IShortResult_Mapped_Multi_Named<MODEL, RESULT>>,
 				ISharedResultMapperTo<MODEL, RESULT, Integer, IShortResult_Mapped_Multi_Named<MODEL, RESULT>>,
@@ -201,6 +205,8 @@ final class Short_Collector_Multi_Any_Any<MODEL, RESULT>
 
 				ISharedResultOps_Numeric_Alias<MODEL, RESULT, Long, IShortResult_Mapped_Multi_Alias<MODEL, RESULT>>,
 				ISharedResultOps_Numeric_Alias<MODEL, RESULT, Long, IShortResult_Mapped_Multi_Alias<MODEL, RESULT>>,
+				ISharedResultOps_Numeric_Alias<MODEL, RESULT, Integer, IShortResult_Mapped_Multi_Alias<MODEL, RESULT>>,
+				
 				ISharedResultOps_Numeric_Alias<MODEL, RESULT, Byte, IShortResult_Mapped_Multi_Alias<MODEL, RESULT>>,
 				ISharedResultOps_Numeric_Alias<MODEL, RESULT, Short, IShortResult_Mapped_Multi_Alias<MODEL, RESULT>>,
 				ISharedResultOps_Numeric_Alias<MODEL, RESULT, Integer, IShortResult_Mapped_Multi_Alias<MODEL, RESULT>>,
@@ -218,6 +224,8 @@ final class Short_Collector_Multi_Any_Any<MODEL, RESULT>
 
 				ISharedResultMapperTo<MODEL, RESULT, Long, IShortResult_Mapped_Multi_Alias<MODEL, RESULT>>,
 				ISharedResultMapperTo<MODEL, RESULT, Long, IShortResult_Mapped_Multi_Alias<MODEL, RESULT>>,
+				ISharedResultMapperTo<MODEL, RESULT, Integer, IShortResult_Mapped_Multi_Alias<MODEL, RESULT>>,
+				
 				ISharedResultMapperTo<MODEL, RESULT, Byte, IShortResult_Mapped_Multi_Alias<MODEL, RESULT>>,
 				ISharedResultMapperTo<MODEL, RESULT, Short, IShortResult_Mapped_Multi_Alias<MODEL, RESULT>>,
 				ISharedResultMapperTo<MODEL, RESULT, Integer, IShortResult_Mapped_Multi_Alias<MODEL, RESULT>>,
@@ -273,6 +281,8 @@ final class Short_Collector_Multi_Any_Any<MODEL, RESULT>
 				MODEL,
 				RESULT, 
 				ISQLLogical_AndOr_MultiEntity_Named<MODEL, RESULT>,
+				ISharedCondition_Comparable_Common_All_Compilable<MODEL, RESULT, Integer, ISQLLogical_AndOr_MultiEntity_Named<MODEL, RESULT>>, 
+
 				ISharedCondition_Comparable_Common_All_Compilable<MODEL, RESULT, Byte, ISQLLogical_AndOr_MultiEntity_Named<MODEL, RESULT>>,
 				ISharedCondition_Comparable_Common_All_Compilable<MODEL, RESULT, Short, ISQLLogical_AndOr_MultiEntity_Named<MODEL, RESULT>>,
 				ISharedCondition_Comparable_Common_All_Compilable<MODEL, RESULT, Integer, ISQLLogical_AndOr_MultiEntity_Named<MODEL, RESULT>>, 

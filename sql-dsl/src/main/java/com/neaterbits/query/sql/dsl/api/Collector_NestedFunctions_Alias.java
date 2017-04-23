@@ -10,6 +10,7 @@ abstract class Collector_NestedFunctions_Alias<
 
 		SUM_LONG_RET extends ISharedFunction_Next<MODEL, RESULT, RET>,
 		COUNT_RET extends ISharedFunction_Next<MODEL, RESULT, RET>,
+		LENGTH_RET extends ISharedFunction_Next<MODEL, RESULT, RET>,
 		
 		BYTE_RET 		extends ISharedFunction_Next<MODEL, RESULT, RET>,
 		SHORT_RET 		extends ISharedFunction_Next<MODEL, RESULT, RET>,
@@ -42,6 +43,7 @@ abstract class Collector_NestedFunctions_Alias<
 				
 				ISharedFunction_Next<MODEL, RESULT, ISharedFunction_After<MODEL, RESULT>>,
 				ISharedFunction_Next<MODEL, RESULT, ISharedFunction_After<MODEL, RESULT>>,
+				ISharedFunction_Next<MODEL, RESULT, ISharedFunction_After<MODEL, RESULT>>,
 
 				ISharedFunction_Next<MODEL, RESULT, ISharedFunction_After<MODEL, RESULT>>,
 				ISharedFunction_Next<MODEL, RESULT, ISharedFunction_After<MODEL, RESULT>>,
@@ -60,6 +62,7 @@ abstract class Collector_NestedFunctions_Alias<
 				
 				SUM_LONG_RET,
 				COUNT_RET,
+				LENGTH_RET,
 
 				BYTE_RET,
 				SHORT_RET,
@@ -79,7 +82,7 @@ abstract class Collector_NestedFunctions_Alias<
 
 		implements 
 		
-		ISharedFunctions_Transform_Initial_Alias<MODEL, RESULT, RET, BYTE_RET, SHORT_RET, INTEGER_RET, LONG_RET, BIGINTEGER_RET, FLOAT_RET, DOUBLE_RET, BIGDECIMAL_RET, STRING_RET>,
+		ISharedFunctions_Transform_Initial_Alias<MODEL, RESULT, RET, LENGTH_RET, BYTE_RET, SHORT_RET, INTEGER_RET, LONG_RET, BIGINTEGER_RET, FLOAT_RET, DOUBLE_RET, BIGDECIMAL_RET, STRING_RET>,
 		
 		/*
 		ISharedFunctions_Initial_And_NoParam_Alias<
@@ -117,7 +120,7 @@ abstract class Collector_NestedFunctions_Alias<
 
 	Collector_NestedFunctions_Alias(Collector_NestedFunctions_Alias<
 					MODEL, RESULT, RET,
-					?, ?,
+					?, ?, ?,
 					?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,
 					?, ?, ?> toCopy) {
 		super(toCopy);

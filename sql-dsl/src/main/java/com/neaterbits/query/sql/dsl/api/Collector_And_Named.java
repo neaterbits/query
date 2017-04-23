@@ -169,6 +169,8 @@ abstract class Collector_And_Named<
 				MODEL,
 				RESULT,
 				AND_CLAUSES,
+				ISharedCondition_Comparable_Common_All<MODEL, RESULT, Integer, AND_CLAUSES>,
+
 				ISharedCondition_Comparable_Common_All<MODEL, RESULT, Byte, AND_CLAUSES>,
 				ISharedCondition_Comparable_Common_All<MODEL, RESULT, Short, AND_CLAUSES>,
 				ISharedCondition_Comparable_Common_All<MODEL, RESULT, Integer, AND_CLAUSES>,

@@ -5,9 +5,12 @@ public interface ISharedFunctions_String_Named<
 		RESULT,
 		RET extends ISharedFunction_After<MODEL, RESULT>,
 		
+		LENGTH_RET_CLAUSE extends ISharedFunction_Next<MODEL, RESULT, RET>,
 		STRING_CLAUSE extends ISharedFunction_Next<MODEL, RESULT, RET>
 
 > {
+
+    <T> LENGTH_RET_CLAUSE length(IFunctionString<T> getter);
 
     <T> STRING_CLAUSE lower(IFunctionString<T> getter);
 

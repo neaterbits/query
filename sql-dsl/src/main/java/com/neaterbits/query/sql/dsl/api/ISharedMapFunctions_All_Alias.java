@@ -8,6 +8,7 @@ public interface ISharedMapFunctions_All_Alias<
 		
 		SUM_LONG_RET	extends ISharedFunction_Next<MODEL, RESULT, RET>,
 		COUNT_RET	extends ISharedFunction_Next<MODEL, RESULT, RET>,
+		LENGTH_RET	extends ISharedFunction_Next<MODEL, RESULT, RET>,
 		
 		
 		BYTE_RET	extends ISharedFunction_Next<MODEL, RESULT, RET>,
@@ -27,6 +28,7 @@ public interface ISharedMapFunctions_All_Alias<
 		
 		NO_PARAM_SUM_LONG_RET	extends ISharedFunction_Next<MODEL, RESULT, RET>,
 		NO_PARAM_COUNT_RET	extends ISharedFunction_Next<MODEL, RESULT, RET>,
+		NO_PARAM_LENGTH_RET	extends ISharedFunction_Next<MODEL, RESULT, RET>,
 		
 		NO_PARAM_BYTE_RET	extends ISharedFunction_Next<MODEL, RESULT, RET>,
 		NO_PARAM_SHORT_RET	extends ISharedFunction_Next<MODEL, RESULT, RET>,
@@ -53,7 +55,7 @@ public interface ISharedMapFunctions_All_Alias<
 				NO_PARAM_SUM_LONG_RET, NO_PARAM_COUNT_RET,
 				NO_PARAM_BYTE_RET, NO_PARAM_SHORT_RET, NO_PARAM_INT_RET, NO_PARAM_LONG_RET, NO_PARAM_BIGINTEGER_RET, NO_PARAM_FLOAT_RET, NO_PARAM_DOUBLE_RET, NO_PARAM_BIGDECIMAL_RET, NO_PARAM_DATE_RET, NO_PARAM_CALENDAR_RET, NO_PARAM_SQLDATE_RET, NO_PARAM_SQLTIME_RET, NO_PARAM_SQLTIMESTAMP_RET>,
 		
-			ISharedFunctions_String_Alias<MODEL, RESULT, RET, STRING_RET>,
+			ISharedFunctions_String_Alias<MODEL, RESULT, RET, LENGTH_RET, STRING_RET>,
 			
 			ISharedFunctions_String_NoParam_Base<MODEL, RESULT, NO_PARAM_STRING_RET> {
 }

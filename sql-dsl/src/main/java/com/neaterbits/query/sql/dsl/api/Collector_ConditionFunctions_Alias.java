@@ -9,6 +9,8 @@ class Collector_ConditionFunctions_Alias<
 		// commented out since reused for mapping functions 
 		RET extends ISharedFunction_After<MODEL, RESULT>,
 		
+		LENGTH_RET 	extends ISharedFunction_Next<MODEL, RESULT, RET>,
+		
 		BYTE_RET 		extends ISharedFunction_Next<MODEL, RESULT, RET>,
 		SHORT_RET 		extends ISharedFunction_Next<MODEL, RESULT, RET>,
 		INTEGER_RET 	extends ISharedFunction_Next<MODEL, RESULT, RET>,
@@ -32,7 +34,8 @@ class Collector_ConditionFunctions_Alias<
 
 			ISharedFunction_Next<MODEL, RESULT, RET>,
 			ISharedFunction_Next<MODEL, RESULT, RET>,
-		
+			LENGTH_RET,
+			
 			BYTE_RET,
 			SHORT_RET,
 			INTEGER_RET,

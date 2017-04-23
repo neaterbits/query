@@ -31,6 +31,8 @@ public interface ISharedResultMapper_All<MODEL, RESULT,
 				
 				ISharedResultMap_OpsAndTo_Comparable_Named<MODEL, RESULT, Long, NAMED_SOURCE>,
 				ISharedResultMap_OpsAndTo_Comparable_Named<MODEL, RESULT, Long, NAMED_SOURCE>,
+				ISharedResultMap_OpsAndTo_Comparable_Named<MODEL, RESULT, Integer, NAMED_SOURCE>,
+
 				ISharedResultMap_OpsAndTo_Comparable_Named<MODEL, RESULT, Byte, NAMED_SOURCE>,
 				ISharedResultMap_OpsAndTo_Comparable_Named<MODEL, RESULT, Short, NAMED_SOURCE>,
 				ISharedResultMap_OpsAndTo_Comparable_Named<MODEL, RESULT, Integer, NAMED_SOURCE>,
@@ -48,6 +50,8 @@ public interface ISharedResultMapper_All<MODEL, RESULT,
 				
 				ISharedResultMapperTo<MODEL, RESULT, Long, NAMED_SOURCE>,
 				ISharedResultMapperTo<MODEL, RESULT, Long, NAMED_SOURCE>,
+				ISharedResultMapperTo<MODEL, RESULT, Integer, NAMED_SOURCE>,
+				
 				ISharedResultMapperTo<MODEL, RESULT, Byte, NAMED_SOURCE>,
 				ISharedResultMapperTo<MODEL, RESULT, Short, NAMED_SOURCE>,
 				ISharedResultMapperTo<MODEL, RESULT, Integer, NAMED_SOURCE>,
@@ -66,6 +70,8 @@ public interface ISharedResultMapper_All<MODEL, RESULT,
 				// Alias functions
 				ISharedResultOps_Numeric_Alias<MODEL, RESULT, Long, ALIAS_SOURCE>,
 				ISharedResultOps_Numeric_Alias<MODEL, RESULT, Long, ALIAS_SOURCE>,
+				ISharedResultOps_Numeric_Alias<MODEL, RESULT, Integer, ALIAS_SOURCE>,
+				
 				ISharedResultOps_Numeric_Alias<MODEL, RESULT, Byte, ALIAS_SOURCE>,
 				ISharedResultOps_Numeric_Alias<MODEL, RESULT, Short, ALIAS_SOURCE>,
 				ISharedResultOps_Numeric_Alias<MODEL, RESULT, Integer, ALIAS_SOURCE>,
@@ -83,6 +89,8 @@ public interface ISharedResultMapper_All<MODEL, RESULT,
 			
 				ISharedResultMapperTo<MODEL, RESULT, Long, ALIAS_SOURCE>,
 				ISharedResultMapperTo<MODEL, RESULT, Long, ALIAS_SOURCE>,
+				ISharedResultMapperTo<MODEL, RESULT, Integer, ALIAS_SOURCE>,
+				
 				ISharedResultMapperTo<MODEL, RESULT, Byte, ALIAS_SOURCE>,
 				ISharedResultMapperTo<MODEL, RESULT, Short, ALIAS_SOURCE>,
 				ISharedResultMapperTo<MODEL, RESULT, Integer, ALIAS_SOURCE>,

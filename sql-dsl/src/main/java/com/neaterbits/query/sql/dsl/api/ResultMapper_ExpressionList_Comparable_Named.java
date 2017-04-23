@@ -25,6 +25,7 @@ final class ResultMapper_ExpressionList_Comparable_Named<
 			
 			ISharedResultMap_OpsAndTo_Comparable_Named<MODEL, RESULT, Long, RET>,
 			ISharedResultMap_OpsAndTo_Comparable_Named<MODEL, RESULT, Long, RET>,
+			ISharedResultMap_OpsAndTo_Comparable_Named<MODEL, RESULT, Integer, RET>,
 			
 			ISharedResultMap_OpsAndTo_Comparable_Named<MODEL, RESULT, Byte, RET>,
 			ISharedResultMap_OpsAndTo_Comparable_Named<MODEL, RESULT, Short, RET>,
@@ -42,6 +43,7 @@ final class ResultMapper_ExpressionList_Comparable_Named<
 			ISharedResultMap_OpsAndTo_SQLTimeType_Named<MODEL, RESULT, java.sql.Timestamp, RET>,
 			
 
+			ISharedFunction_Next<MODEL, RESULT, ISharedFunction_After<MODEL, RESULT>>,
 			ISharedFunction_Next<MODEL, RESULT, ISharedFunction_After<MODEL, RESULT>>,
 			ISharedFunction_Next<MODEL, RESULT, ISharedFunction_After<MODEL, RESULT>>,
 			

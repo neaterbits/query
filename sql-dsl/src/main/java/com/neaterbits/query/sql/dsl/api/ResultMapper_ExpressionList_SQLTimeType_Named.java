@@ -23,6 +23,7 @@ public class ResultMapper_ExpressionList_SQLTimeType_Named<
 		
 		ISharedFunction_Next<MODEL, RESULT, RET>,
 		ISharedFunction_Next<MODEL, RESULT, RET>,
+		ISharedFunction_Next<MODEL, RESULT, RET>,
 		
 		ISharedFunction_Next<MODEL, RESULT, RET>,
 		ISharedFunction_Next<MODEL, RESULT, RET>,
@@ -40,6 +41,7 @@ public class ResultMapper_ExpressionList_SQLTimeType_Named<
 		ISharedResultMap_OpsAndTo_SQLTimeType_Named<MODEL, RESULT, java.sql.Timestamp, RET>,
 		
 	
+		ISharedFunction_Next<MODEL, RESULT, ISharedFunction_After<MODEL, RESULT>>,
 		ISharedFunction_Next<MODEL, RESULT, ISharedFunction_After<MODEL, RESULT>>,
 		ISharedFunction_Next<MODEL, RESULT, ISharedFunction_After<MODEL, RESULT>>,
 		

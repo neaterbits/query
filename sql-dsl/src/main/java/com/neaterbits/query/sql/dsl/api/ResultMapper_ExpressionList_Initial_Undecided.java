@@ -11,6 +11,7 @@ class ResultMapper_ExpressionList_Initial_Undecided<
 		
 		NAMED_SUM_LONG_RET  extends ISharedFunction_Next<MODEL, RESULT, NAMED_RET>,
 		NAMED_COUNT_RET		extends ISharedFunction_Next<MODEL, RESULT, NAMED_RET>,
+		NAMED_LENGTH_RET	extends ISharedFunction_Next<MODEL, RESULT, NAMED_RET>,
 		NAMED_BYTE_RET		extends ISharedFunction_Next<MODEL, RESULT, NAMED_RET>,
 		NAMED_SHORT_RET		extends ISharedFunction_Next<MODEL, RESULT, NAMED_RET>,
 		NAMED_INT_RET		extends ISharedFunction_Next<MODEL, RESULT, NAMED_RET>,
@@ -28,6 +29,7 @@ class ResultMapper_ExpressionList_Initial_Undecided<
 
 		NO_PARAM_NAMED_SUM_LONG_RET  extends ISharedFunction_Next<MODEL, RESULT, NAMED_RET>,
 		NO_PARAM_NAMED_COUNT_RET		extends ISharedFunction_Next<MODEL, RESULT, NAMED_RET>,
+		NO_PARAM_NAMED_LENGTH_RET		extends ISharedFunction_Next<MODEL, RESULT, NAMED_RET>,
 		NO_PARAM_NAMED_BYTE_RET		extends ISharedFunction_Next<MODEL, RESULT, NAMED_RET>,
 		NO_PARAM_NAMED_SHORT_RET		extends ISharedFunction_Next<MODEL, RESULT, NAMED_RET>,
 		NO_PARAM_NAMED_INT_RET		extends ISharedFunction_Next<MODEL, RESULT, NAMED_RET>,
@@ -45,6 +47,7 @@ class ResultMapper_ExpressionList_Initial_Undecided<
 		
 		ALIAS_SUM_LONG_RET 	extends ISharedFunction_Next<MODEL, RESULT, ALIAS_RET>,
 		ALIAS_COUNT_RET		extends ISharedFunction_Next<MODEL, RESULT, ALIAS_RET>,
+		ALIAS_LENGTH_RET		extends ISharedFunction_Next<MODEL, RESULT, ALIAS_RET>,
 		ALIAS_BYTE_RET		extends ISharedFunction_Next<MODEL, RESULT, ALIAS_RET>,
 		ALIAS_SHORT_RET		extends ISharedFunction_Next<MODEL, RESULT, ALIAS_RET>,
 		ALIAS_INT_RET		extends ISharedFunction_Next<MODEL, RESULT, ALIAS_RET>,
@@ -62,6 +65,7 @@ class ResultMapper_ExpressionList_Initial_Undecided<
 
 		NO_PARAM_ALIAS_SUM_LONG_RET 	extends ISharedFunction_Next<MODEL, RESULT, ALIAS_RET>,
 		NO_PARAM_ALIAS_COUNT_RET		extends ISharedFunction_Next<MODEL, RESULT, ALIAS_RET>,
+		NO_PARAM_ALIAS_LENGTH_RET		extends ISharedFunction_Next<MODEL, RESULT, ALIAS_RET>,
 		NO_PARAM_ALIAS_BYTE_RET		extends ISharedFunction_Next<MODEL, RESULT, ALIAS_RET>,
 		NO_PARAM_ALIAS_SHORT_RET	extends ISharedFunction_Next<MODEL, RESULT, ALIAS_RET>,
 		NO_PARAM_ALIAS_INT_RET		extends ISharedFunction_Next<MODEL, RESULT, ALIAS_RET>,
@@ -95,6 +99,7 @@ class ResultMapper_ExpressionList_Initial_Undecided<
 			
 			NAMED_SUM_LONG_RET,
 			NAMED_COUNT_RET,
+			NAMED_LENGTH_RET,
 			
 			NAMED_BYTE_RET,
 			NAMED_SHORT_RET,
@@ -113,6 +118,7 @@ class ResultMapper_ExpressionList_Initial_Undecided<
 
 			ALIAS_SUM_LONG_RET,
 			ALIAS_COUNT_RET,
+			ALIAS_LENGTH_RET,
 			
 			ALIAS_BYTE_RET,
 			ALIAS_SHORT_RET,
@@ -140,6 +146,7 @@ class ResultMapper_ExpressionList_Initial_Undecided<
 			
 			NAMED_SUM_LONG_RET,
 			NAMED_COUNT_RET,
+			NAMED_LENGTH_RET,
 			NAMED_BYTE_RET,
 			NAMED_SHORT_RET,
 			NAMED_INT_RET,
@@ -157,6 +164,7 @@ class ResultMapper_ExpressionList_Initial_Undecided<
 
 			NO_PARAM_NAMED_SUM_LONG_RET,
 			NO_PARAM_NAMED_COUNT_RET,
+			NO_PARAM_NAMED_LENGTH_RET,
 			NO_PARAM_NAMED_BYTE_RET,
 			NO_PARAM_NAMED_SHORT_RET,
 			NO_PARAM_NAMED_INT_RET,
@@ -174,6 +182,7 @@ class ResultMapper_ExpressionList_Initial_Undecided<
 			
 			ALIAS_SUM_LONG_RET,
 			ALIAS_COUNT_RET,
+			ALIAS_LENGTH_RET,
 			ALIAS_BYTE_RET,
 			ALIAS_SHORT_RET,
 			ALIAS_INT_RET,
@@ -191,6 +200,7 @@ class ResultMapper_ExpressionList_Initial_Undecided<
 
 			NO_PARAM_ALIAS_SUM_LONG_RET,
 			NO_PARAM_ALIAS_COUNT_RET,
+			NO_PARAM_ALIAS_LENGTH_RET,
 			NO_PARAM_ALIAS_BYTE_RET,
 			NO_PARAM_ALIAS_SHORT_RET,
 			NO_PARAM_ALIAS_INT_RET,
@@ -806,7 +816,7 @@ class ResultMapper_ExpressionList_Initial_Undecided<
 
 
 	@Override
-	public ISharedStringFunctions_Initial<MODEL, RESULT, NAMED_RET, ALIAS_RET, NAMED_STRING_RET, ALIAS_STRING_RET> lower() {
+	public ISharedStringFunctions_Initial<MODEL, RESULT, NAMED_RET, ALIAS_RET, NAMED_LENGTH_RET, NAMED_STRING_RET, ALIAS_LENGTH_RET, ALIAS_STRING_RET> lower() {
 		addNoParam(Function_String_Lower.INSTANCE);
 		
 		return this;
@@ -814,14 +824,14 @@ class ResultMapper_ExpressionList_Initial_Undecided<
 
 
 	@Override
-	public ISharedStringFunctions_Initial<MODEL, RESULT, NAMED_RET, ALIAS_RET, NAMED_STRING_RET, ALIAS_STRING_RET> upper() {
+	public ISharedStringFunctions_Initial<MODEL, RESULT, NAMED_RET, ALIAS_RET, NAMED_LENGTH_RET, NAMED_STRING_RET, ALIAS_LENGTH_RET, ALIAS_STRING_RET> upper() {
 		addNoParam(Function_String_Upper.INSTANCE);
 		
 		return this;
 	}
 
 	@Override
-	public ISharedStringFunctions_Initial<MODEL, RESULT, NAMED_RET, ALIAS_RET, NAMED_STRING_RET, ALIAS_STRING_RET> trim() {
+	public ISharedStringFunctions_Initial<MODEL, RESULT, NAMED_RET, ALIAS_RET, NAMED_LENGTH_RET, NAMED_STRING_RET, ALIAS_LENGTH_RET, ALIAS_STRING_RET> trim() {
 		addNoParam(Function_String_Trim.INSTANCE);
 		
 		return this;

@@ -18,6 +18,7 @@ public interface ISharedMapFunctions_Initial<
 
 		NAMED_SUM_LONG_RET 	 extends ISharedFunction_Next<MODEL, RESULT, NAMED_RET>,
 		NAMED_COUNT_RET 	 extends ISharedFunction_Next<MODEL, RESULT, NAMED_RET>,
+		NAMED_LENGTH_RET 	 extends ISharedFunction_Next<MODEL, RESULT, NAMED_RET>,
 		NAMED_BYTE_RET 	 	extends ISharedFunction_Next<MODEL, RESULT, NAMED_RET>,
 		NAMED_SHORT_RET 	 extends ISharedFunction_Next<MODEL, RESULT, NAMED_RET>,
 		NAMED_INT_RET 		 extends ISharedFunction_Next<MODEL, RESULT, NAMED_RET>,
@@ -35,6 +36,7 @@ public interface ISharedMapFunctions_Initial<
 
 		NO_PARAM_NAMED_SUM_LONG_RET 	 extends ISharedFunction_Next<MODEL, RESULT, NAMED_RET>,
 		NO_PARAM_NAMED_COUNT_RET 	 extends ISharedFunction_Next<MODEL, RESULT, NAMED_RET>,
+		NO_PARAM_NAMED_LENGTH_RET 	 extends ISharedFunction_Next<MODEL, RESULT, NAMED_RET>,
 		NO_PARAM_NAMED_BYTE_RET 	 extends ISharedFunction_Next<MODEL, RESULT, NAMED_RET>,
 		NO_PARAM_NAMED_SHORT_RET 	 extends ISharedFunction_Next<MODEL, RESULT, NAMED_RET>,
 		NO_PARAM_NAMED_INT_RET 		 extends ISharedFunction_Next<MODEL, RESULT, NAMED_RET>,
@@ -52,6 +54,7 @@ public interface ISharedMapFunctions_Initial<
 		
 		ALIAS_SUM_LONG_RET	 extends ISharedFunction_Next<MODEL, RESULT, ALIAS_RET>,
 		ALIAS_COUNT_RET		 extends ISharedFunction_Next<MODEL, RESULT, ALIAS_RET>,
+		ALIAS_LENGTH_RET		 extends ISharedFunction_Next<MODEL, RESULT, ALIAS_RET>,
 		ALIAS_BYTE_RET		 extends ISharedFunction_Next<MODEL, RESULT, ALIAS_RET>,
 		ALIAS_SHORT_RET		 extends ISharedFunction_Next<MODEL, RESULT, ALIAS_RET>,
 		ALIAS_INT_RET		 extends ISharedFunction_Next<MODEL, RESULT, ALIAS_RET>,
@@ -69,6 +72,7 @@ public interface ISharedMapFunctions_Initial<
 
 		NO_PARAM_ALIAS_SUM_LONG_RET	 extends ISharedFunction_Next<MODEL, RESULT, ALIAS_RET>,
 		NO_PARAM_ALIAS_COUNT_RET		 extends ISharedFunction_Next<MODEL, RESULT, ALIAS_RET>,
+		NO_PARAM_ALIAS_LENGTH_RET		 extends ISharedFunction_Next<MODEL, RESULT, ALIAS_RET>,
 		NO_PARAM_ALIAS_BYTE_RET		 extends ISharedFunction_Next<MODEL, RESULT, ALIAS_RET>,
 		NO_PARAM_ALIAS_SHORT_RET		 extends ISharedFunction_Next<MODEL, RESULT, ALIAS_RET>,
 		NO_PARAM_ALIAS_INT_RET		 extends ISharedFunction_Next<MODEL, RESULT, ALIAS_RET>,
@@ -107,6 +111,6 @@ public interface ISharedMapFunctions_Initial<
 			NAMED_RET,
 			ALIAS_RET,
 			
-			NAMED_STRING_RET,
-			ALIAS_STRING_RET> {
+			NAMED_LENGTH_RET, NAMED_STRING_RET,
+			ALIAS_LENGTH_RET, ALIAS_STRING_RET> {
 }

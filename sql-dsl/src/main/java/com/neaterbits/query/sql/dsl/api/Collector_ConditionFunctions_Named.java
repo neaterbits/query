@@ -5,6 +5,8 @@ final class Collector_ConditionFunctions_Named<
 		MODEL,
 		RESULT,
 		RET extends ISharedFunction_After<MODEL, RESULT>,
+
+		LENGTH_RET 		extends ISharedFunction_Next<MODEL, RESULT, RET>,
 		
 		BYTE_RET 		extends ISharedFunction_Next<MODEL, RESULT, RET>,
 		SHORT_RET 		extends ISharedFunction_Next<MODEL, RESULT, RET>,
@@ -29,6 +31,7 @@ final class Collector_ConditionFunctions_Named<
 			
 			ISharedFunction_Next<MODEL, RESULT, RET>,
 			ISharedFunction_Next<MODEL, RESULT, RET>,
+			LENGTH_RET,
 			
 			BYTE_RET,
 			SHORT_RET,

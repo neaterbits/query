@@ -7,6 +7,7 @@ abstract class ResultMapper_ExpressionList_Initial_Alias<
 			
 			SUM_LONG_RET	extends ISharedFunction_Next<MODEL, RESULT, RET>,
 			COUNT_RET		extends ISharedFunction_Next<MODEL, RESULT, RET>,
+			LENGTH_RET		extends ISharedFunction_Next<MODEL, RESULT, RET>,
 			
 			BYTE_RET 		extends ISharedFunction_Next<MODEL, RESULT, RET>,
 			SHORT_RET 		extends ISharedFunction_Next<MODEL, RESULT, RET>,
@@ -41,6 +42,7 @@ abstract class ResultMapper_ExpressionList_Initial_Alias<
 
 			ISharedFunction_Next<MODEL, RESULT, ISharedFunction_After<MODEL, RESULT>>,
 			ISharedFunction_Next<MODEL, RESULT, ISharedFunction_After<MODEL, RESULT>>,
+			ISharedFunction_Next<MODEL, RESULT, ISharedFunction_After<MODEL, RESULT>>,
 			
 			ISharedFunction_Next<MODEL, RESULT, ISharedFunction_After<MODEL, RESULT>>,
 			ISharedFunction_Next<MODEL, RESULT, ISharedFunction_After<MODEL, RESULT>>,
@@ -59,6 +61,7 @@ abstract class ResultMapper_ExpressionList_Initial_Alias<
 			
 			SUM_LONG_RET,
 			COUNT_RET,
+			LENGTH_RET,
 			
 			BYTE_RET,
 			SHORT_RET,

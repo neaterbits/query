@@ -30,6 +30,8 @@ final class Short_Collector_Multi_Entity_Named<MODEL, RESULT, JOIN_TYPE>
 				RESULT,
 				ISQLLogical_Or_MultiEntity_Named<MODEL, RESULT>,
 				
+				ISharedCondition_Comparable_Common_All<MODEL, RESULT, Integer, ISQLLogical_Or_MultiEntity_Named<MODEL, RESULT>>,
+
 				ISharedCondition_Comparable_Common_All<MODEL, RESULT, Byte, ISQLLogical_Or_MultiEntity_Named<MODEL, RESULT>>,
 				ISharedCondition_Comparable_Common_All<MODEL, RESULT, Short, ISQLLogical_Or_MultiEntity_Named<MODEL, RESULT>>,
 				/*
@@ -65,6 +67,8 @@ final class Short_Collector_Multi_Entity_Named<MODEL, RESULT, JOIN_TYPE>
 			MODEL, 
 			RESULT,
 			ISQLLogical_And_MultiEntity_Named<MODEL, RESULT>, 
+			ISharedCondition_Comparable_Common_All<MODEL, RESULT, Integer, ISQLLogical_And_MultiEntity_Named<MODEL, RESULT>>,
+
 			ISharedCondition_Comparable_Common_All<MODEL, RESULT, Byte, ISQLLogical_And_MultiEntity_Named<MODEL, RESULT>>,
 			ISharedCondition_Comparable_Common_All<MODEL, RESULT, Short, ISQLLogical_And_MultiEntity_Named<MODEL, RESULT>>,
 			ISharedCondition_Comparable_Common_All<MODEL, RESULT, Integer, ISQLLogical_And_MultiEntity_Named<MODEL, RESULT>>,
@@ -140,6 +144,8 @@ final class Short_Collector_Multi_Entity_Named<MODEL, RESULT, JOIN_TYPE>
 			RESULT,
 			
 			ISQLLogical_AndOr_MultiEntity_Named<MODEL, RESULT>,
+			ISharedCondition_Comparable_Common_All_Compilable<MODEL, RESULT, Integer, ISQLLogical_AndOr_MultiEntity_Named<MODEL, RESULT>>,
+
 			ISharedCondition_Comparable_Common_All_Compilable<MODEL, RESULT, Byte, ISQLLogical_AndOr_MultiEntity_Named<MODEL, RESULT>>,
 			ISharedCondition_Comparable_Common_All_Compilable<MODEL, RESULT, Short, ISQLLogical_AndOr_MultiEntity_Named<MODEL, RESULT>>,
 			ISharedCondition_Comparable_Common_All_Compilable<MODEL, RESULT, Integer, ISQLLogical_AndOr_MultiEntity_Named<MODEL, RESULT>>,

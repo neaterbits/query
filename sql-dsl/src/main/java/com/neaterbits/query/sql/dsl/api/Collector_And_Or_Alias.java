@@ -58,6 +58,8 @@ abstract class Collector_And_Or_Alias<
 		MODEL,
 		RESULT,
 		AND_CLAUSES,
+		ISharedCondition_Comparable_Common_All<MODEL, RESULT, Integer, AND_CLAUSES>,
+
 		ISharedCondition_Comparable_Common_All<MODEL, RESULT, Byte, AND_CLAUSES>,
 		ISharedCondition_Comparable_Common_All<MODEL, RESULT, Short, AND_CLAUSES>,
 		ISharedCondition_Comparable_Common_All<MODEL, RESULT, Integer, AND_CLAUSES>,
@@ -80,6 +82,8 @@ abstract class Collector_And_Or_Alias<
 		MODEL,
 		RESULT,
 		OR_CLAUSES,
+		ISharedCondition_Comparable_Common_All<MODEL, RESULT, Integer, OR_CLAUSES>,
+		
 		ISharedCondition_Comparable_Common_All<MODEL, RESULT, Byte, OR_CLAUSES>,
 		ISharedCondition_Comparable_Common_All<MODEL, RESULT, Short, OR_CLAUSES>,
 		ISharedCondition_Comparable_Common_All<MODEL, RESULT, Integer, OR_CLAUSES>,

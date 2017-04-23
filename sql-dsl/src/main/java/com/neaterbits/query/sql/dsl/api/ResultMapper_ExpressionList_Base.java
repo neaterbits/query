@@ -18,6 +18,7 @@ abstract class ResultMapper_ExpressionList_Base<
 			
 			NAMED_SUM_LONG_RET  extends ISharedFunction_Next<MODEL, RESULT, NAMED_RET>,
 			NAMED_COUNT_RET     extends ISharedFunction_Next<MODEL, RESULT, NAMED_RET>,
+			NAMED_LENGTH_RET    extends ISharedFunction_Next<MODEL, RESULT, NAMED_RET>,
 
 			NAMED_BYTE_RET  	extends ISharedFunction_Next<MODEL, RESULT, NAMED_RET>,
 			NAMED_SHORT_RET  	extends ISharedFunction_Next<MODEL, RESULT, NAMED_RET>,
@@ -36,6 +37,7 @@ abstract class ResultMapper_ExpressionList_Base<
 			
 			ALIAS_SUM_LONG_RET  extends ISharedFunction_Next<MODEL, RESULT, ALIAS_RET>,
 			ALIAS_COUNT_RET     extends ISharedFunction_Next<MODEL, RESULT, ALIAS_RET>,
+			ALIAS_LENGTH_RET    extends ISharedFunction_Next<MODEL, RESULT, ALIAS_RET>,
 			
 			ALIAS_BYTE_RET  	extends ISharedFunction_Next<MODEL, RESULT, ALIAS_RET>,
 			ALIAS_SHORT_RET  	extends ISharedFunction_Next<MODEL, RESULT, ALIAS_RET>,
@@ -65,6 +67,7 @@ abstract class ResultMapper_ExpressionList_Base<
 				
 				NAMED_SUM_LONG_RET,
 				NAMED_COUNT_RET,
+				NAMED_LENGTH_RET,
 				
 				NAMED_BYTE_RET,
 				NAMED_SHORT_RET,
@@ -84,6 +87,7 @@ abstract class ResultMapper_ExpressionList_Base<
 				
 				ALIAS_SUM_LONG_RET,
 				ALIAS_COUNT_RET,
+				ALIAS_LENGTH_RET,
 				
 				ALIAS_BYTE_RET,
 				ALIAS_SHORT_RET,
@@ -236,7 +240,7 @@ abstract class ResultMapper_ExpressionList_Base<
 				NAMED_DOUBLE_RET
 				
 			>,
-			ISharedFunctions_String_Named<MODEL, RESULT, NAMED_RET, NAMED_STRING_RET>
+			ISharedFunctions_String_Named<MODEL, RESULT, NAMED_RET, NAMED_LENGTH_RET, NAMED_STRING_RET>
 		>
 
 	implements ISharedMapFunctions_Numeric_Named<
@@ -372,7 +376,7 @@ abstract class ResultMapper_ExpressionList_Base<
 				ALIAS_DOUBLE_RET
 				
 			>,
-			ISharedFunctions_String_Named<MODEL, RESULT, NAMED_RET, NAMED_STRING_RET>
+			ISharedFunctions_String_Named<MODEL, RESULT, ALIAS_RET, ALIAS_LENGTH_RET, ALIAS_STRING_RET>
 		>
 	
 	implements ISharedMapFunctions_Numeric_Alias<

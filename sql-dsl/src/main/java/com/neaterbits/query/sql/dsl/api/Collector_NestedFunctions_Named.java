@@ -19,8 +19,9 @@ abstract class Collector_NestedFunctions_Named<
 
 				RET extends ISharedFunction_After<MODEL, RESULT>,
 
-				SUM_LONG_RET extends ISharedFunction_Next<MODEL, RESULT, RET>,
-				COUNT_RET extends ISharedFunction_Next<MODEL, RESULT, RET>,
+				SUM_LONG_RET 	extends ISharedFunction_Next<MODEL, RESULT, RET>,
+				COUNT_RET 		extends ISharedFunction_Next<MODEL, RESULT, RET>,
+				LENGTH_RET		extends ISharedFunction_Next<MODEL, RESULT, RET>,
 				
 				BYTE_RET 		extends ISharedFunction_Next<MODEL, RESULT, RET>,
 				SHORT_RET 		extends ISharedFunction_Next<MODEL, RESULT, RET>,
@@ -53,6 +54,7 @@ abstract class Collector_NestedFunctions_Named<
 
 				SUM_LONG_RET,
 				COUNT_RET,
+				LENGTH_RET,
 				
 				BYTE_RET,
 				SHORT_RET,
@@ -69,6 +71,7 @@ abstract class Collector_NestedFunctions_Named<
 				SQLTIME_RET,
 				SQLTIMESTAMP_RET,
 				
+				ISharedFunction_Next<MODEL, RESULT, ISharedFunction_After<MODEL, RESULT>>,
 				ISharedFunction_Next<MODEL, RESULT, ISharedFunction_After<MODEL, RESULT>>,
 				ISharedFunction_Next<MODEL, RESULT, ISharedFunction_After<MODEL, RESULT>>,
 				
@@ -90,7 +93,7 @@ abstract class Collector_NestedFunctions_Named<
 
 	implements
 	
-		ISharedFunctions_Transform_Initial_Named<MODEL, RESULT, RET, BYTE_RET, SHORT_RET, INTEGER_RET, LONG_RET, BIGINTEGER_RET, FLOAT_RET, DOUBLE_RET, BIGDECIMAL_RET, STRING_RET>,
+		ISharedFunctions_Transform_Initial_Named<MODEL, RESULT, RET, LENGTH_RET, BYTE_RET, SHORT_RET, INTEGER_RET, LONG_RET, BIGINTEGER_RET, FLOAT_RET, DOUBLE_RET, BIGDECIMAL_RET, STRING_RET>,
 	
 			//ISharedFunctions_Arithmetic_NoParam_Base<MODEL, RESULT, RET, NO_PARAM_SHORT_RET, NO_PARAM_INTEGER_RET, NO_PARAM_LONG_RET, NO_PARAM_DOUBLE_RET, NO_PARAM_BIGDECIMAL_RET>,
 			// ISharedFunctions_String_NoParam_Base<MODEL, RESULT, RET, NO_PARAM_STRING_RET>
@@ -115,7 +118,7 @@ abstract class Collector_NestedFunctions_Named<
 	
 	Collector_NestedFunctions_Named(Collector_NestedFunctions_Named<
 			MODEL, RESULT, RET,
-			?, ?,
+			?, ?, ?,
 			?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 
 			?, ?, ?
 		> toCopy) {

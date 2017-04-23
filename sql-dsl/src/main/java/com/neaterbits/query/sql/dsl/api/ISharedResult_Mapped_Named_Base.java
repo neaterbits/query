@@ -21,7 +21,8 @@ public interface ISharedResult_Mapped_Named_Base<
 		
 		ISharedResultMap_OpsAndTo_Comparable_Named<MODEL, RESULT, Long, 	   RET>,
 		ISharedResultMap_OpsAndTo_Comparable_Named<MODEL, RESULT, Long, 	   RET>,
-	
+		ISharedResultMap_OpsAndTo_Comparable_Named<MODEL, RESULT, Integer,    RET>,
+		
 		ISharedResultMap_OpsAndTo_Comparable_Named<MODEL, RESULT, Byte, 	   RET>,
 		ISharedResultMap_OpsAndTo_Comparable_Named<MODEL, RESULT, Short, 	   RET>,
 		ISharedResultMap_OpsAndTo_Comparable_Named<MODEL, RESULT, Integer,    RET>,
@@ -35,7 +36,8 @@ public interface ISharedResult_Mapped_Named_Base<
 		
 		ISharedResultMapperTo<MODEL, RESULT, Long, 		 RET>,
 		ISharedResultMapperTo<MODEL, RESULT, Long, 		 RET>,
-	
+		ISharedResultMapperTo<MODEL, RESULT, Integer, 	 RET>,
+		
 		ISharedResultMapperTo<MODEL, RESULT, Byte, 	 	RET>,
 		ISharedResultMapperTo<MODEL, RESULT, Short, 	 RET>,
 		ISharedResultMapperTo<MODEL, RESULT, Integer, 	 RET>,

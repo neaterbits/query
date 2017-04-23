@@ -19,6 +19,7 @@ abstract class SubOperandsBuilder<
 
 			NAMED_SUM_LONG_RET extends ISharedFunction_Next<MODEL, RESULT, NAMED_RET>,
 			NAMED_COUNT_RET extends ISharedFunction_Next<MODEL, RESULT, NAMED_RET>,
+			NAMED_LENGTH_RET extends ISharedFunction_Next<MODEL, RESULT, NAMED_RET>,
 			
 			NAMED_BYTE_RET 		extends ISharedFunction_Next<MODEL, RESULT, NAMED_RET>,
 			NAMED_SHORT_RET 	extends ISharedFunction_Next<MODEL, RESULT, NAMED_RET>,
@@ -38,6 +39,7 @@ abstract class SubOperandsBuilder<
 			
 			ALIAS_SUM_LONG_RET extends ISharedFunction_Next<MODEL, RESULT, ALIAS_RET>,
 			ALIAS_COUNT_RET extends ISharedFunction_Next<MODEL, RESULT, ALIAS_RET>,
+			ALIAS_LENGTH_RET extends ISharedFunction_Next<MODEL, RESULT, ALIAS_RET>,
 			
 			ALIAS_BYTE_RET extends ISharedFunction_Next<MODEL, RESULT, ALIAS_RET>,
 			ALIAS_SHORT_RET extends ISharedFunction_Next<MODEL, RESULT, ALIAS_RET>,
@@ -74,6 +76,7 @@ abstract class SubOperandsBuilder<
 			
 			NAMED_SUM_LONG_RET,
 			NAMED_COUNT_RET,
+			NAMED_LENGTH_RET,
 			
 			NAMED_BYTE_RET,
 			NAMED_SHORT_RET,
@@ -92,6 +95,7 @@ abstract class SubOperandsBuilder<
 			
 			ALIAS_SUM_LONG_RET,
 			ALIAS_COUNT_RET,
+			ALIAS_LENGTH_RET,
 			
 			ALIAS_BYTE_RET,
 			ALIAS_SHORT_RET,
@@ -144,9 +148,9 @@ abstract class SubOperandsBuilder<
 		
 	SubOperandsBuilder(SubOperandsBuilder<MODEL, RESULT, R, OPERAND_RET,
 			?, ?, ?, ?,
-			?, ?,
+			?, ?, ?,
 			?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,
-			?, ?,
+			?, ?, ?,
 			?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?> toCopy) {
 		super(toCopy);
 	}

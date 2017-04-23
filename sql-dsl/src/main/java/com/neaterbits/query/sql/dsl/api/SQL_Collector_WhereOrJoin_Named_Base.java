@@ -74,6 +74,7 @@ abstract class SQL_Collector_WhereOrJoin_Named_Base<
 	public final ISharedFunctions_Transform_Initial_Named<
 			MODEL, RESULT,
 			AND_OR,
+			ISharedCondition_Comparable_Common_All_Compilable<MODEL, RESULT, Integer, AND_OR>,
 			
 			ISharedCondition_Comparable_Common_All_Compilable<MODEL, RESULT, Byte, AND_OR>,
 			ISharedCondition_Comparable_Common_All_Compilable<MODEL, RESULT, Short, AND_OR>,

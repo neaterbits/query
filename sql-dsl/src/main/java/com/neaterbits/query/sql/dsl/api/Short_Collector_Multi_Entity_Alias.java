@@ -68,6 +68,8 @@ final class Short_Collector_Multi_Entity_Alias<MODEL, RESULT>
 			MODEL,
 			RESULT,
 			ISQLLogical_AndOr_MultiEntity_Alias<MODEL, RESULT>,
+			ISharedCondition_Comparable_Common_All<MODEL, RESULT, Integer, ISQLLogical_AndOr_MultiEntity_Alias<MODEL, RESULT>>,
+
 			ISharedCondition_Comparable_Common_All<MODEL, RESULT, Byte, ISQLLogical_AndOr_MultiEntity_Alias<MODEL, RESULT>>,
 			ISharedCondition_Comparable_Common_All<MODEL, RESULT, Short, ISQLLogical_AndOr_MultiEntity_Alias<MODEL, RESULT>>,
 			ISharedCondition_Comparable_Common_All<MODEL, RESULT, Integer, ISQLLogical_AndOr_MultiEntity_Alias<MODEL, RESULT>>,
@@ -87,6 +89,8 @@ final class Short_Collector_Multi_Entity_Alias<MODEL, RESULT>
 			MODEL,
 			RESULT, 
 			ISQLLogical_Or_MultiEntity_Alias<MODEL, RESULT>,
+			ISharedCondition_Comparable_Common_All<MODEL, RESULT, Integer, ISQLLogical_Or_MultiEntity_Alias<MODEL, RESULT>>,
+			
 			ISharedCondition_Comparable_Common_All<MODEL, RESULT, Byte, ISQLLogical_Or_MultiEntity_Alias<MODEL, RESULT>>,
 			ISharedCondition_Comparable_Common_All<MODEL, RESULT, Short, ISQLLogical_Or_MultiEntity_Alias<MODEL, RESULT>>,
 			ISharedCondition_Comparable_Common_All<MODEL, RESULT, Integer, ISQLLogical_Or_MultiEntity_Alias<MODEL, RESULT>>,
@@ -107,6 +111,8 @@ final class Short_Collector_Multi_Entity_Alias<MODEL, RESULT>
 			MODEL,
 			RESULT, 
 			ISQLLogical_And_MultiEntity_Alias<MODEL, RESULT>,
+			ISharedCondition_Comparable_Common_All<MODEL, RESULT, Integer, ISQLLogical_And_MultiEntity_Alias<MODEL, RESULT>>,
+
 			ISharedCondition_Comparable_Common_All<MODEL, RESULT, Byte, ISQLLogical_And_MultiEntity_Alias<MODEL, RESULT>>,
 			ISharedCondition_Comparable_Common_All<MODEL, RESULT, Short, ISQLLogical_And_MultiEntity_Alias<MODEL, RESULT>>,
 			ISharedCondition_Comparable_Common_All<MODEL, RESULT, Integer, ISQLLogical_And_MultiEntity_Alias<MODEL, RESULT>>,

@@ -31,6 +31,8 @@ final class Short_Collector_Initial_Single_Entity_Alias<MODEL, RESULT>
 			RESULT,
 
 			ISQLLogical_AndOr_SingleResult_Alias<MODEL, RESULT>,
+			ISharedCondition_Comparable_Common_All<MODEL, RESULT, Integer, ISQLLogical_AndOr_SingleResult_Alias<MODEL, RESULT>>,
+
 			ISharedCondition_Comparable_Common_All<MODEL, RESULT, Byte, ISQLLogical_AndOr_SingleResult_Alias<MODEL, RESULT>>,
 			ISharedCondition_Comparable_Common_All<MODEL, RESULT, Short, ISQLLogical_AndOr_SingleResult_Alias<MODEL, RESULT>>,
 			ISharedCondition_Comparable_Common_All<MODEL, RESULT, Integer, ISQLLogical_AndOr_SingleResult_Alias<MODEL, RESULT>>,
@@ -51,6 +53,7 @@ final class Short_Collector_Initial_Single_Entity_Alias<MODEL, RESULT>
 			MODEL,
 			RESULT,
 			ISQLLogical_Or_NonProcessResult_Alias<MODEL, RESULT>,
+			ISharedCondition_Comparable_Common_All<MODEL, RESULT, Integer, ISQLLogical_Or_NonProcessResult_Alias<MODEL, RESULT>>,
 			
 			ISharedCondition_Comparable_Common_All<MODEL, RESULT, Byte, ISQLLogical_Or_NonProcessResult_Alias<MODEL, RESULT>>,
 			ISharedCondition_Comparable_Common_All<MODEL, RESULT, Short, ISQLLogical_Or_NonProcessResult_Alias<MODEL, RESULT>>,
@@ -71,6 +74,7 @@ final class Short_Collector_Initial_Single_Entity_Alias<MODEL, RESULT>
 			MODEL,
 			RESULT,
 			ISQLLogical_And_NonProcessResult_Alias<MODEL, RESULT>,
+			ISharedCondition_Comparable_Common_All<MODEL, RESULT, Integer, ISQLLogical_And_NonProcessResult_Alias<MODEL, RESULT>>,
 			
 			ISharedCondition_Comparable_Common_All<MODEL, RESULT, Byte, ISQLLogical_And_NonProcessResult_Alias<MODEL, RESULT>>, 
 			ISharedCondition_Comparable_Common_All<MODEL, RESULT, Short, ISQLLogical_And_NonProcessResult_Alias<MODEL, RESULT>>, 

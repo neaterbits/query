@@ -7,6 +7,8 @@ public interface ISharedLogical_Where_Alias_Function<MODEL, RESULT, CONDITION_CL
 	ISharedFunctions_Transform_Initial_Alias<
 		MODEL,
 		RESULT, CONDITION_CLAUSE,
+		ISharedCondition_Comparable_Common_All<MODEL, RESULT, Integer, CONDITION_CLAUSE>,
+		
 		ISharedCondition_Comparable_Common_All<MODEL, RESULT, Byte, CONDITION_CLAUSE>,
 		ISharedCondition_Comparable_Common_All<MODEL, RESULT, Short, CONDITION_CLAUSE>,
 		ISharedCondition_Comparable_Common_All<MODEL, RESULT, Integer, CONDITION_CLAUSE>,

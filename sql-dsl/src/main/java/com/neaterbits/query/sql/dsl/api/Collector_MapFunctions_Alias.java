@@ -11,6 +11,7 @@ final class Collector_MapFunctions_Alias<
 		// fuctions, this is because sum may wrap over limits of type
 		SUM_LONG_RET extends ISharedFunction_Next<MODEL, RESULT, RET>,
 		COUNT_RET 	 extends ISharedFunction_Next<MODEL, RESULT, RET>,
+		LENGTH_RET 	 extends ISharedFunction_Next<MODEL, RESULT, RET>,
 		
 		// for other types aggregates, we return the same result as the input type, eg.
 		// max of short-type will never be > short type
@@ -39,6 +40,7 @@ final class Collector_MapFunctions_Alias<
 		
 		SUM_LONG_RET,
 		COUNT_RET,
+		LENGTH_RET,
 
 		BYTE_RET,
 		SHORT_RET,
@@ -62,7 +64,7 @@ final class Collector_MapFunctions_Alias<
 	
 		implements 
 		
-			ISharedMapFunctions_Alias<MODEL, RESULT, RET, SUM_LONG_RET, COUNT_RET, BYTE_RET, SHORT_RET, INT_RET, LONG_RET, BIGINTEGER_RET, FLOAT_RET, DOUBLE_RET, BIGDECIMAL_RET, STRING_RET, DATE_RET, CALENDAR_RET, SQLDATE_RET, SQLTIME_RET, SQLTIMESTAMP_RET>
+			ISharedMapFunctions_Alias<MODEL, RESULT, RET, SUM_LONG_RET, COUNT_RET, LENGTH_RET, BYTE_RET, SHORT_RET, INT_RET, LONG_RET, BIGINTEGER_RET, FLOAT_RET, DOUBLE_RET, BIGDECIMAL_RET, STRING_RET, DATE_RET, CALENDAR_RET, SQLDATE_RET, SQLTIME_RET, SQLTIMESTAMP_RET>
 	
 	{
 

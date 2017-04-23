@@ -178,6 +178,8 @@ abstract class Collector_And_Or_Named_And_Alias_Base<
 				MODEL,
 				RESULT,
 				NAMED_AND_CLAUSES,
+				ISharedCondition_Comparable_Common_All<MODEL, RESULT, Integer, NAMED_AND_CLAUSES>,
+
 				ISharedCondition_Comparable_Common_All<MODEL, RESULT, Byte, NAMED_AND_CLAUSES>,
 				ISharedCondition_Comparable_Common_All<MODEL, RESULT, Short, NAMED_AND_CLAUSES>,
 				ISharedCondition_Comparable_Common_All<MODEL, RESULT, Integer, NAMED_AND_CLAUSES>,
@@ -298,6 +300,8 @@ abstract class Collector_And_Or_Named_And_Alias_Base<
 		MODEL,
 		RESULT,
 		NAMED_OR_CLAUSES,
+		ISharedCondition_Comparable_Common_All<MODEL, RESULT, Integer, NAMED_OR_CLAUSES>,
+
 		ISharedCondition_Comparable_Common_All<MODEL, RESULT, Byte, NAMED_OR_CLAUSES>,
 		ISharedCondition_Comparable_Common_All<MODEL, RESULT, Short, NAMED_OR_CLAUSES>,
 		ISharedCondition_Comparable_Common_All<MODEL, RESULT, Integer, NAMED_OR_CLAUSES>,
@@ -626,6 +630,8 @@ abstract class Collector_And_Or_Named_And_Alias_Base<
 		MODEL,
 		RESULT,
 		ALIAS_AND_CLAUSES,
+		ISharedCondition_Comparable_Common_All<MODEL, RESULT, Integer, ALIAS_AND_CLAUSES>,
+
 		ISharedCondition_Comparable_Common_All<MODEL, RESULT, Byte, ALIAS_AND_CLAUSES>,
 		ISharedCondition_Comparable_Common_All<MODEL, RESULT, Short, ALIAS_AND_CLAUSES>,
 		ISharedCondition_Comparable_Common_All<MODEL, RESULT, Integer, ALIAS_AND_CLAUSES>,
@@ -751,6 +757,8 @@ abstract class Collector_And_Or_Named_And_Alias_Base<
 			MODEL,
 			RESULT,
 			ALIAS_OR_CLAUSES,
+			ISharedCondition_Comparable_Common_All<MODEL, RESULT, Integer, ALIAS_OR_CLAUSES>,
+
 			ISharedCondition_Comparable_Common_All<MODEL, RESULT, Byte, ALIAS_OR_CLAUSES>,
 			ISharedCondition_Comparable_Common_All<MODEL, RESULT, Short, ALIAS_OR_CLAUSES>,
 			ISharedCondition_Comparable_Common_All<MODEL, RESULT, Integer, ALIAS_OR_CLAUSES>,

@@ -5,6 +5,8 @@ interface FunctionVisitor<T, R> {
 	R onAggregate(Function_Aggregate function, T param);
 	
 	// String
+	R onStringLength(Function_String_Length function, T param);
+
 	R onStringLower(Function_String_Lower function, T param);
 
 	R onStringUpper(Function_String_Upper function, T param);
