@@ -10,7 +10,7 @@ public class CompanyPersonResultVO {
 		
 	}
 	
-	CompanyPersonResultVO(long companyId, long personId, String firstName, String lastName) {
+	public CompanyPersonResultVO(long companyId, long personId, String firstName, String lastName) {
 		this.companyId = companyId;
 		this.personId = personId;
 		this.firstName = firstName;

@@ -23,7 +23,13 @@ public interface ISharedSubOperandsBuilder_Named<MODEL, RESULT, R extends Compar
 						
 						ISharedSubOperandsBuilder_NoParam_Named<MODEL, RESULT, R, AFTER>,
 						ISharedSubOperandsBuilder_NoParam_Named<MODEL, RESULT, Double, AFTER>
-			>
+			>,
+						
+			// can call subs to String functions too
+			ISharedFunctions_String_Named<
+				MODEL, RESULT, AFTER,
+				ISharedSubOperand_Numeric_Ops_Named<MODEL, RESULT, R, AFTER>, 
+				ISharedSubOperand_Numeric_Ops_Named<MODEL, RESULT, R, AFTER>>
 
 				{
 

@@ -1,4 +1,4 @@
-package com.neaterbits.query.sql.dsl.api;
+package com.neaterbits.query.sql.dsl.api._short;
 
 import static com.neaterbits.query.sql.dsl.api.IShortSelect.list;
 import static com.neaterbits.query.sql.dsl.api.IShortSelect.oneOrNull;
@@ -12,14 +12,22 @@ import org.junit.Test;
 import com.neaterbits.query.jpatest.model.Company;
 import com.neaterbits.query.jpatest.model.Employee;
 import com.neaterbits.query.jpatest.model.Person;
+import com.neaterbits.query.sql.dsl.api.BaseJPATest;
+import com.neaterbits.query.sql.dsl.api.CompanyAggregatesVO;
+import com.neaterbits.query.sql.dsl.api.CompanyResultVO;
+import com.neaterbits.query.sql.dsl.api.CompanySqrtAggregatesVO;
+import com.neaterbits.query.sql.dsl.api.IShort;
+import com.neaterbits.query.sql.dsl.api.IShortSelect;
+import com.neaterbits.query.sql.dsl.api.MultiBuilt;
+import com.neaterbits.query.sql.dsl.api.SingleBuilt;
+import com.neaterbits.query.sql.dsl.api.SinglePrepared;
 
 
 
 public class ShortAPITest extends BaseJPATest {
 	
+	protected static final IShort select = com.neaterbits.query.sql.dsl.api.IShortSelect.get();
 
-	private static final ShortSelect select = com.neaterbits.query.sql.dsl.api.IShortSelect.get();
-	
 	//private static final QueryDataSource jpqlDS = jpql.getDataSource();
 	
 	
@@ -572,6 +580,36 @@ public class ShortAPITest extends BaseJPATest {
 				.map(Company::getName).to(NameLength::setName)
 				.map().length(Company::getName).to(NameLength::setLength)
 
+				.build();
+		
+		store(acme1, acme2)
+		.checkListUnordered(acmeQuery, new NameLength("Acme", 4), new NameLength("Acme Inc.", 9));
+	}
+
+	@Test
+    public void testModLengthNamed() {
+		final Company acme1 = new Company(1, "Acme", new BigDecimal("49"));
+		final Company acme2 = new Company(2, "Acme Inc.", new BigDecimal("121"));
+
+		MultiBuilt<NameLength> acmeQuery = select
+				.list(NameLength.class)
+				
+				.map(Company::getName).to(NameLength::setName)
+				//.map().modOf(b -> b.lower(Company::getName) ).to(NameLength::setLength)
+				.map().modOf(b -> b.length(Company::getName).plus((short)1), 3).to(NameLength::setLength)
+
+						/*
+				!! fortsett her
+				
+				!! sjekke at ikke kan ha annen type i sub, f.eks dette bør ikke kompilere 
+				modOf(b -> b.lower(Company::getName)).to(NameLength::setLength)
+				
+				
+				!! sjekke at lower() returnerer nye funjsoner
+				!! sjekke at mod(1).length() fungerer 
+				!! sjekke at mod(1). returnerer alle funsjoner som returnere integer
+				!! sjekke at abs(). returnerer alle funsjoner som returnere integer, også length
+				*/
 				.build();
 		
 		store(acme1, acme2)

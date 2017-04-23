@@ -2,7 +2,7 @@ package com.neaterbits.query.sql.dsl.api;
 
 import java.math.BigDecimal;
 
-class CompanyAggregatesVO {
+public class CompanyAggregatesVO {
 	private String name;
 	private Double avgStockPrice;
 	private BigDecimal sumStockPrice;
@@ -13,7 +13,7 @@ class CompanyAggregatesVO {
 		
 	}
 	
-	CompanyAggregatesVO(String name, Double avgStockPrice, BigDecimal sumStockPrice) {
+	public CompanyAggregatesVO(String name, Double avgStockPrice, BigDecimal sumStockPrice) {
 		this.name = name;
 		this.avgStockPrice = avgStockPrice;
 		this.sumStockPrice = sumStockPrice;

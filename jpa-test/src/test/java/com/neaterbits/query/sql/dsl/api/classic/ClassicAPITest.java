@@ -1,4 +1,4 @@
-package com.neaterbits.query.sql.dsl.api;
+package com.neaterbits.query.sql.dsl.api.classic;
 import static com.neaterbits.query.sql.dsl.api.IClassicSelect.alias;
 import static com.neaterbits.query.sql.dsl.api.IClassicSelect.intParam;
 import static com.neaterbits.query.sql.dsl.api.IClassicSelect.list;
@@ -19,6 +19,17 @@ import com.neaterbits.query.jpatest.model.Company;
 import com.neaterbits.query.jpatest.model.Employee;
 import com.neaterbits.query.jpatest.model.Person;
 import com.neaterbits.query.jpatest.model.Role;
+import com.neaterbits.query.sql.dsl.api.BaseJPATest;
+import com.neaterbits.query.sql.dsl.api.CompanyPersonResultVO;
+import com.neaterbits.query.sql.dsl.api.CompanyResultVO;
+import com.neaterbits.query.sql.dsl.api.IClassicSelect;
+import com.neaterbits.query.sql.dsl.api.InParam;
+import com.neaterbits.query.sql.dsl.api.MultiBuilt;
+import com.neaterbits.query.sql.dsl.api.QueryDataSource;
+import com.neaterbits.query.sql.dsl.api.QueryDataSourceJPQL;
+import com.neaterbits.query.sql.dsl.api.ResultVO;
+import com.neaterbits.query.sql.dsl.api.SingleBuilt;
+import com.neaterbits.query.sql.dsl.api.ValParam;
 
 public class ClassicAPITest extends BaseJPATest {
 	
@@ -575,17 +586,13 @@ public class ClassicAPITest extends BaseJPATest {
 				.add(fooEmp1).add(fooPerson1)
 				.add(fooEmp2).add(fooPerson2)).
 
-		check(ds -> {
-			checkSelectListUnordered(
-				    ds,
-	       			startsWithFoo,
-	       			q -> q.execute(),
+		checkListUnordered(startsWithFoo,
+				
 	       			new CompanyPersonResultVO(fooCompanyId, fooPerson1Id, "Foo1", "Person1"),
 	       			// new CompanyPersonResultVO(fooCompanyId, fooPerson1Id, "Foo1", "Person1"),
 	       			//new CompanyPersonResultVO(fooCompanyId, fooPerson2Id, "Foo2", "Person2"),
 	       			new CompanyPersonResultVO(fooCompanyId, fooPerson2Id, "Foo2", "Person2")
    			);
-		});
 	}
 
 	@Test
