@@ -160,7 +160,13 @@ abstract class Collector_NestedFunctions_Base<
 			throw new IllegalStateException("No functions");
 		}
 		else if (functions.size() == 1) {
-			throw new IllegalStateException("Should not collect when only 1 function");
+			// This may occur eg in map().absOf(b -> b.something()) 
+			// where we have to collect at initial one, but we were still in nested function collection instance here
+			// because we did not know what would come after map(), it might has well been eg. map().abs().sqrtOf(...)
+			// in which case there would be more than one function
+			ret = functions.get(0);
+			
+			//throw new IllegalStateException("Should not collect when only 1 function");
 		}
 		else {
 			ret = new NestedFunctionCallsExpression(new CollectedFunctions(functions));
