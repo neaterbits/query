@@ -9,9 +9,9 @@ final class SubExpressionUtil {
 		return expression;
 	}
 	
-	static <MODEL, RESULT, R extends Comparable<R>, CLAUSE> FunctionExpression addSubNumericForFunction(Function_Arithmetic function, ISharedSubOperandsFunction_Alias<MODEL, RESULT, R> sub /*, Collector_NestedFunctions_Base<MODEL, RESULT> last */) {
+	static <MODEL, RESULT, R extends Comparable<R>, CLAUSE> FunctionExpression addSubNumericForFunction(Function_Arithmetic function, ISharedSubOperandsFunction_Alias<MODEL, RESULT, R> sub, Expression ... expressions) {
 		
-		final FunctionExpression expression = collectSubFunction(function, sub, true); // , last);
+		final FunctionExpression expression = collectSubFunction(function, sub, true, expressions);
 
 		return expression;
 	}
@@ -165,7 +165,7 @@ final class SubExpressionUtil {
 		return new FunctionExpression(function, merge(collected, expressions));
 	}
 	
-	private static <MODEL, RESULT, R extends Comparable<R>> FunctionExpression collectSubFunction(FunctionBase function, ISharedSubOperandsFunction_Alias<MODEL, RESULT, R> sub, boolean numeric /*, Collector_NestedFunctions_Base<MODEL, RESULT> last */) {
+	private static <MODEL, RESULT, R extends Comparable<R>> FunctionExpression collectSubFunction(FunctionBase function, ISharedSubOperandsFunction_Alias<MODEL, RESULT, R> sub, boolean numeric, Expression ... expressions) {
 		
 		if (function == null) {
 			throw new IllegalArgumentException("function == null");
@@ -173,6 +173,6 @@ final class SubExpressionUtil {
 		
 		final ExpressionList collected = intCollectSub(sub, numeric); // TODO, last);
 		
-		return new FunctionExpression(function, collected);
+		return new FunctionExpression(function, merge(collected, expressions));
 	}
 }

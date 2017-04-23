@@ -1092,6 +1092,15 @@ abstract class Collector_ExpressionList<
 		return assureAliasFunctions().sqrt(getter);
 	}
 
+	@Override
+	public final <T> ALIAS_INTEGER_RET mod(ISupplierInteger getter, int value) {
+		return assureAliasFunctions().mod(getter, value);
+	}
+
+	@Override
+	public final <T> ALIAS_INTEGER_RET modOf(ISharedSubOperandsFunction_Integer_Alias<MODEL, RESULT> sub, int value) {
+		return assureAliasFunctions().modOf(sub, value);
+	}
 	
 	//*************** Aggregate forwarding functions ***************
 

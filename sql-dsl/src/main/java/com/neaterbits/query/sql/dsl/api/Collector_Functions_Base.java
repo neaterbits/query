@@ -130,9 +130,11 @@ abstract class Collector_Functions_Base<
 
 	abstract ISharedFunction_Next<MODEL, RESULT, ALIAS_RET> addAndReturnString(Function_String function, ISupplierString getter);
 
+	abstract ISharedFunction_Next<MODEL, RESULT, ALIAS_RET> addAndReturnForAliasNumericExpressions(Function_Arithmetic function, Expression ... expressions);
+
 	abstract ISharedFunction_Next<MODEL, RESULT, ALIAS_RET> addAndReturnForAliasStringExpressions(Function_String function, Expression ... expressions);
 
-	abstract <R extends Comparable<R>, CLAUSE> CLAUSE addSubNumeric(Function_Arithmetic function, ISharedSubOperandsFunction_Alias<MODEL, RESULT, R> sub);
+	abstract <R extends Comparable<R>, CLAUSE> CLAUSE addSubNumeric(Function_Arithmetic function, ISharedSubOperandsFunction_Alias<MODEL, RESULT, R> sub, Expression ... expressions);
 
 	//********************************************************************
 	//* Named
@@ -611,26 +613,31 @@ abstract class Collector_Functions_Base<
 	}
 	
 	@Override
+	@SuppressWarnings("unchecked")
 	public final <T> ALIAS_STRING_RET concat(ISupplierString getter1, ISupplierString getter2) {
 		return (ALIAS_STRING_RET)addAndReturnForAliasStringExpressions(Function_String_Concat.INSTANCE, new FieldExpression(getter1), new FieldExpression(getter2));
 	}
 
 	@Override
+	@SuppressWarnings("unchecked")
 	public final <T> ALIAS_STRING_RET concat(ISupplierString getter, String value) {
 		return (ALIAS_STRING_RET)addAndReturnForAliasStringExpressions(Function_String_Concat.INSTANCE, new FieldExpression(getter), new ValueExpression(value));
 	}
 
 	@Override
+	@SuppressWarnings("unchecked")
 	public final <T> ALIAS_STRING_RET concat(String value, ISupplierString getter) {
 		return (ALIAS_STRING_RET)addAndReturnForAliasStringExpressions(Function_String_Concat.INSTANCE, new ValueExpression(value), new FieldExpression(getter));
 	}
 
 	@Override
+	@SuppressWarnings("unchecked")
 	public final <T> ALIAS_STRING_RET concat(ISupplierString getter, Param<String> param) {
 		return (ALIAS_STRING_RET)addAndReturnForAliasStringExpressions(Function_String_Concat.INSTANCE, new FieldExpression(getter), new ParamExpression(param));
 	}
 
 	@Override
+	@SuppressWarnings("unchecked")
 	public final <T> ALIAS_STRING_RET concat(Param<String> param, ISupplierString getter) {
 		return (ALIAS_STRING_RET)addAndReturnForAliasStringExpressions(Function_String_Concat.INSTANCE, new ParamExpression(param), new FieldExpression(getter));
 	}
@@ -754,8 +761,20 @@ abstract class Collector_Functions_Base<
 	public final <T> ALIAS_DOUBLE_RET sqrt(ISupplierBigDecimal getter) {
 		return addAndReturnType(Function_Arithmetic_Sqrt.INSTANCE, getter);
 	}
+	
+	@Override
+	@SuppressWarnings("unchecked")
+	public final <T> ALIAS_INTEGER_RET mod(ISupplierInteger getter, int value) {
+		return (ALIAS_INTEGER_RET)addAndReturnForAliasNumericExpressions(Function_Arithmetic_Mod.INSTANCE, new FieldExpression(getter), new ValueExpression(value));
+	}
+
+	@Override
+	public final <T> ALIAS_INTEGER_RET modOf(ISharedSubOperandsFunction_Integer_Alias<MODEL, RESULT> sub, int value) {
+		return addSubNumeric(Function_Arithmetic_Abs.INSTANCE, sub, new ValueExpression(value));
+	}
 
 	// ********* Aggregate methods *********
+
 
 	@Override
 	public final ALIAS_DOUBLE_RET avg(ISupplierByte field) {

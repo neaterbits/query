@@ -329,6 +329,14 @@ abstract class Collector_NestedFunctions_Base<
 	}
 	
 	@Override
+	ISharedFunction_Next<MODEL, RESULT, ALIAS_RET> addAndReturnForAliasNumericExpressions(Function_Arithmetic function, Expression... expressions) {
+		
+		final Expression expression = addAlias(function, expressions);
+		
+		return continueAfterAliasComparableFunctions(expression);
+	}
+
+	@Override
 	ISharedFunction_Next<MODEL, RESULT, ALIAS_RET> addAndReturnForAliasStringExpressions(Function_String function, Expression... expressions) {
 		
 		final Expression expression = addAlias(function, expressions);
@@ -338,10 +346,10 @@ abstract class Collector_NestedFunctions_Base<
 	
 	@Override
 	@SuppressWarnings("unchecked")
-	final <R extends Comparable<R>, CLAUSE> CLAUSE addSubNumeric(Function_Arithmetic function, ISharedSubOperandsFunction_Alias<MODEL, RESULT, R> sub) {
+	final <R extends Comparable<R>, CLAUSE> CLAUSE addSubNumeric(Function_Arithmetic function, ISharedSubOperandsFunction_Alias<MODEL, RESULT, R> sub, Expression ... expressions) {
 		
 		// Must build sub-functions with parameters
-		final FunctionExpression expression = SubExpressionUtil.addSubNumericForFunction(function, sub);
+		final FunctionExpression expression = SubExpressionUtil.addSubNumericForFunction(function, sub, expressions);
 		
 		functions.add(expression);
 		
