@@ -8,8 +8,12 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import com.neaterbits.query.jpatest.model.Company;
 import com.neaterbits.query.sql.dsl.api.BaseJPATest;
+import com.neaterbits.query.sql.dsl.api.CompanyAggregatesVO;
+import com.neaterbits.query.sql.dsl.api.CompanyResultVO;
+import com.neaterbits.query.sql.dsl.api.CompanySqrtAggregatesVO;
 import com.neaterbits.query.sql.dsl.api.IShort;
 import com.neaterbits.query.sql.dsl.api.MultiBuilt;
+import com.neaterbits.query.sql.dsl.api.SingleBuilt;
 
 public class ShortFunctionTest extends BaseJPATest {
 	protected static final IShort select = com.neaterbits.query.sql.dsl.api.IShortSelect.get();
@@ -166,5 +170,145 @@ public class ShortFunctionTest extends BaseJPATest {
 				"list(NameLength.class)" +
 				".map(Company::getName).to(NameLength::setName)" +
 				".map().modOf(b -> b.lower(Company::getName), 3).to(NameLength::setLength)");
+	}
+
+	@Test
+    public void testMapSumAndAvgList() {
+		
+		final Company acme1 = new Company(1, "Acme1", new BigDecimal("153.2"));
+		final Company acme2 = new Company(2, "Acme2", new BigDecimal("96.7"));
+		final Company foo = new Company(3, "Foo", new BigDecimal("35.6"));
+
+		final SingleBuilt<CompanyAggregatesVO> acmeQuery = select
+				.one(CompanyAggregatesVO.class)
+
+				//.map(Company::getName) .to (CompanyResultsVO::setName)
+				.map().sum(Company::getStockPrice).to (CompanyAggregatesVO::setSumStockPrice)
+
+
+				.map().avg(Company::getStockPrice).to(CompanyAggregatesVO::setAvgStockPrice)
+
+				.where(Company::getName).startsWith("Acme")
+				.build();
+		
+		store(s  -> s.add(acme1)
+					 .add(acme2)
+					 .add(foo)).
+		checkOneValue(acmeQuery, new CompanyAggregatesVO(null, 124.95, new BigDecimal("249.9")));
+	}
+
+	@Test
+    public void testSqrtOfAvgList() {
+		
+		final Company acme1 = new Company(1, "Acme1", new BigDecimal("45"));
+		final Company acme2 = new Company(2, "Acme2", new BigDecimal("53"));
+		final Company foo = new Company(3, "Foo", new BigDecimal("35.6"));
+
+		final SingleBuilt<CompanySqrtAggregatesVO> acmeQuery = select
+				.one(CompanySqrtAggregatesVO.class)
+
+				.map().sqrt().avg(Company::getStockPrice).to(CompanySqrtAggregatesVO::setSqrtAvgStockPrice)
+
+				.where(Company::getName).startsWith("Acme")
+				.build();
+		
+		store(s  -> s.add(acme1)
+					 .add(acme2)
+					 .add(foo)).
+		checkOneValue(acmeQuery, new CompanySqrtAggregatesVO(7.0, null));
+	}
+	
+	@Test
+    public void testArithmeticModNamed() {
+		
+		final Company acme1 = new Company(1, "Acme1", new BigDecimal("49"));
+		final Company acme2 = new Company(2, "Acme2", new BigDecimal("121"));
+
+		acme2.setYearFounded(1967);
+		
+		MultiBuilt<CompanyResultVO> acmeQuery = select
+				.list(CompanyResultVO.class)
+				
+				.map(Company::getName).to(CompanyResultVO::setName)
+				.map().mod(Company::getYearFounded, 100).to(CompanyResultVO::setYearFounded)
+
+				.build();
+		
+		store(acme1, acme2)
+		.checkListUnordered(acmeQuery, new CompanyResultVO("Acme1"), new CompanyResultVO("Acme2", 67));
+	}
+	
+	@Test
+    public void testArithmeticModOfNamed() {
+		
+		final Company acme1 = new Company(1, "Acme1", new BigDecimal("49"));
+		final Company acme2 = new Company(2, "Acme2", new BigDecimal("121"));
+
+		acme2.setYearFounded(1967);
+		
+		MultiBuilt<CompanyResultVO> acmeQuery = select
+				.list(CompanyResultVO.class)
+				
+				.map(Company::getName).to(CompanyResultVO::setName)
+				.map().modOf(b -> b.abs(Company::getYearFounded), 100).to(CompanyResultVO::setYearFounded)
+
+				.build();
+		
+		store(acme1, acme2)
+		.checkListUnordered(acmeQuery, new CompanyResultVO("Acme1"), new CompanyResultVO("Acme2", 67));
+	}
+
+	@Test
+    public void testLengthNamed() {
+		final Company acme1 = new Company(1, "Acme", new BigDecimal("49"));
+		final Company acme2 = new Company(2, "Acme Inc.", new BigDecimal("121"));
+
+		MultiBuilt<NameLength> acmeQuery = select
+				.list(NameLength.class)
+				
+				.map(Company::getName).to(NameLength::setName)
+				.map().length(Company::getName).to(NameLength::setLength)
+
+				.build();
+		
+		store(acme1, acme2)
+		.checkListUnordered(acmeQuery, new NameLength("Acme", 4), new NameLength("Acme Inc.", 9));
+	}
+
+	@Test
+    public void testModLengthNamed() {
+		final Company acme1 = new Company(1, "Acme", new BigDecimal("49"));
+		final Company acme2 = new Company(2, "Acme Inc.", new BigDecimal("121"));
+
+		MultiBuilt<NameLength> acmeQuery = select
+				.list(NameLength.class)
+				
+				.map(Company::getName).to(NameLength::setName)
+				//.map().modOf(b -> b.lower(Company::getName) ).to(NameLength::setLength)
+				.map().modOf(b -> b.length(Company::getName).plus((short)1), 3).to(NameLength::setLength)
+
+				.build();
+		
+		store(acme1, acme2)
+		.checkListUnordered(acmeQuery, new NameLength("Acme", 4), new NameLength("Acme Inc.", 9));
+	}
+
+	@Test
+    public void testLengthAlias() {
+		final Company acme1 = new Company(1, "Acme", new BigDecimal("49"));
+		final Company acme2 = new Company(2, "Acme Inc.", new BigDecimal("121"));
+
+		final Company c = select.alias(Company.class);
+		
+		MultiBuilt<NameLength> acmeQuery = select
+				.list(NameLength.class)
+				
+				.map(c::getName).to(NameLength::setName)
+				.map().length(c::getName).to(NameLength::setLength)
+
+				.build();
+		
+		store(acme1, acme2)
+		.checkListUnordered(acmeQuery, new NameLength("Acme", 4), new NameLength("Acme Inc.", 9));
 	}
 }
