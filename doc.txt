@@ -575,7 +575,7 @@ vil vi kunne switche i mappinga.
 - TODO where() for functions i short-queries, litt vanskelig om ikke vet result typen (named/alias) allerede, dbs for entities, siden
   må kunne finne denne rekursivt. altså list(SomeEntity.class).where().lower(SomeEntity.getName).isEqualTo("foo"))
 
-- ikke tillate aggregates på toppniv kun på joina typer? list(SomeEntity.class).where().sum(SomeEntity::getSomeMumber) ?
+- ikke tillate aggregates på toppnivå kun på joina typer? list(SomeEntity.class).where().sum(SomeEntity::getSomeMumber) ?
   Gir ikke mening dette queryet.
 
 - map() for funksjoner

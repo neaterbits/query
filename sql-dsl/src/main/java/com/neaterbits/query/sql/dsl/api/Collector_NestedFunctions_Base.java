@@ -5,6 +5,9 @@ import java.util.List;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
+/**
+ */
+
 abstract class Collector_NestedFunctions_Base<
 		MODEL, 
 		RESULT,
@@ -100,6 +103,7 @@ abstract class Collector_NestedFunctions_Base<
 		> {
 	
 	private final List<FunctionExpression> functions;
+	private boolean collected;
 
 
 	// Overridable in case have to switch instance
@@ -121,13 +125,7 @@ abstract class Collector_NestedFunctions_Base<
 
 	Collector_NestedFunctions_Base(/* Collector_NestedFunctions_Base<MODEL, RESULT> last */) {
 		this.functions = new ArrayList<FunctionExpression>();
-				
-				/*
-				
-			last != null 
-				? new ArrayList<>(last.functions)
-				: new ArrayList<>();
-				*/
+		this.collected = false;
 	}
 	
 	Collector_NestedFunctions_Base(Collector_NestedFunctions_Base<
@@ -137,21 +135,25 @@ abstract class Collector_NestedFunctions_Base<
 				?, ?, ?,
 				?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?> toCopy) {
 		this.functions = new ArrayList<>(toCopy.functions);
+		this.collected = false;
 	}
 
 	
-	final void addNoParam(FunctionBase function) {
+	final void addNoParamFunctionToList(FunctionBase function) {
 		if (function == null) {
 			throw new IllegalArgumentException("function == null");
 		}
 		
 		functions.add(new FunctionExpression(function));
 	}
-	
 
-	/*********************** Named ***********************/
-	
-	private Expression collectExpression() {
+	// After sub-expression, we must always collect since functions list are uses solely for the purpose of creating NestedFunctionCallsExpression 
+	private Expression createFinalExpressionsFromSub() {
+		
+		if (collected) {
+			throw new IllegalStateException("already collected");
+		}
+		
 		final Expression ret;
 
 		if (functions.isEmpty()) {
@@ -164,15 +166,23 @@ abstract class Collector_NestedFunctions_Base<
 			ret = new NestedFunctionCallsExpression(new CollectedFunctions(functions));
 		}
 
+		this.collected = true;
+
 		return ret;
 	}
 	
 
-	private Expression createFunctionExpression(FunctionBase function, FieldExpression field) {
-		return createFunctionFromExpressions(function, field);
+	private Expression createFinalExpressionFromFieldAccess_Simple(FunctionBase function, FieldExpression field) {
+		return createFinalExpressionFromFieldAccess_Multi(function, field);
 	}
 
-	private Expression createFunctionFromExpressions(FunctionBase function, Expression ... expressions) {
+	// Collects functions after having received  
+	private Expression createFinalExpressionFromFieldAccess_Multi(FunctionBase function, Expression ... expressions) {
+		
+		if (collected) {
+			throw new IllegalStateException("already collected");
+		}
+		
 		final Expression expression;
 		
 		// May have collected functions already
@@ -182,42 +192,45 @@ abstract class Collector_NestedFunctions_Base<
 		else {
 			// nested functions
 
-			// Add function that is passed field
+			// Add function that field  is passed to
 			functions.add(new FunctionExpression(function, expressions));
-			
-			// addNoParam(function);
-
 			
 			final CollectedFunctions collected = new CollectedFunctions(functions);
 			
 			expression = new NestedFunctionCallsExpression(collected);
 		}
 
+		this.collected = true;
+		
 		return expression;
 	}
+	
+
+	/*********************** Named ***********************/
+	
 
 	abstract ISharedFunction_Next<MODEL, RESULT, NAMED_RET> continueAfterNamedComparableFunctions(Expression expression);
 	abstract ISharedFunction_Next<MODEL, RESULT, NAMED_RET> continueAfterNamedStringFunctions(Expression expression);
 
-	private <T, R extends Comparable<?>> Expression addNamed(FunctionBase function, Function<T, R> getter) {
+	private <T, R extends Comparable<?>> Expression intAddFinalFieldFunction_Simple_Named(FunctionBase function, Function<T, R> getter) {
 
-		final Expression expression = createFunctionExpression(function, new FieldExpression(getter));
+		final Expression expression = createFinalExpressionFromFieldAccess_Simple(function, new FieldExpression(getter));
 
 		return expression;
 	}
 
-	private <T, R extends Comparable<?>> Expression addNamed(FunctionBase function, Expression ... expressions) {
+	private <T, R extends Comparable<?>> Expression intAddFinalFieldFunction_MultiParam_Named(FunctionBase function, Expression ... expressions) {
 
-		final Expression expression = createFunctionFromExpressions(function, expressions);
+		final Expression expression = createFinalExpressionFromFieldAccess_Multi(function, expressions);
 
 		return expression;
 	}
 
 	@Override
 	final <T, R extends Comparable<?>> ISharedFunction_Next<MODEL, RESULT, NAMED_RET> 
-			abstractaddAndReturnComparable(Function_Arithmetic function, Function<T, R> getter) {
+			addFinalFieldFunction_Simple_Arithmetic_Named(Function_Arithmetic function, Function<T, R> getter) {
 				
-		final Expression expression = addNamed(function, getter);
+		final Expression expression = intAddFinalFieldFunction_Simple_Named(function, getter);
 		
 		return continueAfterNamedComparableFunctions(expression);
 
@@ -225,32 +238,32 @@ abstract class Collector_NestedFunctions_Base<
 
 	@Override
 	final <T, R extends Comparable<?>> ISharedFunction_Next<MODEL, RESULT, NAMED_RET>
-		abstractaddAndReturnComparable(Function_Aggregate function, Function<T, R> getter) {
+		addFinalFieldFunction_Simple_Aggregate_Named(Function_Aggregate function, Function<T, R> getter) {
 
-		final Expression expression = addNamed(function, getter);
+		final Expression expression = intAddFinalFieldFunction_Simple_Named(function, getter);
 
 		return continueAfterNamedComparableFunctions(expression);
 	}
 
 	@Override
-	final <T> ISharedFunction_Next<MODEL, RESULT, NAMED_RET> addAndReturnString(Function_String function, IFunctionString<T> getter) {
-		final Expression expression = addNamed(function, getter);
+	final <T> ISharedFunction_Next<MODEL, RESULT, NAMED_RET> addFinalFieldFunction_Simple_String_Named(Function_String function, IFunctionString<T> getter) {
+		final Expression expression = intAddFinalFieldFunction_Simple_Named(function, getter);
 		
 		return continueAfterNamedStringFunctions(expression);
 	}
 
 	@Override
-	ISharedFunction_Next<MODEL, RESULT, NAMED_RET> addAndReturnForNamedNumericExpressions(Function_Arithmetic function, Expression... expressions) {
+	ISharedFunction_Next<MODEL, RESULT, NAMED_RET> addFinalFieldFunction_Multi_Numeric_Named(Function_Arithmetic function, Expression... expressions) {
 		
-		final Expression expression = addNamed(function, expressions);
+		final Expression expression = intAddFinalFieldFunction_MultiParam_Named(function, expressions);
 		
 		return continueAfterNamedComparableFunctions(expression);
 	}
 
 	@Override
-	ISharedFunction_Next<MODEL, RESULT, NAMED_RET> addAndReturnForNamedStringExpressions(Function_String function, Expression... expressions) {
+	ISharedFunction_Next<MODEL, RESULT, NAMED_RET> addFinalFieldFunction_Multi_String_Named(Function_String function, Expression... expressions) {
 		
-		final Expression expression = addNamed(function, expressions);
+		final Expression expression = intAddFinalFieldFunction_MultiParam_Named(function, expressions);
 		
 		return continueAfterNamedStringFunctions(expression);
 	}
@@ -265,7 +278,7 @@ abstract class Collector_NestedFunctions_Base<
 		
 		functions.add(expression);
 		
-		final Expression collected = collectExpression();
+		final Expression collected = createFinalExpressionsFromSub();
 
 		return (CLAUSE)continueAfterNamedComparableFunctions(collected);
 	}
@@ -291,16 +304,16 @@ abstract class Collector_NestedFunctions_Base<
 	}
 	*/
 
-	private <R extends Comparable<?>> Expression addAlias(FunctionBase function, Supplier<R> getter) {
+	private <R extends Comparable<?>> Expression intAddFinalFieldFunction_Simple_Alias(FunctionBase function, Supplier<R> getter) {
 		
-		final Expression expression = createFunctionExpression(function, new FieldExpression(getter));
+		final Expression expression = createFinalExpressionFromFieldAccess_Simple(function, new FieldExpression(getter));
 		
 		return expression;
 	}
 
-	private <T, R extends Comparable<?>> Expression addAlias(FunctionBase function, Expression ... expressions) {
+	private <T, R extends Comparable<?>> Expression intAddFinalFieldFunction_Multi_Alias(FunctionBase function, Expression ... expressions) {
 
-		final Expression expression = createFunctionFromExpressions(function, expressions);
+		final Expression expression = createFinalExpressionFromFieldAccess_Multi(function, expressions);
 
 		return expression;
 	}
@@ -308,42 +321,42 @@ abstract class Collector_NestedFunctions_Base<
 	
 	@Override
 	final <R extends Comparable<?>> ISharedFunction_Next<MODEL, RESULT, ALIAS_RET>
-			abstractaddAndReturnComparable(Function_Arithmetic function, Supplier<R> getter) {
+			addFinalFieldFunction_Simple_Arithmetic_Alias(Function_Arithmetic function, Supplier<R> getter) {
 				
-		final Expression expression =  addAlias(function, getter);
+		final Expression expression =  intAddFinalFieldFunction_Simple_Alias(function, getter);
 		
 		return continueAfterAliasComparableFunctions(expression);
 	}
 
 	@Override
 	final <R extends Comparable<?>> ISharedFunction_Next<MODEL, RESULT, ALIAS_RET>
-			abstractaddAndReturnComparable(Function_Aggregate function, Supplier<R> getter) {
+			addFinalFieldFunction_Simple_Aggregate_Alias(Function_Aggregate function, Supplier<R> getter) {
 
-		final Expression expression = addAlias(function, getter);
+		final Expression expression = intAddFinalFieldFunction_Simple_Alias(function, getter);
 		
 		return continueAfterAliasComparableFunctions(expression);
 	}
 
 	@Override
-	final ISharedFunction_Next<MODEL, RESULT, ALIAS_RET> addAndReturnString(Function_String function, ISupplierString getter) {
+	final ISharedFunction_Next<MODEL, RESULT, ALIAS_RET> addFinalFieldFunction_Simple_String_Alias(Function_String function, ISupplierString getter) {
 		
-		final Expression expression = addAlias(function, getter);
+		final Expression expression = intAddFinalFieldFunction_Simple_Alias(function, getter);
 		
 		return continueAfterAliasStringFunctions(expression);
 	}
 	
 	@Override
-	ISharedFunction_Next<MODEL, RESULT, ALIAS_RET> addAndReturnForAliasNumericExpressions(Function_Arithmetic function, Expression... expressions) {
+	ISharedFunction_Next<MODEL, RESULT, ALIAS_RET> addFinalFieldFunction_Multi_Numeric_Alias(Function_Arithmetic function, Expression... expressions) {
 		
-		final Expression expression = addAlias(function, expressions);
+		final Expression expression = intAddFinalFieldFunction_Multi_Alias(function, expressions);
 		
 		return continueAfterAliasComparableFunctions(expression);
 	}
 
 	@Override
-	ISharedFunction_Next<MODEL, RESULT, ALIAS_RET> addAndReturnForAliasStringExpressions(Function_String function, Expression... expressions) {
+	ISharedFunction_Next<MODEL, RESULT, ALIAS_RET> addFinalFieldFunction_Multi_String_Alias(Function_String function, Expression... expressions) {
 		
-		final Expression expression = addAlias(function, expressions);
+		final Expression expression = intAddFinalFieldFunction_Multi_Alias(function, expressions);
 		
 		return continueAfterAliasStringFunctions(expression);
 	}
@@ -357,7 +370,7 @@ abstract class Collector_NestedFunctions_Base<
 		
 		functions.add(expression);
 		
-		final Expression collected = collectExpression();
+		final Expression collected = createFinalExpressionsFromSub();
 
 		return (CLAUSE)continueAfterAliasComparableFunctions(collected);
 	}

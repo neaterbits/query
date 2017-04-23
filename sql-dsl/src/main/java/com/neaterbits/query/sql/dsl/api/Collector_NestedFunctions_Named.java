@@ -184,7 +184,7 @@ abstract class Collector_NestedFunctions_Named<
 	@Override
 	@SuppressWarnings("unchecked")
 	public final NO_PARAM_STRING_RET lower() {
-		addNoParam(Function_String_Lower.INSTANCE);
+		addNoParamFunctionToList(Function_String_Lower.INSTANCE);
 		
 		return (NO_PARAM_STRING_RET)getNamedNoParamNext();
 	}
@@ -192,7 +192,7 @@ abstract class Collector_NestedFunctions_Named<
 	@Override
 	@SuppressWarnings("unchecked")
 	public final NO_PARAM_STRING_RET upper() {
-		addNoParam(Function_String_Upper.INSTANCE);
+		addNoParamFunctionToList(Function_String_Upper.INSTANCE);
 
 		return (NO_PARAM_STRING_RET)getNamedNoParamNext();
 	}
@@ -200,7 +200,7 @@ abstract class Collector_NestedFunctions_Named<
 	@Override
 	@SuppressWarnings("unchecked")
 	public final NO_PARAM_STRING_RET trim() {
-		addNoParam(Function_String_Trim.INSTANCE);
+		addNoParamFunctionToList(Function_String_Trim.INSTANCE);
 
 		return (NO_PARAM_STRING_RET)getNamedNoParamNext();
 	}
@@ -208,7 +208,7 @@ abstract class Collector_NestedFunctions_Named<
 	@Override
 	@SuppressWarnings("unchecked")
 	public final NO_PARAM_ARITHMETIC_SAME_TYPE_RET abs() {
-		addNoParam(Function_Arithmetic_Abs.INSTANCE);
+		addNoParamFunctionToList(Function_Arithmetic_Abs.INSTANCE);
 
 		return (NO_PARAM_ARITHMETIC_SAME_TYPE_RET)getNamedNoParamNext();
 	}
@@ -216,7 +216,7 @@ abstract class Collector_NestedFunctions_Named<
 	@Override
 	@SuppressWarnings("unchecked")
 	public final NO_PARAM_ARITHMETIC_DOUBLE_RET sqrt() {
-		addNoParam(Function_Arithmetic_Sqrt.INSTANCE);
+		addNoParamFunctionToList(Function_Arithmetic_Sqrt.INSTANCE);
 
 		return (NO_PARAM_ARITHMETIC_DOUBLE_RET)getNamedNoParamNext();
 	}

@@ -17,7 +17,6 @@ import com.neaterbits.query.sql.dsl.api.CompanyAggregatesVO;
 import com.neaterbits.query.sql.dsl.api.CompanyResultVO;
 import com.neaterbits.query.sql.dsl.api.CompanySqrtAggregatesVO;
 import com.neaterbits.query.sql.dsl.api.IShort;
-import com.neaterbits.query.sql.dsl.api.IShortSelect;
 import com.neaterbits.query.sql.dsl.api.MultiBuilt;
 import com.neaterbits.query.sql.dsl.api.SingleBuilt;
 import com.neaterbits.query.sql.dsl.api.SinglePrepared;

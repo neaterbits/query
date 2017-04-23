@@ -416,11 +416,11 @@ abstract class Collector_ExpressionList<
 			// Already know access type
 			switch (fieldAccessType) {
 			case NAMED:
-				assureNamedFunctions().addNoParam(function);
+				assureNamedFunctions().addNoParamFunctionToList(function);
 				break;
 				
 			case ALIAS:
-				assureAliasFunctions().addNoParam(function);
+				assureAliasFunctions().addNoParamFunctionToList(function);
 				break;
 				
 			default:
