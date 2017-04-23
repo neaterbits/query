@@ -171,6 +171,7 @@ abstract class ResultMapper_ExpressionList_Base<
 				
 				NAMED_SUM_LONG_RET,
 				NAMED_COUNT_RET,
+				NAMED_LENGTH_RET,
 				
 				NAMED_BYTE_RET,
 				NAMED_SHORT_RET,
@@ -184,6 +185,7 @@ abstract class ResultMapper_ExpressionList_Base<
 				
 				NAMED_SUM_LONG_RET,
 				NAMED_COUNT_RET,
+				NAMED_LENGTH_RET,
 				
 				NAMED_BYTE_RET,
 				NAMED_SHORT_RET,
@@ -202,6 +204,7 @@ abstract class ResultMapper_ExpressionList_Base<
 				
 				NAMED_RET,
 
+				NAMED_DOUBLE_RET,
 				NAMED_DOUBLE_RET,
 				NAMED_DOUBLE_RET,
 				
@@ -228,6 +231,7 @@ abstract class ResultMapper_ExpressionList_Base<
 				
 				NAMED_DOUBLE_RET,
 				NAMED_DOUBLE_RET,
+				NAMED_DOUBLE_RET,
 				
 				NAMED_DOUBLE_RET,
 				NAMED_DOUBLE_RET,
@@ -251,6 +255,7 @@ abstract class ResultMapper_ExpressionList_Base<
 				
 				NAMED_SUM_LONG_RET,
 				NAMED_COUNT_RET,
+				NAMED_LENGTH_RET,
 			
 				NAMED_BYTE_RET,
 				NAMED_SHORT_RET,
@@ -264,6 +269,7 @@ abstract class ResultMapper_ExpressionList_Base<
 				
 				NAMED_SUM_LONG_RET,
 				NAMED_COUNT_RET,
+				NAMED_LENGTH_RET,
 				
 				NAMED_BYTE_RET,
 				NAMED_SHORT_RET,
@@ -300,6 +306,7 @@ abstract class ResultMapper_ExpressionList_Base<
 				
 				ALIAS_SUM_LONG_RET,
 				ALIAS_COUNT_RET,
+				ALIAS_LENGTH_RET,
 				
 				ALIAS_BYTE_RET,
 				ALIAS_SHORT_RET,
@@ -317,6 +324,7 @@ abstract class ResultMapper_ExpressionList_Base<
 				
 				ALIAS_SUM_LONG_RET,
 				ALIAS_COUNT_RET,
+				ALIAS_LENGTH_RET,
 				
 				ALIAS_BYTE_RET,
 				ALIAS_SHORT_RET,
@@ -341,6 +349,7 @@ abstract class ResultMapper_ExpressionList_Base<
 	
 				ALIAS_DOUBLE_RET,
 				ALIAS_DOUBLE_RET,
+				ALIAS_DOUBLE_RET,
 				
 				ALIAS_DOUBLE_RET,
 				ALIAS_DOUBLE_RET,
@@ -358,6 +367,7 @@ abstract class ResultMapper_ExpressionList_Base<
 	
 				
 				
+				ALIAS_DOUBLE_RET,
 				ALIAS_DOUBLE_RET,
 				ALIAS_DOUBLE_RET,
 				
@@ -387,6 +397,7 @@ abstract class ResultMapper_ExpressionList_Base<
 				
 				ALIAS_SUM_LONG_RET,
 				ALIAS_COUNT_RET,
+				ALIAS_LENGTH_RET,
 				
 				ALIAS_BYTE_RET,
 				ALIAS_SHORT_RET,
@@ -404,6 +415,7 @@ abstract class ResultMapper_ExpressionList_Base<
 				
 				ALIAS_SUM_LONG_RET,
 				ALIAS_COUNT_RET,
+				ALIAS_LENGTH_RET,
 				
 				ALIAS_BYTE_RET,
 				ALIAS_SHORT_RET,

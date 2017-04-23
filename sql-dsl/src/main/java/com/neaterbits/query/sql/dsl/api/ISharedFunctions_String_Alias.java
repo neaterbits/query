@@ -10,9 +10,10 @@ public interface ISharedFunctions_String_Alias<
 			LENGTH_RET_CLAUSE extends ISharedFunction_Next<MODEL, RESULT, RET>,
 			STRING_CLAUSE extends ISharedFunction_Next<MODEL, RESULT, RET>
 
-	> {
+	>
+
+	extends ISharedFunctions_String_NumericResult_Alias<MODEL, RESULT, RET, LENGTH_RET_CLAUSE> {
 		
-    LENGTH_RET_CLAUSE length(ISupplierString getter);
 
 	STRING_CLAUSE lower(ISupplierString getter);
 

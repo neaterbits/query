@@ -3,7 +3,7 @@ package com.neaterbits.query.sql.dsl.api;
 import java.util.List;
 import java.util.function.Function;
 
-public abstract class BaseSQLAPITest {
+public abstract class BaseSQLAPITest extends CompilabilityTest {
 
 	protected final <T> void checkSelectOneOrNull(DataConfig ds, T expected, SingleBuilt<T> query, Function<ISharedPreparedQueryOps<T>, T> execute) {
 		Checks.checkSelectOneOrNull(ds, expected, query, execute);
