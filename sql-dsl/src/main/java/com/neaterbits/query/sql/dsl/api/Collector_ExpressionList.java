@@ -697,8 +697,19 @@ abstract class Collector_ExpressionList<
 		return assureNamedFunctions().sqrtOf(sub);
 	}
 	
+	@Override
+	public final <T> NAMED_INTEGER_RET mod(IFunctionInteger<T> getter, int value) {
+		return assureNamedFunctions().mod(getter, value);
+	}
+
+	@Override
+	public final <T> NAMED_INTEGER_RET modOf(ISharedSubOperandsFunction_Integer_Named<MODEL, RESULT> sub, int value) {
+		return assureNamedFunctions().modOf(sub, value);
+	}
+	
 	//*************** Aggregate forwarding functions ***************
 	
+
 	@Override
 	public final <T> NAMED_DOUBLE_RET avg(IFunctionByte<T> field) {
 		return assureNamedFunctions().avg(field);

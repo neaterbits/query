@@ -2,9 +2,9 @@ package com.neaterbits.query.sql.dsl.api;
 
 final class SubExpressionUtil {
 
-	static <MODEL, RESULT, R extends Comparable<R>, CLAUSE> FunctionExpression addSubNumericForFunction(Function_Arithmetic function, ISharedSubOperandsFunction_Named<MODEL, RESULT, R> sub /*, Collector_NestedFunctions_Base<MODEL, RESULT> last */) {
+	static <MODEL, RESULT, R extends Comparable<R>, CLAUSE> FunctionExpression addSubNumericForFunction(Function_Arithmetic function, ISharedSubOperandsFunction_Named<MODEL, RESULT, R> sub, Expression ... expressions) {
 		
-		final FunctionExpression expression = collectSubFunction(function, sub, true); // , last);
+		final FunctionExpression expression = collectSubFunction(function, sub, true, expressions);
 
 		return expression;
 	}
@@ -92,7 +92,6 @@ final class SubExpressionUtil {
 		
 		sub.apply(b);
 		
-		
 		final ExpressionList expressionList = builder.collectAsExpressionList(false); // do not check, allows for expression lists of 1 item
 		
 		return expressionList;
@@ -127,15 +126,43 @@ final class SubExpressionUtil {
 		return expressionList;
 	}
 	
-	private static <MODEL, RESULT, R extends Comparable<R>> FunctionExpression collectSubFunction(FunctionBase function, ISharedSubOperandsFunction_Named<MODEL, RESULT, R> sub, boolean numeric /*, Collector_NestedFunctions_Base<MODEL, RESULT> last */) {
+	private static Expression [] merge(ExpressionList list, Expression ... expressions) {
+		final Expression [] ret;
+		
+		if (list == null) {
+			throw new IllegalArgumentException("list == null");
+		}
+		
+		if (expressions.length == 0) {
+			ret = new Expression[] { list };
+		}
+		else {
+			ret = new Expression[expressions.length + 1];
+			
+			ret[0] = list;
+
+			int dstIdx = 1;
+			for (Expression expression : expressions) {
+				if (expression == null) {
+					throw new IllegalStateException("expression == null");
+				}
+				
+				ret[dstIdx ++] = expression;
+			}
+		}
+		
+		return ret;
+	}
+	
+	private static <MODEL, RESULT, R extends Comparable<R>> FunctionExpression collectSubFunction(FunctionBase function, ISharedSubOperandsFunction_Named<MODEL, RESULT, R> sub, boolean numeric, Expression ... expressions) {
 		
 		if (function == null) {
 			throw new IllegalArgumentException("function == null");
 		}
 		
-		final ExpressionList collected = intCollectSub(sub, numeric); // TODO, last);
+		final ExpressionList collected = intCollectSub(sub, numeric);
 		
-		return new FunctionExpression(function, collected);
+		return new FunctionExpression(function, merge(collected, expressions));
 	}
 	
 	private static <MODEL, RESULT, R extends Comparable<R>> FunctionExpression collectSubFunction(FunctionBase function, ISharedSubOperandsFunction_Alias<MODEL, RESULT, R> sub, boolean numeric /*, Collector_NestedFunctions_Base<MODEL, RESULT> last */) {

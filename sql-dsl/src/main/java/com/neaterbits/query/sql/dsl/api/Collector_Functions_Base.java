@@ -104,9 +104,11 @@ abstract class Collector_Functions_Base<
 	
 	abstract <T> ISharedFunction_Next<MODEL, RESULT, NAMED_RET> addAndReturnString(Function_String function, IFunctionString<T> getter);
 	
+	abstract ISharedFunction_Next<MODEL, RESULT, NAMED_RET> addAndReturnForNamedNumericExpressions(Function_Arithmetic function, Expression ... expressions);
+
 	abstract ISharedFunction_Next<MODEL, RESULT, NAMED_RET> addAndReturnForNamedStringExpressions(Function_String function, Expression ... expressions);
 	
-	abstract <R extends Comparable<R>, CLAUSE> CLAUSE addSubNumeric(Function_Arithmetic function, ISharedSubOperandsFunction_Named<MODEL, RESULT, R> sub);
+	abstract <R extends Comparable<R>, CLAUSE> CLAUSE addSubNumeric(Function_Arithmetic function, ISharedSubOperandsFunction_Named<MODEL, RESULT, R> sub, Expression ... expressions);
 	
 	abstract <CLAUSE> CLAUSE addSubString(Function_String function, ISharedSubOperandsFunction_String_Named<MODEL, RESULT> sub);
 	
@@ -354,6 +356,17 @@ abstract class Collector_Functions_Base<
 		return addSubNumeric(Function_Arithmetic_Sqrt.INSTANCE, sub);
 	}
 	
+	@Override
+	@SuppressWarnings("unchecked")
+	public final <T> NAMED_INTEGER_RET mod(IFunctionInteger<T> getter, int value) {
+		return (NAMED_INTEGER_RET)addAndReturnForNamedNumericExpressions(Function_Arithmetic_Mod.INSTANCE, new FieldExpression(getter), new ValueExpression(value));
+	}
+
+	@Override
+	public final <T> NAMED_INTEGER_RET modOf(ISharedSubOperandsFunction_Integer_Named<MODEL, RESULT> sub, int value) {
+		return addSubNumeric(Function_Arithmetic_Mod.INSTANCE, sub, new ValueExpression(value));
+	}
+
 	// ********* Aggregate methods *********
 
 

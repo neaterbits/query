@@ -18,6 +18,8 @@ public class Company {
 	
 	private BigDecimal stockPrice;
 	
+	private Integer yearFounded;
+	
 	private List<Employee> employees;
 	
 	public Company() {
@@ -33,6 +35,12 @@ public class Company {
 		this.id = id;
 		this.name = name;
 		this.stockPrice = stockPrice;
+	}
+	
+	public Company(long id, String name, Integer yearFounded) {
+		this.id = id;
+		this.name = name;
+		this.yearFounded = yearFounded;
 	}
 
 	@Id @GeneratedValue
@@ -61,7 +69,16 @@ public class Company {
 	public void setStockPrice(BigDecimal stockPrice) {
 		this.stockPrice = stockPrice;
 	}
-	
+
+	@Column
+	public Integer getYearFounded() {
+		return yearFounded;
+	}
+
+	public void setYearFounded(Integer yearFounded) {
+		this.yearFounded = yearFounded;
+	}
+
 	@OneToMany(mappedBy="company")
 	public List<Employee> getEmployees() {
 		return employees;
@@ -89,12 +106,27 @@ public class Company {
 		if (getClass() != obj.getClass())
 			return false;
 		Company other = (Company) obj;
+		if (employees == null) {
+			if (other.employees != null)
+				return false;
+		} else if (!employees.equals(other.employees))
+			return false;
 		if (id != other.id)
 			return false;
 		if (name == null) {
 			if (other.name != null)
 				return false;
 		} else if (!name.equals(other.name))
+			return false;
+		if (stockPrice == null) {
+			if (other.stockPrice != null)
+				return false;
+		} else if (!stockPrice.equals(other.stockPrice))
+			return false;
+		if (yearFounded == null) {
+			if (other.yearFounded != null)
+				return false;
+		} else if (!yearFounded.equals(other.yearFounded))
 			return false;
 		return true;
 	}

@@ -452,6 +452,50 @@ public class ShortAPITest extends BaseJPATest {
 
 		acmeQuery.prepare(jpqlJPADerby).execute();
 	}
+
+	@Test
+    public void testArithmeticModNamed() {
+		
+		final Company acme1 = new Company(1, "Acme1", new BigDecimal("49"));
+		final Company acme2 = new Company(2, "Acme2", new BigDecimal("121"));
+
+		acme2.setYearFounded(1967);
+		
+		MultiBuilt<CompanyResultVO> acmeQuery = select
+				.list(CompanyResultVO.class)
+				
+				.map(Company::getName).to(CompanyResultVO::setName)
+				.map().mod(Company::getYearFounded, 100).to(CompanyResultVO::setYearFounded)
+
+				.build();
+		
+		store(acme1, acme2)
+		.checkListUnordered(acmeQuery, new CompanyResultVO("Acme1"), new CompanyResultVO("Acme2", 67));
+
+		acmeQuery.prepare(jpqlJPADerby).execute();
+	}
+	
+	@Test
+    public void testArithmeticModOfNamed() {
+		
+		final Company acme1 = new Company(1, "Acme1", new BigDecimal("49"));
+		final Company acme2 = new Company(2, "Acme2", new BigDecimal("121"));
+
+		acme2.setYearFounded(1967);
+		
+		MultiBuilt<CompanyResultVO> acmeQuery = select
+				.list(CompanyResultVO.class)
+				
+				.map(Company::getName).to(CompanyResultVO::setName)
+				.map().modOf(b -> b.abs(Company::getYearFounded), 100).to(CompanyResultVO::setYearFounded)
+
+				.build();
+		
+		store(acme1, acme2)
+		.checkListUnordered(acmeQuery, new CompanyResultVO("Acme1"), new CompanyResultVO("Acme2", 67));
+
+		acmeQuery.prepare(jpqlJPADerby).execute();
+	}
 	
 	@Test
     public void testArithmetic() {

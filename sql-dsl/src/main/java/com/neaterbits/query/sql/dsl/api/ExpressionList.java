@@ -21,7 +21,7 @@ final class ExpressionList extends Expression {
 	List<Operator> getOperators() {
 		return list.getOperators();
 	}
-
+	
 	@Override
 	<T, R> R visit(ExpressionVisitor<T, R> visitor, T param) {
 		return visitor.onList(this, param);

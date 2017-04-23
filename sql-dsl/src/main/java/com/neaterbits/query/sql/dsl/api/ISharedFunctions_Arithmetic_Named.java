@@ -56,4 +56,6 @@ public interface ISharedFunctions_Arithmetic_Named<
 	<T> DOUBLE_RET 	sqrtOf(ISharedSubOperandsFunction_Double_Named<MODEL, RESULT> sub);
 	<T> DOUBLE_RET 	sqrtOf(ISharedSubOperandsFunction_BigDecimal_Named<MODEL, RESULT> sub);
 	
+	<T> INTEGER_RET 	mod(IFunctionInteger<T> getter, int value);
+	<T> INTEGER_RET 	modOf(ISharedSubOperandsFunction_Integer_Named<MODEL, RESULT> sub, int value);
 }

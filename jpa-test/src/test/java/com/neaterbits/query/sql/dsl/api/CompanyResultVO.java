@@ -6,6 +6,7 @@ public class CompanyResultVO {
 
 	private String name;
 	private BigDecimal stockPrice;
+	private Integer yearFounded;
 	
 	public CompanyResultVO() {
 		
@@ -17,6 +18,11 @@ public class CompanyResultVO {
 
 	public CompanyResultVO(BigDecimal stockPrice) {
 		this.stockPrice = stockPrice;
+	}
+
+	public CompanyResultVO(String name, Integer yearFounded) {
+		this.name = name;
+		this.yearFounded = yearFounded;
 	}
 	
 	public String getName() {
@@ -35,6 +41,14 @@ public class CompanyResultVO {
 		this.stockPrice = stockPrice;
 	}
 
+	public Integer getYearFounded() {
+		return yearFounded;
+	}
+
+	public void setYearFounded(Integer yearFounded) {
+		this.yearFounded = yearFounded;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -43,6 +57,8 @@ public class CompanyResultVO {
 		//result = prime * result + ((stockPrice == null) ? 0 : stockPrice.hashCode());
 		return result;
 	}
+
+	
 
 	@Override
 	public boolean equals(Object obj) {
@@ -61,7 +77,12 @@ public class CompanyResultVO {
 		if (stockPrice == null) {
 			if (other.stockPrice != null)
 				return false;
-		} else if (stockPrice.compareTo(other.stockPrice) != 0)
+		} else if (!stockPrice.equals(other.stockPrice))
+			return false;
+		if (yearFounded == null) {
+			if (other.yearFounded != null)
+				return false;
+		} else if (!yearFounded.equals(other.yearFounded))
 			return false;
 		return true;
 	}

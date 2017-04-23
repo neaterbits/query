@@ -21,4 +21,5 @@ interface FunctionVisitor<T, R> {
 
 	R onArithmeticSqrt(Function_Arithmetic_Sqrt function, T param);
 
+	R onArithmeticMod(Function_Arithmetic_Mod function, T param);
 }

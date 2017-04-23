@@ -235,7 +235,13 @@ abstract class Collector_NestedFunctions_Base<
 		return continueAfterNamedStringFunctions(expression);
 	}
 
-	
+	@Override
+	ISharedFunction_Next<MODEL, RESULT, NAMED_RET> addAndReturnForNamedNumericExpressions(Function_Arithmetic function, Expression... expressions) {
+		
+		final Expression expression = addNamed(function, expressions);
+		
+		return continueAfterNamedComparableFunctions(expression);
+	}
 
 	@Override
 	ISharedFunction_Next<MODEL, RESULT, NAMED_RET> addAndReturnForNamedStringExpressions(Function_String function, Expression... expressions) {
@@ -245,12 +251,13 @@ abstract class Collector_NestedFunctions_Base<
 		return continueAfterNamedStringFunctions(expression);
 	}
 
+	
 	@Override
 	@SuppressWarnings("unchecked")
-	final <R extends Comparable<R>, CLAUSE> CLAUSE addSubNumeric(Function_Arithmetic function, ISharedSubOperandsFunction_Named<MODEL, RESULT, R> sub) {
+	final <R extends Comparable<R>, CLAUSE> CLAUSE addSubNumeric(Function_Arithmetic function, ISharedSubOperandsFunction_Named<MODEL, RESULT, R> sub, Expression ... expressions) {
 		
 		// Must build sub-functions with parameters
-		final FunctionExpression expression = SubExpressionUtil.addSubNumericForFunction(function, sub);
+		final FunctionExpression expression = SubExpressionUtil.addSubNumericForFunction(function, sub, expressions);
 		
 		functions.add(expression);
 		
