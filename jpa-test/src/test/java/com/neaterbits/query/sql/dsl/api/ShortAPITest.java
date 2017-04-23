@@ -496,7 +496,107 @@ public class ShortAPITest extends BaseJPATest {
 
 		acmeQuery.prepare(jpqlJPADerby).execute();
 	}
+
+	private static class NameLength {
+		private String name;
+		private Integer length;
+
+		public NameLength() {
+		}
+		
+		public NameLength(String name, Integer  length) {
+			super();
+			this.name = name;
+			this.length = length;
+		}
+
+		public Integer getLength() {
+			return length;
+		}
+		public void setLength(Integer length) {
+			this.length = length;
+		}
+		public String getName() {
+			return name;
+		}
+		public void setName(String name) {
+			this.name = name;
+		}
+
+		@Override
+		public int hashCode() {
+			final int prime = 31;
+			int result = 1;
+			result = prime * result + ((length == null) ? 0 : length.hashCode());
+			result = prime * result + ((name == null) ? 0 : name.hashCode());
+			return result;
+		}
+
+		@Override
+		public boolean equals(Object obj) {
+			if (this == obj)
+				return true;
+			if (obj == null)
+				return false;
+			if (getClass() != obj.getClass())
+				return false;
+			NameLength other = (NameLength) obj;
+			if (length == null) {
+				if (other.length != null)
+					return false;
+			} else if (!length.equals(other.length))
+				return false;
+			if (name == null) {
+				if (other.name != null)
+					return false;
+			} else if (!name.equals(other.name))
+				return false;
+			return true;
+		}
+
+		@Override
+		public String toString() {
+			return "NameLength [name=" + name + ", length=" + length + "]";
+		}
+	}
 	
+	
+	@Test
+    public void testLengthNamed() {
+		final Company acme1 = new Company(1, "Acme", new BigDecimal("49"));
+		final Company acme2 = new Company(2, "Acme Inc.", new BigDecimal("121"));
+
+		MultiBuilt<NameLength> acmeQuery = select
+				.list(NameLength.class)
+				
+				.map(Company::getName).to(NameLength::setName)
+				.map().length(Company::getName).to(NameLength::setLength)
+
+				.build();
+		
+		store(acme1, acme2)
+		.checkListUnordered(acmeQuery, new NameLength("Acme", 4), new NameLength("Acme Inc.", 9));
+	}
+
+	@Test
+    public void testLengthAlias() {
+		final Company acme1 = new Company(1, "Acme", new BigDecimal("49"));
+		final Company acme2 = new Company(2, "Acme Inc.", new BigDecimal("121"));
+
+		final Company c = select.alias(Company.class);
+		
+		MultiBuilt<NameLength> acmeQuery = select
+				.list(NameLength.class)
+				
+				.map(c::getName).to(NameLength::setName)
+				.map().length(c::getName).to(NameLength::setLength)
+
+				.build();
+		
+		store(acme1, acme2)
+		.checkListUnordered(acmeQuery, new NameLength("Acme", 4), new NameLength("Acme Inc.", 9));
+	}
+
 	@Test
     public void testArithmetic() {
 		final SingleBuilt<CompanySqrtAggregatesVO> acmeQuery = select
