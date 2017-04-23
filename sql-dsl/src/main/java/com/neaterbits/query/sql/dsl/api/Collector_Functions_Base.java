@@ -590,226 +590,226 @@ abstract class Collector_Functions_Base<
 	
 	@Override
 	@SuppressWarnings("unchecked")
-	public final <T> ALIAS_STRING_RET lower(ISupplierString getter) {
+	public final ALIAS_STRING_RET lower(ISupplierString getter) {
 		return (ALIAS_STRING_RET) addAndReturnString(Function_String_Lower.INSTANCE, getter);
 	}
 
 	@Override
 	@SuppressWarnings("unchecked")
-	public final <T> ALIAS_STRING_RET upper(ISupplierString getter) {
+	public final ALIAS_STRING_RET upper(ISupplierString getter) {
 		return (ALIAS_STRING_RET) addAndReturnString(Function_String_Upper.INSTANCE, getter);
 	}
 
 	@Override
 	@SuppressWarnings("unchecked")
-	public final <T> ALIAS_STRING_RET trim(ISupplierString getter) {
+	public final ALIAS_STRING_RET trim(ISupplierString getter) {
 		return (ALIAS_STRING_RET) addAndReturnString(Function_String_Trim.INSTANCE, getter);
 	}
 
 	@Override
 	@SuppressWarnings("unchecked")
-	public final <T> ALIAS_STRING_RET substring(ISupplierString getter, int start, int length) {
+	public final ALIAS_STRING_RET substring(ISupplierString getter, int start, int length) {
 		return (ALIAS_STRING_RET)addAndReturnForAliasStringExpressions(Function_String_Substring.INSTANCE, new FieldExpression(getter), new ValueExpression(start), new ValueExpression(length));
 	}
 	
 	@Override
 	@SuppressWarnings("unchecked")
-	public final <T> ALIAS_STRING_RET concat(ISupplierString getter1, ISupplierString getter2) {
+	public final ALIAS_STRING_RET concat(ISupplierString getter1, ISupplierString getter2) {
 		return (ALIAS_STRING_RET)addAndReturnForAliasStringExpressions(Function_String_Concat.INSTANCE, new FieldExpression(getter1), new FieldExpression(getter2));
 	}
 
 	@Override
 	@SuppressWarnings("unchecked")
-	public final <T> ALIAS_STRING_RET concat(ISupplierString getter, String value) {
+	public final ALIAS_STRING_RET concat(ISupplierString getter, String value) {
 		return (ALIAS_STRING_RET)addAndReturnForAliasStringExpressions(Function_String_Concat.INSTANCE, new FieldExpression(getter), new ValueExpression(value));
 	}
 
 	@Override
 	@SuppressWarnings("unchecked")
-	public final <T> ALIAS_STRING_RET concat(String value, ISupplierString getter) {
+	public final ALIAS_STRING_RET concat(String value, ISupplierString getter) {
 		return (ALIAS_STRING_RET)addAndReturnForAliasStringExpressions(Function_String_Concat.INSTANCE, new ValueExpression(value), new FieldExpression(getter));
 	}
 
 	@Override
 	@SuppressWarnings("unchecked")
-	public final <T> ALIAS_STRING_RET concat(ISupplierString getter, Param<String> param) {
+	public final ALIAS_STRING_RET concat(ISupplierString getter, Param<String> param) {
 		return (ALIAS_STRING_RET)addAndReturnForAliasStringExpressions(Function_String_Concat.INSTANCE, new FieldExpression(getter), new ParamExpression(param));
 	}
 
 	@Override
 	@SuppressWarnings("unchecked")
-	public final <T> ALIAS_STRING_RET concat(Param<String> param, ISupplierString getter) {
+	public final ALIAS_STRING_RET concat(Param<String> param, ISupplierString getter) {
 		return (ALIAS_STRING_RET)addAndReturnForAliasStringExpressions(Function_String_Concat.INSTANCE, new ParamExpression(param), new FieldExpression(getter));
 	}
 
 	@Override
-	public final <T> ALIAS_BYTE_RET abs(ISupplierByte getter) {
+	public final ALIAS_BYTE_RET abs(ISupplierByte getter) {
 		return addAndReturnType(Function_Arithmetic_Abs.INSTANCE, getter);
 	}
 
 	@Override
-	public final <T> ALIAS_SHORT_RET abs(ISupplierShort getter) {
+	public final ALIAS_SHORT_RET abs(ISupplierShort getter) {
 		return addAndReturnType(Function_Arithmetic_Abs.INSTANCE, getter);
 	}
 
 	@Override
-	public final <T> ALIAS_INTEGER_RET abs(ISupplierInteger getter) {
+	public final ALIAS_INTEGER_RET abs(ISupplierInteger getter) {
 		return addAndReturnType(Function_Arithmetic_Abs.INSTANCE, getter);
 	}
 
 	@Override
-	public final <T> ALIAS_LONG_RET abs(ISupplierLong getter) {
+	public final ALIAS_LONG_RET abs(ISupplierLong getter) {
 		return addAndReturnType(Function_Arithmetic_Abs.INSTANCE, getter);
 	}
 
 	@Override
-	public final <T> ALIAS_BIGINTEGER_RET abs(ISupplierBigInteger getter) {
+	public final ALIAS_BIGINTEGER_RET abs(ISupplierBigInteger getter) {
 		return addAndReturnType(Function_Arithmetic_Abs.INSTANCE, getter);
 	}
 
 	@Override
-	public final <T> ALIAS_FLOAT_RET abs(ISupplierFloat getter) {
+	public final ALIAS_FLOAT_RET abs(ISupplierFloat getter) {
 		return addAndReturnType(Function_Arithmetic_Abs.INSTANCE, getter);
 	}
 
 	@Override
-	public final <T> ALIAS_DOUBLE_RET abs(ISupplierDouble getter) {
+	public final ALIAS_DOUBLE_RET abs(ISupplierDouble getter) {
 		return addAndReturnType(Function_Arithmetic_Abs.INSTANCE, getter);
 	}
 
 	@Override
-	public final <T> ALIAS_BIGDECIMAL_RET abs(ISupplierBigDecimal getter) {
+	public final ALIAS_BIGDECIMAL_RET abs(ISupplierBigDecimal getter) {
 		return addAndReturnType(Function_Arithmetic_Abs.INSTANCE, getter);
 	}
 	
 	@Override
-	public final <T> ALIAS_BYTE_RET absOfByte(ISharedSubOperandsFunction_Byte_Alias<MODEL, RESULT> sub) {
+	public final ALIAS_BYTE_RET absOfByte(ISharedSubOperandsFunction_Byte_Alias<MODEL, RESULT> sub) {
 		return addSubNumeric(Function_Arithmetic_Abs.INSTANCE, sub);
 	}
 
 	@Override
-	public final <T> ALIAS_SHORT_RET absOfShort(ISharedSubOperandsFunction_Short_Alias<MODEL, RESULT> sub) {
+	public final ALIAS_SHORT_RET absOfShort(ISharedSubOperandsFunction_Short_Alias<MODEL, RESULT> sub) {
 		return addSubNumeric(Function_Arithmetic_Abs.INSTANCE, sub);
 	}
 
 	@Override
-	public final <T> ALIAS_INTEGER_RET absOfInteger(ISharedSubOperandsFunction_Integer_Alias<MODEL, RESULT> sub) {
+	public final ALIAS_INTEGER_RET absOfInteger(ISharedSubOperandsFunction_Integer_Alias<MODEL, RESULT> sub) {
 		return addSubNumeric(Function_Arithmetic_Abs.INSTANCE, sub);
 	}
 
 	@Override
-	public final <T> ALIAS_LONG_RET absOfLong(ISharedSubOperandsFunction_Long_Alias<MODEL, RESULT> sub) {
+	public final ALIAS_LONG_RET absOfLong(ISharedSubOperandsFunction_Long_Alias<MODEL, RESULT> sub) {
 		return addSubNumeric(Function_Arithmetic_Abs.INSTANCE, sub);
 	}
 
 	@Override
-	public final <T> ALIAS_BIGINTEGER_RET absOfBigInteger(ISharedSubOperandsFunction_BigInteger_Alias<MODEL, RESULT> sub) {
+	public final ALIAS_BIGINTEGER_RET absOfBigInteger(ISharedSubOperandsFunction_BigInteger_Alias<MODEL, RESULT> sub) {
 		return addSubNumeric(Function_Arithmetic_Abs.INSTANCE, sub);
 	}
 
 	@Override
-	public final <T> ALIAS_FLOAT_RET absOfFloat(ISharedSubOperandsFunction_Float_Alias<MODEL, RESULT> sub) {
+	public final ALIAS_FLOAT_RET absOfFloat(ISharedSubOperandsFunction_Float_Alias<MODEL, RESULT> sub) {
 		return addSubNumeric(Function_Arithmetic_Abs.INSTANCE, sub);
 	}
 
 	@Override
-	public final <T> ALIAS_DOUBLE_RET absOfDouble(ISharedSubOperandsFunction_Double_Alias<MODEL, RESULT> sub) {
+	public final ALIAS_DOUBLE_RET absOfDouble(ISharedSubOperandsFunction_Double_Alias<MODEL, RESULT> sub) {
 		return addSubNumeric(Function_Arithmetic_Abs.INSTANCE, sub);
 	}
 
 	@Override
-	public final <T> ALIAS_BIGDECIMAL_RET absOfBigDecimal(ISharedSubOperandsFunction_BigDecimal_Alias<MODEL, RESULT> sub) {
+	public final ALIAS_BIGDECIMAL_RET absOfBigDecimal(ISharedSubOperandsFunction_BigDecimal_Alias<MODEL, RESULT> sub) {
 		return addSubNumeric(Function_Arithmetic_Abs.INSTANCE, sub);
 	}
 
 	@Override
-	public final <T> ALIAS_DOUBLE_RET sqrt(ISupplierByte getter) {
+	public final ALIAS_DOUBLE_RET sqrt(ISupplierByte getter) {
 		return addAndReturnType(Function_Arithmetic_Sqrt.INSTANCE, getter);
 	}
 
 	@Override
-	public final <T> ALIAS_DOUBLE_RET sqrt(ISupplierShort getter) {
+	public final ALIAS_DOUBLE_RET sqrt(ISupplierShort getter) {
 		return addAndReturnType(Function_Arithmetic_Sqrt.INSTANCE, getter);
 	}
 
 	@Override
-	public final <T> ALIAS_DOUBLE_RET sqrt(ISupplierInteger getter) {
+	public final ALIAS_DOUBLE_RET sqrt(ISupplierInteger getter) {
 		return addAndReturnType(Function_Arithmetic_Sqrt.INSTANCE, getter);
 	}
 
 	@Override
-	public final <T> ALIAS_DOUBLE_RET sqrt(ISupplierLong getter) {
+	public final ALIAS_DOUBLE_RET sqrt(ISupplierLong getter) {
 		return addAndReturnType(Function_Arithmetic_Sqrt.INSTANCE, getter);
 	}
 
 	@Override
-	public final <T> ALIAS_DOUBLE_RET sqrt(ISupplierBigInteger getter) {
+	public final ALIAS_DOUBLE_RET sqrt(ISupplierBigInteger getter) {
 		return addAndReturnType(Function_Arithmetic_Sqrt.INSTANCE, getter);
 	}
 
 	@Override
-	public final <T> ALIAS_DOUBLE_RET sqrt(ISupplierFloat getter) {
+	public final ALIAS_DOUBLE_RET sqrt(ISupplierFloat getter) {
 		return addAndReturnType(Function_Arithmetic_Sqrt.INSTANCE, getter);
 	}
 
 	@Override
-	public final <T> ALIAS_DOUBLE_RET sqrt(ISupplierDouble getter) {
+	public final ALIAS_DOUBLE_RET sqrt(ISupplierDouble getter) {
 		return addAndReturnType(Function_Arithmetic_Sqrt.INSTANCE, getter);
 	}
 
 	@Override
-	public final <T> ALIAS_DOUBLE_RET sqrt(ISupplierBigDecimal getter) {
+	public final ALIAS_DOUBLE_RET sqrt(ISupplierBigDecimal getter) {
 		return addAndReturnType(Function_Arithmetic_Sqrt.INSTANCE, getter);
 	}
 	
 	@Override
-	public final <T> ALIAS_DOUBLE_RET sqrtOf(ISharedSubOperandsFunction_Byte_Alias<MODEL, RESULT> sub) {
+	public final ALIAS_DOUBLE_RET sqrtOf(ISharedSubOperandsFunction_Byte_Alias<MODEL, RESULT> sub) {
 		return addSubNumeric(Function_Arithmetic_Sqrt.INSTANCE, sub);
 	}
 
 	@Override
-	public final <T> ALIAS_DOUBLE_RET sqrtOf(ISharedSubOperandsFunction_Short_Alias<MODEL, RESULT> sub) {
+	public final ALIAS_DOUBLE_RET sqrtOf(ISharedSubOperandsFunction_Short_Alias<MODEL, RESULT> sub) {
 		return addSubNumeric(Function_Arithmetic_Sqrt.INSTANCE, sub);
 	}
 
 	@Override
-	public final <T> ALIAS_DOUBLE_RET sqrtOf(ISharedSubOperandsFunction_Integer_Alias<MODEL, RESULT> sub) {
+	public final ALIAS_DOUBLE_RET sqrtOf(ISharedSubOperandsFunction_Integer_Alias<MODEL, RESULT> sub) {
 		return addSubNumeric(Function_Arithmetic_Sqrt.INSTANCE, sub);
 	}
 
 	@Override
-	public final <T> ALIAS_DOUBLE_RET sqrtOf(ISharedSubOperandsFunction_BigInteger_Alias<MODEL, RESULT> sub) {
+	public final ALIAS_DOUBLE_RET sqrtOf(ISharedSubOperandsFunction_BigInteger_Alias<MODEL, RESULT> sub) {
 		return addSubNumeric(Function_Arithmetic_Sqrt.INSTANCE, sub);
 	}
 
 	@Override
-	public final <T> ALIAS_DOUBLE_RET sqrtOf(ISharedSubOperandsFunction_Long_Alias<MODEL, RESULT> sub) {
+	public final ALIAS_DOUBLE_RET sqrtOf(ISharedSubOperandsFunction_Long_Alias<MODEL, RESULT> sub) {
 		return addSubNumeric(Function_Arithmetic_Sqrt.INSTANCE, sub);
 	}
 
 	@Override
-	public final <T> ALIAS_DOUBLE_RET sqrtOf(ISharedSubOperandsFunction_Float_Alias<MODEL, RESULT> sub) {
+	public final ALIAS_DOUBLE_RET sqrtOf(ISharedSubOperandsFunction_Float_Alias<MODEL, RESULT> sub) {
 		return addSubNumeric(Function_Arithmetic_Sqrt.INSTANCE, sub);
 	}
 
 	@Override
-	public final <T> ALIAS_DOUBLE_RET sqrtOf(ISharedSubOperandsFunction_Double_Alias<MODEL, RESULT> sub) {
+	public final ALIAS_DOUBLE_RET sqrtOf(ISharedSubOperandsFunction_Double_Alias<MODEL, RESULT> sub) {
 		return addSubNumeric(Function_Arithmetic_Sqrt.INSTANCE, sub);
 	}
 
 	@Override
-	public final <T> ALIAS_DOUBLE_RET sqrtOf(ISharedSubOperandsFunction_BigDecimal_Alias<MODEL, RESULT> sub) {
+	public final ALIAS_DOUBLE_RET sqrtOf(ISharedSubOperandsFunction_BigDecimal_Alias<MODEL, RESULT> sub) {
 		return addSubNumeric(Function_Arithmetic_Sqrt.INSTANCE, sub);
 	}
 
 	@Override
 	@SuppressWarnings("unchecked")
-	public final <T> ALIAS_INTEGER_RET mod(ISupplierInteger getter, int value) {
+	public final ALIAS_INTEGER_RET mod(ISupplierInteger getter, int value) {
 		return (ALIAS_INTEGER_RET)addAndReturnForAliasNumericExpressions(Function_Arithmetic_Mod.INSTANCE, new FieldExpression(getter), new ValueExpression(value));
 	}
 
 	@Override
-	public final <T> ALIAS_INTEGER_RET modOf(ISharedSubOperandsFunction_Integer_Alias<MODEL, RESULT> sub, int value) {
+	public final ALIAS_INTEGER_RET modOf(ISharedSubOperandsFunction_Integer_Alias<MODEL, RESULT> sub, int value) {
 		return addSubNumeric(Function_Arithmetic_Abs.INSTANCE, sub, new ValueExpression(value));
 	}
 

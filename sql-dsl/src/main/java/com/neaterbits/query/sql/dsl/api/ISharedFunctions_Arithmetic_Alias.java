@@ -18,44 +18,44 @@ public interface ISharedFunctions_Arithmetic_Alias<
 		
 		> {
 
-	<T> BYTE_RET 	abs(ISupplierByte getter);
-	<T> SHORT_RET 	abs(ISupplierShort getter);
-	<T> INTEGER_RET abs(ISupplierInteger getter);
-	<T> LONG_RET 	abs(ISupplierLong getter);
-	<T> BIGINTEGER_RET abs(ISupplierBigInteger getter);
-	<T> FLOAT_RET 	abs(ISupplierFloat getter);
-	<T> DOUBLE_RET 	abs(ISupplierDouble getter);
-	<T> BIGDECIMAL_RET abs(ISupplierBigDecimal getter);
+	BYTE_RET 	abs(ISupplierByte getter);
+	SHORT_RET 	abs(ISupplierShort getter);
+	INTEGER_RET abs(ISupplierInteger getter);
+	LONG_RET 	abs(ISupplierLong getter);
+	BIGINTEGER_RET abs(ISupplierBigInteger getter);
+	FLOAT_RET 	abs(ISupplierFloat getter);
+	DOUBLE_RET 	abs(ISupplierDouble getter);
+	BIGDECIMAL_RET abs(ISupplierBigDecimal getter);
 
-	<T> BYTE_RET 		absOfByte(ISharedSubOperandsFunction_Byte_Alias<MODEL, RESULT> sub);
-	<T> SHORT_RET 		absOfShort(ISharedSubOperandsFunction_Short_Alias<MODEL, RESULT> sub);
-	<T> INTEGER_RET 	absOfInteger(ISharedSubOperandsFunction_Integer_Alias<MODEL, RESULT> sub);
-	<T> LONG_RET 		absOfLong(ISharedSubOperandsFunction_Long_Alias<MODEL, RESULT> sub);
-	<T> BIGINTEGER_RET 	absOfBigInteger(ISharedSubOperandsFunction_BigInteger_Alias<MODEL, RESULT> sub);
-	<T> FLOAT_RET 		absOfFloat(ISharedSubOperandsFunction_Float_Alias<MODEL, RESULT> sub);
-	<T> DOUBLE_RET 		absOfDouble(ISharedSubOperandsFunction_Double_Alias<MODEL, RESULT> sub);
-	<T> BIGDECIMAL_RET 	absOfBigDecimal(ISharedSubOperandsFunction_BigDecimal_Alias<MODEL, RESULT> sub);
+	BYTE_RET 		absOfByte(ISharedSubOperandsFunction_Byte_Alias<MODEL, RESULT> sub);
+	SHORT_RET 		absOfShort(ISharedSubOperandsFunction_Short_Alias<MODEL, RESULT> sub);
+	INTEGER_RET 	absOfInteger(ISharedSubOperandsFunction_Integer_Alias<MODEL, RESULT> sub);
+	LONG_RET 		absOfLong(ISharedSubOperandsFunction_Long_Alias<MODEL, RESULT> sub);
+	BIGINTEGER_RET 	absOfBigInteger(ISharedSubOperandsFunction_BigInteger_Alias<MODEL, RESULT> sub);
+	FLOAT_RET 		absOfFloat(ISharedSubOperandsFunction_Float_Alias<MODEL, RESULT> sub);
+	DOUBLE_RET 		absOfDouble(ISharedSubOperandsFunction_Double_Alias<MODEL, RESULT> sub);
+	BIGDECIMAL_RET 	absOfBigDecimal(ISharedSubOperandsFunction_BigDecimal_Alias<MODEL, RESULT> sub);
 
 	
 	// sqrt() always return double-type
-	<T> DOUBLE_RET sqrt(ISupplierByte getter);
-	<T> DOUBLE_RET sqrt(ISupplierShort getter);
-	<T> DOUBLE_RET sqrt(ISupplierInteger getter);
-	<T> DOUBLE_RET sqrt(ISupplierLong getter);
-	<T> DOUBLE_RET sqrt(ISupplierFloat getter);
-	<T> DOUBLE_RET sqrt(ISupplierBigInteger getter);
-	<T> DOUBLE_RET sqrt(ISupplierDouble getter);
-	<T> DOUBLE_RET sqrt(ISupplierBigDecimal getter);
+	DOUBLE_RET sqrt(ISupplierByte getter);
+	DOUBLE_RET sqrt(ISupplierShort getter);
+	DOUBLE_RET sqrt(ISupplierInteger getter);
+	DOUBLE_RET sqrt(ISupplierLong getter);
+	DOUBLE_RET sqrt(ISupplierFloat getter);
+	DOUBLE_RET sqrt(ISupplierBigInteger getter);
+	DOUBLE_RET sqrt(ISupplierDouble getter);
+	DOUBLE_RET sqrt(ISupplierBigDecimal getter);
 
-	<T> DOUBLE_RET 	sqrtOf(ISharedSubOperandsFunction_Byte_Alias<MODEL, RESULT> sub);
-	<T> DOUBLE_RET 	sqrtOf(ISharedSubOperandsFunction_Short_Alias<MODEL, RESULT> sub);
-	<T> DOUBLE_RET 	sqrtOf(ISharedSubOperandsFunction_Integer_Alias<MODEL, RESULT> sub);
-	<T> DOUBLE_RET 	sqrtOf(ISharedSubOperandsFunction_BigInteger_Alias<MODEL, RESULT> sub);
-	<T> DOUBLE_RET 	sqrtOf(ISharedSubOperandsFunction_Long_Alias<MODEL, RESULT> sub);
-	<T> DOUBLE_RET 	sqrtOf(ISharedSubOperandsFunction_Float_Alias<MODEL, RESULT> sub);
-	<T> DOUBLE_RET 	sqrtOf(ISharedSubOperandsFunction_Double_Alias<MODEL, RESULT> sub);
-	<T> DOUBLE_RET 	sqrtOf(ISharedSubOperandsFunction_BigDecimal_Alias<MODEL, RESULT> sub);
+	DOUBLE_RET 	sqrtOf(ISharedSubOperandsFunction_Byte_Alias<MODEL, RESULT> sub);
+	DOUBLE_RET 	sqrtOf(ISharedSubOperandsFunction_Short_Alias<MODEL, RESULT> sub);
+	DOUBLE_RET 	sqrtOf(ISharedSubOperandsFunction_Integer_Alias<MODEL, RESULT> sub);
+	DOUBLE_RET 	sqrtOf(ISharedSubOperandsFunction_BigInteger_Alias<MODEL, RESULT> sub);
+	DOUBLE_RET 	sqrtOf(ISharedSubOperandsFunction_Long_Alias<MODEL, RESULT> sub);
+	DOUBLE_RET 	sqrtOf(ISharedSubOperandsFunction_Float_Alias<MODEL, RESULT> sub);
+	DOUBLE_RET 	sqrtOf(ISharedSubOperandsFunction_Double_Alias<MODEL, RESULT> sub);
+	DOUBLE_RET 	sqrtOf(ISharedSubOperandsFunction_BigDecimal_Alias<MODEL, RESULT> sub);
 	
-	<T> INTEGER_RET 	mod(ISupplierInteger getter, int value);
-	<T> INTEGER_RET 	modOf(ISharedSubOperandsFunction_Integer_Alias<MODEL, RESULT> sub, int value);
+	INTEGER_RET 	mod(ISupplierInteger getter, int value);
+	INTEGER_RET 	modOf(ISharedSubOperandsFunction_Integer_Alias<MODEL, RESULT> sub, int value);
 }

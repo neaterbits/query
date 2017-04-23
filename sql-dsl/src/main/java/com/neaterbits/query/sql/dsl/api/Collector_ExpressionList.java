@@ -973,172 +973,172 @@ abstract class Collector_ExpressionList<
 
 
 	@Override
-	public final <T> ALIAS_BYTE_RET abs(ISupplierByte getter) {
+	public final ALIAS_BYTE_RET abs(ISupplierByte getter) {
 		return assureAliasFunctions().abs(getter);
 	}
 
 	@Override
-	public final <T> ALIAS_SHORT_RET abs(ISupplierShort getter) {
+	public final ALIAS_SHORT_RET abs(ISupplierShort getter) {
 		return assureAliasFunctions().abs(getter);
 	}
 
 	@Override
-	public final <T> ALIAS_INTEGER_RET abs(ISupplierInteger getter) {
+	public final ALIAS_INTEGER_RET abs(ISupplierInteger getter) {
 		return assureAliasFunctions().abs(getter);
 	}
 
 	@Override
-	public final <T> ALIAS_LONG_RET abs(ISupplierLong getter) {
+	public final ALIAS_LONG_RET abs(ISupplierLong getter) {
 		return assureAliasFunctions().abs(getter);
 	}
 
 	@Override
-	public final <T> ALIAS_BIGINTEGER_RET abs(ISupplierBigInteger getter) {
+	public final ALIAS_BIGINTEGER_RET abs(ISupplierBigInteger getter) {
 		return assureAliasFunctions().abs(getter);
 	}
 
 	@Override
-	public final <T> ALIAS_FLOAT_RET abs(ISupplierFloat getter) {
+	public final ALIAS_FLOAT_RET abs(ISupplierFloat getter) {
 		return assureAliasFunctions().abs(getter);
 	}
 
 	@Override
-	public final <T> ALIAS_DOUBLE_RET abs(ISupplierDouble getter) {
+	public final ALIAS_DOUBLE_RET abs(ISupplierDouble getter) {
 		return assureAliasFunctions().abs(getter);
 	}
 
 	@Override
-	public final <T> ALIAS_BIGDECIMAL_RET abs(ISupplierBigDecimal getter) {
+	public final ALIAS_BIGDECIMAL_RET abs(ISupplierBigDecimal getter) {
 		return assureAliasFunctions().abs(getter);
 	}
 
 	@Override
-	public final <T> ALIAS_BYTE_RET absOfByte(ISharedSubOperandsFunction_Byte_Alias<MODEL, RESULT> sub) {
+	public final ALIAS_BYTE_RET absOfByte(ISharedSubOperandsFunction_Byte_Alias<MODEL, RESULT> sub) {
 		return assureAliasFunctions().absOfByte(sub);
 	}
 
 	@Override
-	public final <T> ALIAS_SHORT_RET absOfShort(ISharedSubOperandsFunction_Short_Alias<MODEL, RESULT> sub) {
+	public final ALIAS_SHORT_RET absOfShort(ISharedSubOperandsFunction_Short_Alias<MODEL, RESULT> sub) {
 		return assureAliasFunctions().absOfShort(sub);
 	}
 
 	@Override
-	public final <T> ALIAS_INTEGER_RET absOfInteger(ISharedSubOperandsFunction_Integer_Alias<MODEL, RESULT> sub) {
+	public final ALIAS_INTEGER_RET absOfInteger(ISharedSubOperandsFunction_Integer_Alias<MODEL, RESULT> sub) {
 		return assureAliasFunctions().absOfInteger(sub);
 	}
 
 	@Override
-	public final <T> ALIAS_LONG_RET absOfLong(ISharedSubOperandsFunction_Long_Alias<MODEL, RESULT> sub) {
+	public final ALIAS_LONG_RET absOfLong(ISharedSubOperandsFunction_Long_Alias<MODEL, RESULT> sub) {
 		return assureAliasFunctions().absOfLong(sub);
 	}
 
 	@Override
-	public final <T> ALIAS_BIGINTEGER_RET absOfBigInteger(ISharedSubOperandsFunction_BigInteger_Alias<MODEL, RESULT> sub) {
+	public final ALIAS_BIGINTEGER_RET absOfBigInteger(ISharedSubOperandsFunction_BigInteger_Alias<MODEL, RESULT> sub) {
 		return assureAliasFunctions().absOfBigInteger(sub);
 	}
 
 	@Override
-	public final <T> ALIAS_FLOAT_RET absOfFloat(ISharedSubOperandsFunction_Float_Alias<MODEL, RESULT> sub) {
+	public final ALIAS_FLOAT_RET absOfFloat(ISharedSubOperandsFunction_Float_Alias<MODEL, RESULT> sub) {
 		return assureAliasFunctions().absOfFloat(sub);
 	}
 
 	@Override
-	public final <T> ALIAS_DOUBLE_RET absOfDouble(ISharedSubOperandsFunction_Double_Alias<MODEL, RESULT> sub) {
+	public final ALIAS_DOUBLE_RET absOfDouble(ISharedSubOperandsFunction_Double_Alias<MODEL, RESULT> sub) {
 		return assureAliasFunctions().absOfDouble(sub);
 	}
 
 	@Override
-	public final <T> ALIAS_BIGDECIMAL_RET absOfBigDecimal(ISharedSubOperandsFunction_BigDecimal_Alias<MODEL, RESULT> sub) {
+	public final ALIAS_BIGDECIMAL_RET absOfBigDecimal(ISharedSubOperandsFunction_BigDecimal_Alias<MODEL, RESULT> sub) {
 		return assureAliasFunctions().absOfBigDecimal(sub);
 	}
 
 	@Override
-	public final <T> ALIAS_DOUBLE_RET sqrt(ISupplierByte getter) {
+	public final ALIAS_DOUBLE_RET sqrt(ISupplierByte getter) {
 		return assureAliasFunctions().sqrt(getter);
 	}
 
 	@Override
-	public final <T> ALIAS_DOUBLE_RET sqrt(ISupplierShort getter) {
+	public final ALIAS_DOUBLE_RET sqrt(ISupplierShort getter) {
 		return assureAliasFunctions().sqrt(getter);
 	}
 
 	@Override
-	public final <T> ALIAS_DOUBLE_RET sqrt(ISupplierInteger getter) {
+	public final ALIAS_DOUBLE_RET sqrt(ISupplierInteger getter) {
 		return assureAliasFunctions().sqrt(getter);
 	}
 
 	@Override
-	public final <T> ALIAS_DOUBLE_RET sqrt(ISupplierLong getter) {
+	public final ALIAS_DOUBLE_RET sqrt(ISupplierLong getter) {
 		return assureAliasFunctions().sqrt(getter);
 	}
 
 	@Override
-	public final <T> ALIAS_DOUBLE_RET sqrt(ISupplierBigInteger getter) {
+	public final ALIAS_DOUBLE_RET sqrt(ISupplierBigInteger getter) {
 		return assureAliasFunctions().sqrt(getter);
 	}
 
 	@Override
-	public final <T> ALIAS_DOUBLE_RET sqrt(ISupplierFloat getter) {
+	public final ALIAS_DOUBLE_RET sqrt(ISupplierFloat getter) {
 		return assureAliasFunctions().sqrt(getter);
 	}
 
 	@Override
-	public final <T> ALIAS_DOUBLE_RET sqrt(ISupplierDouble getter) {
+	public final ALIAS_DOUBLE_RET sqrt(ISupplierDouble getter) {
 		return assureAliasFunctions().sqrt(getter);
 	}
 
 	@Override
-	public final <T> ALIAS_DOUBLE_RET sqrt(ISupplierBigDecimal getter) {
+	public final ALIAS_DOUBLE_RET sqrt(ISupplierBigDecimal getter) {
 		return assureAliasFunctions().sqrt(getter);
 	}
 
 	@Override
-	public final <T> ALIAS_DOUBLE_RET sqrtOf(ISharedSubOperandsFunction_Byte_Alias<MODEL, RESULT> sub) {
+	public final ALIAS_DOUBLE_RET sqrtOf(ISharedSubOperandsFunction_Byte_Alias<MODEL, RESULT> sub) {
 		return assureAliasFunctions().sqrtOf(sub);
 	}
 
 	@Override
-	public final <T> ALIAS_DOUBLE_RET sqrtOf(ISharedSubOperandsFunction_Short_Alias<MODEL, RESULT> sub) {
+	public final ALIAS_DOUBLE_RET sqrtOf(ISharedSubOperandsFunction_Short_Alias<MODEL, RESULT> sub) {
 		return assureAliasFunctions().sqrtOf(sub);
 	}
 
 	@Override
-	public final <T> ALIAS_DOUBLE_RET sqrtOf(ISharedSubOperandsFunction_Integer_Alias<MODEL, RESULT> sub) {
+	public final ALIAS_DOUBLE_RET sqrtOf(ISharedSubOperandsFunction_Integer_Alias<MODEL, RESULT> sub) {
 		return assureAliasFunctions().sqrtOf(sub);
 	}
 
 	@Override
-	public final <T> ALIAS_DOUBLE_RET sqrtOf(ISharedSubOperandsFunction_BigInteger_Alias<MODEL, RESULT> sub) {
+	public final ALIAS_DOUBLE_RET sqrtOf(ISharedSubOperandsFunction_BigInteger_Alias<MODEL, RESULT> sub) {
 		return assureAliasFunctions().sqrtOf(sub);
 	}
 
 	@Override
-	public final <T> ALIAS_DOUBLE_RET sqrtOf(ISharedSubOperandsFunction_Long_Alias<MODEL, RESULT> sub) {
+	public final ALIAS_DOUBLE_RET sqrtOf(ISharedSubOperandsFunction_Long_Alias<MODEL, RESULT> sub) {
 		return assureAliasFunctions().sqrtOf(sub);
 	}
 
 	@Override
-	public final <T> ALIAS_DOUBLE_RET sqrtOf(ISharedSubOperandsFunction_Float_Alias<MODEL, RESULT> sub) {
+	public final ALIAS_DOUBLE_RET sqrtOf(ISharedSubOperandsFunction_Float_Alias<MODEL, RESULT> sub) {
 		return assureAliasFunctions().sqrtOf(sub);
 	}
 
 	@Override
-	public final <T> ALIAS_DOUBLE_RET sqrtOf(ISharedSubOperandsFunction_Double_Alias<MODEL, RESULT> sub) {
+	public final ALIAS_DOUBLE_RET sqrtOf(ISharedSubOperandsFunction_Double_Alias<MODEL, RESULT> sub) {
 		return assureAliasFunctions().sqrtOf(sub);
 	}
 
 	@Override
-	public final <T> ALIAS_DOUBLE_RET sqrtOf(ISharedSubOperandsFunction_BigDecimal_Alias<MODEL, RESULT> sub) {
+	public final ALIAS_DOUBLE_RET sqrtOf(ISharedSubOperandsFunction_BigDecimal_Alias<MODEL, RESULT> sub) {
 		return assureAliasFunctions().sqrtOf(sub);
 	}
 
 	@Override
-	public final <T> ALIAS_INTEGER_RET mod(ISupplierInteger getter, int value) {
+	public final ALIAS_INTEGER_RET mod(ISupplierInteger getter, int value) {
 		return assureAliasFunctions().mod(getter, value);
 	}
 
 	@Override
-	public final <T> ALIAS_INTEGER_RET modOf(ISharedSubOperandsFunction_Integer_Alias<MODEL, RESULT> sub, int value) {
+	public final ALIAS_INTEGER_RET modOf(ISharedSubOperandsFunction_Integer_Alias<MODEL, RESULT> sub, int value) {
 		return assureAliasFunctions().modOf(sub, value);
 	}
 	
@@ -1358,47 +1358,47 @@ abstract class Collector_ExpressionList<
 	//*************** String forwarding functions ***************
 	
 	@Override
-	public final <T> ALIAS_STRING_RET lower(ISupplierString getter) {
+	public final ALIAS_STRING_RET lower(ISupplierString getter) {
 		return assureAliasFunctions().lower(getter);
 	}
 
 	@Override
-	public final <T> ALIAS_STRING_RET upper(ISupplierString getter) {
+	public final ALIAS_STRING_RET upper(ISupplierString getter) {
 		return assureAliasFunctions().upper(getter);
 	}
 
 	@Override
-	public final <T> ALIAS_STRING_RET trim(ISupplierString getter) {
+	public final ALIAS_STRING_RET trim(ISupplierString getter) {
 		return assureAliasFunctions().trim(getter);
 	}
 
 	@Override
-	public final <T> ALIAS_STRING_RET substring(ISupplierString getter, int start, int length) {
+	public final ALIAS_STRING_RET substring(ISupplierString getter, int start, int length) {
 		return assureAliasFunctions().substring(getter, start, length);
 	}
 
 	@Override
-	public final <T> ALIAS_STRING_RET concat(ISupplierString getter1, ISupplierString getter2) {
+	public final ALIAS_STRING_RET concat(ISupplierString getter1, ISupplierString getter2) {
 		return assureAliasFunctions().concat(getter1, getter2);
 	}
 
 	@Override
-	public final <T> ALIAS_STRING_RET concat(ISupplierString getter, String value) {
+	public final ALIAS_STRING_RET concat(ISupplierString getter, String value) {
 		return assureAliasFunctions().concat(getter, value);
 	}
 
 	@Override
-	public final <T> ALIAS_STRING_RET concat(String value, ISupplierString getter) {
+	public final ALIAS_STRING_RET concat(String value, ISupplierString getter) {
 		return assureAliasFunctions().concat(value, getter);
 	}
 
 	@Override
-	public final <T> ALIAS_STRING_RET concat(ISupplierString getter, Param<String> param) {
+	public final ALIAS_STRING_RET concat(ISupplierString getter, Param<String> param) {
 		return assureAliasFunctions().concat(getter, param);
 	}
 
 	@Override
-	public final <T> ALIAS_STRING_RET concat(Param<String> param, ISupplierString getter) {
+	public final ALIAS_STRING_RET concat(Param<String> param, ISupplierString getter) {
 		return assureAliasFunctions().concat(param, getter);
 	}
 }
