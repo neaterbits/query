@@ -9,6 +9,11 @@ public class NameLength {
 
 	}
 	
+	public NameLength(String name) {
+		super();
+		this.name = name;
+	}
+
 	NameLength(String name, Integer  length) {
 		super();
 		this.name = name;

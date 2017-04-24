@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.function.Consumer;
 import java.util.function.Function;
+import java.util.function.Supplier;
 
 final class Short_Collector_Multi_Any_Any<MODEL, RESULT>
 	extends Short_Collector_Any_Any_Any<
@@ -243,36 +244,27 @@ final class Short_Collector_Multi_Any_Any<MODEL, RESULT>
 								
 		>
 			map() {
-		/*
-		final ISharedCollector_Functions_Callback_Named<MODEL, RESULT, IShortResult_Mapped_Multi_Named<MODEL, RESULT>> namedCallback
-		
-				= MapFunctionUtil.multiNamedCallback(
-					() -> {
-						final Short_Collector_MultiResult_Decided_Named new Short_Collector_MultiResult_Decided_Named<>(
-						select,
-						new CollectedQueryResult_Mapped_Multi(getResultType(), collectionType),
-						getModelCompiler())
-				});
-		
-		
-		
-		final ISharedCollector_Functions_Callback_Alias<MODEL, RESULT, IShortResult_Mapped_Multi_Alias<MODEL, RESULT>> aliasCallback
-			= MapFunctionUtil.multiAliasCallback(
-				() -> {
-					
-					
-					final Short_Collector_MultiResult_Decided_Alias<> ret = new Short_Collector_MultiResult_Decided_Alias<>(
-								select,
-								new CollectedQueryResult_Mapped_Multi(getResultType(), collectionType),
-								getModelCompiler()));
-		
-					return ret;
-				});
 	
-		return new SharedMapFunctions_Initial<>(namedCallback, aliasCallback, this);
-		*/
+		final Supplier<IMappingCollector<MODEL, RESULT>>
+
+		s1 = () -> {
+			return new Short_Collector_Multi_Mapped_Named_Initial<MODEL, RESULT>(
+					getQueryCollector(),
+					new CollectedQueryResult_Mapped_Multi(getResultType(), collectionType)
+				);
+		};
+
+		final Supplier<IMappingCollector<MODEL, RESULT>>
+				
+		s2 = () -> {
+			return new Short_Collector_Multi_Mapped_Alias<>(
+						getQueryCollector(),
+						new CollectedQueryResult_Mapped_Multi(getResultType(), collectionType)
+				);
+		};
 		
-		throw new UnsupportedOperationException("TODO");
+		
+		return new ResultMapper_ExpressionList_Initial_Undecided<>(s1, s2);
 	}
 
 

@@ -2,6 +2,7 @@ package com.neaterbits.query.sql.dsl.api._short;
 
 import java.math.BigDecimal;
 
+import org.eclipse.persistence.internal.sessions.DirectCollectionChangeRecord.NULL;
 import org.junit.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -124,19 +125,36 @@ public class ShortFunctionTest extends BaseJPATest {
 
 	@Test
 	public void testThatLowerReturnsOtherString_Named() {
-		final Company acme1 = new Company(1, "Acme", new BigDecimal("49"));
-		final Company acme2 = new Company(2, "Acme Inc.", new BigDecimal("121"));
+		final Company acme1 = new Company(1, " Acme", new BigDecimal("49"));
+		final Company acme2 = new Company(2, " Acme Inc.", new BigDecimal("121"));
 
 		final MultiBuilt<NameLength> acmeQuery = select
 				.list(NameLength.class)
-				.map().lower().length(Company::getName).to(NameLength::setLength)
+				.map().lower().trim(Company::getName).to(NameLength::setName)
 				.build();
 
 		
 		store(acme1, acme2)
-		.checkListUnordered(acmeQuery, new NameLength("Acme", 2.0), new NameLength("Acme Inc.", 3.0));
+		.checkListUnordered(acmeQuery, new NameLength("acme"), new NameLength("acme inc."));
 	}
 	
+	@Test
+	public void testThatLowerReturnsOtherString_Alias() {
+		final Company acme1 = new Company(1, " Acme", new BigDecimal("49"));
+		final Company acme2 = new Company(2, " Acme Inc.", new BigDecimal("121"));
+
+		final Company c = select.alias(Company.class);
+		
+		final MultiBuilt<NameLength> acmeQuery = select
+				.list(NameLength.class)
+				.map().lower().trim(c::getName).to(NameLength::setName)
+				.build();
+
+		
+		store(acme1, acme2)
+		.checkListUnordered(acmeQuery, new NameLength("acme"), new NameLength("acme inc."));
+	}
+
 	@Test
 	public void testThatStringMethodDoesNotReturnLengthFunction_Named() {
 		verifyIsCompilable(
