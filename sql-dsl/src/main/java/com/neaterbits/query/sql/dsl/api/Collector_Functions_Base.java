@@ -823,7 +823,7 @@ abstract class Collector_Functions_Base<
 
 	@Override
 	public final ALIAS_INTEGER_RET modOf(ISharedSubOperandsFunction_Integer_Alias<MODEL, RESULT> sub, int value) {
-		return addSubNumeric(Function_Arithmetic_Abs.INSTANCE, sub, new ValueExpression(value));
+		return addSubNumeric(Function_Arithmetic_Mod.INSTANCE, sub, new ValueExpression(value));
 	}
 
 	// ********* Aggregate methods *********
