@@ -40,7 +40,7 @@ public final class QueryDataSourceJPANative extends QueryDataSourceJPA {
 		return new PreparedQuery_DB_Complete<QUERY>(this, queryRunner, q, query, distinctParams);
 	}
 
-	private static FunctionVisitor<Object, Object> resultConversionVisitor = new FunctionVisitor<Object, Object>() {
+	private final FunctionVisitor<Object, Object> resultConversionVisitor = new FunctionVisitor<Object, Object>() {
 		
 		@Override
 		public Object onStringUpper(Function_String_Upper function, Object param) {
@@ -106,7 +106,24 @@ public final class QueryDataSourceJPANative extends QueryDataSourceJPA {
 		
 		@Override
 		public Object onAggregate(Function_Aggregate function, Object param) {
-			return param;
+			
+			final Object ret;
+			
+			switch (function.getFunction()) {
+			case AVG:
+				ret = convertAvgAggregateResult(Double.class, param);
+				break;
+				
+			case COUNT:
+				ret = convertCountAggregateResult(Long.class, param);
+				break;
+				
+			default:
+				ret = param;
+				break;
+			}
+			
+			return ret;
 		}
 	};
 	
@@ -373,7 +390,7 @@ public final class QueryDataSourceJPANative extends QueryDataSourceJPA {
 		}
 		*/
 		else {
-			throw new IllegalStateException("Neither Integer nor Long");
+			throw new IllegalStateException("Neither Integer nor Long: " + input.getClass());
 		}
 
 		return ret;

@@ -142,6 +142,7 @@ abstract class PreparedQuery_DB<QUERY> extends PreparedQuery_DS<QueryDataSource_
 			// TODO always return BigDecimal?
 			
 			
+			// TODO: make code here more similar to how conversion for other functions are handled, ie. QueryDataSource.convertFunctionResultBeforeMapping()  
 			if (aggregateFunction == EAggregateFunction.AVG) {
 				ret = getDataSource().convertAvgAggregateResult(aggregateResultType, input);
 			}
