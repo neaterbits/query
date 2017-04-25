@@ -387,7 +387,7 @@ public class ShortFunctionTest extends BaseJPATest {
 				.list(NameLength.class)
 				
 				.map(c::getName).to(NameLength::setName)
-				.map().modOf(b -> b.length(c::getName).plus((short)1), 3).to(NameLength::setLength)
+				.map().length(c::getName).to(NameLength::setLength)
 
 				.build();
 		
