@@ -87,15 +87,14 @@ abstract class PreparedQuery_DB<QUERY> extends PreparedQuery_DS<QueryDataSource_
 
 				case 1:
 					// Just one field
-					q.executeMappingSetter(query, 0, ret, input);
+					executeMappingSetterWithConversion(0, ret, input);
 					break;
 					
 				default:
 					// More than one
 					final Object [] vals = (Object[])input;
 					for (int i = 0; i < vals.length; ++ i) {
-						
-						q.executeMappingSetter(query, i, ret, vals[i]);
+						executeMappingSetterWithConversion(i, ret, vals[i]);
 					}
 					break;
 			}
@@ -147,6 +146,33 @@ abstract class PreparedQuery_DB<QUERY> extends PreparedQuery_DS<QueryDataSource_
 		}
 
 		return ret;
+	}
+	
+	
+	private static final int [] NO_LEVELS = new int [] { 0 };
+	
+	private void executeMappingSetterWithConversion(int mappingIdx, Object instance, Object value ) {
+		
+		// If mapping the return value of a function, we might have to convert the result
+		// TODO: Might figure out this on the outside so does not have to perform these calls upon every setter
+		final ExecutableQueryExpressions expressions = q.getMappingExpressions(query, mappingIdx);
+		final EExpressionType expressionType = expressions.getExpressionType(0, NO_LEVELS);
+		
+		final Object toSet;
+
+		if (expressionType == EExpressionType.FUNCTION) {
+			if (value != null) {
+				toSet = getDataSource().convertFunctionResultBeforeMapping(expressions.getFunction(0, NO_LEVELS), value);
+			}
+			else {
+				toSet = null;
+			}
+		}
+		else {
+			toSet = value;
+		}
+
+		q.executeMappingSetter(query, mappingIdx, instance, toSet);
 	}
 	
 	private List<Object> mapMultiple(@SuppressWarnings("rawtypes") List input) {

@@ -8,6 +8,9 @@ abstract class QueryDataSource_DB extends QueryDataSource_Base<QueryDataSource_D
 
 	abstract <QUERY> Object mapSingleEntity(ExecutableQuery<QUERY> q, QUERY query, Object input);
 	
+	// Eg length() retuns Long but we're expecting Integer
+	abstract Object convertFunctionResultBeforeMapping(FunctionBase function, Object queryResult);
+
 	Object convertAvgAggregateResult(Class<?> aggregateResultType, Object input) {
 		if (!aggregateResultType.equals(input.getClass())) {
 			throw new IllegalStateException("Not of aggregated type " + aggregateResultType.getName() + ": " + input.getClass().getName());

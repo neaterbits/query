@@ -39,7 +39,84 @@ public final class QueryDataSourceJPANative extends QueryDataSourceJPA {
 
 		return new PreparedQuery_DB_Complete<QUERY>(this, queryRunner, q, query, distinctParams);
 	}
+
+	private static FunctionVisitor<Object, Object> resultConversionVisitor = new FunctionVisitor<Object, Object>() {
+		
+		@Override
+		public Object onStringUpper(Function_String_Upper function, Object param) {
+			return param;
+		}
+		
+		@Override
+		public Object onStringTrim(Function_String_Trim function, Object param) {
+			return param;
+		}
+		
+		@Override
+		public Object onStringSubstring(Function_String_Substring function, Object param) {
+			return param;
+		}
+		
+		@Override
+		public Object onStringLower(Function_String_Lower function, Object param) {
+			return param;
+		}
+		
+		@Override
+		public Object onStringLength(Function_String_Length function, Object param) {
+			
+			// Native returns Long on some databases eg HSQLDB
+			final Object ret;
+			if (param instanceof Long) {
+				final Long l = (Long)param;
+				
+				if (l.longValue() > Integer.MAX_VALUE) {
+					throw new IllegalStateException("Casting return of length() from long > Integer.MAX_VALUE: " + l);
+				}
+				
+				ret = l.intValue();
+			}
+			else {
+				// Derby returns Integer
+				ret = param;
+			}
+			
+			return ret;
+		}
+		
+		@Override
+		public Object onStringConcat(Function_String_Concat function, Object param) {
+			return param;
+		}
+		
+		@Override
+		public Object onArithmeticSqrt(Function_Arithmetic_Sqrt function, Object param) {
+			return param;
+		}
+		
+		@Override
+		public Object onArithmeticMod(Function_Arithmetic_Mod function, Object param) {
+			return param;
+		}
+		
+		@Override
+		public Object onArithmeticAbs(Function_Arithmetic_Abs function, Object param) {
+			return param;
+		}
+		
+		@Override
+		public Object onAggregate(Function_Aggregate function, Object param) {
+			return param;
+		}
+	};
 	
+	@Override
+	Object convertFunctionResultBeforeMapping(FunctionBase function, Object queryResult) {
+		
+		// Some functions have other return value types than JPQL when calling native SQL, so must convert
+		return function.visit(resultConversionVisitor, queryResult);
+	}
+
 	
 	@Override
 	final <QUERY> PreparedQuery_DB<QUERY> makeHalfwayPreparedQuery(ExecutableQuery<QUERY> queryAccess, QUERY query,

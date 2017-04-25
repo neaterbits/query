@@ -22,6 +22,12 @@ public final class QueryDataSourceJPQL extends QueryDataSourceJPA {
 		return new PreparedQuery_DB_Halfway<QUERY>(this, queryAccess, query, distinctParams, base, (PreparedQueryConditionsBuilderORM)conditions);
 	}
 	
+	@Override
+	Object convertFunctionResultBeforeMapping(FunctionBase function, Object queryResult) {
+		
+		// We implement JPQL value semantics in API, so just return result
+		return queryResult;
+	}
 
 	@Override
 	<QUERY> PreparedQuery_DB<QUERY> makeCompletePreparedQuery(ExecutableQuery<QUERY> q, QUERY query, QueryParametersDistinct distinctParams, PreparedQueryBuilder sb) {
