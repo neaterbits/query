@@ -19,7 +19,14 @@ public interface ISharedStringFunctions_Initial<
 			ISharedFunctions_String_Named<MODEL, RESULT, NAMED_RET, NAMED_LENGTH_RET, NAMED_STRING_RET>,
 			ISharedFunctions_String_Alias<MODEL, RESULT, ALIAS_RET, ALIAS_LENGTH_RET, ALIAS_STRING_RET>,
 		
-			ISharedFunctions_String_NoParam_Base<MODEL, RESULT,
+				ISharedFunctions_String_NoParam_Base<
+						MODEL,
+						RESULT,
+						ISharedStringFunctions_Initial<
+							MODEL, RESULT,
+							NAMED_RET, ALIAS_RET,
+							NAMED_LENGTH_RET, NAMED_LENGTH_RET, ALIAS_LENGTH_RET, ALIAS_LENGTH_RET>,
+			
 						ISharedStringFunctions_Initial<
 							MODEL, RESULT,
 							NAMED_RET, ALIAS_RET,

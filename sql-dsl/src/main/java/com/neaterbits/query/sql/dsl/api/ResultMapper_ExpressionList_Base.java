@@ -244,7 +244,27 @@ abstract class ResultMapper_ExpressionList_Base<
 				NAMED_DOUBLE_RET
 				
 			>,
-			ISharedFunctions_String_Named<MODEL, RESULT, NAMED_RET, NAMED_LENGTH_RET, NAMED_STRING_RET>
+			ISharedMapFunctions_String_Named<
+				MODEL,
+				RESULT,
+
+				NAMED_RET,
+				
+				NAMED_LENGTH_RET,
+				NAMED_STRING_RET,
+				NAMED_LENGTH_RET,
+				NAMED_STRING_RET
+				>,
+			ISharedMapFunctions_String_Named<
+				MODEL,
+				RESULT,
+				NAMED_RET,
+				
+				NAMED_LENGTH_RET,
+				NAMED_LENGTH_RET,
+				NAMED_LENGTH_RET,
+				NAMED_LENGTH_RET
+				>
 		>
 
 	implements ISharedMapFunctions_Numeric_Named<
@@ -281,7 +301,18 @@ abstract class ResultMapper_ExpressionList_Base<
 				NAMED_BIGDECIMAL_RET,
 				NAMED_DATE_RET
 				
-				>
+				>,
+		ISharedMapFunctions_String_Named<
+			MODEL,
+			RESULT,
+
+			NAMED_RET,
+			
+			NAMED_LENGTH_RET,
+			NAMED_STRING_RET,
+			NAMED_LENGTH_RET,
+			NAMED_STRING_RET
+			>
 		{
 
 		ResultMapper_Named_Functions(ISharedCollector_Functions_Callback<MODEL, RESULT, NAMED_RET> func) {
@@ -386,7 +417,27 @@ abstract class ResultMapper_ExpressionList_Base<
 				ALIAS_DOUBLE_RET
 				
 			>,
-			ISharedFunctions_String_Named<MODEL, RESULT, ALIAS_RET, ALIAS_LENGTH_RET, ALIAS_STRING_RET>
+			ISharedMapFunctions_String_Alias<
+				MODEL,
+				RESULT,
+	
+				ALIAS_RET,
+				
+				ALIAS_LENGTH_RET,
+				ALIAS_STRING_RET,
+				ALIAS_LENGTH_RET,
+				ALIAS_STRING_RET
+			>,
+			ISharedMapFunctions_String_Alias<
+				MODEL,
+				RESULT,
+				ALIAS_RET,
+				
+				ALIAS_LENGTH_RET,
+				ALIAS_LENGTH_RET,
+				ALIAS_LENGTH_RET,
+				ALIAS_LENGTH_RET
+			>
 		>
 	
 	implements ISharedMapFunctions_Numeric_Alias<
@@ -431,7 +482,19 @@ abstract class ResultMapper_ExpressionList_Base<
 				ALIAS_SQLTIME_RET,
 				ALIAS_SQLTIMESTAMP_RET
 				
-				>
+				>,
+				
+		ISharedMapFunctions_String_Alias<
+				MODEL,
+				RESULT,
+
+				ALIAS_RET,
+				
+				ALIAS_LENGTH_RET,
+				ALIAS_STRING_RET,
+				ALIAS_LENGTH_RET,
+				ALIAS_STRING_RET
+				>				
 		{
 	
 		ResultMapper_Alias_Functions(ISharedCollector_Functions_Callback<MODEL, RESULT, ALIAS_RET> func) {

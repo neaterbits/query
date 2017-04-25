@@ -41,7 +41,8 @@ abstract class Collector_NestedFunctions_Named<
 				NO_PARAM_ARITHMETIC_SAME_TYPE_RET,
 				NO_PARAM_ARITHMETIC_DOUBLE_RET,
 				
-				NO_PARAM_STRING_RET
+				NO_PARAM_STRING_SAME_TYPE_RET,
+				NO_PARAM_STRING_LENGTH_RET
 				
 				>
 
@@ -100,7 +101,7 @@ abstract class Collector_NestedFunctions_Named<
 	
 	
 			ISharedFunctions_Arithmetic_NoParam_Base<MODEL, RESULT, NO_PARAM_ARITHMETIC_SAME_TYPE_RET, NO_PARAM_ARITHMETIC_DOUBLE_RET>,
-			ISharedFunctions_String_NoParam_Base<MODEL, RESULT, NO_PARAM_STRING_RET>
+			ISharedFunctions_String_NoParam_Base<MODEL, RESULT, NO_PARAM_STRING_LENGTH_RET, NO_PARAM_STRING_SAME_TYPE_RET>
 
 {
 		
@@ -120,7 +121,7 @@ abstract class Collector_NestedFunctions_Named<
 			MODEL, RESULT, RET,
 			?, ?, ?,
 			?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 
-			?, ?, ?
+			?, ?, ?, ?
 		> toCopy) {
 
 		super(toCopy);
@@ -183,26 +184,34 @@ abstract class Collector_NestedFunctions_Named<
 
 	@Override
 	@SuppressWarnings("unchecked")
-	public final NO_PARAM_STRING_RET lower() {
+	public final NO_PARAM_STRING_SAME_TYPE_RET lower() {
 		addNoParamFunctionToList(Function_String_Lower.INSTANCE);
 		
-		return (NO_PARAM_STRING_RET)getNamedNoParamNext();
+		return (NO_PARAM_STRING_SAME_TYPE_RET)getNamedNoParamNext();
 	}
 
 	@Override
 	@SuppressWarnings("unchecked")
-	public final NO_PARAM_STRING_RET upper() {
+	public final NO_PARAM_STRING_SAME_TYPE_RET upper() {
 		addNoParamFunctionToList(Function_String_Upper.INSTANCE);
 
-		return (NO_PARAM_STRING_RET)getNamedNoParamNext();
+		return (NO_PARAM_STRING_SAME_TYPE_RET)getNamedNoParamNext();
 	}
 
 	@Override
 	@SuppressWarnings("unchecked")
-	public final NO_PARAM_STRING_RET trim() {
+	public final NO_PARAM_STRING_SAME_TYPE_RET trim() {
 		addNoParamFunctionToList(Function_String_Trim.INSTANCE);
 
-		return (NO_PARAM_STRING_RET)getNamedNoParamNext();
+		return (NO_PARAM_STRING_SAME_TYPE_RET)getNamedNoParamNext();
+	}
+
+	@Override
+	@SuppressWarnings("unchecked")
+	public final NO_PARAM_STRING_LENGTH_RET length() {
+		addNoParamFunctionToList(Function_String_Length.INSTANCE);
+
+		return (NO_PARAM_STRING_LENGTH_RET)getNamedNoParamNext();
 	}
 
 	@Override

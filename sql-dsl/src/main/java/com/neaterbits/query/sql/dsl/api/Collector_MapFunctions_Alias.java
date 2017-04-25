@@ -59,6 +59,7 @@ final class Collector_MapFunctions_Alias<
 		
 		Void,
 		Void,
+		Void,
 		Void> 
 	
 	

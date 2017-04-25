@@ -2,7 +2,6 @@ package com.neaterbits.query.sql.dsl.api._short;
 
 import java.math.BigDecimal;
 
-import org.eclipse.persistence.internal.sessions.DirectCollectionChangeRecord.NULL;
 import org.junit.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -153,6 +152,61 @@ public class ShortFunctionTest extends BaseJPATest {
 		
 		store(acme1, acme2)
 		.checkListUnordered(acmeQuery, new NameLength("acme"), new NameLength("acme inc."));
+	}
+
+	@Test
+	public void testThatLengthReturnsOtherString_Named() {
+		final Company acme1 = new Company(1, " Acme", new BigDecimal("49"));
+		final Company acme2 = new Company(2, " Acme Inc.", new BigDecimal("121"));
+
+		final MultiBuilt<NameLength> acmeQuery = select
+				.list(NameLength.class)
+				.map(Company::getName).to(NameLength::setName)
+				.map().length().trim(Company::getName).to(NameLength::setLength)
+				.build();
+
+		
+		store(acme1, acme2)
+		.checkListUnordered(acmeQuery, new NameLength(" Acme", 4), new NameLength(" Acme Inc.", 9));
+	}
+
+	@Test
+	public void testThatLengthReturnsOtherString_Alias() {
+		final Company acme1 = new Company(1, " Acme", new BigDecimal("49"));
+		final Company acme2 = new Company(2, " Acme Inc.", new BigDecimal("121"));
+
+		final Company c= select.alias(Company.class);
+		
+		final MultiBuilt<NameLength> acmeQuery = select
+				.list(NameLength.class)
+				.map(c::getName).to(NameLength::setName)
+				.map().length().trim(c::getName).to(NameLength::setLength)
+				.build();
+
+		
+		store(acme1, acme2)
+		.checkListUnordered(acmeQuery, new NameLength(" Acme", 4), new NameLength(" Acme Inc.", 9));
+	}
+	
+	@Test
+	public void testThatCanDoAbsOfLength_Named() {
+		assertThat(true).isEqualTo(false);
+		/*
+		final Company acme1 = new Company(1, " Acme", new BigDecimal("49"));
+		final Company acme2 = new Company(2, " Acme Inc.", new BigDecimal("121"));
+
+		final MultiBuilt<NameLength> acmeQuery = select
+				.list(NameLength.class)
+				.map().abs().length()
+				.map(Company::getName).to(NameLength::setName)
+				.map().abs().length()
+				.map().length().trim(Company::getName).to(NameLength::setLength)
+				.build();
+
+		
+		store(acme1, acme2)
+		.checkListUnordered(acmeQuery, new NameLength("acme"), new NameLength("acme inc."));
+		*/
 	}
 
 	@Test

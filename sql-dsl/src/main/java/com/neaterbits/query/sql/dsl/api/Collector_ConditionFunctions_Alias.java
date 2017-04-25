@@ -53,6 +53,7 @@ class Collector_ConditionFunctions_Alias<
 			
 			ISharedFunction_Next<MODEL, RESULT, RET>,
 			ISharedFunction_Next<MODEL, RESULT, RET>,
+			ISharedFunction_Next<MODEL, RESULT, RET>,
 			ISharedFunction_Next<MODEL, RESULT, RET>> 
 
 	//implements ISharedFunctions_Initial_And_NoParam_Alias<MODEL, RESULT, RET, SHORT_RET, INTEGER_RET, LONG_RET, DOUBLE_RET, BIGDECIMAL_RET, STRING_RET> 

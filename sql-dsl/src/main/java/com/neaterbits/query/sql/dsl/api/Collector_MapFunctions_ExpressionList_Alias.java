@@ -100,20 +100,62 @@ final class Collector_MapFunctions_ExpressionList_Alias<
 			> sqrt() {
 		return super.sqrtAliasNoParam();
 	}
-	
+
 	@Override
-	public NO_PARAM_STRING_RET lower() {
-		throw new UnsupportedOperationException("TODO");
-	}
-	
-	@Override
-	public NO_PARAM_STRING_RET upper() {
-		throw new UnsupportedOperationException("TODO");
-	}
-	
-	@Override
-	public NO_PARAM_STRING_RET trim() {
-		throw new UnsupportedOperationException("TODO");
+	public ISharedMapFunctions_String_Alias<
+			MODEL, 
+			RESULT,
+			RET, 
+			LENGTH_RET,
+			STRING_RET,
+			NO_PARAM_LENGTH_RET,
+			NO_PARAM_STRING_RET
+		> lower() {
+
+		return super.lowerAliasNoParam();
 	}
 
+	@Override
+	public ISharedMapFunctions_String_Alias<
+			MODEL,
+			RESULT,
+			RET, 
+			LENGTH_RET,
+			STRING_RET,
+			NO_PARAM_LENGTH_RET,
+			NO_PARAM_STRING_RET
+		> upper() {
+			
+		return super.upperAliasNoParam();
+	}
+
+	@Override
+	public ISharedMapFunctions_String_Alias<
+			MODEL,
+			RESULT,
+			RET, 
+			LENGTH_RET,
+			STRING_RET,
+			NO_PARAM_LENGTH_RET,
+			NO_PARAM_STRING_RET
+		> trim() {
+			
+		return super.trimAliasNoParam();
+	}
+
+	@Override
+	public ISharedMapFunctions_String_Alias<
+			MODEL,
+			RESULT,
+			RET,
+			LENGTH_RET,
+			LENGTH_RET, 
+			NO_PARAM_LENGTH_RET, 
+			NO_PARAM_LENGTH_RET
+		> length() {
+			
+		return super.lengthAliasNoParam();
+	}
+
+			
 }

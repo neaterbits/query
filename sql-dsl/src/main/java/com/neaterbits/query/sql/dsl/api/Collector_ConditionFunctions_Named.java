@@ -50,6 +50,7 @@ final class Collector_ConditionFunctions_Named<
 			
 			ISharedFunction_Next<MODEL, RESULT, RET>,
 			ISharedFunction_Next<MODEL, RESULT, RET>,
+			ISharedFunction_Next<MODEL, RESULT, RET>,
 			ISharedFunction_Next<MODEL, RESULT, RET>
 			>
 

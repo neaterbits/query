@@ -2,7 +2,7 @@ package com.neaterbits.query.sql.dsl.api;
 
 import java.util.function.Supplier;
 
-class ResultMapper_ExpressionList_Initial_Undecided<
+final class ResultMapper_ExpressionList_Initial_Undecided<
 		MODEL,
 		RESULT,
 
@@ -957,4 +957,24 @@ class ResultMapper_ExpressionList_Initial_Undecided<
 
 		return (ISharedNumericFunctions_Initial)this;
 	}
+
+
+
+	@Override
+	@SuppressWarnings({"unchecked", "rawtypes"})
+	public ISharedStringFunctions_Initial<
+			MODEL,
+			RESULT,
+			NAMED_RET,
+			ALIAS_RET,
+			NAMED_LENGTH_RET,
+			NAMED_LENGTH_RET, 
+			ALIAS_LENGTH_RET,
+			ALIAS_LENGTH_RET
+			
+			> length() {
+		return (ISharedStringFunctions_Initial)this;
+	}
+				
+				
 }

@@ -30,7 +30,8 @@ abstract class Collector_NestedFunctions_Alias<
 		NO_PARAM_ARITHMETIC_SAME_TYPE_RET,
 		NO_PARAM_ARITHMETIC_DOUBLE_RET,
 		
-		NO_PARAM_STRING_RET
+		NO_PARAM_STRING_SAMETYPE_RET,
+		NO_PARAM_STRING_LENGTH_RET
 	
 		>
 
@@ -101,8 +102,13 @@ abstract class Collector_NestedFunctions_Alias<
 					*/
 		// ISharedFunctions_Arithmetic_NoParam_Alias<MODEL, RESULT, RET, SHORT_RET, INTEGER_RET, LONG_RET, DOUBLE_RET, BIGDECIMAL_RET>
 					
-		ISharedFunctions_Arithmetic_NoParam_Base<MODEL, RESULT, NO_PARAM_ARITHMETIC_SAME_TYPE_RET, NO_PARAM_ARITHMETIC_DOUBLE_RET>,
-		ISharedFunctions_String_NoParam_Base<MODEL, RESULT, NO_PARAM_STRING_RET>
+		ISharedFunctions_Arithmetic_NoParam_Base<
+				MODEL, 
+				RESULT,
+				NO_PARAM_ARITHMETIC_SAME_TYPE_RET, NO_PARAM_ARITHMETIC_DOUBLE_RET>,
+				
+		ISharedFunctions_String_NoParam_Base<MODEL, RESULT, NO_PARAM_STRING_LENGTH_RET, NO_PARAM_STRING_SAMETYPE_RET>
+				
 
 {
 
@@ -122,7 +128,7 @@ abstract class Collector_NestedFunctions_Alias<
 					MODEL, RESULT, RET,
 					?, ?, ?,
 					?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,
-					?, ?, ?> toCopy) {
+					?, ?, ?, ?> toCopy) {
 		super(toCopy);
 
 		this.func = toCopy.func;
@@ -187,18 +193,33 @@ abstract class Collector_NestedFunctions_Alias<
 
 	@Override
 	@SuppressWarnings("unchecked")
-	public final NO_PARAM_STRING_RET lower() {
-		return (NO_PARAM_STRING_RET)getAliasNoParamNext();
+	public final NO_PARAM_STRING_SAMETYPE_RET lower() {
+		return (NO_PARAM_STRING_SAMETYPE_RET)getAliasNoParamNext();
 	}
 	
 	@Override
 	@SuppressWarnings("unchecked")
-	public final NO_PARAM_STRING_RET upper() {
+	public final NO_PARAM_STRING_SAMETYPE_RET upper() {
 		addNoParamFunctionToList(Function_String_Upper.INSTANCE);
 
-		return (NO_PARAM_STRING_RET)getAliasNoParamNext();
+		return (NO_PARAM_STRING_SAMETYPE_RET)getAliasNoParamNext();
 	}
 
+	@Override
+	@SuppressWarnings("unchecked")
+	public final NO_PARAM_STRING_SAMETYPE_RET trim() {
+		addNoParamFunctionToList(Function_String_Trim.INSTANCE);
+
+		return (NO_PARAM_STRING_SAMETYPE_RET)getAliasNoParamNext();
+	}
+
+	@Override
+	@SuppressWarnings("unchecked")
+	public final NO_PARAM_STRING_LENGTH_RET length() {
+		addNoParamFunctionToList(Function_String_Length.INSTANCE);
+
+		return (NO_PARAM_STRING_LENGTH_RET)getAliasNoParamNext();
+	}
 
 	@Override
 	@SuppressWarnings("unchecked")
@@ -226,11 +247,4 @@ abstract class Collector_NestedFunctions_Alias<
 	}
 	
 
-	@Override
-	@SuppressWarnings("unchecked")
-	public final NO_PARAM_STRING_RET trim() {
-		addNoParamFunctionToList(Function_String_Trim.INSTANCE);
-
-		return (NO_PARAM_STRING_RET)getAliasNoParamNext();
-	}
 }

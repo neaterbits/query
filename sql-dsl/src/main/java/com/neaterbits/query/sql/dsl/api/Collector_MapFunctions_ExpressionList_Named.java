@@ -99,20 +99,26 @@ final class Collector_MapFunctions_ExpressionList_Named<
 				
 		return super.sqrtNamedNoParam();
 	}
-	
+
+			
 	@Override
-	public NO_PARAM_STRING_RET lower() {
-		throw new UnsupportedOperationException("TODO");
+	public ISharedMapFunctions_String_Named<MODEL, RESULT, RET, LENGTH_RET, STRING_RET, NO_PARAM_LENGTH_RET, NO_PARAM_STRING_RET> lower() {
+		return super.lowerNamedNoParam();
 	}
 
 	@Override
-	public NO_PARAM_STRING_RET upper() {
-		throw new UnsupportedOperationException("TODO");
+	public ISharedMapFunctions_String_Named<MODEL, RESULT, RET, LENGTH_RET, STRING_RET, NO_PARAM_LENGTH_RET, NO_PARAM_STRING_RET> upper() {
+		return super.upperNamedNoParam();
 	}
 
 	@Override
-	public NO_PARAM_STRING_RET trim() {
-		throw new UnsupportedOperationException("TODO");
+	public ISharedMapFunctions_String_Named<MODEL, RESULT, RET, LENGTH_RET, STRING_RET, NO_PARAM_LENGTH_RET, NO_PARAM_STRING_RET> trim() {
+		return super.trimNamedNoParam();
+	}
+
+	@Override
+	public ISharedMapFunctions_String_Named<MODEL, RESULT, RET, LENGTH_RET, LENGTH_RET, NO_PARAM_LENGTH_RET, NO_PARAM_LENGTH_RET> length() {
+		return super.lengthNamedNoParam();
 	}
 }
 

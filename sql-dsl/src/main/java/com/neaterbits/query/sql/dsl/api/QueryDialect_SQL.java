@@ -179,7 +179,6 @@ abstract class QueryDialect_SQL extends QueryDialect_Base {
 			return "length";
 		}
 
-
 		@Override
 		public String onStringLower(Function_String_Lower function, Void param) {
 			return "lower";

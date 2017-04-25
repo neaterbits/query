@@ -207,6 +207,26 @@ abstract class Collector_ExpressionList<
 	}
 
 	@SuppressWarnings("unchecked")
+	final <CLAUSE> CLAUSE lowerNamedNoParam() {
+		return (CLAUSE)assureNamedFunctions().lower();
+	}
+
+	@SuppressWarnings("unchecked")
+	final <CLAUSE> CLAUSE upperNamedNoParam() {
+		return (CLAUSE)assureNamedFunctions().upper();
+	}
+	
+	@SuppressWarnings("unchecked")
+	final <CLAUSE> CLAUSE trimNamedNoParam() {
+		return (CLAUSE)assureNamedFunctions().trim();
+	}
+
+	@SuppressWarnings("unchecked")
+	final <CLAUSE> CLAUSE lengthNamedNoParam() {
+		return (CLAUSE)assureNamedFunctions().length();
+	}
+
+	@SuppressWarnings("unchecked")
 	final <CLAUSE> CLAUSE absAliasNoParam() {
 		return (CLAUSE)assureAliasFunctions().abs();
 	}
@@ -214,6 +234,26 @@ abstract class Collector_ExpressionList<
 	@SuppressWarnings("unchecked")
 	final <CLAUSE> CLAUSE sqrtAliasNoParam() {
 		return (CLAUSE)assureAliasFunctions().sqrt();
+	}
+
+	@SuppressWarnings("unchecked")
+	final <CLAUSE> CLAUSE lowerAliasNoParam() {
+		return (CLAUSE)assureAliasFunctions().lower();
+	}
+
+	@SuppressWarnings("unchecked")
+	final <CLAUSE> CLAUSE upperAliasNoParam() {
+		return (CLAUSE)assureAliasFunctions().upper();
+	}
+	
+	@SuppressWarnings("unchecked")
+	final <CLAUSE> CLAUSE trimAliasNoParam() {
+		return (CLAUSE)assureAliasFunctions().trim();
+	}
+
+	@SuppressWarnings("unchecked")
+	final <CLAUSE> CLAUSE lengthAliasNoParam() {
+		return (CLAUSE)assureAliasFunctions().length();
 	}
 	
 	@Override
@@ -323,7 +363,9 @@ abstract class Collector_ExpressionList<
 		NO_PARAM_ARITHMETIC_SAME_TYPE_RET,
 		NO_PARAM_ARITHMETIC_DOUBLE_RET,
 		
-		NO_PARAM_STRING_RET>
+		NO_PARAM_STRING_SAME_TYPE_RET,
+		NO_PARAM_STRING_LENGTH_RET
+		>
 	
 	
 		extends Collector_NestedFunctions_Named<
@@ -334,7 +376,8 @@ abstract class Collector_ExpressionList<
 					NO_PARAM_ARITHMETIC_SAME_TYPE_RET,
 					NO_PARAM_ARITHMETIC_DOUBLE_RET,
 					
-					NO_PARAM_STRING_RET
+					NO_PARAM_STRING_SAME_TYPE_RET,
+					NO_PARAM_STRING_LENGTH_RET
 					> 
 	
 		implements ISharedFunction_Next<MODEL, RESULT, NAMED_RET>
@@ -360,7 +403,9 @@ abstract class Collector_ExpressionList<
 		NO_PARAM_ARITHMETIC_SAME_TYPE_RET,
 		NO_PARAM_ARITHMETIC_DOUBLE_RET,
 		
-		NO_PARAM_STRING_RET>
+		NO_PARAM_STRING_SAME_TYPE_RET,
+		NO_PARAM_STRING_LENGTH_RET
+		>
 	
 		extends Collector_NestedFunctions_Alias<
 					MODEL, RESULT, ALIAS_RET,
@@ -370,7 +415,8 @@ abstract class Collector_ExpressionList<
 					NO_PARAM_ARITHMETIC_SAME_TYPE_RET,
 					NO_PARAM_ARITHMETIC_DOUBLE_RET,
 					
-					NO_PARAM_STRING_RET
+					NO_PARAM_STRING_SAME_TYPE_RET,
+					NO_PARAM_STRING_LENGTH_RET
 					> 
 	
 		implements ISharedFunction_Next<MODEL, RESULT, ALIAS_RET> {
@@ -379,7 +425,7 @@ abstract class Collector_ExpressionList<
 								MODEL, RESULT, ALIAS_RET,
 								?, ?, ?,
 								?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,
-								?, ?, ?> toCopy) {
+								?, ?, ?, ?> toCopy) {
 				super(toCopy);
 			}
 		
@@ -431,7 +477,7 @@ abstract class Collector_ExpressionList<
 	
 	//*************** Arithmetic forwarding functions ***************
 
-	private NamedFunctions<?, ?, ?> assureNamedFunctions() {
+	private NamedFunctions<?, ?, ?, ?> assureNamedFunctions() {
 		
 		
 		setNamed();
@@ -461,7 +507,7 @@ abstract class Collector_ExpressionList<
 		}
 
 		@SuppressWarnings("unchecked")
-		final NamedFunctions<?, ?, ?> ret = this.named;
+		final NamedFunctions<?, ?, ?, ?> ret = this.named;
 		
 		return ret;
 	}
@@ -504,7 +550,7 @@ abstract class Collector_ExpressionList<
 	}
 	
 
-	private AliasFunctions<?, ?, ?> assureAliasFunctions() {
+	private AliasFunctions<?, ?, ?, ?> assureAliasFunctions() {
 		
 		setAliased();
 		
@@ -533,7 +579,7 @@ abstract class Collector_ExpressionList<
 		}
 		
 		@SuppressWarnings("unchecked")
-		final AliasFunctions<?, ?, ?> ret = this.alias;
+		final AliasFunctions<?, ?, ?, ?> ret = this.alias;
 
 		return ret;
 	}

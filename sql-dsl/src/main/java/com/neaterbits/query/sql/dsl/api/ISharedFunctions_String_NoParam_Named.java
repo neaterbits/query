@@ -14,6 +14,7 @@ public interface ISharedFunctions_String_NoParam_Named<
 		extends ISharedFunctions_String_NoParam_Base<
 				MODEL,
 				RESULT,
+				ISharedFunctions_String_Named<MODEL, RESULT, RET, LENGTH_CLAUSE, LENGTH_CLAUSE>,
 				ISharedFunctions_String_Named<MODEL, RESULT, RET, LENGTH_CLAUSE, STRING_CLAUSE>
 		> {
 
