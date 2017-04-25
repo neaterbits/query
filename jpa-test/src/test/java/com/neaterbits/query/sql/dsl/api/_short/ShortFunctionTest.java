@@ -68,7 +68,7 @@ public class ShortFunctionTest extends BaseJPATest {
 	// Test that can call nested function as first entry after map()
 	// this is a problematic case since we have not yet decided whether named or aliased
 	@Test 
-	public void testVerifyNestedInFirstMapQueryWheneNamedOrAliasNotYetDecided() {
+	public void testVerifyNestedInFirstMapQueryWhenNamedOrAliasNotYetDecided() {
 
 		verifyIsCompilable(
 				b -> b.addImport(NameLength.class).addImport(Company.class),
@@ -187,26 +187,68 @@ public class ShortFunctionTest extends BaseJPATest {
 		store(acme1, acme2)
 		.checkListUnordered(acmeQuery, new NameLength(" Acme", 4), new NameLength(" Acme Inc.", 9));
 	}
-	
+
 	@Test
 	public void testThatCanDoAbsOfLength_Named() {
-		assertThat(true).isEqualTo(false);
-		/*
-		final Company acme1 = new Company(1, " Acme", new BigDecimal("49"));
-		final Company acme2 = new Company(2, " Acme Inc.", new BigDecimal("121"));
+		final Company acme1 = new Company(1, "Acme", new BigDecimal("49"));
+		final Company acme2 = new Company(2, "Acme Inc.", new BigDecimal("121"));
 
-		final MultiBuilt<NameLength> acmeQuery = select
-				.list(NameLength.class)
-				.map().abs().length()
+		final MultiBuilt<NameLength> acmeQuery = select.list(NameLength.class)
 				.map(Company::getName).to(NameLength::setName)
-				.map().abs().length()
-				.map().length().trim(Company::getName).to(NameLength::setLength)
+				.map().abs().length(Company::getName).to(NameLength::setLength)
 				.build();
 
 		
 		store(acme1, acme2)
-		.checkListUnordered(acmeQuery, new NameLength("acme"), new NameLength("acme inc."));
-		*/
+		.checkListUnordered(acmeQuery, new NameLength("Acme", 4), new NameLength("Acme Inc.", 9));
+	}
+	
+	@Test
+	public void testThatCanDoAbsOfLength_Alias() {
+		final Company acme1 = new Company(1, "Acme", new BigDecimal("49"));
+		final Company acme2 = new Company(2, "Acme Inc.", new BigDecimal("121"));
+
+		final MultiBuilt<NameLength> acmeQuery = select.list(NameLength.class)
+				.map(Company::getName).to(NameLength::setName)
+				.map().abs().length(Company::getName).to(NameLength::setLength)
+				.build();
+
+		
+		store(acme1, acme2)
+		.checkListUnordered(acmeQuery, new NameLength("Acme", 4), new NameLength("Acme Inc.", 9));
+	}
+	
+	@Test
+	public void testThatCanDoAbsOfLengthTrim_Named() {
+		final Company acme1 = new Company(1, " Acme", new BigDecimal("49"));
+		final Company acme2 = new Company(2, " Acme Inc.", new BigDecimal("121"));
+
+		final MultiBuilt<NameLength> acmeQuery = select.list(NameLength.class)
+				.map(Company::getName).to(NameLength::setName)
+				.map().abs().length(Company::getName).to(NameLength::setLength)
+				.map().abs().length().trim(Company::getName).to(NameLength::setLength)
+				.build();
+
+		
+		store(acme1, acme2)
+		.checkListUnordered(acmeQuery, new NameLength(" Acme", 4), new NameLength(" Acme Inc.", 9));
+	}
+
+	@Test
+	public void testThatCanDoAbsOfLengthTrim_Alias() {
+		final Company acme1 = new Company(1, " Acme", new BigDecimal("49"));
+		final Company acme2 = new Company(2, " Acme Inc.", new BigDecimal("121"));
+
+		final Company c = select.alias(Company.class);
+		
+		final MultiBuilt<NameLength> acmeQuery = select.list(NameLength.class)
+				.map(c::getName).to(NameLength::setName)
+				.map().abs().length().trim(c::getName).to(NameLength::setLength)
+				.build();
+
+		
+		store(acme1, acme2)
+		.checkListUnordered(acmeQuery, new NameLength(" Acme", 4), new NameLength(" Acme Inc.", 9));
 	}
 
 	@Test
