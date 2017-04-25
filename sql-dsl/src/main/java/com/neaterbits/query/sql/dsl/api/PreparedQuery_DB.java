@@ -36,6 +36,28 @@ abstract class PreparedQuery_DB<QUERY> extends PreparedQuery_DS<QueryDataSource_
 		this.query = query;
 	}
 
+	private static final int [] NO_LEVELS = new int [] { 0 };
+	
+	private FunctionBase [] getMapFunctions() {
+
+		final int numMappings = q.getMappingCount(query);
+
+		final FunctionBase [] ret = new FunctionBase[numMappings];
+
+		for (int mappingIdx = 0; mappingIdx < numMappings; ++ mappingIdx) {
+		
+			final ExecutableQueryExpressions expressions = q.getMappingExpressions(query, mappingIdx);
+			final EExpressionType expressionType = expressions.getExpressionType(0, NO_LEVELS);
+
+			final FunctionBase function = expressionType == EExpressionType.FUNCTION
+					? expressions.getFunction(0, NO_LEVELS)
+					: null;
+
+			ret[mappingIdx] = function;
+		}
+		
+		return ret;
+	}
 	
 	
 	final Object executeWithParams(QueryRunner queryRunner, ParamValueResolver paramCollector) {
@@ -45,16 +67,23 @@ abstract class PreparedQuery_DB<QUERY> extends PreparedQuery_DS<QueryDataSource_
 		Object ret;
 
 		final EQueryResultDimension resultDimension = q.getDimension(query);
+		final EQueryResultGathering resultGathering = q.getGathering(query);
+		
+		// Cache functions for result conversion
+		final FunctionBase [] mapFunctions = resultGathering == EQueryResultGathering.MAPPED
+				? getMapFunctions()
+				: null;
+		
 		
 		switch (resultDimension) {
 		case SINGLE:
 			final Object ormRet = queryRunner.executeForSingleResult();
-			ret = ormRet == null ? null : mapSingle(ormRet);
+			ret = ormRet == null ? null : mapSingle(resultGathering, ormRet, mapFunctions);
 			break;
 
 		case MULTI:
 			final List<?> ormList = queryRunner.executeForMultiResult();
-			ret = mapMultiple(ormList);
+			ret = mapMultiple(resultGathering, ormList, mapFunctions);
 			break;
 
 		default:
@@ -64,7 +93,7 @@ abstract class PreparedQuery_DB<QUERY> extends PreparedQuery_DS<QueryDataSource_
 		return ret;
 	}
 	
-	private Object mapSingle(Object input) {
+	private Object mapSingle(EQueryResultGathering resultGathering, Object input, FunctionBase [] mapFunctions) {
 		
 		if (input == null) {
 			throw new IllegalArgumentException("input == null");
@@ -72,7 +101,6 @@ abstract class PreparedQuery_DB<QUERY> extends PreparedQuery_DS<QueryDataSource_
 
 		final Object ret;
 		
-		final EQueryResultGathering resultGathering = q.getGathering(query);
 		
 		switch (resultGathering) {
 
@@ -87,14 +115,14 @@ abstract class PreparedQuery_DB<QUERY> extends PreparedQuery_DS<QueryDataSource_
 
 				case 1:
 					// Just one field
-					executeMappingSetterWithConversion(0, ret, input);
+					executeMappingSetterWithConversion(0, ret, input, mapFunctions);
 					break;
 					
 				default:
 					// More than one
 					final Object [] vals = (Object[])input;
 					for (int i = 0; i < vals.length; ++ i) {
-						executeMappingSetterWithConversion(i, ret, vals[i]);
+						executeMappingSetterWithConversion(i, ret, vals[i], mapFunctions);
 					}
 					break;
 			}
@@ -149,20 +177,13 @@ abstract class PreparedQuery_DB<QUERY> extends PreparedQuery_DS<QueryDataSource_
 	}
 	
 	
-	private static final int [] NO_LEVELS = new int [] { 0 };
-	
-	private void executeMappingSetterWithConversion(int mappingIdx, Object instance, Object value ) {
-		
-		// If mapping the return value of a function, we might have to convert the result
-		// TODO: Might figure out this on the outside so does not have to perform these calls upon every setter
-		final ExecutableQueryExpressions expressions = q.getMappingExpressions(query, mappingIdx);
-		final EExpressionType expressionType = expressions.getExpressionType(0, NO_LEVELS);
+	private void executeMappingSetterWithConversion(int mappingIdx, Object instance, Object value, FunctionBase [] mapFunctions) {
 		
 		final Object toSet;
 
-		if (expressionType == EExpressionType.FUNCTION) {
+		if (mapFunctions[mappingIdx] != null) {
 			if (value != null) {
-				toSet = getDataSource().convertFunctionResultBeforeMapping(expressions.getFunction(0, NO_LEVELS), value);
+				toSet = getDataSource().convertFunctionResultBeforeMapping(mapFunctions[mappingIdx], value);
 			}
 			else {
 				toSet = null;
@@ -175,12 +196,10 @@ abstract class PreparedQuery_DB<QUERY> extends PreparedQuery_DS<QueryDataSource_
 		q.executeMappingSetter(query, mappingIdx, instance, toSet);
 	}
 	
-	private List<Object> mapMultiple(@SuppressWarnings("rawtypes") List input) {
+	private List<Object> mapMultiple(EQueryResultGathering resultGathering, @SuppressWarnings("rawtypes") List input, FunctionBase [] mappedFunctions) {
 		
 		List<Object> ret;
 
-		final EQueryResultGathering resultGathering = q.getGathering(query);
-		
 		switch (resultGathering) { 
 		
 		case MAPPED:
@@ -188,7 +207,7 @@ abstract class PreparedQuery_DB<QUERY> extends PreparedQuery_DS<QueryDataSource_
 			ret = new ArrayList<>(input.size());
 			
 			for (Object o : input) {
-				ret.add(mapSingle(o));
+				ret.add(mapSingle(resultGathering, o, mappedFunctions));
 			}
 			break;
 			
