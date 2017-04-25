@@ -10,28 +10,8 @@ public interface ISharedFunctions_String_Named<
 
 	>
 
-	extends ISharedFunctions_String_NumericResult_Named<MODEL, RESULT, RET, LENGTH_RET_CLAUSE> {
+	extends ISharedFunctions_String_NumericResult_Named<MODEL, RESULT, RET, LENGTH_RET_CLAUSE>,
+			ISharedFunctions_String_StringResult_Named<MODEL, RESULT, RET, STRING_CLAUSE>
+	{
 
-    <T> STRING_CLAUSE lower(IFunctionString<T> getter);
-
-    <T> STRING_CLAUSE upper(IFunctionString<T> getter);
-
-    <T> STRING_CLAUSE trim(IFunctionString<T> getter);
-
-    <T> STRING_CLAUSE substring(IFunctionString<T> getter, int start, int length);
-    
-    @Deprecated // there is a concat operand for strings
-    <T> STRING_CLAUSE concat(IFunctionString<T> getter1, IFunctionString<T> getter2);
-	
-    @Deprecated // there is a concat operand for strings
-    <T> STRING_CLAUSE concat(IFunctionString<T> getter, String value);
-
-    @Deprecated // there is a concat operand for strings
-    <T> STRING_CLAUSE concat(String value, IFunctionString<T> getter);
-
-    @Deprecated // there is a concat operand for strings
-    <T> STRING_CLAUSE concat(IFunctionString<T> getter, Param<String> param);
-
-    @Deprecated // there is a concat operand for strings
-    <T> STRING_CLAUSE concat(Param<String> param, IFunctionString<T> getter);
 }

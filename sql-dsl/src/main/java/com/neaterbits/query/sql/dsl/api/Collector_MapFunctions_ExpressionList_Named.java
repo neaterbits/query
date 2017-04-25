@@ -102,17 +102,17 @@ final class Collector_MapFunctions_ExpressionList_Named<
 
 			
 	@Override
-	public ISharedMapFunctions_String_Named<MODEL, RESULT, RET, LENGTH_RET, STRING_RET, NO_PARAM_LENGTH_RET, NO_PARAM_STRING_RET> lower() {
+	public ISharedMapFunctions_String_StringResult_Named<MODEL, RESULT, RET, STRING_RET, NO_PARAM_STRING_RET> lower() {
 		return super.lowerNamedNoParam();
 	}
 
 	@Override
-	public ISharedMapFunctions_String_Named<MODEL, RESULT, RET, LENGTH_RET, STRING_RET, NO_PARAM_LENGTH_RET, NO_PARAM_STRING_RET> upper() {
+	public ISharedMapFunctions_String_StringResult_Named<MODEL, RESULT, RET, STRING_RET, NO_PARAM_STRING_RET> upper() {
 		return super.upperNamedNoParam();
 	}
 
 	@Override
-	public ISharedMapFunctions_String_Named<MODEL, RESULT, RET, LENGTH_RET, STRING_RET, NO_PARAM_LENGTH_RET, NO_PARAM_STRING_RET> trim() {
+	public ISharedMapFunctions_String_StringResult_Named<MODEL, RESULT, RET, STRING_RET, NO_PARAM_STRING_RET> trim() {
 		return super.trimNamedNoParam();
 	}
 

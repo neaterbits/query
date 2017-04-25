@@ -215,7 +215,9 @@ final class ResultMapper_ExpressionList_Initial_Undecided<
 			NO_PARAM_ALIAS_SQLDATE_RET,
 			NO_PARAM_ALIAS_SQLTIME_RET,
 			NO_PARAM_ALIAS_SQLTIMESTAMP_RET
-		>
+		>,
+			
+		ISharedFunctions_StringResult_Initial<MODEL, RESULT, NAMED_RET, ALIAS_RET, NAMED_STRING_RET, ALIAS_STRING_RET>			
 	//,
 			
 	//ISharedResultMap_OpsAndTo_Comparable_Named<MODEL, RESULT, Integer, ISharedFunction_After<MODEL,RESULT>>
@@ -816,7 +818,7 @@ final class ResultMapper_ExpressionList_Initial_Undecided<
 
 
 	@Override
-	public ISharedStringFunctions_Initial<MODEL, RESULT, NAMED_RET, ALIAS_RET, NAMED_LENGTH_RET, NAMED_STRING_RET, ALIAS_LENGTH_RET, ALIAS_STRING_RET> lower() {
+	public ISharedFunctions_StringResult_Initial<MODEL, RESULT, NAMED_RET, ALIAS_RET, NAMED_STRING_RET, ALIAS_STRING_RET> lower() {
 		addNoParam(Function_String_Lower.INSTANCE);
 		
 		return this;
@@ -824,14 +826,14 @@ final class ResultMapper_ExpressionList_Initial_Undecided<
 
 
 	@Override
-	public ISharedStringFunctions_Initial<MODEL, RESULT, NAMED_RET, ALIAS_RET, NAMED_LENGTH_RET, NAMED_STRING_RET, ALIAS_LENGTH_RET, ALIAS_STRING_RET> upper() {
+	public ISharedFunctions_StringResult_Initial<MODEL, RESULT, NAMED_RET, ALIAS_RET, NAMED_STRING_RET, ALIAS_STRING_RET> upper() {
 		addNoParam(Function_String_Upper.INSTANCE);
 		
 		return this;
 	}
 
 	@Override
-	public ISharedStringFunctions_Initial<MODEL, RESULT, NAMED_RET, ALIAS_RET, NAMED_LENGTH_RET, NAMED_STRING_RET, ALIAS_LENGTH_RET, ALIAS_STRING_RET> trim() {
+	public ISharedFunctions_StringResult_Initial<MODEL, RESULT, NAMED_RET, ALIAS_RET, NAMED_STRING_RET, ALIAS_STRING_RET> trim() {
 		addNoParam(Function_String_Trim.INSTANCE);
 		
 		return this;

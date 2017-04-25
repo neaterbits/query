@@ -264,10 +264,19 @@ public class ShortFunctionTest extends BaseJPATest {
 				"list(NameLength.class)" +
 				".map().lower().length(Company::getName).to(NameLength::setLength)"				
 				);
+
+
+		verifyIsNotCompilable(
+				b -> b.addImport(NameLength.class).addImport(Company.class),
+				"list(NameLength.class)" +
+				".map().lower(Company::getName).to(NameLength::setName)" +				
+				".map().lower().length(Company::getName).to(NameLength::setLength)"				
+				);
 	}
 
 	@Test
 	public void testThatStringMethodDoesNotReturnLengthFunction_Alias() {
+
 		verifyIsCompilable(
 				b -> b.addImport(NameLength.class).addImport(Company.class)
 					.add(Company.class, "c"),
@@ -280,6 +289,14 @@ public class ShortFunctionTest extends BaseJPATest {
 					.add(Company.class, "c"),
 				"list(NameLength.class)" +
 				".map().lower().length(c::getName).to(NameLength::setLength)"				
+				);
+
+		verifyIsNotCompilable(
+				b -> b.addImport(NameLength.class).addImport(Company.class)
+					.add(Company.class, "c"),
+				"list(NameLength.class)" +
+				".map().lower(c::getName).to(NameLength::setName)" + 				
+				".map().lower().length(c::getName).to(NameLength::setLength)"
 				);
 	}
 	

@@ -102,13 +102,11 @@ final class Collector_MapFunctions_ExpressionList_Alias<
 	}
 
 	@Override
-	public ISharedMapFunctions_String_Alias<
+	public ISharedMapFunctions_String_StringResult_Alias<
 			MODEL, 
 			RESULT,
 			RET, 
-			LENGTH_RET,
 			STRING_RET,
-			NO_PARAM_LENGTH_RET,
 			NO_PARAM_STRING_RET
 		> lower() {
 
@@ -116,13 +114,11 @@ final class Collector_MapFunctions_ExpressionList_Alias<
 	}
 
 	@Override
-	public ISharedMapFunctions_String_Alias<
+	public ISharedMapFunctions_String_StringResult_Alias<
 			MODEL,
 			RESULT,
 			RET, 
-			LENGTH_RET,
 			STRING_RET,
-			NO_PARAM_LENGTH_RET,
 			NO_PARAM_STRING_RET
 		> upper() {
 			
@@ -130,13 +126,11 @@ final class Collector_MapFunctions_ExpressionList_Alias<
 	}
 
 	@Override
-	public ISharedMapFunctions_String_Alias<
+	public ISharedMapFunctions_String_StringResult_Alias<
 			MODEL,
 			RESULT,
 			RET, 
-			LENGTH_RET,
 			STRING_RET,
-			NO_PARAM_LENGTH_RET,
 			NO_PARAM_STRING_RET
 		> trim() {
 			

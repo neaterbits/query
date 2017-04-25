@@ -244,18 +244,14 @@ abstract class ResultMapper_ExpressionList_Base<
 				NAMED_DOUBLE_RET
 				
 			>,
-			ISharedMapFunctions_String_Named<
-				MODEL,
-				RESULT,
-
-				NAMED_RET,
-				
-				NAMED_LENGTH_RET,
-				NAMED_STRING_RET,
-				NAMED_LENGTH_RET,
-				NAMED_STRING_RET
-				>,
-			ISharedMapFunctions_String_Named<
+		    ISharedMapFunctions_String_StringResult_Named<
+			    	MODEL,
+			    	RESULT,
+			    	NAMED_RET,
+			    	NAMED_STRING_RET,
+			    	NAMED_STRING_RET
+		    >,
+		    ISharedMapFunctions_String_Named<
 				MODEL,
 				RESULT,
 				NAMED_RET,
@@ -417,15 +413,13 @@ abstract class ResultMapper_ExpressionList_Base<
 				ALIAS_DOUBLE_RET
 				
 			>,
-			ISharedMapFunctions_String_Alias<
+			ISharedMapFunctions_String_StringResult_Alias<
 				MODEL,
 				RESULT,
 	
 				ALIAS_RET,
 				
-				ALIAS_LENGTH_RET,
 				ALIAS_STRING_RET,
-				ALIAS_LENGTH_RET,
 				ALIAS_STRING_RET
 			>,
 			ISharedMapFunctions_String_Alias<

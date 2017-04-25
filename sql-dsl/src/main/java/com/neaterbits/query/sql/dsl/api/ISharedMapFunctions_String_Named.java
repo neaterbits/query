@@ -23,12 +23,10 @@ public interface ISharedMapFunctions_String_Named<
 			    	NO_PARAM_LENGTH_RET>
 			    , 			    
  			    
- 			    ISharedMapFunctions_String_Named<
+ 			    ISharedMapFunctions_String_StringResult_Named<
  			    	MODEL, RESULT,
  			    	RET,
- 			    	LENGTH_RET,
  			    	STRING_RET,
- 			    	NO_PARAM_LENGTH_RET,
  			    	NO_PARAM_STRING_RET
  			    
  			    >> {
