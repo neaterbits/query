@@ -270,7 +270,14 @@ public class ShortFunctionTest extends BaseJPATest {
 				b -> b.addImport(NameLength.class).addImport(Company.class),
 				"list(NameLength.class)" +
 				".map().lower(Company::getName).to(NameLength::setName)" +				
-				".map().lower().length(Company::getName).to(NameLength::setLength)"				
+				".map().lower().length(Company::getName).to(NameLength::setLength)" 				
+				);
+
+		verifyIsNotCompilable(
+				b -> b.addImport(NameLength.class).addImport(Company.class),
+				"list(NameLength.class)" +
+				".map().lower(Company::getName).to(NameLength::setName)" +				
+				".map().lower().length().trim(Company::getName).to(NameLength::setLength)" 				
 				);
 	}
 
@@ -298,6 +305,92 @@ public class ShortFunctionTest extends BaseJPATest {
 				".map().lower(c::getName).to(NameLength::setName)" + 				
 				".map().lower().length(c::getName).to(NameLength::setLength)"
 				);
+
+		verifyIsNotCompilable(
+				b -> b.addImport(NameLength.class).addImport(Company.class)
+					.add(Company.class, "c"),
+				"list(NameLength.class)" +
+				".map().lower(c::getName).to(NameLength::setName)" + 				
+				".map().lower().length().trim(c::getName).to(NameLength::setLength)"
+				);
+	}
+
+	@Test
+	public void testThatLengthFunctionDoesNotReturnLengthFunction_Named() {
+		verifyIsCompilable(
+				b -> b.addImport(NameLength.class).addImport(Company.class),
+				"list(NameLength.class)" +
+				".map().length().trim(Company::getName).to(NameLength::setLength)"				
+				);
+
+		verifyIsNotCompilable(
+				b -> b.addImport(NameLength.class).addImport(Company.class),
+				"list(NameLength.class)" +
+				".map().length().length(Company::getName).to(NameLength::setLength)"				
+				);
+		
+		verifyIsNotCompilable(
+				b -> b.addImport(NameLength.class).addImport(Company.class),
+				"list(NameLength.class)" +
+				".map().length().length().lower(Company::getName).to(NameLength::setLength)"				
+				);
+
+		verifyIsNotCompilable(
+				b -> b.addImport(NameLength.class).addImport(Company.class),
+				"list(NameLength.class)" +
+				".map().lower(Company::getName).to(NameLength::setName)" +				
+				".map().length().length(Company::getName).to(NameLength::setLength)"				
+				);
+		
+		verifyIsNotCompilable(
+				b -> b.addImport(NameLength.class).addImport(Company.class),
+				"list(NameLength.class)" +
+				".map().lower(Company::getName).to(NameLength::setName)" +				
+				".map().length().length().lower(Company::getName).to(NameLength::setLength)"				
+				);
+
+	}
+
+
+	@Test
+	public void testThatLengthFunctionDoesNotReturnLengthFunction_Alias() {
+		verifyIsCompilable(
+				b -> b.addImport(NameLength.class).addImport(Company.class)
+				.add(Company.class, "c"),
+				"list(NameLength.class)" +
+				".map().length().trim(c::getName).to(NameLength::setLength)"				
+				);
+
+		verifyIsNotCompilable(
+				b -> b.addImport(NameLength.class).addImport(Company.class)
+				.add(Company.class, "c"),
+				"list(NameLength.class)" +
+				".map().length().length(c::getName).to(NameLength::setLength)"				
+				);
+		
+		verifyIsNotCompilable(
+				b -> b.addImport(NameLength.class).addImport(Company.class)
+				.add(Company.class, "c"),
+				"list(NameLength.class)" +
+				".map().length().length().lower(c::getName).to(NameLength::setLength)"				
+				);
+
+		verifyIsNotCompilable(
+				b -> b.addImport(NameLength.class).addImport(Company.class)
+				.add(Company.class, "c"),
+				"list(NameLength.class)" +
+				".map().lower(c::getName).to(NameLength::setName)" +				
+				".map().length().length(c::getName).to(NameLength::setLength)"				
+				);
+		
+		verifyIsNotCompilable(
+				b -> b.addImport(NameLength.class).addImport(Company.class)
+				.add(Company.class, "c"),
+				"list(NameLength.class)" +
+				".map().lower(c::getName).to(NameLength::setName)" +				
+				".map().length().length().lower(c::getName).to(NameLength::setLength)"				
+				);
+
 	}
 	
 	@Test // Test that cannot combine no-param, integer and other String functions directly
