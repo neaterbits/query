@@ -22,10 +22,10 @@ public interface ISharedStringFunctions_Initial<
 			ISharedFunctions_String_NoParam_Base<
 					MODEL,
 					RESULT,
-					ISharedStringFunctions_Initial<
+					ISharedFunctions_StringResult_Initial<
 						MODEL, RESULT,
 						NAMED_RET, ALIAS_RET,
-						NAMED_LENGTH_RET, NAMED_LENGTH_RET, ALIAS_LENGTH_RET, ALIAS_LENGTH_RET>,
+						NAMED_LENGTH_RET, ALIAS_LENGTH_RET>,
 		
 					// eg lower().xyz, return only the functions that return String (so skip length())
 					ISharedFunctions_StringResult_Initial<

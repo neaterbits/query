@@ -964,18 +964,16 @@ final class ResultMapper_ExpressionList_Initial_Undecided<
 
 	@Override
 	@SuppressWarnings({"unchecked", "rawtypes"})
-	public ISharedStringFunctions_Initial<
+	public ISharedFunctions_StringResult_Initial<
 			MODEL,
 			RESULT,
 			NAMED_RET,
 			ALIAS_RET,
-			NAMED_LENGTH_RET,
 			NAMED_LENGTH_RET, 
-			ALIAS_LENGTH_RET,
 			ALIAS_LENGTH_RET
 			
 			> length() {
-		return (ISharedStringFunctions_Initial)this;
+		return (ISharedFunctions_StringResult_Initial)this;
 	}
 				
 				

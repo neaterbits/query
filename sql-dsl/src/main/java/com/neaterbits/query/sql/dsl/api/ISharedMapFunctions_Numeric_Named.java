@@ -62,12 +62,10 @@ public interface ISharedMapFunctions_Numeric_Named<
 				NO_PARAM_DOUBLE_RET, NO_PARAM_DOUBLE_RET, NO_PARAM_DOUBLE_RET, NO_PARAM_DOUBLE_RET, NO_PARAM_DOUBLE_RET, NO_PARAM_DOUBLE_RET, NO_PARAM_DOUBLE_RET, NO_PARAM_DOUBLE_RET, NO_PARAM_DOUBLE_RET, NO_PARAM_DOUBLE_RET, NO_PARAM_DOUBLE_RET, NO_PARAM_DOUBLE_RET>
 		>,
 		ISharedFunctions_String_NumericResult_NoParam_Base<MODEL, RESULT, 
-			ISharedMapFunctions_String_Named<
+			ISharedMapFunctions_String_StringResult_Named<
 		    	MODEL, RESULT,
 		    	RET,
 		    	LENGTH_RET,
-		    	LENGTH_RET,
-		    	NO_PARAM_LENGTH_RET,
 		    	NO_PARAM_LENGTH_RET>>
 		
 		{

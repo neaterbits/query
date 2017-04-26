@@ -117,7 +117,12 @@ final class Collector_MapFunctions_ExpressionList_Named<
 	}
 
 	@Override
-	public ISharedMapFunctions_String_Named<MODEL, RESULT, RET, LENGTH_RET, LENGTH_RET, NO_PARAM_LENGTH_RET, NO_PARAM_LENGTH_RET> length() {
+	public ISharedMapFunctions_String_StringResult_Named<
+			MODEL,
+			RESULT,
+			RET,
+			LENGTH_RET,
+			NO_PARAM_LENGTH_RET> length() {
 		return super.lengthNamedNoParam();
 	}
 }

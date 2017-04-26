@@ -138,13 +138,11 @@ final class Collector_MapFunctions_ExpressionList_Alias<
 	}
 
 	@Override
-	public ISharedMapFunctions_String_Alias<
+	public ISharedMapFunctions_String_StringResult_Alias<
 			MODEL,
 			RESULT,
 			RET,
-			LENGTH_RET,
 			LENGTH_RET, 
-			NO_PARAM_LENGTH_RET, 
 			NO_PARAM_LENGTH_RET
 		> length() {
 			

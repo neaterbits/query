@@ -14,13 +14,11 @@ public interface ISharedMapFunctions_String_Alias<
 	extends ISharedFunctions_String_Alias<MODEL, RESULT, RET, LENGTH_RET, STRING_RET>,
 			    ISharedFunctions_String_NoParam_Base<MODEL, RESULT,
 			    
-			    ISharedMapFunctions_String_Alias<
-		    	MODEL, RESULT,
-		    	RET,
-		    	LENGTH_RET,
-		    	LENGTH_RET,
-		    	NO_PARAM_LENGTH_RET,
-		    	NO_PARAM_LENGTH_RET>, 			    
+			    ISharedMapFunctions_String_StringResult_Alias<
+			    	MODEL, RESULT,
+			    	RET,
+			    	LENGTH_RET,
+			    	NO_PARAM_LENGTH_RET>, 			    
 			    
 			    ISharedMapFunctions_String_StringResult_Alias<
 			    	MODEL, RESULT,
