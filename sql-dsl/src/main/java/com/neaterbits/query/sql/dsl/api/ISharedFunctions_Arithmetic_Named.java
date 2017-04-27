@@ -27,15 +27,15 @@ public interface ISharedFunctions_Arithmetic_Named<
 	<T> DOUBLE_RET 		abs(IFunctionDouble<T> getter);
 	<T> BIGDECIMAL_RET 	abs(IFunctionBigDecimal<T> getter);
 
-	<T> BYTE_RET 		absOfByte(ISharedSubOperandsFunction_Byte_Named<MODEL, RESULT> sub);
-	<T> SHORT_RET 		absOfShort(ISharedSubOperandsFunction_Short_Named<MODEL, RESULT> sub);
-	<T> INTEGER_RET 	absOfInteger(ISharedSubOperandsFunction_Integer_Named<MODEL, RESULT> sub);
-	<T> LONG_RET 		absOfLong(ISharedSubOperandsFunction_Long_Named<MODEL, RESULT> sub);
-	<T> BIGINTEGER_RET 	absOfBigInteger(ISharedSubOperandsFunction_BigInteger_Named<MODEL, RESULT> sub);
-	<T> FLOAT_RET 		absOfFloat(ISharedSubOperandsFunction_Float_Named<MODEL, RESULT> sub);
-	<T> DOUBLE_RET 		absOfDouble(ISharedSubOperandsFunction_Double_Named<MODEL, RESULT> sub);
-	<T> BIGDECIMAL_RET 	absOfBigDecimal(ISharedSubOperandsFunction_BigDecimal_Named<MODEL, RESULT> sub);
 	
+	BYTE_RET 		absOfByte(ISharedSubOperandsFunction_Byte_Named<MODEL, RESULT> sub);
+	SHORT_RET 		absOfShort(ISharedSubOperandsFunction_Short_Named<MODEL, RESULT> sub);
+	INTEGER_RET 	absOfInteger(ISharedSubOperandsFunction_Integer_Named<MODEL, RESULT> sub);
+	LONG_RET 		absOfLong(ISharedSubOperandsFunction_Long_Named<MODEL, RESULT> sub);
+	BIGINTEGER_RET 	absOfBigInteger(ISharedSubOperandsFunction_BigInteger_Named<MODEL, RESULT> sub);
+	FLOAT_RET 		absOfFloat(ISharedSubOperandsFunction_Float_Named<MODEL, RESULT> sub);
+	DOUBLE_RET 		absOfDouble(ISharedSubOperandsFunction_Double_Named<MODEL, RESULT> sub);
+	BIGDECIMAL_RET 	absOfBigDecimal(ISharedSubOperandsFunction_BigDecimal_Named<MODEL, RESULT> sub);
 
 	// sqrt always returns double
 	<T> DOUBLE_RET sqrt(IFunctionByte<T> getter);
@@ -47,15 +47,15 @@ public interface ISharedFunctions_Arithmetic_Named<
 	<T> DOUBLE_RET sqrt(IFunctionDouble<T> getter);
 	<T> DOUBLE_RET sqrt(IFunctionBigDecimal<T> getter);
 
-	<T> DOUBLE_RET 	sqrtOf(ISharedSubOperandsFunction_Byte_Named<MODEL, RESULT> sub);
-	<T> DOUBLE_RET 	sqrtOf(ISharedSubOperandsFunction_Short_Named<MODEL, RESULT> sub);
-	<T> DOUBLE_RET 	sqrtOf(ISharedSubOperandsFunction_Integer_Named<MODEL, RESULT> sub);
-	<T> DOUBLE_RET 	sqrtOf(ISharedSubOperandsFunction_BigInteger_Named<MODEL, RESULT> sub);
-	<T> DOUBLE_RET 	sqrtOf(ISharedSubOperandsFunction_Long_Named<MODEL, RESULT> sub);
-	<T> DOUBLE_RET 	sqrtOf(ISharedSubOperandsFunction_Float_Named<MODEL, RESULT> sub);
-	<T> DOUBLE_RET 	sqrtOf(ISharedSubOperandsFunction_Double_Named<MODEL, RESULT> sub);
-	<T> DOUBLE_RET 	sqrtOf(ISharedSubOperandsFunction_BigDecimal_Named<MODEL, RESULT> sub);
+	DOUBLE_RET 	sqrtOf(ISharedSubOperandsFunction_Byte_Named<MODEL, RESULT> sub);
+	DOUBLE_RET 	sqrtOf(ISharedSubOperandsFunction_Short_Named<MODEL, RESULT> sub);
+	DOUBLE_RET 	sqrtOf(ISharedSubOperandsFunction_Integer_Named<MODEL, RESULT> sub);
+	DOUBLE_RET 	sqrtOf(ISharedSubOperandsFunction_BigInteger_Named<MODEL, RESULT> sub);
+	DOUBLE_RET 	sqrtOf(ISharedSubOperandsFunction_Long_Named<MODEL, RESULT> sub);
+	DOUBLE_RET 	sqrtOf(ISharedSubOperandsFunction_Float_Named<MODEL, RESULT> sub);
+	DOUBLE_RET 	sqrtOf(ISharedSubOperandsFunction_Double_Named<MODEL, RESULT> sub);
+	DOUBLE_RET 	sqrtOf(ISharedSubOperandsFunction_BigDecimal_Named<MODEL, RESULT> sub);
 	
 	<T> INTEGER_RET 	mod(IFunctionInteger<T> getter, int value);
-	<T> INTEGER_RET 	modOf(ISharedSubOperandsFunction_Integer_Named<MODEL, RESULT> sub, int value);
+	INTEGER_RET 	modOf(ISharedSubOperandsFunction_Integer_Named<MODEL, RESULT> sub, int value);
 }
