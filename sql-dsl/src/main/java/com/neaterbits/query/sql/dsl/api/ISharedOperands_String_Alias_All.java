@@ -9,6 +9,7 @@ public interface ISharedOperands_String_Alias_All<
 		
 		TYPE_RET extends ISharedFunction_Next<MODEL, RESULT, RET>
 
-	> extends ISharedOperands_String_Alias_Base<MODEL, RESULT, RET, TYPE_RET> {
+	> extends ISharedOperands_String_Alias_Base<MODEL, RESULT, RET, TYPE_RET>,
+			  ISharedOperands_String_Common<MODEL, RESULT, RET, TYPE_RET> {
 
 }
