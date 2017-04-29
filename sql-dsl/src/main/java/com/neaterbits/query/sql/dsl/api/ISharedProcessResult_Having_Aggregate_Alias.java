@@ -6,7 +6,7 @@ import java.util.Date;
 
 public interface ISharedProcessResult_Having_Aggregate_Alias<MODEL, RESULT, AFTER_HAVING extends ISharedLogical_Base<MODEL, RESULT>>
 
-	extends ISharedFunctions_Aggregate_Alias<
+	extends ISharedFunctions_Aggregate_Alias_All<
 		    ISharedCondition_Comparable_Common_All<MODEL, RESULT, Long, AFTER_HAVING>,
 		    ISharedCondition_Comparable_Common_All<MODEL, RESULT, Long, AFTER_HAVING>,
 			
