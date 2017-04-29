@@ -5,7 +5,7 @@ public interface ISharedSubOperandsBuilder_NumericSQLTimeType_Next_Alias<MODEL, 
 		extends 
 			ISharedSubOperand_End_Alias<MODEL, RESULT, R>,
 			ISharedFunction_Next<MODEL, RESULT, AFTER>,
-			ISharedOperands_Numeric_Alias<
+			ISharedOperands_Numeric_Alias_All<
 				MODEL,
 				RESULT,
 				AFTER,

@@ -62,10 +62,10 @@ abstract class Collector_ExpressionList<
 	//Implement both Numeric and String in this baseclass 
 	implements 
 	
-			   ISharedOperands_Numeric_Named<MODEL, RESULT, OPERAND_RET, NUMERIC_OPERAND_NEXT>,
+			   ISharedOperands_Numeric_Named_All<MODEL, RESULT, OPERAND_RET, NUMERIC_OPERAND_NEXT>,
 			   ISharedOperands_String_Named<MODEL, RESULT, OPERAND_RET, STRING_OPERAND_NEXT>, 
 
-			   ISharedOperands_Numeric_Alias<MODEL, RESULT, OPERAND_RET, NUMERIC_OPERAND_NEXT>,
+			   ISharedOperands_Numeric_Alias_All<MODEL, RESULT, OPERAND_RET, NUMERIC_OPERAND_NEXT>,
 			   ISharedOperands_String_Alias<MODEL, RESULT, OPERAND_RET, STRING_OPERAND_NEXT>,
 			   
 
