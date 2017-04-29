@@ -13,6 +13,7 @@ abstract class Collector_ExpressionList<
 		
 		NAMED_RET extends ISharedFunction_After<MODEL, RESULT>,
 		ALIAS_RET extends ISharedFunction_After<MODEL, RESULT>,
+		UNDECIDED_RET extends ISharedFunction_After<MODEL, RESULT>,
 		
 		NUMERIC_OPERAND_NEXT    extends ISharedFunction_Next<MODEL, RESULT, OPERAND_RET>,
 		STRING_OPERAND_NEXT    extends ISharedFunction_Next<MODEL, RESULT, OPERAND_RET>,
@@ -54,7 +55,27 @@ abstract class Collector_ExpressionList<
 		ALIAS_CALENDAR_RET  extends ISharedFunction_Next<MODEL, RESULT, ALIAS_RET>,
 		ALIAS_SQLDATE_RET  	extends ISharedFunction_Next<MODEL, RESULT, ALIAS_RET>,
 		ALIAS_SQLTIME_RET  	extends ISharedFunction_Next<MODEL, RESULT, ALIAS_RET>,
-		ALIAS_SQLTIMESTAMP_RET  extends ISharedFunction_Next<MODEL, RESULT, ALIAS_RET>
+		ALIAS_SQLTIMESTAMP_RET  extends ISharedFunction_Next<MODEL, RESULT, ALIAS_RET>,
+		
+		UNDECIDED_SUM_LONG_RET  extends ISharedFunction_Next<MODEL, RESULT, UNDECIDED_RET>,
+		UNDECIDED_COUNT_RET     extends ISharedFunction_Next<MODEL, RESULT, UNDECIDED_RET>,
+		UNDECIDED_LENGTH_RET    extends ISharedFunction_Next<MODEL, RESULT, UNDECIDED_RET>,
+		
+		UNDECIDED_BYTE_RET  	extends ISharedFunction_Next<MODEL, RESULT, UNDECIDED_RET>,
+		UNDECIDED_SHORT_RET  	extends ISharedFunction_Next<MODEL, RESULT, UNDECIDED_RET>,
+		UNDECIDED_INTEGER_RET  	extends ISharedFunction_Next<MODEL, RESULT, UNDECIDED_RET>,
+		UNDECIDED_LONG_RET 	 	extends ISharedFunction_Next<MODEL, RESULT, UNDECIDED_RET>,
+		UNDECIDED_BIGINTEGER_RET 	 	extends ISharedFunction_Next<MODEL, RESULT, UNDECIDED_RET>,
+		UNDECIDED_FLOAT_RET 	 	extends ISharedFunction_Next<MODEL, RESULT, UNDECIDED_RET>,
+		UNDECIDED_DOUBLE_RET   	extends ISharedFunction_Next<MODEL, RESULT, UNDECIDED_RET>,
+		UNDECIDED_BIGDECIMAL_RET  extends ISharedFunction_Next<MODEL, RESULT, UNDECIDED_RET>,
+		UNDECIDED_STRING_RET  	extends ISharedFunction_Next<MODEL, RESULT, UNDECIDED_RET>,
+		UNDECIDED_DATE_RET  	extends ISharedFunction_Next<MODEL, RESULT, UNDECIDED_RET>,
+		UNDECIDED_CALENDAR_RET  extends ISharedFunction_Next<MODEL, RESULT, UNDECIDED_RET>,
+		UNDECIDED_SQLDATE_RET  	extends ISharedFunction_Next<MODEL, RESULT, UNDECIDED_RET>,
+		UNDECIDED_SQLTIME_RET  	extends ISharedFunction_Next<MODEL, RESULT, UNDECIDED_RET>,
+		UNDECIDED_SQLTIMESTAMP_RET  extends ISharedFunction_Next<MODEL, RESULT, UNDECIDED_RET>
+		
 	>
 
 	extends Collector_ExpressionList_Base<MODEL, RESULT, R, OPERAND_RET> 
@@ -137,9 +158,13 @@ abstract class Collector_ExpressionList<
 	
 	Collector_ExpressionList(Collector_ExpressionList<MODEL, RESULT, R, OPERAND_RET,
 			?, ?,
-			?, ?,
+					
+			?, ?, ?,
+					
 			?, ?, ?,
 		    ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,
+			?, ?, ?,
+			?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,
 			?, ?, ?,
 			?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?
 					> toCopy) {

@@ -6,7 +6,7 @@ public class SubOperandsBuilder_NoParam_Alias<
 		R extends Comparable<R>,
 		ALIAS_RET extends ISharedFunction_After<MODEL, RESULT>>
 		
-	extends SubOperandsBuilder_NoParam<MODEL, RESULT, R, ALIAS_RET, ISharedFunction_After<MODEL, RESULT>, ALIAS_RET> 
+	extends SubOperandsBuilder_NoParam<MODEL, RESULT, R, ALIAS_RET, ISharedFunction_After<MODEL, RESULT>, ALIAS_RET, ISharedFunction_After<MODEL, RESULT>> 
 
 	implements ISharedSubOperandsBuilder_NoParam_Alias<MODEL, RESULT, R, ALIAS_RET>,
 	           ISharedSubOperandsBuilder_NoParam_End_Alias<MODEL, RESULT, R, ALIAS_RET>

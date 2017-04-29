@@ -16,6 +16,7 @@ final class ResultMapper_ExpressionList_String_Alias<
 			
 			ISharedFunction_After<MODEL, RESULT>,
 			AFTER,
+			ISharedFunction_After<MODEL, RESULT>,
 			
 			
 			ISharedFunction_Next<MODEL, RESULT, AFTER>, // Comparable
@@ -57,7 +58,26 @@ final class ResultMapper_ExpressionList_String_Alias<
 			ISharedFunction_Next<MODEL, RESULT, AFTER>,
 			ISharedFunction_Next<MODEL, RESULT, AFTER>,
 			ISharedFunction_Next<MODEL, RESULT, AFTER>,
-			ISharedFunction_Next<MODEL, RESULT, AFTER>
+			ISharedFunction_Next<MODEL, RESULT, AFTER>,
+			
+			ISharedFunction_Next<MODEL, RESULT, ISharedFunction_After<MODEL, RESULT>>,
+			ISharedFunction_Next<MODEL, RESULT, ISharedFunction_After<MODEL, RESULT>>,
+			ISharedFunction_Next<MODEL, RESULT, ISharedFunction_After<MODEL, RESULT>>,
+			
+			ISharedFunction_Next<MODEL, RESULT, ISharedFunction_After<MODEL, RESULT>>,
+			ISharedFunction_Next<MODEL, RESULT, ISharedFunction_After<MODEL, RESULT>>,
+			ISharedFunction_Next<MODEL, RESULT, ISharedFunction_After<MODEL, RESULT>>,
+			ISharedFunction_Next<MODEL, RESULT, ISharedFunction_After<MODEL, RESULT>>,
+			ISharedFunction_Next<MODEL, RESULT, ISharedFunction_After<MODEL, RESULT>>,
+			ISharedFunction_Next<MODEL, RESULT, ISharedFunction_After<MODEL, RESULT>>,
+			ISharedFunction_Next<MODEL, RESULT, ISharedFunction_After<MODEL, RESULT>>,
+			ISharedFunction_Next<MODEL, RESULT, ISharedFunction_After<MODEL, RESULT>>,
+			ISharedFunction_Next<MODEL, RESULT, ISharedFunction_After<MODEL, RESULT>>,
+			ISharedFunction_Next<MODEL, RESULT, ISharedFunction_After<MODEL, RESULT>>,
+			ISharedFunction_Next<MODEL, RESULT, ISharedFunction_After<MODEL, RESULT>>,
+			ISharedFunction_Next<MODEL, RESULT, ISharedFunction_After<MODEL, RESULT>>,
+			ISharedFunction_Next<MODEL, RESULT, ISharedFunction_After<MODEL, RESULT>>,
+			ISharedFunction_Next<MODEL, RESULT, ISharedFunction_After<MODEL, RESULT>>
 	> 
 	implements ISharedResultMap_OpsAndTo_String_Alias<MODEL, RESULT, AFTER> {
 

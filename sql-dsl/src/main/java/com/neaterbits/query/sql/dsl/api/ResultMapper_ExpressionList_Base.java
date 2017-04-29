@@ -11,6 +11,7 @@ abstract class ResultMapper_ExpressionList_Base<
 			
 			NAMED_RET extends ISharedFunction_After<MODEL, RESULT>,
 			ALIAS_RET extends ISharedFunction_After<MODEL, RESULT>,
+			UNDECIDED_RET extends ISharedFunction_After<MODEL, RESULT>,
 			
 			NUMERIC_NEXT extends ISharedFunction_Next<MODEL, RESULT, OPERAND_RET>,
 			STRING_NEXT extends ISharedFunction_Next<MODEL, RESULT, OPERAND_RET>,
@@ -52,7 +53,27 @@ abstract class ResultMapper_ExpressionList_Base<
 			ALIAS_CALENDAR_RET  extends ISharedFunction_Next<MODEL, RESULT, ALIAS_RET>,
 			ALIAS_SQLDATE_RET  	extends ISharedFunction_Next<MODEL, RESULT, ALIAS_RET>,
 			ALIAS_SQLTIME_RET  	extends ISharedFunction_Next<MODEL, RESULT, ALIAS_RET>,
-			ALIAS_SQLTIMESTAMP_RET  extends ISharedFunction_Next<MODEL, RESULT, ALIAS_RET>
+			ALIAS_SQLTIMESTAMP_RET  extends ISharedFunction_Next<MODEL, RESULT, ALIAS_RET>,
+			
+			UNDECIDED_SUM_LONG_RET  extends ISharedFunction_Next<MODEL, RESULT, UNDECIDED_RET>,
+			UNDECIDED_COUNT_RET     extends ISharedFunction_Next<MODEL, RESULT, UNDECIDED_RET>,
+			UNDECIDED_LENGTH_RET    extends ISharedFunction_Next<MODEL, RESULT, UNDECIDED_RET>,
+			
+			UNDECIDED_BYTE_RET  	extends ISharedFunction_Next<MODEL, RESULT, UNDECIDED_RET>,
+			UNDECIDED_SHORT_RET  	extends ISharedFunction_Next<MODEL, RESULT, UNDECIDED_RET>,
+			UNDECIDED_INTEGER_RET  	extends ISharedFunction_Next<MODEL, RESULT, UNDECIDED_RET>,
+			UNDECIDED_LONG_RET 	 	extends ISharedFunction_Next<MODEL, RESULT, UNDECIDED_RET>,
+			UNDECIDED_BIGINTEGER_RET extends ISharedFunction_Next<MODEL, RESULT, UNDECIDED_RET>,
+			UNDECIDED_FLOAT_RET 	 extends ISharedFunction_Next<MODEL, RESULT, UNDECIDED_RET>,
+			UNDECIDED_DOUBLE_RET   	extends ISharedFunction_Next<MODEL, RESULT, UNDECIDED_RET>,
+			UNDECIDED_BIGDECIMAL_RET  extends ISharedFunction_Next<MODEL, RESULT, UNDECIDED_RET>,
+			UNDECIDED_STRING_RET  	extends ISharedFunction_Next<MODEL, RESULT, UNDECIDED_RET>,
+			UNDECIDED_DATE_RET  	extends ISharedFunction_Next<MODEL, RESULT, UNDECIDED_RET>,
+			UNDECIDED_CALENDAR_RET  extends ISharedFunction_Next<MODEL, RESULT, UNDECIDED_RET>,
+			UNDECIDED_SQLDATE_RET  	extends ISharedFunction_Next<MODEL, RESULT, UNDECIDED_RET>,
+			UNDECIDED_SQLTIME_RET  	extends ISharedFunction_Next<MODEL, RESULT, UNDECIDED_RET>,
+			UNDECIDED_SQLTIMESTAMP_RET  extends ISharedFunction_Next<MODEL, RESULT, UNDECIDED_RET>
+			
 
 			>
 
@@ -61,7 +82,7 @@ abstract class ResultMapper_ExpressionList_Base<
 				
 				OPERAND_RET,
 				
-				NAMED_RET, ALIAS_RET,
+				NAMED_RET, ALIAS_RET, UNDECIDED_RET,
 				
 				NUMERIC_NEXT, STRING_NEXT,
 				
@@ -84,7 +105,6 @@ abstract class ResultMapper_ExpressionList_Base<
 				NAMED_SQLTIME_RET,
 				NAMED_SQLTIMESTAMP_RET,
 
-				
 				ALIAS_SUM_LONG_RET,
 				ALIAS_COUNT_RET,
 				ALIAS_LENGTH_RET,
@@ -102,7 +122,28 @@ abstract class ResultMapper_ExpressionList_Base<
 				ALIAS_CALENDAR_RET,
 				ALIAS_SQLDATE_RET,
 				ALIAS_SQLTIME_RET,
-				ALIAS_SQLTIMESTAMP_RET
+				ALIAS_SQLTIMESTAMP_RET,
+				
+				
+				UNDECIDED_SUM_LONG_RET,
+				UNDECIDED_COUNT_RET,
+				UNDECIDED_LENGTH_RET,
+				
+				UNDECIDED_BYTE_RET,
+				UNDECIDED_SHORT_RET,
+				UNDECIDED_INTEGER_RET,
+				UNDECIDED_LONG_RET,
+				UNDECIDED_BIGINTEGER_RET,
+				UNDECIDED_FLOAT_RET,
+				UNDECIDED_DOUBLE_RET,
+				UNDECIDED_BIGDECIMAL_RET,
+				UNDECIDED_STRING_RET,
+				UNDECIDED_DATE_RET,
+				UNDECIDED_CALENDAR_RET,
+				UNDECIDED_SQLDATE_RET,
+				UNDECIDED_SQLTIME_RET,
+				UNDECIDED_SQLTIMESTAMP_RET
+				
 				
 				> 
 

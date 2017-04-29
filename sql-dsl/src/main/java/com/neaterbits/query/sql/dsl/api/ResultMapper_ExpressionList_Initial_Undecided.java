@@ -130,6 +130,7 @@ final class ResultMapper_ExpressionList_Initial_Undecided<
 			
 			NAMED_RET,
 			ALIAS_RET,
+			UNDECIDED_RET,
 			
 			ISharedResultMap_OpsAndTo_Comparable_Named<MODEL, RESULT, Integer, ISharedFunction_After<MODEL, RESULT>>,
 			ISharedFunction_Next<MODEL, RESULT, ISharedFunction_After<MODEL, RESULT>>,
@@ -171,7 +172,27 @@ final class ResultMapper_ExpressionList_Initial_Undecided<
 			ALIAS_CALENDAR_RET,
 			ALIAS_SQLDATE_RET,
 			ALIAS_SQLTIME_RET,
-			ALIAS_SQLTIMESTAMP_RET
+			ALIAS_SQLTIMESTAMP_RET,
+			
+			UNDECIDED_SUM_LONG_RET,
+			UNDECIDED_COUNT_RET,
+			UNDECIDED_LENGTH_RET,
+			
+			UNDECIDED_BYTE_RET,
+			UNDECIDED_SHORT_RET,
+			UNDECIDED_INT_RET,
+			UNDECIDED_LONG_RET,
+			UNDECIDED_BIGINTEGER_RET,
+			UNDECIDED_FLOAT_RET,
+			UNDECIDED_DOUBLE_RET,
+			UNDECIDED_BIGDECIMAL_RET,
+			UNDECIDED_STRING_RET,
+			UNDECIDED_DATE_RET,
+			UNDECIDED_CALENDAR_RET,
+			UNDECIDED_SQLDATE_RET,
+			UNDECIDED_SQLTIME_RET,
+			UNDECIDED_SQLTIMESTAMP_RET
+			
 			>
 
 	
@@ -1089,5 +1110,5 @@ final class ResultMapper_ExpressionList_Initial_Undecided<
 			> length() {
 		return (ISharedFunctions_StringResult_Initial)this;
 	}
-				
+
 }

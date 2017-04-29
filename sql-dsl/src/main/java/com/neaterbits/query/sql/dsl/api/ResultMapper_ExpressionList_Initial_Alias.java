@@ -36,6 +36,7 @@ abstract class ResultMapper_ExpressionList_Initial_Alias<
 			
 			ISharedFunction_After<MODEL, RESULT>,
 			RET,
+			ISharedFunction_After<MODEL, RESULT>,
 			
 			ISharedResultMap_OpsAndTo_Comparable_Alias<MODEL, RESULT, Integer, RET>,
 			ISharedResultMap_OpsAndTo_String_Alias<MODEL, RESULT, RET>,
@@ -76,7 +77,26 @@ abstract class ResultMapper_ExpressionList_Initial_Alias<
 			CALENDAR_RET,
 			SQLDATE_RET,
 			SQLTIME_RET,
-			SQLTIMESTAMP_RET
+			SQLTIMESTAMP_RET,
+			
+			ISharedFunction_Next<MODEL, RESULT, ISharedFunction_After<MODEL, RESULT>>,
+			ISharedFunction_Next<MODEL, RESULT, ISharedFunction_After<MODEL, RESULT>>,
+			ISharedFunction_Next<MODEL, RESULT, ISharedFunction_After<MODEL, RESULT>>,
+
+			ISharedFunction_Next<MODEL, RESULT, ISharedFunction_After<MODEL, RESULT>>,
+			ISharedFunction_Next<MODEL, RESULT, ISharedFunction_After<MODEL, RESULT>>,
+			ISharedFunction_Next<MODEL, RESULT, ISharedFunction_After<MODEL, RESULT>>,
+			ISharedFunction_Next<MODEL, RESULT, ISharedFunction_After<MODEL, RESULT>>,
+			ISharedFunction_Next<MODEL, RESULT, ISharedFunction_After<MODEL, RESULT>>,
+			ISharedFunction_Next<MODEL, RESULT, ISharedFunction_After<MODEL, RESULT>>,
+			ISharedFunction_Next<MODEL, RESULT, ISharedFunction_After<MODEL, RESULT>>,
+			ISharedFunction_Next<MODEL, RESULT, ISharedFunction_After<MODEL, RESULT>>,
+			ISharedFunction_Next<MODEL, RESULT, ISharedFunction_After<MODEL, RESULT>>,
+			ISharedFunction_Next<MODEL, RESULT, ISharedFunction_After<MODEL, RESULT>>,
+			ISharedFunction_Next<MODEL, RESULT, ISharedFunction_After<MODEL, RESULT>>,
+			ISharedFunction_Next<MODEL, RESULT, ISharedFunction_After<MODEL, RESULT>>,
+			ISharedFunction_Next<MODEL, RESULT, ISharedFunction_After<MODEL, RESULT>>,
+			ISharedFunction_Next<MODEL, RESULT, ISharedFunction_After<MODEL, RESULT>>
 			
 		>
 

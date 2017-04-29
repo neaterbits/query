@@ -409,8 +409,7 @@ public class ShortFunctionTest extends BaseJPATest {
 		/*
 		select.list(NameLength.class)
 			.map().absOfInteger(b ->b.abs(Company::getYearFounded)).
-			*/
-		
+		*/
 		
 		
 		verifyIsCompilable(

@@ -12,7 +12,8 @@ final class Collector_Expression_List_Sub<
 	OPERAND_RET extends ISharedFunction_After<MODEL, RESULT>,
 	
 	NAMED_RET extends ISharedFunction_After<MODEL, RESULT>,
-	ALIAS_RET extends ISharedFunction_After<MODEL, RESULT>
+	ALIAS_RET extends ISharedFunction_After<MODEL, RESULT>,
+	UNDECIDED_RET extends ISharedFunction_After<MODEL, RESULT>
 
 	>
 
@@ -27,6 +28,7 @@ final class Collector_Expression_List_Sub<
 		
 		NAMED_RET,
 		ALIAS_RET,
+		UNDECIDED_RET,
 		
 		ISharedSubOperandsBuilder_Numeric_Next_Named<MODEL, RESULT, R, OPERAND_RET>,
 		ISharedFunction_Next<MODEL, RESULT, OPERAND_RET>,// STRING_OPERAND_NEXT,
@@ -68,7 +70,27 @@ final class Collector_Expression_List_Sub<
 		ISharedFunction_Next<MODEL, RESULT, ALIAS_RET>,
 		ISharedFunction_Next<MODEL, RESULT, ALIAS_RET>,
 		ISharedFunction_Next<MODEL, RESULT, ALIAS_RET>,
-		ISharedFunction_Next<MODEL, RESULT, ALIAS_RET>
+		ISharedFunction_Next<MODEL, RESULT, ALIAS_RET>,
+		
+		ISharedFunction_Next<MODEL, RESULT, UNDECIDED_RET>,
+		ISharedFunction_Next<MODEL, RESULT, UNDECIDED_RET>,
+		ISharedFunction_Next<MODEL, RESULT, UNDECIDED_RET>,
+		
+		ISharedFunction_Next<MODEL, RESULT, UNDECIDED_RET>,
+		ISharedFunction_Next<MODEL, RESULT, UNDECIDED_RET>,
+		ISharedFunction_Next<MODEL, RESULT, UNDECIDED_RET>,
+		ISharedFunction_Next<MODEL, RESULT, UNDECIDED_RET>,
+		ISharedFunction_Next<MODEL, RESULT, UNDECIDED_RET>,
+		ISharedFunction_Next<MODEL, RESULT, UNDECIDED_RET>,
+		ISharedFunction_Next<MODEL, RESULT, UNDECIDED_RET>,
+		ISharedFunction_Next<MODEL, RESULT, UNDECIDED_RET>,
+		ISharedFunction_Next<MODEL, RESULT, UNDECIDED_RET>,
+		ISharedFunction_Next<MODEL, RESULT, UNDECIDED_RET>,
+		ISharedFunction_Next<MODEL, RESULT, UNDECIDED_RET>,
+		ISharedFunction_Next<MODEL, RESULT, UNDECIDED_RET>,
+		ISharedFunction_Next<MODEL, RESULT, UNDECIDED_RET>,
+		ISharedFunction_Next<MODEL, RESULT, UNDECIDED_RET>
+		
 		
 		/*
 		ISharedSubOperandsBuilder_Numeric_Next_Alias<MODEL, RESULT, Long, ALIAS_RET>,

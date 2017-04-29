@@ -11,6 +11,7 @@ abstract class SubOperandsBuilder_Initial<
 		
 		NAMED_RET extends ISharedFunction_After<MODEL, RESULT>,
 		ALIAS_RET extends ISharedFunction_After<MODEL, RESULT>,
+		UNDECIDED_RET extends ISharedFunction_After<MODEL, RESULT>,
 		
 		NUMERIC_OPERAND_NEXT   extends ISharedFunction_Next<MODEL, RESULT, AFTER>,
 		STRING_OPERAND_NEXT    extends ISharedFunction_Next<MODEL, RESULT, AFTER>
@@ -26,6 +27,7 @@ abstract class SubOperandsBuilder_Initial<
 			
 			NAMED_RET,
 			ALIAS_RET,
+			UNDECIDED_RET,
 
 			NUMERIC_OPERAND_NEXT,
 			STRING_OPERAND_NEXT,
@@ -67,7 +69,28 @@ abstract class SubOperandsBuilder_Initial<
 			ISharedSubOperand_Numeric_Ops_Alias<MODEL, RESULT, R, ALIAS_RET>,
 			ISharedSubOperand_NumericSQLTimeType_Ops_Alias<MODEL, RESULT, R, ALIAS_RET>,
 			ISharedSubOperand_NumericSQLTimeType_Ops_Alias<MODEL, RESULT, R, ALIAS_RET>,
-			ISharedSubOperand_NumericSQLTimeType_Ops_Alias<MODEL, RESULT, R, ALIAS_RET>
+			ISharedSubOperand_NumericSQLTimeType_Ops_Alias<MODEL, RESULT, R, ALIAS_RET>,
+			
+			
+			ISharedSubOperand_Numeric_Ops_Undecided<MODEL, RESULT, R, UNDECIDED_RET>,
+			ISharedSubOperand_Numeric_Ops_Undecided<MODEL, RESULT, R, UNDECIDED_RET>,
+			ISharedSubOperand_Numeric_Ops_Undecided<MODEL, RESULT, R, UNDECIDED_RET>,
+
+			ISharedSubOperand_Numeric_Ops_Undecided<MODEL, RESULT, R, UNDECIDED_RET>, 
+			ISharedSubOperand_Numeric_Ops_Undecided<MODEL, RESULT, R, UNDECIDED_RET>,
+			ISharedSubOperand_Numeric_Ops_Undecided<MODEL, RESULT, R, UNDECIDED_RET>,
+			ISharedSubOperand_Numeric_Ops_Undecided<MODEL, RESULT, R, UNDECIDED_RET>,
+			ISharedSubOperand_Numeric_Ops_Undecided<MODEL, RESULT, R, UNDECIDED_RET>,
+			ISharedSubOperand_Numeric_Ops_Undecided<MODEL, RESULT, R, UNDECIDED_RET>,
+			ISharedSubOperand_Numeric_Ops_Undecided<MODEL, RESULT, R, UNDECIDED_RET>,
+			ISharedSubOperand_Numeric_Ops_Undecided<MODEL, RESULT, R, UNDECIDED_RET>,
+			ISharedSubOperand_String_Ops_Undecided<MODEL, RESULT, UNDECIDED_RET>,
+			ISharedSubOperand_Numeric_Ops_Undecided<MODEL, RESULT, R, UNDECIDED_RET>,
+			ISharedSubOperand_Numeric_Ops_Undecided<MODEL, RESULT, R, UNDECIDED_RET>,
+			ISharedSubOperand_NumericSQLTimeType_Ops_Undecided<MODEL, RESULT, R, UNDECIDED_RET>,
+			ISharedSubOperand_NumericSQLTimeType_Ops_Undecided<MODEL, RESULT, R, UNDECIDED_RET>,
+			ISharedSubOperand_NumericSQLTimeType_Ops_Undecided<MODEL, RESULT, R, UNDECIDED_RET>
+			
 			>
 
  {
