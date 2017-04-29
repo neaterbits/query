@@ -20,6 +20,6 @@ public interface ISharedFunctions_All_Transform_Alias<
 		>
 		extends
 			ISharedFunctions_Arithmetic_Alias_All<MODEL, RESULT, RET, BYTE_RET, SHORT_RET, INTEGER_RET, LONG_RET, BIGINTEGER_RET, FLOAT_RET, DOUBLE_RET, BIGDECIMAL_RET>,
-			ISharedFunctions_String_Alias<MODEL, RESULT, RET, LENGTH_RET, STRING_RET> {
+			ISharedFunctions_String_Alias_All<MODEL, RESULT, RET, LENGTH_RET, STRING_RET> {
 
 }

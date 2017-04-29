@@ -11,7 +11,7 @@ public interface ISharedMapFunctions_String_Named<
 		NO_PARAM_LENGTH_RET extends ISharedFunction_Next<MODEL, RESULT, RET>,
 		NO_PARAM_STRING_RET extends ISharedFunction_Next<MODEL, RESULT, RET>>
 
-		extends ISharedFunctions_String_Named<MODEL, RESULT, RET, LENGTH_RET, STRING_RET>,
+		extends ISharedFunctions_String_Named_All<MODEL, RESULT, RET, LENGTH_RET, STRING_RET>,
  			    ISharedFunctions_String_NoParam_Base<MODEL, RESULT,
  			    
  			    ISharedMapFunctions_String_StringResult_Named<
