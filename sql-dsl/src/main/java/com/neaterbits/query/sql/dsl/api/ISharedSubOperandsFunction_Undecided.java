@@ -2,7 +2,8 @@ package com.neaterbits.query.sql.dsl.api;
 
 import java.util.function.Function;
 
-public interface ISharedSubOperandsFunction_Undecided<MODEL, RESULT, R extends Comparable<R>, RET extends ISharedSubOperand_End_Undecided<MODEL, RESULT, R>>
+@FunctionalInterface
+public interface ISharedSubOperandsFunction_Undecided<MODEL, RESULT, R extends Comparable<R>>
 
 		extends Function<
 			ISharedSubOperandsBuilder_Undecided<
@@ -12,7 +13,7 @@ public interface ISharedSubOperandsFunction_Undecided<MODEL, RESULT, R extends C
 					ISharedSubOperand_End_Named<MODEL, RESULT, R>,
 					ISharedSubOperand_End_Alias<MODEL, RESULT, R>>,
 			
-					Integer> 
+					ISharedSubOperand_End_Undecided<MODEL, RESULT, R>> 
 			
 			/*
 fortsett her, må returnere retur-typen ut baser på om er named eller ikke?

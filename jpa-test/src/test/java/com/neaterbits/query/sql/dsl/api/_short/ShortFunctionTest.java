@@ -230,6 +230,7 @@ public class ShortFunctionTest extends BaseJPATest {
 				.map(Company::getName).to(NameLength::setName)
 				.map().abs().length(Company::getName).to(NameLength::setLength)
 				.map().abs().length().trim(Company::getName).to(NameLength::setLength)
+				.map().abs().absOfBigDecimal(b -> b.abs())
 				.build();
 
 		

@@ -5,7 +5,8 @@ public interface ISharedSubOperandsBuilder_Undecided<
 		RESULT,
 		R extends Comparable<R>, 
 		NAMED_RET extends ISharedFunction_After<MODEL, RESULT>,
-		ALIAS_RET extends ISharedFunction_After<MODEL, RESULT>>
+		ALIAS_RET extends ISharedFunction_After<MODEL, RESULT>,
+		UNDECIDED_RET extends ISharedFunction_After<MODEL, RESULT>>
 
 	extends 
 		//ISharedFunction_Next<MODEL, RESULT, NAMED_RET, ALIAS_RET>,
@@ -14,6 +15,7 @@ public interface ISharedSubOperandsBuilder_Undecided<
 			
 			NAMED_RET,
 			ALIAS_RET,
+			UNDECIDED_RET,
 			
 			ISharedSubOperand_Numeric_Ops_Named<MODEL, RESULT, R, NAMED_RET>,
 			ISharedSubOperand_Numeric_Ops_Named<MODEL, RESULT, R, NAMED_RET>,
@@ -31,9 +33,18 @@ public interface ISharedSubOperandsBuilder_Undecided<
 			ISharedSubOperand_Numeric_Ops_Alias<MODEL, RESULT, R, ALIAS_RET>,
 			ISharedSubOperand_Numeric_Ops_Alias<MODEL, RESULT, R, ALIAS_RET>,
 			ISharedSubOperand_Numeric_Ops_Alias<MODEL, RESULT, R, ALIAS_RET>,
-			ISharedSubOperand_Numeric_Ops_Alias<MODEL, RESULT, R, ALIAS_RET>
+			ISharedSubOperand_Numeric_Ops_Alias<MODEL, RESULT, R, ALIAS_RET>,
 			
-		>,
+			ISharedSubOperand_Numeric_Ops_Undecided<MODEL, RESULT, R, UNDECIDED_RET>,
+			ISharedSubOperand_Numeric_Ops_Undecided<MODEL, RESULT, R, UNDECIDED_RET>,
+			ISharedSubOperand_Numeric_Ops_Undecided<MODEL, RESULT, R, UNDECIDED_RET>,
+			ISharedSubOperand_Numeric_Ops_Undecided<MODEL, RESULT, R, UNDECIDED_RET>,
+			ISharedSubOperand_Numeric_Ops_Undecided<MODEL, RESULT, R, UNDECIDED_RET>,
+			ISharedSubOperand_Numeric_Ops_Undecided<MODEL, RESULT, R, UNDECIDED_RET>,
+			ISharedSubOperand_Numeric_Ops_Undecided<MODEL, RESULT, R, UNDECIDED_RET>,
+			ISharedSubOperand_Numeric_Ops_Undecided<MODEL, RESULT, R, UNDECIDED_RET>
+
+			>,
 		ISharedFunctions_Arithmetic_NoParam_Base<
 					MODEL,
 					RESULT,
