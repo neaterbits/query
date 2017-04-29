@@ -14,7 +14,7 @@ public interface ISharedFunctions_String_Undecided<
 		
 		> 
 
-	extends ISharedFunctions_String_Named<MODEL, RESULT, NAMED_RET, NAMED_LENGTH_RET_CLAUSE, NAMED_STRING_CLAUSE>,
-			ISharedFunctions_String_Alias<MODEL, RESULT, ALIAS_RET, ALIAS_LENGTH_RET_CLAUSE, ALIAS_STRING_CLAUSE> {
+	extends ISharedFunctions_String_Named_All<MODEL, RESULT, NAMED_RET, NAMED_LENGTH_RET_CLAUSE, NAMED_STRING_CLAUSE>,
+			ISharedFunctions_String_Alias_All<MODEL, RESULT, ALIAS_RET, ALIAS_LENGTH_RET_CLAUSE, ALIAS_STRING_CLAUSE> {
 	
 }

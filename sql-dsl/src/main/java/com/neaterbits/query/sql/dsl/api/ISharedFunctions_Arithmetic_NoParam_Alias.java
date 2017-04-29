@@ -19,10 +19,10 @@ public interface ISharedFunctions_Arithmetic_NoParam_Alias<
 	extends ISharedFunctions_Arithmetic_NoParam_Base<
 			MODEL,
 			RESULT,
-			ISharedFunctions_Arithmetic_Alias<MODEL, RESULT, RET, BYTE_RET, SHORT_RET, INTEGER_RET, LONG_RET, BIGINTEGER_RET, FLOAT_RET, DOUBLE_RET, BIGDECIMAL_RET>,
+			ISharedFunctions_Arithmetic_Alias_All<MODEL, RESULT, RET, BYTE_RET, SHORT_RET, INTEGER_RET, LONG_RET, BIGINTEGER_RET, FLOAT_RET, DOUBLE_RET, BIGDECIMAL_RET>,
 			
 			// for sqrt()
-			ISharedFunctions_Arithmetic_Alias<MODEL, RESULT, RET, DOUBLE_RET, DOUBLE_RET, DOUBLE_RET, DOUBLE_RET, DOUBLE_RET, DOUBLE_RET, DOUBLE_RET, DOUBLE_RET>
+			ISharedFunctions_Arithmetic_Alias_All<MODEL, RESULT, RET, DOUBLE_RET, DOUBLE_RET, DOUBLE_RET, DOUBLE_RET, DOUBLE_RET, DOUBLE_RET, DOUBLE_RET, DOUBLE_RET>
 	> {
 
 }

@@ -41,7 +41,7 @@ public interface ISQL<
 		ALIAS_SQLTIMESTAMP_RET
 		>
 
-		extends ISharedFunctions_Aggregate_Named<
+		extends ISharedFunctions_Aggregate_Named_All<
 			NAMED_SUM_LONG_RET,
 			NAMED_COUNT_RET,
 			
@@ -57,7 +57,7 @@ public interface ISQL<
 			>
 		,
 
-		ISharedFunctions_Aggregate_Alias<
+		ISharedFunctions_Aggregate_Alias_All<
 			ALIAS_SUM_LONG_RET,
 			ALIAS_COUNT_RET,
 			

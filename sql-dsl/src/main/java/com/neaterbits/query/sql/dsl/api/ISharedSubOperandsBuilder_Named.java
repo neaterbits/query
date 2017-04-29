@@ -4,7 +4,7 @@ public interface ISharedSubOperandsBuilder_Named<MODEL, RESULT, R extends Compar
 
 		extends 
 			ISharedFunction_Next<MODEL, RESULT, AFTER>,
-			ISharedFunctions_Arithmetic_Named<
+			ISharedFunctions_Arithmetic_Named_All<
 				MODEL, RESULT,
 				AFTER,
 				
@@ -26,7 +26,7 @@ public interface ISharedSubOperandsBuilder_Named<MODEL, RESULT, R extends Compar
 			>,
 						
 			// can call subs to String functions too
-			ISharedFunctions_String_Named<
+			ISharedFunctions_String_Named_All<
 				MODEL, RESULT, AFTER,
 				ISharedSubOperand_Numeric_Ops_Named<MODEL, RESULT, R, AFTER>, 
 				ISharedSubOperand_String_Ops_Named<MODEL, RESULT, AFTER>>

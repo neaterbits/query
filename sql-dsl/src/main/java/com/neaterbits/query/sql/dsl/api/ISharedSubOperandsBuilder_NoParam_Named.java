@@ -4,7 +4,7 @@ public interface ISharedSubOperandsBuilder_NoParam_Named<MODEL, RESULT, T, AFTER
 
 	extends
 		ISharedFunction_Next<MODEL, RESULT, AFTER>,
-		ISharedFunctions_Arithmetic_Named<
+		ISharedFunctions_Arithmetic_Named_All<
 
 		MODEL,
 				RESULT,

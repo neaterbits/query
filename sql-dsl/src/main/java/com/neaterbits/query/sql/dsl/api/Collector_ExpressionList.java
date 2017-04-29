@@ -76,7 +76,7 @@ abstract class Collector_ExpressionList<
 			   
 	// NOTE! We do not bother about types here since Java does not keep generic-types at runtime in any case
 			 
-			   ISharedFunctions_Arithmetic_Named<
+			   ISharedFunctions_Arithmetic_Named_All<
 				   MODEL,
 				   RESULT,
 	
@@ -92,10 +92,10 @@ abstract class Collector_ExpressionList<
 				   NAMED_BIGDECIMAL_RET
 				   >,
 			   
-			   ISharedFunctions_Aggregate_Named<NAMED_SUM_LONG_RET, NAMED_COUNT_RET, NAMED_BYTE_RET, NAMED_SHORT_RET, NAMED_INTEGER_RET, NAMED_LONG_RET, NAMED_BIGINTEGER_RET, NAMED_FLOAT_RET, NAMED_DOUBLE_RET, NAMED_BIGDECIMAL_RET, NAMED_DATE_RET>,
-			   ISharedFunctions_String_Named<MODEL, RESULT, NAMED_RET, NAMED_LENGTH_RET, NAMED_STRING_RET>,
+			   ISharedFunctions_Aggregate_Named_All<NAMED_SUM_LONG_RET, NAMED_COUNT_RET, NAMED_BYTE_RET, NAMED_SHORT_RET, NAMED_INTEGER_RET, NAMED_LONG_RET, NAMED_BIGINTEGER_RET, NAMED_FLOAT_RET, NAMED_DOUBLE_RET, NAMED_BIGDECIMAL_RET, NAMED_DATE_RET>,
+			   ISharedFunctions_String_Named_All<MODEL, RESULT, NAMED_RET, NAMED_LENGTH_RET, NAMED_STRING_RET>,
 			   
-			   ISharedFunctions_Arithmetic_Alias<
+			   ISharedFunctions_Arithmetic_Alias_All<
 				   MODEL,
 				   RESULT,
 	
@@ -110,8 +110,8 @@ abstract class Collector_ExpressionList<
 				   ALIAS_DOUBLE_RET,
 				   ALIAS_BIGDECIMAL_RET
 			   >,
-			   ISharedFunctions_Aggregate_Alias<ALIAS_SUM_LONG_RET, ALIAS_COUNT_RET, ALIAS_BYTE_RET, ALIAS_SHORT_RET, ALIAS_INTEGER_RET, ALIAS_LONG_RET, ALIAS_BIGINTEGER_RET, ALIAS_FLOAT_RET, ALIAS_DOUBLE_RET, ALIAS_BIGDECIMAL_RET, ALIAS_DATE_RET>,
-			   ISharedFunctions_String_Alias<MODEL, RESULT, ALIAS_RET, ALIAS_LENGTH_RET, ALIAS_STRING_RET> {
+			   ISharedFunctions_Aggregate_Alias_All<ALIAS_SUM_LONG_RET, ALIAS_COUNT_RET, ALIAS_BYTE_RET, ALIAS_SHORT_RET, ALIAS_INTEGER_RET, ALIAS_LONG_RET, ALIAS_BIGINTEGER_RET, ALIAS_FLOAT_RET, ALIAS_DOUBLE_RET, ALIAS_BIGDECIMAL_RET, ALIAS_DATE_RET>,
+			   ISharedFunctions_String_Alias_All<MODEL, RESULT, ALIAS_RET, ALIAS_LENGTH_RET, ALIAS_STRING_RET> {
 
 	private EFieldAccessType fieldAccessType;
 	private List<FunctionBase> undecidedFunctions;

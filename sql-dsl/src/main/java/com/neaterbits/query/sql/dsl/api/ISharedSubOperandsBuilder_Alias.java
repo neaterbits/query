@@ -4,7 +4,7 @@ public interface ISharedSubOperandsBuilder_Alias<MODEL, RESULT, R extends Compar
 
 	extends 
 		ISharedFunction_Next<MODEL, RESULT, AFTER>,
-		ISharedFunctions_Arithmetic_Alias<
+		ISharedFunctions_Arithmetic_Alias_All<
 			MODEL, RESULT,
 			AFTER,
 			
@@ -24,7 +24,7 @@ public interface ISharedSubOperandsBuilder_Alias<MODEL, RESULT, R extends Compar
 					ISharedSubOperandsBuilder_NoParam_Alias<MODEL, RESULT, R, AFTER>,
 					ISharedSubOperandsBuilder_NoParam_Alias<MODEL, RESULT, Double, AFTER>
 		>,
-		ISharedFunctions_String_Alias<
+		ISharedFunctions_String_Alias_All<
 					MODEL,
 					RESULT,
 					AFTER,

@@ -17,7 +17,7 @@ public interface ISharedFunctions_NumericResult_Alias<
 	DOUBLE_RET   	extends ISharedFunction_Next<MODEL, RESULT, RET>,
 	BIGDECIMAL_RET  extends ISharedFunction_Next<MODEL, RESULT, RET>>
 	
-	extends ISharedFunctions_Arithmetic_Alias<
+	extends ISharedFunctions_Arithmetic_Alias_All<
 		MODEL,
 		RESULT,
 		RET,
