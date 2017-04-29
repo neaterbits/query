@@ -23,6 +23,9 @@ public class ShortFunctionTest extends BaseJPATest {
 	public void testModAndLengthNamed() {
 		final Company acme1 = new Company(1, "Acme", new BigDecimal("49"));
 		final Company acme2 = new Company(2, "Acme Inc.", new BigDecimal("121"));
+		
+		select.list(NameLength.class)
+			.map().absOfInteger(b -> b.length(Company::getName)).toString();
 
 		final MultiBuilt<NameLength> acmeQuery = select
 				.list(NameLength.class)
@@ -401,6 +404,13 @@ public class ShortFunctionTest extends BaseJPATest {
 	@Test // Test that can combine mod and length functions
 	public void testVerifyNoStringTypeInIntegerSub() {
 
+		/*
+		select.list(NameLength.class)
+			.map().absOfInteger(b ->b.abs(Company::getYearFounded)).
+			*/
+		
+		
+		
 		verifyIsCompilable(
 				b -> b.addImport(NameLength.class).addImport(Company.class),
 				
