@@ -53,7 +53,7 @@ abstract class Collector_Functions_Base<
 
 	implements 
 
-		ISharedFunctions_Arithmetic_Named<
+		ISharedFunctions_Arithmetic_Named_All<
 			MODEL, RESULT,
 		
 			NAMED_RET,
@@ -69,7 +69,7 @@ abstract class Collector_Functions_Base<
 		ISharedFunctions_String_Named<MODEL, RESULT, NAMED_RET, NAMED_LENGTH_RET, NAMED_STRING_RET>,
 		ISharedFunctions_Aggregate_Named<NAMED_SUM_LONG_RET, NAMED_COUNT_RET, NAMED_BYTE_RET, NAMED_SHORT_RET, NAMED_INTEGER_RET, NAMED_LONG_RET, NAMED_BIGINTEGER_RET, NAMED_FLOAT_RET, NAMED_DOUBLE_RET, NAMED_BIGDECIMAL_RET, NAMED_DATE_RET>,
 	
-		ISharedFunctions_Arithmetic_Alias<
+		ISharedFunctions_Arithmetic_Alias_All<
 			MODEL, RESULT,
 	
 			ALIAS_RET,
