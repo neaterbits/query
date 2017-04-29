@@ -436,7 +436,6 @@ public class ShortFunctionTest extends BaseJPATest {
 				".map().modOf(b -> b.lower(Company::getName), 3).to(NameLength::setLength)");
 	}
 
-	/* TODO re-enable
 	@Test
     public void testMapSumAndAvgList() {
 		
@@ -461,9 +460,7 @@ public class ShortFunctionTest extends BaseJPATest {
 					 .add(foo)).
 		checkOneValue(acmeQuery, new CompanyAggregatesVO(null, 124.95, new BigDecimal("249.9")));
 	}
-	*/
 
-	/* TODO - re-enable
 	@Test
     public void testSqrtOfAvgList() {
 		
@@ -484,7 +481,6 @@ public class ShortFunctionTest extends BaseJPATest {
 					 .add(foo)).
 		checkOneValue(acmeQuery, new CompanySqrtAggregatesVO(7.0, null));
 	}
-	*/
 	
 	@Test
     public void testArithmeticModNamed() {

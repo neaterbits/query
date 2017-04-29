@@ -66,8 +66,6 @@ public class ShortAPITest extends BaseJPATest {
 	}
 	*/
 
-	/* TODO - re-enable
-	
 	@Test
     public void testMapSumAndAvgOne() {
 		
@@ -100,7 +98,6 @@ public class ShortAPITest extends BaseJPATest {
 		
 	}
 	
-*/
 	@Test
     public void testPlusLiteral() {
 		
@@ -403,8 +400,6 @@ public class ShortAPITest extends BaseJPATest {
 	}
 
 
-	/* TODO - re-enable
-	
 	@Test
     public void testArithmetic() {
 		final SingleBuilt<CompanySqrtAggregatesVO> acmeQuery = select
@@ -421,8 +416,6 @@ public class ShortAPITest extends BaseJPATest {
 		
 	}
 		
-*/
-	
 	@Test
     public void testMapOf() {
 		
