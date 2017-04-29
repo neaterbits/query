@@ -8,7 +8,7 @@ public interface ISharedResultMap_OpsAndTo_String_Alias<
 	extends
     	ISharedResultMap_To_Comparable_Alias<MODEL, RESULT, String, RET>,
     
-		ISharedOperands_String_Alias<
+		ISharedOperands_String_Alias_All<
 				MODEL,
 				RESULT,
 				

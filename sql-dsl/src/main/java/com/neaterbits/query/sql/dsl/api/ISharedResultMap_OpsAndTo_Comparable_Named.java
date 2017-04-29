@@ -7,7 +7,7 @@ public interface ISharedResultMap_OpsAndTo_Comparable_Named<
 	RET extends ISharedFunction_After<MODEL, RESULT>>
 
 	extends ISharedResultMap_To_Comparable_Named<MODEL, RESULT, R, RET>,
-			ISharedOperands_Numeric_Named<
+			ISharedOperands_Numeric_Named_All<
 				MODEL,
 				RESULT,
 				
