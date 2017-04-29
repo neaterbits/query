@@ -36,17 +36,41 @@ public interface ISharedFunctions_Arithmetic_Undecided<
 	UNDECIDED_DOUBLE_RET   		extends ISharedFunction_Next<MODEL, RESULT, UNDECIDED_RET>,
 	UNDECIDED_BIGDECIMAL_RET  	extends ISharedFunction_Next<MODEL, RESULT, UNDECIDED_RET>
 	
-	> {
+	> 
+	
+		extends ISharedFunctions_Arithmetic_Named_Base<
+					MODEL,
+					RESULT,
+					
+					NAMED_RET,
+					
+					NAMED_BYTE_RET,
+					NAMED_SHORT_RET,
+					NAMED_INTEGER_RET,
+					NAMED_LONG_RET,
+					NAMED_BIGINTEGER_RET,
+					NAMED_FLOAT_RET,
+					NAMED_DOUBLE_RET,
+					NAMED_BIGDECIMAL_RET>,
+					
+				ISharedFunctions_Arithmetic_Alias_Base<
+					MODEL,
+					RESULT,
+					
+					ALIAS_RET,
+					
+					ALIAS_BYTE_RET,
+					ALIAS_SHORT_RET,
+					ALIAS_INTEGER_RET,
+					ALIAS_LONG_RET,
+					ALIAS_BIGINTEGER_RET,
+					ALIAS_FLOAT_RET,
+					ALIAS_DOUBLE_RET,
+					ALIAS_BIGDECIMAL_RET>					
+				
+				
+	{
 
-
-	<T> NAMED_BYTE_RET 		abs(IFunctionByte<T> getter);
-	<T> NAMED_SHORT_RET 		abs(IFunctionShort<T> getter);
-	<T> NAMED_INTEGER_RET 	abs(IFunctionInteger<T> getter);
-	<T> NAMED_LONG_RET 		abs(IFunctionLong<T> getter);
-	<T> NAMED_BIGINTEGER_RET 	abs(IFunctionBigInteger<T> getter);
-	<T> NAMED_FLOAT_RET 		abs(IFunctionFloat<T> getter);
-	<T> NAMED_DOUBLE_RET 		abs(IFunctionDouble<T> getter);
-	<T> NAMED_BIGDECIMAL_RET 	abs(IFunctionBigDecimal<T> getter);
 	
 	/*
 	UNDECIDED_BYTE_RET 		absOfByte(ISharedSubOperandsFunction_Byte_Undecided<MODEL, RESULT> sub);
@@ -60,16 +84,7 @@ public interface ISharedFunctions_Arithmetic_Undecided<
 	*/
 
 	// sqrt always returns double
-	<T> NAMED_DOUBLE_RET sqrt(IFunctionByte<T> getter);
-	<T> NAMED_DOUBLE_RET sqrt(IFunctionShort<T> getter);
-	<T> NAMED_DOUBLE_RET sqrt(IFunctionInteger<T> getter);
-	<T> NAMED_DOUBLE_RET sqrt(IFunctionLong<T> getter);
-	<T> NAMED_DOUBLE_RET sqrt(IFunctionBigInteger<T> getter);
-	<T> NAMED_DOUBLE_RET sqrt(IFunctionFloat<T> getter);
-	<T> NAMED_DOUBLE_RET sqrt(IFunctionDouble<T> getter);
-	<T> NAMED_DOUBLE_RET sqrt(IFunctionBigDecimal<T> getter);
-
-	/*
+/*
 	UNDECIDED_DOUBLE_RET sqrtOf(ISharedSubOperandsFunction_Byte_Undecided<MODEL, RESULT> sub);
 	UNDECIDED_DOUBLE_RET sqrtOf(ISharedSubOperandsFunction_Short_Undecided<MODEL, RESULT> sub);
 	UNDECIDED_DOUBLE_RET sqrtOf(ISharedSubOperandsFunction_Integer_Undecided<MODEL, RESULT> sub);
