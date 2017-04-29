@@ -38,7 +38,7 @@ abstract class ResultMapper_ExpressionList_Initial_Alias<
 			RET,
 			
 			ISharedResultMap_OpsAndTo_Comparable_Alias<MODEL, RESULT, Integer, RET>,
-			ISharedResultOps_String_Alias<MODEL, RESULT, RET>,
+			ISharedResultMap_OpsAndTo_String_Alias<MODEL, RESULT, RET>,
 
 			ISharedFunction_Next<MODEL, RESULT, ISharedFunction_After<MODEL, RESULT>>,
 			ISharedFunction_Next<MODEL, RESULT, ISharedFunction_After<MODEL, RESULT>>,

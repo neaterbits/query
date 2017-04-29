@@ -25,7 +25,7 @@ public interface ISharedMapFunctions_All_Named_Concrete<MODEL, RESULT, RET exten
 		ISharedResultMap_OpsAndTo_Comparable_Named<MODEL, RESULT, Double,     RET>,
 		ISharedResultMap_OpsAndTo_Comparable_Named<MODEL, RESULT, BigDecimal, RET>,
 		ISharedResultMap_OpsAndTo_Comparable_Named<MODEL, RESULT, Date, 	   RET>,
-		ISharedResultOps_String_Named<MODEL, RESULT, RET>,
+		ISharedResultMap_OpsAndTo_String_Named<MODEL, RESULT, RET>,
 		
 		ISharedResultMapperTo<MODEL, RESULT, Long, 		 RET>,
 		ISharedResultMapperTo<MODEL, RESULT, Long, 		 RET>,

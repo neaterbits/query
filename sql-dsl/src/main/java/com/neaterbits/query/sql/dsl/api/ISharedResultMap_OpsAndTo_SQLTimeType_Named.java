@@ -6,7 +6,7 @@ public interface ISharedResultMap_OpsAndTo_SQLTimeType_Named<
 		R, // extends Comparable<R>,
 		RET extends ISharedFunction_After<MODEL, RESULT>>
 		
-		extends ISharedMapResultOps_SQLTimeType_Named<MODEL, RESULT, R, RET>
+		extends ISharedResultMap_To_SQLTimeType_Named<MODEL, RESULT, R, RET>
 /*
 ,
 				ISharedOperands_Numeric_Named<

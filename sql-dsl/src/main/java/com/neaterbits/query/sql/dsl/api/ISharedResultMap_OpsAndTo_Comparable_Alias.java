@@ -6,7 +6,7 @@ public interface ISharedResultMap_OpsAndTo_Comparable_Alias<
 	R extends Comparable<R>,
 	RET extends ISharedFunction_After<MODEL, RESULT>>
 	
-	extends ISharedMapResultOps_Comparable_Alias<MODEL, RESULT, R, RET>,
+	extends ISharedResultMap_To_Comparable_Alias<MODEL, RESULT, R, RET>,
 			ISharedOperands_Numeric_Alias<
 				MODEL,
 				RESULT,
