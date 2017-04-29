@@ -8,7 +8,8 @@ public interface ISharedOperands_String_Named_All<
 		
 		TYPE_RET extends ISharedFunction_Next<MODEL, RESULT, RET>
 	
-	> extends ISharedOperands_String_Named_Base<MODEL, RESULT, RET, TYPE_RET> {
+	> extends ISharedOperands_String_Named_Base<MODEL, RESULT, RET, TYPE_RET>,
+			  ISharedOperands_String_Common<MODEL, RESULT, RET, TYPE_RET> {
 	
 
 }

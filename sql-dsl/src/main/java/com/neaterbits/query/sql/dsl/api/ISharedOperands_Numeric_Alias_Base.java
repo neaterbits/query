@@ -11,7 +11,7 @@ public interface ISharedOperands_Numeric_Alias_Base<
 	
 	TYPE_RET extends ISharedFunction_Next<MODEL, RESULT, RET>
 	
-	> extends ISharedOperands_Numeric_Common<MODEL, RESULT, RET, TYPE_RET> {
+	> {
 
 	<T> TYPE_RET plus(ISupplierShort getter);
 	

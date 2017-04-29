@@ -10,7 +10,8 @@ public interface ISharedOperands_Numeric_Named_All<
 		
 		TYPE_RET extends ISharedFunction_Next<MODEL, RESULT, RET>
 		
-	> extends ISharedOperands_Numeric_Named_Base<MODEL, RESULT, RET, TYPE_RET> {
+	> extends ISharedOperands_Numeric_Named_Base<MODEL, RESULT, RET, TYPE_RET>,
+			  ISharedOperands_Numeric_Common<MODEL, RESULT, RET, TYPE_RET> {
 
 		TYPE_RET plusOf(ISharedSubOperandsFunction_Named<MODEL, RESULT, BigDecimal> builder);
 
