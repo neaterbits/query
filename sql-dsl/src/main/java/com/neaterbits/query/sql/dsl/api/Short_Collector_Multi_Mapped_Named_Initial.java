@@ -42,7 +42,7 @@ final class Short_Collector_Multi_Mapped_Named_Initial<MODEL, RESULT>
 			ISharedResultMap_OpsAndTo_Comparable_Named<MODEL, RESULT, Double, IShortResult_Mapped_Multi_Named<MODEL, RESULT>>,
 			ISharedResultMap_OpsAndTo_Comparable_Named<MODEL, RESULT, BigDecimal, IShortResult_Mapped_Multi_Named<MODEL, RESULT>>,
 			ISharedResultMap_OpsAndTo_Comparable_Named<MODEL, RESULT, Date, IShortResult_Mapped_Multi_Named<MODEL, RESULT>>,
-			ISharedResultOps_String_Named<MODEL, RESULT,  IShortResult_Mapped_Multi_Named<MODEL, RESULT>>,
+			ISharedResultMap_OpsAndTo_String_Named<MODEL, RESULT,  IShortResult_Mapped_Multi_Named<MODEL, RESULT>>,
 			
 			ISharedResultMapperTo<MODEL, RESULT, Long, IShortResult_Mapped_Multi_Named<MODEL, RESULT>>,
 			ISharedResultMapperTo<MODEL, RESULT, Long, IShortResult_Mapped_Multi_Named<MODEL, RESULT>>,

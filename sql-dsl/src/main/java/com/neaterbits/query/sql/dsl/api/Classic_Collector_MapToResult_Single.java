@@ -55,8 +55,12 @@ final class Classic_Collector_MapToResult_Single<MODEL, RESULT>
 	@Override
 	CollectedQueryResult getCollectedQueryResult() {
 		throw new UnsupportedOperationException("Should never be invoked since passes " + CollectedQueryResult.class.getSimpleName() + "  in constructor");
+
 	}
 
+	
+	
+	
 	@Override
 	public ISharedMapFunctions_Initial<
 				MODEL,
@@ -77,7 +81,7 @@ final class Classic_Collector_MapToResult_Single<MODEL, RESULT>
 				ISharedResultMap_OpsAndTo_Comparable_Named<MODEL, RESULT, Float, IClassicResult_Mapped_Single_Named<MODEL, RESULT>>,
 				ISharedResultMap_OpsAndTo_Comparable_Named<MODEL, RESULT, Double, IClassicResult_Mapped_Single_Named<MODEL, RESULT>>,
 				ISharedResultMap_OpsAndTo_Comparable_Named<MODEL, RESULT, BigDecimal, IClassicResult_Mapped_Single_Named<MODEL, RESULT>>,
-				ISharedResultOps_String_Named<MODEL, RESULT, IClassicResult_Mapped_Single_Named<MODEL, RESULT>>,
+				ISharedResultMap_OpsAndTo_String_Named<MODEL, RESULT, IClassicResult_Mapped_Single_Named<MODEL, RESULT>>,
 				ISharedResultMap_OpsAndTo_Comparable_Named<MODEL, RESULT, java.util.Date, IClassicResult_Mapped_Single_Named<MODEL, RESULT>>,
 				ISharedResultMap_OpsAndTo_Comparable_Named<MODEL, RESULT, java.util.Calendar, IClassicResult_Mapped_Single_Named<MODEL, RESULT>>,
 				ISharedResultMap_OpsAndTo_SQLTimeType_Named<MODEL, RESULT, java.sql.Date, IClassicResult_Mapped_Single_Named<MODEL, RESULT>>,
@@ -103,24 +107,24 @@ final class Classic_Collector_MapToResult_Single<MODEL, RESULT>
 				ISharedResultMapperTo<MODEL, RESULT, java.sql.Time, IClassicResult_Mapped_Single_Named<MODEL, RESULT>>,
 				ISharedResultMapperTo<MODEL, RESULT, java.sql.Timestamp, IClassicResult_Mapped_Single_Named<MODEL, RESULT>>,
 
-				ISharedResultOps_Numeric_Alias<MODEL, RESULT, Long, IClassicResult_Mapped_Single_Alias<MODEL, RESULT>>,
-				ISharedResultOps_Numeric_Alias<MODEL, RESULT, Long, IClassicResult_Mapped_Single_Alias<MODEL, RESULT>>,
-				ISharedResultOps_Numeric_Alias<MODEL, RESULT, Integer, IClassicResult_Mapped_Single_Alias<MODEL, RESULT>>,
+				ISharedResultMap_OpsAndTo_Comparable_Alias<MODEL, RESULT, Long, IClassicResult_Mapped_Single_Alias<MODEL, RESULT>>,
+				ISharedResultMap_OpsAndTo_Comparable_Alias<MODEL, RESULT, Long, IClassicResult_Mapped_Single_Alias<MODEL, RESULT>>,
+				ISharedResultMap_OpsAndTo_Comparable_Alias<MODEL, RESULT, Integer, IClassicResult_Mapped_Single_Alias<MODEL, RESULT>>,
 				
-				ISharedResultOps_Numeric_Alias<MODEL, RESULT, Byte, IClassicResult_Mapped_Single_Alias<MODEL, RESULT>>,
-				ISharedResultOps_Numeric_Alias<MODEL, RESULT, Short, IClassicResult_Mapped_Single_Alias<MODEL, RESULT>>,
-				ISharedResultOps_Numeric_Alias<MODEL, RESULT, Integer, IClassicResult_Mapped_Single_Alias<MODEL, RESULT>>,
-				ISharedResultOps_Numeric_Alias<MODEL, RESULT, Long, IClassicResult_Mapped_Single_Alias<MODEL, RESULT>>, 
-				ISharedResultOps_Numeric_Alias<MODEL, RESULT, BigInteger, IClassicResult_Mapped_Single_Alias<MODEL, RESULT>>, 
-				ISharedResultOps_Numeric_Alias<MODEL, RESULT, Float, IClassicResult_Mapped_Single_Alias<MODEL, RESULT>>, 
-				ISharedResultOps_Numeric_Alias<MODEL, RESULT, Double, IClassicResult_Mapped_Single_Alias<MODEL, RESULT>>, 
-				ISharedResultOps_Numeric_Alias<MODEL, RESULT, BigDecimal, IClassicResult_Mapped_Single_Alias<MODEL, RESULT>>,
-				ISharedResultOps_String_Alias<MODEL, RESULT, IClassicResult_Mapped_Single_Alias<MODEL, RESULT>>,
-				ISharedResultOps_Numeric_Alias<MODEL, RESULT, java.util.Date, IClassicResult_Mapped_Single_Alias<MODEL, RESULT>>,
-				ISharedResultOps_Numeric_Alias<MODEL, RESULT, java.util.Calendar, IClassicResult_Mapped_Single_Alias<MODEL, RESULT>>,
-				ISharedResultOps_NumericSQLTimeType_Alias<MODEL, RESULT, java.sql.Date, IClassicResult_Mapped_Single_Alias<MODEL, RESULT>>,
-				ISharedResultOps_NumericSQLTimeType_Alias<MODEL, RESULT, java.sql.Time, IClassicResult_Mapped_Single_Alias<MODEL, RESULT>>,
-				ISharedResultOps_NumericSQLTimeType_Alias<MODEL, RESULT, java.sql.Timestamp, IClassicResult_Mapped_Single_Alias<MODEL, RESULT>>,
+				ISharedResultMap_OpsAndTo_Comparable_Alias<MODEL, RESULT, Byte, IClassicResult_Mapped_Single_Alias<MODEL, RESULT>>,
+				ISharedResultMap_OpsAndTo_Comparable_Alias<MODEL, RESULT, Short, IClassicResult_Mapped_Single_Alias<MODEL, RESULT>>,
+				ISharedResultMap_OpsAndTo_Comparable_Alias<MODEL, RESULT, Integer, IClassicResult_Mapped_Single_Alias<MODEL, RESULT>>,
+				ISharedResultMap_OpsAndTo_Comparable_Alias<MODEL, RESULT, Long, IClassicResult_Mapped_Single_Alias<MODEL, RESULT>>, 
+				ISharedResultMap_OpsAndTo_Comparable_Alias<MODEL, RESULT, BigInteger, IClassicResult_Mapped_Single_Alias<MODEL, RESULT>>, 
+				ISharedResultMap_OpsAndTo_Comparable_Alias<MODEL, RESULT, Float, IClassicResult_Mapped_Single_Alias<MODEL, RESULT>>, 
+				ISharedResultMap_OpsAndTo_Comparable_Alias<MODEL, RESULT, Double, IClassicResult_Mapped_Single_Alias<MODEL, RESULT>>, 
+				ISharedResultMap_OpsAndTo_Comparable_Alias<MODEL, RESULT, BigDecimal, IClassicResult_Mapped_Single_Alias<MODEL, RESULT>>,
+				ISharedResultMap_OpsAndTo_String_Alias<MODEL, RESULT, IClassicResult_Mapped_Single_Alias<MODEL, RESULT>>,
+				ISharedResultMap_OpsAndTo_Comparable_Alias<MODEL, RESULT, java.util.Date, IClassicResult_Mapped_Single_Alias<MODEL, RESULT>>,
+				ISharedResultMap_OpsAndTo_Comparable_Alias<MODEL, RESULT, java.util.Calendar, IClassicResult_Mapped_Single_Alias<MODEL, RESULT>>,
+				ISharedResultMap_OpsAndTo_SQLTimeType_Alias<MODEL, RESULT, java.sql.Date, IClassicResult_Mapped_Single_Alias<MODEL, RESULT>>,
+				ISharedResultMap_OpsAndTo_SQLTimeType_Alias<MODEL, RESULT, java.sql.Time, IClassicResult_Mapped_Single_Alias<MODEL, RESULT>>,
+				ISharedResultMap_OpsAndTo_SQLTimeType_Alias<MODEL, RESULT, java.sql.Timestamp, IClassicResult_Mapped_Single_Alias<MODEL, RESULT>>,
 				
 				ISharedResultMapperTo<MODEL, RESULT, Long, IClassicResult_Mapped_Single_Alias<MODEL, RESULT>>,
 				ISharedResultMapperTo<MODEL, RESULT, Long, IClassicResult_Mapped_Single_Alias<MODEL, RESULT>>,

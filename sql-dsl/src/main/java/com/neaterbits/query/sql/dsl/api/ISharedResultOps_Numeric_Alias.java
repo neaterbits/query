@@ -1,5 +1,6 @@
 package com.neaterbits.query.sql.dsl.api;
 
+@Deprecated // in use?
 public interface ISharedResultOps_Numeric_Alias<
 		MODEL,
 		RESULT,

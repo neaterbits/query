@@ -184,7 +184,7 @@ abstract class Short_Collector_Any_MappedOrEntityOrAggregate_Any<
 	}
 
 	@Override
-	public final <T> ISharedResultOps_String_Named<MODEL, RESULT, NAMED_MAPPED> map(IFunctionString<T> getter) {
+	public final <T> ISharedResultMap_OpsAndTo_String_Named<MODEL, RESULT, NAMED_MAPPED> map(IFunctionString<T> getter) {
 		return new ResultMapper_ExpressionList_String_Named<>(new FieldExpression(getter), this);
 	}
 

@@ -30,7 +30,7 @@ public interface ISharedResult_Mapped_Alias_Base<
 			ISharedResultMap_OpsAndTo_Comparable_Alias<MODEL, RESULT, Float, 	   RET>,
 			ISharedResultMap_OpsAndTo_Comparable_Alias<MODEL, RESULT, Double,     RET>,
 			ISharedResultMap_OpsAndTo_Comparable_Alias<MODEL, RESULT, BigDecimal, RET>,
-			ISharedResultOps_String_Alias<MODEL, RESULT, RET>,
+			ISharedResultMap_OpsAndTo_String_Alias<MODEL, RESULT, RET>,
 			ISharedResultMap_OpsAndTo_Comparable_Alias<MODEL, RESULT, java.util.Date, 	   RET>,
 			ISharedResultMap_OpsAndTo_Comparable_Alias<MODEL, RESULT, java.util.Calendar, RET>,
 			ISharedResultMap_OpsAndTo_SQLTimeType_Alias<MODEL, RESULT, java.sql.Date, RET>,

@@ -19,7 +19,7 @@ final class ResultMapper_ExpressionList_String_Named<
 
 		
 		ISharedFunction_Next<MODEL, RESULT, AFTER>, // Comparable
-		ISharedResultOps_String_Named<MODEL, RESULT, AFTER>,
+		ISharedResultMap_OpsAndTo_String_Named<MODEL, RESULT, AFTER>,
 		
 		ISharedFunction_Next<MODEL, RESULT, AFTER>,
 		ISharedFunction_Next<MODEL, RESULT, AFTER>,
@@ -33,7 +33,7 @@ final class ResultMapper_ExpressionList_String_Named<
 		ISharedFunction_Next<MODEL, RESULT, AFTER>,
 		ISharedFunction_Next<MODEL, RESULT, AFTER>,
 		ISharedFunction_Next<MODEL, RESULT, AFTER>,
-		ISharedResultOps_String_Named<MODEL, RESULT, AFTER>,
+		ISharedResultMap_OpsAndTo_String_Named<MODEL, RESULT, AFTER>,
 		ISharedFunction_Next<MODEL, RESULT, AFTER>,
 		ISharedFunction_Next<MODEL, RESULT, AFTER>,
 		ISharedFunction_Next<MODEL, RESULT, AFTER>,
@@ -62,7 +62,7 @@ final class ResultMapper_ExpressionList_String_Named<
 > 
 
 
-	implements ISharedResultOps_String_Named<MODEL, RESULT, AFTER> {
+	implements ISharedResultMap_OpsAndTo_String_Named<MODEL, RESULT, AFTER> {
 
 	private final IMappingCollector<MODEL, RESULT> impl;
 	

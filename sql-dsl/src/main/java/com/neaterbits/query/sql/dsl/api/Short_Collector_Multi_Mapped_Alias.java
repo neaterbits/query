@@ -42,7 +42,7 @@ final class Short_Collector_Multi_Mapped_Alias<MODEL, RESULT>
 			ISharedResultMap_OpsAndTo_Comparable_Alias<MODEL, RESULT, Float, IShortResult_Mapped_Multi_Alias<MODEL, RESULT>>,
 			ISharedResultMap_OpsAndTo_Comparable_Alias<MODEL, RESULT, Double, IShortResult_Mapped_Multi_Alias<MODEL, RESULT>>,
 			ISharedResultMap_OpsAndTo_Comparable_Alias<MODEL, RESULT, BigDecimal, IShortResult_Mapped_Multi_Alias<MODEL, RESULT>>,
-			ISharedResultOps_String_Alias<MODEL, RESULT,  IShortResult_Mapped_Multi_Alias<MODEL, RESULT>>,
+			ISharedResultMap_OpsAndTo_String_Alias<MODEL, RESULT,  IShortResult_Mapped_Multi_Alias<MODEL, RESULT>>,
 			ISharedResultMap_OpsAndTo_Comparable_Alias<MODEL, RESULT, java.util.Date, IShortResult_Mapped_Multi_Alias<MODEL, RESULT>>,
 			ISharedResultMap_OpsAndTo_Comparable_Alias<MODEL, RESULT, java.util.Calendar, IShortResult_Mapped_Multi_Alias<MODEL, RESULT>>,
 			ISharedResultMap_OpsAndTo_SQLTimeType_Alias<MODEL, RESULT, java.sql.Date, IShortResult_Mapped_Multi_Alias<MODEL, RESULT>>,
