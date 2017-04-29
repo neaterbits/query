@@ -165,6 +165,7 @@ final class Short_Collector_Multi_Any_Any<MODEL, RESULT>
 				
 				IShortResult_Mapped_Multi_Named<MODEL, RESULT>,
 				IShortResult_Mapped_Multi_Alias<MODEL, RESULT>,
+				IShortResult_Mapped_Multi_Undecided<MODEL, RESULT>,
 
 				ISharedResultMap_OpsAndTo_Comparable_Named<MODEL, RESULT, Long, IShortResult_Mapped_Multi_Named<MODEL, RESULT>>,
 				ISharedResultMap_OpsAndTo_Comparable_Named<MODEL, RESULT, Long, IShortResult_Mapped_Multi_Named<MODEL, RESULT>>,
@@ -254,12 +255,12 @@ final class Short_Collector_Multi_Any_Any<MODEL, RESULT>
 				ISharedResultMap_OpsAndTo_Comparable_Undecided<MODEL, RESULT, Float, IShortResult_Mapped_Multi_Undecided<MODEL, RESULT>>,
 				ISharedResultMap_OpsAndTo_Comparable_Undecided<MODEL, RESULT, Double, IShortResult_Mapped_Multi_Undecided<MODEL, RESULT>>,
 				ISharedResultMap_OpsAndTo_Comparable_Undecided<MODEL, RESULT, BigDecimal, IShortResult_Mapped_Multi_Undecided<MODEL, RESULT>>,
-				ISharedResultOps_String_Undecided<MODEL, RESULT, IShortResult_Mapped_Multi_Undecided<MODEL, RESULT>>,
+				ISharedResultMap_OpsAndTo_String_Undecided<MODEL, RESULT, IShortResult_Mapped_Multi_Undecided<MODEL, RESULT>>,
 				ISharedResultMap_OpsAndTo_Comparable_Undecided<MODEL, RESULT, java.util.Date, IShortResult_Mapped_Multi_Undecided<MODEL, RESULT>>,
 				ISharedResultMap_OpsAndTo_Comparable_Undecided<MODEL, RESULT, java.util.Calendar, IShortResult_Mapped_Multi_Undecided<MODEL, RESULT>>,
-				ISharedResultOps_NumericSQLTimeType_Undecided<MODEL, RESULT, java.sql.Date, IShortResult_Mapped_Multi_Undecided<MODEL, RESULT>>,
-				ISharedResultOps_NumericSQLTimeType_Undecided<MODEL, RESULT, java.sql.Time, IShortResult_Mapped_Multi_Undecided<MODEL, RESULT>>,
-				ISharedResultOps_NumericSQLTimeType_Undecided<MODEL, RESULT, java.sql.Timestamp, IShortResult_Mapped_Multi_Undecided<MODEL, RESULT>>,
+				ISharedResultMap_OpsAndTo_SQLTimeType_Undecided<MODEL, RESULT, java.sql.Date, IShortResult_Mapped_Multi_Undecided<MODEL, RESULT>>,
+				ISharedResultMap_OpsAndTo_SQLTimeType_Undecided<MODEL, RESULT, java.sql.Time, IShortResult_Mapped_Multi_Undecided<MODEL, RESULT>>,
+				ISharedResultMap_OpsAndTo_SQLTimeType_Undecided<MODEL, RESULT, java.sql.Timestamp, IShortResult_Mapped_Multi_Undecided<MODEL, RESULT>>,
 
 				ISharedResultMapperTo<MODEL, RESULT, Long, IShortResult_Mapped_Multi_Undecided<MODEL, RESULT>>,
 				ISharedResultMapperTo<MODEL, RESULT, Long, IShortResult_Mapped_Multi_Undecided<MODEL, RESULT>>,

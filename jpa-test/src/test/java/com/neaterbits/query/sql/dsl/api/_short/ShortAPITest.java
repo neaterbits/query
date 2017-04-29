@@ -66,6 +66,7 @@ public class ShortAPITest extends BaseJPATest {
 	}
 	*/
 
+	/* TODO - re-enable
 	
 	@Test
     public void testMapSumAndAvgOne() {
@@ -78,7 +79,7 @@ public class ShortAPITest extends BaseJPATest {
 				.one(CompanyAggregatesVO.class)
 
 				//.map(Company::getName) .to (CompanyResultsVO::setName)
-				.map().sum  ( Company::getStockPrice) .to (CompanyAggregatesVO::setSumStockPrice)
+				.map().sum( Company::getStockPrice) .to (CompanyAggregatesVO::setSumStockPrice)
 
 
 				.map().avg(Company::getStockPrice).to(CompanyAggregatesVO::setAvgStockPrice)
@@ -99,7 +100,7 @@ public class ShortAPITest extends BaseJPATest {
 		
 	}
 	
-
+*/
 	@Test
     public void testPlusLiteral() {
 		
@@ -402,6 +403,8 @@ public class ShortAPITest extends BaseJPATest {
 	}
 
 
+	/* TODO - re-enable
+	
 	@Test
     public void testArithmetic() {
 		final SingleBuilt<CompanySqrtAggregatesVO> acmeQuery = select
@@ -418,7 +421,7 @@ public class ShortAPITest extends BaseJPATest {
 		
 	}
 		
-
+*/
 	
 	@Test
     public void testMapOf() {

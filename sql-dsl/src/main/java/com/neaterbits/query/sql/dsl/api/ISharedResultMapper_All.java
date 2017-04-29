@@ -5,7 +5,8 @@ import java.math.BigInteger;
 
 public interface ISharedResultMapper_All<MODEL, RESULT, 
 		NAMED_SOURCE extends ISharedSelectSourceBuilder<MODEL, RESULT>,
-		ALIAS_SOURCE extends ISharedSelectSourceBuilder<MODEL, RESULT>> 
+		ALIAS_SOURCE extends ISharedSelectSourceBuilder<MODEL, RESULT>,
+		UNDECIDED_SOURCE extends ISharedSelectSourceBuilder<MODEL, RESULT>> 
 
 	extends ISharedResultMapper_Named<MODEL, RESULT, NAMED_SOURCE>,
 			ISharedResultMapper_Alias<MODEL, RESULT, ALIAS_SOURCE>
@@ -26,6 +27,7 @@ public interface ISharedResultMapper_All<MODEL, RESULT,
 
 				NAMED_SOURCE,
 				ALIAS_SOURCE,
+				UNDECIDED_SOURCE,
 				
 				// Named functions
 				
@@ -104,7 +106,46 @@ public interface ISharedResultMapper_All<MODEL, RESULT,
 				ISharedResultMapperTo<MODEL, RESULT, java.util.Calendar, ALIAS_SOURCE>,
 				ISharedResultMapperTo<MODEL, RESULT, java.sql.Date, ALIAS_SOURCE>,
 				ISharedResultMapperTo<MODEL, RESULT, java.sql.Time, ALIAS_SOURCE>,
-				ISharedResultMapperTo<MODEL, RESULT, java.sql.Timestamp, ALIAS_SOURCE>
+				ISharedResultMapperTo<MODEL, RESULT, java.sql.Timestamp, ALIAS_SOURCE>,
+				
+				// Undecided functions
+				ISharedResultMap_OpsAndTo_Comparable_Undecided<MODEL, RESULT, Long, UNDECIDED_SOURCE>,
+				ISharedResultMap_OpsAndTo_Comparable_Undecided<MODEL, RESULT, Long, UNDECIDED_SOURCE>,
+				ISharedResultMap_OpsAndTo_Comparable_Undecided<MODEL, RESULT, Integer, UNDECIDED_SOURCE>,
+				
+				ISharedResultMap_OpsAndTo_Comparable_Undecided<MODEL, RESULT, Byte, UNDECIDED_SOURCE>,
+				ISharedResultMap_OpsAndTo_Comparable_Undecided<MODEL, RESULT, Short, UNDECIDED_SOURCE>,
+				ISharedResultMap_OpsAndTo_Comparable_Undecided<MODEL, RESULT, Integer, UNDECIDED_SOURCE>,
+				ISharedResultMap_OpsAndTo_Comparable_Undecided<MODEL, RESULT, Long, UNDECIDED_SOURCE>,
+				ISharedResultMap_OpsAndTo_Comparable_Undecided<MODEL, RESULT, BigInteger, UNDECIDED_SOURCE>,
+				ISharedResultMap_OpsAndTo_Comparable_Undecided<MODEL, RESULT, Float, UNDECIDED_SOURCE>,
+				ISharedResultMap_OpsAndTo_Comparable_Undecided<MODEL, RESULT, Double, UNDECIDED_SOURCE>,
+				ISharedResultMap_OpsAndTo_Comparable_Undecided<MODEL, RESULT, BigDecimal, UNDECIDED_SOURCE>,
+				ISharedResultMap_OpsAndTo_String_Undecided<MODEL, RESULT, UNDECIDED_SOURCE>,
+				ISharedResultMap_OpsAndTo_Comparable_Undecided<MODEL, RESULT, java.util.Date, UNDECIDED_SOURCE>,
+				ISharedResultMap_OpsAndTo_Comparable_Undecided<MODEL, RESULT, java.util.Calendar, UNDECIDED_SOURCE>,
+				ISharedResultMap_OpsAndTo_SQLTimeType_Undecided<MODEL, RESULT, java.sql.Date, UNDECIDED_SOURCE>,
+				ISharedResultMap_OpsAndTo_SQLTimeType_Undecided<MODEL, RESULT, java.sql.Time, UNDECIDED_SOURCE>,
+				ISharedResultMap_OpsAndTo_SQLTimeType_Undecided<MODEL, RESULT, java.sql.Timestamp, UNDECIDED_SOURCE>,
+			
+				ISharedResultMapperTo<MODEL, RESULT, Long, UNDECIDED_SOURCE>,
+				ISharedResultMapperTo<MODEL, RESULT, Long, UNDECIDED_SOURCE>,
+				ISharedResultMapperTo<MODEL, RESULT, Integer, UNDECIDED_SOURCE>,
+				
+				ISharedResultMapperTo<MODEL, RESULT, Byte, UNDECIDED_SOURCE>,
+				ISharedResultMapperTo<MODEL, RESULT, Short, UNDECIDED_SOURCE>,
+				ISharedResultMapperTo<MODEL, RESULT, Integer, UNDECIDED_SOURCE>,
+				ISharedResultMapperTo<MODEL, RESULT, Long, UNDECIDED_SOURCE>,
+				ISharedResultMapperTo<MODEL, RESULT, BigInteger, UNDECIDED_SOURCE>,
+				ISharedResultMapperTo<MODEL, RESULT, Float, UNDECIDED_SOURCE>,
+				ISharedResultMapperTo<MODEL, RESULT, Double, UNDECIDED_SOURCE>,
+				ISharedResultMapperTo<MODEL, RESULT, BigDecimal, UNDECIDED_SOURCE>,
+				ISharedResultMapperTo<MODEL, RESULT, String,  UNDECIDED_SOURCE>,
+				ISharedResultMapperTo<MODEL, RESULT, java.util.Date, UNDECIDED_SOURCE>,
+				ISharedResultMapperTo<MODEL, RESULT, java.util.Calendar, UNDECIDED_SOURCE>,
+				ISharedResultMapperTo<MODEL, RESULT, java.sql.Date, UNDECIDED_SOURCE>,
+				ISharedResultMapperTo<MODEL, RESULT, java.sql.Time, UNDECIDED_SOURCE>,
+				ISharedResultMapperTo<MODEL, RESULT, java.sql.Timestamp, UNDECIDED_SOURCE>				
 	>
 				
 				map();

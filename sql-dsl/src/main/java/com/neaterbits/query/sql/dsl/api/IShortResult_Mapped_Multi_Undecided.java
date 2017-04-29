@@ -1,6 +1,9 @@
 package com.neaterbits.query.sql.dsl.api;
 
 public interface IShortResult_Mapped_Multi_Undecided<MODEL, RESULT>
+
+	extends ISharedSelectSourceBuilder<MODEL, RESULT> // TODO replace with those below
+			
 /* TODO
 	extends 
 	

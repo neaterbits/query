@@ -3,7 +3,9 @@ package com.neaterbits.query.sql.dsl.api;
 public interface ISharedSubOperandsBuilder_Undecided<
 		MODEL,
 		RESULT,
+		
 		R extends Comparable<R>, 
+		
 		NAMED_RET extends ISharedFunction_After<MODEL, RESULT>,
 		ALIAS_RET extends ISharedFunction_After<MODEL, RESULT>,
 		UNDECIDED_RET extends ISharedFunction_After<MODEL, RESULT>>
@@ -49,8 +51,8 @@ public interface ISharedSubOperandsBuilder_Undecided<
 					MODEL,
 					RESULT,
 					
-					ISharedSubOperandsBuilder_NoParam_Undecided<MODEL, RESULT, R, NAMED_RET, ALIAS_RET>,
-					ISharedSubOperandsBuilder_NoParam_Undecided<MODEL, RESULT, Double, NAMED_RET, ALIAS_RET>
+					ISharedSubOperandsBuilder_NoParam_Undecided<MODEL, RESULT, R, NAMED_RET, ALIAS_RET, UNDECIDED_RET>,
+					ISharedSubOperandsBuilder_NoParam_Undecided<MODEL, RESULT, Double, NAMED_RET, ALIAS_RET, UNDECIDED_RET>
 		>,
 					
 		// can call subs to String functions too

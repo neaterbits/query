@@ -198,6 +198,7 @@ abstract class Short_Collector_Initial_Single_Any_Any_Base<MODEL, RESULT>
 			
 			IShortResult_Mapped_Single_Named<MODEL, RESULT>,
 			IShortResult_Mapped_Single_Alias<MODEL, RESULT>,
+			IShortResult_Mapped_Single_Undecided<MODEL, RESULT>,
 			
 			ISharedResultMap_OpsAndTo_Comparable_Named<MODEL, RESULT, Long, IShortResult_Mapped_Single_Named<MODEL, RESULT>>,
 			ISharedResultMap_OpsAndTo_Comparable_Named<MODEL, RESULT, Long, IShortResult_Mapped_Single_Named<MODEL, RESULT>>,
@@ -273,7 +274,46 @@ abstract class Short_Collector_Initial_Single_Any_Any_Base<MODEL, RESULT>
 			ISharedResultMapperTo<MODEL, RESULT, java.util.Calendar, IShortResult_Mapped_Single_Alias<MODEL, RESULT>>,
 			ISharedResultMapperTo<MODEL, RESULT, java.sql.Date, IShortResult_Mapped_Single_Alias<MODEL, RESULT>>,
 			ISharedResultMapperTo<MODEL, RESULT, java.sql.Time, IShortResult_Mapped_Single_Alias<MODEL, RESULT>>,
-			ISharedResultMapperTo<MODEL, RESULT, java.sql.Timestamp, IShortResult_Mapped_Single_Alias<MODEL, RESULT>>
+			ISharedResultMapperTo<MODEL, RESULT, java.sql.Timestamp, IShortResult_Mapped_Single_Alias<MODEL, RESULT>>,
+
+			ISharedResultMap_OpsAndTo_Comparable_Undecided<MODEL, RESULT, Long, IShortResult_Mapped_Single_Undecided<MODEL, RESULT>>,
+			ISharedResultMap_OpsAndTo_Comparable_Undecided<MODEL, RESULT, Long, IShortResult_Mapped_Single_Undecided<MODEL, RESULT>>,
+			ISharedResultMap_OpsAndTo_Comparable_Undecided<MODEL, RESULT, Integer, IShortResult_Mapped_Single_Undecided<MODEL, RESULT>>,
+			
+			ISharedResultMap_OpsAndTo_Comparable_Undecided<MODEL, RESULT, Byte, IShortResult_Mapped_Single_Undecided<MODEL, RESULT>>,
+			ISharedResultMap_OpsAndTo_Comparable_Undecided<MODEL, RESULT, Short, IShortResult_Mapped_Single_Undecided<MODEL, RESULT>>,
+			ISharedResultMap_OpsAndTo_Comparable_Undecided<MODEL, RESULT, Integer, IShortResult_Mapped_Single_Undecided<MODEL, RESULT>>,
+			ISharedResultMap_OpsAndTo_Comparable_Undecided<MODEL, RESULT, Long, IShortResult_Mapped_Single_Undecided<MODEL, RESULT>>,
+			ISharedResultMap_OpsAndTo_Comparable_Undecided<MODEL, RESULT, BigInteger, IShortResult_Mapped_Single_Undecided<MODEL, RESULT>>,
+			ISharedResultMap_OpsAndTo_Comparable_Undecided<MODEL, RESULT, Float, IShortResult_Mapped_Single_Undecided<MODEL, RESULT>>,
+			ISharedResultMap_OpsAndTo_Comparable_Undecided<MODEL, RESULT, Double, IShortResult_Mapped_Single_Undecided<MODEL, RESULT>>,
+			ISharedResultMap_OpsAndTo_Comparable_Undecided<MODEL, RESULT, BigDecimal, IShortResult_Mapped_Single_Undecided<MODEL, RESULT>>,
+			ISharedResultMap_OpsAndTo_String_Undecided<MODEL, RESULT, IShortResult_Mapped_Single_Undecided<MODEL, RESULT>>,
+			ISharedResultMap_OpsAndTo_Comparable_Undecided<MODEL, RESULT, java.util.Date, IShortResult_Mapped_Single_Undecided<MODEL, RESULT>>,
+			ISharedResultMap_OpsAndTo_Comparable_Undecided<MODEL, RESULT, java.util.Calendar, IShortResult_Mapped_Single_Undecided<MODEL, RESULT>>,
+			ISharedResultMap_OpsAndTo_SQLTimeType_Undecided<MODEL, RESULT, java.sql.Date, IShortResult_Mapped_Single_Undecided<MODEL, RESULT>>,
+			ISharedResultMap_OpsAndTo_SQLTimeType_Undecided<MODEL, RESULT, java.sql.Time, IShortResult_Mapped_Single_Undecided<MODEL, RESULT>>,
+			ISharedResultMap_OpsAndTo_SQLTimeType_Undecided<MODEL, RESULT, java.sql.Timestamp, IShortResult_Mapped_Single_Undecided<MODEL, RESULT>>,
+			
+			ISharedResultMapperTo<MODEL, RESULT, Long, IShortResult_Mapped_Single_Undecided<MODEL, RESULT>>,
+			ISharedResultMapperTo<MODEL, RESULT, Long, IShortResult_Mapped_Single_Undecided<MODEL, RESULT>>,
+			ISharedResultMapperTo<MODEL, RESULT, Integer, IShortResult_Mapped_Single_Undecided<MODEL, RESULT>>,
+			
+			ISharedResultMapperTo<MODEL, RESULT, Byte, IShortResult_Mapped_Single_Undecided<MODEL, RESULT>>,
+			ISharedResultMapperTo<MODEL, RESULT, Short, IShortResult_Mapped_Single_Undecided<MODEL, RESULT>>,
+			ISharedResultMapperTo<MODEL, RESULT, Integer, IShortResult_Mapped_Single_Undecided<MODEL, RESULT>>,
+			ISharedResultMapperTo<MODEL, RESULT, Long, IShortResult_Mapped_Single_Undecided<MODEL, RESULT>>,
+			ISharedResultMapperTo<MODEL, RESULT, BigInteger, IShortResult_Mapped_Single_Undecided<MODEL, RESULT>>,
+			ISharedResultMapperTo<MODEL, RESULT, Float, IShortResult_Mapped_Single_Undecided<MODEL, RESULT>>,
+			ISharedResultMapperTo<MODEL, RESULT, Double, IShortResult_Mapped_Single_Undecided<MODEL, RESULT>>,
+			ISharedResultMapperTo<MODEL, RESULT, BigDecimal, IShortResult_Mapped_Single_Undecided<MODEL, RESULT>>,
+			ISharedResultMapperTo<MODEL, RESULT, String, IShortResult_Mapped_Single_Undecided<MODEL, RESULT>>,
+			ISharedResultMapperTo<MODEL, RESULT, java.util.Date, IShortResult_Mapped_Single_Undecided<MODEL, RESULT>>,
+			ISharedResultMapperTo<MODEL, RESULT, java.util.Calendar, IShortResult_Mapped_Single_Undecided<MODEL, RESULT>>,
+			ISharedResultMapperTo<MODEL, RESULT, java.sql.Date, IShortResult_Mapped_Single_Undecided<MODEL, RESULT>>,
+			ISharedResultMapperTo<MODEL, RESULT, java.sql.Time, IShortResult_Mapped_Single_Undecided<MODEL, RESULT>>,
+			ISharedResultMapperTo<MODEL, RESULT, java.sql.Timestamp, IShortResult_Mapped_Single_Undecided<MODEL, RESULT>>
+			
 			>
 
 		map() {

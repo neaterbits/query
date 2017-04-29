@@ -48,7 +48,7 @@ public interface ISharedFunctions_Arithmetic_Undecided<
 	<T> NAMED_DOUBLE_RET 		abs(IFunctionDouble<T> getter);
 	<T> NAMED_BIGDECIMAL_RET 	abs(IFunctionBigDecimal<T> getter);
 	
-	
+	/*
 	UNDECIDED_BYTE_RET 		absOfByte(ISharedSubOperandsFunction_Byte_Undecided<MODEL, RESULT> sub);
 	UNDECIDED_SHORT_RET		absOfShort(ISharedSubOperandsFunction_Short_Undecided<MODEL, RESULT> sub);
 	UNDECIDED_INTEGER_RET 	absOfInteger(ISharedSubOperandsFunction_Integer_Undecided<MODEL, RESULT> sub);
@@ -57,6 +57,7 @@ public interface ISharedFunctions_Arithmetic_Undecided<
 	UNDECIDED_FLOAT_RET		 absOfFloat(ISharedSubOperandsFunction_Float_Undecided<MODEL, RESULT> sub);
 	UNDECIDED_DOUBLE_RET	 absOfDouble(ISharedSubOperandsFunction_Double_Undecided<MODEL, RESULT> sub);
 	UNDECIDED_BIGDECIMAL_RET absOfBigDecimal(ISharedSubOperandsFunction_BigDecimal_Undecided<MODEL, RESULT> sub);
+	*/
 
 	// sqrt always returns double
 	<T> NAMED_DOUBLE_RET sqrt(IFunctionByte<T> getter);
@@ -68,6 +69,7 @@ public interface ISharedFunctions_Arithmetic_Undecided<
 	<T> NAMED_DOUBLE_RET sqrt(IFunctionDouble<T> getter);
 	<T> NAMED_DOUBLE_RET sqrt(IFunctionBigDecimal<T> getter);
 
+	/*
 	UNDECIDED_DOUBLE_RET sqrtOf(ISharedSubOperandsFunction_Byte_Undecided<MODEL, RESULT> sub);
 	UNDECIDED_DOUBLE_RET sqrtOf(ISharedSubOperandsFunction_Short_Undecided<MODEL, RESULT> sub);
 	UNDECIDED_DOUBLE_RET sqrtOf(ISharedSubOperandsFunction_Integer_Undecided<MODEL, RESULT> sub);
@@ -76,7 +78,9 @@ public interface ISharedFunctions_Arithmetic_Undecided<
 	UNDECIDED_DOUBLE_RET sqrtOf(ISharedSubOperandsFunction_Float_Undecided<MODEL, RESULT> sub);
 	UNDECIDED_DOUBLE_RET sqrtOf(ISharedSubOperandsFunction_Double_Undecided<MODEL, RESULT> sub);
 	UNDECIDED_DOUBLE_RET sqrtOf(ISharedSubOperandsFunction_BigDecimal_Undecided<MODEL, RESULT> sub);
+	*/
 	
 	<T> NAMED_INTEGER_RET 	mod(IFunctionInteger<T> getter, int value);
-	UNDECIDED_INTEGER_RET modOf(ISharedSubOperandsFunction_Integer_Undecided<MODEL, RESULT> sub, int value);
+	
+	//UNDECIDED_INTEGER_RET modOf(ISharedSubOperandsFunction_Integer_Undecided<MODEL, RESULT> sub, int value);
 }

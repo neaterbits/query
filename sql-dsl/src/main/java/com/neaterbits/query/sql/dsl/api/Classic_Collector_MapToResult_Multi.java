@@ -69,6 +69,7 @@ final class Classic_Collector_MapToResult_Multi<
 
 			IClassicResult_Mapped_Multi_Named<MODEL, RESULT>,
 			IClassicResult_Mapped_Multi_Alias<MODEL, RESULT>,
+			IClassicResult_Mapped_Multi_Undecided<MODEL, RESULT>,
 			
 
 			ISharedResultMap_OpsAndTo_Comparable_Named<MODEL, RESULT, Long, IClassicResult_Mapped_Multi_Named<MODEL, RESULT>>,
@@ -147,7 +148,48 @@ final class Classic_Collector_MapToResult_Multi<
 			ISharedResultMapperTo<MODEL, RESULT, java.util.Calendar, IClassicResult_Mapped_Multi_Alias<MODEL, RESULT>>,
 			ISharedResultMapperTo<MODEL, RESULT, java.sql.Date, IClassicResult_Mapped_Multi_Alias<MODEL, RESULT>>,
 			ISharedResultMapperTo<MODEL, RESULT, java.sql.Time, IClassicResult_Mapped_Multi_Alias<MODEL, RESULT>>,
-			ISharedResultMapperTo<MODEL, RESULT, java.sql.Timestamp, IClassicResult_Mapped_Multi_Alias<MODEL, RESULT>>
+			ISharedResultMapperTo<MODEL, RESULT, java.sql.Timestamp, IClassicResult_Mapped_Multi_Alias<MODEL, RESULT>>,
+			
+			
+			ISharedResultMap_OpsAndTo_Comparable_Undecided<MODEL, RESULT, Long, IClassicResult_Mapped_Multi_Undecided<MODEL, RESULT>>,
+			ISharedResultMap_OpsAndTo_Comparable_Undecided<MODEL, RESULT, Long, IClassicResult_Mapped_Multi_Undecided<MODEL, RESULT>>,
+			ISharedResultMap_OpsAndTo_Comparable_Undecided<MODEL, RESULT, Integer, IClassicResult_Mapped_Multi_Undecided<MODEL, RESULT>>,
+			
+			ISharedResultMap_OpsAndTo_Comparable_Undecided<MODEL, RESULT, Byte, IClassicResult_Mapped_Multi_Undecided<MODEL, RESULT>>,
+			ISharedResultMap_OpsAndTo_Comparable_Undecided<MODEL, RESULT, Short, IClassicResult_Mapped_Multi_Undecided<MODEL, RESULT>>,
+			ISharedResultMap_OpsAndTo_Comparable_Undecided<MODEL, RESULT, Integer, IClassicResult_Mapped_Multi_Undecided<MODEL, RESULT>>,
+			ISharedResultMap_OpsAndTo_Comparable_Undecided<MODEL, RESULT, Long, IClassicResult_Mapped_Multi_Undecided<MODEL, RESULT>>,
+			ISharedResultMap_OpsAndTo_Comparable_Undecided<MODEL, RESULT, BigInteger, IClassicResult_Mapped_Multi_Undecided<MODEL, RESULT>>,
+			ISharedResultMap_OpsAndTo_Comparable_Undecided<MODEL, RESULT, Float, IClassicResult_Mapped_Multi_Undecided<MODEL, RESULT>>,
+			ISharedResultMap_OpsAndTo_Comparable_Undecided<MODEL, RESULT, Double, IClassicResult_Mapped_Multi_Undecided<MODEL, RESULT>>,
+			ISharedResultMap_OpsAndTo_Comparable_Undecided<MODEL, RESULT, BigDecimal, IClassicResult_Mapped_Multi_Undecided<MODEL, RESULT>>,
+			ISharedResultMap_OpsAndTo_String_Undecided<MODEL, RESULT, IClassicResult_Mapped_Multi_Undecided<MODEL, RESULT>>,
+			ISharedResultMap_OpsAndTo_Comparable_Undecided<MODEL, RESULT, java.util.Date, IClassicResult_Mapped_Multi_Undecided<MODEL, RESULT>>,
+			ISharedResultMap_OpsAndTo_Comparable_Undecided<MODEL, RESULT, java.util.Calendar, IClassicResult_Mapped_Multi_Undecided<MODEL, RESULT>>,
+			ISharedResultMap_OpsAndTo_SQLTimeType_Undecided<MODEL, RESULT, java.sql.Date, IClassicResult_Mapped_Multi_Undecided<MODEL, RESULT>>,
+			ISharedResultMap_OpsAndTo_SQLTimeType_Undecided<MODEL, RESULT, java.sql.Time, IClassicResult_Mapped_Multi_Undecided<MODEL, RESULT>>,
+			ISharedResultMap_OpsAndTo_SQLTimeType_Undecided<MODEL, RESULT, java.sql.Timestamp, IClassicResult_Mapped_Multi_Undecided<MODEL, RESULT>>,
+			
+			
+			ISharedResultMapperTo<MODEL, RESULT, Long, IClassicResult_Mapped_Multi_Undecided<MODEL, RESULT>>,
+			ISharedResultMapperTo<MODEL, RESULT, Long, IClassicResult_Mapped_Multi_Undecided<MODEL, RESULT>>,
+			ISharedResultMapperTo<MODEL, RESULT, Integer, IClassicResult_Mapped_Multi_Undecided<MODEL, RESULT>>,
+			
+			ISharedResultMapperTo<MODEL, RESULT, Byte, IClassicResult_Mapped_Multi_Undecided<MODEL, RESULT>>,
+			ISharedResultMapperTo<MODEL, RESULT, Short, IClassicResult_Mapped_Multi_Undecided<MODEL, RESULT>>,
+			ISharedResultMapperTo<MODEL, RESULT, Integer, IClassicResult_Mapped_Multi_Undecided<MODEL, RESULT>>,
+			ISharedResultMapperTo<MODEL, RESULT, Long, IClassicResult_Mapped_Multi_Undecided<MODEL, RESULT>>,
+			ISharedResultMapperTo<MODEL, RESULT, BigInteger, IClassicResult_Mapped_Multi_Undecided<MODEL, RESULT>>,
+			ISharedResultMapperTo<MODEL, RESULT, Float, IClassicResult_Mapped_Multi_Undecided<MODEL, RESULT>>,
+			ISharedResultMapperTo<MODEL, RESULT, Double, IClassicResult_Mapped_Multi_Undecided<MODEL, RESULT>>,
+			ISharedResultMapperTo<MODEL, RESULT, BigDecimal, IClassicResult_Mapped_Multi_Undecided<MODEL, RESULT>>,
+			ISharedResultMapperTo<MODEL, RESULT, String, IClassicResult_Mapped_Multi_Undecided<MODEL, RESULT>>,
+			ISharedResultMapperTo<MODEL, RESULT, java.util.Date, IClassicResult_Mapped_Multi_Undecided<MODEL, RESULT>>,
+			ISharedResultMapperTo<MODEL, RESULT, java.util.Calendar, IClassicResult_Mapped_Multi_Undecided<MODEL, RESULT>>,
+			ISharedResultMapperTo<MODEL, RESULT, java.sql.Date, IClassicResult_Mapped_Multi_Undecided<MODEL, RESULT>>,
+			ISharedResultMapperTo<MODEL, RESULT, java.sql.Time, IClassicResult_Mapped_Multi_Undecided<MODEL, RESULT>>,
+			ISharedResultMapperTo<MODEL, RESULT, java.sql.Timestamp, IClassicResult_Mapped_Multi_Undecided<MODEL, RESULT>>
+			
 		>
 
 			

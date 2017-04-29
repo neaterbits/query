@@ -19,4 +19,3 @@ public interface ISharedResultMap_OpsAndTo_Comparable_Named<
 {
 
 }
-I
