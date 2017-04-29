@@ -5,7 +5,7 @@ public interface ISharedSubOperandsBuilder_String_Next_Alias<MODEL, RESULT, AFTE
 	extends 
 		ISharedSubOperand_End_Alias<MODEL, RESULT, String>,
 		ISharedFunction_Next<MODEL, RESULT, AFTER>,
-		ISharedOperands_String_Alias<
+		ISharedOperands_String_Alias_All<
 			MODEL,
 			RESULT,
 			AFTER,

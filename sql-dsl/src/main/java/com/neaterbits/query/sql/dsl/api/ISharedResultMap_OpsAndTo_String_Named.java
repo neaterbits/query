@@ -9,7 +9,7 @@ public interface ISharedResultMap_OpsAndTo_String_Named<
 		
 		    ISharedResultMap_To_Comparable_Named<MODEL, RESULT, String, RET>,
 		    
-			ISharedOperands_String_Named<
+			ISharedOperands_String_Named_All<
 					MODEL,
 					RESULT,
 					
