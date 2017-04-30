@@ -91,8 +91,17 @@ public class ShortFunctionTest extends BaseJPATest {
 		final Company acme1 = new Company(1, "Acme", new BigDecimal("49"));
 		final Company acme2 = new Company(2, "Acme Inc.", new BigDecimal("121"));
 		
+		MultiBuilt<NameLength> query;
+
+		assertThat(true).isEqualTo(false); // TODO - must pass Undecided versions all along to group-by etc since may use sub-functions all the way
+
+		/*
+		query = select.list(NameLength.class)
+				.map().modOf(b -> b.length(Company::getName), 3).to(NameLength::setLength)
+				.build();
+				*/
 		
-		MultiBuilt<NameLength> query = select.list(NameLength.class)
+		query = select.list(NameLength.class)
 			.map().sqrt().length(Company::getName).to(NameLength::setLengthSqrt)
 			.build();
 	
@@ -100,6 +109,7 @@ public class ShortFunctionTest extends BaseJPATest {
 		store(acme1, acme2)
 		.checkListUnordered(query, new NameLength(null, 2.0), new NameLength(null, 3.0));
 
+		
 		query = select.list(NameLength.class)
 				.map().sqrt().length(Company::getName).to(NameLength::setLengthSqrt)
 				.map(Company::getName).to(NameLength::setName)
@@ -109,6 +119,32 @@ public class ShortFunctionTest extends BaseJPATest {
 			.checkListUnordered(query, new NameLength("Acme", 2.0), new NameLength("Acme Inc.", 3.0));
 	}
 
+	@Test 
+	public void testVerifyThatDetectsMixOfNamedAndAliasAtQueryCompileTime() {
+		// Must make sure that throws exception for queries where we cannot detect type differences
+		// at Java compile time, eg two .xyzOf() queries at the same level
+		assertThat(true).isEqualTo(false);
+	}
+	
+	@Test 
+	public void testVerifyMultipleNestedInFirstMapQueryWhenNamedOrAliasNotYetDecided() {
+		
+		assertThat(true).isEqualTo(false); // TODO - various version of undecided
+		
+		/*
+		final Company acme1 = new Company(1, "Acme", new BigDecimal("49"));
+		final Company acme2 = new Company(2, "Acme Inc.", new BigDecimal("121"));
+		
+		
+		final MultiBuilt<NameLength> query = select.list(NameLength.class)
+			.map().modOf(b1 -> b1.absOfInteger(b2 -> b2.length(Company::getName)), 3).to(NameLength::setLength)
+			.build();
+		*/
+	
+		
+	}
+	
+	
 	@Test // Test that can combine no-param, integer and length functions directly
 	public void testCanCombineNoParamArithmeticAndStringLength_Named() {
 		final Company acme1 = new Company(1, "Acme", new BigDecimal("49"));

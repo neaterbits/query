@@ -592,6 +592,11 @@ vil vi kunne switche i mappinga.
   Evt bare lage mapOfAlias() og mapOfNamed() som fallback for initielle interface men dette hadde vært greit å unngå å måtte si om er named eller alias noe sted. 
 
 
+- TODO: rename ISHort m.fl interfaces til IShort_V1 og anvende pattern der bruker må definere eget interface som definerer datasources,
+med en enkelt static-variabel per data source, som da er db-interfacet.
+
+
+
  - !! TODO !! bør avg() returnere Double for BigDecimal? virker rart. Vil dette fungere for Long også eller kan Long ha verdier 
 som er større enn double?
 
