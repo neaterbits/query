@@ -70,6 +70,46 @@ public class ShortFunctionTest extends BaseJPATest {
 				new NameLength("Acme Inc.", 1)); 	// (9 + 1) % 3 => 1
 	}
 	
+	@Test // Seems to compile
+	public void testDoesNotCompileAndAfterMap() {
+		verifyIsNotCompilable(
+				b -> b.addImport(NameLength.class).addImport(Company.class),
+				
+				"list(NameLength.class)" +
+				
+				".map(Company::getName).to(NameLength::setName)" + 
+				".and(Company::getName).isEqualTo(\"Acme\")");		
+		
+		verifyIsNotCompilable(
+				b -> b.addImport(NameLength.class).addImport(Company.class)
+					 .add(Company.class, "c"),
+				
+				"list(NameLength.class)" +
+				
+				".map(c::getName).to(NameLength::setName)" + 
+				".and(c::getName).isEqualTo(\"Acme\")");		
+	}
+	
+	@Test
+	public void testDoesNotCompileOrAfterMap() {
+		verifyIsNotCompilable(
+				b -> b.addImport(NameLength.class).addImport(Company.class),
+				
+				"list(NameLength.class)" +
+				
+				".map(Company::getName).to(NameLength::setName)" + 
+				".or(Company::getName).isEqualTo(\"Acme\")");		
+		
+		verifyIsNotCompilable(
+				b -> b.addImport(NameLength.class).addImport(Company.class)
+					 .add(Company.class, "c"),
+				
+				"list(NameLength.class)" +
+				
+				".map(c::getName).to(NameLength::setName)" + 
+				".or(c::getName).isEqualTo(\"Acme\")");		
+	}
+
 	// Test that can call nested function as first entry after map()
 	// this is a problematic case since we have not yet decided whether named or aliased
 	@Test 
