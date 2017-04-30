@@ -2,6 +2,7 @@ package com.neaterbits.query.sql.dsl.api;
 
 import java.math.BigInteger;
 
+@Deprecated // in use?
 public interface ISharedFunctions_Initial_All<
 		MODEL,
 		RESULT,
