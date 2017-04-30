@@ -316,7 +316,7 @@ final class ResultMapper_ExpressionList_Initial_Undecided<
 			NO_PARAM_UNDECIDED_SQLTIMESTAMP_RET			
 		>,
 			
-		ISharedFunctions_StringResult_Initial<MODEL, RESULT, NAMED_RET, ALIAS_RET, NAMED_STRING_RET, ALIAS_STRING_RET>			
+		ISharedFunctions_StringResult_Undecided<MODEL, RESULT, NAMED_RET, ALIAS_RET, NAMED_STRING_RET, ALIAS_STRING_RET>			
 	//,
 			
 	//ISharedResultMap_OpsAndTo_Comparable_Named<MODEL, RESULT, Integer, ISharedFunction_After<MODEL,RESULT>>
@@ -860,7 +860,7 @@ final class ResultMapper_ExpressionList_Initial_Undecided<
 
 	@Override
 	@SuppressWarnings({"unchecked", "rawtypes"})
-	public ISharedNumericFunctions_Initial<
+	public ISharedMapFunctions_Numeric_Undecided<
 	
 				MODEL, RESULT,
 				NAMED_RET, ALIAS_RET, UNDECIDED_RET,
@@ -885,7 +885,7 @@ final class ResultMapper_ExpressionList_Initial_Undecided<
 					
 		addNoParam(Function_Arithmetic_Abs.INSTANCE);
 		
-		return (ISharedNumericFunctions_Initial)this;
+		return (ISharedMapFunctions_Numeric_Undecided)this;
 	}
 
 	
@@ -900,7 +900,7 @@ final class ResultMapper_ExpressionList_Initial_Undecided<
 
 	@Override
 	@SuppressWarnings({"unchecked", "rawtypes"})
-	public ISharedNumericFunctions_Initial<
+	public ISharedMapFunctions_Numeric_Undecided<
 				MODEL, RESULT,
 				NAMED_RET, ALIAS_RET, UNDECIDED_RET,
 				
@@ -922,12 +922,12 @@ final class ResultMapper_ExpressionList_Initial_Undecided<
 			> sqrt() {
 		addNoParam(Function_Arithmetic_Sqrt.INSTANCE);
 		
-		return (ISharedNumericFunctions_Initial)this;
+		return (ISharedMapFunctions_Numeric_Undecided)this;
 	}
 
 
 	@Override
-	public ISharedFunctions_StringResult_Initial<MODEL, RESULT, NAMED_RET, ALIAS_RET, NAMED_STRING_RET, ALIAS_STRING_RET> lower() {
+	public ISharedFunctions_StringResult_Undecided<MODEL, RESULT, NAMED_RET, ALIAS_RET, NAMED_STRING_RET, ALIAS_STRING_RET> lower() {
 		addNoParam(Function_String_Lower.INSTANCE);
 		
 		return this;
@@ -935,14 +935,14 @@ final class ResultMapper_ExpressionList_Initial_Undecided<
 
 
 	@Override
-	public ISharedFunctions_StringResult_Initial<MODEL, RESULT, NAMED_RET, ALIAS_RET, NAMED_STRING_RET, ALIAS_STRING_RET> upper() {
+	public ISharedFunctions_StringResult_Undecided<MODEL, RESULT, NAMED_RET, ALIAS_RET, NAMED_STRING_RET, ALIAS_STRING_RET> upper() {
 		addNoParam(Function_String_Upper.INSTANCE);
 		
 		return this;
 	}
 
 	@Override
-	public ISharedFunctions_StringResult_Initial<MODEL, RESULT, NAMED_RET, ALIAS_RET, NAMED_STRING_RET, ALIAS_STRING_RET> trim() {
+	public ISharedFunctions_StringResult_Undecided<MODEL, RESULT, NAMED_RET, ALIAS_RET, NAMED_STRING_RET, ALIAS_STRING_RET> trim() {
 		addNoParam(Function_String_Trim.INSTANCE);
 		
 		return this;
@@ -951,7 +951,7 @@ final class ResultMapper_ExpressionList_Initial_Undecided<
 
 	@Override
 	@SuppressWarnings({"unchecked", "rawtypes"})
-	public ISharedNumericFunctions_Initial<
+	public ISharedMapFunctions_Numeric_Undecided<
 					MODEL, RESULT,
 					NAMED_RET, ALIAS_RET, UNDECIDED_RET,
 					
@@ -977,7 +977,7 @@ final class ResultMapper_ExpressionList_Initial_Undecided<
 
 		addNoParam(Function_Aggregate.SUM);
 		
-		return (ISharedNumericFunctions_Initial)this;
+		return (ISharedMapFunctions_Numeric_Undecided)this;
 	}
 	
 	
@@ -987,7 +987,7 @@ final class ResultMapper_ExpressionList_Initial_Undecided<
 
 	@Override
 	@SuppressWarnings({"unchecked", "rawtypes"})
-	public ISharedNumericFunctions_Initial<
+	public ISharedMapFunctions_Numeric_Undecided<
 	
 					MODEL, RESULT,
 					NAMED_RET, ALIAS_RET, UNDECIDED_RET,
@@ -1011,12 +1011,12 @@ final class ResultMapper_ExpressionList_Initial_Undecided<
 				> min() {
 		addNoParam(Function_Aggregate.MIN);
 		
-		return (ISharedNumericFunctions_Initial)this;
+		return (ISharedMapFunctions_Numeric_Undecided)this;
 	}
 
 	@Override
 	@SuppressWarnings({"unchecked", "rawtypes"})
-	public ISharedNumericFunctions_Initial<
+	public ISharedMapFunctions_Numeric_Undecided<
 					MODEL, RESULT,
 					NAMED_RET, ALIAS_RET, UNDECIDED_RET,
 					
@@ -1038,13 +1038,13 @@ final class ResultMapper_ExpressionList_Initial_Undecided<
 				> max() {
 		addNoParam(Function_Aggregate.MAX);
 		
-		return (ISharedNumericFunctions_Initial)this;
+		return (ISharedMapFunctions_Numeric_Undecided)this;
 	}
 
 
 	@Override
 	@SuppressWarnings({"unchecked", "rawtypes"})
-	public ISharedNumericFunctions_Initial<
+	public ISharedMapFunctions_Numeric_Undecided<
 					MODEL, RESULT,
 					NAMED_RET, ALIAS_RET, UNDECIDED_RET,
 					
@@ -1067,12 +1067,12 @@ final class ResultMapper_ExpressionList_Initial_Undecided<
 					> avg() {
 		addNoParam(Function_Aggregate.AVG);
 		
-		return (ISharedNumericFunctions_Initial)this;
+		return (ISharedMapFunctions_Numeric_Undecided)this;
 	}
 
 	@Override
 	@SuppressWarnings({"unchecked", "rawtypes"})
-	public ISharedNumericFunctions_Initial<
+	public ISharedMapFunctions_Numeric_Undecided<
 				MODEL, RESULT,
 				NAMED_RET, ALIAS_RET, UNDECIDED_RET,
 				
@@ -1095,14 +1095,14 @@ final class ResultMapper_ExpressionList_Initial_Undecided<
 					
 		addNoParam(Function_Aggregate.COUNT);
 
-		return (ISharedNumericFunctions_Initial)this;
+		return (ISharedMapFunctions_Numeric_Undecided)this;
 	}
 
 
 
 	@Override
 	@SuppressWarnings({"unchecked", "rawtypes"})
-	public ISharedFunctions_StringResult_Initial<
+	public ISharedFunctions_StringResult_Undecided<
 			MODEL,
 			RESULT,
 			NAMED_RET,
@@ -1111,7 +1111,7 @@ final class ResultMapper_ExpressionList_Initial_Undecided<
 			ALIAS_LENGTH_RET
 			
 			> length() {
-		return (ISharedFunctions_StringResult_Initial)this;
+		return (ISharedFunctions_StringResult_Undecided)this;
 	}
 
 }

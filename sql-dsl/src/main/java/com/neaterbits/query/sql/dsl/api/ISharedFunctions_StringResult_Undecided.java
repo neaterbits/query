@@ -1,6 +1,6 @@
 package com.neaterbits.query.sql.dsl.api;
 
-public interface ISharedFunctions_StringResult_Initial<
+public interface ISharedFunctions_StringResult_Undecided<
 		MODEL,
 		RESULT,
 		
@@ -22,7 +22,7 @@ public interface ISharedFunctions_StringResult_Initial<
 				RESULT,
 	
 				// eg lower().xyz, return only the functions that return String (so skip length())
-				ISharedFunctions_StringResult_Initial<
+				ISharedFunctions_StringResult_Undecided<
 					MODEL, RESULT,
 					NAMED_RET, ALIAS_RET,
 					NAMED_STRING_RET, ALIAS_STRING_RET>> {
