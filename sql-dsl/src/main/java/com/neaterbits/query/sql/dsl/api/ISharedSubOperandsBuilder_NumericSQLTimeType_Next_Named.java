@@ -13,5 +13,6 @@ public interface ISharedSubOperandsBuilder_NumericSQLTimeType_Next_Named<
 			MODEL,
 			RESULT,
 			AFTER,
+			ISharedSubOperandsBuilder_NumericSQLTimeType_Next_Named<MODEL, RESULT, R, AFTER>,
 			ISharedSubOperandsBuilder_NumericSQLTimeType_Next_Named<MODEL, RESULT, R, AFTER>> {
 	}

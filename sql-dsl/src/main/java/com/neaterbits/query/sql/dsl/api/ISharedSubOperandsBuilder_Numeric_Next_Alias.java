@@ -9,5 +9,6 @@ public interface ISharedSubOperandsBuilder_Numeric_Next_Alias<MODEL, RESULT, R e
 			MODEL,
 			RESULT,
 			AFTER,
+			ISharedSubOperandsBuilder_Numeric_Next_Alias<MODEL, RESULT, R, AFTER>,
 			ISharedSubOperandsBuilder_Numeric_Next_Alias<MODEL, RESULT, R, AFTER>> {
 }

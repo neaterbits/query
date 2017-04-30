@@ -9,5 +9,6 @@ public interface ISharedSubOperandsBuilder_NumericSQLTimeType_Next_Alias<MODEL, 
 				MODEL,
 				RESULT,
 				AFTER,
+				ISharedSubOperandsBuilder_NumericSQLTimeType_Next_Alias<MODEL, RESULT, R, AFTER>,
 				ISharedSubOperandsBuilder_NumericSQLTimeType_Next_Alias<MODEL, RESULT, R, AFTER>> {
 }

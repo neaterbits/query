@@ -32,6 +32,10 @@ abstract class SubOperandsBuilder_NoParam<
 		
 		ISharedFunction_Next<MODEL, RESULT, AFTER>,
 		ISharedFunction_Next<MODEL, RESULT, AFTER>,
+		ISharedFunction_Next<MODEL, RESULT, AFTER>,
+		ISharedFunction_Next<MODEL, RESULT, AFTER>,
+		ISharedFunction_Next<MODEL, RESULT, AFTER>,
+		ISharedFunction_Next<MODEL, RESULT, AFTER>,
 		
 		
 		ISharedSubOperandsBuilder_NoParam_End_Named<MODEL, RESULT, R, NAMED_RET>,
@@ -96,7 +100,7 @@ abstract class SubOperandsBuilder_NoParam<
 	// ISharedSubOperandsBuilder_NoParam_Named<MODEL, RESULT, R, NAMED_RET>
 	{
 
-	SubOperandsBuilder_NoParam(SubOperandsBuilder_Initial<MODEL, RESULT, R, AFTER, NAMED_RET, ALIAS_RET, UNDECIDED_RET, ?, ?> toCopy) {
+	SubOperandsBuilder_NoParam(SubOperandsBuilder_Initial<MODEL, RESULT, R, AFTER, NAMED_RET, ALIAS_RET, UNDECIDED_RET, ?, ?, ?, ?, ?, ?> toCopy) {
 		super(toCopy);
 	}
 

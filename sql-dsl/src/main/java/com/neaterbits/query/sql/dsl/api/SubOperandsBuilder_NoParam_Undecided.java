@@ -10,12 +10,12 @@ final class SubOperandsBuilder_NoParam_Undecided<
 		UNDECIDED_RET extends ISharedFunction_After<MODEL, RESULT>
 	> 
 
-	extends SubOperandsBuilder_NoParam<MODEL, RESULT, R, UNDECIDED_RET, ISharedFunction_After<MODEL, RESULT>, ISharedFunction_After<MODEL, RESULT>, UNDECIDED_RET> 
+	extends SubOperandsBuilder_NoParam<MODEL, RESULT, R, UNDECIDED_RET, NAMED_RET, ALIAS_RET, UNDECIDED_RET> 
 	implements ISharedSubOperandsBuilder_NoParam_Undecided<MODEL, RESULT, R, NAMED_RET, ALIAS_RET, UNDECIDED_RET>,
 			   ISharedSubOperandsBuilder_NoParam_End_Undecided<MODEL, RESULT, R, UNDECIDED_RET> {
 
 
-	SubOperandsBuilder_NoParam_Undecided(SubOperandsBuilder_Initial<MODEL, RESULT, R, UNDECIDED_RET, ISharedFunction_After<MODEL, RESULT>, ISharedFunction_After<MODEL, RESULT>, UNDECIDED_RET, ?, ?> toCopy) {
+	SubOperandsBuilder_NoParam_Undecided(SubOperandsBuilder_Initial<MODEL, RESULT, R, UNDECIDED_RET, NAMED_RET, ALIAS_RET, UNDECIDED_RET, ?, ?, ?, ?, ?, ?> toCopy) {
 		super(toCopy);
 	}
 	

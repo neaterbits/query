@@ -3,6 +3,7 @@ package com.neaterbits.query.sql.dsl.api;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 
+@Deprecated // in use?
 final class Collector_Expression_List_Sub<
 
 	MODEL,
@@ -30,8 +31,9 @@ final class Collector_Expression_List_Sub<
 		ALIAS_RET,
 		UNDECIDED_RET,
 		
-		ISharedSubOperandsBuilder_Numeric_Next_Named<MODEL, RESULT, R, OPERAND_RET>,
-		ISharedFunction_Next<MODEL, RESULT, OPERAND_RET>,// STRING_OPERAND_NEXT,
+		ISharedSubOperandsBuilder_Numeric_Next_Named<MODEL, RESULT, R, OPERAND_RET>, ISharedFunction_Next<MODEL, RESULT, OPERAND_RET>,// STRING_OPERAND_NEXT,
+		ISharedFunction_Next<MODEL, RESULT, OPERAND_RET>, ISharedFunction_Next<MODEL, RESULT, OPERAND_RET>,
+		ISharedSubOperandsBuilder_Numeric_Next_Named<MODEL, RESULT, R, OPERAND_RET>, ISharedFunction_Next<MODEL, RESULT, OPERAND_RET>,// STRING_OPERAND_NEXT,
 		
 		ISharedSubOperandsBuilder_Numeric_Next_Named<MODEL, RESULT, Long, NAMED_RET>,
 		ISharedSubOperandsBuilder_Numeric_Next_Named<MODEL, RESULT, Long, NAMED_RET>,

@@ -8,7 +8,12 @@ public interface ISharedSubOperand_NumericSQLTimeType_Ops_Named<
 		AFTER extends ISharedFunction_After<MODEL, RESULT>>
 	
 	extends ISharedSubOperand_End_Named<MODEL, RESULT, R>,
-		ISharedOperands_Numeric_Named_All<MODEL, RESULT, AFTER, ISharedSubOperandsBuilder_NumericSQLTimeType_Next_Named<MODEL, RESULT, R, AFTER>>,
+		ISharedOperands_Numeric_Named_All<
+				MODEL,
+				RESULT,
+				AFTER, 
+				ISharedSubOperandsBuilder_NumericSQLTimeType_Next_Named<MODEL, RESULT, R, AFTER>,
+				ISharedSubOperandsBuilder_NumericSQLTimeType_Next_Named<MODEL, RESULT, R, AFTER>>,
 		ISharedFunction_Next<MODEL, RESULT, AFTER> {
 
 }

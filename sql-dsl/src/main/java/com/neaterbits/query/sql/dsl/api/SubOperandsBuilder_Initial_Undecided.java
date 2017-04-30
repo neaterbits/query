@@ -16,10 +16,14 @@ final class SubOperandsBuilder_Initial_Undecided<
 		R,
 		UNDECIDED_RET,
 		
-		ISharedFunction_After<MODEL,RESULT>,
-		ISharedFunction_After<MODEL,RESULT>,
+		NAMED_RET,
+		ALIAS_RET,
 		UNDECIDED_RET,
-		
+
+		ISharedSubOperandsBuilder_Numeric_Next_Named<MODEL,RESULT,R,UNDECIDED_RET>,
+		ISharedSubOperandsBuilder_String_Next_Named<MODEL,RESULT,UNDECIDED_RET>,
+		ISharedSubOperandsBuilder_Numeric_Next_Alias<MODEL,RESULT,R,UNDECIDED_RET>,
+		ISharedSubOperandsBuilder_String_Next_Alias<MODEL,RESULT,UNDECIDED_RET>,
 		ISharedSubOperandsBuilder_Numeric_Next_Undecided<MODEL,RESULT,R,UNDECIDED_RET>,
 		ISharedSubOperandsBuilder_String_Next_Undecided<MODEL,RESULT,UNDECIDED_RET>
 		>

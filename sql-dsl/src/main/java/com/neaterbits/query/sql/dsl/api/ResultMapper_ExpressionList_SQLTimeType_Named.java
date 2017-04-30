@@ -21,6 +21,10 @@ public class ResultMapper_ExpressionList_SQLTimeType_Named<
 		
 		ISharedFunction_Next<MODEL, RESULT, RET>, // Comparable
 		ISharedFunction_Next<MODEL, RESULT, RET>, // String
+		ISharedFunction_Next<MODEL, RESULT, RET>, // Comparable
+		ISharedFunction_Next<MODEL, RESULT, RET>, // String
+		ISharedFunction_Next<MODEL, RESULT, RET>, // Comparable
+		ISharedFunction_Next<MODEL, RESULT, RET>, // String
 		
 		ISharedFunction_Next<MODEL, RESULT, RET>,
 		ISharedFunction_Next<MODEL, RESULT, RET>,

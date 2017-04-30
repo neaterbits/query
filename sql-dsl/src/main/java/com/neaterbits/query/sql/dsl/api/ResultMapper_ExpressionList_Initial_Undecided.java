@@ -134,7 +134,10 @@ final class ResultMapper_ExpressionList_Initial_Undecided<
 			
 			ISharedResultMap_OpsAndTo_Comparable_Named<MODEL, RESULT, Integer, ISharedFunction_After<MODEL, RESULT>>,
 			ISharedFunction_Next<MODEL, RESULT, ISharedFunction_After<MODEL, RESULT>>,
-			
+			ISharedResultMap_OpsAndTo_Comparable_Alias<MODEL, RESULT, Integer, ISharedFunction_After<MODEL, RESULT>>,
+			ISharedFunction_Next<MODEL, RESULT, ISharedFunction_After<MODEL, RESULT>>,
+			ISharedResultMap_OpsAndTo_Comparable_Undecided<MODEL, RESULT, Integer, ISharedFunction_After<MODEL, RESULT>>,
+			ISharedFunction_Next<MODEL, RESULT, ISharedFunction_After<MODEL, RESULT>>,
 			
 			NAMED_SUM_LONG_RET,
 			NAMED_COUNT_RET,

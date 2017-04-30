@@ -13,6 +13,7 @@ public interface ISharedResultMap_OpsAndTo_Comparable_Alias<
 				
 				RET,
 				
+				ISharedResultMap_OpsAndTo_Comparable_Alias<MODEL, RESULT, R, RET>,
 				ISharedResultMap_OpsAndTo_Comparable_Alias<MODEL, RESULT, R, RET>
 			>
 {

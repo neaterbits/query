@@ -15,9 +15,9 @@ public interface ISharedResultMap_OpsAndTo_String_Named<
 					
 					RET,
 					
+					ISharedResultMap_OpsAndTo_String_Named<MODEL, RESULT, RET>,
 					ISharedResultMap_OpsAndTo_String_Named<MODEL, RESULT, RET>
-					
-					>
+			>
 		
 {
 

@@ -19,6 +19,9 @@ final class ResultMapper_ExpressionList_String_Alias<
 			ISharedFunction_After<MODEL, RESULT>,
 			
 			
+			ISharedFunction_Next<MODEL, RESULT, AFTER>, ISharedFunction_Next<MODEL, RESULT, AFTER>,
+			ISharedFunction_Next<MODEL, RESULT, AFTER>, // Comparable
+			ISharedResultMap_OpsAndTo_String_Alias<MODEL, RESULT, AFTER>,
 			ISharedFunction_Next<MODEL, RESULT, AFTER>, // Comparable
 			ISharedResultMap_OpsAndTo_String_Alias<MODEL, RESULT, AFTER>,
 			

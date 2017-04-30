@@ -13,8 +13,12 @@ abstract class ResultMapper_ExpressionList_Base<
 			ALIAS_RET extends ISharedFunction_After<MODEL, RESULT>,
 			UNDECIDED_RET extends ISharedFunction_After<MODEL, RESULT>,
 			
-			NUMERIC_NEXT extends ISharedFunction_Next<MODEL, RESULT, OPERAND_RET>,
-			STRING_NEXT extends ISharedFunction_Next<MODEL, RESULT, OPERAND_RET>,
+			NAMED_NUMERIC_NEXT extends ISharedFunction_Next<MODEL, RESULT, OPERAND_RET>,
+			NAMED_STRING_NEXT extends ISharedFunction_Next<MODEL, RESULT, OPERAND_RET>,
+			ALIAS_NUMERIC_NEXT extends ISharedFunction_Next<MODEL, RESULT, OPERAND_RET>,
+			ALIAS_STRING_NEXT extends ISharedFunction_Next<MODEL, RESULT, OPERAND_RET>,
+			COMMON_NUMERIC_NEXT extends ISharedFunction_Next<MODEL, RESULT, OPERAND_RET>,
+			COMMON_STRING_NEXT extends ISharedFunction_Next<MODEL, RESULT, OPERAND_RET>,
 			
 			
 			NAMED_SUM_LONG_RET  extends ISharedFunction_Next<MODEL, RESULT, NAMED_RET>,
@@ -84,7 +88,9 @@ abstract class ResultMapper_ExpressionList_Base<
 				
 				NAMED_RET, ALIAS_RET, UNDECIDED_RET,
 				
-				NUMERIC_NEXT, STRING_NEXT,
+				NAMED_NUMERIC_NEXT, NAMED_STRING_NEXT,
+				ALIAS_NUMERIC_NEXT, ALIAS_STRING_NEXT,
+				COMMON_NUMERIC_NEXT, COMMON_STRING_NEXT,
 				
 				NAMED_SUM_LONG_RET,
 				NAMED_COUNT_RET,

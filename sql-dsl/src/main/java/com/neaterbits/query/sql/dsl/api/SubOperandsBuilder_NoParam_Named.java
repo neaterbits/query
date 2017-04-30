@@ -13,7 +13,7 @@ final class SubOperandsBuilder_NoParam_Named<
 			   ISharedSubOperandsBuilder_NoParam_End_Named<MODEL, RESULT, R, NAMED_RET> {
 
 	
-	SubOperandsBuilder_NoParam_Named(SubOperandsBuilder_Initial<MODEL, RESULT, R, NAMED_RET, NAMED_RET, ISharedFunction_After<MODEL, RESULT>, ISharedFunction_After<MODEL, RESULT>, ?, ?> toCopy) {
+	SubOperandsBuilder_NoParam_Named(SubOperandsBuilder_Initial<MODEL, RESULT, R, NAMED_RET, NAMED_RET, ISharedFunction_After<MODEL, RESULT>, ISharedFunction_After<MODEL, RESULT>, ?, ?, ?, ?, ?, ?> toCopy) {
 		super(toCopy);
 	}
 

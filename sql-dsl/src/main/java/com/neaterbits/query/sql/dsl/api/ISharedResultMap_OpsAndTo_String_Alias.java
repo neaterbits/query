@@ -14,6 +14,7 @@ public interface ISharedResultMap_OpsAndTo_String_Alias<
 				
 				RET,
 				
+				ISharedResultMap_OpsAndTo_String_Alias<MODEL, RESULT, RET>,
 				ISharedResultMap_OpsAndTo_String_Alias<MODEL, RESULT, RET>
 				>
 	{

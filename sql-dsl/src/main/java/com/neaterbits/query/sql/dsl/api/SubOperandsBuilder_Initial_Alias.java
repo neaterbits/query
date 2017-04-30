@@ -18,6 +18,10 @@ final class SubOperandsBuilder_Initial_Alias<
 		ALIAS_RET,
 		ISharedFunction_After<MODEL,RESULT>,
 
+		ISharedFunction_Next<MODEL,RESULT, ALIAS_RET>,
+		ISharedFunction_Next<MODEL,RESULT, ALIAS_RET>,
+		ISharedSubOperandsBuilder_Numeric_Next_Alias<MODEL,RESULT,R,ALIAS_RET>,
+		ISharedSubOperandsBuilder_String_Next_Alias<MODEL,RESULT,ALIAS_RET>,
 		ISharedSubOperandsBuilder_Numeric_Next_Alias<MODEL,RESULT,R,ALIAS_RET>,
 		ISharedSubOperandsBuilder_String_Next_Alias<MODEL,RESULT,ALIAS_RET>
 		>

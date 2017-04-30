@@ -15,8 +15,12 @@ abstract class SubOperandsBuilder<
 			ALIAS_RET extends ISharedFunction_After<MODEL, RESULT>,
 			UNDECIDED_RET extends ISharedFunction_After<MODEL, RESULT>,
 			
-			NUMERIC_OPERAND_NEXT    extends ISharedFunction_Next<MODEL, RESULT, OPERAND_RET>,
-			STRING_OPERAND_NEXT    extends ISharedFunction_Next<MODEL, RESULT, OPERAND_RET>,
+			NAMED_NUMERIC_OPERAND_NEXT    extends ISharedFunction_Next<MODEL, RESULT, OPERAND_RET>,
+			NAMED_STRING_OPERAND_NEXT    extends ISharedFunction_Next<MODEL, RESULT, OPERAND_RET>,
+			ALIAS_NUMERIC_OPERAND_NEXT    extends ISharedFunction_Next<MODEL, RESULT, OPERAND_RET>,
+			ALIAS_STRING_OPERAND_NEXT    extends ISharedFunction_Next<MODEL, RESULT, OPERAND_RET>,
+			COMMON_NUMERIC_OPERAND_NEXT    extends ISharedFunction_Next<MODEL, RESULT, OPERAND_RET>,
+			COMMON_STRING_OPERAND_NEXT    extends ISharedFunction_Next<MODEL, RESULT, OPERAND_RET>,
 
 			NAMED_SUM_LONG_RET extends ISharedFunction_Next<MODEL, RESULT, NAMED_RET>,
 			NAMED_COUNT_RET extends ISharedFunction_Next<MODEL, RESULT, NAMED_RET>,
@@ -92,8 +96,12 @@ abstract class SubOperandsBuilder<
 			ALIAS_RET,
 			UNDECIDED_RET,
 			
-			NUMERIC_OPERAND_NEXT,
-			STRING_OPERAND_NEXT,
+			NAMED_NUMERIC_OPERAND_NEXT,
+			NAMED_STRING_OPERAND_NEXT,
+			ALIAS_NUMERIC_OPERAND_NEXT,
+			ALIAS_STRING_OPERAND_NEXT,
+			COMMON_NUMERIC_OPERAND_NEXT,
+			COMMON_STRING_OPERAND_NEXT,
 			
 			NAMED_SUM_LONG_RET,
 			NAMED_COUNT_RET,
@@ -188,7 +196,8 @@ abstract class SubOperandsBuilder<
 	}
 		
 	SubOperandsBuilder(SubOperandsBuilder<MODEL, RESULT, R, OPERAND_RET,
-			?, ?, ?, ?, ?,
+			?, ?, ?,
+			?, ?, ?, ?, ?, ?,
 			?, ?, ?,
 			?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,
 			?, ?, ?,

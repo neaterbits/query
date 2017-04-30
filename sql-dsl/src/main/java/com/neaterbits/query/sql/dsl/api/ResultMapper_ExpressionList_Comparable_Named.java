@@ -21,8 +21,9 @@ final class ResultMapper_ExpressionList_Comparable_Named<
 			ISharedFunction_After<MODEL, RESULT>, // Alias
 			ISharedFunction_After<MODEL, RESULT>, // Undecided
 			
-			ISharedResultMap_OpsAndTo_Comparable_Named<MODEL, RESULT, R, RET>,
-			ISharedFunction_Next<MODEL, RESULT, RET>, // String
+			ISharedResultMap_OpsAndTo_Comparable_Named<MODEL, RESULT, R, RET>, ISharedFunction_Next<MODEL, RESULT, RET>, //Named
+			ISharedFunction_Next<MODEL, RESULT, RET>, ISharedFunction_Next<MODEL, RESULT, RET>, // Alias
+			ISharedResultMap_OpsAndTo_Comparable_Named<MODEL, RESULT, R, RET>, ISharedFunction_Next<MODEL, RESULT, RET>, //Named
 			
 			ISharedResultMap_OpsAndTo_Comparable_Named<MODEL, RESULT, Long, RET>,
 			ISharedResultMap_OpsAndTo_Comparable_Named<MODEL, RESULT, Long, RET>,

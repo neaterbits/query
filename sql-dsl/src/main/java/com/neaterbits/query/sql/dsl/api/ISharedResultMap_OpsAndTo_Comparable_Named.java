@@ -13,6 +13,7 @@ public interface ISharedResultMap_OpsAndTo_Comparable_Named<
 				
 				RET,
 				
+				ISharedResultMap_OpsAndTo_Comparable_Named<MODEL, RESULT, R, RET>,
 				ISharedResultMap_OpsAndTo_Comparable_Named<MODEL, RESULT, R, RET>
 			>
 

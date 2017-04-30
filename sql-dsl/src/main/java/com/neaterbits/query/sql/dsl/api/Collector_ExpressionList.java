@@ -15,9 +15,13 @@ abstract class Collector_ExpressionList<
 		ALIAS_RET extends ISharedFunction_After<MODEL, RESULT>,
 		UNDECIDED_RET extends ISharedFunction_After<MODEL, RESULT>,
 		
-		NUMERIC_OPERAND_NEXT    extends ISharedFunction_Next<MODEL, RESULT, OPERAND_RET>,
-		STRING_OPERAND_NEXT    extends ISharedFunction_Next<MODEL, RESULT, OPERAND_RET>,
-
+		NAMED_NUMERIC_OPERAND_NEXT    extends ISharedFunction_Next<MODEL, RESULT, OPERAND_RET>,
+		NAMED_STRING_OPERAND_NEXT    extends ISharedFunction_Next<MODEL, RESULT, OPERAND_RET>,
+		ALIAS_NUMERIC_OPERAND_NEXT    extends ISharedFunction_Next<MODEL, RESULT, OPERAND_RET>,
+		ALIAS_STRING_OPERAND_NEXT    extends ISharedFunction_Next<MODEL, RESULT, OPERAND_RET>,
+		COMMON_NUMERIC_OPERAND_NEXT    extends ISharedFunction_Next<MODEL, RESULT, OPERAND_RET>,
+		COMMON_STRING_OPERAND_NEXT    extends ISharedFunction_Next<MODEL, RESULT, OPERAND_RET>,
+		
 		NAMED_SUM_LONG_RET  extends ISharedFunction_Next<MODEL, RESULT, NAMED_RET>,
 		NAMED_COUNT_RET   	extends ISharedFunction_Next<MODEL, RESULT, NAMED_RET>,
 		NAMED_LENGTH_RET    extends ISharedFunction_Next<MODEL, RESULT, NAMED_RET>,
@@ -83,11 +87,11 @@ abstract class Collector_ExpressionList<
 	//Implement both Numeric and String in this baseclass 
 	implements 
 	
-			   ISharedOperands_Numeric_Named_All<MODEL, RESULT, OPERAND_RET, NUMERIC_OPERAND_NEXT>,
-			   ISharedOperands_String_Named_All<MODEL, RESULT, OPERAND_RET, STRING_OPERAND_NEXT>, 
+			   ISharedOperands_Numeric_Named_All<MODEL, RESULT, OPERAND_RET, NAMED_NUMERIC_OPERAND_NEXT, COMMON_NUMERIC_OPERAND_NEXT>,
+			   ISharedOperands_String_Named_All<MODEL, RESULT, OPERAND_RET, NAMED_STRING_OPERAND_NEXT, COMMON_STRING_OPERAND_NEXT>, 
 
-			   ISharedOperands_Numeric_Alias_All<MODEL, RESULT, OPERAND_RET, NUMERIC_OPERAND_NEXT>,
-			   ISharedOperands_String_Alias_All<MODEL, RESULT, OPERAND_RET, STRING_OPERAND_NEXT>,
+			   ISharedOperands_Numeric_Alias_All<MODEL, RESULT, OPERAND_RET, ALIAS_NUMERIC_OPERAND_NEXT, COMMON_NUMERIC_OPERAND_NEXT>,
+			   ISharedOperands_String_Alias_All<MODEL, RESULT, OPERAND_RET, ALIAS_STRING_OPERAND_NEXT, COMMON_STRING_OPERAND_NEXT>,
 			   
 
 
@@ -194,9 +198,9 @@ abstract class Collector_ExpressionList<
 	}
 	
 	Collector_ExpressionList(Collector_ExpressionList<MODEL, RESULT, R, OPERAND_RET,
-			?, ?,
-					
 			?, ?, ?,
+					
+			?, ?, ?, ?, ?, ?,
 					
 			?, ?, ?,
 		    ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,
@@ -354,92 +358,92 @@ abstract class Collector_ExpressionList<
 	
 	@Override
 	@SuppressWarnings("unchecked")
-	public final <T> NUMERIC_OPERAND_NEXT plus(IFunctionShort<T> getter) {
+	public final <T> NAMED_NUMERIC_OPERAND_NEXT plus(IFunctionShort<T> getter) {
 		addField(Operator.PLUS, getter);
 		
-		return (NUMERIC_OPERAND_NEXT)this;
+		return (NAMED_NUMERIC_OPERAND_NEXT)this;
 	}
 
 	@Override
 	@SuppressWarnings("unchecked")
-	public final <T> NUMERIC_OPERAND_NEXT plus(short value) {
+	public final <T> COMMON_NUMERIC_OPERAND_NEXT plus(short value) {
 		addValue(Operator.PLUS, value);
 		
-		return (NUMERIC_OPERAND_NEXT)this;
+		return (COMMON_NUMERIC_OPERAND_NEXT)this;
 	}
 
 	@Override
 	@SuppressWarnings("unchecked")
-	public final <T> NUMERIC_OPERAND_NEXT plus(IFunctionBigDecimal<T> getter) {
+	public final <T> NAMED_NUMERIC_OPERAND_NEXT plus(IFunctionBigDecimal<T> getter) {
 		addField(Operator.PLUS, getter);
 		
-		return (NUMERIC_OPERAND_NEXT)this;
+		return (NAMED_NUMERIC_OPERAND_NEXT)this;
 	}
 
 	@Override
 	@SuppressWarnings("unchecked")
-	public final NUMERIC_OPERAND_NEXT plusOf(ISharedSubOperandsFunction_Named<MODEL, RESULT, BigDecimal> builder) {
+	public final NAMED_NUMERIC_OPERAND_NEXT plusOf(ISharedSubOperandsFunction_Named<MODEL, RESULT, BigDecimal> builder) {
 
 		addSubNumeric(Operator.PLUS, builder);
 
-		return (NUMERIC_OPERAND_NEXT)this;
+		return (NAMED_NUMERIC_OPERAND_NEXT)this;
 	}
 
 	@Override
 	@SuppressWarnings("unchecked")
-	public final NUMERIC_OPERAND_NEXT plus(BigDecimal value) {
+	public final COMMON_NUMERIC_OPERAND_NEXT plus(BigDecimal value) {
 
 		addValue(Operator.PLUS, value);
 
-		return (NUMERIC_OPERAND_NEXT)this;
+		return (COMMON_NUMERIC_OPERAND_NEXT)this;
 	}
 	
 	@Override
 	@SuppressWarnings("unchecked")
-	public final <T> NUMERIC_OPERAND_NEXT plus(ISupplierShort getter) {
+	public final <T> ALIAS_NUMERIC_OPERAND_NEXT plus(ISupplierShort getter) {
 		addField(Operator.PLUS, getter);
 		
-		return (NUMERIC_OPERAND_NEXT)this;
+		return (ALIAS_NUMERIC_OPERAND_NEXT)this;
 	}
 
 	@Override
 	@SuppressWarnings("unchecked")
-	public final <T> NUMERIC_OPERAND_NEXT plus(ISupplierBigDecimal getter) {
+	public final <T> ALIAS_NUMERIC_OPERAND_NEXT plus(ISupplierBigDecimal getter) {
 		addField(Operator.PLUS, getter);
 		
-		return (NUMERIC_OPERAND_NEXT)this;
+		return (ALIAS_NUMERIC_OPERAND_NEXT)this;
 	}
 
 	@Override
 	@SuppressWarnings("unchecked")
-	public final NUMERIC_OPERAND_NEXT plusOf(ISharedSubOperandsFunction_Alias<MODEL, RESULT, BigDecimal> builder) {
+	public final ALIAS_NUMERIC_OPERAND_NEXT plusOf(ISharedSubOperandsFunction_Alias<MODEL, RESULT, BigDecimal> builder) {
 		addSubNumeric(Operator.PLUS, builder);
 		
-		return (NUMERIC_OPERAND_NEXT)this;
+		return (ALIAS_NUMERIC_OPERAND_NEXT)this;
 	}
 
 	@Override
 	@SuppressWarnings("unchecked")
-	public final <T> STRING_OPERAND_NEXT concat(IFunctionString<T> getter) {
+	public final <T> NAMED_STRING_OPERAND_NEXT concat(IFunctionString<T> getter) {
 		addField(Operator.CONCAT, getter);
 
-		return (STRING_OPERAND_NEXT)this;
+		return (NAMED_STRING_OPERAND_NEXT)this;
 	}
 
 	@Override
 	@SuppressWarnings("unchecked")
-	public final <T> STRING_OPERAND_NEXT concat(String value) {
+	public final <T> COMMON_STRING_OPERAND_NEXT concat(String value) {
 		addValue(Operator.PLUS, value);
 
-		return (STRING_OPERAND_NEXT)this;
+		return (COMMON_STRING_OPERAND_NEXT)this;
 	}
 
 	@Override
 	@SuppressWarnings("unchecked")
-	public final STRING_OPERAND_NEXT concat(ISupplierString getter) {
+	public final ALIAS_STRING_OPERAND_NEXT concat(ISupplierString getter) {
 		addField(Operator.CONCAT, getter);
 		
-		return (STRING_OPERAND_NEXT)this;
+		return (ALIAS_STRING_OPERAND_NEXT)this;
 	}
 	
 	
