@@ -81,18 +81,32 @@ public class ShortFunctionTest extends BaseJPATest {
 				"list(NameLength.class)" +
 				".map().modOf(b -> b.length(Company::getName), 3).to(NameLength::setLength)");
 
-		select.list(NameLength.class)
-			.map().sqrt().length(Company::getName).to(NameLength::setLengthSqrt);
-		
-		select.list(NameLength.class)
-		   .map(Company::getName).to(NameLength::setName)
-			.map().sqrt().length(Company::getName).to(NameLength::setLengthSqrt);
 
 		verifyIsCompilable(
 				b -> b.addImport(NameLength.class).addImport(Company.class),
 				
 				"list(NameLength.class)" +
 				".map().sqrt().length(Company::getName).to(NameLength::setLengthSqrt)");
+
+		final Company acme1 = new Company(1, "Acme", new BigDecimal("49"));
+		final Company acme2 = new Company(2, "Acme Inc.", new BigDecimal("121"));
+		
+		
+		MultiBuilt<NameLength> query = select.list(NameLength.class)
+			.map().sqrt().length(Company::getName).to(NameLength::setLengthSqrt)
+			.build();
+	
+		
+		store(acme1, acme2)
+		.checkListUnordered(query, new NameLength(null, 2.0), new NameLength(null, 3.0));
+
+		query = select.list(NameLength.class)
+				.map().sqrt().length(Company::getName).to(NameLength::setLengthSqrt)
+				.map(Company::getName).to(NameLength::setName)
+				.build();
+			
+			store(acme1, acme2)
+			.checkListUnordered(query, new NameLength("Acme", 2.0), new NameLength("Acme Inc.", 3.0));
 	}
 
 	@Test // Test that can combine no-param, integer and length functions directly

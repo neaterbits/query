@@ -90,6 +90,6 @@ public class NameLength {
 
 	@Override
 	public String toString() {
-		return "NameLength [name=" + name + ", length=" + length + "]";
+		return "NameLength [name=" + name + ", length=" + length + ", lengthSqrt=" + lengthSqrt + "]";
 	}
 }

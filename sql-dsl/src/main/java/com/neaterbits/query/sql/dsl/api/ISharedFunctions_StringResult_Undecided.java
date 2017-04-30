@@ -22,7 +22,7 @@ public interface ISharedFunctions_StringResult_Undecided<
 				RESULT,
 	
 				// eg lower().xyz, return only the functions that return String (so skip length())
-				ISharedFunctions_StringResult_Undecided<
+				ISharedFunctions_String_StringResult_Undecided<
 					MODEL, RESULT,
 					NAMED_RET, ALIAS_RET,
 					NAMED_STRING_RET, ALIAS_STRING_RET>> {
