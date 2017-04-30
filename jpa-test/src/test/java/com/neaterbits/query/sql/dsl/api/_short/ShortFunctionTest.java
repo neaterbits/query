@@ -61,6 +61,7 @@ public class ShortFunctionTest extends BaseJPATest {
 				
 				//fortsett her, fikse slik at kun returnerer
 				.map().modOf(b -> b.length(c::getName).plus((short)1), 3).to(NameLength::setLength)
+				.where().absOfBigDecimal(b -> b.sqrt(c::getStockPrice)).isEqualTo(new BigDecimal("1.2"))
 
 				.build();
 		
@@ -70,6 +71,28 @@ public class ShortFunctionTest extends BaseJPATest {
 				new NameLength("Acme Inc.", 1)); 	// (9 + 1) % 3 => 1
 	}
 	
+
+	@Test // Should not allow .absOfBigDecimal for sqrt() since sqrt() is Double type 
+	public void testShouldNoCompileCondition() {
+
+		verifyIsNotCompilable(
+				b -> b.addImport(NameLength.class).addImport(Company.class),
+						
+				"list(NameLength.class)" +
+				
+				".map(Company::getName).to(NameLength::setName)" +
+				".where().absOfBigDecimal(b -> b.sqrt(Company::getStockPrice)).isEqualTo(new BigDecimal(\"1.2\"))");
+		
+		verifyIsNotCompilable(
+				b -> b.addImport(NameLength.class).addImport(Company.class)
+					 .add(Company.class, "c"),
+						
+				"list(NameLength.class)" +
+				
+				".map(c::getName).to(NameLength::setName)" +
+				".where().absOfBigDecimal(b -> b.sqrt(c::getStockPrice)).isEqualTo(new BigDecimal(\"1.2\"))");
+
+	}
 	@Test // Seems to compile
 	public void testDoesNotCompileAndAfterMap() {
 		verifyIsNotCompilable(
