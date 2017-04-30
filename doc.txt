@@ -596,7 +596,6 @@ vil vi kunne switche i mappinga.
 med en enkelt static-variabel per data source, som da er db-interfacet.
 
 
-
  - !! TODO !! bør avg() returnere Double for BigDecimal? virker rart. Vil dette fungere for Long også eller kan Long ha verdier 
 som er større enn double?
 
@@ -1537,6 +1536,52 @@ abstract-methode fungerer dårlig, se på ConditionsClause? Kan se på original-
 Må alltid ha type i Collector_Clause, så kan bruke denne til å sette? Dvs EConditionsClause.
 
 Collector_Clause har alltid dette, men denne lagres unna.
+
+
+-----------------------
+
+Condition functions:
+
+ISharedResultMap_To_Comparable_Named => ISharedCondition_Comp_Comparable_Named for conditions
+Likeledes med ISharedResultMap_OpsAndTo som vil da ha operasjonene med .plus() osv. Så burde være tålelig greit, er også her allerede differensiering
+på comparable, time types osv. ISharedResultMap_OpsAndTo_Comparable_Named
+
+
+Mens ISharedCondion_* må renames til ISharedComparision_ for å unngå navnekonflikt.
+
+Så blir det ellers ganske likt med map(), som det bør være, med funksjoner som mappes via expression list,
+som det gjøres allerede. Er stort sett interfacene som må være forskjellige.
+
+Bør gjøres i egen branch ut fra undecided-endringene? Eller kan gjøres fra master?
+Må merge tilbake til master den fix-branchen som var separat.
+Da kan vi merge ut fra master.
+Evt gjøre dette ut fra fiks-branchen? Greiest med master.
+Til slutt legge på undecided for gjennomgående hele veien i _take2 branched, og så merge til master.
+
+
+Men kan heller merge den tilbake, så branche fra main og regelmessig merge conditions inn i undecided fix branchen
+for å se at ikke blir konflikt. Men burde ikke bli det siden må lage egne interfaces for mye, unntatt suboperands greiene.
+
+er ISharedFunctions_Transform_Initial_Named som returneres fra where() i ISharedLogical_Where_Named_Base
+
+Disse er tilsvarende ISharedMapFuntions_* som kalles fra ISharedResult_Mapped_Named_Base (som inneholder map())
+
+ISharedFunctions_Transform_Initial_Named Bør nok renamed til ISharedConditionFunctions_ eller ISharedTransformFunctions_
+for å bli mere likt ISharedMapFunctions_
+
+
+Kan hende må gjenbuke samme for having() for at skulle kalle funksjoner der, slik at blir konsistent.
+
+
+
+
+
+
+
+
+
+
+
 
 
 
