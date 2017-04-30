@@ -2,7 +2,7 @@ package com.neaterbits.query.sql.dsl.api;
 
 class Collector_Condition_Comparative<MODEL, RESULT, R extends Comparable<R>, L extends ISharedLogical_Base<MODEL, RESULT>> 
 	extends Collector_Condition_Equality<MODEL, RESULT, R, L>
-	implements ISharedCondition_Comparable_Common_All_Compilable<MODEL, RESULT, R, L> {
+	implements ISharedComparison_Comparable_Common_All_Compilable<MODEL, RESULT, R, L> {
 
 	
 	Collector_Condition_Comparative(Collector_Conditions_GroupBy<MODEL, RESULT, ?> clause, Expression expression) {

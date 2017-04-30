@@ -9,22 +9,22 @@ public interface ISharedLogical_Or_Named_Base<
 	OR_CLAUSES extends ISharedLogical_Or<MODEL, RESULT>,
 	NESTED_AND_CLAUSES extends ISharedLogical_And_Named<MODEL, RESULT>,
 	
-	BOOLEAN_CLAUSE extends ISharedCondition_Comparable_Common_Base<MODEL, RESULT, Boolean, OR_CLAUSES>,
-	BYTE_CLAUSE extends ISharedCondition_Comparable_Common_Base<MODEL, RESULT, Byte, OR_CLAUSES>,
-	SHORT_CLAUSE extends ISharedCondition_Comparable_Common_Base<MODEL, RESULT, Short, OR_CLAUSES>,
-	INTEGER_CLAUSE extends ISharedCondition_Comparable_Common_Base<MODEL, RESULT, Integer, OR_CLAUSES>,
-	LONG_CLAUSE extends ISharedCondition_Comparable_Common_Base<MODEL, RESULT, Long, OR_CLAUSES>,
-	BIGINTEGER_CLAUSE extends ISharedCondition_Comparable_Common_Base<MODEL, RESULT, BigInteger, OR_CLAUSES>,
-	FLOAT_CLAUSE extends ISharedCondition_Comparable_Common_Base<MODEL, RESULT, Float, OR_CLAUSES>,
-	DOUBLE_CLAUSE extends ISharedCondition_Comparable_Common_Base<MODEL, RESULT, Double, OR_CLAUSES>,
-	BIGDECIMAL_CLAUSE extends ISharedCondition_Comparable_Common_Base<MODEL, RESULT, BigDecimal, OR_CLAUSES>,
-	STRING_CLAUSE extends ISharedCondition_Comparable_String_Base<MODEL, RESULT, OR_CLAUSES>,
-	DATE_CLAUSE extends ISharedCondition_Comparable_Common_Base<MODEL, RESULT, java.util.Date, OR_CLAUSES>,
-	CALENDAR_CLAUSE extends ISharedCondition_Comparable_Common_Base<MODEL, RESULT, java.util.Calendar, OR_CLAUSES>,
-	SQLDATE_CLAUSE extends ISharedCondition_SQLTimeType_Base<MODEL, RESULT, java.sql.Date, OR_CLAUSES>,
-	SQLTIME_CLAUSE extends ISharedCondition_SQLTimeType_Base<MODEL, RESULT, java.sql.Time, OR_CLAUSES>,
-	SQLTIMESTAMP_CLAUSE extends ISharedCondition_SQLTimeType_Base<MODEL, RESULT, java.sql.Timestamp, OR_CLAUSES>,
-	BYTEARRAY_CLAUSE extends ISharedCondition_ByteArray_Base<MODEL, RESULT, OR_CLAUSES>
+	BOOLEAN_CLAUSE extends ISharedComparison_Comparable_Common_Base<MODEL, RESULT, Boolean, OR_CLAUSES>,
+	BYTE_CLAUSE extends ISharedComparison_Comparable_Common_Base<MODEL, RESULT, Byte, OR_CLAUSES>,
+	SHORT_CLAUSE extends ISharedComparison_Comparable_Common_Base<MODEL, RESULT, Short, OR_CLAUSES>,
+	INTEGER_CLAUSE extends ISharedComparison_Comparable_Common_Base<MODEL, RESULT, Integer, OR_CLAUSES>,
+	LONG_CLAUSE extends ISharedComparison_Comparable_Common_Base<MODEL, RESULT, Long, OR_CLAUSES>,
+	BIGINTEGER_CLAUSE extends ISharedComparison_Comparable_Common_Base<MODEL, RESULT, BigInteger, OR_CLAUSES>,
+	FLOAT_CLAUSE extends ISharedComparison_Comparable_Common_Base<MODEL, RESULT, Float, OR_CLAUSES>,
+	DOUBLE_CLAUSE extends ISharedComparison_Comparable_Common_Base<MODEL, RESULT, Double, OR_CLAUSES>,
+	BIGDECIMAL_CLAUSE extends ISharedComparison_Comparable_Common_Base<MODEL, RESULT, BigDecimal, OR_CLAUSES>,
+	STRING_CLAUSE extends ISharedComparison_Comparable_String_Base<MODEL, RESULT, OR_CLAUSES>,
+	DATE_CLAUSE extends ISharedComparison_Comparable_Common_Base<MODEL, RESULT, java.util.Date, OR_CLAUSES>,
+	CALENDAR_CLAUSE extends ISharedComparison_Comparable_Common_Base<MODEL, RESULT, java.util.Calendar, OR_CLAUSES>,
+	SQLDATE_CLAUSE extends ISharedComparison_SQLTimeType_Base<MODEL, RESULT, java.sql.Date, OR_CLAUSES>,
+	SQLTIME_CLAUSE extends ISharedComparison_SQLTimeType_Base<MODEL, RESULT, java.sql.Time, OR_CLAUSES>,
+	SQLTIMESTAMP_CLAUSE extends ISharedComparison_SQLTimeType_Base<MODEL, RESULT, java.sql.Timestamp, OR_CLAUSES>,
+	BYTEARRAY_CLAUSE extends ISharedComparison_ByteArray_Base<MODEL, RESULT, OR_CLAUSES>
 	>
 
 	extends ISharedLogical_Or_Named<MODEL, RESULT> {

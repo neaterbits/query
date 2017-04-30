@@ -8,18 +8,18 @@ public interface ISharedFunctions_Initial_All<
 		
 		RET extends ISharedLogical_Base<MODEL, RESULT>,
 		
-		LENGTH_RET extends ISharedCondition_Comparable_Common_Base<MODEL, RESULT, Integer, RET>,
+		LENGTH_RET extends ISharedComparison_Comparable_Common_Base<MODEL, RESULT, Integer, RET>,
 
 		
-		BYTE_RET extends ISharedCondition_Comparable_Common_Base<MODEL, RESULT, Byte, RET>,
-		SHORT_RET extends ISharedCondition_Comparable_Common_Base<MODEL, RESULT, Short, RET>,
-		INTEGER_RET extends ISharedCondition_Comparable_Common_Base<MODEL, RESULT, Integer, RET>,
-		LONG_RET extends ISharedCondition_Comparable_Common_Base<MODEL, RESULT, Long, RET>,
-		BIGINTEGER_RET extends ISharedCondition_Comparable_Common_Base<MODEL, RESULT, BigInteger, RET>,
-		FLOAT_RET extends ISharedCondition_Comparable_Common_Base<MODEL, RESULT, Float, RET>,
-		DOUBLE_RET extends ISharedCondition_Comparable_Common_Base<MODEL, RESULT, Double, RET>,
-		BIGDECIMAL_RET extends ISharedCondition_Comparable_Common_Base<MODEL, RESULT, Double, RET>,
-		STRING_RET extends ISharedCondition_Comparable_String_Base<MODEL, RESULT, RET>>
+		BYTE_RET extends ISharedComparison_Comparable_Common_Base<MODEL, RESULT, Byte, RET>,
+		SHORT_RET extends ISharedComparison_Comparable_Common_Base<MODEL, RESULT, Short, RET>,
+		INTEGER_RET extends ISharedComparison_Comparable_Common_Base<MODEL, RESULT, Integer, RET>,
+		LONG_RET extends ISharedComparison_Comparable_Common_Base<MODEL, RESULT, Long, RET>,
+		BIGINTEGER_RET extends ISharedComparison_Comparable_Common_Base<MODEL, RESULT, BigInteger, RET>,
+		FLOAT_RET extends ISharedComparison_Comparable_Common_Base<MODEL, RESULT, Float, RET>,
+		DOUBLE_RET extends ISharedComparison_Comparable_Common_Base<MODEL, RESULT, Double, RET>,
+		BIGDECIMAL_RET extends ISharedComparison_Comparable_Common_Base<MODEL, RESULT, Double, RET>,
+		STRING_RET extends ISharedComparison_Comparable_String_Base<MODEL, RESULT, RET>>
 
 	extends 
 

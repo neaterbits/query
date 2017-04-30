@@ -30,7 +30,7 @@ final class Collector_GroupBy_Named<MODEL, RESULT> extends Collector_GroupBy<MOD
 		this.having = new Collector_Having_Named<>(this);
 	}
 
-	private <R extends Comparable<R>> ISharedCondition_Comparable_Common_All<MODEL, RESULT, R, ISharedProcessResult_Having_And_Or_Named<MODEL, RESULT>> havingComparable(Function<?, R> function) {
+	private <R extends Comparable<R>> ISharedComparison_Comparable_Common_All<MODEL, RESULT, R, ISharedProcessResult_Having_And_Or_Named<MODEL, RESULT>> havingComparable(Function<?, R> function) {
 
 		instantiateHaving();
 
@@ -38,25 +38,25 @@ final class Collector_GroupBy_Named<MODEL, RESULT> extends Collector_GroupBy<MOD
 	}
 
 	@Override
-	public final <T> ISharedCondition_Comparable_Common_All<MODEL, RESULT, Integer, ISharedProcessResult_Having_And_Or_Named<MODEL, RESULT>> having(IFunctionInteger<T> getter) {
+	public final <T> ISharedComparison_Comparable_Common_All<MODEL, RESULT, Integer, ISharedProcessResult_Having_And_Or_Named<MODEL, RESULT>> having(IFunctionInteger<T> getter) {
 
 		return havingComparable(getter);
 	}
 
 	@Override
-	public final <T> ISharedCondition_Comparable_Common_All<MODEL, RESULT, Long, ISharedProcessResult_Having_And_Or_Named<MODEL, RESULT>> having(IFunctionLong<T> getter) {
+	public final <T> ISharedComparison_Comparable_Common_All<MODEL, RESULT, Long, ISharedProcessResult_Having_And_Or_Named<MODEL, RESULT>> having(IFunctionLong<T> getter) {
 
 		return havingComparable(getter);
 	}
 
 	@Override
-	public final <T> ISharedCondition_Comparable_Common_All<MODEL, RESULT, BigDecimal, ISharedProcessResult_Having_And_Or_Named<MODEL, RESULT>> having(IFunctionBigDecimal<T> getter) {
+	public final <T> ISharedComparison_Comparable_Common_All<MODEL, RESULT, BigDecimal, ISharedProcessResult_Having_And_Or_Named<MODEL, RESULT>> having(IFunctionBigDecimal<T> getter) {
 
 		return havingComparable(getter);
 	}
 
 	@Override
-	public final <T> ISharedCondition_Comparable_String_All<MODEL, RESULT, ISharedProcessResult_Having_And_Or_Named<MODEL, RESULT>> having(IFunctionString<T> getter) {
+	public final <T> ISharedComparison_Comparable_String_All<MODEL, RESULT, ISharedProcessResult_Having_And_Or_Named<MODEL, RESULT>> having(IFunctionString<T> getter) {
 
 		instantiateHaving();
 

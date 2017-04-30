@@ -5,8 +5,8 @@ import java.util.function.Function;
 import java.util.function.Supplier;
 
 abstract class Collector_Condition_Equality<MODEL, RESULT, R, L extends ISharedLogical_Base<MODEL, RESULT>>
-	implements ISharedCondition_Equality_Named<MODEL, RESULT, R, L>,
-			   ISharedCondition_Equality_Alias<MODEL, RESULT, R, L> {
+	implements ISharedComparison_Equality_Named<MODEL, RESULT, R, L>,
+			   ISharedComparison_Equality_Alias<MODEL, RESULT, R, L> {
 
 	private final Collector_Conditions_GroupBy<MODEL, RESULT, ?> clause;
 	final Expression lhs;

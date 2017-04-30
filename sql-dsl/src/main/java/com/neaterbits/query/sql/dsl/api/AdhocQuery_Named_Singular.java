@@ -25,29 +25,29 @@ abstract class AdhocQuery_Named_Singular<MODEL> extends AdhocQuery_Named<MODEL, 
 	
 	@SuppressWarnings("unchecked")
 	@Override
-	public <E extends Enum<E>> ISharedCondition_Equality_Value<MODEL, Object, E, IAdhocLogical_And_Or_Singular<MODEL, Object, Object>> where(IFunctionEnum<Object, E> func) {
+	public <E extends Enum<E>> ISharedComparison_Equality_Value<MODEL, Object, E, IAdhocLogical_And_Or_Singular<MODEL, Object, Object>> where(IFunctionEnum<Object, E> func) {
 		return addConditionWhere(func);
 	}	
 	
 	@SuppressWarnings("unchecked")
 	@Override
-	public ISharedCondition_Comparable_Common_Value<MODEL, Object, Integer, IAdhocLogical_And_Or_Singular<MODEL, Object, Object>> where(IFunctionInteger<Object> func) {
+	public ISharedComparison_Comparable_Common_Value<MODEL, Object, Integer, IAdhocLogical_And_Or_Singular<MODEL, Object, Object>> where(IFunctionInteger<Object> func) {
 		return addComparativeWhere(func);
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public ISharedCondition_Comparable_Common_Value<MODEL, Object, BigDecimal, IAdhocLogical_And_Or_Singular<MODEL, Object, Object>> where(IFunctionBigDecimal<Object> func) {
+	public ISharedComparison_Comparable_Common_Value<MODEL, Object, BigDecimal, IAdhocLogical_And_Or_Singular<MODEL, Object, Object>> where(IFunctionBigDecimal<Object> func) {
 		return addComparativeWhere(func);
 	}
 
 	@Override
 	@SuppressWarnings({"unchecked", "rawtypes"})
-	public ISharedCondition_Comparable_String_Value<MODEL, Object, IAdhocLogical_And_Or_Singular<MODEL, Object, Object>> where(IFunctionString<Object> func) {
+	public ISharedComparison_Comparable_String_Value<MODEL, Object, IAdhocLogical_And_Or_Singular<MODEL, Object, Object>> where(IFunctionString<Object> func) {
 
 		addWhereGetter(func);
 		
-		return (ISharedCondition_Comparable_String_Value)this;
+		return (ISharedComparison_Comparable_String_Value)this;
 	}
 
 

@@ -6,9 +6,9 @@ public interface IAdhocFunctions_Initial<
 		ENTITY,
 		RET extends ISharedLogical_Base<MODEL, RESULT>,
 
-		INTEGER_CLAUSE extends ISharedCondition_Comparable_Common_Value<MODEL, RESULT, Integer, RET>,
-		LONG_CLAUSE extends ISharedCondition_Comparable_Common_Value<MODEL, RESULT, Long, RET>,
-		STRING_CLAUSE extends ISharedCondition_Comparable_String_Value<MODEL, RESULT, RET>>
+		INTEGER_CLAUSE extends ISharedComparison_Comparable_Common_Value<MODEL, RESULT, Integer, RET>,
+		LONG_CLAUSE extends ISharedComparison_Comparable_Common_Value<MODEL, RESULT, Long, RET>,
+		STRING_CLAUSE extends ISharedComparison_Comparable_String_Value<MODEL, RESULT, RET>>
 
 		extends 
 				IAdhocFunctions_Arithmetic<MODEL, RESULT, ENTITY, RET, INTEGER_CLAUSE, LONG_CLAUSE>,

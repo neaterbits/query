@@ -31,17 +31,17 @@ public interface ISharedLogical_And_Named_Function
 			MODEL,
 			RESULT, 
 			AND_CLAUSES,
-			ISharedCondition_Comparable_Common_All<MODEL, RESULT, Integer, AND_CLAUSES>,
+			ISharedComparison_Comparable_Common_All<MODEL, RESULT, Integer, AND_CLAUSES>,
 			
-			ISharedCondition_Comparable_Common_All<MODEL, RESULT, Byte, AND_CLAUSES>,
-			ISharedCondition_Comparable_Common_All<MODEL, RESULT, Short, AND_CLAUSES>,
-			ISharedCondition_Comparable_Common_All<MODEL, RESULT, Integer, AND_CLAUSES>,
-			ISharedCondition_Comparable_Common_All<MODEL, RESULT, Long, AND_CLAUSES>,
-			ISharedCondition_Comparable_Common_All<MODEL, RESULT, BigInteger, AND_CLAUSES>,
-			ISharedCondition_Comparable_Common_All<MODEL, RESULT, Float, AND_CLAUSES>,
-			ISharedCondition_Comparable_Common_All<MODEL, RESULT, Double, AND_CLAUSES>,
-			ISharedCondition_Comparable_Common_All<MODEL, RESULT, BigDecimal, AND_CLAUSES>,
-			ISharedCondition_Comparable_String_All<MODEL, RESULT, AND_CLAUSES>			
+			ISharedComparison_Comparable_Common_All<MODEL, RESULT, Byte, AND_CLAUSES>,
+			ISharedComparison_Comparable_Common_All<MODEL, RESULT, Short, AND_CLAUSES>,
+			ISharedComparison_Comparable_Common_All<MODEL, RESULT, Integer, AND_CLAUSES>,
+			ISharedComparison_Comparable_Common_All<MODEL, RESULT, Long, AND_CLAUSES>,
+			ISharedComparison_Comparable_Common_All<MODEL, RESULT, BigInteger, AND_CLAUSES>,
+			ISharedComparison_Comparable_Common_All<MODEL, RESULT, Float, AND_CLAUSES>,
+			ISharedComparison_Comparable_Common_All<MODEL, RESULT, Double, AND_CLAUSES>,
+			ISharedComparison_Comparable_Common_All<MODEL, RESULT, BigDecimal, AND_CLAUSES>,
+			ISharedComparison_Comparable_String_All<MODEL, RESULT, AND_CLAUSES>			
 			//INTEGER_CLAUSE, LONG_CLAUSE, STRING_CLAUSE
 			
 			>

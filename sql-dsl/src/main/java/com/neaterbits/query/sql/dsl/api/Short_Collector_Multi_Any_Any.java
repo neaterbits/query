@@ -273,17 +273,17 @@ final class Short_Collector_Multi_Any_Any<MODEL, RESULT>
 				MODEL,
 				RESULT, 
 				ISQLLogical_AndOr_MultiEntity_Named<MODEL, RESULT>,
-				ISharedCondition_Comparable_Common_All_Compilable<MODEL, RESULT, Integer, ISQLLogical_AndOr_MultiEntity_Named<MODEL, RESULT>>, 
+				ISharedComparison_Comparable_Common_All_Compilable<MODEL, RESULT, Integer, ISQLLogical_AndOr_MultiEntity_Named<MODEL, RESULT>>, 
 
-				ISharedCondition_Comparable_Common_All_Compilable<MODEL, RESULT, Byte, ISQLLogical_AndOr_MultiEntity_Named<MODEL, RESULT>>,
-				ISharedCondition_Comparable_Common_All_Compilable<MODEL, RESULT, Short, ISQLLogical_AndOr_MultiEntity_Named<MODEL, RESULT>>,
-				ISharedCondition_Comparable_Common_All_Compilable<MODEL, RESULT, Integer, ISQLLogical_AndOr_MultiEntity_Named<MODEL, RESULT>>, 
-				ISharedCondition_Comparable_Common_All_Compilable<MODEL, RESULT, Long, ISQLLogical_AndOr_MultiEntity_Named<MODEL, RESULT>>, 
-				ISharedCondition_Comparable_Common_All_Compilable<MODEL, RESULT, BigInteger, ISQLLogical_AndOr_MultiEntity_Named<MODEL, RESULT>>, 
-				ISharedCondition_Comparable_Common_All_Compilable<MODEL, RESULT, Float, ISQLLogical_AndOr_MultiEntity_Named<MODEL, RESULT>>, 
-				ISharedCondition_Comparable_Common_All_Compilable<MODEL, RESULT, Double, ISQLLogical_AndOr_MultiEntity_Named<MODEL, RESULT>>,
-				ISharedCondition_Comparable_Common_All_Compilable<MODEL, RESULT, BigDecimal, ISQLLogical_AndOr_MultiEntity_Named<MODEL, RESULT>>,
-				ISharedCondition_Comparable_String_All_Compilable<MODEL, RESULT, ISQLLogical_AndOr_MultiEntity_Named<MODEL, RESULT>>
+				ISharedComparison_Comparable_Common_All_Compilable<MODEL, RESULT, Byte, ISQLLogical_AndOr_MultiEntity_Named<MODEL, RESULT>>,
+				ISharedComparison_Comparable_Common_All_Compilable<MODEL, RESULT, Short, ISQLLogical_AndOr_MultiEntity_Named<MODEL, RESULT>>,
+				ISharedComparison_Comparable_Common_All_Compilable<MODEL, RESULT, Integer, ISQLLogical_AndOr_MultiEntity_Named<MODEL, RESULT>>, 
+				ISharedComparison_Comparable_Common_All_Compilable<MODEL, RESULT, Long, ISQLLogical_AndOr_MultiEntity_Named<MODEL, RESULT>>, 
+				ISharedComparison_Comparable_Common_All_Compilable<MODEL, RESULT, BigInteger, ISQLLogical_AndOr_MultiEntity_Named<MODEL, RESULT>>, 
+				ISharedComparison_Comparable_Common_All_Compilable<MODEL, RESULT, Float, ISQLLogical_AndOr_MultiEntity_Named<MODEL, RESULT>>, 
+				ISharedComparison_Comparable_Common_All_Compilable<MODEL, RESULT, Double, ISQLLogical_AndOr_MultiEntity_Named<MODEL, RESULT>>,
+				ISharedComparison_Comparable_Common_All_Compilable<MODEL, RESULT, BigDecimal, ISQLLogical_AndOr_MultiEntity_Named<MODEL, RESULT>>,
+				ISharedComparison_Comparable_String_All_Compilable<MODEL, RESULT, ISQLLogical_AndOr_MultiEntity_Named<MODEL, RESULT>>
 		> where() {
 
 		return whereNamed();

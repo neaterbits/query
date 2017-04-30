@@ -5,8 +5,8 @@ public interface IAdhocFunctions_Arithmetic<
 		ENTITY,
 		RET extends ISharedLogical_Base<MODEL, RESULT>,
 		
-		INTEGER_CLAUSE extends ISharedCondition_Comparable_Common_Value<MODEL, RESULT, Integer, RET>,
-		LONG_CLAUSE extends ISharedCondition_Comparable_Common_Value<MODEL, RESULT, Long, RET>> {
+		INTEGER_CLAUSE extends ISharedComparison_Comparable_Common_Value<MODEL, RESULT, Integer, RET>,
+		LONG_CLAUSE extends ISharedComparison_Comparable_Common_Value<MODEL, RESULT, Long, RET>> {
 
 	
 

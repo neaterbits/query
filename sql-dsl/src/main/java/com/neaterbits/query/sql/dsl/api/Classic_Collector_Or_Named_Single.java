@@ -11,12 +11,12 @@ final class Classic_Collector_Or_Named_Single<MODEL, RESULT>
 	}
 
 	@Override
-	public ISharedCondition_Comparable_Common_All<MODEL, RESULT, Integer, IClassicSingleOrClausesNamed<MODEL, RESULT>> or(IFunctionInteger<RESULT> getter) {
+	public ISharedComparison_Comparable_Common_All<MODEL, RESULT, Integer, IClassicSingleOrClausesNamed<MODEL, RESULT>> or(IFunctionInteger<RESULT> getter) {
 		return new Collector_Condition_Comparative<MODEL, RESULT, Integer, IClassicSingleOrClausesNamed<MODEL,RESULT>>(this, makeGetterExpression(getter));
 	}
 
 	@Override
-	public ISharedCondition_Comparable_String_All<MODEL, RESULT, IClassicSingleOrClausesNamed<MODEL, RESULT>> or(IFunctionString<RESULT> getter) {
+	public ISharedComparison_Comparable_String_All<MODEL, RESULT, IClassicSingleOrClausesNamed<MODEL, RESULT>> or(IFunctionString<RESULT> getter) {
 		return new Collector_Condition_String<MODEL, RESULT, IClassicSingleOrClausesNamed<MODEL,RESULT>>(this, makeGetterExpression(getter));
 	}
 	@Override

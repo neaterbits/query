@@ -31,7 +31,7 @@ final class Collector_GroupBy_Alias<MODEL, RESULT> extends Collector_GroupBy<MOD
 		return having != null ? having.clauseCollector : null;
 	}
 
-	private <R extends Comparable<R>> ISharedCondition_Comparable_Common_All<MODEL, RESULT, R, ISharedProcessResult_Having_And_Or_Alias<MODEL, RESULT>>
+	private <R extends Comparable<R>> ISharedComparison_Comparable_Common_All<MODEL, RESULT, R, ISharedProcessResult_Having_And_Or_Alias<MODEL, RESULT>>
 		havingComparable(Supplier<R> supplier) {
 
 		instantiateHaving();
@@ -46,28 +46,28 @@ final class Collector_GroupBy_Alias<MODEL, RESULT> extends Collector_GroupBy<MOD
 	}
 	
 	@Override
-	public final ISharedCondition_Comparable_Common_All<MODEL, RESULT, Integer, ISharedProcessResult_Having_And_Or_Alias<MODEL, RESULT>>
+	public final ISharedComparison_Comparable_Common_All<MODEL, RESULT, Integer, ISharedProcessResult_Having_And_Or_Alias<MODEL, RESULT>>
 		having(ISupplierInteger getter) {
 
 		return havingComparable(getter);
 	}
 
 	@Override
-	public final ISharedCondition_Comparable_Common_All<MODEL, RESULT, Long, ISharedProcessResult_Having_And_Or_Alias<MODEL, RESULT>>
+	public final ISharedComparison_Comparable_Common_All<MODEL, RESULT, Long, ISharedProcessResult_Having_And_Or_Alias<MODEL, RESULT>>
 			having(ISupplierLong getter) {
 		
 		return havingComparable(getter);
 	}
 
 	@Override
-	public final ISharedCondition_Comparable_Common_All<MODEL, RESULT, BigDecimal, ISharedProcessResult_Having_And_Or_Alias<MODEL, RESULT>>
+	public final ISharedComparison_Comparable_Common_All<MODEL, RESULT, BigDecimal, ISharedProcessResult_Having_And_Or_Alias<MODEL, RESULT>>
 			having(ISupplierBigDecimal getter) {
 		
 		return havingComparable(getter);
 	}
 
 	@Override
-	public final ISharedCondition_Comparable_String_All<MODEL, RESULT, ISharedProcessResult_Having_And_Or_Alias<MODEL, RESULT>>
+	public final ISharedComparison_Comparable_String_All<MODEL, RESULT, ISharedProcessResult_Having_And_Or_Alias<MODEL, RESULT>>
 			having(ISupplierString getter) {
 
 		instantiateHaving();

@@ -4,7 +4,7 @@ public class Collector_Condition_ByteArray<MODEL, RESULT, L extends ISharedLogic
 	extends Collector_Condition_Equality<MODEL, RESULT, byte [], L> 
 
 	implements 
-		ISharedCondition_ByteArray_All<MODEL, RESULT, L> {
+		ISharedComparison_ByteArray_All<MODEL, RESULT, L> {
 
 	Collector_Condition_ByteArray(Collector_Conditions_GroupBy<MODEL, RESULT, ?> clause, Expression expression) {
 

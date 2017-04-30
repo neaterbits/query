@@ -14,8 +14,8 @@ final class AdhocJoin<MODEL, RESULT>
 		IAdhocJoinSubOrCondition<MODEL, RESULT, Object, Object>,
 		IAdhocWhereOrJoinSub<MODEL, RESULT, Object>,
 
-		ISharedCondition_Comparable_Common_Value<MODEL, RESULT, Comparable<Object>, ISharedLogical_Base<MODEL, RESULT>>,
-		ISharedCondition_Comparable_String_Value<MODEL, RESULT, ISharedLogical_Base<MODEL, RESULT>>,
+		ISharedComparison_Comparable_Common_Value<MODEL, RESULT, Comparable<Object>, ISharedLogical_Base<MODEL, RESULT>>,
+		ISharedComparison_Comparable_String_Value<MODEL, RESULT, ISharedLogical_Base<MODEL, RESULT>>,
 		
 		ISharedLogical_Base<MODEL, RESULT>,
 		IAdhocLogical_And_Or<MODEL, RESULT, Object>,
@@ -162,38 +162,38 @@ final class AdhocJoin<MODEL, RESULT>
 	// Where-implementation - just adds condition straight to main query as already handles conditions from multiple select sources
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Override
-	public <E extends Enum<E>> ISharedCondition_Equality_Value<MODEL, RESULT, E, IAdhocLogical_And_Or<MODEL, RESULT, Object>> where(IFunctionEnum<Object, E> func) {
+	public <E extends Enum<E>> ISharedComparison_Equality_Value<MODEL, RESULT, E, IAdhocLogical_And_Or<MODEL, RESULT, Object>> where(IFunctionEnum<Object, E> func) {
 
 		addWhere(func);
 
-		return (ISharedCondition_Equality_Value)this;
+		return (ISharedComparison_Equality_Value)this;
 	}
 
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Override
-	public ISharedCondition_Comparable_Common_Value<MODEL, RESULT, Integer, IAdhocLogical_And_Or<MODEL, RESULT, Object>> where(IFunctionInteger<Object> func) {
+	public ISharedComparison_Comparable_Common_Value<MODEL, RESULT, Integer, IAdhocLogical_And_Or<MODEL, RESULT, Object>> where(IFunctionInteger<Object> func) {
 
 		addWhere(func);
 
-		return (ISharedCondition_Comparable_Common_Value)this;
+		return (ISharedComparison_Comparable_Common_Value)this;
 	}
 
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Override
-	public ISharedCondition_Comparable_Common_Value<MODEL, RESULT, BigDecimal, IAdhocLogical_And_Or<MODEL, RESULT, Object>> where(IFunctionBigDecimal<Object> func) {
+	public ISharedComparison_Comparable_Common_Value<MODEL, RESULT, BigDecimal, IAdhocLogical_And_Or<MODEL, RESULT, Object>> where(IFunctionBigDecimal<Object> func) {
 
 		addWhere(func);
 
-		return (ISharedCondition_Comparable_Common_Value)this;
+		return (ISharedComparison_Comparable_Common_Value)this;
 	}
 
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Override
-	public ISharedCondition_Comparable_String_Value<MODEL, RESULT, IAdhocLogical_And_Or<MODEL, RESULT, Object>> where(IFunctionString<Object> func) {
+	public ISharedComparison_Comparable_String_Value<MODEL, RESULT, IAdhocLogical_And_Or<MODEL, RESULT, Object>> where(IFunctionString<Object> func) {
 
 		addWhere(func);
 
-		return (ISharedCondition_Comparable_String_Value)this;
+		return (ISharedComparison_Comparable_String_Value)this;
 	}
 
 	
@@ -203,9 +203,9 @@ final class AdhocJoin<MODEL, RESULT>
 			RESULT,
 			Object,
 			IAdhocLogical_And_Or<MODEL, RESULT, Object>,
-			ISharedCondition_Comparable_Common_Value<MODEL, RESULT, Integer, IAdhocLogical_And_Or<MODEL, RESULT, Object>>,
-			ISharedCondition_Comparable_Common_Value<MODEL, RESULT, Long, IAdhocLogical_And_Or<MODEL, RESULT, Object>>,
-		    ISharedCondition_Comparable_String_Value<MODEL, RESULT, IAdhocLogical_And_Or<MODEL, RESULT, Object>>>
+			ISharedComparison_Comparable_Common_Value<MODEL, RESULT, Integer, IAdhocLogical_And_Or<MODEL, RESULT, Object>>,
+			ISharedComparison_Comparable_Common_Value<MODEL, RESULT, Long, IAdhocLogical_And_Or<MODEL, RESULT, Object>>,
+		    ISharedComparison_Comparable_String_Value<MODEL, RESULT, IAdhocLogical_And_Or<MODEL, RESULT, Object>>>
 	
 	
 			where() {
@@ -214,9 +214,9 @@ final class AdhocJoin<MODEL, RESULT>
 				MODEL, RESULT,
 				Object,
 				IAdhocLogical_And_Or<MODEL, RESULT, Object>,
-				ISharedCondition_Comparable_Common_Value<MODEL, RESULT, Integer, IAdhocLogical_And_Or<MODEL, RESULT, Object>>,
-				ISharedCondition_Comparable_Common_Value<MODEL, RESULT, Long, IAdhocLogical_And_Or<MODEL, RESULT, Object>>,
-				ISharedCondition_Comparable_String_Value<MODEL, RESULT, IAdhocLogical_And_Or<MODEL, RESULT, Object>>>
+				ISharedComparison_Comparable_Common_Value<MODEL, RESULT, Integer, IAdhocLogical_And_Or<MODEL, RESULT, Object>>,
+				ISharedComparison_Comparable_Common_Value<MODEL, RESULT, Long, IAdhocLogical_And_Or<MODEL, RESULT, Object>>,
+				ISharedComparison_Comparable_String_Value<MODEL, RESULT, IAdhocLogical_And_Or<MODEL, RESULT, Object>>>
 		
 		
 		   functions = new AdhocFunctions<>(ConditionsType.SINGLE, this);
@@ -397,28 +397,28 @@ final class AdhocJoin<MODEL, RESULT>
 	/******************************** Or ********************************/
 	
 	@SuppressWarnings({"unchecked", "rawtypes"})
-	private <FIELD extends Comparable<?>> ISharedCondition_Comparable_Common_Value<MODEL, RESULT, FIELD, IAdhocLogical_And<MODEL, RESULT, Object>>  addAndClause(Function<?, FIELD> getter) {
-		return (ISharedCondition_Comparable_Common_Value)addConditionNoFunctions(ConditionsType.AND, getter);
+	private <FIELD extends Comparable<?>> ISharedComparison_Comparable_Common_Value<MODEL, RESULT, FIELD, IAdhocLogical_And<MODEL, RESULT, Object>>  addAndClause(Function<?, FIELD> getter) {
+		return (ISharedComparison_Comparable_Common_Value)addConditionNoFunctions(ConditionsType.AND, getter);
 	}
 
 	@SuppressWarnings({"unchecked", "rawtypes"})
-	private <T extends Comparable<?>> ISharedCondition_Comparable_Common_Value<MODEL, RESULT, T, IAdhocLogical_Or<MODEL, RESULT, Object>>  addOrClause(Function<?, T> getter) {
-		return (ISharedCondition_Comparable_Common_Value)addConditionNoFunctions(ConditionsType.OR, getter);
+	private <T extends Comparable<?>> ISharedComparison_Comparable_Common_Value<MODEL, RESULT, T, IAdhocLogical_Or<MODEL, RESULT, Object>>  addOrClause(Function<?, T> getter) {
+		return (ISharedComparison_Comparable_Common_Value)addConditionNoFunctions(ConditionsType.OR, getter);
 	}
 	
 	@Override
-	public final ISharedCondition_Comparable_Common_Value<MODEL, RESULT, Integer, IAdhocLogical_Or<MODEL, RESULT, Object>> or(IFunctionInteger<Object> getter) {
+	public final ISharedComparison_Comparable_Common_Value<MODEL, RESULT, Integer, IAdhocLogical_Or<MODEL, RESULT, Object>> or(IFunctionInteger<Object> getter) {
 		return addOrClause(getter);
 	}
 
 
 	@Override
-	public final ISharedCondition_Comparable_Common_Value<MODEL, RESULT, Long, IAdhocLogical_Or<MODEL, RESULT, Object>> or(IFunctionLong<Object> getter) {
+	public final ISharedComparison_Comparable_Common_Value<MODEL, RESULT, Long, IAdhocLogical_Or<MODEL, RESULT, Object>> or(IFunctionLong<Object> getter) {
 		return addOrClause(getter);
 	}
 	
 	@Override
-	public final ISharedCondition_Comparable_Common_Value<MODEL, RESULT, BigDecimal, IAdhocLogical_Or<MODEL, RESULT, Object>> or(IFunctionBigDecimal<Object> getter) {
+	public final ISharedComparison_Comparable_Common_Value<MODEL, RESULT, BigDecimal, IAdhocLogical_Or<MODEL, RESULT, Object>> or(IFunctionBigDecimal<Object> getter) {
 		return addOrClause(getter);
 	}
 
@@ -428,9 +428,9 @@ final class AdhocJoin<MODEL, RESULT>
 		RESULT,
 		Object,
 		IAdhocLogical_Or<MODEL, RESULT, Object>,
-		ISharedCondition_Comparable_Common_Value<MODEL, RESULT, Integer, IAdhocLogical_Or<MODEL, RESULT, Object>>,
-		ISharedCondition_Comparable_Common_Value<MODEL, RESULT, Long, IAdhocLogical_Or<MODEL, RESULT, Object>>,
-		ISharedCondition_Comparable_String_Value<MODEL, RESULT, IAdhocLogical_Or<MODEL, RESULT, Object>>>
+		ISharedComparison_Comparable_Common_Value<MODEL, RESULT, Integer, IAdhocLogical_Or<MODEL, RESULT, Object>>,
+		ISharedComparison_Comparable_Common_Value<MODEL, RESULT, Long, IAdhocLogical_Or<MODEL, RESULT, Object>>,
+		ISharedComparison_Comparable_String_Value<MODEL, RESULT, IAdhocLogical_Or<MODEL, RESULT, Object>>>
 	
 			or() {
 		
@@ -441,9 +441,9 @@ final class AdhocJoin<MODEL, RESULT>
 				RESULT,
 				Object,
 				IAdhocLogical_Or<MODEL, RESULT, Object>,
-				ISharedCondition_Comparable_Common_Value<MODEL, RESULT, Integer, IAdhocLogical_Or<MODEL, RESULT, Object>>,
-				ISharedCondition_Comparable_Common_Value<MODEL, RESULT, Long, IAdhocLogical_Or<MODEL, RESULT, Object>>,
-				ISharedCondition_Comparable_String_Value<MODEL, RESULT, IAdhocLogical_Or<MODEL, RESULT, Object>>> functions;
+				ISharedComparison_Comparable_Common_Value<MODEL, RESULT, Integer, IAdhocLogical_Or<MODEL, RESULT, Object>>,
+				ISharedComparison_Comparable_Common_Value<MODEL, RESULT, Long, IAdhocLogical_Or<MODEL, RESULT, Object>>,
+				ISharedComparison_Comparable_String_Value<MODEL, RESULT, IAdhocLogical_Or<MODEL, RESULT, Object>>> functions;
 		
 		
 		final State newState;
@@ -471,32 +471,32 @@ final class AdhocJoin<MODEL, RESULT>
 
 	@Override
 	@SuppressWarnings({"unchecked", "rawtypes"})
-	public final ISharedCondition_Comparable_String_Value<MODEL, RESULT, IAdhocLogical_Or<MODEL, RESULT, Object>> or(IFunctionString<Object> getter) {
-		return (ISharedCondition_Comparable_String_Value)addConditionNoFunctions(ConditionsType.OR, getter);
+	public final ISharedComparison_Comparable_String_Value<MODEL, RESULT, IAdhocLogical_Or<MODEL, RESULT, Object>> or(IFunctionString<Object> getter) {
+		return (ISharedComparison_Comparable_String_Value)addConditionNoFunctions(ConditionsType.OR, getter);
 	}
 
 
 	/******************************** And ********************************/
 	@Override
-	public final ISharedCondition_Comparable_Common_Value<MODEL, RESULT, Integer, IAdhocLogical_And<MODEL, RESULT, Object>> and(IFunctionInteger<Object> getter) {
+	public final ISharedComparison_Comparable_Common_Value<MODEL, RESULT, Integer, IAdhocLogical_And<MODEL, RESULT, Object>> and(IFunctionInteger<Object> getter) {
 		return addAndClause(getter);
 	}
 
 
 	@Override
-	public final ISharedCondition_Comparable_Common_Value<MODEL, RESULT, Long, IAdhocLogical_And<MODEL, RESULT, Object>> and(IFunctionLong<Object> getter) {
+	public final ISharedComparison_Comparable_Common_Value<MODEL, RESULT, Long, IAdhocLogical_And<MODEL, RESULT, Object>> and(IFunctionLong<Object> getter) {
 		return addAndClause(getter);
 	}
 
 	@Override
-	public final ISharedCondition_Comparable_Common_Value<MODEL, RESULT, BigDecimal, IAdhocLogical_And<MODEL, RESULT, Object>> and(IFunctionBigDecimal<Object> getter) {
+	public final ISharedComparison_Comparable_Common_Value<MODEL, RESULT, BigDecimal, IAdhocLogical_And<MODEL, RESULT, Object>> and(IFunctionBigDecimal<Object> getter) {
 		return addAndClause(getter);
 	}
 
 	@Override
 	@SuppressWarnings({"unchecked", "rawtypes"})
-	public final ISharedCondition_Comparable_String_Value<MODEL, RESULT, IAdhocLogical_And<MODEL, RESULT, Object>> and(IFunctionString<Object> getter) {
-		return (ISharedCondition_Comparable_String_Value)addConditionNoFunctions(ConditionsType.AND, getter);
+	public final ISharedComparison_Comparable_String_Value<MODEL, RESULT, IAdhocLogical_And<MODEL, RESULT, Object>> and(IFunctionString<Object> getter) {
+		return (ISharedComparison_Comparable_String_Value)addConditionNoFunctions(ConditionsType.AND, getter);
 	}
 
 	@Override
@@ -505,9 +505,9 @@ final class AdhocJoin<MODEL, RESULT>
 		RESULT,
 		Object,
 		IAdhocLogical_And<MODEL, RESULT, Object>,
-		ISharedCondition_Comparable_Common_Value<MODEL, RESULT, Integer, IAdhocLogical_And<MODEL, RESULT, Object>>,
-		ISharedCondition_Comparable_Common_Value<MODEL, RESULT, Long, IAdhocLogical_And<MODEL, RESULT, Object>>,
-		ISharedCondition_Comparable_String_Value<MODEL, RESULT, IAdhocLogical_And<MODEL, RESULT, Object>>>
+		ISharedComparison_Comparable_Common_Value<MODEL, RESULT, Integer, IAdhocLogical_And<MODEL, RESULT, Object>>,
+		ISharedComparison_Comparable_Common_Value<MODEL, RESULT, Long, IAdhocLogical_And<MODEL, RESULT, Object>>,
+		ISharedComparison_Comparable_String_Value<MODEL, RESULT, IAdhocLogical_And<MODEL, RESULT, Object>>>
 	
 			and() {
 		
@@ -518,9 +518,9 @@ final class AdhocJoin<MODEL, RESULT>
 				RESULT,
 				Object,
 				IAdhocLogical_And<MODEL, RESULT, Object>,
-				ISharedCondition_Comparable_Common_Value<MODEL, RESULT, Integer, IAdhocLogical_And<MODEL, RESULT, Object>>,
-				ISharedCondition_Comparable_Common_Value<MODEL, RESULT, Long, IAdhocLogical_And<MODEL, RESULT, Object>>,
-				ISharedCondition_Comparable_String_Value<MODEL, RESULT, IAdhocLogical_And<MODEL, RESULT, Object>>> functions;
+				ISharedComparison_Comparable_Common_Value<MODEL, RESULT, Integer, IAdhocLogical_And<MODEL, RESULT, Object>>,
+				ISharedComparison_Comparable_Common_Value<MODEL, RESULT, Long, IAdhocLogical_And<MODEL, RESULT, Object>>,
+				ISharedComparison_Comparable_String_Value<MODEL, RESULT, IAdhocLogical_And<MODEL, RESULT, Object>>> functions;
 		
 		
 		final State newState;
@@ -551,17 +551,17 @@ final class AdhocJoin<MODEL, RESULT>
 
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Override
-	public ISharedCondition_Comparable_Common_Base<MODEL, RESULT, Comparable<?>, ISharedLogical_Base<MODEL, RESULT>>
+	public ISharedComparison_Comparable_Common_Base<MODEL, RESULT, Comparable<?>, ISharedLogical_Base<MODEL, RESULT>>
 	
 		onComparable(AdhocFunctions<MODEL, RESULT, ?, ?, ?, ?, ?> functions, Function<?, ? extends Comparable<?>> getter) {
 
 		addConditionCollectedFunctions(functions.getConditionsType(), functions, getter);
 		
-		return (ISharedCondition_Comparable_Common_Base)this;
+		return (ISharedComparison_Comparable_Common_Base)this;
 	}
 
 	@Override
-	public ISharedCondition_Comparable_String_Base<MODEL, RESULT, ISharedLogical_Base<MODEL, RESULT>> onString(
+	public ISharedComparison_Comparable_String_Base<MODEL, RESULT, ISharedLogical_Base<MODEL, RESULT>> onString(
 			AdhocFunctions<MODEL, RESULT, ?, ?, ?, ?, ?> functions, IFunctionString<?> getter) {
 
 		addConditionCollectedFunctions(functions.getConditionsType(), functions, getter);

@@ -17,9 +17,9 @@ final class AdhocQuery_Named_Aggregate<MODEL> extends AdhocQuery_Named_Singular<
 				Object,
 				Object,
 				IAdhocLogical_And_Or<MODEL, Object, Object>,
-				ISharedCondition_Comparable_Common_Value<MODEL, Object, Integer, IAdhocLogical_And_Or<MODEL, Object, Object>>,
-				ISharedCondition_Comparable_Common_Value<MODEL, Object, Long, IAdhocLogical_And_Or<MODEL, Object, Object>>,
-				ISharedCondition_Comparable_String_Value<MODEL, Object, IAdhocLogical_And_Or<MODEL, Object, Object>>
+				ISharedComparison_Comparable_Common_Value<MODEL, Object, Integer, IAdhocLogical_And_Or<MODEL, Object, Object>>,
+				ISharedComparison_Comparable_Common_Value<MODEL, Object, Long, IAdhocLogical_And_Or<MODEL, Object, Object>>,
+				ISharedComparison_Comparable_String_Value<MODEL, Object, IAdhocLogical_And_Or<MODEL, Object, Object>>
 			> where() {
 		
 		return addWhere();
