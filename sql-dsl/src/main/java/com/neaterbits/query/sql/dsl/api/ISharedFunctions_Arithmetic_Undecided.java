@@ -91,7 +91,5 @@ public interface ISharedFunctions_Arithmetic_Undecided<
 	UNDECIDED_DOUBLE_RET sqrtOf(ISharedSubOperandsFunction_Double_Undecided<MODEL, RESULT> sub);
 	UNDECIDED_DOUBLE_RET sqrtOf(ISharedSubOperandsFunction_BigDecimal_Undecided<MODEL, RESULT> sub);
 	
-	<T> NAMED_INTEGER_RET 	mod(IFunctionInteger<T> getter, int value);
-	
 	UNDECIDED_INTEGER_RET modOf(ISharedSubOperandsFunction_Integer_Undecided<MODEL, RESULT> sub, int value);
 }

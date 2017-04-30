@@ -10,13 +10,21 @@ public interface ISharedSubOperandsFunction_Undecided<MODEL, RESULT, R extends C
 					MODEL,
 					RESULT,
 					R, 
-					ISharedSubOperand_End_Named<MODEL, RESULT, R>,
-					ISharedSubOperand_End_Alias<MODEL, RESULT, R>,
+					/*
+					ISharedSubOperand_End_Undecided<MODEL, RESULT, R>,	// ISharedSubOperand_End_Named<MODEL, RESULT, R>,
+					ISharedSubOperand_End_Undecided<MODEL, RESULT, R>,	// ISharedSubOperand_End_Alias<MODEL, RESULT, R>,
 					ISharedSubOperand_End_Undecided<MODEL, RESULT, R>>,
 					
 					// result still undecided, or more to the point, doesn't matter
 					// TODO: might be wrong here if returns one of the above instaed, so might require returning a _Common marker interface
-					ISharedSubOperand_End_Undecided<MODEL, RESULT, R>> 
+					ISharedSubOperand_End_Undecided<MODEL, RESULT, R>>
+					*/
+					
+					
+					ISharedSubOperand_End<MODEL, RESULT, R>,	// ISharedSubOperand_End_Named<MODEL, RESULT, R>,
+					ISharedSubOperand_End<MODEL, RESULT, R>,	// ISharedSubOperand_End_Alias<MODEL, RESULT, R>,
+					ISharedSubOperand_End<MODEL, RESULT, R>>,
+					ISharedSubOperand_End<MODEL, RESULT, R>>
 			
 			/*
 fortsett her, må returnere retur-typen ut baser på om er named eller ikke?

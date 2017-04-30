@@ -145,9 +145,9 @@ final class SubExpressionUtil {
 			RESULT,
 			R,
 			
-			ISharedSubOperand_End_Named<MODEL, RESULT, R>,
-			ISharedSubOperand_End_Alias<MODEL, RESULT, R>,
-			ISharedSubOperand_End_Undecided<MODEL, RESULT, R>
+			ISharedSubOperand_End<MODEL, RESULT, R>,
+			ISharedSubOperand_End<MODEL, RESULT, R>,
+			ISharedSubOperand_End<MODEL, RESULT, R>
 		
 		
 			> builder = new SubOperandsBuilder_Initial_Undecided<>();
@@ -155,9 +155,9 @@ final class SubExpressionUtil {
 		
 		final ISharedSubOperandsBuilder_Undecided<
 			MODEL, RESULT, R,
-			ISharedSubOperand_End_Named<MODEL, RESULT, R>,
-			ISharedSubOperand_End_Alias<MODEL, RESULT, R>,
-			ISharedSubOperand_End_Undecided<MODEL, RESULT, R>> b = builder;
+			ISharedSubOperand_End<MODEL, RESULT, R>,
+			ISharedSubOperand_End<MODEL, RESULT, R>,
+			ISharedSubOperand_End<MODEL, RESULT, R>> b = builder;
 		
 		sub.apply(b);
 		

@@ -81,6 +81,7 @@ public class ShortFunctionTest extends BaseJPATest {
 				"list(NameLength.class)" +
 				".map().modOf(b -> b.length(Company::getName), 3).to(NameLength::setLength)");
 
+		
 		verifyIsCompilable(
 				b -> b.addImport(NameLength.class).addImport(Company.class),
 				
