@@ -6,7 +6,7 @@ public interface IAdhocFunctions_String<
 		ENTITY,
 		RET extends ISharedLogical_Base<MODEL, RESULT>,
 		
-		STRING_CLAUSE extends ISharedCondition_Comparable_String_Value<MODEL, RESULT, RET>> {
+		STRING_CLAUSE extends ISharedComparison_Comparable_String_Value<MODEL, RESULT, RET>> {
 		
 		STRING_CLAUSE lower(IFunctionString<ENTITY> getter);
 		IAdhocFunctions_String<MODEL, RESULT, ENTITY, RET, STRING_CLAUSE> lower();

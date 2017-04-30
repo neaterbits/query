@@ -48,17 +48,17 @@ final class Short_Collector_Initial_Single_Aggregate_Alias<RESULT>
 			SingleBuilt<RESULT>,
 			RESULT,
 			ISQLLogical_AndOr_SingleResult_Alias<SingleBuilt<RESULT>, RESULT>,
-			ISharedCondition_Comparable_Common_All<SingleBuilt<RESULT>, RESULT, Integer, 	ISQLLogical_AndOr_SingleResult_Alias<SingleBuilt<RESULT>, RESULT>>,
+			ISharedCondition_OpsAndComp_Comparable_Alias<SingleBuilt<RESULT>, RESULT, Integer, 	ISQLLogical_AndOr_SingleResult_Alias<SingleBuilt<RESULT>, RESULT>>,
 
-			ISharedCondition_Comparable_Common_All<SingleBuilt<RESULT>, RESULT, Byte, 	 	ISQLLogical_AndOr_SingleResult_Alias<SingleBuilt<RESULT>, RESULT>>,
-			ISharedCondition_Comparable_Common_All<SingleBuilt<RESULT>, RESULT, Short, 	 	ISQLLogical_AndOr_SingleResult_Alias<SingleBuilt<RESULT>, RESULT>>,
-			ISharedCondition_Comparable_Common_All<SingleBuilt<RESULT>, RESULT, Integer, 	ISQLLogical_AndOr_SingleResult_Alias<SingleBuilt<RESULT>, RESULT>>,
-			ISharedCondition_Comparable_Common_All<SingleBuilt<RESULT>, RESULT, Long, 	 	ISQLLogical_AndOr_SingleResult_Alias<SingleBuilt<RESULT>, RESULT>>, 
-			ISharedCondition_Comparable_Common_All<SingleBuilt<RESULT>, RESULT, BigInteger, ISQLLogical_AndOr_SingleResult_Alias<SingleBuilt<RESULT>, RESULT>>, 
-			ISharedCondition_Comparable_Common_All<SingleBuilt<RESULT>, RESULT, Float, 	 	ISQLLogical_AndOr_SingleResult_Alias<SingleBuilt<RESULT>, RESULT>>, 
-			ISharedCondition_Comparable_Common_All<SingleBuilt<RESULT>, RESULT, Double,   	ISQLLogical_AndOr_SingleResult_Alias<SingleBuilt<RESULT>, RESULT>>,
-			ISharedCondition_Comparable_Common_All<SingleBuilt<RESULT>, RESULT, BigDecimal, ISQLLogical_AndOr_SingleResult_Alias<SingleBuilt<RESULT>, RESULT>>,
-			ISharedCondition_Comparable_String_All<SingleBuilt<RESULT>, RESULT, ISQLLogical_AndOr_SingleResult_Alias<SingleBuilt<RESULT>, RESULT>>
+			ISharedCondition_OpsAndComp_Comparable_Alias<SingleBuilt<RESULT>, RESULT, Byte, 	 	ISQLLogical_AndOr_SingleResult_Alias<SingleBuilt<RESULT>, RESULT>>,
+			ISharedCondition_OpsAndComp_Comparable_Alias<SingleBuilt<RESULT>, RESULT, Short, 	 	ISQLLogical_AndOr_SingleResult_Alias<SingleBuilt<RESULT>, RESULT>>,
+			ISharedCondition_OpsAndComp_Comparable_Alias<SingleBuilt<RESULT>, RESULT, Integer, 	ISQLLogical_AndOr_SingleResult_Alias<SingleBuilt<RESULT>, RESULT>>,
+			ISharedCondition_OpsAndComp_Comparable_Alias<SingleBuilt<RESULT>, RESULT, Long, 	 	ISQLLogical_AndOr_SingleResult_Alias<SingleBuilt<RESULT>, RESULT>>, 
+			ISharedCondition_OpsAndComp_Comparable_Alias<SingleBuilt<RESULT>, RESULT, BigInteger, ISQLLogical_AndOr_SingleResult_Alias<SingleBuilt<RESULT>, RESULT>>, 
+			ISharedCondition_OpsAndComp_Comparable_Alias<SingleBuilt<RESULT>, RESULT, Float, 	 	ISQLLogical_AndOr_SingleResult_Alias<SingleBuilt<RESULT>, RESULT>>, 
+			ISharedCondition_OpsAndComp_Comparable_Alias<SingleBuilt<RESULT>, RESULT, Double,   	ISQLLogical_AndOr_SingleResult_Alias<SingleBuilt<RESULT>, RESULT>>,
+			ISharedCondition_OpsAndComp_Comparable_Alias<SingleBuilt<RESULT>, RESULT, BigDecimal, ISQLLogical_AndOr_SingleResult_Alias<SingleBuilt<RESULT>, RESULT>>,
+			ISharedCondition_OpsAndComp_String_Alias<SingleBuilt<RESULT>, RESULT, ISQLLogical_AndOr_SingleResult_Alias<SingleBuilt<RESULT>, RESULT>>
 	
 			> where() {
 		return whereAlias();
@@ -70,17 +70,17 @@ final class Short_Collector_Initial_Single_Aggregate_Alias<RESULT>
 			SingleBuilt<RESULT>,
 			RESULT,
 			ISQLLogical_And_NonProcessResult_Alias<SingleBuilt<RESULT>, RESULT>,
-			ISharedCondition_Comparable_Common_All<SingleBuilt<RESULT>, RESULT, Integer, ISQLLogical_And_NonProcessResult_Alias<SingleBuilt<RESULT>, RESULT>>,
+			ISharedComparison_Comparable_Common_All<SingleBuilt<RESULT>, RESULT, Integer, ISQLLogical_And_NonProcessResult_Alias<SingleBuilt<RESULT>, RESULT>>,
 			
-			ISharedCondition_Comparable_Common_All<SingleBuilt<RESULT>, RESULT, Byte, ISQLLogical_And_NonProcessResult_Alias<SingleBuilt<RESULT>, RESULT>>,
-			ISharedCondition_Comparable_Common_All<SingleBuilt<RESULT>, RESULT, Short, ISQLLogical_And_NonProcessResult_Alias<SingleBuilt<RESULT>, RESULT>>,
-			ISharedCondition_Comparable_Common_All<SingleBuilt<RESULT>, RESULT, Integer, ISQLLogical_And_NonProcessResult_Alias<SingleBuilt<RESULT>, RESULT>>,
-			ISharedCondition_Comparable_Common_All<SingleBuilt<RESULT>, RESULT, Long, ISQLLogical_And_NonProcessResult_Alias<SingleBuilt<RESULT>, RESULT>>,
-			ISharedCondition_Comparable_Common_All<SingleBuilt<RESULT>, RESULT, BigInteger, ISQLLogical_And_NonProcessResult_Alias<SingleBuilt<RESULT>, RESULT>>,
-			ISharedCondition_Comparable_Common_All<SingleBuilt<RESULT>, RESULT, Float, ISQLLogical_And_NonProcessResult_Alias<SingleBuilt<RESULT>, RESULT>>,
-			ISharedCondition_Comparable_Common_All<SingleBuilt<RESULT>, RESULT, Double, ISQLLogical_And_NonProcessResult_Alias<SingleBuilt<RESULT>, RESULT>>,
-			ISharedCondition_Comparable_Common_All<SingleBuilt<RESULT>, RESULT, BigDecimal, ISQLLogical_And_NonProcessResult_Alias<SingleBuilt<RESULT>, RESULT>>,
-			ISharedCondition_Comparable_String_All<SingleBuilt<RESULT>, RESULT, ISQLLogical_And_NonProcessResult_Alias<SingleBuilt<RESULT>, RESULT>>
+			ISharedComparison_Comparable_Common_All<SingleBuilt<RESULT>, RESULT, Byte, ISQLLogical_And_NonProcessResult_Alias<SingleBuilt<RESULT>, RESULT>>,
+			ISharedComparison_Comparable_Common_All<SingleBuilt<RESULT>, RESULT, Short, ISQLLogical_And_NonProcessResult_Alias<SingleBuilt<RESULT>, RESULT>>,
+			ISharedComparison_Comparable_Common_All<SingleBuilt<RESULT>, RESULT, Integer, ISQLLogical_And_NonProcessResult_Alias<SingleBuilt<RESULT>, RESULT>>,
+			ISharedComparison_Comparable_Common_All<SingleBuilt<RESULT>, RESULT, Long, ISQLLogical_And_NonProcessResult_Alias<SingleBuilt<RESULT>, RESULT>>,
+			ISharedComparison_Comparable_Common_All<SingleBuilt<RESULT>, RESULT, BigInteger, ISQLLogical_And_NonProcessResult_Alias<SingleBuilt<RESULT>, RESULT>>,
+			ISharedComparison_Comparable_Common_All<SingleBuilt<RESULT>, RESULT, Float, ISQLLogical_And_NonProcessResult_Alias<SingleBuilt<RESULT>, RESULT>>,
+			ISharedComparison_Comparable_Common_All<SingleBuilt<RESULT>, RESULT, Double, ISQLLogical_And_NonProcessResult_Alias<SingleBuilt<RESULT>, RESULT>>,
+			ISharedComparison_Comparable_Common_All<SingleBuilt<RESULT>, RESULT, BigDecimal, ISQLLogical_And_NonProcessResult_Alias<SingleBuilt<RESULT>, RESULT>>,
+			ISharedComparison_Comparable_String_All<SingleBuilt<RESULT>, RESULT, ISQLLogical_And_NonProcessResult_Alias<SingleBuilt<RESULT>, RESULT>>
 
 			> and() {
 		
@@ -93,17 +93,17 @@ final class Short_Collector_Initial_Single_Aggregate_Alias<RESULT>
 			SingleBuilt<RESULT>,
 			RESULT,
 			ISQLLogical_Or_NonProcessResult_Alias<SingleBuilt<RESULT>, RESULT>,
-			ISharedCondition_Comparable_Common_All<SingleBuilt<RESULT>, RESULT, Integer, ISQLLogical_Or_NonProcessResult_Alias<SingleBuilt<RESULT>, RESULT>>,
+			ISharedComparison_Comparable_Common_All<SingleBuilt<RESULT>, RESULT, Integer, ISQLLogical_Or_NonProcessResult_Alias<SingleBuilt<RESULT>, RESULT>>,
 			
-			ISharedCondition_Comparable_Common_All<SingleBuilt<RESULT>, RESULT, Byte, ISQLLogical_Or_NonProcessResult_Alias<SingleBuilt<RESULT>, RESULT>>,
-			ISharedCondition_Comparable_Common_All<SingleBuilt<RESULT>, RESULT, Short, ISQLLogical_Or_NonProcessResult_Alias<SingleBuilt<RESULT>, RESULT>>,
-			ISharedCondition_Comparable_Common_All<SingleBuilt<RESULT>, RESULT, Integer, ISQLLogical_Or_NonProcessResult_Alias<SingleBuilt<RESULT>, RESULT>>,
-			ISharedCondition_Comparable_Common_All<SingleBuilt<RESULT>, RESULT, Long, ISQLLogical_Or_NonProcessResult_Alias<SingleBuilt<RESULT>, RESULT>>,
-			ISharedCondition_Comparable_Common_All<SingleBuilt<RESULT>, RESULT, BigInteger, ISQLLogical_Or_NonProcessResult_Alias<SingleBuilt<RESULT>, RESULT>>,
-			ISharedCondition_Comparable_Common_All<SingleBuilt<RESULT>, RESULT, Float, ISQLLogical_Or_NonProcessResult_Alias<SingleBuilt<RESULT>, RESULT>>,
-			ISharedCondition_Comparable_Common_All<SingleBuilt<RESULT>, RESULT, Double, ISQLLogical_Or_NonProcessResult_Alias<SingleBuilt<RESULT>, RESULT>>,
-			ISharedCondition_Comparable_Common_All<SingleBuilt<RESULT>, RESULT, BigDecimal, ISQLLogical_Or_NonProcessResult_Alias<SingleBuilt<RESULT>, RESULT>>,
-			ISharedCondition_Comparable_String_All<SingleBuilt<RESULT>, RESULT, ISQLLogical_Or_NonProcessResult_Alias<SingleBuilt<RESULT>, RESULT>>
+			ISharedComparison_Comparable_Common_All<SingleBuilt<RESULT>, RESULT, Byte, ISQLLogical_Or_NonProcessResult_Alias<SingleBuilt<RESULT>, RESULT>>,
+			ISharedComparison_Comparable_Common_All<SingleBuilt<RESULT>, RESULT, Short, ISQLLogical_Or_NonProcessResult_Alias<SingleBuilt<RESULT>, RESULT>>,
+			ISharedComparison_Comparable_Common_All<SingleBuilt<RESULT>, RESULT, Integer, ISQLLogical_Or_NonProcessResult_Alias<SingleBuilt<RESULT>, RESULT>>,
+			ISharedComparison_Comparable_Common_All<SingleBuilt<RESULT>, RESULT, Long, ISQLLogical_Or_NonProcessResult_Alias<SingleBuilt<RESULT>, RESULT>>,
+			ISharedComparison_Comparable_Common_All<SingleBuilt<RESULT>, RESULT, BigInteger, ISQLLogical_Or_NonProcessResult_Alias<SingleBuilt<RESULT>, RESULT>>,
+			ISharedComparison_Comparable_Common_All<SingleBuilt<RESULT>, RESULT, Float, ISQLLogical_Or_NonProcessResult_Alias<SingleBuilt<RESULT>, RESULT>>,
+			ISharedComparison_Comparable_Common_All<SingleBuilt<RESULT>, RESULT, Double, ISQLLogical_Or_NonProcessResult_Alias<SingleBuilt<RESULT>, RESULT>>,
+			ISharedComparison_Comparable_Common_All<SingleBuilt<RESULT>, RESULT, BigDecimal, ISQLLogical_Or_NonProcessResult_Alias<SingleBuilt<RESULT>, RESULT>>,
+			ISharedComparison_Comparable_String_All<SingleBuilt<RESULT>, RESULT, ISQLLogical_Or_NonProcessResult_Alias<SingleBuilt<RESULT>, RESULT>>
 
 			> or() {
 

@@ -490,21 +490,21 @@ abstract class AdhocQuery_Named<MODEL, RESULT>
 	@SuppressWarnings("rawtypes")
 	final <R extends Comparable<R>, AND_OR extends IAdhocLogical_And_Or<MODEL, Object, Object>>
 	
-		ISharedCondition_Comparable_Common_Value // <MODEL, Object, R, AND_OR>
+		ISharedComparison_Comparable_Common_Value // <MODEL, Object, R, AND_OR>
 				addComparativeWhere(Function<?, ?> function) {
 		
-		return (ISharedCondition_Comparable_Common_Value)addWhereGetter(function);
+		return (ISharedComparison_Comparable_Common_Value)addWhereGetter(function);
 	}
 	
 
 	@SuppressWarnings("rawtypes")
 	final <R extends Comparable<R>, AND_OR extends IAdhocLogical_And_Or<MODEL, Object, Object>>
 	
-		ISharedCondition_Equality_Value // <MODEL, Object, R, AND_OR>
+		ISharedComparison_Equality_Value // <MODEL, Object, R, AND_OR>
 	
 			addConditionWhere(Function<?, ?> function) {
 
-		return (ISharedCondition_Equality_Value)addWhereGetter(function);
+		return (ISharedComparison_Equality_Value)addWhereGetter(function);
 	}
 	
 	final 
@@ -512,9 +512,9 @@ abstract class AdhocQuery_Named<MODEL, RESULT>
 		ENTITY,
 		RET extends ISharedLogical_Base<MODEL, RESULT>,
 
-		INTEGER_CLAUSE extends ISharedCondition_Comparable_Common_Value<MODEL, RESULT, Integer, RET>,
-		LONG_CLAUSE extends ISharedCondition_Comparable_Common_Value<MODEL, RESULT, Long, RET>,
-		STRING_CLAUSE extends ISharedCondition_Comparable_String_Value<MODEL, RESULT, RET>>
+		INTEGER_CLAUSE extends ISharedComparison_Comparable_Common_Value<MODEL, RESULT, Integer, RET>,
+		LONG_CLAUSE extends ISharedComparison_Comparable_Common_Value<MODEL, RESULT, Long, RET>,
+		STRING_CLAUSE extends ISharedComparison_Comparable_String_Value<MODEL, RESULT, RET>>
 	
 	IAdhocFunctions_Initial<MODEL, RESULT, ENTITY, RET, INTEGER_CLAUSE, LONG_CLAUSE, STRING_CLAUSE> addWhere() {
 		
@@ -525,13 +525,13 @@ abstract class AdhocQuery_Named<MODEL, RESULT>
 	
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Override
-	public final ISharedCondition_Comparable_Common_Base<MODEL, RESULT, Comparable<?>, ISharedLogical_Base<MODEL, RESULT>> onComparable(
+	public final ISharedComparison_Comparable_Common_Base<MODEL, RESULT, Comparable<?>, ISharedLogical_Base<MODEL, RESULT>> onComparable(
 			AdhocFunctions<MODEL, RESULT, ?, ?, ?, ?, ?> functions, Function<?, ? extends Comparable<?>> getter) {
-		return (ISharedCondition_Comparable_Common_Base)addWhere(functions, getter);
+		return (ISharedComparison_Comparable_Common_Base)addWhere(functions, getter);
 	}
 
 	@Override
-	public final ISharedCondition_Comparable_String_Base<MODEL, RESULT, ISharedLogical_Base<MODEL, RESULT>> onString(
+	public final ISharedComparison_Comparable_String_Base<MODEL, RESULT, ISharedLogical_Base<MODEL, RESULT>> onString(
 			AdhocFunctions<MODEL, RESULT, ?, ?, ?, ?, ?> functions, IFunctionString<?> getter) {
 		return addWhere(functions, getter);
 	}

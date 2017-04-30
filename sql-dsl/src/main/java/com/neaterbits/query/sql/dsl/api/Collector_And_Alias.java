@@ -39,7 +39,7 @@ abstract class Collector_And_Alias<
 			M_AND_CLAUSES extends ISharedLogical_And_Alias_Base<MODEL, RESULT, M_AND_CLAUSES, NESTED_OR_CLAUSES>,
 			NESTED_OR_CLAUSES extends ISharedLogical_Or_Alias<MODEL, RESULT>>
 		
-			ISharedCondition_Comparable_Common_All<MODEL, RESULT, RR, M_AND_CLAUSES> andAliasImplComparable(Supplier<RR> getter) {
+			ISharedComparison_Comparable_Common_All<MODEL, RESULT, RR, M_AND_CLAUSES> andAliasImplComparable(Supplier<RR> getter) {
 
 		return andAliasImplComparable(makeGetterExpression(getter));
 	}
@@ -48,108 +48,108 @@ abstract class Collector_And_Alias<
 		M_AND_CLAUSES extends ISharedLogical_And_Alias_Base<MODEL, RESULT, M_AND_CLAUSES, NESTED_OR_CLAUSES>,
 		NESTED_OR_CLAUSES extends ISharedLogical_Or_Alias<MODEL, RESULT>>
 		
-		ISharedCondition_Comparable_Common_All<MODEL, RESULT, RR, M_AND_CLAUSES> andAliasImplComparable(Expression expression) {
+		ISharedComparison_Comparable_Common_All<MODEL, RESULT, RR, M_AND_CLAUSES> andAliasImplComparable(Expression expression) {
 
 		//final Expression expression = makeExpression(functions, makeGetterExpression(getter));
 		
 		return new Collector_Condition_Comparative<MODEL, RESULT, RR, M_AND_CLAUSES>(this, expression);
 	}
 
-	private ISharedCondition_Comparable_String_All<MODEL, RESULT, AND_CLAUSES>
+	private ISharedComparison_Comparable_String_All<MODEL, RESULT, AND_CLAUSES>
 		andAliasImplString(Expression expression) {
 		
 		return new Collector_Condition_String<MODEL, RESULT, AND_CLAUSES>(this, expression);
 	}
 
-	private <RR> ISharedCondition_SQLTimeType_All<MODEL, RESULT, RR, AND_CLAUSES>
+	private <RR> ISharedComparison_SQLTimeType_All<MODEL, RESULT, RR, AND_CLAUSES>
 		andAliasImplSQLTimeType(Supplier<RR> getter) {
 		
 		return new Collector_Condition_SQLTimeType<MODEL, RESULT, RR, AND_CLAUSES>(this, makeGetterExpression(getter));
 	}
 		
-	private <RR> ISharedCondition_ByteArray_All<MODEL, RESULT, AND_CLAUSES>
+	private <RR> ISharedComparison_ByteArray_All<MODEL, RESULT, AND_CLAUSES>
 		andAliasImplByteArray(Supplier<byte[]> getter) {
 		
 		return new Collector_Condition_ByteArray<MODEL, RESULT, AND_CLAUSES>(this, makeGetterExpression(getter));
 	}
 
 	@Override
-	public final ISharedCondition_Comparable_Common_All<MODEL, RESULT, Boolean, AND_CLAUSES> and(ISupplierBoolean getter) {
+	public final ISharedComparison_Comparable_Common_All<MODEL, RESULT, Boolean, AND_CLAUSES> and(ISupplierBoolean getter) {
 		return andAliasImplComparable(getter);
 	}
 
 	@Override
-	public final ISharedCondition_Comparable_Common_All<MODEL, RESULT, Byte, AND_CLAUSES> and(ISupplierByte getter) {
+	public final ISharedComparison_Comparable_Common_All<MODEL, RESULT, Byte, AND_CLAUSES> and(ISupplierByte getter) {
 		return andAliasImplComparable(getter);
 	}
 
 	@Override
-	public final ISharedCondition_Comparable_Common_All<MODEL, RESULT, Short, AND_CLAUSES> and(ISupplierShort getter) {
+	public final ISharedComparison_Comparable_Common_All<MODEL, RESULT, Short, AND_CLAUSES> and(ISupplierShort getter) {
 		return andAliasImplComparable(getter);
 	}
 
 	@Override
-	public final ISharedCondition_Comparable_Common_All<MODEL, RESULT, Integer, AND_CLAUSES> and(ISupplierInteger getter) {
+	public final ISharedComparison_Comparable_Common_All<MODEL, RESULT, Integer, AND_CLAUSES> and(ISupplierInteger getter) {
 		return andAliasImplComparable(getter);
 	}
 
 	@Override
-	public final ISharedCondition_Comparable_Common_All<MODEL, RESULT, Long, AND_CLAUSES> and(ISupplierLong getter) {
+	public final ISharedComparison_Comparable_Common_All<MODEL, RESULT, Long, AND_CLAUSES> and(ISupplierLong getter) {
 		return andAliasImplComparable(getter);
 	}
 
 	@Override
-	public final ISharedCondition_Comparable_Common_All<MODEL, RESULT, BigInteger, AND_CLAUSES> and(ISupplierBigInteger getter) {
+	public final ISharedComparison_Comparable_Common_All<MODEL, RESULT, BigInteger, AND_CLAUSES> and(ISupplierBigInteger getter) {
 		return andAliasImplComparable(getter);
 	}
 
 	@Override
-	public final ISharedCondition_Comparable_Common_All<MODEL, RESULT, Float, AND_CLAUSES> and(ISupplierFloat getter) {
+	public final ISharedComparison_Comparable_Common_All<MODEL, RESULT, Float, AND_CLAUSES> and(ISupplierFloat getter) {
 		return andAliasImplComparable(getter);
 	}
 	
 	@Override
-	public final ISharedCondition_Comparable_Common_All<MODEL, RESULT, Double, AND_CLAUSES> and(ISupplierDouble getter) {
+	public final ISharedComparison_Comparable_Common_All<MODEL, RESULT, Double, AND_CLAUSES> and(ISupplierDouble getter) {
 		return andAliasImplComparable(getter);
 	}
 	
 	@Override
-	public final ISharedCondition_Comparable_Common_All<MODEL, RESULT, BigDecimal, AND_CLAUSES> and(ISupplierBigDecimal getter) {
+	public final ISharedComparison_Comparable_Common_All<MODEL, RESULT, BigDecimal, AND_CLAUSES> and(ISupplierBigDecimal getter) {
 		return andAliasImplComparable(getter);
 	}
 
 	@Override
-	public final ISharedCondition_Comparable_String_All<MODEL, RESULT, AND_CLAUSES> and(ISupplierString getter) {
+	public final ISharedComparison_Comparable_String_All<MODEL, RESULT, AND_CLAUSES> and(ISupplierString getter) {
 		return andAliasImplString(makeGetterExpression(getter));
 	}
 
 	@Override
-	public final ISharedCondition_Comparable_Common_All<MODEL, RESULT, java.util.Date, AND_CLAUSES> and(ISupplierDate getter) {
+	public final ISharedComparison_Comparable_Common_All<MODEL, RESULT, java.util.Date, AND_CLAUSES> and(ISupplierDate getter) {
 		return andAliasImplComparable(getter);
 	}
 
 	@Override
-	public final ISharedCondition_Comparable_Common_All<MODEL, RESULT, java.util.Calendar, AND_CLAUSES> and(ISupplierCalendar getter) {
+	public final ISharedComparison_Comparable_Common_All<MODEL, RESULT, java.util.Calendar, AND_CLAUSES> and(ISupplierCalendar getter) {
 		return andAliasImplComparable(getter);
 	}
 	
 	@Override
-	public final ISharedCondition_SQLTimeType_All<MODEL, RESULT, java.sql.Date, AND_CLAUSES> and(ISupplierSQLDate getter) {
+	public final ISharedComparison_SQLTimeType_All<MODEL, RESULT, java.sql.Date, AND_CLAUSES> and(ISupplierSQLDate getter) {
 		return andAliasImplSQLTimeType(getter);
 	}
 
 	@Override
-	public final ISharedCondition_SQLTimeType_All<MODEL, RESULT, java.sql.Time, AND_CLAUSES> and(ISupplierSQLTime getter) {
+	public final ISharedComparison_SQLTimeType_All<MODEL, RESULT, java.sql.Time, AND_CLAUSES> and(ISupplierSQLTime getter) {
 		return andAliasImplSQLTimeType(getter);
 	}
 	
 	@Override
-	public final ISharedCondition_SQLTimeType_All<MODEL, RESULT, java.sql.Timestamp, AND_CLAUSES> and(ISupplierSQLTimestamp getter) {
+	public final ISharedComparison_SQLTimeType_All<MODEL, RESULT, java.sql.Timestamp, AND_CLAUSES> and(ISupplierSQLTimestamp getter) {
 		return andAliasImplSQLTimeType(getter);
 	}
 
 	@Override
-	public final ISharedCondition_ByteArray_All<MODEL, RESULT, AND_CLAUSES> and(ISupplierByteArray getter) {
+	public final ISharedComparison_ByteArray_All<MODEL, RESULT, AND_CLAUSES> and(ISupplierByteArray getter) {
 		return andAliasImplByteArray(getter);
 	}
 	
@@ -167,17 +167,17 @@ abstract class Collector_And_Alias<
 				MODEL,
 				RESULT,
 				AND_CLAUSES,
-				ISharedCondition_Comparable_Common_All<MODEL, RESULT, Integer, AND_CLAUSES>,
+				ISharedComparison_Comparable_Common_All<MODEL, RESULT, Integer, AND_CLAUSES>,
 
-				ISharedCondition_Comparable_Common_All<MODEL, RESULT, Byte, AND_CLAUSES>,
-				ISharedCondition_Comparable_Common_All<MODEL, RESULT, Short, AND_CLAUSES>,
-				ISharedCondition_Comparable_Common_All<MODEL, RESULT, Integer, AND_CLAUSES>,
-				ISharedCondition_Comparable_Common_All<MODEL, RESULT, Long, AND_CLAUSES>,
-				ISharedCondition_Comparable_Common_All<MODEL, RESULT, BigInteger, AND_CLAUSES>,
-				ISharedCondition_Comparable_Common_All<MODEL, RESULT, Float, AND_CLAUSES>,
-				ISharedCondition_Comparable_Common_All<MODEL, RESULT, Double, AND_CLAUSES>,
-				ISharedCondition_Comparable_Common_All<MODEL, RESULT, BigDecimal, AND_CLAUSES>,
-				ISharedCondition_Comparable_String_All<MODEL, RESULT, AND_CLAUSES>> and() {
+				ISharedComparison_Comparable_Common_All<MODEL, RESULT, Byte, AND_CLAUSES>,
+				ISharedComparison_Comparable_Common_All<MODEL, RESULT, Short, AND_CLAUSES>,
+				ISharedComparison_Comparable_Common_All<MODEL, RESULT, Integer, AND_CLAUSES>,
+				ISharedComparison_Comparable_Common_All<MODEL, RESULT, Long, AND_CLAUSES>,
+				ISharedComparison_Comparable_Common_All<MODEL, RESULT, BigInteger, AND_CLAUSES>,
+				ISharedComparison_Comparable_Common_All<MODEL, RESULT, Float, AND_CLAUSES>,
+				ISharedComparison_Comparable_Common_All<MODEL, RESULT, Double, AND_CLAUSES>,
+				ISharedComparison_Comparable_Common_All<MODEL, RESULT, BigDecimal, AND_CLAUSES>,
+				ISharedComparison_Comparable_String_All<MODEL, RESULT, AND_CLAUSES>> and() {
 
 					
 		final ISharedCollector_Functions_Callback<MODEL, RESULT, AND_CLAUSES> cb

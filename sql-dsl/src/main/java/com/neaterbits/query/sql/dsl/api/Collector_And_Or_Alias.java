@@ -58,17 +58,17 @@ abstract class Collector_And_Or_Alias<
 		MODEL,
 		RESULT,
 		AND_CLAUSES,
-		ISharedCondition_Comparable_Common_All<MODEL, RESULT, Integer, AND_CLAUSES>,
+		ISharedComparison_Comparable_Common_All<MODEL, RESULT, Integer, AND_CLAUSES>,
 
-		ISharedCondition_Comparable_Common_All<MODEL, RESULT, Byte, AND_CLAUSES>,
-		ISharedCondition_Comparable_Common_All<MODEL, RESULT, Short, AND_CLAUSES>,
-		ISharedCondition_Comparable_Common_All<MODEL, RESULT, Integer, AND_CLAUSES>,
-		ISharedCondition_Comparable_Common_All<MODEL, RESULT, Long, AND_CLAUSES>,
-		ISharedCondition_Comparable_Common_All<MODEL, RESULT, BigInteger, AND_CLAUSES>,
-		ISharedCondition_Comparable_Common_All<MODEL, RESULT, Float, AND_CLAUSES>,
-		ISharedCondition_Comparable_Common_All<MODEL, RESULT, Double, AND_CLAUSES>,
-		ISharedCondition_Comparable_Common_All<MODEL, RESULT, BigDecimal, AND_CLAUSES>,
-		ISharedCondition_Comparable_String_All<MODEL, RESULT, AND_CLAUSES>
+		ISharedComparison_Comparable_Common_All<MODEL, RESULT, Byte, AND_CLAUSES>,
+		ISharedComparison_Comparable_Common_All<MODEL, RESULT, Short, AND_CLAUSES>,
+		ISharedComparison_Comparable_Common_All<MODEL, RESULT, Integer, AND_CLAUSES>,
+		ISharedComparison_Comparable_Common_All<MODEL, RESULT, Long, AND_CLAUSES>,
+		ISharedComparison_Comparable_Common_All<MODEL, RESULT, BigInteger, AND_CLAUSES>,
+		ISharedComparison_Comparable_Common_All<MODEL, RESULT, Float, AND_CLAUSES>,
+		ISharedComparison_Comparable_Common_All<MODEL, RESULT, Double, AND_CLAUSES>,
+		ISharedComparison_Comparable_Common_All<MODEL, RESULT, BigDecimal, AND_CLAUSES>,
+		ISharedComparison_Comparable_String_All<MODEL, RESULT, AND_CLAUSES>
 	>
 		and() {
 			
@@ -82,17 +82,17 @@ abstract class Collector_And_Or_Alias<
 		MODEL,
 		RESULT,
 		OR_CLAUSES,
-		ISharedCondition_Comparable_Common_All<MODEL, RESULT, Integer, OR_CLAUSES>,
+		ISharedComparison_Comparable_Common_All<MODEL, RESULT, Integer, OR_CLAUSES>,
 		
-		ISharedCondition_Comparable_Common_All<MODEL, RESULT, Byte, OR_CLAUSES>,
-		ISharedCondition_Comparable_Common_All<MODEL, RESULT, Short, OR_CLAUSES>,
-		ISharedCondition_Comparable_Common_All<MODEL, RESULT, Integer, OR_CLAUSES>,
-		ISharedCondition_Comparable_Common_All<MODEL, RESULT, Long, OR_CLAUSES>,
-		ISharedCondition_Comparable_Common_All<MODEL, RESULT, BigInteger, OR_CLAUSES>,
-		ISharedCondition_Comparable_Common_All<MODEL, RESULT, Float, OR_CLAUSES>,
-		ISharedCondition_Comparable_Common_All<MODEL, RESULT, Double, OR_CLAUSES>,
-		ISharedCondition_Comparable_Common_All<MODEL, RESULT, BigDecimal, OR_CLAUSES>,
-		ISharedCondition_Comparable_String_All<MODEL, RESULT, OR_CLAUSES>
+		ISharedComparison_Comparable_Common_All<MODEL, RESULT, Byte, OR_CLAUSES>,
+		ISharedComparison_Comparable_Common_All<MODEL, RESULT, Short, OR_CLAUSES>,
+		ISharedComparison_Comparable_Common_All<MODEL, RESULT, Integer, OR_CLAUSES>,
+		ISharedComparison_Comparable_Common_All<MODEL, RESULT, Long, OR_CLAUSES>,
+		ISharedComparison_Comparable_Common_All<MODEL, RESULT, BigInteger, OR_CLAUSES>,
+		ISharedComparison_Comparable_Common_All<MODEL, RESULT, Float, OR_CLAUSES>,
+		ISharedComparison_Comparable_Common_All<MODEL, RESULT, Double, OR_CLAUSES>,
+		ISharedComparison_Comparable_Common_All<MODEL, RESULT, BigDecimal, OR_CLAUSES>,
+		ISharedComparison_Comparable_String_All<MODEL, RESULT, OR_CLAUSES>
 	>
 		or() {
 			

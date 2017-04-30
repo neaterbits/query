@@ -95,82 +95,82 @@ abstract class Collector_And_Or_Named_And_Alias_Base<
 
 
 	@Override
-	public final <T> ISharedCondition_Comparable_Common_All<MODEL, RESULT, Boolean, NAMED_AND_CLAUSES> and(IFunctionBoolean<T> getter) {
+	public final <T> ISharedComparison_Comparable_Common_All<MODEL, RESULT, Boolean, NAMED_AND_CLAUSES> and(IFunctionBoolean<T> getter) {
 		return andNamedClassImplComparative(new FieldExpression(getter));
 	}
 
 	@Override
-	public final <T> ISharedCondition_Comparable_Common_All<MODEL, RESULT, Byte, NAMED_AND_CLAUSES> and(IFunctionByte<T> getter) {
+	public final <T> ISharedComparison_Comparable_Common_All<MODEL, RESULT, Byte, NAMED_AND_CLAUSES> and(IFunctionByte<T> getter) {
 		return andNamedClassImplComparative(new FieldExpression(getter));
 	}
 
 	@Override
-	public final <T> ISharedCondition_Comparable_Common_All<MODEL, RESULT, Short, NAMED_AND_CLAUSES> and(IFunctionShort<T> getter) {
+	public final <T> ISharedComparison_Comparable_Common_All<MODEL, RESULT, Short, NAMED_AND_CLAUSES> and(IFunctionShort<T> getter) {
 		return andNamedClassImplComparative(new FieldExpression(getter));
 	}
 
 	@Override
-	public final <T> ISharedCondition_Comparable_Common_All<MODEL, RESULT, Integer, NAMED_AND_CLAUSES> and(IFunctionInteger<T> getter) {
+	public final <T> ISharedComparison_Comparable_Common_All<MODEL, RESULT, Integer, NAMED_AND_CLAUSES> and(IFunctionInteger<T> getter) {
 		return andNamedClassImplComparative(new FieldExpression(getter));
 	}
 
 	@Override
-	public final <T> ISharedCondition_Comparable_Common_All<MODEL, RESULT, Long, NAMED_AND_CLAUSES> and(IFunctionLong<T> getter) {
+	public final <T> ISharedComparison_Comparable_Common_All<MODEL, RESULT, Long, NAMED_AND_CLAUSES> and(IFunctionLong<T> getter) {
 		return andNamedClassImplComparative(new FieldExpression(getter));
 	}
 
 	@Override
-	public final <T> ISharedCondition_Comparable_Common_All<MODEL, RESULT, BigInteger, NAMED_AND_CLAUSES> and(IFunctionBigInteger<T> getter) {
+	public final <T> ISharedComparison_Comparable_Common_All<MODEL, RESULT, BigInteger, NAMED_AND_CLAUSES> and(IFunctionBigInteger<T> getter) {
 		return andNamedClassImplComparative(new FieldExpression(getter));
 	}
 
 	@Override
-	public final <T> ISharedCondition_Comparable_Common_All<MODEL, RESULT, Float, NAMED_AND_CLAUSES> and(IFunctionFloat<T> getter) {
+	public final <T> ISharedComparison_Comparable_Common_All<MODEL, RESULT, Float, NAMED_AND_CLAUSES> and(IFunctionFloat<T> getter) {
 		return andNamedClassImplComparative(new FieldExpression(getter));
 	}
 
 	@Override
-	public final <T> ISharedCondition_Comparable_Common_All<MODEL, RESULT, Double, NAMED_AND_CLAUSES> and(IFunctionDouble<T> getter) {
+	public final <T> ISharedComparison_Comparable_Common_All<MODEL, RESULT, Double, NAMED_AND_CLAUSES> and(IFunctionDouble<T> getter) {
 		return andNamedClassImplComparative(new FieldExpression(getter));
 	}
 
 	@Override
-	public final <T> ISharedCondition_Comparable_Common_All<MODEL, RESULT, BigDecimal, NAMED_AND_CLAUSES> and(IFunctionBigDecimal<T> getter) {
+	public final <T> ISharedComparison_Comparable_Common_All<MODEL, RESULT, BigDecimal, NAMED_AND_CLAUSES> and(IFunctionBigDecimal<T> getter) {
 		return andNamedClassImplComparative(new FieldExpression(getter));
 	}
 
 	@Override
-	public final <T> ISharedCondition_Comparable_String_All<MODEL, RESULT, NAMED_AND_CLAUSES> and(IFunctionString<T> getter) {
+	public final <T> ISharedComparison_Comparable_String_All<MODEL, RESULT, NAMED_AND_CLAUSES> and(IFunctionString<T> getter) {
 		return andNamedClassImplString(new FieldExpression(getter));
 	}
 
 	@Override
-	public final <T> ISharedCondition_Comparable_Common_All<MODEL, RESULT, java.util.Date, NAMED_AND_CLAUSES> and(IFunctionDate<T> getter) {
+	public final <T> ISharedComparison_Comparable_Common_All<MODEL, RESULT, java.util.Date, NAMED_AND_CLAUSES> and(IFunctionDate<T> getter) {
 		return andNamedClassImplComparative(new FieldExpression(getter));
 	}
 
 	@Override
-	public final <T> ISharedCondition_Comparable_Common_All<MODEL, RESULT, java.util.Calendar, NAMED_AND_CLAUSES> and(IFunctionCalendar<T> getter) {
+	public final <T> ISharedComparison_Comparable_Common_All<MODEL, RESULT, java.util.Calendar, NAMED_AND_CLAUSES> and(IFunctionCalendar<T> getter) {
 		return andNamedClassImplComparative(new FieldExpression(getter));
 	}
 
 	@Override
-	public final <T> ISharedCondition_SQLTimeType_All<MODEL, RESULT, java.sql.Date, NAMED_AND_CLAUSES> and(IFunctionSQLDate<T> getter) {
+	public final <T> ISharedComparison_SQLTimeType_All<MODEL, RESULT, java.sql.Date, NAMED_AND_CLAUSES> and(IFunctionSQLDate<T> getter) {
 		return andNamedImplSQLTimeType(getter);
 	}
 	
 	@Override
-	public final <T> ISharedCondition_SQLTimeType_All<MODEL, RESULT, java.sql.Time, NAMED_AND_CLAUSES> and(IFunctionSQLTime<T> getter) {
+	public final <T> ISharedComparison_SQLTimeType_All<MODEL, RESULT, java.sql.Time, NAMED_AND_CLAUSES> and(IFunctionSQLTime<T> getter) {
 		return andNamedImplSQLTimeType(getter);
 	}
 	
 	@Override
-	public final <T> ISharedCondition_SQLTimeType_All<MODEL, RESULT, java.sql.Timestamp, NAMED_AND_CLAUSES> and(IFunctionSQLTimestamp<T> getter) {
+	public final <T> ISharedComparison_SQLTimeType_All<MODEL, RESULT, java.sql.Timestamp, NAMED_AND_CLAUSES> and(IFunctionSQLTimestamp<T> getter) {
 		return andNamedImplSQLTimeType(getter);
 	}
 	
 	@Override
-	public final <T> ISharedCondition_ByteArray_All<MODEL, RESULT, NAMED_AND_CLAUSES> and(IFunctionByteArray<T> getter) {
+	public final <T> ISharedComparison_ByteArray_All<MODEL, RESULT, NAMED_AND_CLAUSES> and(IFunctionByteArray<T> getter) {
 		return andNamedImplByteArray(getter);
 	}
 	
@@ -178,17 +178,17 @@ abstract class Collector_And_Or_Named_And_Alias_Base<
 				MODEL,
 				RESULT,
 				NAMED_AND_CLAUSES,
-				ISharedCondition_Comparable_Common_All<MODEL, RESULT, Integer, NAMED_AND_CLAUSES>,
+				ISharedComparison_Comparable_Common_All<MODEL, RESULT, Integer, NAMED_AND_CLAUSES>,
 
-				ISharedCondition_Comparable_Common_All<MODEL, RESULT, Byte, NAMED_AND_CLAUSES>,
-				ISharedCondition_Comparable_Common_All<MODEL, RESULT, Short, NAMED_AND_CLAUSES>,
-				ISharedCondition_Comparable_Common_All<MODEL, RESULT, Integer, NAMED_AND_CLAUSES>,
-				ISharedCondition_Comparable_Common_All<MODEL, RESULT, Long, NAMED_AND_CLAUSES>,
-				ISharedCondition_Comparable_Common_All<MODEL, RESULT, BigInteger, NAMED_AND_CLAUSES>,
-				ISharedCondition_Comparable_Common_All<MODEL, RESULT, Float, NAMED_AND_CLAUSES>,
-				ISharedCondition_Comparable_Common_All<MODEL, RESULT, Double, NAMED_AND_CLAUSES>,
-				ISharedCondition_Comparable_Common_All<MODEL, RESULT, BigDecimal, NAMED_AND_CLAUSES>,
-				ISharedCondition_Comparable_String_All<MODEL, RESULT, NAMED_AND_CLAUSES>
+				ISharedComparison_Comparable_Common_All<MODEL, RESULT, Byte, NAMED_AND_CLAUSES>,
+				ISharedComparison_Comparable_Common_All<MODEL, RESULT, Short, NAMED_AND_CLAUSES>,
+				ISharedComparison_Comparable_Common_All<MODEL, RESULT, Integer, NAMED_AND_CLAUSES>,
+				ISharedComparison_Comparable_Common_All<MODEL, RESULT, Long, NAMED_AND_CLAUSES>,
+				ISharedComparison_Comparable_Common_All<MODEL, RESULT, BigInteger, NAMED_AND_CLAUSES>,
+				ISharedComparison_Comparable_Common_All<MODEL, RESULT, Float, NAMED_AND_CLAUSES>,
+				ISharedComparison_Comparable_Common_All<MODEL, RESULT, Double, NAMED_AND_CLAUSES>,
+				ISharedComparison_Comparable_Common_All<MODEL, RESULT, BigDecimal, NAMED_AND_CLAUSES>,
+				ISharedComparison_Comparable_String_All<MODEL, RESULT, NAMED_AND_CLAUSES>
 			> andNamed() {
 					
 		final ISharedCollector_Functions_Callback<MODEL, RESULT, NAMED_AND_CLAUSES> cb
@@ -203,7 +203,7 @@ abstract class Collector_And_Or_Named_And_Alias_Base<
 			}
 		
 			@Override
-			public ISharedCondition_Comparable_String_Base<MODEL, RESULT, NAMED_AND_CLAUSES>
+			public ISharedComparison_Comparable_String_Base<MODEL, RESULT, NAMED_AND_CLAUSES>
 				onString(Expression expression) {
 				
 				return andNamedClassImplString(expression);
@@ -217,82 +217,82 @@ abstract class Collector_And_Or_Named_And_Alias_Base<
 	// ------------------------  OR ------------------------
 
 	@Override
-	public final <T> ISharedCondition_Comparable_Common_All<MODEL, RESULT, Boolean, NAMED_OR_CLAUSES> or(IFunctionBoolean<T> getter) {
+	public final <T> ISharedComparison_Comparable_Common_All<MODEL, RESULT, Boolean, NAMED_OR_CLAUSES> or(IFunctionBoolean<T> getter) {
 		return orNamedClassImplComparable(new FieldExpression(getter));
 	}
 
 	@Override
-	public final <T> ISharedCondition_Comparable_Common_All<MODEL, RESULT, Byte, NAMED_OR_CLAUSES> or(IFunctionByte<T> getter) {
+	public final <T> ISharedComparison_Comparable_Common_All<MODEL, RESULT, Byte, NAMED_OR_CLAUSES> or(IFunctionByte<T> getter) {
 		return orNamedClassImplComparable(new FieldExpression(getter));
 	}
 
 	@Override
-	public final <T> ISharedCondition_Comparable_Common_All<MODEL, RESULT, Short, NAMED_OR_CLAUSES> or(IFunctionShort<T> getter) {
+	public final <T> ISharedComparison_Comparable_Common_All<MODEL, RESULT, Short, NAMED_OR_CLAUSES> or(IFunctionShort<T> getter) {
 		return orNamedClassImplComparable(new FieldExpression(getter));
 	}
 
 	@Override
-	public final <T> ISharedCondition_Comparable_Common_All<MODEL, RESULT, Integer, NAMED_OR_CLAUSES> or(IFunctionInteger<T> getter) {
+	public final <T> ISharedComparison_Comparable_Common_All<MODEL, RESULT, Integer, NAMED_OR_CLAUSES> or(IFunctionInteger<T> getter) {
 		return orNamedClassImplComparable(new FieldExpression(getter));
 	}
 
 	@Override
-	public final <T> ISharedCondition_Comparable_Common_All<MODEL, RESULT, Long, NAMED_OR_CLAUSES> or(IFunctionLong<T> getter) {
+	public final <T> ISharedComparison_Comparable_Common_All<MODEL, RESULT, Long, NAMED_OR_CLAUSES> or(IFunctionLong<T> getter) {
 		return orNamedClassImplComparable(new FieldExpression(getter));
 	}
 
 	@Override
-	public final <T> ISharedCondition_Comparable_Common_All<MODEL, RESULT, BigInteger, NAMED_OR_CLAUSES> or(IFunctionBigInteger<T> getter) {
+	public final <T> ISharedComparison_Comparable_Common_All<MODEL, RESULT, BigInteger, NAMED_OR_CLAUSES> or(IFunctionBigInteger<T> getter) {
 		return orNamedClassImplComparable(new FieldExpression(getter));
 	}
 
 	@Override
-	public final <T> ISharedCondition_Comparable_Common_All<MODEL, RESULT, BigDecimal, NAMED_OR_CLAUSES> or(IFunctionBigDecimal<T> getter) {
+	public final <T> ISharedComparison_Comparable_Common_All<MODEL, RESULT, BigDecimal, NAMED_OR_CLAUSES> or(IFunctionBigDecimal<T> getter) {
 		return orNamedClassImplComparable(new FieldExpression(getter));
 	}
 
 	@Override
-	public final <T> ISharedCondition_Comparable_Common_All<MODEL, RESULT, Float, NAMED_OR_CLAUSES> or(IFunctionFloat<T> getter) {
+	public final <T> ISharedComparison_Comparable_Common_All<MODEL, RESULT, Float, NAMED_OR_CLAUSES> or(IFunctionFloat<T> getter) {
 		return orNamedClassImplComparable(new FieldExpression(getter));
 	}
 
 	@Override
-	public final <T> ISharedCondition_Comparable_Common_All<MODEL, RESULT, Double, NAMED_OR_CLAUSES> or(IFunctionDouble<T> getter) {
+	public final <T> ISharedComparison_Comparable_Common_All<MODEL, RESULT, Double, NAMED_OR_CLAUSES> or(IFunctionDouble<T> getter) {
 		return orNamedClassImplComparable(new FieldExpression(getter));
 	}
 
 	@Override
-	public final <T> ISharedCondition_Comparable_String_All<MODEL, RESULT, NAMED_OR_CLAUSES> or(IFunctionString<T> getter) {
+	public final <T> ISharedComparison_Comparable_String_All<MODEL, RESULT, NAMED_OR_CLAUSES> or(IFunctionString<T> getter) {
 		return orNamedClassImplString(new FieldExpression(getter));
 	}
 
 	@Override
-	public final <T> ISharedCondition_Comparable_Common_All<MODEL, RESULT, java.util.Date, NAMED_OR_CLAUSES> or(IFunctionDate<T> getter) {
+	public final <T> ISharedComparison_Comparable_Common_All<MODEL, RESULT, java.util.Date, NAMED_OR_CLAUSES> or(IFunctionDate<T> getter) {
 		return orNamedClassImplComparable(new FieldExpression(getter));
 	}
 	
 	@Override
-	public final <T> ISharedCondition_Comparable_Common_All<MODEL, RESULT, java.util.Calendar, NAMED_OR_CLAUSES> or(IFunctionCalendar<T> getter) {
+	public final <T> ISharedComparison_Comparable_Common_All<MODEL, RESULT, java.util.Calendar, NAMED_OR_CLAUSES> or(IFunctionCalendar<T> getter) {
 		return orNamedClassImplComparable(new FieldExpression(getter));
 	}
 
 	@Override
-	public final <T> ISharedCondition_SQLTimeType_All<MODEL, RESULT, Date, NAMED_OR_CLAUSES> or(IFunctionSQLDate<T> getter) {
+	public final <T> ISharedComparison_SQLTimeType_All<MODEL, RESULT, Date, NAMED_OR_CLAUSES> or(IFunctionSQLDate<T> getter) {
 		return orNamedImplSQLTimeType(makeGetterExpression(getter));
 	}
 
 	@Override
-	public final <T> ISharedCondition_SQLTimeType_All<MODEL, RESULT, Time, NAMED_OR_CLAUSES> or(IFunctionSQLTime<T> getter) {
+	public final <T> ISharedComparison_SQLTimeType_All<MODEL, RESULT, Time, NAMED_OR_CLAUSES> or(IFunctionSQLTime<T> getter) {
 		return orNamedImplSQLTimeType(makeGetterExpression(getter));
 	}
 
 	@Override
-	public final <T> ISharedCondition_SQLTimeType_All<MODEL, RESULT, Timestamp, NAMED_OR_CLAUSES> or(IFunctionSQLTimestamp<T> getter) {
+	public final <T> ISharedComparison_SQLTimeType_All<MODEL, RESULT, Timestamp, NAMED_OR_CLAUSES> or(IFunctionSQLTimestamp<T> getter) {
 		return orNamedImplSQLTimeType(makeGetterExpression(getter));
 	}
 
 	@Override
-	public final <T> ISharedCondition_ByteArray_All<MODEL, RESULT, NAMED_OR_CLAUSES> or(IFunctionByteArray<T> getter) {
+	public final <T> ISharedComparison_ByteArray_All<MODEL, RESULT, NAMED_OR_CLAUSES> or(IFunctionByteArray<T> getter) {
 		return orNamedImplByteArray(makeGetterExpression(getter));
 	}
 
@@ -300,17 +300,17 @@ abstract class Collector_And_Or_Named_And_Alias_Base<
 		MODEL,
 		RESULT,
 		NAMED_OR_CLAUSES,
-		ISharedCondition_Comparable_Common_All<MODEL, RESULT, Integer, NAMED_OR_CLAUSES>,
+		ISharedComparison_Comparable_Common_All<MODEL, RESULT, Integer, NAMED_OR_CLAUSES>,
 
-		ISharedCondition_Comparable_Common_All<MODEL, RESULT, Byte, NAMED_OR_CLAUSES>,
-		ISharedCondition_Comparable_Common_All<MODEL, RESULT, Short, NAMED_OR_CLAUSES>,
-		ISharedCondition_Comparable_Common_All<MODEL, RESULT, Integer, NAMED_OR_CLAUSES>,
-		ISharedCondition_Comparable_Common_All<MODEL, RESULT, Long, NAMED_OR_CLAUSES>,
-		ISharedCondition_Comparable_Common_All<MODEL, RESULT, BigInteger, NAMED_OR_CLAUSES>,
-		ISharedCondition_Comparable_Common_All<MODEL, RESULT, Float, NAMED_OR_CLAUSES>,
-		ISharedCondition_Comparable_Common_All<MODEL, RESULT, Double, NAMED_OR_CLAUSES>,
-		ISharedCondition_Comparable_Common_All<MODEL, RESULT, BigDecimal, NAMED_OR_CLAUSES>,
-		ISharedCondition_Comparable_String_All<MODEL, RESULT, NAMED_OR_CLAUSES>
+		ISharedComparison_Comparable_Common_All<MODEL, RESULT, Byte, NAMED_OR_CLAUSES>,
+		ISharedComparison_Comparable_Common_All<MODEL, RESULT, Short, NAMED_OR_CLAUSES>,
+		ISharedComparison_Comparable_Common_All<MODEL, RESULT, Integer, NAMED_OR_CLAUSES>,
+		ISharedComparison_Comparable_Common_All<MODEL, RESULT, Long, NAMED_OR_CLAUSES>,
+		ISharedComparison_Comparable_Common_All<MODEL, RESULT, BigInteger, NAMED_OR_CLAUSES>,
+		ISharedComparison_Comparable_Common_All<MODEL, RESULT, Float, NAMED_OR_CLAUSES>,
+		ISharedComparison_Comparable_Common_All<MODEL, RESULT, Double, NAMED_OR_CLAUSES>,
+		ISharedComparison_Comparable_Common_All<MODEL, RESULT, BigDecimal, NAMED_OR_CLAUSES>,
+		ISharedComparison_Comparable_String_All<MODEL, RESULT, NAMED_OR_CLAUSES>
 	>
 		orNamed() {
 
@@ -319,13 +319,13 @@ abstract class Collector_And_Or_Named_And_Alias_Base<
 				= new ISharedCollector_Functions_Callback<MODEL, RESULT, NAMED_OR_CLAUSES>() {
 		
 			@Override
-			public ISharedCondition_Comparable_Common_Base<MODEL, RESULT, Comparable<?>, NAMED_OR_CLAUSES> onComparable(Expression expression) {
-				return (ISharedCondition_Comparable_Common_All)orNamedClassImplComparable(expression);
+			public ISharedComparison_Comparable_Common_Base<MODEL, RESULT, Comparable<?>, NAMED_OR_CLAUSES> onComparable(Expression expression) {
+				return (ISharedComparison_Comparable_Common_All)orNamedClassImplComparable(expression);
 			}
 		
 			@Override
-			public ISharedCondition_Comparable_String_Base<MODEL, RESULT, NAMED_OR_CLAUSES> onString(Expression expression) {
-				return (ISharedCondition_Comparable_String_Base)orNamedClassImplString(expression);
+			public ISharedComparison_Comparable_String_Base<MODEL, RESULT, NAMED_OR_CLAUSES> onString(Expression expression) {
+				return (ISharedComparison_Comparable_String_Base)orNamedClassImplString(expression);
 			}
 		};
 
@@ -336,14 +336,14 @@ abstract class Collector_And_Or_Named_And_Alias_Base<
 
 	private <T, RR extends Comparable<RR>>
 			
-		ISharedCondition_Comparable_Common_All<MODEL, RESULT, RR, NAMED_AND_CLAUSES> andNamedClassImplComparative(Expression expression) {
+		ISharedComparison_Comparable_Common_All<MODEL, RESULT, RR, NAMED_AND_CLAUSES> andNamedClassImplComparative(Expression expression) {
 		
 		return andNamedClassImplComparable(expression);
 	}
 
 	final <T, RR extends Comparable<RR>>
 		
-		ISharedCondition_Comparable_Common_All<MODEL, RESULT, RR, NAMED_AND_CLAUSES> 
+		ISharedComparison_Comparable_Common_All<MODEL, RESULT, RR, NAMED_AND_CLAUSES> 
 	
 				andNamedClassImplComparable(Expression expression) {
 	
@@ -353,21 +353,21 @@ abstract class Collector_And_Or_Named_And_Alias_Base<
 	}
 		
 		
-	final ISharedCondition_Comparable_String_All<MODEL, RESULT, NAMED_AND_CLAUSES> andNamedClassImplString(Expression expression) {
+	final ISharedComparison_Comparable_String_All<MODEL, RESULT, NAMED_AND_CLAUSES> andNamedClassImplString(Expression expression) {
 		
 		final Collector_And_Named<MODEL, RESULT, NAMED_AND_CLAUSES, NAMED_NESTED_AND_CLAUSES, NAMED_NESTED_OR_CLAUSES, NAMED_AFTER_GROUP_BY> andClauses = createNamedAndCollector(); // new Classic_Collector_And_Named<>(this);
 		
 		return new Collector_Condition_String<MODEL, RESULT, NAMED_AND_CLAUSES>(andClauses, expression);
 	}
 
-	private <T, RR> ISharedCondition_SQLTimeType_All<MODEL, RESULT, RR, NAMED_AND_CLAUSES> andNamedImplSQLTimeType(Function<T, RR> getter) {
+	private <T, RR> ISharedComparison_SQLTimeType_All<MODEL, RESULT, RR, NAMED_AND_CLAUSES> andNamedImplSQLTimeType(Function<T, RR> getter) {
 	
 		final Collector_And_Named<MODEL, RESULT, NAMED_AND_CLAUSES, NAMED_NESTED_AND_CLAUSES, NAMED_NESTED_OR_CLAUSES, NAMED_AFTER_GROUP_BY> andClauses = createNamedAndCollector(); // new Classic_Collector_And_Named<>(this);
 		
 		return new Collector_Condition_SQLTimeType<MODEL, RESULT, RR, NAMED_AND_CLAUSES>(andClauses, makeGetterExpression(getter));
 	}
 	
-	private <T> ISharedCondition_ByteArray_All<MODEL, RESULT, NAMED_AND_CLAUSES> andNamedImplByteArray(Function<T, byte []> getter) {
+	private <T> ISharedComparison_ByteArray_All<MODEL, RESULT, NAMED_AND_CLAUSES> andNamedImplByteArray(Function<T, byte []> getter) {
 		
 		final Collector_And_Named<MODEL, RESULT, NAMED_AND_CLAUSES, NAMED_NESTED_AND_CLAUSES, NAMED_NESTED_OR_CLAUSES, NAMED_AFTER_GROUP_BY> andClauses = createNamedAndCollector(); // new Classic_Collector_And_Named<>(this);
 		
@@ -375,7 +375,7 @@ abstract class Collector_And_Or_Named_And_Alias_Base<
 	}	
 	// ------------------------  OR helpers ------------------------
 	private <T, RR extends Comparable<RR>>
-		ISharedCondition_Comparable_Common_All<MODEL, RESULT, RR, NAMED_OR_CLAUSES>
+		ISharedComparison_Comparable_Common_All<MODEL, RESULT, RR, NAMED_OR_CLAUSES>
 		
 		orNamedClassImplComparable(Expression expression) {
 		
@@ -384,7 +384,7 @@ abstract class Collector_And_Or_Named_And_Alias_Base<
 		return new Collector_Condition_Comparative<MODEL, RESULT, RR, NAMED_OR_CLAUSES>(andClauses, expression);
 	}
 
-	final ISharedCondition_Comparable_String_All<MODEL, RESULT, NAMED_OR_CLAUSES>
+	final ISharedComparison_Comparable_String_All<MODEL, RESULT, NAMED_OR_CLAUSES>
 				orNamedClassImplString(Expression expression) {
 
 		final Collector_Or_Named<MODEL, RESULT, NAMED_OR_CLAUSES, NAMED_NESTED_AND_CLAUSES, NAMED_NESTED_OR_CLAUSES, NAMED_AFTER_GROUP_BY> andClauses = createNamedOrCollector(); // new Classic_Collector_Or_Named<>(this);
@@ -392,13 +392,13 @@ abstract class Collector_And_Or_Named_And_Alias_Base<
 		return new Collector_Condition_String<MODEL, RESULT, NAMED_OR_CLAUSES>(andClauses, expression);
 	}
 				
-	private <RR> ISharedCondition_SQLTimeType_All<MODEL, RESULT, RR, NAMED_OR_CLAUSES> orNamedImplSQLTimeType(Expression expression) {
+	private <RR> ISharedComparison_SQLTimeType_All<MODEL, RESULT, RR, NAMED_OR_CLAUSES> orNamedImplSQLTimeType(Expression expression) {
 		final Collector_Or_Named<MODEL, RESULT, NAMED_OR_CLAUSES, NAMED_NESTED_AND_CLAUSES, NAMED_NESTED_OR_CLAUSES, NAMED_AFTER_GROUP_BY> andClauses = createNamedOrCollector();
 
 		return new Collector_Condition_SQLTimeType<MODEL, RESULT, RR, NAMED_OR_CLAUSES>(andClauses, expression);
 	}
 	
-	private <RR> ISharedCondition_ByteArray_All<MODEL, RESULT, NAMED_OR_CLAUSES> orNamedImplByteArray(Expression expression) {
+	private <RR> ISharedComparison_ByteArray_All<MODEL, RESULT, NAMED_OR_CLAUSES> orNamedImplByteArray(Expression expression) {
 		final Collector_Or_Named<MODEL, RESULT, NAMED_OR_CLAUSES, NAMED_NESTED_AND_CLAUSES, NAMED_NESTED_OR_CLAUSES, NAMED_AFTER_GROUP_BY> andClauses = createNamedOrCollector();
 
 		return new Collector_Condition_ByteArray<MODEL, RESULT, NAMED_OR_CLAUSES>(andClauses, expression);
@@ -460,82 +460,82 @@ abstract class Collector_And_Or_Named_And_Alias_Base<
 	
 	
 	@Override
-	public final ISharedCondition_Comparable_Common_All<MODEL, RESULT, Boolean, ALIAS_AND_CLAUSES> and(ISupplierBoolean getter) {
+	public final ISharedComparison_Comparable_Common_All<MODEL, RESULT, Boolean, ALIAS_AND_CLAUSES> and(ISupplierBoolean getter) {
 		return andAliasImplComparable(getter);
 	}
 	
 	@Override
-	public final ISharedCondition_Comparable_Common_All<MODEL, RESULT, Byte, ALIAS_AND_CLAUSES> and(ISupplierByte getter) {
+	public final ISharedComparison_Comparable_Common_All<MODEL, RESULT, Byte, ALIAS_AND_CLAUSES> and(ISupplierByte getter) {
 		return andAliasImplComparable(getter);
 	}
 	
 	@Override
-	public final ISharedCondition_Comparable_Common_All<MODEL, RESULT, Short, ALIAS_AND_CLAUSES> and(ISupplierShort getter) {
+	public final ISharedComparison_Comparable_Common_All<MODEL, RESULT, Short, ALIAS_AND_CLAUSES> and(ISupplierShort getter) {
 		return andAliasImplComparable(getter);
 	}
 	
 	@Override
-	public final ISharedCondition_Comparable_Common_All<MODEL, RESULT, Integer, ALIAS_AND_CLAUSES> and(ISupplierInteger getter) {
+	public final ISharedComparison_Comparable_Common_All<MODEL, RESULT, Integer, ALIAS_AND_CLAUSES> and(ISupplierInteger getter) {
 		return andAliasImplComparable(getter);
 	}
 	
 	@Override
-	public final ISharedCondition_Comparable_Common_All<MODEL, RESULT, Long, ALIAS_AND_CLAUSES> and(ISupplierLong getter) {
+	public final ISharedComparison_Comparable_Common_All<MODEL, RESULT, Long, ALIAS_AND_CLAUSES> and(ISupplierLong getter) {
 		return andAliasImplComparable(getter);
 	}
 	
 	@Override
-	public final ISharedCondition_Comparable_Common_All<MODEL, RESULT, BigInteger, ALIAS_AND_CLAUSES> and(ISupplierBigInteger getter) {
+	public final ISharedComparison_Comparable_Common_All<MODEL, RESULT, BigInteger, ALIAS_AND_CLAUSES> and(ISupplierBigInteger getter) {
 		return andAliasImplComparable(getter);
 	}
 
 	@Override
-	public final ISharedCondition_Comparable_Common_All<MODEL, RESULT, Float, ALIAS_AND_CLAUSES> and(ISupplierFloat getter) {
+	public final ISharedComparison_Comparable_Common_All<MODEL, RESULT, Float, ALIAS_AND_CLAUSES> and(ISupplierFloat getter) {
 		return andAliasImplComparable(getter);
 	}
 	
 	@Override
-	public final ISharedCondition_Comparable_Common_All<MODEL, RESULT, Double, ALIAS_AND_CLAUSES> and(ISupplierDouble getter) {
+	public final ISharedComparison_Comparable_Common_All<MODEL, RESULT, Double, ALIAS_AND_CLAUSES> and(ISupplierDouble getter) {
 		return andAliasImplComparable(getter);
 	}
 
 	@Override
-	public final ISharedCondition_Comparable_Common_All<MODEL, RESULT, BigDecimal, ALIAS_AND_CLAUSES> and(ISupplierBigDecimal getter) {
+	public final ISharedComparison_Comparable_Common_All<MODEL, RESULT, BigDecimal, ALIAS_AND_CLAUSES> and(ISupplierBigDecimal getter) {
 		return andAliasImplComparable(getter);
 	}
 
 	@Override
-	public final ISharedCondition_Comparable_Common_All<MODEL, RESULT, java.util.Date, ALIAS_AND_CLAUSES> and(ISupplierDate getter) {
+	public final ISharedComparison_Comparable_Common_All<MODEL, RESULT, java.util.Date, ALIAS_AND_CLAUSES> and(ISupplierDate getter) {
 		return andAliasImplComparable(getter);
 	}
 	
 	@Override
-	public final ISharedCondition_Comparable_Common_All<MODEL, RESULT, java.util.Calendar, ALIAS_AND_CLAUSES> and(ISupplierCalendar getter) {
+	public final ISharedComparison_Comparable_Common_All<MODEL, RESULT, java.util.Calendar, ALIAS_AND_CLAUSES> and(ISupplierCalendar getter) {
 		return andAliasImplComparable(getter);
 	}
 	
 	@Override
-	public final ISharedCondition_SQLTimeType_All<MODEL, RESULT, java.sql.Date, ALIAS_AND_CLAUSES> and(ISupplierSQLDate getter) {
+	public final ISharedComparison_SQLTimeType_All<MODEL, RESULT, java.sql.Date, ALIAS_AND_CLAUSES> and(ISupplierSQLDate getter) {
 		return andAliasImplSQLTimeType(getter);
 	}
 	
 	@Override
-	public final ISharedCondition_SQLTimeType_All<MODEL, RESULT, java.sql.Time, ALIAS_AND_CLAUSES> and(ISupplierSQLTime getter) {
+	public final ISharedComparison_SQLTimeType_All<MODEL, RESULT, java.sql.Time, ALIAS_AND_CLAUSES> and(ISupplierSQLTime getter) {
 		return andAliasImplSQLTimeType(getter);
 	}
 
 	@Override
-	public final ISharedCondition_SQLTimeType_All<MODEL, RESULT, java.sql.Timestamp, ALIAS_AND_CLAUSES> and(ISupplierSQLTimestamp getter) {
+	public final ISharedComparison_SQLTimeType_All<MODEL, RESULT, java.sql.Timestamp, ALIAS_AND_CLAUSES> and(ISupplierSQLTimestamp getter) {
 		return andAliasImplSQLTimeType(getter);
 	}
 
 	@Override
-	public final ISharedCondition_ByteArray_All<MODEL, RESULT, ALIAS_AND_CLAUSES> and(ISupplierByteArray getter) {
+	public final ISharedComparison_ByteArray_All<MODEL, RESULT, ALIAS_AND_CLAUSES> and(ISupplierByteArray getter) {
 		return andAliasImplByteArray(getter);
 	}
 
 	@Override
-	public final ISharedCondition_Comparable_String_All<MODEL, RESULT, ALIAS_AND_CLAUSES> and(ISupplierString getter) {
+	public final ISharedComparison_Comparable_String_All<MODEL, RESULT, ALIAS_AND_CLAUSES> and(ISupplierString getter) {
 	
 		final Collector_And_Alias<MODEL, RESULT, ALIAS_AND_CLAUSES, ALIAS_NESTED_AND_CLAUSES, ALIAS_NESTED_OR_CLAUSES, ALIAS_AFTER_GROUP_BY> andClauses = createAliasAndCollector();// new Classic_Collector_And_Alias<>(this);
 		
@@ -547,82 +547,82 @@ abstract class Collector_And_Or_Named_And_Alias_Base<
 
 	
 	@Override
-	public final ISharedCondition_Comparable_Common_All<MODEL, RESULT, Boolean, ALIAS_OR_CLAUSES> or(ISupplierBoolean getter) {
+	public final ISharedComparison_Comparable_Common_All<MODEL, RESULT, Boolean, ALIAS_OR_CLAUSES> or(ISupplierBoolean getter) {
 		return orAliasImplComparable(getter);
 	}
 
 	@Override
-	public final ISharedCondition_Comparable_Common_All<MODEL, RESULT, Byte, ALIAS_OR_CLAUSES> or(ISupplierByte getter) {
+	public final ISharedComparison_Comparable_Common_All<MODEL, RESULT, Byte, ALIAS_OR_CLAUSES> or(ISupplierByte getter) {
 		return orAliasImplComparable(getter);
 	}
 
 	@Override
-	public final ISharedCondition_Comparable_Common_All<MODEL, RESULT, Short, ALIAS_OR_CLAUSES> or(ISupplierShort getter) {
+	public final ISharedComparison_Comparable_Common_All<MODEL, RESULT, Short, ALIAS_OR_CLAUSES> or(ISupplierShort getter) {
 		return orAliasImplComparable(getter);
 	}
 	
 	@Override
-	public final ISharedCondition_Comparable_Common_All<MODEL, RESULT, Integer, ALIAS_OR_CLAUSES> or(ISupplierInteger getter) {
+	public final ISharedComparison_Comparable_Common_All<MODEL, RESULT, Integer, ALIAS_OR_CLAUSES> or(ISupplierInteger getter) {
 		return orAliasImplComparable(getter);
 	}
 
 	@Override
-	public final ISharedCondition_Comparable_Common_All<MODEL, RESULT, Long, ALIAS_OR_CLAUSES> or(ISupplierLong getter) {
+	public final ISharedComparison_Comparable_Common_All<MODEL, RESULT, Long, ALIAS_OR_CLAUSES> or(ISupplierLong getter) {
 		return orAliasImplComparable(getter);
 	}
 	
 	@Override
-	public final ISharedCondition_Comparable_Common_All<MODEL, RESULT, BigInteger, ALIAS_OR_CLAUSES> or(ISupplierBigInteger getter) {
+	public final ISharedComparison_Comparable_Common_All<MODEL, RESULT, BigInteger, ALIAS_OR_CLAUSES> or(ISupplierBigInteger getter) {
 		return orAliasImplComparable(getter);
 	}
 
 	@Override
-	public final ISharedCondition_Comparable_Common_All<MODEL, RESULT, Float, ALIAS_OR_CLAUSES> or(ISupplierFloat getter) {
+	public final ISharedComparison_Comparable_Common_All<MODEL, RESULT, Float, ALIAS_OR_CLAUSES> or(ISupplierFloat getter) {
 		return orAliasImplComparable(getter);
 	}
 
 	@Override
-	public final ISharedCondition_Comparable_Common_All<MODEL, RESULT, Double, ALIAS_OR_CLAUSES> or(ISupplierDouble getter) {
+	public final ISharedComparison_Comparable_Common_All<MODEL, RESULT, Double, ALIAS_OR_CLAUSES> or(ISupplierDouble getter) {
 		return orAliasImplComparable(getter);
 	}
 	
 	@Override
-	public final ISharedCondition_Comparable_Common_All<MODEL, RESULT, BigDecimal, ALIAS_OR_CLAUSES> or(ISupplierBigDecimal getter) {
+	public final ISharedComparison_Comparable_Common_All<MODEL, RESULT, BigDecimal, ALIAS_OR_CLAUSES> or(ISupplierBigDecimal getter) {
 		return orAliasImplComparable(getter);
 	}
 
 	@Override
-	public final ISharedCondition_Comparable_String_All<MODEL, RESULT, ALIAS_OR_CLAUSES> or(ISupplierString getter) {
+	public final ISharedComparison_Comparable_String_All<MODEL, RESULT, ALIAS_OR_CLAUSES> or(ISupplierString getter) {
 		return orAliasImplString(makeGetterExpression(getter));
 	}
 
 	@Override
-	public final ISharedCondition_Comparable_Common_All<MODEL, RESULT, java.util.Date, ALIAS_OR_CLAUSES> or(ISupplierDate getter) {
+	public final ISharedComparison_Comparable_Common_All<MODEL, RESULT, java.util.Date, ALIAS_OR_CLAUSES> or(ISupplierDate getter) {
 		return orAliasImplComparable(getter);
 	}
 	
 	@Override
-	public final ISharedCondition_Comparable_Common_All<MODEL, RESULT, java.util.Calendar, ALIAS_OR_CLAUSES> or(ISupplierCalendar getter) {
+	public final ISharedComparison_Comparable_Common_All<MODEL, RESULT, java.util.Calendar, ALIAS_OR_CLAUSES> or(ISupplierCalendar getter) {
 		return orAliasImplComparable(getter);
 	}
 
 	@Override
-	public final ISharedCondition_SQLTimeType_All<MODEL, RESULT, java.sql.Date, ALIAS_OR_CLAUSES> or(ISupplierSQLDate getter) {
+	public final ISharedComparison_SQLTimeType_All<MODEL, RESULT, java.sql.Date, ALIAS_OR_CLAUSES> or(ISupplierSQLDate getter) {
 		return orAliasImplSQLTimeType(getter);
 	}
 	
 	@Override
-	public final ISharedCondition_SQLTimeType_All<MODEL, RESULT, java.sql.Time, ALIAS_OR_CLAUSES> or(ISupplierSQLTime getter) {
+	public final ISharedComparison_SQLTimeType_All<MODEL, RESULT, java.sql.Time, ALIAS_OR_CLAUSES> or(ISupplierSQLTime getter) {
 		return orAliasImplSQLTimeType(getter);
 	}
 
 	@Override
-	public final ISharedCondition_SQLTimeType_All<MODEL, RESULT, java.sql.Timestamp, ALIAS_OR_CLAUSES> or(ISupplierSQLTimestamp getter) {
+	public final ISharedComparison_SQLTimeType_All<MODEL, RESULT, java.sql.Timestamp, ALIAS_OR_CLAUSES> or(ISupplierSQLTimestamp getter) {
 		return orAliasImplSQLTimeType(getter);
 	}
 
 	@Override
-	public final ISharedCondition_ByteArray_All<MODEL, RESULT, ALIAS_OR_CLAUSES> or(ISupplierByteArray getter) {
+	public final ISharedComparison_ByteArray_All<MODEL, RESULT, ALIAS_OR_CLAUSES> or(ISupplierByteArray getter) {
 		return orAliasImplByteArray(getter);
 	}
 	
@@ -630,17 +630,17 @@ abstract class Collector_And_Or_Named_And_Alias_Base<
 		MODEL,
 		RESULT,
 		ALIAS_AND_CLAUSES,
-		ISharedCondition_Comparable_Common_All<MODEL, RESULT, Integer, ALIAS_AND_CLAUSES>,
+		ISharedComparison_Comparable_Common_All<MODEL, RESULT, Integer, ALIAS_AND_CLAUSES>,
 
-		ISharedCondition_Comparable_Common_All<MODEL, RESULT, Byte, ALIAS_AND_CLAUSES>,
-		ISharedCondition_Comparable_Common_All<MODEL, RESULT, Short, ALIAS_AND_CLAUSES>,
-		ISharedCondition_Comparable_Common_All<MODEL, RESULT, Integer, ALIAS_AND_CLAUSES>,
-		ISharedCondition_Comparable_Common_All<MODEL, RESULT, Long, ALIAS_AND_CLAUSES>,
-		ISharedCondition_Comparable_Common_All<MODEL, RESULT, BigInteger, ALIAS_AND_CLAUSES>,
-		ISharedCondition_Comparable_Common_All<MODEL, RESULT, Float, ALIAS_AND_CLAUSES>,
-		ISharedCondition_Comparable_Common_All<MODEL, RESULT, Double, ALIAS_AND_CLAUSES>,
-		ISharedCondition_Comparable_Common_All<MODEL, RESULT, BigDecimal, ALIAS_AND_CLAUSES>,
-		ISharedCondition_Comparable_String_All<MODEL, RESULT, ALIAS_AND_CLAUSES>
+		ISharedComparison_Comparable_Common_All<MODEL, RESULT, Byte, ALIAS_AND_CLAUSES>,
+		ISharedComparison_Comparable_Common_All<MODEL, RESULT, Short, ALIAS_AND_CLAUSES>,
+		ISharedComparison_Comparable_Common_All<MODEL, RESULT, Integer, ALIAS_AND_CLAUSES>,
+		ISharedComparison_Comparable_Common_All<MODEL, RESULT, Long, ALIAS_AND_CLAUSES>,
+		ISharedComparison_Comparable_Common_All<MODEL, RESULT, BigInteger, ALIAS_AND_CLAUSES>,
+		ISharedComparison_Comparable_Common_All<MODEL, RESULT, Float, ALIAS_AND_CLAUSES>,
+		ISharedComparison_Comparable_Common_All<MODEL, RESULT, Double, ALIAS_AND_CLAUSES>,
+		ISharedComparison_Comparable_Common_All<MODEL, RESULT, BigDecimal, ALIAS_AND_CLAUSES>,
+		ISharedComparison_Comparable_String_All<MODEL, RESULT, ALIAS_AND_CLAUSES>
 	>
 		andAlias() {
 	
@@ -664,14 +664,14 @@ abstract class Collector_And_Or_Named_And_Alias_Base<
 	// ------------------------  AND helpers ------------------------
 	
 	private <RR extends Comparable<RR>>
-		ISharedCondition_Comparable_Common_All<MODEL, RESULT, RR, ALIAS_AND_CLAUSES> andAliasImplComparable(Supplier<RR> getter) {
+		ISharedComparison_Comparable_Common_All<MODEL, RESULT, RR, ALIAS_AND_CLAUSES> andAliasImplComparable(Supplier<RR> getter) {
 		
 		return andAliasImplComparable(makeGetterExpression(getter));
 	}
 	
 	final <RR extends Comparable<RR>>
 		
-	ISharedCondition_Comparable_Common_All<MODEL, RESULT, RR, ALIAS_AND_CLAUSES> andAliasImplComparable(Expression expression) {
+	ISharedComparison_Comparable_Common_All<MODEL, RESULT, RR, ALIAS_AND_CLAUSES> andAliasImplComparable(Expression expression) {
 	
 		final Collector_And_Alias<MODEL, RESULT, ALIAS_AND_CLAUSES, ALIAS_NESTED_AND_CLAUSES, ALIAS_NESTED_OR_CLAUSES, ALIAS_AFTER_GROUP_BY> andClauses = createAliasAndCollector();// new Classic_Collector_And_Alias<MODEL, RESULT>(this);
 	
@@ -679,21 +679,21 @@ abstract class Collector_And_Or_Named_And_Alias_Base<
 	}
 		
 		
-	final ISharedCondition_Comparable_String_All<MODEL, RESULT, ALIAS_AND_CLAUSES> andAliasImplString(Expression expression) {
+	final ISharedComparison_Comparable_String_All<MODEL, RESULT, ALIAS_AND_CLAUSES> andAliasImplString(Expression expression) {
 		
 		final Collector_And_Alias<MODEL, RESULT, ALIAS_AND_CLAUSES, ALIAS_NESTED_AND_CLAUSES, ALIAS_NESTED_OR_CLAUSES, ALIAS_AFTER_GROUP_BY> andClauses = createAliasAndCollector(); // new Classic_Collector_And_Alias<>(this);
 		
 		return new Collector_Condition_String<MODEL, RESULT, ALIAS_AND_CLAUSES>(andClauses, expression);
 	}
 
-	final <RR> ISharedCondition_SQLTimeType_All<MODEL, RESULT, RR, ALIAS_AND_CLAUSES> andAliasImplSQLTimeType(Supplier<RR> getter) {
+	final <RR> ISharedComparison_SQLTimeType_All<MODEL, RESULT, RR, ALIAS_AND_CLAUSES> andAliasImplSQLTimeType(Supplier<RR> getter) {
 		
 		final Collector_And_Alias<MODEL, RESULT, ALIAS_AND_CLAUSES, ALIAS_NESTED_AND_CLAUSES, ALIAS_NESTED_OR_CLAUSES, ALIAS_AFTER_GROUP_BY> andClauses = createAliasAndCollector(); // new Classic_Collector_And_Alias<>(this);
 		
 		return new Collector_Condition_SQLTimeType<MODEL, RESULT, RR, ALIAS_AND_CLAUSES>(andClauses, makeGetterExpression(getter));
 	}
 
-	final ISharedCondition_ByteArray_All<MODEL, RESULT, ALIAS_AND_CLAUSES> andAliasImplByteArray(Supplier<byte []> getter) {
+	final ISharedComparison_ByteArray_All<MODEL, RESULT, ALIAS_AND_CLAUSES> andAliasImplByteArray(Supplier<byte []> getter) {
 		
 		final Collector_And_Alias<MODEL, RESULT, ALIAS_AND_CLAUSES, ALIAS_NESTED_AND_CLAUSES, ALIAS_NESTED_OR_CLAUSES, ALIAS_AFTER_GROUP_BY> andClauses = createAliasAndCollector(); // new Classic_Collector_And_Alias<>(this);
 		
@@ -703,14 +703,14 @@ abstract class Collector_And_Or_Named_And_Alias_Base<
 	// ------------------------  OR helpers ------------------------
 	private final <RR extends Comparable<RR>>
 	
-		ISharedCondition_Comparable_Common_All<MODEL, RESULT, RR, ALIAS_OR_CLAUSES> orAliasImplComparable(Supplier<RR> getter) {
+		ISharedComparison_Comparable_Common_All<MODEL, RESULT, RR, ALIAS_OR_CLAUSES> orAliasImplComparable(Supplier<RR> getter) {
 		
 		return orAliasImplComparable(makeGetterExpression(getter));
 	}
 	
 	final <T, RR extends Comparable<RR>>
 	
-	ISharedCondition_Comparable_Common_All<MODEL, RESULT, RR, ALIAS_OR_CLAUSES> orAliasImplComparable(Expression expression) {
+	ISharedComparison_Comparable_Common_All<MODEL, RESULT, RR, ALIAS_OR_CLAUSES> orAliasImplComparable(Expression expression) {
 	
 		final Collector_Or_Alias<MODEL, RESULT, ALIAS_OR_CLAUSES, ALIAS_NESTED_AND_CLAUSES, ALIAS_NESTED_OR_CLAUSES, ALIAS_AFTER_GROUP_BY> orClauses = createAliasOrCollector(); // new Classic_Collector_Or_Alias<>(this);
 	
@@ -718,7 +718,7 @@ abstract class Collector_And_Or_Named_And_Alias_Base<
 	}
 	
 	final 
-		ISharedCondition_Comparable_String_All<MODEL, RESULT, ALIAS_OR_CLAUSES> orAliasImplString(Expression expression) {
+		ISharedComparison_Comparable_String_All<MODEL, RESULT, ALIAS_OR_CLAUSES> orAliasImplString(Expression expression) {
 	
 		final Collector_Or_Alias<MODEL, RESULT, ALIAS_OR_CLAUSES, ALIAS_NESTED_AND_CLAUSES, ALIAS_NESTED_OR_CLAUSES, ALIAS_AFTER_GROUP_BY> orClauses = createAliasOrCollector(); // new Classic_Collector_Or_Alias<>(this);
 	
@@ -727,14 +727,14 @@ abstract class Collector_And_Or_Named_And_Alias_Base<
 	
 	private final <RR>
 		
-			ISharedCondition_SQLTimeType_All<MODEL, RESULT, RR, ALIAS_OR_CLAUSES> orAliasImplSQLTimeType(Supplier<RR> getter) {
+			ISharedComparison_SQLTimeType_All<MODEL, RESULT, RR, ALIAS_OR_CLAUSES> orAliasImplSQLTimeType(Supplier<RR> getter) {
 
 		final Collector_Or_Alias<MODEL, RESULT, ALIAS_OR_CLAUSES, ALIAS_NESTED_AND_CLAUSES, ALIAS_NESTED_OR_CLAUSES, ALIAS_AFTER_GROUP_BY> orClauses = createAliasOrCollector();
 		
 		return new Collector_Condition_SQLTimeType<MODEL, RESULT, RR, ALIAS_OR_CLAUSES>(orClauses, makeGetterExpression(getter));
 	}
 
-	private final ISharedCondition_ByteArray_All<MODEL, RESULT, ALIAS_OR_CLAUSES> orAliasImplByteArray(Supplier<byte []> getter) {
+	private final ISharedComparison_ByteArray_All<MODEL, RESULT, ALIAS_OR_CLAUSES> orAliasImplByteArray(Supplier<byte []> getter) {
 		final Collector_Or_Alias<MODEL, RESULT, ALIAS_OR_CLAUSES, ALIAS_NESTED_AND_CLAUSES, ALIAS_NESTED_OR_CLAUSES, ALIAS_AFTER_GROUP_BY> orClauses = createAliasOrCollector();
 		
 		return new Collector_Condition_ByteArray<MODEL, RESULT, ALIAS_OR_CLAUSES>(orClauses, makeGetterExpression(getter));
@@ -757,17 +757,17 @@ abstract class Collector_And_Or_Named_And_Alias_Base<
 			MODEL,
 			RESULT,
 			ALIAS_OR_CLAUSES,
-			ISharedCondition_Comparable_Common_All<MODEL, RESULT, Integer, ALIAS_OR_CLAUSES>,
+			ISharedComparison_Comparable_Common_All<MODEL, RESULT, Integer, ALIAS_OR_CLAUSES>,
 
-			ISharedCondition_Comparable_Common_All<MODEL, RESULT, Byte, ALIAS_OR_CLAUSES>,
-			ISharedCondition_Comparable_Common_All<MODEL, RESULT, Short, ALIAS_OR_CLAUSES>,
-			ISharedCondition_Comparable_Common_All<MODEL, RESULT, Integer, ALIAS_OR_CLAUSES>,
-			ISharedCondition_Comparable_Common_All<MODEL, RESULT, Long, ALIAS_OR_CLAUSES>,
-			ISharedCondition_Comparable_Common_All<MODEL, RESULT, BigInteger, ALIAS_OR_CLAUSES>,
-			ISharedCondition_Comparable_Common_All<MODEL, RESULT, Float, ALIAS_OR_CLAUSES>,
-			ISharedCondition_Comparable_Common_All<MODEL, RESULT, Double, ALIAS_OR_CLAUSES>,
-			ISharedCondition_Comparable_Common_All<MODEL, RESULT, BigDecimal, ALIAS_OR_CLAUSES>,
-			ISharedCondition_Comparable_String_All<MODEL, RESULT, ALIAS_OR_CLAUSES>
+			ISharedComparison_Comparable_Common_All<MODEL, RESULT, Byte, ALIAS_OR_CLAUSES>,
+			ISharedComparison_Comparable_Common_All<MODEL, RESULT, Short, ALIAS_OR_CLAUSES>,
+			ISharedComparison_Comparable_Common_All<MODEL, RESULT, Integer, ALIAS_OR_CLAUSES>,
+			ISharedComparison_Comparable_Common_All<MODEL, RESULT, Long, ALIAS_OR_CLAUSES>,
+			ISharedComparison_Comparable_Common_All<MODEL, RESULT, BigInteger, ALIAS_OR_CLAUSES>,
+			ISharedComparison_Comparable_Common_All<MODEL, RESULT, Float, ALIAS_OR_CLAUSES>,
+			ISharedComparison_Comparable_Common_All<MODEL, RESULT, Double, ALIAS_OR_CLAUSES>,
+			ISharedComparison_Comparable_Common_All<MODEL, RESULT, BigDecimal, ALIAS_OR_CLAUSES>,
+			ISharedComparison_Comparable_String_All<MODEL, RESULT, ALIAS_OR_CLAUSES>
 		>
 			orAlias() {
 		

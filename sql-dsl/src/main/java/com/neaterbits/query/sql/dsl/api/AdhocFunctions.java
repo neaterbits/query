@@ -12,9 +12,9 @@ final class AdhocFunctions<
 		ENTITY,
 		RET extends ISharedLogical_Base<MODEL, RESULT>,
 
-		INTEGER_CLAUSE extends ISharedCondition_Comparable_Common_Value<MODEL, RESULT, Integer, RET>,
-		LONG_CLAUSE extends ISharedCondition_Comparable_Common_Value<MODEL, RESULT, Long, RET>,
-		STRING_CLAUSE extends ISharedCondition_Comparable_String_Value<MODEL, RESULT, RET>>
+		INTEGER_CLAUSE extends ISharedComparison_Comparable_Common_Value<MODEL, RESULT, Integer, RET>,
+		LONG_CLAUSE extends ISharedComparison_Comparable_Common_Value<MODEL, RESULT, Long, RET>,
+		STRING_CLAUSE extends ISharedComparison_Comparable_String_Value<MODEL, RESULT, RET>>
 
 	implements IAdhocFunctions_Arithmetic<MODEL, RESULT, ENTITY, RET, INTEGER_CLAUSE, LONG_CLAUSE>,
 			   IAdhocFunctions_String<MODEL, RESULT, ENTITY, RET, STRING_CLAUSE>,
@@ -98,7 +98,7 @@ final class AdhocFunctions<
 
 	@SuppressWarnings("unchecked")
 	private <VALUE extends Comparable<?>,
-			CLAUSE extends ISharedCondition_Comparable_Common_Value<MODEL, RESULT, VALUE, RET>>
+			CLAUSE extends ISharedComparison_Comparable_Common_Value<MODEL, RESULT, VALUE, RET>>
 	
 			CLAUSE onComparable(Function_Arithmetic f, Function<?, ? extends Comparable<?>> getter) {
 		add(f);

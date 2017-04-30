@@ -35,27 +35,27 @@ final class AdhocQuery_Named_Set<MODEL>
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public ISharedCondition_Comparable_Common_Value<MODEL, Set<Object>, Integer, IAdhocLogical_And_Or_Set<MODEL, Object, Set<Object>>> where(IFunctionInteger<Object> func) {
+	public ISharedComparison_Comparable_Common_Value<MODEL, Set<Object>, Integer, IAdhocLogical_And_Or_Set<MODEL, Object, Set<Object>>> where(IFunctionInteger<Object> func) {
 		return addComparativeWhere(func);
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public <E extends Enum<E>> ISharedCondition_Equality_Value<MODEL, Set<Object>, E, IAdhocLogical_And_Or_Set<MODEL, Object, Set<Object>>> where(IFunctionEnum<Object, E> func) {
+	public <E extends Enum<E>> ISharedComparison_Equality_Value<MODEL, Set<Object>, E, IAdhocLogical_And_Or_Set<MODEL, Object, Set<Object>>> where(IFunctionEnum<Object, E> func) {
 		return addConditionWhere(func);
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public ISharedCondition_Comparable_Common_Value<MODEL, Set<Object>, BigDecimal, IAdhocLogical_And_Or_Set<MODEL, Object, Set<Object>>> where(IFunctionBigDecimal<Object> func) {
+	public ISharedComparison_Comparable_Common_Value<MODEL, Set<Object>, BigDecimal, IAdhocLogical_And_Or_Set<MODEL, Object, Set<Object>>> where(IFunctionBigDecimal<Object> func) {
 		return addComparativeWhere(func);
 	}
 
 	@Override
 	@SuppressWarnings({ "unchecked", "rawtypes" })
-	public ISharedCondition_Comparable_String_Value<MODEL, Set<Object>, IAdhocLogical_And_Or_Set<MODEL, Object, Set<Object>>> where(IFunctionString<Object> func) {
+	public ISharedComparison_Comparable_String_Value<MODEL, Set<Object>, IAdhocLogical_And_Or_Set<MODEL, Object, Set<Object>>> where(IFunctionString<Object> func) {
 
-		return (ISharedCondition_Comparable_String_Value)addWhereGetter(func);
+		return (ISharedComparison_Comparable_String_Value)addWhereGetter(func);
 	}
 	
 	@Override
@@ -64,9 +64,9 @@ final class AdhocQuery_Named_Set<MODEL>
 			Set<Object>,
 			Object,
 			IAdhocLogical_And_Or<MODEL, Set<Object>, Object>,
-			ISharedCondition_Comparable_Common_Value<MODEL, Set<Object>, Integer, IAdhocLogical_And_Or<MODEL, Set<Object>, Object>>,
-					ISharedCondition_Comparable_Common_Value<MODEL, Set<Object>, Long, IAdhocLogical_And_Or<MODEL, Set<Object>, Object>>,
-			ISharedCondition_Comparable_String_Value<MODEL, Set<Object>, IAdhocLogical_And_Or<MODEL, Set<Object>, Object>>> where() {
+			ISharedComparison_Comparable_Common_Value<MODEL, Set<Object>, Integer, IAdhocLogical_And_Or<MODEL, Set<Object>, Object>>,
+					ISharedComparison_Comparable_Common_Value<MODEL, Set<Object>, Long, IAdhocLogical_And_Or<MODEL, Set<Object>, Object>>,
+			ISharedComparison_Comparable_String_Value<MODEL, Set<Object>, IAdhocLogical_And_Or<MODEL, Set<Object>, Object>>> where() {
 		
 		return addWhere();
 	}

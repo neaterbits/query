@@ -74,17 +74,17 @@ abstract class SQL_Collector_WhereOrJoin_Named_Base<
 	public final ISharedFunctions_Transform_Initial_Named<
 			MODEL, RESULT,
 			AND_OR,
-			ISharedCondition_Comparable_Common_All_Compilable<MODEL, RESULT, Integer, AND_OR>,
+			ISharedCondition_OpsAndComp_Comparable_Named<MODEL, RESULT, Integer, AND_OR>,
 			
-			ISharedCondition_Comparable_Common_All_Compilable<MODEL, RESULT, Byte, AND_OR>,
-			ISharedCondition_Comparable_Common_All_Compilable<MODEL, RESULT, Short, AND_OR>,
-			ISharedCondition_Comparable_Common_All_Compilable<MODEL, RESULT, Integer, AND_OR>,
-			ISharedCondition_Comparable_Common_All_Compilable<MODEL, RESULT, Long, AND_OR>,
-			ISharedCondition_Comparable_Common_All_Compilable<MODEL, RESULT, BigInteger, AND_OR>,
-			ISharedCondition_Comparable_Common_All_Compilable<MODEL, RESULT, Float, AND_OR>,
-			ISharedCondition_Comparable_Common_All_Compilable<MODEL, RESULT, Double, AND_OR>,
-			ISharedCondition_Comparable_Common_All_Compilable<MODEL, RESULT, BigDecimal, AND_OR>,
-			ISharedCondition_Comparable_String_All_Compilable<MODEL, RESULT, AND_OR>> 
+			ISharedCondition_OpsAndComp_Comparable_Named<MODEL, RESULT, Byte, AND_OR>,
+			ISharedCondition_OpsAndComp_Comparable_Named<MODEL, RESULT, Short, AND_OR>,
+			ISharedCondition_OpsAndComp_Comparable_Named<MODEL, RESULT, Integer, AND_OR>,
+			ISharedCondition_OpsAndComp_Comparable_Named<MODEL, RESULT, Long, AND_OR>,
+			ISharedCondition_OpsAndComp_Comparable_Named<MODEL, RESULT, BigInteger, AND_OR>,
+			ISharedCondition_OpsAndComp_Comparable_Named<MODEL, RESULT, Float, AND_OR>,
+			ISharedCondition_OpsAndComp_Comparable_Named<MODEL, RESULT, Double, AND_OR>,
+			ISharedCondition_OpsAndComp_Comparable_Named<MODEL, RESULT, BigDecimal, AND_OR>,
+			ISharedCondition_OpsAndComp_String_Named<MODEL, RESULT, AND_OR>> 
 	
 			where() {
 				

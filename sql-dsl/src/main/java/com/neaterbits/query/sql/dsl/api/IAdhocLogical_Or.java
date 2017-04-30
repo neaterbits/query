@@ -7,17 +7,17 @@ public interface IAdhocLogical_Or<MODEL, RESULT, ENTITY>
 		extends ISharedLogical_Or<MODEL, RESULT>,
 				IAdhocEnd_Base<MODEL, RESULT> {
 		
-	ISharedCondition_Comparable_Common_Value<MODEL, RESULT, Integer, IAdhocLogical_Or<MODEL, RESULT, ENTITY>>
+	ISharedComparison_Comparable_Common_Value<MODEL, RESULT, Integer, IAdhocLogical_Or<MODEL, RESULT, ENTITY>>
 			or(IFunctionInteger<ENTITY> getter);
 		
-	ISharedCondition_Comparable_Common_Value<MODEL, RESULT, Long, IAdhocLogical_Or<MODEL, RESULT, ENTITY>>
+	ISharedComparison_Comparable_Common_Value<MODEL, RESULT, Long, IAdhocLogical_Or<MODEL, RESULT, ENTITY>>
 			or(IFunctionLong<ENTITY> getter);
 		
-	ISharedCondition_Comparable_Common_Value<MODEL, RESULT, BigDecimal, IAdhocLogical_Or<MODEL, RESULT, ENTITY>>
+	ISharedComparison_Comparable_Common_Value<MODEL, RESULT, BigDecimal, IAdhocLogical_Or<MODEL, RESULT, ENTITY>>
 			or(IFunctionBigDecimal<ENTITY> func);
 
 	
-	ISharedCondition_Comparable_String_Value<MODEL, RESULT, IAdhocLogical_Or<MODEL, RESULT, ENTITY>>
+	ISharedComparison_Comparable_String_Value<MODEL, RESULT, IAdhocLogical_Or<MODEL, RESULT, ENTITY>>
 			or(IFunctionString<ENTITY> getter);
 
     IAdhocFunctions_Initial<
@@ -26,9 +26,9 @@ public interface IAdhocLogical_Or<MODEL, RESULT, ENTITY>
 			ENTITY,
 			IAdhocLogical_Or<MODEL, RESULT, ENTITY>,
 			
-			ISharedCondition_Comparable_Common_Value<MODEL, RESULT, Integer, IAdhocLogical_Or<MODEL, RESULT, ENTITY>>,
-			ISharedCondition_Comparable_Common_Value<MODEL, RESULT, Long, IAdhocLogical_Or<MODEL, RESULT, ENTITY>>,
-			ISharedCondition_Comparable_String_Value<MODEL, RESULT, IAdhocLogical_Or<MODEL, RESULT, ENTITY>>
+			ISharedComparison_Comparable_Common_Value<MODEL, RESULT, Integer, IAdhocLogical_Or<MODEL, RESULT, ENTITY>>,
+			ISharedComparison_Comparable_Common_Value<MODEL, RESULT, Long, IAdhocLogical_Or<MODEL, RESULT, ENTITY>>,
+			ISharedComparison_Comparable_String_Value<MODEL, RESULT, IAdhocLogical_Or<MODEL, RESULT, ENTITY>>
 	
     	> or();
     
