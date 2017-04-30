@@ -94,17 +94,17 @@ abstract class SQL_Collector_WhereOrJoin_Alias_Base<
 	public final ISharedFunctions_Transform_Initial_Alias<
 			MODEL, RESULT,
 			AND_OR,
-			ISharedComparison_Comparable_Common_All<MODEL, RESULT, Integer, AND_OR>,
+			ISharedCondition_OpsAndComp_Comparable_Alias<MODEL, RESULT, Integer, AND_OR>,
 			
-			ISharedComparison_Comparable_Common_All<MODEL, RESULT, Byte, AND_OR>,
-			ISharedComparison_Comparable_Common_All<MODEL, RESULT, Short, AND_OR>,
-			ISharedComparison_Comparable_Common_All<MODEL, RESULT, Integer, AND_OR>,
-			ISharedComparison_Comparable_Common_All<MODEL, RESULT, Long, AND_OR>,
-			ISharedComparison_Comparable_Common_All<MODEL, RESULT, BigInteger, AND_OR>,
-			ISharedComparison_Comparable_Common_All<MODEL, RESULT, Float, AND_OR>,
-			ISharedComparison_Comparable_Common_All<MODEL, RESULT, Double, AND_OR>,
-			ISharedComparison_Comparable_Common_All<MODEL, RESULT, BigDecimal, AND_OR>,
-			ISharedComparison_Comparable_String_All<MODEL, RESULT, AND_OR>
+			ISharedCondition_OpsAndComp_Comparable_Alias<MODEL, RESULT, Byte, AND_OR>,
+			ISharedCondition_OpsAndComp_Comparable_Alias<MODEL, RESULT, Short, AND_OR>,
+			ISharedCondition_OpsAndComp_Comparable_Alias<MODEL, RESULT, Integer, AND_OR>,
+			ISharedCondition_OpsAndComp_Comparable_Alias<MODEL, RESULT, Long, AND_OR>,
+			ISharedCondition_OpsAndComp_Comparable_Alias<MODEL, RESULT, BigInteger, AND_OR>,
+			ISharedCondition_OpsAndComp_Comparable_Alias<MODEL, RESULT, Float, AND_OR>,
+			ISharedCondition_OpsAndComp_Comparable_Alias<MODEL, RESULT, Double, AND_OR>,
+			ISharedCondition_OpsAndComp_Comparable_Alias<MODEL, RESULT, BigDecimal, AND_OR>,
+			ISharedCondition_OpsAndComp_String_Alias<MODEL, RESULT, AND_OR>
 	> 
 	
 			where() {
