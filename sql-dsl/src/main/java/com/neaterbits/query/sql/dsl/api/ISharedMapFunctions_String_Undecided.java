@@ -22,13 +22,13 @@ public interface ISharedMapFunctions_String_Undecided<
 			ISharedFunctions_String_NoParam_Base<
 					MODEL,
 					RESULT,
-					ISharedFunctions_StringResult_Undecided<
+					ISharedFunctions_String_StringResult_Undecided<
 						MODEL, RESULT,
 						NAMED_RET, ALIAS_RET,
 						NAMED_LENGTH_RET, ALIAS_LENGTH_RET>,
 		
 					// eg lower().xyz, return only the functions that return String (so skip length())
-					ISharedFunctions_StringResult_Undecided<
+					ISharedFunctions_String_StringResult_Undecided<
 						MODEL, RESULT,
 						NAMED_RET, ALIAS_RET,
 						NAMED_STRING_RET, ALIAS_STRING_RET>>
