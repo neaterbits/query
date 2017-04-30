@@ -132,8 +132,45 @@ abstract class Collector_ExpressionList<
 				   ALIAS_BIGDECIMAL_RET
 			   >,
 			   ISharedFunctions_Aggregate_Alias_All<ALIAS_SUM_LONG_RET, ALIAS_COUNT_RET, ALIAS_BYTE_RET, ALIAS_SHORT_RET, ALIAS_INTEGER_RET, ALIAS_LONG_RET, ALIAS_BIGINTEGER_RET, ALIAS_FLOAT_RET, ALIAS_DOUBLE_RET, ALIAS_BIGDECIMAL_RET, ALIAS_DATE_RET>,
-			   ISharedFunctions_String_Alias_All<MODEL, RESULT, ALIAS_RET, ALIAS_LENGTH_RET, ALIAS_STRING_RET> {
+			   ISharedFunctions_String_Alias_All<MODEL, RESULT, ALIAS_RET, ALIAS_LENGTH_RET, ALIAS_STRING_RET>,
 
+		   ISharedFunctions_Arithmetic_Undecided<
+				   MODEL,
+				   RESULT,
+	
+				   NAMED_RET,
+				   ALIAS_RET,
+				   UNDECIDED_RET,
+
+				   NAMED_BYTE_RET,
+				   NAMED_SHORT_RET,
+				   NAMED_INTEGER_RET,
+				   NAMED_LONG_RET,
+				   NAMED_BIGINTEGER_RET,
+				   NAMED_FLOAT_RET,
+				   NAMED_DOUBLE_RET,
+				   NAMED_BIGDECIMAL_RET,
+				   
+				   ALIAS_BYTE_RET,
+				   ALIAS_SHORT_RET,
+				   ALIAS_INTEGER_RET,
+				   ALIAS_LONG_RET,
+				   ALIAS_BIGINTEGER_RET,
+				   ALIAS_FLOAT_RET,
+				   ALIAS_DOUBLE_RET,
+				   ALIAS_BIGDECIMAL_RET,
+				   
+				   UNDECIDED_BYTE_RET,
+				   UNDECIDED_SHORT_RET,
+				   UNDECIDED_INTEGER_RET,
+				   UNDECIDED_LONG_RET,
+				   UNDECIDED_BIGINTEGER_RET,
+				   UNDECIDED_FLOAT_RET,
+				   UNDECIDED_DOUBLE_RET,
+				   UNDECIDED_BIGDECIMAL_RET
+				   >  {
+			   
+					   
 	private EFieldAccessType fieldAccessType;
 	private List<FunctionBase> undecidedFunctions;
 					
@@ -215,6 +252,10 @@ abstract class Collector_ExpressionList<
 	private void setAliased() {
 		setAccessType(EFieldAccessType.ALIAS);
 	}
+
+	private void setUndecided() {
+		setAccessType(EFieldAccessType.UNDECIDED);
+	}
 	
 	final EFieldAccessType getFieldAccessType() {
 		return fieldAccessType;
@@ -279,6 +320,36 @@ abstract class Collector_ExpressionList<
 	@SuppressWarnings("unchecked")
 	final <CLAUSE> CLAUSE lengthAliasNoParam() {
 		return (CLAUSE)assureAliasFunctions().length();
+	}
+
+	@SuppressWarnings("unchecked")
+	final <CLAUSE> CLAUSE absUndecidedNoParam() {
+		return (CLAUSE)assureUndecidedFunctions().abs();
+	}
+
+	@SuppressWarnings("unchecked")
+	final <CLAUSE> CLAUSE sqrtUndecidedNoParam() {
+		return (CLAUSE)assureUndecidedFunctions().sqrt();
+	}
+
+	@SuppressWarnings("unchecked")
+	final <CLAUSE> CLAUSE lowerUndecidedNoParam() {
+		return (CLAUSE)assureUndecidedFunctions().lower();
+	}
+
+	@SuppressWarnings("unchecked")
+	final <CLAUSE> CLAUSE upperUndecidedNoParam() {
+		return (CLAUSE)assureUndecidedFunctions().upper();
+	}
+	
+	@SuppressWarnings("unchecked")
+	final <CLAUSE> CLAUSE trimUndecidedNoParam() {
+		return (CLAUSE)assureUndecidedFunctions().trim();
+	}
+
+	@SuppressWarnings("unchecked")
+	final <CLAUSE> CLAUSE lengthUndecidedNoParam() {
+		return (CLAUSE)assureUndecidedFunctions().length();
 	}
 	
 	@Override
@@ -380,7 +451,11 @@ abstract class Collector_ExpressionList<
 		return def;
 	}
 	
-
+	ISharedFunction_Next<MODEL, RESULT, UNDECIDED_RET> getUndecidedNoParamNext(ISharedFunction_Next<MODEL, RESULT, UNDECIDED_RET> def) {
+		return def;
+	}
+	
+	
 	abstract NamedFunctions createNamedFunctions(ISharedCollector_Functions_Callback<MODEL, RESULT, NAMED_RET> func);
 
 	protected class NamedFunctions<
@@ -465,6 +540,67 @@ abstract class Collector_ExpressionList<
 		}
 		
 	private AliasFunctions alias;
+
+	protected class UndecidedFunctions<
+		NO_PARAM_ARITHMETIC_SAME_TYPE_RET,
+		NO_PARAM_ARITHMETIC_DOUBLE_RET,
+		
+		NO_PARAM_STRING_SAME_TYPE_RET,
+		NO_PARAM_STRING_LENGTH_RET
+		>
+
+	extends Collector_NestedFunctions_Undecided<
+				MODEL, RESULT, 
+				
+				UNDECIDED_RET,
+				
+				UNDECIDED_SUM_LONG_RET, 
+				UNDECIDED_COUNT_RET,
+				UNDECIDED_LENGTH_RET,
+				
+				UNDECIDED_BYTE_RET,
+				UNDECIDED_SHORT_RET,
+				UNDECIDED_INTEGER_RET,
+				UNDECIDED_LONG_RET,
+				UNDECIDED_BIGINTEGER_RET, 
+				UNDECIDED_FLOAT_RET,
+				UNDECIDED_DOUBLE_RET,
+				UNDECIDED_BIGDECIMAL_RET,
+				UNDECIDED_STRING_RET,
+				UNDECIDED_DATE_RET,
+				UNDECIDED_CALENDAR_RET,
+				UNDECIDED_SQLDATE_RET,
+				UNDECIDED_SQLTIME_RET,
+				UNDECIDED_SQLTIMESTAMP_RET,
+				
+				NO_PARAM_ARITHMETIC_SAME_TYPE_RET,
+				NO_PARAM_ARITHMETIC_DOUBLE_RET,
+				
+				NO_PARAM_STRING_SAME_TYPE_RET,
+				NO_PARAM_STRING_LENGTH_RET
+				> 
+
+	implements ISharedFunction_Next<MODEL, RESULT, UNDECIDED_RET> {
+	
+		protected UndecidedFunctions(Collector_NestedFunctions_Undecided<
+							MODEL, RESULT, UNDECIDED_RET,
+							?, ?, ?,
+							?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,
+							?, ?, ?, ?> toCopy) {
+			super(toCopy);
+		}
+	
+		protected UndecidedFunctions(ISharedCollector_Functions_Callback<MODEL, RESULT, UNDECIDED_RET> func) {
+			super(func);
+		}
+	
+		@Override
+		ISharedFunction_Next<MODEL, RESULT, UNDECIDED_RET> getUndecidedNoParamNext() {
+			return Collector_ExpressionList.this.getUndecidedNoParamNext(this);
+		}
+	}
+	
+	private UndecidedFunctions undecided;
 	
 	/****************************************************************
 	 * Named
@@ -1483,5 +1619,144 @@ abstract class Collector_ExpressionList<
 	@Override
 	public final ALIAS_STRING_RET concat(Param<String> param, ISupplierString getter) {
 		return assureAliasFunctions().concat(param, getter);
+	}
+	
+	
+	/****************************************************************
+	 * Undecided
+	 ***************************************************************/
+	
+	abstract UndecidedFunctions createUndecidedFunctions(ISharedCollector_Functions_Callback<MODEL, RESULT, UNDECIDED_RET> func);
+	
+
+	private UndecidedFunctions<?, ?, ?, ?> assureUndecidedFunctions() {
+		
+		
+		setUndecided();
+		
+		if (this.undecided == null) {
+			
+			final ISharedCollector_Functions_Callback<MODEL, RESULT, UNDECIDED_RET> callback
+			
+				= new ISharedCollector_Functions_Callback<MODEL, RESULT, UNDECIDED_RET>() {
+
+					@Override
+					public ISharedFunction_Next<MODEL, RESULT, UNDECIDED_RET> onComparable(Expression expression) {
+						addNamedFunctionResult(expression);
+						
+						return getUndecidedComparableFunctionNext(expression);
+					}
+
+					@Override
+					public ISharedFunction_Next<MODEL, RESULT, UNDECIDED_RET> onString(Expression expression) {
+						addNamedFunctionResult(expression);
+						
+						return getUndecidedStringFunctionNext(expression);
+					}
+			};
+			
+			this.undecided= createUndecidedFunctions(callback);
+		}
+
+		@SuppressWarnings("unchecked")
+		final UndecidedFunctions<?, ?, ?, ?> ret = this.undecided;
+		
+		return ret;
+	}
+
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	ISharedFunction_Next<MODEL, RESULT, UNDECIDED_RET> getUndecidedComparableFunctionNext(Expression expression) {
+		return (ISharedFunction_Next)this;
+	}
+	
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	ISharedFunction_Next<MODEL, RESULT, UNDECIDED_RET> getUndecidedStringFunctionNext(Expression expression) {
+		return (ISharedFunction_Next)this;
+	}
+	
+	
+	@Override
+	public final UNDECIDED_BYTE_RET absOfByte(ISharedSubOperandsFunction_Byte_Undecided<MODEL, RESULT> sub) {
+		return assureUndecidedFunctions().absOfByte(sub);
+	}
+
+	@Override
+	public final UNDECIDED_SHORT_RET absOfShort(ISharedSubOperandsFunction_Short_Undecided<MODEL, RESULT> sub) {
+		return assureUndecidedFunctions().absOfShort(sub);
+	}
+
+	@Override
+	public final UNDECIDED_INTEGER_RET absOfInteger(ISharedSubOperandsFunction_Integer_Undecided<MODEL, RESULT> sub) {
+		return assureUndecidedFunctions().absOfInteger(sub);
+	}
+
+	@Override
+	public final UNDECIDED_LONG_RET absOfLong(ISharedSubOperandsFunction_Long_Undecided<MODEL, RESULT> sub) {
+		return assureUndecidedFunctions().absOfLong(sub);
+	}
+
+	@Override
+	public final UNDECIDED_BIGINTEGER_RET absOfBigInteger(ISharedSubOperandsFunction_BigInteger_Undecided<MODEL, RESULT> sub) {
+		return assureUndecidedFunctions().absOfBigInteger(sub);
+	}
+
+	@Override
+	public final UNDECIDED_FLOAT_RET absOfFloat(ISharedSubOperandsFunction_Float_Undecided<MODEL, RESULT> sub) {
+		return assureUndecidedFunctions().absOfFloat(sub);
+	}
+
+	@Override
+	public final UNDECIDED_DOUBLE_RET absOfDouble(ISharedSubOperandsFunction_Double_Undecided<MODEL, RESULT> sub) {
+		return assureUndecidedFunctions().absOfDouble(sub);
+	}
+
+	@Override
+	public final UNDECIDED_BIGDECIMAL_RET absOfBigDecimal(ISharedSubOperandsFunction_BigDecimal_Undecided<MODEL, RESULT> sub) {
+		return assureUndecidedFunctions().absOfBigDecimal(sub);
+	}
+
+	@Override
+	public final UNDECIDED_DOUBLE_RET sqrtOf(ISharedSubOperandsFunction_Byte_Undecided<MODEL, RESULT> sub) {
+		return assureUndecidedFunctions().sqrtOf(sub);
+	}
+
+	@Override
+	public final UNDECIDED_DOUBLE_RET sqrtOf(ISharedSubOperandsFunction_Short_Undecided<MODEL, RESULT> sub) {
+		return assureUndecidedFunctions().sqrtOf(sub);
+	}
+
+	@Override
+	public final UNDECIDED_DOUBLE_RET sqrtOf(ISharedSubOperandsFunction_Integer_Undecided<MODEL, RESULT> sub) {
+		return assureUndecidedFunctions().sqrtOf(sub);
+	}
+
+	@Override
+	public final UNDECIDED_DOUBLE_RET sqrtOf(ISharedSubOperandsFunction_BigInteger_Undecided<MODEL, RESULT> sub) {
+		return assureUndecidedFunctions().sqrtOf(sub);
+	}
+
+	@Override
+	public final UNDECIDED_DOUBLE_RET sqrtOf(ISharedSubOperandsFunction_Long_Undecided<MODEL, RESULT> sub) {
+		return assureUndecidedFunctions().sqrtOf(sub);
+	}
+
+	@Override
+	public final UNDECIDED_DOUBLE_RET sqrtOf(ISharedSubOperandsFunction_Float_Undecided<MODEL, RESULT> sub) {
+		return assureUndecidedFunctions().sqrtOf(sub);
+	}
+
+	@Override
+	public final UNDECIDED_DOUBLE_RET sqrtOf(ISharedSubOperandsFunction_Double_Undecided<MODEL, RESULT> sub) {
+		return assureUndecidedFunctions().sqrtOf(sub);
+	}
+
+	@Override
+	public final UNDECIDED_DOUBLE_RET sqrtOf(ISharedSubOperandsFunction_BigDecimal_Undecided<MODEL, RESULT> sub) {
+		return assureUndecidedFunctions().sqrtOf(sub);
+	}
+
+	@Override
+	public final UNDECIDED_INTEGER_RET modOf(ISharedSubOperandsFunction_Integer_Undecided<MODEL, RESULT> sub, int value) {
+		return assureUndecidedFunctions().modOf(sub, value);
 	}
 }

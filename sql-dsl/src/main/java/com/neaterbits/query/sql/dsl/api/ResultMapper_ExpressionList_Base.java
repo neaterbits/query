@@ -555,4 +555,9 @@ abstract class ResultMapper_ExpressionList_Base<
 		
 		return new ResultMapper_Alias_Functions(func);
 	}
+
+	@Override
+	final UndecidedFunctions createUndecidedFunctions(ISharedCollector_Functions_Callback<MODEL, RESULT, UNDECIDED_RET> func) {
+		throw new UnsupportedOperationException("TODO");
+	}
 }

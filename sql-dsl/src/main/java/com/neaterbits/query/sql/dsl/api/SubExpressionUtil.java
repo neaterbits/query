@@ -17,6 +17,13 @@ final class SubExpressionUtil {
 	}
 	
 	
+	static <MODEL, RESULT, R extends Comparable<R>, CLAUSE> FunctionExpression addSubNumericForFunction(Function_Arithmetic function, ISharedSubOperandsFunction_Undecided<MODEL, RESULT, R> sub, Expression ... expressions) {
+		
+		final FunctionExpression expression = collectSubFunction(function, sub, true, expressions);
+
+		return expression;
+	}
+	
 
 	static <MODEL, RESULT, CLAUSE> Expression addSubStringForFunction(Function_String function, ISharedSubOperandsFunction_String_Named<MODEL, RESULT> sub /* , Collector_NestedFunctions_Base<MODEL, RESULT> last */) {
 		
@@ -125,6 +132,40 @@ final class SubExpressionUtil {
 		
 		return expressionList;
 	}
+
+	private static <MODEL, RESULT, R extends Comparable<R>> ExpressionList intCollectSub(ISharedSubOperandsFunction_Undecided<MODEL, RESULT, R> sub, boolean numeric) {
+		
+		if (sub == null) {
+			throw new IllegalArgumentException("sub == null");
+		}
+		
+		
+		final SubOperandsBuilder_Initial_Undecided<
+			MODEL,
+			RESULT,
+			R,
+			
+			ISharedSubOperand_End_Named<MODEL, RESULT, R>,
+			ISharedSubOperand_End_Alias<MODEL, RESULT, R>,
+			ISharedSubOperand_End_Undecided<MODEL, RESULT, R>
+		
+		
+			> builder = new SubOperandsBuilder_Initial_Undecided<>();
+		
+		
+		final ISharedSubOperandsBuilder_Undecided<
+			MODEL, RESULT, R,
+			ISharedSubOperand_End_Named<MODEL, RESULT, R>,
+			ISharedSubOperand_End_Alias<MODEL, RESULT, R>,
+			ISharedSubOperand_End_Undecided<MODEL, RESULT, R>> b = builder;
+		
+		sub.apply(b);
+		
+		
+		final ExpressionList expressionList = builder.collectAsExpressionList(false); // do not check, allows for expression lists of 1 item
+		
+		return expressionList;
+	}
 	
 	private static Expression [] merge(ExpressionList list, Expression ... expressions) {
 		final Expression [] ret;
@@ -166,6 +207,17 @@ final class SubExpressionUtil {
 	}
 	
 	private static <MODEL, RESULT, R extends Comparable<R>> FunctionExpression collectSubFunction(FunctionBase function, ISharedSubOperandsFunction_Alias<MODEL, RESULT, R> sub, boolean numeric, Expression ... expressions) {
+		
+		if (function == null) {
+			throw new IllegalArgumentException("function == null");
+		}
+		
+		final ExpressionList collected = intCollectSub(sub, numeric); // TODO, last);
+		
+		return new FunctionExpression(function, merge(collected, expressions));
+	}
+
+	private static <MODEL, RESULT, R extends Comparable<R>> FunctionExpression collectSubFunction(FunctionBase function, ISharedSubOperandsFunction_Undecided<MODEL, RESULT, R> sub, boolean numeric, Expression ... expressions) {
 		
 		if (function == null) {
 			throw new IllegalArgumentException("function == null");

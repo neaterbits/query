@@ -229,4 +229,18 @@ abstract class SubOperandsBuilder<
 	final AliasFunctions createAliasFunctions(ISharedCollector_Functions_Callback<MODEL, RESULT, ALIAS_RET> func) {
 		return new SubAliasFunctions(func);
 	}
+
+	private class SubUndecidedFunctions extends UndecidedFunctions
+	
+		implements ISharedSubOperandsBuilder_NoParam_Undecided {
+	
+		SubUndecidedFunctions(ISharedCollector_Functions_Callback func) {
+			super(func);
+		}
+	}
+
+	@Override
+	final UndecidedFunctions createUndecidedFunctions(ISharedCollector_Functions_Callback<MODEL, RESULT, UNDECIDED_RET> func) {
+		return new SubUndecidedFunctions(func);
+	}
 }

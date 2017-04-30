@@ -1,12 +1,15 @@
 package com.neaterbits.query.sql.dsl.api;
 
-public interface ISharedSubOperandsBuilder_NoParam_Undecided<MODEL, RESULT, T,
+public interface ISharedSubOperandsBuilder_NoParam_Undecided<
+		MODEL,
+		RESULT,
+		T,
 		NAMED_RET extends ISharedFunction_After<MODEL, RESULT>,
 		ALIAS_RET extends ISharedFunction_After<MODEL, RESULT>, 
 		UNDECIDED_RET extends ISharedFunction_After<MODEL, RESULT>> 
 
 	extends
-		ISharedFunction_Next<MODEL, RESULT, NAMED_RET>,
+		ISharedFunction_Next<MODEL, RESULT, UNDECIDED_RET>,
 		ISharedFunctions_Arithmetic_Undecided<
 	
 				MODEL,

@@ -14,6 +14,7 @@ abstract class Collector_NestedFunctions_Base<
 		
 		NAMED_RET extends ISharedFunction_After<MODEL, RESULT>,
 		ALIAS_RET extends ISharedFunction_After<MODEL, RESULT>,
+		UNDECIDED_RET extends ISharedFunction_After<MODEL, RESULT>,
 		
 		NAMED_SUM_LONG_RET  extends ISharedFunction_Next<MODEL, RESULT, NAMED_RET>,
 		NAMED_COUNT_RET		extends ISharedFunction_Next<MODEL, RESULT, NAMED_RET>,
@@ -52,7 +53,26 @@ abstract class Collector_NestedFunctions_Base<
 		ALIAS_CALENDAR_RET 	extends ISharedFunction_Next<MODEL, RESULT, ALIAS_RET>,
 		ALIAS_SQLDATE_RET 		extends ISharedFunction_Next<MODEL, RESULT, ALIAS_RET>,
 		ALIAS_SQLTIME_RET 		extends ISharedFunction_Next<MODEL, RESULT, ALIAS_RET>,
-		ALIAS_SQLTIMESTAMP_RET 	extends ISharedFunction_Next<MODEL, RESULT, ALIAS_RET>
+		ALIAS_SQLTIMESTAMP_RET 	extends ISharedFunction_Next<MODEL, RESULT, ALIAS_RET>,
+
+		UNDECIDED_SUM_LONG_RET  extends ISharedFunction_Next<MODEL, RESULT, UNDECIDED_RET>,
+		UNDECIDED_COUNT_RET		extends ISharedFunction_Next<MODEL, RESULT, UNDECIDED_RET>,
+		UNDECIDED_LENGTH_RET	extends ISharedFunction_Next<MODEL, RESULT, UNDECIDED_RET>,
+
+		UNDECIDED_BYTE_RET 		extends ISharedFunction_Next<MODEL, RESULT, UNDECIDED_RET>,
+		UNDECIDED_SHORT_RET 	extends ISharedFunction_Next<MODEL, RESULT, UNDECIDED_RET>,
+		UNDECIDED_INTEGER_RET 	extends ISharedFunction_Next<MODEL, RESULT, UNDECIDED_RET>,
+		UNDECIDED_LONG_RET    	extends ISharedFunction_Next<MODEL, RESULT, UNDECIDED_RET>,
+		UNDECIDED_BIGINTEGER_RET    extends ISharedFunction_Next<MODEL, RESULT, UNDECIDED_RET>,
+		UNDECIDED_FLOAT_RET    	extends ISharedFunction_Next<MODEL, RESULT, UNDECIDED_RET>,
+		UNDECIDED_DOUBLE_RET  	extends ISharedFunction_Next<MODEL, RESULT, UNDECIDED_RET>,
+		UNDECIDED_BIGDECIMAL_RET extends ISharedFunction_Next<MODEL, RESULT, UNDECIDED_RET>,
+		UNDECIDED_STRING_RET  	extends ISharedFunction_Next<MODEL, RESULT, UNDECIDED_RET>,
+		UNDECIDED_DATE_RET 		extends ISharedFunction_Next<MODEL, RESULT, UNDECIDED_RET>,
+		UNDECIDED_CALENDAR_RET 	extends ISharedFunction_Next<MODEL, RESULT, UNDECIDED_RET>,
+		UNDECIDED_SQLDATE_RET 		extends ISharedFunction_Next<MODEL, RESULT, UNDECIDED_RET>,
+		UNDECIDED_SQLTIME_RET 		extends ISharedFunction_Next<MODEL, RESULT, UNDECIDED_RET>,
+		UNDECIDED_SQLTIMESTAMP_RET 	extends ISharedFunction_Next<MODEL, RESULT, UNDECIDED_RET>
 		
 		> extends Collector_Functions_Base<
 		
@@ -61,6 +81,7 @@ abstract class Collector_NestedFunctions_Base<
 		
 		NAMED_RET,
 		ALIAS_RET,
+		UNDECIDED_RET,
 
 		NAMED_SUM_LONG_RET,
 		NAMED_COUNT_RET,
@@ -98,7 +119,27 @@ abstract class Collector_NestedFunctions_Base<
 		ALIAS_CALENDAR_RET,
 		ALIAS_SQLDATE_RET,
 		ALIAS_SQLTIME_RET,
-		ALIAS_SQLTIMESTAMP_RET
+		ALIAS_SQLTIMESTAMP_RET,
+		
+		UNDECIDED_SUM_LONG_RET,
+		UNDECIDED_COUNT_RET,
+		UNDECIDED_LENGTH_RET,
+
+		UNDECIDED_BYTE_RET,
+		UNDECIDED_SHORT_RET,
+		UNDECIDED_INTEGER_RET,
+		UNDECIDED_LONG_RET,
+		UNDECIDED_BIGINTEGER_RET,
+		UNDECIDED_FLOAT_RET,
+		UNDECIDED_DOUBLE_RET,
+		UNDECIDED_BIGDECIMAL_RET,
+		UNDECIDED_STRING_RET,
+		UNDECIDED_DATE_RET,
+		UNDECIDED_CALENDAR_RET,
+		UNDECIDED_SQLDATE_RET,
+		UNDECIDED_SQLTIME_RET,
+		UNDECIDED_SQLTIMESTAMP_RET
+		
 		
 		> {
 	
@@ -116,6 +157,11 @@ abstract class Collector_NestedFunctions_Base<
 	ISharedFunction_Next<MODEL, RESULT, ALIAS_RET> getAliasNoParamNext() {
 		return (ISharedFunction_Next<MODEL, RESULT, ALIAS_RET>)this;
 	}
+
+	@SuppressWarnings("unchecked")
+	ISharedFunction_Next<MODEL, RESULT, UNDECIDED_RET> getUndecidedNoParamNext() {
+		return (ISharedFunction_Next<MODEL, RESULT, UNDECIDED_RET>)this;
+	}
 	
 	/*
 	Collector_SharedFunctions_Base() {
@@ -129,7 +175,9 @@ abstract class Collector_NestedFunctions_Base<
 	}
 	
 	Collector_NestedFunctions_Base(Collector_NestedFunctions_Base<
-				MODEL, RESULT, ?, ?,
+				MODEL, RESULT, ?, ?, ?,
+				?, ?, ?,
+				?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,
 				?, ?, ?,
 				?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,
 				?, ?, ?,
@@ -273,8 +321,8 @@ abstract class Collector_NestedFunctions_Base<
 		
 		return continueAfterNamedStringFunctions(expression);
 	}
-
 	
+
 	@Override
 	@SuppressWarnings("unchecked")
 	final <R extends Comparable<R>, CLAUSE> CLAUSE addSubNumeric(Function_Arithmetic function, ISharedSubOperandsFunction_Named<MODEL, RESULT, R> sub, Expression ... expressions) {
@@ -379,6 +427,25 @@ abstract class Collector_NestedFunctions_Base<
 		final Expression collected = createFinalExpressionsFromSub();
 
 		return (CLAUSE)continueAfterAliasComparableFunctions(collected);
+	}
+
+	/*********************** Undecided ***********************/
+
+	abstract ISharedFunction_Next<MODEL, RESULT, UNDECIDED_RET> continueAfterUndecidedComparableFunctions(Expression expression);
+	abstract ISharedFunction_Next<MODEL, RESULT, UNDECIDED_RET> continueAfterUndecidedStringFunctions(Expression expression);
+
+	@Override
+	@SuppressWarnings("unchecked")
+	final <R extends Comparable<R>, CLAUSE> CLAUSE addSubNumeric(Function_Arithmetic function, ISharedSubOperandsFunction_Undecided<MODEL, RESULT, R> sub, Expression ... expressions) {
+		
+		// Must build sub-functions with parameters
+		final FunctionExpression expression = SubExpressionUtil.addSubNumericForFunction(function, sub, expressions);
+		
+		functions.add(expression);
+		
+		final Expression collected = createFinalExpressionsFromSub();
+
+		return (CLAUSE)continueAfterUndecidedComparableFunctions(collected);
 	}
 }
 

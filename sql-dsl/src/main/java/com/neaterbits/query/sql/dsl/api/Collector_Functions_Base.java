@@ -9,6 +9,7 @@ abstract class Collector_Functions_Base<
 		
 		NAMED_RET extends ISharedFunction_After<MODEL, RESULT>,
 		ALIAS_RET extends ISharedFunction_After<MODEL, RESULT>,
+		UNDECIDED_RET extends ISharedFunction_After<MODEL, RESULT>,
 		
 		NAMED_SUM_LONG_RET  extends ISharedFunction_Next<MODEL, RESULT, NAMED_RET>,
 		NAMED_COUNT_RET		extends ISharedFunction_Next<MODEL, RESULT, NAMED_RET>,
@@ -47,8 +48,26 @@ abstract class Collector_Functions_Base<
 		ALIAS_CALENDAR_RET 	extends ISharedFunction_Next<MODEL, RESULT, ALIAS_RET>,
 		ALIAS_SQLDATE_RET 	extends ISharedFunction_Next<MODEL, RESULT, ALIAS_RET>,
 		ALIAS_SQLTIME_RET 	extends ISharedFunction_Next<MODEL, RESULT, ALIAS_RET>,
-		ALIAS_SQLTIMESTAMP_RET extends ISharedFunction_Next<MODEL, RESULT, ALIAS_RET>
+		ALIAS_SQLTIMESTAMP_RET extends ISharedFunction_Next<MODEL, RESULT, ALIAS_RET>,
 		
+		UNDECIDED_SUM_LONG_RET  extends ISharedFunction_Next<MODEL, RESULT, UNDECIDED_RET>,
+		UNDECIDED_COUNT_RET		extends ISharedFunction_Next<MODEL, RESULT, UNDECIDED_RET>,
+		UNDECIDED_LENGTH_RET	extends ISharedFunction_Next<MODEL, RESULT, UNDECIDED_RET>,
+
+		UNDECIDED_BYTE_RET 		extends ISharedFunction_Next<MODEL, RESULT, UNDECIDED_RET>,
+		UNDECIDED_SHORT_RET 	extends ISharedFunction_Next<MODEL, RESULT, UNDECIDED_RET>,
+		UNDECIDED_INTEGER_RET 	extends ISharedFunction_Next<MODEL, RESULT, UNDECIDED_RET>,
+		UNDECIDED_LONG_RET    	extends ISharedFunction_Next<MODEL, RESULT, UNDECIDED_RET>,
+		UNDECIDED_BIGINTEGER_RET extends ISharedFunction_Next<MODEL, RESULT, UNDECIDED_RET>,
+		UNDECIDED_FLOAT_RET    	extends ISharedFunction_Next<MODEL, RESULT, UNDECIDED_RET>,
+		UNDECIDED_DOUBLE_RET  	extends ISharedFunction_Next<MODEL, RESULT, UNDECIDED_RET>,
+		UNDECIDED_BIGDECIMAL_RET extends ISharedFunction_Next<MODEL, RESULT, UNDECIDED_RET>,
+		UNDECIDED_STRING_RET  	extends ISharedFunction_Next<MODEL, RESULT, UNDECIDED_RET>,
+		UNDECIDED_DATE_RET 		extends ISharedFunction_Next<MODEL, RESULT, UNDECIDED_RET>,
+		UNDECIDED_CALENDAR_RET 	extends ISharedFunction_Next<MODEL, RESULT, UNDECIDED_RET>,
+		UNDECIDED_SQLDATE_RET 	extends ISharedFunction_Next<MODEL, RESULT, UNDECIDED_RET>,
+		UNDECIDED_SQLTIME_RET 	extends ISharedFunction_Next<MODEL, RESULT, UNDECIDED_RET>,
+		UNDECIDED_SQLTIMESTAMP_RET extends ISharedFunction_Next<MODEL, RESULT, UNDECIDED_RET>
 		>
 
 	implements 
@@ -85,7 +104,39 @@ abstract class Collector_Functions_Base<
 			
 		ISharedFunctions_String_Alias_All<MODEL, RESULT, ALIAS_RET, ALIAS_LENGTH_RET, ALIAS_STRING_RET>,
 		ISharedFunctions_Aggregate_Alias_All<ALIAS_SUM_LONG_RET, ALIAS_COUNT_RET,
-				ALIAS_BYTE_RET, ALIAS_SHORT_RET, ALIAS_INTEGER_RET, ALIAS_LONG_RET, ALIAS_BIGINTEGER_RET, ALIAS_FLOAT_RET, ALIAS_DOUBLE_RET, ALIAS_BIGDECIMAL_RET, ALIAS_DATE_RET>
+				ALIAS_BYTE_RET, ALIAS_SHORT_RET, ALIAS_INTEGER_RET, ALIAS_LONG_RET, ALIAS_BIGINTEGER_RET, ALIAS_FLOAT_RET, ALIAS_DOUBLE_RET, ALIAS_BIGDECIMAL_RET, ALIAS_DATE_RET>,
+				
+		ISharedFunctions_Arithmetic_Undecided<
+				MODEL, RESULT, 
+				NAMED_RET, ALIAS_RET, UNDECIDED_RET,
+				
+				NAMED_BYTE_RET,
+				NAMED_SHORT_RET,
+				NAMED_INTEGER_RET,
+				NAMED_LONG_RET,
+				NAMED_BIGINTEGER_RET,
+				NAMED_FLOAT_RET,
+				NAMED_DOUBLE_RET,
+				NAMED_BIGDECIMAL_RET,
+				
+				ALIAS_BYTE_RET,
+				ALIAS_SHORT_RET,
+				ALIAS_INTEGER_RET,
+				ALIAS_LONG_RET,
+				ALIAS_BIGINTEGER_RET,
+				ALIAS_FLOAT_RET,
+				ALIAS_DOUBLE_RET,
+				ALIAS_BIGDECIMAL_RET,
+				
+				UNDECIDED_BYTE_RET,
+				UNDECIDED_SHORT_RET,
+				UNDECIDED_INTEGER_RET,
+				UNDECIDED_LONG_RET,
+				UNDECIDED_BIGINTEGER_RET,
+				UNDECIDED_FLOAT_RET,
+				UNDECIDED_DOUBLE_RET,
+				UNDECIDED_BIGDECIMAL_RET
+		>
 			
 {
 	
@@ -138,6 +189,10 @@ abstract class Collector_Functions_Base<
 
 	abstract <R extends Comparable<R>, CLAUSE> CLAUSE addSubNumeric(Function_Arithmetic function, ISharedSubOperandsFunction_Alias<MODEL, RESULT, R> sub, Expression ... expressions);
 
+	// ********* Alias abstract methods *********
+
+	abstract <R extends Comparable<R>, CLAUSE> CLAUSE addSubNumeric(Function_Arithmetic function, ISharedSubOperandsFunction_Undecided<MODEL, RESULT, R> sub, Expression ... expressions);
+	
 	//********************************************************************
 	//* Named
 	//********************************************************************
@@ -1037,5 +1092,94 @@ abstract class Collector_Functions_Base<
 	@Override
 	public final ALIAS_BIGDECIMAL_RET sum(ISupplierBigDecimal field) {
 		return intAddFinalFieldFunction_Simple(Function_Aggregate.SUM, field);
+	}
+
+	//********************************************************************
+	//* Undecided
+	//********************************************************************
+
+	@Override
+	public final UNDECIDED_BYTE_RET absOfByte(ISharedSubOperandsFunction_Byte_Undecided<MODEL, RESULT> sub) {
+		return addSubNumeric(Function_Arithmetic_Abs.INSTANCE, sub);
+	}
+
+	@Override
+	public final UNDECIDED_SHORT_RET absOfShort(ISharedSubOperandsFunction_Short_Undecided<MODEL, RESULT> sub) {
+		return addSubNumeric(Function_Arithmetic_Abs.INSTANCE, sub);
+	}
+
+	@Override
+	public final UNDECIDED_INTEGER_RET absOfInteger(ISharedSubOperandsFunction_Integer_Undecided<MODEL, RESULT> sub) {
+		return addSubNumeric(Function_Arithmetic_Abs.INSTANCE, sub);
+	}
+
+	@Override
+	public final UNDECIDED_LONG_RET absOfLong(ISharedSubOperandsFunction_Long_Undecided<MODEL, RESULT> sub) {
+		return addSubNumeric(Function_Arithmetic_Abs.INSTANCE, sub);
+	}
+
+	@Override
+	public final UNDECIDED_BIGINTEGER_RET absOfBigInteger(ISharedSubOperandsFunction_BigInteger_Undecided<MODEL, RESULT> sub) {
+		return addSubNumeric(Function_Arithmetic_Abs.INSTANCE, sub);
+	}
+
+	@Override
+	public final UNDECIDED_FLOAT_RET absOfFloat(ISharedSubOperandsFunction_Float_Undecided<MODEL, RESULT> sub) {
+		return addSubNumeric(Function_Arithmetic_Abs.INSTANCE, sub);
+	}
+
+	@Override
+	public final UNDECIDED_DOUBLE_RET absOfDouble(ISharedSubOperandsFunction_Double_Undecided<MODEL, RESULT> sub) {
+		return addSubNumeric(Function_Arithmetic_Abs.INSTANCE, sub);
+	}
+
+	@Override
+	public final UNDECIDED_BIGDECIMAL_RET absOfBigDecimal(ISharedSubOperandsFunction_BigDecimal_Undecided<MODEL, RESULT> sub) {
+		return addSubNumeric(Function_Arithmetic_Abs.INSTANCE, sub);
+	}
+
+	@Override
+	public final UNDECIDED_DOUBLE_RET sqrtOf(ISharedSubOperandsFunction_Byte_Undecided<MODEL, RESULT> sub) {
+		return addSubNumeric(Function_Arithmetic_Sqrt.INSTANCE, sub);
+	}
+
+	@Override
+	public final UNDECIDED_DOUBLE_RET sqrtOf(ISharedSubOperandsFunction_Short_Undecided<MODEL, RESULT> sub) {
+		return addSubNumeric(Function_Arithmetic_Sqrt.INSTANCE, sub);
+	}
+
+	@Override
+	public final UNDECIDED_DOUBLE_RET sqrtOf(ISharedSubOperandsFunction_Integer_Undecided<MODEL, RESULT> sub) {
+		return addSubNumeric(Function_Arithmetic_Sqrt.INSTANCE, sub);
+	}
+
+	@Override
+	public final UNDECIDED_DOUBLE_RET sqrtOf(ISharedSubOperandsFunction_BigInteger_Undecided<MODEL, RESULT> sub) {
+		return addSubNumeric(Function_Arithmetic_Sqrt.INSTANCE, sub);
+	}
+
+	@Override
+	public final UNDECIDED_DOUBLE_RET sqrtOf(ISharedSubOperandsFunction_Long_Undecided<MODEL, RESULT> sub) {
+		return addSubNumeric(Function_Arithmetic_Sqrt.INSTANCE, sub);
+	}
+
+	@Override
+	public final UNDECIDED_DOUBLE_RET sqrtOf(ISharedSubOperandsFunction_Float_Undecided<MODEL, RESULT> sub) {
+		return addSubNumeric(Function_Arithmetic_Sqrt.INSTANCE, sub);
+	}
+
+	@Override
+	public final UNDECIDED_DOUBLE_RET sqrtOf(ISharedSubOperandsFunction_Double_Undecided<MODEL, RESULT> sub) {
+		return addSubNumeric(Function_Arithmetic_Sqrt.INSTANCE, sub);
+	}
+
+	@Override
+	public final UNDECIDED_DOUBLE_RET sqrtOf(ISharedSubOperandsFunction_BigDecimal_Undecided<MODEL, RESULT> sub) {
+		return addSubNumeric(Function_Arithmetic_Sqrt.INSTANCE, sub);
+	}
+
+	@Override
+	public final UNDECIDED_INTEGER_RET modOf(ISharedSubOperandsFunction_Integer_Undecided<MODEL, RESULT> sub, int value) {
+		return addSubNumeric(Function_Arithmetic_Mod.INSTANCE, sub, new ValueExpression(value));
 	}
 }

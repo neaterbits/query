@@ -128,4 +128,10 @@ final class Collector_Expression_List_Sub<
 	AliasFunctions createAliasFunctions(ISharedCollector_Functions_Callback<MODEL, RESULT, ALIAS_RET> func) {
 		return new AliasFunctions(func);
 	}
+
+	@Override
+	UndecidedFunctions createUndecidedFunctions(ISharedCollector_Functions_Callback<MODEL, RESULT, UNDECIDED_RET> func) {
+		return new UndecidedFunctions(func);
+	}
+	
 }
