@@ -6,6 +6,8 @@ abstract class ExecutableQueryForCompiledBase {
 	
 	static boolean evaluateCondition(CompiledConditionComparison condition, Object instance, ConditionValuesScratch scratch) {
 		
+		throw new UnsupportedOperationException("TODO - evaluate expressions");
+		/*
 		// Must evaluate condition with params.
 		// First figure lhs
 		final Object lhs  = condition.getLhs().getValue(instance);
@@ -28,6 +30,7 @@ abstract class ExecutableQueryForCompiledBase {
 		}
 
 		return ret;
+		*/
 	}
 
 	private static final ConditionEvaluator_Comparable comparableEvaluator = new ConditionEvaluator_Comparable();

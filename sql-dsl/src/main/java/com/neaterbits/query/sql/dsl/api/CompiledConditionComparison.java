@@ -1,18 +1,16 @@
 package com.neaterbits.query.sql.dsl.api;
 
-import java.lang.reflect.Method;
-
-import com.neaterbits.query.sql.dsl.api.entity.ScalarType;
 
 final class CompiledConditionComparison extends CompiledCondition {
 
 	private final CollectedCondition_NonNested original;
-	private final CompiledFieldReference lhs;
+	//private final CompiledFieldReference lhs;
+	private final CompiledExpression lhs;
 	private final ConditionValue value;
 	
-	private final ScalarType scalarType; // All conditions are scalars
+	//private final ScalarType scalarType; // All conditions are scalars
 	
-	CompiledConditionComparison(CollectedCondition_NonNested original, CompiledFieldReference lhs, ConditionValue value) {
+	CompiledConditionComparison(CollectedCondition_NonNested original, CompiledExpression lhs, /* CompiledFieldReference lhs, */ ConditionValue value) {
 		
 		if (original == null) {
 			throw new IllegalArgumentException("original == null");
@@ -26,6 +24,8 @@ final class CompiledConditionComparison extends CompiledCondition {
 		this.lhs = lhs;
 		this.value = value;
 
+		/*
+
 		final Method getterMethod = lhs.getGetter().getGetterMethod();
 		final Class<?> type = getterMethod.getReturnType();
 
@@ -34,12 +34,14 @@ final class CompiledConditionComparison extends CompiledCondition {
 		if (scalarType == null) {
 			throw new IllegalArgumentException("Unable to get scalar type from " + getterMethod);
 		}
+		*/
 	}
 
 	CollectedCondition getOriginal() {
 		return original;
 	}
 
+	/*
 	CompiledFieldReference getLhs() {
 		return lhs;
 	}
@@ -47,6 +49,7 @@ final class CompiledConditionComparison extends CompiledCondition {
 	TypeMapSource getLhsSource() {
 		return lhs.getSource();
 	}
+	*/
 	
 	EClauseOperator getOperator() {
 		return original.getOperator();
@@ -56,6 +59,10 @@ final class CompiledConditionComparison extends CompiledCondition {
 		return value;
 	}
 
+	CompiledExpression getLhs() {
+		return lhs;
+	}
+/*
 	int getNumFunctions() {
 		final CollectedFunctions functions = original.getFunctions();
 		
@@ -67,7 +74,6 @@ final class CompiledConditionComparison extends CompiledCondition {
 
 		return functions.getFunctions().get(functionIdx).getFunction();
 	}
-
 	
 	ScalarType getScalarType() {
 		return scalarType;
@@ -77,6 +83,9 @@ final class CompiledConditionComparison extends CompiledCondition {
 	int getSourceIdx() {
 		return lhs.getSource().getIdx();
 	}
+*/
+	
+	
 	
 	
 }

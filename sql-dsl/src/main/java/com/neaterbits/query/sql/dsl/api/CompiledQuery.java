@@ -985,7 +985,10 @@ final class CompiledQuery {
 	
 	private static CompiledCondition compileNonNestedCondition(CollectedCondition_NonNested condition, SelectSourceLookup sources) throws CompileException {
 		
-		final CompiledFieldReference lhs = sources.makeFieldReference(condition, condition.getGetter());
+		final CompiledExpression lhs = compileExpression(condition.getLhs(), sources);
+		
+		
+		// final CompiledFieldReference lhs = sources.makeFieldReference(condition, condition.getGetter());
 		
 		ConditionValue value;
 		

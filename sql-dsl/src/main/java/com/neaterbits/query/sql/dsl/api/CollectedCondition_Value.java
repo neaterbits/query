@@ -15,6 +15,7 @@ abstract class CollectedCondition_Value extends CollectedCondition_NonNested {
 		this.value = value;
 	}
 	
+	/*
 	@Deprecated
 	private CollectedCondition_Value(Getter getter, ConditionValue value) {
 		super(getter);
@@ -25,6 +26,7 @@ abstract class CollectedCondition_Value extends CollectedCondition_NonNested {
 
 		this.value = value;
 	}
+	*/
 
 	final ConditionValue getValue() {
 		return value;

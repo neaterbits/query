@@ -76,10 +76,12 @@ final class ExecutableQueryForCompiledConditions
 		return getConditionsType(c);
 	}
 
+	/*
 	@Override
 	public int getConditionSourceIdx(CompiledConditions conditions, int level, int[] conditionIndices) {
 		return getCondition(conditions, level, conditionIndices).getSourceIdx();
 	}
+	*/
 
 	@Override
 	public boolean isSubCondition(CompiledConditions conditions, int level, int[] conditionIndices) {
@@ -99,16 +101,19 @@ final class ExecutableQueryForCompiledConditions
 		return getComparisonCondition(conditions, level, conditionIndices).getOperator();
 	}
 
+	/*
 	@Override
 	public CompiledFieldReference getConditionLhs(CompiledConditions conditions, int level, int[] conditionIndices) {
 		return getComparisonCondition(conditions, level, conditionIndices).getLhs();
 	}
+	*/
 
 	@Override
 	public ConditionValue getConditionValue(CompiledConditions conditions, int level, int[] conditionIndices) {
 		return getComparisonCondition(conditions, level, conditionIndices).getValue();
 	}
 
+	/*
 	@Override
 	public int getConditionNumFunctions(CompiledConditions conditions, int level, int[] conditionIndices) {
 		return getComparisonCondition(conditions, level, conditionIndices).getNumFunctions();
@@ -119,6 +124,7 @@ final class ExecutableQueryForCompiledConditions
 	public FunctionCalcBase getConditionFunction(CompiledConditions conditions, int level, int[] conditionIndices, int functionIdx) {
 		return (FunctionCalcBase)getComparisonCondition(conditions, level, conditionIndices).getFunctionAt(functionIdx);
 	}
+	*/
 	
 	@Override
 	public boolean evaluateCondition(CompiledConditions conditions, int level, int[] conditionIndices, Object instance, ConditionValuesScratch scratch) {
@@ -128,10 +134,12 @@ final class ExecutableQueryForCompiledConditions
 		return evaluateCondition(comparison, instance, scratch);
 	}
 	
+	/*
 	@Override
 	public Method getForDebugConditionLhsMethod(CompiledConditions conditions, int level, int[] conditionIndices) {
 		return getComparisonCondition(conditions, level, conditionIndices).getLhs().getGetter().getGetterMethod();
 	}
+	*/
 
 	@Override
 	public String getForDebugConditionValue(CompiledConditions conditions, int level, int[] conditionIndices) {
@@ -141,7 +149,13 @@ final class ExecutableQueryForCompiledConditions
 
 	@Override
 	public ExecutableQueryExpressions getLHS(CompiledConditions query, int level, int[] conditionIndices) {
-		throw new UnsupportedOperationException("TODO");
+		final CompiledExpression lhs = getComparisonCondition(query, level, conditionIndices).getLhs();
+		
+		if (lhs == null) {
+			throw new IllegalStateException("lhs == null");
+		}
+		
+		return new ExecutableQueryExpressionsForCompiledExpression(lhs);
 	}
 
 

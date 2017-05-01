@@ -16,10 +16,12 @@ final class ExecutableQueryConditions_ForCompiledQuery_Conditions implements Exe
 		return forConditions.getConditionsType(query.getConditions(), level, conditionIndices);
 	}
 
+	/*
 	@Override
 	public int getConditionSourceIdx(CompiledQuery query, int level, int[] conditionIndices) {
 		return forConditions.getConditionSourceIdx(query.getConditions(), level, conditionIndices);
 	}
+	*/
 
 	@Override
 	public boolean evaluateCondition(CompiledQuery query, int level, int[] conditionIndices, Object instance, ConditionValuesScratch scratch) {
@@ -41,16 +43,19 @@ final class ExecutableQueryConditions_ForCompiledQuery_Conditions implements Exe
 		return forConditions.getOperator(query.getConditions(), level, conditionIndices);
 	}
 
+	/*
 	@Override
 	public CompiledFieldReference getConditionLhs(CompiledQuery query, int level, int[] conditionIndices) {
 		return forConditions.getConditionLhs(query.getConditions(), level, conditionIndices);
 	}
+	*/
 
 	@Override
 	public ConditionValue getConditionValue(CompiledQuery query, int level, int[] conditionIndices) {
 		return forConditions.getConditionValue(query.getConditions(), level, conditionIndices);
 	}
 
+	/*
 	@Override
 	public int getConditionNumFunctions(CompiledQuery query, int level, int[] conditionIndices) {
 		return forConditions.getConditionNumFunctions(query.getConditions(), level, conditionIndices);
@@ -65,6 +70,7 @@ final class ExecutableQueryConditions_ForCompiledQuery_Conditions implements Exe
 	public Method getForDebugConditionLhsMethod(CompiledQuery query, int level, int[] conditionIndices) {
 		return forConditions.getForDebugConditionLhsMethod(query.getConditions(), level, conditionIndices);
 	}
+	*/
 
 	@Override
 	public String getForDebugConditionValue(CompiledQuery query, int level, int[] conditionIndices) {

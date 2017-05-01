@@ -5,13 +5,16 @@ import java.util.function.Consumer;
 
 final class PreparedQueryConditionComparison extends PreparedQueryCondition {
 
+	/*
 	private final List<FunctionCalcBase> functions;
 	private final CompiledFieldReference compiledLhs;
 	private final FieldReference lhs;
+	*/
+	private final ExecutableQueryExpressions lhs;
 	private final PreparedQueryComparisonRHS rhs;
 	
-	PreparedQueryConditionComparison(List<FunctionCalcBase> functions, CompiledFieldReference compiledLhs, FieldReference lhs, PreparedQueryComparisonRHS rhs) {
-		
+	PreparedQueryConditionComparison(ExecutableQueryExpressions lhs,/* List<FunctionCalcBase> functions, CompiledFieldReference compiledLhs, FieldReference lhs, */ PreparedQueryComparisonRHS rhs) {
+		/*
 		if (compiledLhs == null) {
 			throw new IllegalArgumentException("compiledLhs == null");
 		}
@@ -27,9 +30,12 @@ final class PreparedQueryConditionComparison extends PreparedQueryCondition {
 		this.functions = functions;
 		this.compiledLhs = compiledLhs;
 		this.lhs = lhs;
+		*/
+		this.lhs = lhs;
 		this.rhs = rhs;
 	}
 
+	/*
 	List<FunctionCalcBase> getLhsFunctions() {
 		return functions;
 	}
@@ -39,6 +45,11 @@ final class PreparedQueryConditionComparison extends PreparedQueryCondition {
 	}
 
 	FieldReference getLhs() {
+		return lhs;
+	}
+	*/
+	
+	ExecutableQueryExpressions getLhs() {
 		return lhs;
 	}
 

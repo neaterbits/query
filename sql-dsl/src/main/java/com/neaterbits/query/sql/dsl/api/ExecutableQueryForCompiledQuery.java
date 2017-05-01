@@ -426,8 +426,9 @@ final class ExecutableQueryForCompiledQuery extends ExecutableQueryForCompiledBa
 	
 	@Override
 	public CompiledFieldReference getRootConditionLhs(CompiledQuery query, int conditionIdx) {
+		throw new UnsupportedOperationException("TODO - take adhoc queries into account");
 
-		return getRootComparisonCondition(query, conditionIdx).getLhs();
+		//return getRootComparisonCondition(query, conditionIdx).getLhs();
 	}
 
 	@Override
@@ -439,13 +440,15 @@ final class ExecutableQueryForCompiledQuery extends ExecutableQueryForCompiledBa
 
 	@Override
 	public int getRootConditionNumFunctions(CompiledQuery query, int conditionIdx) {
-		return getRootComparisonCondition(query, conditionIdx).getNumFunctions();
+		throw new UnsupportedOperationException("TODO - take adhoc queries into account");
+		//return getRootComparisonCondition(query, conditionIdx).getNumFunctions();
 	}
 
 
 	@Override
 	public FunctionCalcBase getRootConditionFunction(CompiledQuery query, int conditionIdx, int functionIdx) {
-		return (FunctionCalcBase)getRootComparisonCondition(query, conditionIdx).getFunctionAt(functionIdx);
+		throw new UnsupportedOperationException("TODO - take adhoc queries into account");
+		//return (FunctionCalcBase)getRootComparisonCondition(query, conditionIdx).getFunctionAt(functionIdx);
 	}
 
 	@Override
@@ -456,10 +459,12 @@ final class ExecutableQueryForCompiledQuery extends ExecutableQueryForCompiledBa
 		return ExecutableQueryForCompiledConditions.getConditionsType(conditions);
 	}
 
+	/*
 	@Override
 	public final int getRootConditionSourceIdx(CompiledQuery query, int conditionIdx) {
 		return getRootComparisonCondition(query, conditionIdx).getLhsSource().getIdx();
 	}
+	*/
 
 	@Override
 	public final boolean evaluateRootCondition(CompiledQuery query, Object instance, int conditionIdx, ConditionValuesScratch scratch) {

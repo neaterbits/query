@@ -106,11 +106,6 @@ public class Company {
 		if (getClass() != obj.getClass())
 			return false;
 		Company other = (Company) obj;
-		if (employees == null) {
-			if (other.employees != null)
-				return false;
-		} else if (!employees.equals(other.employees))
-			return false;
 		if (id != other.id)
 			return false;
 		if (name == null) {
@@ -121,7 +116,7 @@ public class Company {
 		if (stockPrice == null) {
 			if (other.stockPrice != null)
 				return false;
-		} else if (!stockPrice.equals(other.stockPrice))
+		} else if (stockPrice.compareTo(other.stockPrice) != 0)
 			return false;
 		if (yearFounded == null) {
 			if (other.yearFounded != null)
@@ -131,8 +126,5 @@ public class Company {
 		return true;
 	}
 
-	@Override
-	public String toString() {
-		return "Company [id=" + id + ", name=" + name + "]";
-	}
+	
 }

@@ -6,6 +6,7 @@ import java.util.function.Consumer;
 
 class PreparedQueryBuilderUtil {
 
+	@Deprecated // should output using expressions
 	static void resolveFunction(QueryDialect_SQL dialect, List<? extends FunctionBase> funcs, FieldReference field, QueryBuilder sb) {
 		final AppendNextFunction appendNext = new AppendNextFunction(funcs, field, dialect);
 
@@ -13,10 +14,12 @@ class PreparedQueryBuilderUtil {
 	}
 
 	
+	@Deprecated // should output using expressions
 	static void resolveFunction(QueryDialect_SQL dialect, FunctionBase function, QueryBuilder sb, Consumer<QueryBuilder> appendParams) {
 		resolveFunction(dialect, function, 0, sb, (index, s) -> appendParams.accept(s)); 
 	}
 	
+	@Deprecated // should output using expressions
 	static void resolveFunction(QueryDialect_SQL dialect, FunctionBase function, int idx, QueryBuilder sb, BiConsumer<Integer, QueryBuilder> appendNext) {
 		
 		final String functionName = dialect.getFunctionName(function);
@@ -29,6 +32,7 @@ class PreparedQueryBuilderUtil {
 		sb.append(')');
 	}
 
+	@Deprecated // should output using expressions
 	static void resolveOneFunction(QueryDialect_SQL dialect, FunctionBase function, FieldReference field, QueryBuilder sb) {
 		
 		resolveFunction(dialect, function, 0, sb, (idx, s) -> dialect.appendFieldReference(s, field));
