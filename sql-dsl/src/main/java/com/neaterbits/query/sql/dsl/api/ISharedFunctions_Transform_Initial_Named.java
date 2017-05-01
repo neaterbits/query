@@ -1,5 +1,6 @@
 package com.neaterbits.query.sql.dsl.api;
 
+@Deprecated // swap out
 public interface ISharedFunctions_Transform_Initial_Named<
 
 		MODEL,
