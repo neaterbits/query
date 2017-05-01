@@ -10,10 +10,12 @@ final class Condition_ExpressionList_Comparable_Named<
 		
 		RET extends ISharedLogical_Base<MODEL, RESULT>>
 
-	extends Conditions_ExpressionList_Base<
+	extends Conditions_ExpressionList_Comparable_Base<
 		MODEL,
 		RESULT,
 		R,
+		
+		RET, ISharedComparison_Comparable_Common_All<MODEL, RESULT, R, RET>,
 		
 		RET,
 		
@@ -73,6 +75,11 @@ final class Condition_ExpressionList_Comparable_Named<
 	Condition_ExpressionList_Comparable_Named(Collector_Conditions_GroupBy<MODEL, RESULT, ?> clause, Expression expression /*, IMappingCollector<MODEL, RESULT> impl */) {
 		super(clause, expression, EFieldAccessType.NAMED);
 	}
+	
+	@Override
+	ISharedComparison_Comparable_Common_All<MODEL, RESULT, R, RET> assureComparable() {
+		return assureNamedComparable();
+	}
 
 	@SuppressWarnings({"unchecked", "rawtypes"})
 	final ISharedComparison_Comparable_Common_All<MODEL, RESULT, R, RET> assureNamedComparable() {
@@ -84,76 +91,5 @@ final class Condition_ExpressionList_Comparable_Named<
 		this.comparableConditions = new Collector_Condition_Comparative<>(getRetClause(), collectExpressionListOrOne());
 
 		return (ISharedComparison_Comparable_Common_All)comparableConditions;
-	}
-
-
-	@Override
-	public RET isEqualTo(R other) {
-		return assureNamedComparable().isEqualTo(other);
-	}
-
-	@Override
-	public RET isNotEqualTo(R other) {
-		return assureNamedComparable().isNotEqualTo(other);
-	}
-
-	@Override
-	public RET in(R... values) {
-		return assureNamedComparable().in(values);
-	}
-
-	@Override
-	public RET isGreaterThan(ValParam<R> value) {
-		return assureNamedComparable().isGreaterThan(value);
-	}
-
-	@Override
-	public RET isGreaterOrEqualTo(ValParam<R> value) {
-		return assureNamedComparable().isGreaterOrEqualTo(value);
-	}
-
-	@Override
-	public RET isLessThan(ValParam<R> value) {
-		return assureNamedComparable().isLessThan(value);
-	}
-
-	@Override
-	public RET isLessOrEqualTo(ValParam<R> value) {
-		return assureNamedComparable().isLessOrEqualTo(value);
-	}
-
-	@Override
-	public RET isEqualTo(ValParam<R> other) {
-		return assureNamedComparable().isEqualTo(other);
-	}
-
-	@Override
-	public RET isNotEqualTo(ValParam<R> other) {
-		return assureNamedComparable().isNotEqualTo(other);
-	}
-
-	@Override
-	public RET in(InParam<R> param) {
-		return assureNamedComparable().in(param);
-	}
-
-	@Override
-	public RET isGreaterThan(R value) {
-		return assureNamedComparable().isGreaterThan(value);
-	}
-
-	@Override
-	public RET isGreaterOrEqualTo(R value) {
-		return assureNamedComparable().isGreaterOrEqualTo(value);
-	}
-
-	@Override
-	public RET isLessThan(R value) {
-		return assureNamedComparable().isLessThan(value);
-	}
-
-	@Override
-	public RET isLessOrEqualTo(R value) {
-		return assureNamedComparable().isLessOrEqualTo(value);
 	}
 }
