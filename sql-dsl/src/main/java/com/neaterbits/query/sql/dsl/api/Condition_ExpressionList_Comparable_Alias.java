@@ -70,14 +70,10 @@ final class Condition_ExpressionList_Comparable_Alias<
 	
 	{
 	
-	private final Collector_Conditions_GroupBy<MODEL, RESULT, ?> clause;
 	private Collector_Condition_Comparative<MODEL, RESULT, ?, ?> comparableConditions;
 	
 	Condition_ExpressionList_Comparable_Alias(Collector_Conditions_GroupBy<MODEL, RESULT, ?> clause, Expression expression) {
-		super(expression, EFieldAccessType.NAMED);
-		
-		
-		this.clause = clause;
+		super(clause, expression, EFieldAccessType.NAMED);
 	}
 	
 	@SuppressWarnings({"unchecked", "rawtypes"})
@@ -87,7 +83,7 @@ final class Condition_ExpressionList_Comparable_Alias<
 			throw new IllegalStateException("Condition already set");
 		}
 
-		this.comparableConditions = new Collector_Condition_Comparative<>(clause, collectExpressionListOrOne());
+		this.comparableConditions = new Collector_Condition_Comparative<>(getRetClause(), collectExpressionListOrOne());
 
 		return (ISharedComparison_Comparable_Common_All) comparableConditions;
 	}

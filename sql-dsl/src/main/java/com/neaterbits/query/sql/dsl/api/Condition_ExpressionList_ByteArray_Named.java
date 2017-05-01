@@ -73,7 +73,7 @@ final class Condition_ExpressionList_ByteArray_Named<
 	{
 	
 	
-	Condition_ExpressionList_ByteArray_Named(Expression expression) {
-		super(expression /*, impl */, EFieldAccessType.NAMED);
+	Condition_ExpressionList_ByteArray_Named(Collector_Conditions_GroupBy<MODEL, RESULT, ?> clause, Expression expression) {
+		super(clause, expression, EFieldAccessType.NAMED);
 	}
 }

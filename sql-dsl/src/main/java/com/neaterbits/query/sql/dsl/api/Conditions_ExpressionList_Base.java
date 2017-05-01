@@ -110,13 +110,16 @@ abstract class Conditions_ExpressionList_Base<
 		//abstract IMappingCollector<MODEL, RESULT> getMappingCollector(EFieldAccessType fieldAccessType);
 
 	
-
-	Conditions_ExpressionList_Base() {
-	}
-
-	Conditions_ExpressionList_Base(Expression expression, EFieldAccessType fieldAccessType) {
+	private final Collector_Conditions_GroupBy<MODEL, RESULT, ?> clause;
+			
+	
+	Conditions_ExpressionList_Base(Collector_Conditions_GroupBy<MODEL, RESULT, ?> clause, Expression expression, EFieldAccessType fieldAccessType) {
 		super(expression, fieldAccessType);
+		
+		this.clause = clause;
 	}
+	
+	
 
 	/*
 	@Override
@@ -138,6 +141,11 @@ abstract class Conditions_ExpressionList_Base<
 		return (OPERAND_RET)impl;
 	}
 	*/
+
+	final Collector_Conditions_GroupBy<MODEL, RESULT, ?> getRetClause() {
+		return clause;
+	}
+
 
 	private class Conditions_Named_Functions extends
 	

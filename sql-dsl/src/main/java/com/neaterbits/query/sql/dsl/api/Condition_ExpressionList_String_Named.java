@@ -69,12 +69,9 @@ final class Condition_ExpressionList_String_Named<
 	
 	{
 	
-	private final Collector_Conditions_GroupBy<MODEL, RESULT, ?> clause;
 	
 	private Collector_Condition_String<MODEL, RESULT, ?> stringConditions;
 	
-	
-	//private final IMappingCollector<MODEL, RESULT> impl;
 	
 	@SuppressWarnings({"unchecked", "rawtypes"})
 	private final  ISharedComparison_Comparable_String_All<MODEL, RESULT, RET> assureNamedString() {
@@ -83,7 +80,7 @@ final class Condition_ExpressionList_String_Named<
 			throw new IllegalStateException("stringConditions already set");
 		}
 
-		this.stringConditions = new Collector_Condition_String<>(clause, collectExpressionListOrOne());
+		this.stringConditions = new Collector_Condition_String<>(getRetClause(), collectExpressionListOrOne());
 		
 		return (ISharedComparison_Comparable_String_All)stringConditions;
 	}
@@ -91,18 +88,8 @@ final class Condition_ExpressionList_String_Named<
 
 	
 	// 	TODO go over constructor calls and use static utility methods? 
-	Condition_ExpressionList_String_Named(Collector_Conditions_GroupBy<MODEL, RESULT, ?> clause, Expression expression /*, IMappingCollector<MODEL, RESULT> impl */) {
-		super(expression /*, impl */, EFieldAccessType.NAMED);
-	
-		this.clause = clause;
-		
-		/*
-		if (impl == null) {
-			throw new IllegalArgumentException("impl == null");
-		}
-		
-		this.impl = impl;
-		*/
+	Condition_ExpressionList_String_Named(Collector_Conditions_GroupBy<MODEL, RESULT, ?> clause, Expression expression) {
+		super(clause, expression, EFieldAccessType.NAMED);
 	}
 
 	@Override

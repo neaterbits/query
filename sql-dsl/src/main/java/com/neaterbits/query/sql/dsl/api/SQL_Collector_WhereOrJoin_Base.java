@@ -304,28 +304,28 @@ abstract class SQL_Collector_WhereOrJoin_Base<
 	public final <T> ISharedCondition_OpsAndComp_SQLTimeType_Named<MODEL, RESULT, java.sql.Date, NAMED_AND_OR> where(IFunctionSQLDate<T> getter) {
 
 		//return new Collector_Condition_SQLTimeType<MODEL, RESULT, java.sql.Date, NAMED_AND_OR>(getAfterWhereNamed(), makeGetterExpression(getter));
-		return new Condition_ExpressionList_SQLTimeType_Named<>(makeGetterExpression(getter));
+		return new Condition_ExpressionList_SQLTimeType_Named<>(getAfterWhereNamed(), makeGetterExpression(getter));
 	}
 
 	//implemented in subclass @Override
 	public final <T> ISharedCondition_OpsAndComp_SQLTimeType_Named<MODEL, RESULT, java.sql.Time, NAMED_AND_OR> where(IFunctionSQLTime<T> getter) {
 
 		//return new Collector_Condition_SQLTimeType<MODEL, RESULT, java.sql.Time, NAMED_AND_OR>(getAfterWhereNamed(), makeGetterExpression(getter));
-		return new Condition_ExpressionList_SQLTimeType_Named<>(makeGetterExpression(getter));
+		return new Condition_ExpressionList_SQLTimeType_Named<>(getAfterWhereNamed(), makeGetterExpression(getter));
 	}
 
 	//implemented in subclass @Override
 	public final <T> ISharedCondition_OpsAndComp_SQLTimeType_Named<MODEL, RESULT, java.sql.Timestamp, NAMED_AND_OR> where(IFunctionSQLTimestamp<T> getter) {
 
 		//return new Collector_Condition_SQLTimeType<MODEL, RESULT, java.sql.Timestamp, NAMED_AND_OR>(getAfterWhereNamed(), makeGetterExpression(getter));
-		return new Condition_ExpressionList_SQLTimeType_Named<>(makeGetterExpression(getter));
+		return new Condition_ExpressionList_SQLTimeType_Named<>(getAfterWhereNamed(), makeGetterExpression(getter));
 	}
 
 	//implemented in subclass @Override
 	public final <T> ISharedCondition_OpsAndComp_ByteArray_Named<MODEL, RESULT, NAMED_AND_OR> where(IFunctionByteArray<T> getter) {
 
 		//return new Collector_Condition_ByteArray<MODEL, RESULT, NAMED_AND_OR>(getAfterWhereNamed(), makeGetterExpression(getter));
-		return new Condition_ExpressionList_ByteArray_Named<>(makeGetterExpression(getter));
+		return new Condition_ExpressionList_ByteArray_Named<>(getAfterWhereNamed(), makeGetterExpression(getter));
 	}
 
 	// implemented in subclass @Override
@@ -540,27 +540,27 @@ abstract class SQL_Collector_WhereOrJoin_Base<
 	//implemented in subclass @Override
 	public final ISharedCondition_OpsAndComp_SQLTimeType_Alias<MODEL, RESULT, java.sql.Date, ALIAS_AND_OR> where(ISupplierSQLDate func) {
 		//return new Collector_Condition_SQLTimeType<MODEL, RESULT, java.sql.Date, ALIAS_AND_OR>(getAfterWhereAlias(), makeGetterExpression(func));
-		return new Condition_ExpressionList_SQLTimeType_Alias<>(makeGetterExpression(func));
+		return new Condition_ExpressionList_SQLTimeType_Alias<>(getAfterWhereAlias(), makeGetterExpression(func));
 	}
 
 	//implemented in subclass @Override
 	public final ISharedCondition_OpsAndComp_SQLTimeType_Alias<MODEL, RESULT, java.sql.Time, ALIAS_AND_OR> where(ISupplierSQLTime func) {
 	
 		//return new Collector_Condition_SQLTimeType<MODEL, RESULT, java.sql.Time, ALIAS_AND_OR>(getAfterWhereAlias(), makeGetterExpression(func));
-		return new Condition_ExpressionList_SQLTimeType_Alias<>(makeGetterExpression(func));
+		return new Condition_ExpressionList_SQLTimeType_Alias<>(getAfterWhereAlias(), makeGetterExpression(func));
 	}
 
 	//implemented in subclass @Override
 	public final ISharedCondition_OpsAndComp_SQLTimeType_Alias<MODEL, RESULT, java.sql.Timestamp, ALIAS_AND_OR> where(ISupplierSQLTimestamp func) {
 	
 		//return new Collector_Condition_SQLTimeType<MODEL, RESULT, java.sql.Timestamp, ALIAS_AND_OR>(getAfterWhereAlias(), makeGetterExpression(func));
-		return new Condition_ExpressionList_SQLTimeType_Alias<>(makeGetterExpression(func));
+		return new Condition_ExpressionList_SQLTimeType_Alias<>(getAfterWhereAlias(), makeGetterExpression(func));
 	}
 	
 	//implemented in subclass @Override
 	public final ISharedCondition_OpsAndComp_ByteArray_Alias<MODEL, RESULT, ALIAS_AND_OR> where(ISupplierByteArray func) {
 	
 		//return new Collector_Condition_ByteArray<MODEL, RESULT, ALIAS_AND_OR>(getAfterWhereAlias(), makeGetterExpression(func));
-		return new Condition_ExpressionList_ByteArray_Alias<>(makeGetterExpression(func));
+		return new Condition_ExpressionList_ByteArray_Alias<>(getAfterWhereAlias(), makeGetterExpression(func));
 	}
 }

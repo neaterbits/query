@@ -65,33 +65,13 @@ final class Condition_ExpressionList_Comparable_Named<
 	>
 
 	implements 
-		ISharedCondition_OpsAndComp_Comparable_Named<MODEL, RESULT, R, RET>
-		
-
-	{
+		ISharedCondition_OpsAndComp_Comparable_Named<MODEL, RESULT, R, RET> {
 	
-	private final Collector_Conditions_GroupBy<MODEL, RESULT, ?> clause;
 	private Collector_Condition_Comparative<MODEL, RESULT, ?, ?> comparableConditions;
 
 	
-	//private final IMappingCollector<MODEL, RESULT> impl;
-
-	
-
-	// 	TODO go over constructor calls and use static utility methods? 
 	Condition_ExpressionList_Comparable_Named(Collector_Conditions_GroupBy<MODEL, RESULT, ?> clause, Expression expression /*, IMappingCollector<MODEL, RESULT> impl */) {
-		super(expression /*, impl */, EFieldAccessType.NAMED);
-
-		
-		this.clause = clause;
-	
-		/*
-		if (impl == null) {
-			throw new IllegalArgumentException("impl == null");
-		}
-		
-		this.impl = impl;
-		*/
+		super(clause, expression, EFieldAccessType.NAMED);
 	}
 
 	@SuppressWarnings({"unchecked", "rawtypes"})
@@ -101,7 +81,7 @@ final class Condition_ExpressionList_Comparable_Named<
 			throw new IllegalStateException("Condition already set");
 		}
 		
-		this.comparableConditions = new Collector_Condition_Comparative<>(clause, collectExpressionListOrOne());
+		this.comparableConditions = new Collector_Condition_Comparative<>(getRetClause(), collectExpressionListOrOne());
 
 		return (ISharedComparison_Comparable_Common_All)comparableConditions;
 	}

@@ -73,7 +73,7 @@ final class Condition_ExpressionList_SQLTimeType_Named<
 
 	{
 
-	Condition_ExpressionList_SQLTimeType_Named(Expression expression /*, IMappingCollector<MODEL, RESULT> impl */) {
-		super(expression /*, impl */, EFieldAccessType.NAMED);
+	Condition_ExpressionList_SQLTimeType_Named(Collector_Conditions_GroupBy<MODEL, RESULT, ?> clause, Expression expression) {
+		super(clause, expression, EFieldAccessType.NAMED);
 	}
 }

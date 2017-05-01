@@ -76,7 +76,7 @@ final class Condition_ExpressionList_SQLTimeType_Alias<
 	
 
 {
-	Condition_ExpressionList_SQLTimeType_Alias(Expression expression) {
-		super(expression, EFieldAccessType.NAMED);
+	Condition_ExpressionList_SQLTimeType_Alias(Collector_Conditions_GroupBy<MODEL, RESULT, ?> clause, Expression expression) {
+		super(clause, expression, EFieldAccessType.NAMED);
 	}
 }

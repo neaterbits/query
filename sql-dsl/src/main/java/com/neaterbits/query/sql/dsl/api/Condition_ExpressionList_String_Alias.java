@@ -67,12 +67,7 @@ final class Condition_ExpressionList_String_Alias<
 
 
 {
-
-	private final Collector_Conditions_GroupBy<MODEL, RESULT, ?> clause;
-	
 	private Collector_Condition_String<MODEL, RESULT, ?> stringConditions;
-
-
 
 	@SuppressWarnings({"unchecked", "rawtypes"})
 	private final  ISharedComparison_Comparable_String_All<MODEL, RESULT, RET> assureNamedString() {
@@ -81,17 +76,13 @@ final class Condition_ExpressionList_String_Alias<
 			throw new IllegalStateException("stringConditions already set");
 		}
 
-		this.stringConditions = new Collector_Condition_String<>(clause, collectExpressionListOrOne());
+		this.stringConditions = new Collector_Condition_String<>(getRetClause(), collectExpressionListOrOne());
 
 		return (ISharedComparison_Comparable_String_All) stringConditions;
 	}
 
-
-
 	Condition_ExpressionList_String_Alias(Collector_Conditions_GroupBy<MODEL, RESULT, ?> clause, Expression expression) {
-		super(expression, EFieldAccessType.NAMED);
-
-		this.clause = clause;
+		super(clause, expression, EFieldAccessType.NAMED);
 	}
 	
 	@Override
