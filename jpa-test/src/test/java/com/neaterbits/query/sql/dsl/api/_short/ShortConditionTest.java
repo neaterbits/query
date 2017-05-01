@@ -29,19 +29,52 @@ public class ShortConditionTest extends BaseJPATest {
     	
     	store(acme1, acme2)
 		.checkListUnordered(query, () -> Arrays.asList(new Company(acme2.getId(), "Acme Inc.", new BigDecimal("121"))));
-    	
     }
 
+    @Test
+    public void testAggregateSingleAlias() {
+		final Company acme1 = new Company(1, "Acme", new BigDecimal("49"));
+		final Company acme2 = new Company(2, "Acme Inc.", new BigDecimal("121"));
+
+		final Company c = select.alias(Company.class);
+    	    	
+    	// sum for all landplots
+    	final MultiBuilt<Company> query
+			= select.list(c)
+				.where(c::getStockPrice).plus(new BigDecimal("1")).isEqualTo(new BigDecimal("122"))
+				.build();
+    	
+    	store(acme1, acme2)
+		.checkListUnordered(query, () -> Arrays.asList(new Company(acme2.getId(), "Acme Inc.", new BigDecimal("121"))));
+    }
+    
     @Test
     public void testAggregateSingleNamed2() {
 		final Company acme1 = new Company(1, "Acme", 1953);
 		final Company acme2 = new Company(2, "Acme Inc.", 1979);
-
     	    	
     	// sum for all landplots
     	final MultiBuilt<Company> query
 			= select.list(Company.class)
 				.where(Company::getYearFounded).plus((short)2).isEqualTo(1981)
+				.build();
+    	
+    	store(acme1, acme2)
+		.checkListUnordered(query, () -> Arrays.asList(new Company(acme2.getId(), "Acme Inc.", 1979)));
+    	
+    }
+
+    @Test
+    public void testAggregateSingleAlias2() {
+		final Company acme1 = new Company(1, "Acme", 1953);
+		final Company acme2 = new Company(2, "Acme Inc.", 1979);
+
+		final Company c = select.alias(Company.class);
+    	    	
+    	// sum for all landplots
+    	final MultiBuilt<Company> query
+			= select.list(c)
+				.where(c::getYearFounded).plus((short)2).isEqualTo(1981)
 				.build();
     	
     	store(acme1, acme2)

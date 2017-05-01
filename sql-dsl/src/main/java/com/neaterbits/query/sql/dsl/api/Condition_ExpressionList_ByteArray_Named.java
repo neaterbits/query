@@ -39,9 +39,9 @@ final class Condition_ExpressionList_ByteArray_Named<
 		ISharedFunction_Next<MODEL, RESULT, RET>,
 		ISharedFunction_Next<MODEL, RESULT, RET>,
 		ISharedFunction_Next<MODEL, RESULT, RET>,
-		ISharedCondition_OpsAndComp_SQLTimeType_Named<MODEL, RESULT, java.sql.Date, RET>,
-		ISharedCondition_OpsAndComp_SQLTimeType_Named<MODEL, RESULT, java.sql.Time, RET>,
-		ISharedCondition_OpsAndComp_SQLTimeType_Named<MODEL, RESULT, java.sql.Timestamp, RET>,
+		ISharedFunction_Next<MODEL, RESULT, RET>,
+		ISharedFunction_Next<MODEL, RESULT, RET>,
+		ISharedFunction_Next<MODEL, RESULT, RET>,
 		
 	
 		ISharedFunction_Next<MODEL, RESULT, ISharedLogical_Base<MODEL, RESULT>>,
@@ -73,21 +73,7 @@ final class Condition_ExpressionList_ByteArray_Named<
 	{
 	
 	
-	
-	//private final IMappingCollector<MODEL, RESULT> impl;
-	
-	
-	
-	// 	TODO go over constructor calls and use static utility methods? 
-	Condition_ExpressionList_ByteArray_Named(Expression expression /*, IMappingCollector<MODEL, RESULT> impl */) {
+	Condition_ExpressionList_ByteArray_Named(Expression expression) {
 		super(expression /*, impl */, EFieldAccessType.NAMED);
-	
-		/*
-		if (impl == null) {
-			throw new IllegalArgumentException("impl == null");
-		}
-		
-		this.impl = impl;
-		*/
 	}
 }
