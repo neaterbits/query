@@ -1,14 +1,18 @@
 package com.neaterbits.query.sql.dsl.api;
 
+/*
 import java.util.Arrays;
 import java.util.List;
+*/
 
 abstract class CollectedCondition_NonNested extends CollectedCondition {
 
 	private final Expression lhs;
 	
+	/*
 	private final Getter getter;
 	private CollectedFunctions functions;
+	*/
 
 	abstract EClauseOperator getOperator();
 
@@ -18,9 +22,14 @@ abstract class CollectedCondition_NonNested extends CollectedCondition {
 		}
 
 		this.lhs = lhs;
-		this.getter = null;
+		//this.getter = null;
+	}
+
+	final Expression getLhs() {
+		return lhs;
 	}
 	
+	/*
 	@Deprecated
 	CollectedCondition_NonNested(Getter getter) {
 		
@@ -102,4 +111,5 @@ abstract class CollectedCondition_NonNested extends CollectedCondition {
 
 		this.functions = functions;
 	}
+	*/
 }

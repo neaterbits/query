@@ -273,10 +273,12 @@ abstract class AdhocQuery_Named<MODEL, RESULT>
 		return conditions == null ? 0 : conditions.numConditions;
 	}
 
+	/*
 	@Override
 	public final int getRootConditionSourceIdx(AdhocQuery_Named<MODEL, RESULT> query, int conditionIdx) {
 		return conditions.conditionToSourceIdx[conditionIdx];
 	}
+	*/
 
 	@Override
 	public final EClauseOperator getRootConditionOperator(AdhocQuery_Named<MODEL, RESULT> query, int conditionIdx) {
@@ -304,10 +306,12 @@ abstract class AdhocQuery_Named<MODEL, RESULT>
 		throw new UnsupportedOperationException("TODO");
 	}
 
+	/*
 	@Override
 	public final Method getForDebugRootConditionLhsMethod(AdhocQuery_Named<MODEL, RESULT> query, int conditionIdx) {
 		return getForDebugConditionLhsMethod(query, 0, new int[] { conditionIdx });
 	}
+	*/
 
 	@Override
 	public final String getForDebugRootConditionValue(AdhocQuery_Named<MODEL, RESULT> query, int conditionIdx) {
@@ -325,6 +329,7 @@ abstract class AdhocQuery_Named<MODEL, RESULT>
 	}
 
 
+	/*
 	@Override
 	public final int getConditionSourceIdx(AdhocQuery_Named<MODEL, RESULT> query, int level, int[] conditionIndices) {
 		
@@ -334,6 +339,7 @@ abstract class AdhocQuery_Named<MODEL, RESULT>
 		
 		return conditions.getConditionSourceIdx(level, conditionIndices);
 	}
+	*/
 	
 
 	@Override
@@ -383,6 +389,7 @@ abstract class AdhocQuery_Named<MODEL, RESULT>
 		return conditions == null ? -1 : conditions.getMaxDepth();
 	}
 
+	/*
 	@Override
 	public final int getConditionNumFunctions(AdhocQuery_Named<MODEL, RESULT> query, int level, int[] conditionIndices) {
 		throw new UnsupportedOperationException("TODO");
@@ -397,12 +404,13 @@ abstract class AdhocQuery_Named<MODEL, RESULT>
 	public final List<FunctionCalcBase> getConditionFunctions(AdhocQuery_Named<MODEL, RESULT> query, int level, int[] conditionIndices) {
 		throw new UnsupportedOperationException("TODO");
 	}
-
 	
+
 	@Override
 	public final Method getForDebugConditionLhsMethod(AdhocQuery_Named<MODEL, RESULT> query, int level, int[] conditionIndices) {
 		return conditions.getForDebugConditionLhsMethod(level, conditionIndices, getForDebugSourceClasses());
 	}
+	*/
 
 	@Override
 	public final String getForDebugConditionValue(AdhocQuery_Named<MODEL, RESULT> query, int level, int[] conditionIndices) {

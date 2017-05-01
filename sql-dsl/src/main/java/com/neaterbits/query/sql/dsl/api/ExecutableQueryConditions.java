@@ -1,8 +1,6 @@
 package com.neaterbits.query.sql.dsl.api;
 
 import java.lang.reflect.Method;
-import java.util.ArrayList;
-import java.util.List;
 
 
 /**
@@ -31,7 +29,7 @@ interface ExecutableQueryConditions<QUERY> {
 	// Generic nested-condition evaluation
 	ConditionsType getConditionsType(QUERY query, int level, int [] conditionIndices);
 
-	int getConditionSourceIdx(QUERY query, int level, int [] conditionIndices);
+	//int getConditionSourceIdx(QUERY query, int level, int [] conditionIndices);
 
 	boolean evaluateCondition(QUERY query, int level, int [] conditionIndices, Object instance, ConditionValuesScratch scratch);
 	
@@ -46,18 +44,22 @@ interface ExecutableQueryConditions<QUERY> {
 	ExecutableQueryExpressions getRHS(QUERY query, int level, int [] conditionIndices);
 
 	// for compiled-queries only?
-	CompiledFieldReference getConditionLhs(QUERY query, int level, int [] conditionIndices);
+	//CompiledFieldReference getConditionLhs(QUERY query, int level, int [] conditionIndices);
 
 	ConditionValue getConditionValue(QUERY query, int level, int [] conditionIndices);
 
-	int getConditionNumFunctions(QUERY query, int level, int [] conditionIndices);
+	// Obsoleted by expressions
+	//int getConditionNumFunctions(QUERY query, int level, int [] conditionIndices);
 
-	FunctionCalcBase getConditionFunction(QUERY query, int level, int [] conditionIndices, int functionIdx);
+	// Obsoleted by expressions
+	//FunctionCalcBase getConditionFunction(QUERY query, int level, int [] conditionIndices, int functionIdx);
 
-	Method getForDebugConditionLhsMethod(QUERY query, int level, int [] conditionIndices);
+	//Method getForDebugConditionLhsMethod(QUERY query, int level, int [] conditionIndices);
 	
 	String getForDebugConditionValue(QUERY query, int level, int [] conditionIndices);
 	
+	// Obsoleted by expressions
+	/*
 	default List<FunctionCalcBase> getConditionFunctions(QUERY query, int level, int [] conditionIndices) {
 		final int numFunctions = getConditionNumFunctions(query, level, conditionIndices);
 		
@@ -85,4 +87,5 @@ interface ExecutableQueryConditions<QUERY> {
 		return ret;
 		
 	}
+	*/
 }

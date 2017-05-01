@@ -10,6 +10,7 @@ import java.util.Set;
 import java.util.function.BiFunction;
 
 import com.neaterbits.query.sql.dsl.api.entity.EntityModelUtil;
+import com.neaterbits.query.sql.dsl.api.entity.IEntityModelUtil;
 import com.neaterbits.query.sql.dsl.api.entity.Relation;
 
 final class PreparedQueryBuilderORM<MANAGED, EMBEDDED, IDENTIFIABLE, ATTRIBUTE, COLL extends Collection<ATTRIBUTE>>
@@ -48,8 +49,8 @@ final class PreparedQueryBuilderORM<MANAGED, EMBEDDED, IDENTIFIABLE, ATTRIBUTE, 
 	}
 	
 
-	final PreparedQueryConditionsBuilder createConditionsBuilder(QueryDialect_SQL dialect, EConditionsClause conditionsClause, boolean atRoot) {
-		return new PreparedQueryConditionsBuilderORM(dialect, entityModelUtil, conditionsClause, atRoot);
+	final PreparedQueryConditionsBuilder createConditionsBuilder(QueryDialect_SQL dialect, EConditionsClause conditionsClause, boolean atRoot, EFieldAccessType fieldAccessType) {
+		return new PreparedQueryConditionsBuilderORM(dialect, entityModelUtil, conditionsClause, atRoot, fieldAccessType);
 	}
 
 	private static final SQLConditionToOperator conditionToOperator = new SQLConditionToOperator();
@@ -141,7 +142,7 @@ final class PreparedQueryBuilderORM<MANAGED, EMBEDDED, IDENTIFIABLE, ATTRIBUTE, 
 			
 			final ExecutableQueryExpressions expressions = q.getMappingExpressions(query, mappingIdx);
 			
-			outputExpressions(expressions, fieldReferenceType);
+			ExpressionsBuilderUtil.outputExpressions(dialect, entityModelUtil, s, expressions, fieldReferenceType);
 			
 			// Must recursively output query usingn visitor
 			
@@ -166,103 +167,7 @@ final class PreparedQueryBuilderORM<MANAGED, EMBEDDED, IDENTIFIABLE, ATTRIBUTE, 
 		//dialect.addMappings(s, refs);
 	}
 
-	private <QUERY> void outputExpressions(ExecutableQueryExpressions expressions, EFieldAccessType fieldReferenceType) {
-		// Start at root and recurse downwards
-		
-		int level = 0;
-		int [] context = new int[100]; // probably less tahnn 100 nested-levels
-		
-		context[0] = 0; // just one root expression
-		
-		
-		outputExpression(expressions, fieldReferenceType, level, context);
-	}
-	private <QUERY> void outputExpression(ExecutableQueryExpressions expressions, EFieldAccessType fieldReferenceType, int level, int [] context) {
-		// Start at root and recurse downwards
-		
-		final EExpressionType type = expressions.getExpressionType(level, context);
-		
-		switch (type) {
-		case FIELD:
-			
-			final CompiledFieldReference fieldReference = expressions.getFieldReference(level, context);
-			
-			dialect.appendFieldReference(s, prepareFieldReference(fieldReferenceType, fieldReference));
-			break;
-			
-		case VALUE:
-			// TODO: handle this properly, must wrap string literals etc
-			
-			final Comparable<?> value = expressions.getValue(level, context);
-			
-			s.append(value.toString());
-			break;
-			
-		case LIST:
-			s.append('(');
-
-			final int num = expressions.getSubCount(level, context);
-
-			for (int i = 0; i < num; ++ i) {
-
-				if (i > 0) {
-					final char opChar;
-
-					final Operator operator = expressions.getListOperator(level, context, i - 1);
-					
-					switch (operator) {
-					case PLUS: 		opChar = '+'; break;
-					case MINUS: 	opChar = '-'; break;
-					case MULTIPLY: 	opChar = '*'; break;
-					case DIVIDE: 	opChar = '/'; break;
-					
-					default:
-						throw new UnsupportedOperationException("Unknown arithmetic operator " + operator);
-					}
-					
-					s.sb.append(' ').append(opChar).append(' ');
-				}
-				
-				// recurse
-				context[level + 1] = i;
-
-				outputExpression(expressions, fieldReferenceType, level + 1, context);
-			}
-
-			s.append(')');
-			break;
-			
-		case FUNCTION:
-			final FunctionBase function = expressions.getFunction(level, context);
-			final String functionName = dialect.getFunctionName(function);
-			
-			s.append(functionName);
-			s.append('(');
-			
-			final int numParameters = expressions.getSubCount(level, context);
-			
-			for (int i = 0; i < numParameters; ++ i) {
-				
-				if (i > 0) {
-					s.append(", ");
-				}
-				
-				context[level + 1] = i;
-
-				// recurse for param
-				outputExpression(expressions, fieldReferenceType, level + 1, context);
-			}
-			
-			s.append(')');
-			
-			break;
-			
-		default:
-			throw new UnsupportedOperationException("Unknown expression type " + type);
-		}
-		
-	}
-
+	
 	private static <QUERY> int [] getArray(QUERY query, int num, BiFunction<QUERY, Integer, Integer> getIndex) {
 		
 		final int [] ret = new int[num];
@@ -304,7 +209,7 @@ final class PreparedQueryBuilderORM<MANAGED, EMBEDDED, IDENTIFIABLE, ATTRIBUTE, 
 
 	    	final int [] conditionIndices = new int[maxDepth];
 
-			final PreparedQueryConditionsBuilder conditionsBuilder = createConditionsBuilder(dialect, EConditionsClause.HAVING, true);
+			final PreparedQueryConditionsBuilder conditionsBuilder = createConditionsBuilder(dialect, EConditionsClause.HAVING, true, q.getQueryFieldAccessType(query));
 
 			if (distinctParams == null) {
 				throw new IllegalStateException("distinctParams == null");
@@ -488,35 +393,10 @@ final class PreparedQueryBuilderORM<MANAGED, EMBEDDED, IDENTIFIABLE, ATTRIBUTE, 
 	private <QUERY> FieldReference prepareFieldReference(ExecutableQuery<QUERY> q, QUERY query, CompiledFieldReference field) {
 		final EFieldAccessType fieldReferenceType = q.getQueryFieldAccessType(query);
 
-		return prepareFieldReference(fieldReferenceType, field);
+		return ExpressionsBuilderUtil.prepareFieldReference(dialect, entityModelUtil, fieldReferenceType, field);
 	}
 
-	private <QUERY> FieldReference prepareFieldReference(EFieldAccessType fieldReferenceType, CompiledFieldReference field) {
-		
-		final TypeMapSource source = field.getSource();
-
-		final CompiledGetter getter = field.getGetter();
-
-		final String columnName = getColumnOrFieldNameForGetter(source, getter);
-
-		final FieldReference ret;
-		
-		switch (fieldReferenceType) {
-		case ALIAS:
-			ret = new FieldReferenceAlias(source.getName(), columnName);
-			break;
-			
-		case NAMED:
-			ret = new FieldReferenceEntity(source.getType(), source.getName(), columnName);
-			break;
-			
-		default:
-			throw new IllegalStateException("field reference type: " + fieldReferenceType);
-		}
-
-		return ret;
-	}
-
+	
 	private <QUERY> void prepareJoins(ExecutableQuery<QUERY> q, QUERY query, List<JoinConditionId> addJoinToWhere) {
 		
 		int joinParamIdx = 0;
@@ -724,8 +604,11 @@ final class PreparedQueryBuilderORM<MANAGED, EMBEDDED, IDENTIFIABLE, ATTRIBUTE, 
 
 			
 		final ConditionStringBuilder conditionSB = dialect.makeConditionStringBuilder(distinctParams);
-				
-	    if (q.isRootConditionOnly(query)) {
+			
+		// TODO: for now skip root conditions here to reuse generic expression output
+		// must look at this in relevance to adhoc queries, where root-onoly may be a useful optimization during build time
+	    if (false && q.isRootConditionOnly(query)) {
+	    	
 	    	prepareRootConditions(q, query, original, sub, conditionSB);
 	    }
 	    else {
@@ -760,12 +643,16 @@ final class PreparedQueryBuilderORM<MANAGED, EMBEDDED, IDENTIFIABLE, ATTRIBUTE, 
 			// Operator and value
 			final PreparedQueryComparisonRHS preparedCondition = convertCondition(lhs, operator, value, conditionSB);
 
+			throw new UnsupportedOperationException("TODO");
+			
+			/*
 			final PreparedQueryConditionComparison prepared = new PreparedQueryConditionComparison(lhsFunctions, lhs, left, preparedCondition);
 
 			sub.addComparisonCondition(original, prepared);
 			
 			// Clear for next iteration
 			conditionSB.clear();
+			*/
 		}
 
 		return ret;
@@ -800,19 +687,24 @@ final class PreparedQueryBuilderORM<MANAGED, EMBEDDED, IDENTIFIABLE, ATTRIBUTE, 
 			}
 			else {
 				// Just create comparison condition
-				final CompiledFieldReference lhs = qc.getConditionLhs(query, level, conditionIndices);
+				//final CompiledFieldReference lhs = qc.getConditionLhs(query, level, conditionIndices);
 				final ConditionValue value = qc.getConditionValue(query, level, conditionIndices);
 				final EClauseOperator operator = qc.getOperator(query, level, conditionIndices);
 				
-				final FieldReference left = prepareFieldReference(q, query, lhs);
+				//final FieldReference left = prepareFieldReference(q, query, lhs);
 				
-				final List<FunctionCalcBase> lhsFunctions = qc.getConditionFunctions(query, level, conditionIndices);
+				//final List<FunctionCalcBase> lhsFunctions = qc.getConditionFunctions(query, level, conditionIndices);
+				
+				final ExecutableQueryExpressions lhs = qc.getLHS(query, level, conditionIndices);
 				
 
 				// Operator and value
-				final PreparedQueryComparisonRHS preparedCondition = convertCondition(lhs, operator, value, conditionSB);
+				final PreparedQueryComparisonRHS preparedCondition = convertCondition(/* null TODO mush have field type for RHS date literals lhs */ null, operator, value, conditionSB);
 
-				final PreparedQueryConditionComparison prepared = new PreparedQueryConditionComparison(lhsFunctions, lhs, left, preparedCondition);
+				//final PreparedQueryConditionComparison prepared = new PreparedQueryConditionComparison(lhsFunctions, lhs, left, preparedCondition);
+				
+				final PreparedQueryConditionComparison prepared = new PreparedQueryConditionComparison(lhs, /* lhsFunctions, lhs, left, */ preparedCondition);
+				
 
 				sub.addComparisonCondition(original, prepared);
 				
@@ -834,13 +726,8 @@ final class PreparedQueryBuilderORM<MANAGED, EMBEDDED, IDENTIFIABLE, ATTRIBUTE, 
 			this.conditionIdx = conditionIdx;
 		}
 	}
-	
-	private final String getColumnOrFieldNameForGetter(TypeMapSource source, CompiledGetter getter) {
-		
-		return dialect.getFieldNameForGetter(entityModelUtil, source.getType(), getter.getGetterMethod());
-		
-		// return entityModelUtil.getModel().getColumnNameForGetter(source.getType(), getter.getGetterMethod());
+
+	private String getColumnOrFieldNameForGetter(TypeMapSource source, CompiledGetter getter) {
+		return ExpressionsBuilderUtil.getColumnOrFieldNameForGetter(dialect, entityModelUtil, source, getter);
 	}
-	
-	
 }

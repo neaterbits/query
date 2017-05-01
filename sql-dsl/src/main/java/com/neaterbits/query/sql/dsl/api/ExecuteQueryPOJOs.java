@@ -696,6 +696,9 @@ final class ExecuteQueryPOJOs<QUERY> extends ExecutableQueryAggregateComputation
 		
 		conditionIndices[level] = conditionIdx;
 
+		throw new UnsupportedOperationException("TODO condition source idx, use expressions?");
+
+		/*
 		final int conditionSourceIdx = qc.getConditionSourceIdx(query, level, conditionIndices);
 		
 		if (debug != null) {
@@ -726,6 +729,7 @@ final class ExecuteQueryPOJOs<QUERY> extends ExecutableQueryAggregateComputation
 		}
 		
 		return ret;
+		*/
 	}
 	
 	private static class ConditionDebug {
@@ -751,7 +755,7 @@ final class ExecuteQueryPOJOs<QUERY> extends ExecutableQueryAggregateComputation
 	
 	private ConditionDebug getConditionDebug(ExecutableQueryConditions<QUERY> qc, QUERY query, int level, int [] conditionIndices) {
 		final EClauseOperator operator = qc.getOperator(query, level, conditionIndices);
-		final Method lhsMethod = qc.getForDebugConditionLhsMethod(query, level, conditionIndices);
+		final Method lhsMethod = null; // TODO may be expressions qc.getForDebugConditionLhsMethod(query, level, conditionIndices);
 		final String value = qc.getForDebugConditionValue(query, level, conditionIndices);
 
 		return new ConditionDebug(operator, lhsMethod, value);
@@ -766,7 +770,7 @@ final class ExecuteQueryPOJOs<QUERY> extends ExecutableQueryAggregateComputation
 
 	private void debugRootMatch(QUERY query, int conditionIdx, EMatch ret, StructuredDebug debug) {
 		final EClauseOperator operator = q.getRootConditionOperator(query, conditionIdx);
-		final Method lhsMethod = q.getForDebugRootConditionLhsMethod(query, conditionIdx);
+		final Method lhsMethod = null; // TODO: may be expressions q.getForDebugRootConditionLhsMethod(query, conditionIdx);
 		final String value = q.getForDebugRootConditionValue(query, conditionIdx);
 		
 		final ConditionDebug conditionDebug = new ConditionDebug(operator, lhsMethod, value);
@@ -827,7 +831,9 @@ final class ExecuteQueryPOJOs<QUERY> extends ExecutableQueryAggregateComputation
 					throw new UnsupportedOperationException("Unknown match " + subMatch);
 				}
 			}
-			else { 
+			else {
+				throw new UnsupportedOperationException("TODO root condition source idx, use expressions?");
+				/*
 				final int conditionSourceIdx = qc.getConditionSourceIdx(query, level, conditionIndices);
 
 				if (conditionSourceIdx == sourceIdx) {
@@ -845,6 +851,7 @@ final class ExecuteQueryPOJOs<QUERY> extends ExecutableQueryAggregateComputation
 
 					++ numFromThisSource; // only count if from this source
 				}
+				*/
 			}
 		}
 		
@@ -910,6 +917,10 @@ final class ExecuteQueryPOJOs<QUERY> extends ExecutableQueryAggregateComputation
 				
 			}
 			else {
+				throw new UnsupportedOperationException("TODO root condition source idx, use expressions?");
+				
+				/*
+
 				
 				final int conditionSourceIdx = qc.getConditionSourceIdx(query, level, conditionIndices);
 				
@@ -937,6 +948,7 @@ final class ExecuteQueryPOJOs<QUERY> extends ExecutableQueryAggregateComputation
 
 					++ numFromThisSource;
 				}
+				*/
 			}
 		}
 		
@@ -987,7 +999,9 @@ final class ExecuteQueryPOJOs<QUERY> extends ExecutableQueryAggregateComputation
 		}
 		
 		final EMatch ret;
-		
+
+		throw new UnsupportedOperationException("TODO root condition source idx, use expressions?");
+/*
 		final int conditionSourceIdx = q.getRootConditionSourceIdx(query, conditionIdx);
 		
 		if (conditionSourceIdx == sourceIdx) {
@@ -1007,6 +1021,7 @@ final class ExecuteQueryPOJOs<QUERY> extends ExecutableQueryAggregateComputation
 		}
 		
 		return ret;
+*/
 	}
 
 
@@ -1019,6 +1034,9 @@ final class ExecuteQueryPOJOs<QUERY> extends ExecutableQueryAggregateComputation
 		}
 
 		for (int conditionIdx = 0; conditionIdx < scratch.getNumConditions(); ++ conditionIdx) {
+			throw new UnsupportedOperationException("TODO root condition source idx, use expressions?");
+
+			/*
 			if (q.getRootConditionSourceIdx(query, conditionIdx) == sourceIdx) {
 				
 				if (!q.evaluateRootCondition(query, instance, conditionIdx, scratch)) {
@@ -1036,6 +1054,7 @@ final class ExecuteQueryPOJOs<QUERY> extends ExecutableQueryAggregateComputation
 				
 				++ numFromThisSource;
 			}
+			*/
 			
 		}
 		
@@ -1063,6 +1082,8 @@ final class ExecuteQueryPOJOs<QUERY> extends ExecutableQueryAggregateComputation
 		}
 		
 		for (int conditionIdx = 0; conditionIdx < numConditions; ++ conditionIdx) {
+			throw new UnsupportedOperationException("TODO root condition source idx, use expressions?");
+			/*
 			if (q.getRootConditionSourceIdx(query, conditionIdx) == sourceIdx) {
 				
 				if (q.evaluateRootCondition(query, instance, conditionIdx, scratch)) {
@@ -1079,6 +1100,7 @@ final class ExecuteQueryPOJOs<QUERY> extends ExecutableQueryAggregateComputation
 				
 				++ numFromThisSource;
 			}
+			*/
 		}
 
 		final EMatch ret = numConditions == numFromThisSource

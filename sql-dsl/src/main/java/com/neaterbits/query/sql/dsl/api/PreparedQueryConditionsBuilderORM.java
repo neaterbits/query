@@ -1,7 +1,5 @@
 package com.neaterbits.query.sql.dsl.api;
 
-import java.util.List;
-
 import com.neaterbits.query.sql.dsl.api.entity.IEntityModelUtil;
 
 /**
@@ -16,9 +14,10 @@ final class PreparedQueryConditionsBuilderORM extends PreparedQueryConditionsBui
 	private final QueryDialect_SQL dialect;
 	private final IEntityModelUtil entityModelUtil;
 	private final QueryBuilder sb;
+	private final EFieldAccessType fieldReferenceType;
 	
 	
-	PreparedQueryConditionsBuilderORM(QueryDialect_SQL dialect, IEntityModelUtil entityModelUtil, EConditionsClause conditionsClause, boolean atRoot) {
+	PreparedQueryConditionsBuilderORM(QueryDialect_SQL dialect, IEntityModelUtil entityModelUtil, EConditionsClause conditionsClause, boolean atRoot, EFieldAccessType fieldReferenceType) {
 		super(conditionsClause, atRoot);
 
 		if (dialect == null) {
@@ -28,15 +27,20 @@ final class PreparedQueryConditionsBuilderORM extends PreparedQueryConditionsBui
 		if (entityModelUtil == null) {
 			throw new IllegalArgumentException("entityModelUtil == null");
 		}
+		
+		if (fieldReferenceType == null) {
+			throw new IllegalArgumentException("fieldReferenceType == null");
+		}
 
 		this.dialect = dialect;
 		this.entityModelUtil = entityModelUtil;
 		this.sb = new QueryBuilder();
+		this.fieldReferenceType = fieldReferenceType;
 	}
 	
 	@Override
 	PreparedQueryConditionsBuilder createConditionsBuilder(EConditionsClause conditionsClause, boolean atRoot) {
-		return new PreparedQueryConditionsBuilderORM(dialect, entityModelUtil, conditionsClause, atRoot);
+		return new PreparedQueryConditionsBuilderORM(dialect, entityModelUtil, conditionsClause, atRoot, fieldReferenceType);
 	}
 
 	
@@ -168,6 +172,7 @@ final class PreparedQueryConditionsBuilderORM extends PreparedQueryConditionsBui
 				// comparison
 				final PreparedQueryConditionComparison comparison = (PreparedQueryConditionComparison)condition;
 
+				/*
 				// We must add any functions
 				final List<FunctionCalcBase> funcs = comparison.getLhsFunctions();
 				
@@ -179,11 +184,15 @@ final class PreparedQueryConditionsBuilderORM extends PreparedQueryConditionsBui
 					// Must add any functions before 
 					dialect.appendFieldReference(sb, comparison.getLhs());
 				}
+				*/
+				
+				ExpressionsBuilderUtil.outputExpressions(dialect, entityModelUtil, sb, comparison.getLhs(), fieldReferenceType);
+				
 				
 				
 				sb.append(' ');
 
-				comparison.getRhs().resolve(comparison.getCompiledLhs(), entityModelUtil, dialect, sb, resolver);
+				comparison.getRhs().resolve(null, /* TODO - date literals require rhs type comparison.getCompiledLhs(), */ entityModelUtil, dialect, sb, resolver);
 			}
 			else {
 				throw new UnsupportedOperationException("Unknown condition type " + condition.getClass().getSimpleName());

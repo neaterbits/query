@@ -369,9 +369,11 @@ interface ExecutableQuery<QUERY> {
 		return ret;
 	}
 	
+	/*
 	default Method getForDebugRootConditionLhsMethod(QUERY query, int conditionIdx) {
 		return getRootConditionLhs(query, conditionIdx).getGetter().getGetterMethod();
 	}
+	*/
 
 	default String getForDebugRootConditionValue(QUERY query, int conditionIdx) {
 		return getRootConditionValue(query, conditionIdx).toString();
@@ -385,7 +387,7 @@ interface ExecutableQuery<QUERY> {
 
 	ConditionsType getRootConditionsType(QUERY query);
 
-	int getRootConditionSourceIdx(QUERY query, int conditionIdx);
+	//int getRootConditionSourceIdx(QUERY query, int conditionIdx);
 
 	boolean evaluateRootCondition(QUERY query, Object instance, int conditionIdx, ConditionValuesScratch scratch);
 

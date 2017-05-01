@@ -21,10 +21,11 @@ abstract class Collector_Condition_Equality<MODEL, RESULT, R, L extends ISharedL
 		if (clause == null) {
 			throw new IllegalArgumentException("clause == null");
 		}
-		
+		/*
 		if (expression == null) {
 			throw new IllegalArgumentException("expression == null");
 		}
+		*/
 
 		this.clause = clause;
 		this.lhs = expression;
@@ -50,11 +51,13 @@ abstract class Collector_Condition_Equality<MODEL, RESULT, R, L extends ISharedL
 	}
 
 	final L addCondition(CollectedCondition_NonNested condition) {
-		
+
+		/*
 		// Call setter to pass on functions
 		if (functions != null) {
 			condition.setFunctions(functions);
 		}
+		*/
 
 		return addConditionInt(condition);
 	}

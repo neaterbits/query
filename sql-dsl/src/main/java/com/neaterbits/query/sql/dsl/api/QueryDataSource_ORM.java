@@ -48,7 +48,7 @@ abstract class QueryDataSource_ORM<MANAGED, EMBEDDED, IDENTIFIABLE, ATTRIBUTE, C
 			
 			//final CompileConditionParam param = new CompileConditionParam(paramNameAssigner, em);
 
-			final PreparedQueryConditionsBuilder conditionsBuilder = sb.createConditionsBuilder(dialect, EConditionsClause.WHERE, true);
+			final PreparedQueryConditionsBuilder conditionsBuilder = sb.createConditionsBuilder(dialect, EConditionsClause.WHERE, true, q.getQueryFieldAccessType(query));
 
 			sb.prepareConditions(q, query, conditionsBuilder, addJoinToWhere, distinctParams);
 

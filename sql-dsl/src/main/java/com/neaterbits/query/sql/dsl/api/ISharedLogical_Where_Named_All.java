@@ -20,9 +20,9 @@ public interface ISharedLogical_Where_Named_All<
 			STRING_CLAUSE 	extends ISharedComparison_Comparable_String_Base<MODEL, RESULT, CONDITION_CLAUSE>,
 			DATE_CLAUSE 	extends ISharedComparison_Comparable_Common_Base<MODEL, RESULT, java.util.Date, CONDITION_CLAUSE>,
 			CALENDAR_CLAUSE extends ISharedComparison_Comparable_Common_Base<MODEL, RESULT, java.util.Calendar, CONDITION_CLAUSE>,
-			SQLDATE_CLAUSE 	extends ISharedComparison_SQLTimeType_All<MODEL, RESULT, java.sql.Date, CONDITION_CLAUSE>,
-			SQLTIME_CLAUSE 	extends ISharedComparison_SQLTimeType_All<MODEL, RESULT, java.sql.Time, CONDITION_CLAUSE>,
-			SQLTIMESTAMP_CLAUSE extends ISharedComparison_SQLTimeType_All<MODEL, RESULT, java.sql.Timestamp, CONDITION_CLAUSE>,
+			SQLDATE_CLAUSE 	extends ISharedComparison_SQLTimeType_Base<MODEL, RESULT, java.sql.Date, CONDITION_CLAUSE>,
+			SQLTIME_CLAUSE 	extends ISharedComparison_SQLTimeType_Base<MODEL, RESULT, java.sql.Time, CONDITION_CLAUSE>,
+			SQLTIMESTAMP_CLAUSE extends ISharedComparison_SQLTimeType_Base<MODEL, RESULT, java.sql.Timestamp, CONDITION_CLAUSE>,
 			
 			BYTEARRAY_CLAUSE extends ISharedComparison_ByteArray_All<MODEL, RESULT, CONDITION_CLAUSE>
 			>
