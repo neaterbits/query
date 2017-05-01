@@ -18,6 +18,17 @@ final class SQLConditionToOperator {
 		final ConditionValueVisitorParam builder = new ConditionValueVisitorParam(field, b);
 		
 		switch (operator) {
+		
+		case IS_NULL:
+			b.append("IS NULL");
+			ret = new SQLConditionResolved(b.getBuiltString(), null);
+			break;
+			
+		case IS_NOT_NULL:
+			b.append("IS NOT NULL");
+			ret = new SQLConditionResolved(b.getBuiltString(), null);
+			break;
+		
 		case IS_EQUAL:
 			ret = appendOpAndValue("=", value, builder);
 			break;

@@ -10,6 +10,18 @@ class ConditionEvaluator_Comparable extends ConditionAdapterComparableBase<Condi
 	}
 	
 	@Override
+	public final Boolean onIsNull(CollectedCondition_IsNull condition, ConditionValuesScratch param) {
+		return param.getLhsComparable() == null;
+	}
+
+
+
+	@Override
+	public final Boolean onIsNotNull(CollectedCondition_IsNotNull condition, ConditionValuesScratch param) {
+		return param.getLhsComparable() != null;
+	}
+
+	@Override
 	public final Boolean onEqualTo(CollectedCondition_EqualTo condition, ConditionValuesScratch param) {
 		final Comparable<Object> lhs = param.getLhsComparable();
 		final Comparable<Object> rhs = param.getRhsComparable();

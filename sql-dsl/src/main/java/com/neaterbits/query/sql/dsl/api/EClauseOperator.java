@@ -2,20 +2,32 @@ package com.neaterbits.query.sql.dsl.api;
 
 enum EClauseOperator {
 
-	IS_EQUAL,
-	NOT_EQUAL,
+	IS_NULL(false),
+	IS_NOT_NULL(false),
 	
-	GREATER_THAN,
-	GREATER_OR_EQUAL,
+	IS_EQUAL(true),
+	NOT_EQUAL(true),
 	
-	LESS_THAN,
-	LESS_OR_EQUAL,
+	GREATER_THAN(true),
+	GREATER_OR_EQUAL(true),
 	
-	IN,
+	LESS_THAN(true),
+	LESS_OR_EQUAL(true),
 	
-	STARTS_WITH,
-	ENDS_WITH,
-	CONTAINS,
-	MATCHES;
+	IN(true),
 	
+	STARTS_WITH(true),
+	ENDS_WITH(true),
+	CONTAINS(true),
+	MATCHES(true);
+
+	private final boolean hasConditionValue;
+
+	private EClauseOperator(boolean hasParam) {
+		this.hasConditionValue = hasParam;
+	}
+
+	public boolean hasConditionValue() {
+		return hasConditionValue;
+	}
 }

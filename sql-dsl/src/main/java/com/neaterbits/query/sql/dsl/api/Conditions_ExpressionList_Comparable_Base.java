@@ -117,6 +117,16 @@ abstract class Conditions_ExpressionList_Comparable_Base<
 	}
 
 	@Override
+	public final SHARED_COMPARISON_RET isNull() {
+		return assureComparable().isNull();
+	}
+
+	@Override
+	public final SHARED_COMPARISON_RET isNotNull() {
+		return assureComparable().isNotNull();
+	}
+
+	@Override
 	public final SHARED_COMPARISON_RET isEqualTo(R other) {
 		return assureComparable().isEqualTo(other);
 	}

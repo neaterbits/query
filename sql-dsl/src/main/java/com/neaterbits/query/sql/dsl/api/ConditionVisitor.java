@@ -2,6 +2,10 @@ package com.neaterbits.query.sql.dsl.api;
 
 interface ConditionVisitor<T, R> {
 
+	R onIsNull(CollectedCondition_IsNull condition, T param);
+	
+	R onIsNotNull(CollectedCondition_IsNotNull condition, T param);
+
 	R onEqualTo(CollectedCondition_EqualTo condition, T param);
 
 	R onNotEqualTo(CollectedCondition_NotEqualTo condition, T param);
