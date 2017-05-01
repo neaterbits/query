@@ -107,7 +107,9 @@ public class MappedJoinWhereTest extends GEN_BaseTestCase {
     @Test
     public void testMappedSingleAlias() {
     	verifyIsNotCompilable(
-    			a -> a.add(Farm.class, "f").add(LandPlot.class, "l"),
+    			a -> a
+					.addImport(Farm.class).addImport(LandPlot.class).addImport(FarmLand.class)
+	    			.add(Farm.class, "f").add(LandPlot.class, "l"),
     			
     			"one(FarmLand.class)" +
     	    	".map(Farm::getName)	 .to(FarmLand::setFarmName)" +
@@ -116,7 +118,9 @@ public class MappedJoinWhereTest extends GEN_BaseTestCase {
     			".where(l::getHectares).isGreaterThan(new BigDecimal(\"100.5\"))");
 
     	verifyIsCompilable(
-    			a -> a.add(Farm.class, "f").add(LandPlot.class, "l"),
+    			a -> a
+    				.addImport(Farm.class).addImport(LandPlot.class).addImport(FarmLand.class)
+    				.add(Farm.class, "f").add(LandPlot.class, "l"),
     			
     			"one(FarmLand.class)" +
     	    	".map(Farm::getName)	 .to(FarmLand::setFarmName)" +
