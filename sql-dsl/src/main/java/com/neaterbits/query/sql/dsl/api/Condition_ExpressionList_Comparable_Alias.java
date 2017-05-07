@@ -21,7 +21,12 @@ final class Condition_ExpressionList_Comparable_Alias<
 		
 		ISharedLogical_Base<MODEL, RESULT>,
 		RET,
+		ISharedLogical_Base<MODEL, RESULT>,
 	
+		ISharedFunction_Next<MODEL, RESULT, RET>,
+		ISharedFunction_Next<MODEL, RESULT, RET>,
+		ISharedCondition_OpsAndComp_Comparable_Alias<MODEL, RESULT, R, RET>,
+		ISharedCondition_OpsAndComp_String_Alias<MODEL, RESULT, RET>,
 		ISharedCondition_OpsAndComp_Comparable_Alias<MODEL, RESULT, R, RET>,
 		ISharedCondition_OpsAndComp_String_Alias<MODEL, RESULT, RET>,
 		
@@ -62,7 +67,28 @@ final class Condition_ExpressionList_Comparable_Alias<
 		ISharedCondition_OpsAndComp_Comparable_Alias<MODEL, RESULT, java.util.Calendar, RET>,
 		ISharedFunction_Next<MODEL, RESULT, RET>,
 		ISharedFunction_Next<MODEL, RESULT, RET>,
-		ISharedFunction_Next<MODEL, RESULT, RET>
+		ISharedFunction_Next<MODEL, RESULT, RET>,
+		
+		
+		ISharedFunction_Next<MODEL, RESULT, ISharedLogical_Base<MODEL, RESULT>>,
+		ISharedFunction_Next<MODEL, RESULT, ISharedLogical_Base<MODEL, RESULT>>,
+		ISharedFunction_Next<MODEL, RESULT, ISharedLogical_Base<MODEL, RESULT>>,
+		
+		ISharedFunction_Next<MODEL, RESULT, ISharedLogical_Base<MODEL, RESULT>>,
+		ISharedFunction_Next<MODEL, RESULT, ISharedLogical_Base<MODEL, RESULT>>,
+		ISharedFunction_Next<MODEL, RESULT, ISharedLogical_Base<MODEL, RESULT>>,
+		ISharedFunction_Next<MODEL, RESULT, ISharedLogical_Base<MODEL, RESULT>>,
+		ISharedFunction_Next<MODEL, RESULT, ISharedLogical_Base<MODEL, RESULT>>,
+		ISharedFunction_Next<MODEL, RESULT, ISharedLogical_Base<MODEL, RESULT>>,
+		ISharedFunction_Next<MODEL, RESULT, ISharedLogical_Base<MODEL, RESULT>>,
+		ISharedFunction_Next<MODEL, RESULT, ISharedLogical_Base<MODEL, RESULT>>,
+		ISharedFunction_Next<MODEL, RESULT, ISharedLogical_Base<MODEL, RESULT>>,
+		ISharedFunction_Next<MODEL, RESULT, ISharedLogical_Base<MODEL, RESULT>>,
+		ISharedFunction_Next<MODEL, RESULT, ISharedLogical_Base<MODEL, RESULT>>,
+		ISharedFunction_Next<MODEL, RESULT, ISharedLogical_Base<MODEL, RESULT>>,
+		ISharedFunction_Next<MODEL, RESULT, ISharedLogical_Base<MODEL, RESULT>>,
+		ISharedFunction_Next<MODEL, RESULT, ISharedLogical_Base<MODEL, RESULT>>
+		
 	>
 	
 	implements ISharedCondition_OpsAndComp_Comparable_Alias<MODEL, RESULT, R, RET> {

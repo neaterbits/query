@@ -10,9 +10,14 @@ abstract class Conditions_ExpressionList_Base<
 		
 		NAMED_RET extends ISharedLogical_Base<MODEL, RESULT>,
 		ALIAS_RET extends ISharedLogical_Base<MODEL, RESULT>,
+		UNDECIDED_RET extends ISharedLogical_Base<MODEL, RESULT>,
 		
-		NUMERIC_NEXT extends ISharedFunction_Next<MODEL, RESULT, OPERAND_RET>,
-		STRING_NEXT extends ISharedFunction_Next<MODEL, RESULT, OPERAND_RET>,
+		NAMED_NUMERIC_OPERAND_NEXT    extends ISharedFunction_Next<MODEL, RESULT, OPERAND_RET>,
+		NAMED_STRING_OPERAND_NEXT    extends ISharedFunction_Next<MODEL, RESULT, OPERAND_RET>,
+		ALIAS_NUMERIC_OPERAND_NEXT    extends ISharedFunction_Next<MODEL, RESULT, OPERAND_RET>,
+		ALIAS_STRING_OPERAND_NEXT    extends ISharedFunction_Next<MODEL, RESULT, OPERAND_RET>,
+		COMMON_NUMERIC_OPERAND_NEXT    extends ISharedFunction_Next<MODEL, RESULT, OPERAND_RET>,
+		COMMON_STRING_OPERAND_NEXT    extends ISharedFunction_Next<MODEL, RESULT, OPERAND_RET>,
 		
 		
 		NAMED_SUM_LONG_RET  extends ISharedFunction_Next<MODEL, RESULT, NAMED_RET>,
@@ -51,7 +56,27 @@ abstract class Conditions_ExpressionList_Base<
 		ALIAS_CALENDAR_RET  extends ISharedFunction_Next<MODEL, RESULT, ALIAS_RET>,
 		ALIAS_SQLDATE_RET  	extends ISharedFunction_Next<MODEL, RESULT, ALIAS_RET>,
 		ALIAS_SQLTIME_RET  	extends ISharedFunction_Next<MODEL, RESULT, ALIAS_RET>,
-		ALIAS_SQLTIMESTAMP_RET  extends ISharedFunction_Next<MODEL, RESULT, ALIAS_RET>
+		ALIAS_SQLTIMESTAMP_RET  extends ISharedFunction_Next<MODEL, RESULT, ALIAS_RET>,
+		
+		UNDECIDED_SUM_LONG_RET  extends ISharedFunction_Next<MODEL, RESULT, UNDECIDED_RET>,
+		UNDECIDED_COUNT_RET     extends ISharedFunction_Next<MODEL, RESULT, UNDECIDED_RET>,
+		UNDECIDED_LENGTH_RET    extends ISharedFunction_Next<MODEL, RESULT, UNDECIDED_RET>,
+		
+		UNDECIDED_BYTE_RET  	extends ISharedFunction_Next<MODEL, RESULT, UNDECIDED_RET>,
+		UNDECIDED_SHORT_RET  	extends ISharedFunction_Next<MODEL, RESULT, UNDECIDED_RET>,
+		UNDECIDED_INTEGER_RET  	extends ISharedFunction_Next<MODEL, RESULT, UNDECIDED_RET>,
+		UNDECIDED_LONG_RET 	 	extends ISharedFunction_Next<MODEL, RESULT, UNDECIDED_RET>,
+		UNDECIDED_BIGINTEGER_RET 	 	extends ISharedFunction_Next<MODEL, RESULT, UNDECIDED_RET>,
+		UNDECIDED_FLOAT_RET 	 	extends ISharedFunction_Next<MODEL, RESULT, UNDECIDED_RET>,
+		UNDECIDED_DOUBLE_RET   	extends ISharedFunction_Next<MODEL, RESULT, UNDECIDED_RET>,
+		UNDECIDED_BIGDECIMAL_RET  extends ISharedFunction_Next<MODEL, RESULT, UNDECIDED_RET>,
+		UNDECIDED_STRING_RET  	extends ISharedFunction_Next<MODEL, RESULT, UNDECIDED_RET>,
+		UNDECIDED_DATE_RET  	extends ISharedFunction_Next<MODEL, RESULT, UNDECIDED_RET>,
+		UNDECIDED_CALENDAR_RET  extends ISharedFunction_Next<MODEL, RESULT, UNDECIDED_RET>,
+		UNDECIDED_SQLDATE_RET  	extends ISharedFunction_Next<MODEL, RESULT, UNDECIDED_RET>,
+		UNDECIDED_SQLTIME_RET  	extends ISharedFunction_Next<MODEL, RESULT, UNDECIDED_RET>,
+		UNDECIDED_SQLTIMESTAMP_RET  extends ISharedFunction_Next<MODEL, RESULT, UNDECIDED_RET>
+		
 
 		>
 
@@ -60,9 +85,14 @@ abstract class Conditions_ExpressionList_Base<
 		
 		OPERAND_RET,
 		
-		NAMED_RET, ALIAS_RET,
+		NAMED_RET, ALIAS_RET, UNDECIDED_RET,
 		
-		NUMERIC_NEXT, STRING_NEXT,
+		NAMED_NUMERIC_OPERAND_NEXT,
+		NAMED_STRING_OPERAND_NEXT,
+		ALIAS_NUMERIC_OPERAND_NEXT,
+		ALIAS_STRING_OPERAND_NEXT,
+		COMMON_NUMERIC_OPERAND_NEXT,
+		COMMON_STRING_OPERAND_NEXT,
 		
 		NAMED_SUM_LONG_RET,
 		NAMED_COUNT_RET,
@@ -101,8 +131,27 @@ abstract class Conditions_ExpressionList_Base<
 		ALIAS_CALENDAR_RET,
 		ALIAS_SQLDATE_RET,
 		ALIAS_SQLTIME_RET,
-		ALIAS_SQLTIMESTAMP_RET
+		ALIAS_SQLTIMESTAMP_RET,
+
 		
+		UNDECIDED_SUM_LONG_RET,
+		UNDECIDED_COUNT_RET,
+		UNDECIDED_LENGTH_RET,
+		
+		UNDECIDED_BYTE_RET,
+		UNDECIDED_SHORT_RET,
+		UNDECIDED_INTEGER_RET,
+		UNDECIDED_LONG_RET,
+		UNDECIDED_BIGINTEGER_RET,
+		UNDECIDED_FLOAT_RET,
+		UNDECIDED_DOUBLE_RET,
+		UNDECIDED_BIGDECIMAL_RET,
+		UNDECIDED_STRING_RET,
+		UNDECIDED_DATE_RET,
+		UNDECIDED_CALENDAR_RET,
+		UNDECIDED_SQLDATE_RET,
+		UNDECIDED_SQLTIME_RET,
+		UNDECIDED_SQLTIMESTAMP_RET
 		>  {
 
 			//private final IMappingCollector<MODEL, RESULT> impl;
@@ -497,6 +546,16 @@ abstract class Conditions_ExpressionList_Base<
 	@Override
 	final AliasFunctions createAliasFunctions(ISharedCollector_Functions_Callback<MODEL, RESULT, ALIAS_RET> func) {
 		return new Conditions_Alias_Functions(func);
+	}
+
+
+
+	@Override
+	com.neaterbits.query.sql.dsl.api.Collector_ExpressionList.UndecidedFunctions createUndecidedFunctions(
+			ISharedCollector_Functions_Callback<MODEL, RESULT, UNDECIDED_RET> func) {
+		
+		throw new UnsupportedOperationException("TODO");
+		
 	}
 }
 

@@ -9,6 +9,7 @@ public interface ISharedCondition_OpsAndComp_String_Named<MODEL, RESULT, L exten
 				
 				L,
 				
+				ISharedCondition_OpsAndComp_String_Named<MODEL, RESULT, L>,
 				ISharedCondition_OpsAndComp_String_Named<MODEL, RESULT, L>
 			> {
 

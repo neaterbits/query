@@ -18,8 +18,13 @@ final class Condition_ExpressionList_String_Named<
 		
 		RET,
 		ISharedLogical_Base<MODEL, RESULT>, // Alias
+		ISharedLogical_Base<MODEL, RESULT>,
 		
 		//ISharedCondition_OpsAndComp_Comparable_Named<MODEL, RESULT, R, RET>,
+		ISharedFunction_Next<MODEL, RESULT, RET>,
+		ISharedCondition_OpsAndComp_String_Named<MODEL, RESULT, RET>, // String
+		ISharedFunction_Next<MODEL, RESULT, RET>,
+		ISharedFunction_Next<MODEL, RESULT, RET>,
 		ISharedFunction_Next<MODEL, RESULT, RET>,
 		ISharedCondition_OpsAndComp_String_Named<MODEL, RESULT, RET>, // String
 		
@@ -60,8 +65,26 @@ final class Condition_ExpressionList_String_Named<
 		ISharedFunction_Next<MODEL, RESULT, ISharedLogical_Base<MODEL, RESULT>>,
 		ISharedFunction_Next<MODEL, RESULT, ISharedLogical_Base<MODEL, RESULT>>,
 		ISharedFunction_Next<MODEL, RESULT, ISharedLogical_Base<MODEL, RESULT>>,
+		ISharedFunction_Next<MODEL, RESULT, ISharedLogical_Base<MODEL, RESULT>>,
+		
+		ISharedFunction_Next<MODEL, RESULT, ISharedLogical_Base<MODEL, RESULT>>,
+		ISharedFunction_Next<MODEL, RESULT, ISharedLogical_Base<MODEL, RESULT>>,
+		ISharedFunction_Next<MODEL, RESULT, ISharedLogical_Base<MODEL, RESULT>>,
+		
+		ISharedFunction_Next<MODEL, RESULT, ISharedLogical_Base<MODEL, RESULT>>,
+		ISharedFunction_Next<MODEL, RESULT, ISharedLogical_Base<MODEL, RESULT>>,
+		ISharedFunction_Next<MODEL, RESULT, ISharedLogical_Base<MODEL, RESULT>>,
+		ISharedFunction_Next<MODEL, RESULT, ISharedLogical_Base<MODEL, RESULT>>,
+		ISharedFunction_Next<MODEL, RESULT, ISharedLogical_Base<MODEL, RESULT>>,
+		ISharedFunction_Next<MODEL, RESULT, ISharedLogical_Base<MODEL, RESULT>>,
+		ISharedFunction_Next<MODEL, RESULT, ISharedLogical_Base<MODEL, RESULT>>,
+		ISharedFunction_Next<MODEL, RESULT, ISharedLogical_Base<MODEL, RESULT>>,
+		ISharedFunction_Next<MODEL, RESULT, ISharedLogical_Base<MODEL, RESULT>>,
+		ISharedFunction_Next<MODEL, RESULT, ISharedLogical_Base<MODEL, RESULT>>,
+		ISharedFunction_Next<MODEL, RESULT, ISharedLogical_Base<MODEL, RESULT>>,
+		ISharedFunction_Next<MODEL, RESULT, ISharedLogical_Base<MODEL, RESULT>>,
+		ISharedFunction_Next<MODEL, RESULT, ISharedLogical_Base<MODEL, RESULT>>,
 		ISharedFunction_Next<MODEL, RESULT, ISharedLogical_Base<MODEL, RESULT>>
-	
 	>
 	
 	implements ISharedCondition_OpsAndComp_String_Named<MODEL, RESULT, RET>

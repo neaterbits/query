@@ -10,14 +10,20 @@ final class Condition_ExpressionList_String_Alias<
 		RESULT,
 		String,
 		
-		RET, ISharedComparison_Comparable_String_All<MODEL, RESULT, RET>,
+		RET,
+		ISharedComparison_Comparable_String_All<MODEL, RESULT, RET>,
 
 		RET,
 		
 		ISharedLogical_Base<MODEL, RESULT>,
 		RET,
+		ISharedLogical_Base<MODEL, RESULT>,
 		
 		//ISharedCondition_OpsAndComp_Comparable_Alias<MODEL, RESULT, R, RET>,
+		ISharedFunction_Next<MODEL, RESULT, RET>,
+		ISharedFunction_Next<MODEL, RESULT, RET>,
+		ISharedFunction_Next<MODEL, RESULT, RET>,
+		ISharedCondition_OpsAndComp_String_Alias<MODEL, RESULT, RET>, // String
 		ISharedFunction_Next<MODEL, RESULT, RET>,
 		ISharedCondition_OpsAndComp_String_Alias<MODEL, RESULT, RET>, // String
 
@@ -57,9 +63,27 @@ final class Condition_ExpressionList_String_Alias<
 		ISharedFunction_Next<MODEL, RESULT, RET>,
 		ISharedFunction_Next<MODEL, RESULT, RET>,
 		ISharedFunction_Next<MODEL, RESULT, RET>,
-		ISharedFunction_Next<MODEL, RESULT, RET>
+		ISharedFunction_Next<MODEL, RESULT, RET>,
 		
 		
+		ISharedFunction_Next<MODEL, RESULT, ISharedLogical_Base<MODEL, RESULT>>,
+		ISharedFunction_Next<MODEL, RESULT, ISharedLogical_Base<MODEL, RESULT>>,
+		ISharedFunction_Next<MODEL, RESULT, ISharedLogical_Base<MODEL, RESULT>>,
+		
+		ISharedFunction_Next<MODEL, RESULT, ISharedLogical_Base<MODEL, RESULT>>,
+		ISharedFunction_Next<MODEL, RESULT, ISharedLogical_Base<MODEL, RESULT>>,
+		ISharedFunction_Next<MODEL, RESULT, ISharedLogical_Base<MODEL, RESULT>>,
+		ISharedFunction_Next<MODEL, RESULT, ISharedLogical_Base<MODEL, RESULT>>,
+		ISharedFunction_Next<MODEL, RESULT, ISharedLogical_Base<MODEL, RESULT>>,
+		ISharedFunction_Next<MODEL, RESULT, ISharedLogical_Base<MODEL, RESULT>>,
+		ISharedFunction_Next<MODEL, RESULT, ISharedLogical_Base<MODEL, RESULT>>,
+		ISharedFunction_Next<MODEL, RESULT, ISharedLogical_Base<MODEL, RESULT>>,
+		ISharedFunction_Next<MODEL, RESULT, ISharedLogical_Base<MODEL, RESULT>>,
+		ISharedFunction_Next<MODEL, RESULT, ISharedLogical_Base<MODEL, RESULT>>,
+		ISharedFunction_Next<MODEL, RESULT, ISharedLogical_Base<MODEL, RESULT>>,
+		ISharedFunction_Next<MODEL, RESULT, ISharedLogical_Base<MODEL, RESULT>>,
+		ISharedFunction_Next<MODEL, RESULT, ISharedLogical_Base<MODEL, RESULT>>,
+		ISharedFunction_Next<MODEL, RESULT, ISharedLogical_Base<MODEL, RESULT>>
 		
 		>
 		
