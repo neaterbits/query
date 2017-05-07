@@ -9,6 +9,8 @@ import com.neaterbits.query.sql.dsl.api.BaseJPATest;
 import com.neaterbits.query.sql.dsl.api.IShort;
 import com.neaterbits.query.sql.dsl.api.MultiBuilt;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 /**
  * Tests that check for undecided map/alias all the way through
  * @author nhl
@@ -42,4 +44,9 @@ public class ShortUndecidedTest extends BaseJPATest {
 				new NameLength("Acme Inc.", 1)); 	// (9 + 1) % 3 => 1
 	}
 	
+	@Test
+	public void testAvgSumAndOthersThatReturnCorrectType() {
+		// Check that returns Long for <= long type and BigInteger for BigInteger etc
+		assertThat(true).isEqualTo(false);
+	}
 }

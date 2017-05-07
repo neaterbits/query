@@ -4,8 +4,8 @@ public interface ISharedMapFunctions_String_Undecided<
 		MODEL,
 		RESULT,
 		
-		NAMED_RET extends ISharedSelectSourceBuilder<MODEL, RESULT>,
-		ALIAS_RET extends ISharedSelectSourceBuilder<MODEL, RESULT>,
+		NAMED_RET extends ISharedFunction_After<MODEL, RESULT>,
+		ALIAS_RET extends ISharedFunction_After<MODEL, RESULT>,
 		
 		NAMED_LENGTH_RET extends ISharedFunction_Next<MODEL, RESULT, NAMED_RET>,
 		NAMED_STRING_RET extends ISharedFunction_Next<MODEL, RESULT, NAMED_RET>,

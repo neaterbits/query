@@ -549,6 +549,10 @@ abstract class Collector_ExpressionList<
 		NO_PARAM_ARITHMETIC_SAME_TYPE_RET,
 		NO_PARAM_ARITHMETIC_DOUBLE_RET,
 		
+		NO_PARAM_AGGREGATE_SAME_TYPE_RET,
+		NO_PARAM_AGGREGATE_SUM_RET,
+		NO_PARAM_AGGREGATE_COUNT_RET,
+		
 		NO_PARAM_STRING_SAME_TYPE_RET,
 		NO_PARAM_STRING_LENGTH_RET
 		>
@@ -556,7 +560,45 @@ abstract class Collector_ExpressionList<
 	extends Collector_NestedFunctions_Undecided<
 				MODEL, RESULT, 
 				
-				UNDECIDED_RET,
+				NAMED_RET, ALIAS_RET, UNDECIDED_RET,
+
+				NAMED_SUM_LONG_RET, 
+				NAMED_COUNT_RET,
+				NAMED_LENGTH_RET,
+				
+				NAMED_BYTE_RET,
+				NAMED_SHORT_RET,
+				NAMED_INTEGER_RET,
+				NAMED_LONG_RET,
+				NAMED_BIGINTEGER_RET, 
+				NAMED_FLOAT_RET,
+				NAMED_DOUBLE_RET,
+				NAMED_BIGDECIMAL_RET,
+				NAMED_STRING_RET,
+				NAMED_DATE_RET,
+				NAMED_CALENDAR_RET,
+				NAMED_SQLDATE_RET,
+				NAMED_SQLTIME_RET,
+				NAMED_SQLTIMESTAMP_RET,
+				
+				ALIAS_SUM_LONG_RET, 
+				ALIAS_COUNT_RET,
+				ALIAS_LENGTH_RET,
+				
+				ALIAS_BYTE_RET,
+				ALIAS_SHORT_RET,
+				ALIAS_INTEGER_RET,
+				ALIAS_LONG_RET,
+				ALIAS_BIGINTEGER_RET, 
+				ALIAS_FLOAT_RET,
+				ALIAS_DOUBLE_RET,
+				ALIAS_BIGDECIMAL_RET,
+				ALIAS_STRING_RET,
+				ALIAS_DATE_RET,
+				ALIAS_CALENDAR_RET,
+				ALIAS_SQLDATE_RET,
+				ALIAS_SQLTIME_RET,
+				ALIAS_SQLTIMESTAMP_RET,
 				
 				UNDECIDED_SUM_LONG_RET, 
 				UNDECIDED_COUNT_RET,
@@ -580,6 +622,10 @@ abstract class Collector_ExpressionList<
 				NO_PARAM_ARITHMETIC_SAME_TYPE_RET,
 				NO_PARAM_ARITHMETIC_DOUBLE_RET,
 				
+				NO_PARAM_AGGREGATE_SAME_TYPE_RET,
+				NO_PARAM_AGGREGATE_SUM_RET,
+				NO_PARAM_AGGREGATE_COUNT_RET,
+				
 				NO_PARAM_STRING_SAME_TYPE_RET,
 				NO_PARAM_STRING_LENGTH_RET
 				> 
@@ -587,10 +633,15 @@ abstract class Collector_ExpressionList<
 	implements ISharedFunction_Next<MODEL, RESULT, UNDECIDED_RET> {
 	
 		protected UndecidedFunctions(Collector_NestedFunctions_Undecided<
-							MODEL, RESULT, UNDECIDED_RET,
+							MODEL, RESULT,
+							NAMED_RET, ALIAS_RET, UNDECIDED_RET,
 							?, ?, ?,
 							?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,
-							?, ?, ?, ?> toCopy) {
+							?, ?, ?,
+							?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,
+							?, ?, ?,
+							?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,
+							?, ?, ?, ?, ?, ?, ?> toCopy) {
 			super(toCopy);
 		}
 	
@@ -1633,7 +1684,7 @@ abstract class Collector_ExpressionList<
 	abstract UndecidedFunctions createUndecidedFunctions(ISharedCollector_Functions_Callback<MODEL, RESULT, UNDECIDED_RET> func);
 	
 
-	private UndecidedFunctions<?, ?, ?, ?> assureUndecidedFunctions() {
+	private UndecidedFunctions<?, ?, ?, ?, ?, ?, ?> assureUndecidedFunctions() {
 		
 		
 		setUndecided();
@@ -1663,7 +1714,7 @@ abstract class Collector_ExpressionList<
 		}
 
 		@SuppressWarnings("unchecked")
-		final UndecidedFunctions<?, ?, ?, ?> ret = this.undecided;
+		final UndecidedFunctions<?, ?, ?, ?, ?, ?, ?> ret = this.undecided;
 		
 		return ret;
 	}

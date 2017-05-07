@@ -225,6 +225,4 @@ abstract class Collector_NestedFunctions_Alias<
 
 		return (NO_PARAM_ARITHMETIC_DOUBLE_RET)getAliasNoParamNext();
 	}
-	
-
 }
