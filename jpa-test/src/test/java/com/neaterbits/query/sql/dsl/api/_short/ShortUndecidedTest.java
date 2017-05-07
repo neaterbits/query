@@ -5,6 +5,7 @@ import java.math.BigDecimal;
 import org.junit.Test;
 
 import com.neaterbits.query.jpatest.model.Company;
+import com.neaterbits.query.sql.dsl.api.BaseJPATest;
 import com.neaterbits.query.sql.dsl.api.IShort;
 import com.neaterbits.query.sql.dsl.api.MultiBuilt;
 
@@ -14,7 +15,7 @@ import com.neaterbits.query.sql.dsl.api.MultiBuilt;
  *
  */
 
-public class ShortUndecidedTest {
+public class ShortUndecidedTest extends BaseJPATest {
 	protected static final IShort select = com.neaterbits.query.sql.dsl.api.IShortSelect.get();
 
 	@Test
@@ -31,7 +32,7 @@ public class ShortUndecidedTest {
 				.list(NameLength.class)
 				
 				.map().sqrtOfInteger(b -> b.length(Company::getName)).to(NameLength::setLengthSqrt)
-				.where().absOfInteger(b -> b.length(Company::getNamed)).isEqualTo(4)
+				.where().absOfInteger(b -> b.length(Company::getName)).isEqualTo(4)
 
 				.build();
 		
