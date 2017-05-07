@@ -4,7 +4,7 @@ public interface IClassicResult_Mapped_Multi_All<MODEL, RESULT>
 	extends 
 		IClassicMultiSelectSourceBuilder<MODEL, RESULT>,
 		
-		ISharedResultMapper_All<
+		ISharedResultMapper_Undecided<
 			MODEL,
 			RESULT,
 			IClassicResult_Mapped_Multi_Named<MODEL, RESULT>,

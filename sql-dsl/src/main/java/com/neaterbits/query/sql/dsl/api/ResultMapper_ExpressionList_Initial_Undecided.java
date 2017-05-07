@@ -199,7 +199,7 @@ final class ResultMapper_ExpressionList_Initial_Undecided<
 			>
 
 	
-	implements ISharedMapFunctions_Initial<
+	implements ISharedMapFunctions_All_Undecided<
 			MODEL,
 			RESULT,
 

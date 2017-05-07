@@ -15,10 +15,10 @@ public interface ISharedResult_Mapped_Undecided_Base<
 	>
 	
 	extends 
-	ISharedResultMapper_All<MODEL, RESULT, NAMED_RET, ALIAS_RET, UNDECIDED_RET>,
+	ISharedResultMapper_Undecided<MODEL, RESULT, NAMED_RET, ALIAS_RET, UNDECIDED_RET>,
 	ISharedSelectSourceBuilder<MODEL, RESULT> { // TODO: really select-source? needed for type-checking{
 	
-	ISharedMapFunctions_Initial<
+	ISharedMapFunctions_All_Undecided<
 		MODEL,
 		RESULT,
 		

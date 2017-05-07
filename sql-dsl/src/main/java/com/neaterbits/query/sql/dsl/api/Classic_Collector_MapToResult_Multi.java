@@ -62,7 +62,7 @@ final class Classic_Collector_MapToResult_Multi<
 
 
 	@Override
-	public final ISharedMapFunctions_Initial<
+	public final ISharedMapFunctions_All_Undecided<
 
 			MODEL,
 			RESULT,

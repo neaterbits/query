@@ -3,7 +3,7 @@ package com.neaterbits.query.sql.dsl.api;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 
-public interface ISharedResultMapper_All<MODEL, RESULT, 
+public interface ISharedResultMapper_Undecided<MODEL, RESULT, 
 		NAMED_SOURCE extends ISharedSelectSourceBuilder<MODEL, RESULT>,
 		ALIAS_SOURCE extends ISharedSelectSourceBuilder<MODEL, RESULT>,
 		UNDECIDED_SOURCE extends ISharedSelectSourceBuilder<MODEL, RESULT>> 
@@ -21,7 +21,7 @@ public interface ISharedResultMapper_All<MODEL, RESULT,
 			
 			
 	// All functions - aggregate, string, datetime and aggregated
-	ISharedMapFunctions_Initial<
+	ISharedMapFunctions_All_Undecided<
 				MODEL,
 				RESULT,
 

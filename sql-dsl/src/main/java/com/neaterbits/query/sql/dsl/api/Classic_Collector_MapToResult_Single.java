@@ -63,7 +63,7 @@ final class Classic_Collector_MapToResult_Single<MODEL, RESULT>
 	}
 
 	@Override
-	public ISharedMapFunctions_Initial<
+	public ISharedMapFunctions_All_Undecided<
 		MODEL, 
 		RESULT,
 	

@@ -159,7 +159,7 @@ final class Short_Collector_Multi_Any_Any<MODEL, RESULT>
 
 
 	@Override
-	public ISharedMapFunctions_Initial<
+	public ISharedMapFunctions_All_Undecided<
 				MODEL,
 				RESULT,
 				
