@@ -63,6 +63,14 @@ final class QueryHelper {
 				getConditionParamRefs(qc, query, level + 1, conditionIndices, list, unique);
 			}
 			else {
+				
+				final EClauseOperator operator = qc.getOperator(query, level, conditionIndices);
+				
+				if (!operator.hasConditionValue()) {
+					// eg. isNull() and isNotNull() does not have parameters
+					continue;
+				}
+				
 				final ConditionValue conditionValue = qc.getConditionValue(query, level, conditionIndices);
 
 				if (conditionValue.getType() == EConditionValue.PARAM) {
@@ -105,6 +113,12 @@ final class QueryHelper {
 				thisConditionHasParams = hasConditionParams(q, query, level + 1, conditionIndices);
 			}
 			else {
+				final EClauseOperator operator = q.getOperator(query, level, conditionIndices);
+				
+				if (!operator.hasConditionValue()) {
+					// eg. isNull() and isNotNull() does not have parameters
+					continue;
+				}
 				
 				final ConditionValue conditionValue = q.getConditionValue(query, level, conditionIndices);
 

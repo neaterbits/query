@@ -65,6 +65,14 @@ abstract class AdhocConditions<MODEL, RESULT, QUERY extends AdhocQuery_Named<MOD
 	/**************************************************************************
 	** ISharedClauseConditionValue
 	**************************************************************************/
+
+	private ISharedLogical_Base<MODEL, RESULT> addOperatorRet(EClauseOperator operator) {
+		
+		addOperator(operator, null, query.getCurSource()); // Join with current-source from query
+
+		return this;
+	}
+	
 	private ISharedLogical_Base<MODEL, RESULT> addOperatorRet(EClauseOperator operator, Object value) {
 		
 		addOperator(operator, value, query.getCurSource()); // Join with current-source from query
@@ -86,6 +94,16 @@ abstract class AdhocConditions<MODEL, RESULT, QUERY extends AdhocQuery_Named<MOD
 	@Override
 	public final ISharedLogical_Base<MODEL, RESULT> isNotEqualTo(Comparable<Object> other) {
 		return addOperatorRet(EClauseOperator.NOT_EQUAL, other);
+	}
+	
+	@Override
+	public final ISharedLogical_Base<MODEL, RESULT> isNull() {
+		return addOperatorRet(EClauseOperator.IS_NULL);
+	}
+
+	@Override
+	public final ISharedLogical_Base<MODEL, RESULT> isNotNull() {
+		return addOperatorRet(EClauseOperator.IS_NOT_NULL);
 	}
 
 	@Override

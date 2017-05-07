@@ -78,6 +78,17 @@ abstract class Collector_Condition_Equality<MODEL, RESULT, R, L extends ISharedL
 		return (L)clause;
 	}
 
+	
+	@Override
+	public final L isNull() {
+		return addCondition(new CollectedCondition_IsNull(lhs));
+	}
+
+	@Override
+	public final L isNotNull() {
+		return addCondition(new CollectedCondition_IsNotNull(lhs));
+	}
+
 	@Override
 	public final L isEqualTo(R other) {
 		

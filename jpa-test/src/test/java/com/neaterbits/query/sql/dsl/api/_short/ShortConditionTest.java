@@ -81,4 +81,71 @@ public class ShortConditionTest extends BaseJPATest {
 		.checkListUnordered(query, () -> Arrays.asList(new Company(acme2.getId(), "Acme Inc.", 1979)));
     	
     }
+
+    @Test
+    public void testIsNullNamed() {
+		final Company acme1 = new Company(1, "Acme", new BigDecimal("49"));
+		final Company acme2 = new Company(2, "Acme Inc.", (BigDecimal)null);
+
+    	    	
+    	// sum for all landplots
+    	final MultiBuilt<Company> query
+			= select.list(Company.class)
+				.where(Company::getStockPrice).isNull()
+				.build();
+    	
+    	store(acme1, acme2)
+		.checkListUnordered(query, () -> Arrays.asList(new Company(acme2.getId(), "Acme Inc.")));
+    }
+
+    @Test
+    public void testIsNullAlias() {
+		final Company acme1 = new Company(1, "Acme", new BigDecimal("49"));
+		final Company acme2 = new Company(2, "Acme Inc.", (BigDecimal)null);
+
+		final Company c = select.alias(Company.class);
+    	    	
+    	// sum for all landplots
+    	final MultiBuilt<Company> query
+			= select.list(c)
+				.where(c::getStockPrice).isNull()
+				.build();
+    	
+    	store(acme1, acme2)
+		.checkListUnordered(query, () -> Arrays.asList(new Company(acme2.getId(), "Acme Inc.")));
+    }
+
+    @Test
+    public void testIsNotNullNamed() {
+		final Company acme1 = new Company(1, "Acme", new BigDecimal("49"));
+		final Company acme2 = new Company(2, "Acme Inc.", (BigDecimal)null);
+
+    	    	
+    	// sum for all landplots
+    	final MultiBuilt<Company> query
+			= select.list(Company.class)
+				.where(Company::getStockPrice).isNotNull()
+				.build();
+    	
+    	store(acme1, acme2)
+		.checkListUnordered(query, () -> Arrays.asList(new Company(acme1.getId(), "Acme", new BigDecimal("49"))));
+    }
+
+    @Test
+    public void testIsNotNullAlias() {
+		final Company acme1 = new Company(1, "Acme", new BigDecimal("49"));
+		final Company acme2 = new Company(2, "Acme Inc.", (BigDecimal)null);
+
+		final Company c = select.alias(Company.class);
+    	    	
+    	// sum for all landplots
+    	final MultiBuilt<Company> query
+			= select.list(c)
+				.where(c::getStockPrice).isNotNull()
+				.build();
+    	
+    	store(acme1, acme2)
+		.checkListUnordered(query, () -> Arrays.asList(new Company(acme1.getId(), "Acme", new BigDecimal("49"))));
+    }
+
 }

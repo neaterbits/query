@@ -1,7 +1,7 @@
 package com.neaterbits.query.sql.dsl.api;
 
 
-abstract class CollectedCondition_Value extends CollectedCondition_NonNested {
+abstract class CollectedCondition_Value extends CollectedCondition_Basic {
 
 	private final ConditionValue value;
 	

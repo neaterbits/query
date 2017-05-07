@@ -259,6 +259,12 @@ final class AdhocJoin<MODEL, RESULT>
 	}
 		
 
+	private ISharedLogical_Base<MODEL, RESULT> addOperatorRet(EClauseOperator operator) {
+		addOperator(operator, null);
+
+		return this;
+	}
+	
 	private ISharedLogical_Base<MODEL, RESULT> addOperatorRet(EClauseOperator operator, Object value) {
 		addOperator(operator, value);
 
@@ -271,6 +277,17 @@ final class AdhocJoin<MODEL, RESULT>
 				Constants.IN_AS_LIST ? Arrays.asList(values) : values);
 	}
 	
+	@Override
+	public final ISharedLogical_Base<MODEL, RESULT> isNull() {
+		return addOperatorRet(EClauseOperator.IS_NULL);
+	}
+
+	@Override
+	public final ISharedLogical_Base<MODEL, RESULT> isNotNull() {
+		return addOperatorRet(EClauseOperator.IS_NOT_NULL);
+	}
+
+
 	@Override
 	public final ISharedLogical_Base<MODEL, RESULT> isEqualTo(Comparable<Object> other) {
 		return addOperatorRet(EClauseOperator.IS_EQUAL, other);
