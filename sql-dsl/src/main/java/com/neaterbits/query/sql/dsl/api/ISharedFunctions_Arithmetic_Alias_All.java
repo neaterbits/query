@@ -45,14 +45,14 @@ public interface ISharedFunctions_Arithmetic_Alias_All<
 	
 	// sqrt() always return double-type
 	
-	DOUBLE_RET 	sqrtOf(ISharedSubOperandsFunction_Byte_Alias<MODEL, RESULT> sub);
-	DOUBLE_RET 	sqrtOf(ISharedSubOperandsFunction_Short_Alias<MODEL, RESULT> sub);
-	DOUBLE_RET 	sqrtOf(ISharedSubOperandsFunction_Integer_Alias<MODEL, RESULT> sub);
-	DOUBLE_RET 	sqrtOf(ISharedSubOperandsFunction_BigInteger_Alias<MODEL, RESULT> sub);
-	DOUBLE_RET 	sqrtOf(ISharedSubOperandsFunction_Long_Alias<MODEL, RESULT> sub);
-	DOUBLE_RET 	sqrtOf(ISharedSubOperandsFunction_Float_Alias<MODEL, RESULT> sub);
-	DOUBLE_RET 	sqrtOf(ISharedSubOperandsFunction_Double_Alias<MODEL, RESULT> sub);
-	DOUBLE_RET 	sqrtOf(ISharedSubOperandsFunction_BigDecimal_Alias<MODEL, RESULT> sub);
+	DOUBLE_RET 	sqrtOfByte(ISharedSubOperandsFunction_Byte_Alias<MODEL, RESULT> sub);
+	DOUBLE_RET 	sqrtOfShort(ISharedSubOperandsFunction_Short_Alias<MODEL, RESULT> sub);
+	DOUBLE_RET 	sqrtOfInteger(ISharedSubOperandsFunction_Integer_Alias<MODEL, RESULT> sub);
+	DOUBLE_RET 	sqrtOfLong(ISharedSubOperandsFunction_Long_Alias<MODEL, RESULT> sub);
+	DOUBLE_RET 	sqrtOfBigInteger(ISharedSubOperandsFunction_BigInteger_Alias<MODEL, RESULT> sub);
+	DOUBLE_RET 	sqrtOfFloat(ISharedSubOperandsFunction_Float_Alias<MODEL, RESULT> sub);
+	DOUBLE_RET 	sqrtOfDouble(ISharedSubOperandsFunction_Double_Alias<MODEL, RESULT> sub);
+	DOUBLE_RET 	sqrtOfBigDecimal(ISharedSubOperandsFunction_BigDecimal_Alias<MODEL, RESULT> sub);
 	
 	INTEGER_RET 	modOf(ISharedSubOperandsFunction_Integer_Alias<MODEL, RESULT> sub, int value);
 }

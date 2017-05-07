@@ -82,14 +82,14 @@ public interface ISharedFunctions_Arithmetic_Undecided<
 	UNDECIDED_BIGDECIMAL_RET absOfBigDecimal(ISharedSubOperandsFunction_BigDecimal_Undecided<MODEL, RESULT> sub);
 
 	// sqrt always returns double
-	UNDECIDED_DOUBLE_RET sqrtOf(ISharedSubOperandsFunction_Byte_Undecided<MODEL, RESULT> sub);
-	UNDECIDED_DOUBLE_RET sqrtOf(ISharedSubOperandsFunction_Short_Undecided<MODEL, RESULT> sub);
-	UNDECIDED_DOUBLE_RET sqrtOf(ISharedSubOperandsFunction_Integer_Undecided<MODEL, RESULT> sub);
-	UNDECIDED_DOUBLE_RET sqrtOf(ISharedSubOperandsFunction_BigInteger_Undecided<MODEL, RESULT> sub);
-	UNDECIDED_DOUBLE_RET sqrtOf(ISharedSubOperandsFunction_Long_Undecided<MODEL, RESULT> sub);
-	UNDECIDED_DOUBLE_RET sqrtOf(ISharedSubOperandsFunction_Float_Undecided<MODEL, RESULT> sub);
-	UNDECIDED_DOUBLE_RET sqrtOf(ISharedSubOperandsFunction_Double_Undecided<MODEL, RESULT> sub);
-	UNDECIDED_DOUBLE_RET sqrtOf(ISharedSubOperandsFunction_BigDecimal_Undecided<MODEL, RESULT> sub);
+	UNDECIDED_DOUBLE_RET sqrtOfByte(ISharedSubOperandsFunction_Byte_Undecided<MODEL, RESULT> sub);
+	UNDECIDED_DOUBLE_RET sqrtOfShort(ISharedSubOperandsFunction_Short_Undecided<MODEL, RESULT> sub);
+	UNDECIDED_DOUBLE_RET sqrtOfInteger(ISharedSubOperandsFunction_Integer_Undecided<MODEL, RESULT> sub);
+	UNDECIDED_DOUBLE_RET sqrtOfLong(ISharedSubOperandsFunction_Long_Undecided<MODEL, RESULT> sub);
+	UNDECIDED_DOUBLE_RET sqrtOfBigInteger(ISharedSubOperandsFunction_BigInteger_Undecided<MODEL, RESULT> sub);
+	UNDECIDED_DOUBLE_RET sqrtOfFloat(ISharedSubOperandsFunction_Float_Undecided<MODEL, RESULT> sub);
+	UNDECIDED_DOUBLE_RET sqrtOfDouble(ISharedSubOperandsFunction_Double_Undecided<MODEL, RESULT> sub);
+	UNDECIDED_DOUBLE_RET sqrtOfBigDecimal(ISharedSubOperandsFunction_BigDecimal_Undecided<MODEL, RESULT> sub);
 	
 	UNDECIDED_INTEGER_RET modOf(ISharedSubOperandsFunction_Integer_Undecided<MODEL, RESULT> sub, int value);
 }

@@ -871,43 +871,43 @@ abstract class Collector_ExpressionList<
 	}
 
 	@Override
-	public final NAMED_DOUBLE_RET sqrtOf(ISharedSubOperandsFunction_Byte_Named<MODEL, RESULT> sub) {
-		return assureNamedFunctions().sqrtOf(sub);
+	public final NAMED_DOUBLE_RET sqrtOfByte(ISharedSubOperandsFunction_Byte_Named<MODEL, RESULT> sub) {
+		return assureNamedFunctions().sqrtOfByte(sub);
 	}
 
 	@Override
-	public final NAMED_DOUBLE_RET sqrtOf(ISharedSubOperandsFunction_Short_Named<MODEL, RESULT> sub) {
-		return assureNamedFunctions().sqrtOf(sub);
+	public final NAMED_DOUBLE_RET sqrtOfShort(ISharedSubOperandsFunction_Short_Named<MODEL, RESULT> sub) {
+		return assureNamedFunctions().sqrtOfShort(sub);
 	}
 
 	@Override
-	public final NAMED_DOUBLE_RET sqrtOf(ISharedSubOperandsFunction_Integer_Named<MODEL, RESULT> sub) {
-		return assureNamedFunctions().sqrtOf(sub);
+	public final NAMED_DOUBLE_RET sqrtOfInteger(ISharedSubOperandsFunction_Integer_Named<MODEL, RESULT> sub) {
+		return assureNamedFunctions().sqrtOfInteger(sub);
 	}
 
 	@Override
-	public final NAMED_DOUBLE_RET sqrtOf(ISharedSubOperandsFunction_BigInteger_Named<MODEL, RESULT> sub) {
-		return assureNamedFunctions().sqrtOf(sub);
+	public final NAMED_DOUBLE_RET sqrtOfLong(ISharedSubOperandsFunction_Long_Named<MODEL, RESULT> sub) {
+		return assureNamedFunctions().sqrtOfLong(sub);
 	}
 
 	@Override
-	public final NAMED_DOUBLE_RET sqrtOf(ISharedSubOperandsFunction_Long_Named<MODEL, RESULT> sub) {
-		return assureNamedFunctions().sqrtOf(sub);
+	public final NAMED_DOUBLE_RET sqrtOfBigInteger(ISharedSubOperandsFunction_BigInteger_Named<MODEL, RESULT> sub) {
+		return assureNamedFunctions().sqrtOfBigInteger(sub);
 	}
 
 	@Override
-	public final NAMED_DOUBLE_RET sqrtOf(ISharedSubOperandsFunction_Float_Named<MODEL, RESULT> sub) {
-		return assureNamedFunctions().sqrtOf(sub);
+	public final NAMED_DOUBLE_RET sqrtOfFloat(ISharedSubOperandsFunction_Float_Named<MODEL, RESULT> sub) {
+		return assureNamedFunctions().sqrtOfFloat(sub);
 	}
 
 	@Override
-	public final NAMED_DOUBLE_RET sqrtOf(ISharedSubOperandsFunction_Double_Named<MODEL, RESULT> sub) {
-		return assureNamedFunctions().sqrtOf(sub);
+	public final NAMED_DOUBLE_RET sqrtOfDouble(ISharedSubOperandsFunction_Double_Named<MODEL, RESULT> sub) {
+		return assureNamedFunctions().sqrtOfDouble(sub);
 	}
 
 	@Override
-	public final NAMED_DOUBLE_RET sqrtOf(ISharedSubOperandsFunction_BigDecimal_Named<MODEL, RESULT> sub) {
-		return assureNamedFunctions().sqrtOf(sub);
+	public final NAMED_DOUBLE_RET sqrtOfBigDecimal(ISharedSubOperandsFunction_BigDecimal_Named<MODEL, RESULT> sub) {
+		return assureNamedFunctions().sqrtOfBigDecimal(sub);
 	}
 	
 	@Override
@@ -1311,43 +1311,43 @@ abstract class Collector_ExpressionList<
 	}
 
 	@Override
-	public final ALIAS_DOUBLE_RET sqrtOf(ISharedSubOperandsFunction_Byte_Alias<MODEL, RESULT> sub) {
-		return assureAliasFunctions().sqrtOf(sub);
+	public final ALIAS_DOUBLE_RET sqrtOfByte(ISharedSubOperandsFunction_Byte_Alias<MODEL, RESULT> sub) {
+		return assureAliasFunctions().sqrtOfByte(sub);
 	}
 
 	@Override
-	public final ALIAS_DOUBLE_RET sqrtOf(ISharedSubOperandsFunction_Short_Alias<MODEL, RESULT> sub) {
-		return assureAliasFunctions().sqrtOf(sub);
+	public final ALIAS_DOUBLE_RET sqrtOfShort(ISharedSubOperandsFunction_Short_Alias<MODEL, RESULT> sub) {
+		return assureAliasFunctions().sqrtOfShort(sub);
 	}
 
 	@Override
-	public final ALIAS_DOUBLE_RET sqrtOf(ISharedSubOperandsFunction_Integer_Alias<MODEL, RESULT> sub) {
-		return assureAliasFunctions().sqrtOf(sub);
+	public final ALIAS_DOUBLE_RET sqrtOfInteger(ISharedSubOperandsFunction_Integer_Alias<MODEL, RESULT> sub) {
+		return assureAliasFunctions().sqrtOfInteger(sub);
 	}
 
 	@Override
-	public final ALIAS_DOUBLE_RET sqrtOf(ISharedSubOperandsFunction_BigInteger_Alias<MODEL, RESULT> sub) {
-		return assureAliasFunctions().sqrtOf(sub);
+	public final ALIAS_DOUBLE_RET sqrtOfLong(ISharedSubOperandsFunction_Long_Alias<MODEL, RESULT> sub) {
+		return assureAliasFunctions().sqrtOfLong(sub);
 	}
 
 	@Override
-	public final ALIAS_DOUBLE_RET sqrtOf(ISharedSubOperandsFunction_Long_Alias<MODEL, RESULT> sub) {
-		return assureAliasFunctions().sqrtOf(sub);
+	public final ALIAS_DOUBLE_RET sqrtOfBigInteger(ISharedSubOperandsFunction_BigInteger_Alias<MODEL, RESULT> sub) {
+		return assureAliasFunctions().sqrtOfBigInteger(sub);
 	}
 
 	@Override
-	public final ALIAS_DOUBLE_RET sqrtOf(ISharedSubOperandsFunction_Float_Alias<MODEL, RESULT> sub) {
-		return assureAliasFunctions().sqrtOf(sub);
+	public final ALIAS_DOUBLE_RET sqrtOfFloat(ISharedSubOperandsFunction_Float_Alias<MODEL, RESULT> sub) {
+		return assureAliasFunctions().sqrtOfFloat(sub);
 	}
 
 	@Override
-	public final ALIAS_DOUBLE_RET sqrtOf(ISharedSubOperandsFunction_Double_Alias<MODEL, RESULT> sub) {
-		return assureAliasFunctions().sqrtOf(sub);
+	public final ALIAS_DOUBLE_RET sqrtOfDouble(ISharedSubOperandsFunction_Double_Alias<MODEL, RESULT> sub) {
+		return assureAliasFunctions().sqrtOfDouble(sub);
 	}
 
 	@Override
-	public final ALIAS_DOUBLE_RET sqrtOf(ISharedSubOperandsFunction_BigDecimal_Alias<MODEL, RESULT> sub) {
-		return assureAliasFunctions().sqrtOf(sub);
+	public final ALIAS_DOUBLE_RET sqrtOfBigDecimal(ISharedSubOperandsFunction_BigDecimal_Alias<MODEL, RESULT> sub) {
+		return assureAliasFunctions().sqrtOfBigDecimal(sub);
 	}
 
 	@Override
@@ -1720,43 +1720,43 @@ abstract class Collector_ExpressionList<
 	}
 
 	@Override
-	public final UNDECIDED_DOUBLE_RET sqrtOf(ISharedSubOperandsFunction_Byte_Undecided<MODEL, RESULT> sub) {
-		return assureUndecidedFunctions().sqrtOf(sub);
+	public final UNDECIDED_DOUBLE_RET sqrtOfByte(ISharedSubOperandsFunction_Byte_Undecided<MODEL, RESULT> sub) {
+		return assureUndecidedFunctions().sqrtOfByte(sub);
 	}
 
 	@Override
-	public final UNDECIDED_DOUBLE_RET sqrtOf(ISharedSubOperandsFunction_Short_Undecided<MODEL, RESULT> sub) {
-		return assureUndecidedFunctions().sqrtOf(sub);
+	public final UNDECIDED_DOUBLE_RET sqrtOfShort(ISharedSubOperandsFunction_Short_Undecided<MODEL, RESULT> sub) {
+		return assureUndecidedFunctions().sqrtOfShort(sub);
 	}
 
 	@Override
-	public final UNDECIDED_DOUBLE_RET sqrtOf(ISharedSubOperandsFunction_Integer_Undecided<MODEL, RESULT> sub) {
-		return assureUndecidedFunctions().sqrtOf(sub);
+	public final UNDECIDED_DOUBLE_RET sqrtOfInteger(ISharedSubOperandsFunction_Integer_Undecided<MODEL, RESULT> sub) {
+		return assureUndecidedFunctions().sqrtOfInteger(sub);
 	}
 
 	@Override
-	public final UNDECIDED_DOUBLE_RET sqrtOf(ISharedSubOperandsFunction_BigInteger_Undecided<MODEL, RESULT> sub) {
-		return assureUndecidedFunctions().sqrtOf(sub);
+	public final UNDECIDED_DOUBLE_RET sqrtOfLong(ISharedSubOperandsFunction_Long_Undecided<MODEL, RESULT> sub) {
+		return assureUndecidedFunctions().sqrtOfLong(sub);
 	}
 
 	@Override
-	public final UNDECIDED_DOUBLE_RET sqrtOf(ISharedSubOperandsFunction_Long_Undecided<MODEL, RESULT> sub) {
-		return assureUndecidedFunctions().sqrtOf(sub);
+	public final UNDECIDED_DOUBLE_RET sqrtOfBigInteger(ISharedSubOperandsFunction_BigInteger_Undecided<MODEL, RESULT> sub) {
+		return assureUndecidedFunctions().sqrtOfBigInteger(sub);
 	}
 
 	@Override
-	public final UNDECIDED_DOUBLE_RET sqrtOf(ISharedSubOperandsFunction_Float_Undecided<MODEL, RESULT> sub) {
-		return assureUndecidedFunctions().sqrtOf(sub);
+	public final UNDECIDED_DOUBLE_RET sqrtOfFloat(ISharedSubOperandsFunction_Float_Undecided<MODEL, RESULT> sub) {
+		return assureUndecidedFunctions().sqrtOfFloat(sub);
 	}
 
 	@Override
-	public final UNDECIDED_DOUBLE_RET sqrtOf(ISharedSubOperandsFunction_Double_Undecided<MODEL, RESULT> sub) {
-		return assureUndecidedFunctions().sqrtOf(sub);
+	public final UNDECIDED_DOUBLE_RET sqrtOfDouble(ISharedSubOperandsFunction_Double_Undecided<MODEL, RESULT> sub) {
+		return assureUndecidedFunctions().sqrtOfDouble(sub);
 	}
 
 	@Override
-	public final UNDECIDED_DOUBLE_RET sqrtOf(ISharedSubOperandsFunction_BigDecimal_Undecided<MODEL, RESULT> sub) {
-		return assureUndecidedFunctions().sqrtOf(sub);
+	public final UNDECIDED_DOUBLE_RET sqrtOfBigDecimal(ISharedSubOperandsFunction_BigDecimal_Undecided<MODEL, RESULT> sub) {
+		return assureUndecidedFunctions().sqrtOfBigDecimal(sub);
 	}
 
 	@Override
