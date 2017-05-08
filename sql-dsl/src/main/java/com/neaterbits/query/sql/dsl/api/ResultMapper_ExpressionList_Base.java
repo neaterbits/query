@@ -1064,11 +1064,20 @@ abstract class ResultMapper_ExpressionList_Base<
 				NAMED_RET,
 				ALIAS_RET,
 				
+				NAMED_STRING_RET,
+				NAMED_STRING_RET,
+
+				ALIAS_STRING_RET,
+				ALIAS_STRING_RET
+				
+				/*
+				
 				NAMED_LENGTH_RET,
 				NAMED_LENGTH_RET,
 				
 				ALIAS_LENGTH_RET,
 				ALIAS_LENGTH_RET
+				*/
 			>
 		>
 	

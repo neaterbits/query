@@ -15,7 +15,10 @@ public interface ISharedFunctions_StringResult_Undecided<
 	extends
 	
 		ISharedFunctions_String_StringResult_Named<MODEL, RESULT, NAMED_RET, NAMED_STRING_RET>,
-		ISharedFunctions_String_StringResult_Alias<MODEL, RESULT, ALIAS_RET, ALIAS_STRING_RET>,
+		ISharedFunctions_String_StringResult_Alias<MODEL, RESULT, ALIAS_RET, ALIAS_STRING_RET>
+		
+		/* Should not add NoParam funcs to the base functions
+		,
 
 		ISharedFunctions_String_StringResult_NoParam_Base<
 				MODEL,
@@ -25,6 +28,6 @@ public interface ISharedFunctions_StringResult_Undecided<
 				ISharedFunctions_String_StringResult_Undecided<
 					MODEL, RESULT,
 					NAMED_RET, ALIAS_RET,
-					NAMED_STRING_RET, ALIAS_STRING_RET>> {
+					NAMED_STRING_RET, ALIAS_STRING_RET>> */ {
 	
 }

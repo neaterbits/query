@@ -315,9 +315,35 @@ final class ResultMapper_ExpressionList_Initial_Undecided<
 			NO_PARAM_UNDECIDED_SQLTIME_RET,
 			NO_PARAM_UNDECIDED_SQLTIMESTAMP_RET			
 		>,
-			
-		ISharedFunctions_StringResult_Undecided<MODEL, RESULT, NAMED_RET, ALIAS_RET, NAMED_STRING_RET, ALIAS_STRING_RET>,
-		ISharedFunctions_String_StringResult_Undecided<MODEL, RESULT, NAMED_RET, ALIAS_RET, NAMED_STRING_RET, ALIAS_STRING_RET>
+
+		ISharedFunctions_StringResult_Undecided<
+			MODEL,
+			RESULT,
+			NAMED_RET,
+			ALIAS_RET,
+			NAMED_STRING_RET,
+			ALIAS_STRING_RET
+		>,
+
+		ISharedFunctions_String_StringResult_Undecided<
+			MODEL,
+			RESULT,
+			NAMED_RET,
+			ALIAS_RET, 
+			NAMED_STRING_RET,
+			ALIAS_STRING_RET
+		>,
+		ISharedMapFunctions_String_StringResult_Undecided<
+			MODEL,
+			RESULT,
+			NAMED_RET,
+			ALIAS_RET, 
+			NAMED_STRING_RET,
+			NAMED_STRING_RET,
+			ALIAS_STRING_RET,
+			ALIAS_STRING_RET
+		>			
+						
 	//,
 			
 	//ISharedResultMap_OpsAndTo_Comparable_Named<MODEL, RESULT, Integer, ISharedFunction_After<MODEL,RESULT>>
@@ -928,7 +954,16 @@ final class ResultMapper_ExpressionList_Initial_Undecided<
 
 
 	@Override
-	public ISharedFunctions_String_StringResult_Undecided<MODEL, RESULT, NAMED_RET, ALIAS_RET, NAMED_STRING_RET, ALIAS_STRING_RET> lower() {
+	public ISharedMapFunctions_String_StringResult_Undecided<
+			MODEL,
+			RESULT,
+			NAMED_RET,
+			ALIAS_RET,
+			NAMED_STRING_RET, 
+			NAMED_STRING_RET, 
+			ALIAS_STRING_RET,
+			ALIAS_STRING_RET
+			> lower() {
 		addNoParam(Function_String_Lower.INSTANCE);
 		
 		return this;
@@ -936,14 +971,32 @@ final class ResultMapper_ExpressionList_Initial_Undecided<
 
 
 	@Override
-	public ISharedFunctions_String_StringResult_Undecided<MODEL, RESULT, NAMED_RET, ALIAS_RET, NAMED_STRING_RET, ALIAS_STRING_RET> upper() {
+	public ISharedMapFunctions_String_StringResult_Undecided<
+			MODEL,
+			RESULT, 
+			NAMED_RET, 
+			ALIAS_RET,
+			NAMED_STRING_RET,
+			NAMED_STRING_RET,
+			ALIAS_STRING_RET,
+			ALIAS_STRING_RET
+			> upper() {
 		addNoParam(Function_String_Upper.INSTANCE);
 		
 		return this;
 	}
 
 	@Override
-	public ISharedFunctions_String_StringResult_Undecided<MODEL, RESULT, NAMED_RET, ALIAS_RET, NAMED_STRING_RET, ALIAS_STRING_RET> trim() {
+	public ISharedMapFunctions_String_StringResult_Undecided<
+			MODEL,
+			RESULT, 
+			NAMED_RET,
+			ALIAS_RET,
+			NAMED_STRING_RET,
+			NAMED_STRING_RET,
+			ALIAS_STRING_RET,
+			ALIAS_STRING_RET
+			> trim() {
 		addNoParam(Function_String_Trim.INSTANCE);
 		
 		return this;
@@ -1104,14 +1157,18 @@ final class ResultMapper_ExpressionList_Initial_Undecided<
 
 	@Override
 	@SuppressWarnings({"unchecked", "rawtypes"})
-	public ISharedFunctions_String_StringResult_Undecided<
+	public ISharedMapFunctions_String_StringResult_Undecided<
 				MODEL,
 				RESULT,
 				NAMED_RET,
 				ALIAS_RET,
 				
-				NAMED_LENGTH_RET,
-				ALIAS_LENGTH_RET> length() {
-		return (ISharedFunctions_String_StringResult_Undecided)this;
+				NAMED_STRING_RET,
+				NAMED_STRING_RET,
+				ALIAS_STRING_RET,
+				ALIAS_STRING_RET
+				
+				> length() {
+		return this;
 	}
 }
