@@ -197,8 +197,9 @@ abstract class SQL_Collector_WhereOrJoin_Base<
 			public ISharedComparison_Comparable_Common_Base<MODEL, RESULT, Comparable<?>, NAMED_AND_OR>
 				onComparable(Expression expression) {
 
-				return (ISharedComparison_Comparable_Common_Base)new Collector_Condition_Comparative<MODEL, RESULT, Integer, NAMED_AND_OR>(getAfterWhereNamed(), expression);
-
+				//return (ISharedComparison_Comparable_Common_Base)new Collector_Condition_Comparative<MODEL, RESULT, Integer, NAMED_AND_OR>(getAfterWhereNamed(), expression);
+				return (ISharedComparison_Comparable_Common_Base)new Condition_ExpressionList_Comparable_Named<MODEL, RESULT, Integer, NAMED_AND_OR>(getAfterWhereNamed(), expression);
+					
 				// return (ISharedCondition_Comparable_Common_Base)andNamedClassImplComparable(expression);
 			}
 		
@@ -206,7 +207,8 @@ abstract class SQL_Collector_WhereOrJoin_Base<
 			public ISharedComparison_Comparable_String_Base<MODEL, RESULT, NAMED_AND_OR>
 				onString(Expression expression) {
 				
-				return new Collector_Condition_String<MODEL, RESULT, NAMED_AND_OR> (getAfterWhereNamed(), expression);
+				//return new Collector_Condition_String<MODEL, RESULT, NAMED_AND_OR> (getAfterWhereNamed(), expression);
+				return new Condition_ExpressionList_String_Named<MODEL, RESULT, NAMED_AND_OR> (getAfterWhereNamed(), expression);
 			}
 		};
 		
@@ -441,7 +443,8 @@ abstract class SQL_Collector_WhereOrJoin_Base<
 					
 			@Override
 			public ISharedFunction_Next<MODEL, RESULT, ALIAS_AND_OR> onComparable(Expression expression) {
-				return new Collector_Condition_Comparative<MODEL, RESULT, Integer /* just to set Comparable */, ALIAS_AND_OR>(SQL_Collector_WhereOrJoin_Base.this, expression);
+				// return new Collector_Condition_Comparative<MODEL, RESULT, Integer /* just to set Comparable */, ALIAS_AND_OR>(SQL_Collector_WhereOrJoin_Base.this, expression);
+				return new Condition_ExpressionList_Comparable_Alias<>(SQL_Collector_WhereOrJoin_Base.this, expression);
 			}
 
 			@Override

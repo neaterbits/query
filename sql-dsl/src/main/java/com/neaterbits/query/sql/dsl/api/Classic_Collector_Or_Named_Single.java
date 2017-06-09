@@ -12,7 +12,8 @@ final class Classic_Collector_Or_Named_Single<MODEL, RESULT>
 
 	@Override
 	public ISharedComparison_Comparable_Common_All<MODEL, RESULT, Integer, IClassicSingleOrClausesNamed<MODEL, RESULT>> or(IFunctionInteger<RESULT> getter) {
-		return new Collector_Condition_Comparative<MODEL, RESULT, Integer, IClassicSingleOrClausesNamed<MODEL,RESULT>>(this, makeGetterExpression(getter));
+		//return new Collector_Condition_Comparative<MODEL, RESULT, Integer, IClassicSingleOrClausesNamed<MODEL,RESULT>>(this, makeGetterExpression(getter));
+		return new Condition_ExpressionList_Comparable_Named<>(this, makeGetterExpression(getter));
 	}
 
 	@Override

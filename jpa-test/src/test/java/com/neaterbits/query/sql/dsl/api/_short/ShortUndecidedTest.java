@@ -33,7 +33,7 @@ public class ShortUndecidedTest extends BaseJPATest {
 		final MultiBuilt<NameLength> acmeQuery = select
 				.list(NameLength.class)
 				
-				.map().sqrtOfInteger(b -> b.length(Company::getName)).to(NameLength::setLengthSqrt)
+				.map().sqrtOfInteger(b ->b.length(Company::getName)).to(NameLength::setLengthSqrt)
 				.where().absOfInteger(b -> b.length(Company::getName)).isEqualTo(4)
 
 				.build();
@@ -44,6 +44,32 @@ public class ShortUndecidedTest extends BaseJPATest {
 				new NameLength("Acme Inc.", 1)); 	// (9 + 1) % 3 => 1
 	}
 	
+	@Test
+	public void testWhere2() {
+		final Company acme1 = new Company(1, "Acme", new BigDecimal("49"));
+		final Company acme2 = new Company(2, "Acme Inc.", new BigDecimal("121"));
+		
+		/*
+		select.list(NameLength.class)
+			.map().absOfInteger(b -> b.length(Company::getName)).toString();
+			*/
+
+		final MultiBuilt<NameLength> acmeQuery = select
+				.list(NameLength.class)
+				.map(Company::getName).to(NameLength::setName)
+				.map()
+					.sqrtOfInteger(b ->
+						b.length(Company::getName))
+					.to(NameLength::setLengthSqrt)
+				.where().absOfInteger(b -> b.length(Company::getName)).isEqualTo(4)
+
+				.build();
+		
+		store(acme1, acme2)
+		.checkListUnordered(acmeQuery, 
+				new NameLength("Acme", 2),  		// (4 + 1) % 3 => 2
+				new NameLength("Acme Inc.", 1)); 	// (9 + 1) % 3 => 1
+	}
 	@Test
 	public void testAvgSumAndOthersThatReturnCorrectType() {
 		// Check that returns Long for <= long type and BigInteger for BigInteger etc

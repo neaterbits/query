@@ -51,7 +51,8 @@ abstract class Collector_And_Named<
 	
 		ISharedComparison_Comparable_Common_All<MODEL, RESULT, RR, AND_CLAUSES> andClassImplComparable(Expression expression) {
 
-		return new Collector_Condition_Comparative<MODEL, RESULT, RR, AND_CLAUSES>(this, expression);
+		//return new Collector_Condition_Comparative<MODEL, RESULT, RR, AND_CLAUSES>(this, expression);
+		return new Condition_ExpressionList_Comparable_Named<MODEL, RESULT, RR, AND_CLAUSES>(this, expression);
 	}
 	
 	private <T, RR extends Comparable<RR>>
@@ -64,7 +65,8 @@ abstract class Collector_And_Named<
 	private ISharedComparison_Comparable_String_All<MODEL, RESULT, AND_CLAUSES>
 		andClassImplString(Expression expression) {
 
-		return new Collector_Condition_String<MODEL, RESULT, AND_CLAUSES>(this, expression);
+		//return new Collector_Condition_String<MODEL, RESULT, AND_CLAUSES>(this, expression);
+		return new Condition_ExpressionList_String_Named<MODEL, RESULT, AND_CLAUSES>(this, expression);
 	}
 
 	private <T, RR> ISharedComparison_SQLTimeType_All<MODEL, RESULT, RR, AND_CLAUSES> andClassImplSQLTimeType(Function<T, RR> getter) {

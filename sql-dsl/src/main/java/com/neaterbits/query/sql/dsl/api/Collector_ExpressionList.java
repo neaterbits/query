@@ -388,6 +388,16 @@ abstract class Collector_ExpressionList<
 
 		return (NAMED_NUMERIC_OPERAND_NEXT)this;
 	}
+	
+	
+
+	@Override
+	@SuppressWarnings("unchecked")
+	public NAMED_NUMERIC_OPERAND_NEXT plusOfDouble(ISharedSubOperandsFunction_Named<MODEL, RESULT, Double> builder) {
+		addSubNumeric(Operator.PLUS, builder);
+
+		return (NAMED_NUMERIC_OPERAND_NEXT)this;
+	}
 
 	@Override
 	@SuppressWarnings("unchecked")

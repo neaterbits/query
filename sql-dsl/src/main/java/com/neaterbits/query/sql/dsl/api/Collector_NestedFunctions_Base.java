@@ -1,6 +1,7 @@
 package com.neaterbits.query.sql.dsl.api;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.function.Function;
 import java.util.function.Supplier;
@@ -268,6 +269,8 @@ abstract class Collector_NestedFunctions_Base<
 
 	private <T, R extends Comparable<?>> Expression intAddFinalFieldFunction_Simple_Named(FunctionBase function, Function<T, R> getter) {
 
+		enterFunctionCalls(function.toString() + "(" + getter + ")");
+		
 		final Expression expression = createFinalExpressionFromFieldAccess_Simple(function, new FieldExpression(getter));
 
 		return expression;
@@ -275,6 +278,8 @@ abstract class Collector_NestedFunctions_Base<
 
 	private <T, R extends Comparable<?>> Expression intAddFinalFieldFunction_MultiParam_Named(FunctionBase function, Expression ... expressions) {
 
+		enterFunctionCalls(function.toString() + "(" + Arrays.toString(expressions) + ")");
+		
 		final Expression expression = createFinalExpressionFromFieldAccess_Multi(function, expressions);
 
 		return expression;
@@ -283,7 +288,9 @@ abstract class Collector_NestedFunctions_Base<
 	@Override
 	final <T, R extends Comparable<?>> ISharedFunction_Next<MODEL, RESULT, NAMED_RET> 
 			addFinalFieldFunction_Simple_Arithmetic_Named(Function_Arithmetic function, Function<T, R> getter) {
-				
+
+		enterFunctionCalls(function.toString() + "(" + getter + ")");
+
 		final Expression expression = intAddFinalFieldFunction_Simple_Named(function, getter);
 		
 		return continueAfterNamedComparableFunctions(expression);
@@ -293,6 +300,8 @@ abstract class Collector_NestedFunctions_Base<
 	@Override
 	final <T, R extends Comparable<?>> ISharedFunction_Next<MODEL, RESULT, NAMED_RET>
 		addFinalFieldFunction_Simple_Aggregate_Named(Function_Aggregate function, Function<T, R> getter) {
+			
+		enterFunctionCalls(function.toString() + "(" + getter + ")");
 
 		final Expression expression = intAddFinalFieldFunction_Simple_Named(function, getter);
 
@@ -301,6 +310,9 @@ abstract class Collector_NestedFunctions_Base<
 
 	@Override
 	final <T> ISharedFunction_Next<MODEL, RESULT, NAMED_RET> addFinalFieldFunction_Simple_String_Named(Function_String function, IFunctionString<T> getter) {
+
+		enterFunctionCalls(function.toString() + "(getter)");
+		
 		final Expression expression = intAddFinalFieldFunction_Simple_Named(function, getter);
 		
 		return continueAfterNamedStringFunctions(expression);
@@ -309,6 +321,8 @@ abstract class Collector_NestedFunctions_Base<
 	@Override
 	ISharedFunction_Next<MODEL, RESULT, NAMED_RET> addFinalFieldFunction_Multi_Numeric_Named(Function_Arithmetic function, Expression... expressions) {
 		
+		enterFunctionCalls(function.toString() + "(" + Arrays.toString(expressions) + ")");
+
 		final Expression expression = intAddFinalFieldFunction_MultiParam_Named(function, expressions);
 		
 		return continueAfterNamedComparableFunctions(expression);
@@ -316,6 +330,8 @@ abstract class Collector_NestedFunctions_Base<
 
 	@Override
 	ISharedFunction_Next<MODEL, RESULT, NAMED_RET> addFinalFieldFunction_Multi_String_Named(Function_String function, Expression... expressions) {
+
+		enterFunctionCalls(function.toString() + "(" + Arrays.toString(expressions) + ")");
 		
 		final Expression expression = intAddFinalFieldFunction_MultiParam_Named(function, expressions);
 		
@@ -326,20 +342,28 @@ abstract class Collector_NestedFunctions_Base<
 	@Override
 	@SuppressWarnings("unchecked")
 	final <R extends Comparable<R>, CLAUSE> CLAUSE addSubNumeric(Function_Arithmetic function, ISharedSubOperandsFunction_Named<MODEL, RESULT, R> sub, Expression ... expressions) {
+
+		enterFunctionCalls(function.toString() + "(" + Arrays.toString(expressions) + ")");
 		
 		// Must build sub-functions with parameters
 		final FunctionExpression expression = SubExpressionUtil.addSubNumericForFunction(function, sub, expressions);
-		
+
 		functions.add(expression);
-		
+
 		final Expression collected = createFinalExpressionsFromSub();
 
-		return (CLAUSE)continueAfterNamedComparableFunctions(collected);
+		final CLAUSE ret = (CLAUSE)continueAfterNamedComparableFunctions(collected);
+
+		exitFunctionCalls(ret);
+
+		return ret;
 	}
 
 	@Override
 	final <CLAUSE> CLAUSE addSubString(Function_String function, ISharedSubOperandsFunction_String_Named<MODEL, RESULT> sub) {
 		
+		enterFunctionCalls(function.toString() + "(" + sub + ")");
+				
 		throw new UnsupportedOperationException("TODO");
 	}
 
@@ -359,16 +383,24 @@ abstract class Collector_NestedFunctions_Base<
 	*/
 
 	private <R extends Comparable<?>> Expression intAddFinalFieldFunction_Simple_Alias(FunctionBase function, Supplier<R> getter) {
+
+		enterFunctionCalls(function.toString() + "(" + getter + ")");
 		
 		final Expression expression = createFinalExpressionFromFieldAccess_Simple(function, new FieldExpression(getter));
+		
+		exitFunctionCalls(expression);
 		
 		return expression;
 	}
 
 	private <T, R extends Comparable<?>> Expression intAddFinalFieldFunction_Multi_Alias(FunctionBase function, Expression ... expressions) {
 
+		enterFunctionCalls(function.toString() + "(" + Arrays.toString(expressions) + ")");
+
 		final Expression expression = createFinalExpressionFromFieldAccess_Multi(function, expressions);
 
+		exitFunctionCalls(expression);
+		
 		return expression;
 	}
 	
@@ -376,48 +408,80 @@ abstract class Collector_NestedFunctions_Base<
 	@Override
 	final <R extends Comparable<?>> ISharedFunction_Next<MODEL, RESULT, ALIAS_RET>
 			addFinalFieldFunction_Simple_Arithmetic_Alias(Function_Arithmetic function, Supplier<R> getter) {
+
+		enterFunctionCalls(function.toString() + "(" + getter + ")");
 				
 		final Expression expression =  intAddFinalFieldFunction_Simple_Alias(function, getter);
 		
-		return continueAfterAliasComparableFunctions(expression);
+		final ISharedFunction_Next<MODEL, RESULT, ALIAS_RET> ret = continueAfterAliasComparableFunctions(expression);
+
+		exitFunctionCalls(ret);
+
+		return ret;
 	}
 
 	@Override
 	final <R extends Comparable<?>> ISharedFunction_Next<MODEL, RESULT, ALIAS_RET>
 			addFinalFieldFunction_Simple_Aggregate_Alias(Function_Aggregate function, Supplier<R> getter) {
 
+		enterFunctionCalls(function.toString() + "(" + getter + ")");
+				
 		final Expression expression = intAddFinalFieldFunction_Simple_Alias(function, getter);
 		
-		return continueAfterAliasComparableFunctions(expression);
+		final ISharedFunction_Next<MODEL, RESULT, ALIAS_RET> ret = continueAfterAliasComparableFunctions(expression);
+
+		exitFunctionCalls(ret);
+
+		return ret;
 	}
 
 	@Override
 	final ISharedFunction_Next<MODEL, RESULT, ALIAS_RET> addFinalFieldFunction_Simple_String_Alias(Function_String function, ISupplierString getter) {
 		
+		enterFunctionCalls(function.toString() + "(" + getter + ")");
+		
 		final Expression expression = intAddFinalFieldFunction_Simple_Alias(function, getter);
 		
-		return continueAfterAliasStringFunctions(expression);
+		final ISharedFunction_Next<MODEL, RESULT, ALIAS_RET> ret = continueAfterAliasStringFunctions(expression);
+		
+		exitFunctionCalls(ret);
+		
+		return ret;
 	}
 	
 	@Override
 	ISharedFunction_Next<MODEL, RESULT, ALIAS_RET> addFinalFieldFunction_Multi_Numeric_Alias(Function_Arithmetic function, Expression... expressions) {
+
+		enterFunctionCalls(function.toString() + "(" + Arrays.toString(expressions) + ")");
 		
 		final Expression expression = intAddFinalFieldFunction_Multi_Alias(function, expressions);
 		
-		return continueAfterAliasComparableFunctions(expression);
+		final ISharedFunction_Next<MODEL, RESULT, ALIAS_RET> ret = continueAfterAliasComparableFunctions(expression);
+
+		exitFunctionCalls(ret);
+		
+		return ret;
 	}
 
 	@Override
 	ISharedFunction_Next<MODEL, RESULT, ALIAS_RET> addFinalFieldFunction_Multi_String_Alias(Function_String function, Expression... expressions) {
 		
+		enterFunctionCalls(function.toString() + "(" + Arrays.toString(expressions) + ")");
+				
 		final Expression expression = intAddFinalFieldFunction_Multi_Alias(function, expressions);
 		
-		return continueAfterAliasStringFunctions(expression);
+		final ISharedFunction_Next<MODEL, RESULT, ALIAS_RET> ret = continueAfterAliasStringFunctions(expression);
+		
+		exitFunctionCalls(ret);
+		
+		return ret;
 	}
 	
 	@Override
 	@SuppressWarnings("unchecked")
 	final <R extends Comparable<R>, CLAUSE> CLAUSE addSubNumeric(Function_Arithmetic function, ISharedSubOperandsFunction_Alias<MODEL, RESULT, R> sub, Expression ... expressions) {
+
+		enterFunctionCalls(function.toString() + "(" + Arrays.toString(expressions) + ")");
 		
 		// Must build sub-functions with parameters
 		final FunctionExpression expression = SubExpressionUtil.addSubNumericForFunction(function, sub, expressions);
@@ -426,7 +490,11 @@ abstract class Collector_NestedFunctions_Base<
 		
 		final Expression collected = createFinalExpressionsFromSub();
 
-		return (CLAUSE)continueAfterAliasComparableFunctions(collected);
+		final CLAUSE clause = (CLAUSE)continueAfterAliasComparableFunctions(collected);
+		
+		exitFunctionCalls(clause);
+		
+		return clause;
 	}
 
 	/*********************** Undecided ***********************/
@@ -437,6 +505,8 @@ abstract class Collector_NestedFunctions_Base<
 	@Override
 	@SuppressWarnings("unchecked")
 	final <R extends Comparable<R>, CLAUSE> CLAUSE addSubNumeric(Function_Arithmetic function, ISharedSubOperandsFunction_Undecided<MODEL, RESULT, R> sub, Expression ... expressions) {
+
+		enterFunctionCalls(function.toString() + "(" + Arrays.toString(expressions) + ")");
 		
 		// Must build sub-functions with parameters
 		final FunctionExpression expression = SubExpressionUtil.addSubNumericForFunction(function, sub, expressions);
@@ -445,7 +515,11 @@ abstract class Collector_NestedFunctions_Base<
 		
 		final Expression collected = createFinalExpressionsFromSub();
 
-		return (CLAUSE)continueAfterUndecidedComparableFunctions(collected);
+		final CLAUSE clause = (CLAUSE)continueAfterUndecidedComparableFunctions(collected);
+
+		exitFunctionCalls(clause);
+		
+		return clause;
 	}
 }
 

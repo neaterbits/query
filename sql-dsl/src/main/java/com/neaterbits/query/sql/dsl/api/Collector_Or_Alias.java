@@ -37,12 +37,14 @@ abstract class Collector_Or_Alias<
 
 	private <RR extends Comparable<RR>> ISharedComparison_Comparable_Common_All<MODEL, RESULT, RR, OR_CLAUSES> orAliasImplComparable(Expression expression) {
 		
-		return new Collector_Condition_Comparative<MODEL, RESULT, RR, OR_CLAUSES>(this, expression);
+		//return new Collector_Condition_Comparative<MODEL, RESULT, RR, OR_CLAUSES>(this, expression);
+		return new Condition_ExpressionList_Comparable_Alias<MODEL, RESULT, RR, OR_CLAUSES>(this, expression);
 	}
 	
 	private ISharedComparison_Comparable_String_All<MODEL, RESULT, OR_CLAUSES> orAliasImplString(Expression expression) {
 
-		return new Collector_Condition_String<MODEL, RESULT, OR_CLAUSES>(this, expression);
+		//return new Collector_Condition_String<MODEL, RESULT, OR_CLAUSES>(this, expression);
+		return new Condition_ExpressionList_String_Named<MODEL, RESULT, OR_CLAUSES>(this, expression);
 	}
 
 	private <RR> ISharedComparison_SQLTimeType_All<MODEL, RESULT, RR, OR_CLAUSES> orAliasImplSQLTimeType(Supplier<RR> getter) {

@@ -107,13 +107,18 @@ final class Condition_ExpressionList_Comparable_Named<
 
 	@SuppressWarnings({"unchecked", "rawtypes"})
 	final ISharedComparison_Comparable_Common_All<MODEL, RESULT, R, RET> assureNamedComparable() {
+		
+		enterCollectorCalls("");
 
+		
 		if (this.comparableConditions != null) {
 			throw new IllegalStateException("Condition already set");
 		}
 		
 		this.comparableConditions = new Collector_Condition_Comparative<>(getRetClause(), collectExpressionListOrOne());
 
+		exitCollectorCalls(comparableConditions);
+		
 		return (ISharedComparison_Comparable_Common_All)comparableConditions;
 	}
 }

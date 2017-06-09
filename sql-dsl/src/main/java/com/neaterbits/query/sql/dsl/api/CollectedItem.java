@@ -7,7 +7,7 @@ package com.neaterbits.query.sql.dsl.api;
  *
  */
 
-abstract class CollectedItem {
+abstract class CollectedItem extends Debug {
 
 }
 

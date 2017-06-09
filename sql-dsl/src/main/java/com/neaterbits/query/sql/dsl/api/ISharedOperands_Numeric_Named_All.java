@@ -16,5 +16,6 @@ public interface ISharedOperands_Numeric_Named_All<
 			  ISharedOperands_Numeric_Common<MODEL, RESULT, RET, COMMON_TYPE_RET> {
 
 		NAMED_TYPE_RET plusOf(ISharedSubOperandsFunction_Named<MODEL, RESULT, BigDecimal> builder);
+		NAMED_TYPE_RET plusOfDouble(ISharedSubOperandsFunction_Named<MODEL, RESULT, Double> builder);
 
 }

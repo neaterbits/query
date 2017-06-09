@@ -52,13 +52,15 @@ abstract class Collector_And_Alias<
 
 		//final Expression expression = makeExpression(functions, makeGetterExpression(getter));
 		
-		return new Collector_Condition_Comparative<MODEL, RESULT, RR, M_AND_CLAUSES>(this, expression);
+		//return new Collector_Condition_Comparative<MODEL, RESULT, RR, M_AND_CLAUSES>(this, expression);
+		return new Condition_ExpressionList_Comparable_Alias<MODEL, RESULT, RR, M_AND_CLAUSES>(this, expression);
 	}
 
 	private ISharedComparison_Comparable_String_All<MODEL, RESULT, AND_CLAUSES>
 		andAliasImplString(Expression expression) {
 		
-		return new Collector_Condition_String<MODEL, RESULT, AND_CLAUSES>(this, expression);
+		//return new Collector_Condition_String<MODEL, RESULT, AND_CLAUSES>(this, expression);
+		return new Condition_ExpressionList_String_Alias<MODEL, RESULT, AND_CLAUSES>(this, expression);
 	}
 
 	private <RR> ISharedComparison_SQLTimeType_All<MODEL, RESULT, RR, AND_CLAUSES>

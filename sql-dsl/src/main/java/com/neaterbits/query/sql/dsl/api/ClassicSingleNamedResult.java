@@ -31,14 +31,16 @@ final class ClassicSingleNamedResult<MODEL, RESULT>
 	public <RR extends Comparable<RR>> ISharedComparison_Equality_All<MODEL, RESULT, RR, IClassicSingleAndOrLogicalClausesNamed<MODEL, RESULT>>
 			where(Function<RESULT, RR> func) {
 
-		return new Collector_Condition_Comparative<MODEL, RESULT, RR, IClassicSingleAndOrLogicalClausesNamed<MODEL,RESULT>>(this, makeGetterExpression(func));
+		//return new Collector_Condition_Comparative<MODEL, RESULT, RR, IClassicSingleAndOrLogicalClausesNamed<MODEL,RESULT>>(this, makeGetterExpression(func));
+		throw new UnsupportedOperationException("TODO - expression list");
 	}
 
 	@Override
 	public ISharedComparison_Comparable_String_All<MODEL, RESULT, IClassicSingleAndOrLogicalClausesNamed<MODEL, RESULT>>
 			where(IFunctionString<RESULT> func) {
 
-		return new Collector_Condition_String<MODEL, RESULT, IClassicSingleAndOrLogicalClausesNamed<MODEL,RESULT>>(this, makeGetterExpression(func));
+		//return new Collector_Condition_String<MODEL, RESULT, IClassicSingleAndOrLogicalClausesNamed<MODEL,RESULT>>(this, makeGetterExpression(func));
+		throw new UnsupportedOperationException("TODO - expression list");
 	}
 
 	// ------------------------  AND ------------------------
@@ -48,7 +50,8 @@ final class ClassicSingleNamedResult<MODEL, RESULT>
 		
 		final SQL_Collector_And_Named_Single<MODEL, RESULT> andClauses = new SQL_Collector_And_Named_Single<>(this);
 		
-		return new Collector_Condition_Comparative<MODEL, RESULT, Integer, IClassicSingleAndClausesNamed<MODEL,RESULT>>(andClauses, makeGetterExpression(getter));
+		//return new Collector_Condition_Comparative<MODEL, RESULT, Integer, IClassicSingleAndClausesNamed<MODEL,RESULT>>(andClauses, makeGetterExpression(getter));
+		return new Condition_ExpressionList_Comparable_Named<MODEL, RESULT, Integer, IClassicSingleAndClausesNamed<MODEL,RESULT>>(andClauses, makeGetterExpression(getter));
 	}
 
 	@Override
@@ -57,7 +60,8 @@ final class ClassicSingleNamedResult<MODEL, RESULT>
 
 		final SQL_Collector_And_Named_Single<MODEL, RESULT> andClauses = new SQL_Collector_And_Named_Single<>(this);
 		
-		return new Collector_Condition_String<MODEL, RESULT, IClassicSingleAndClausesNamed<MODEL,RESULT>>(andClauses, makeGetterExpression(getter));
+		//return new Collector_Condition_String<MODEL, RESULT, IClassicSingleAndClausesNamed<MODEL,RESULT>>(andClauses, makeGetterExpression(getter));
+		return new Condition_ExpressionList_String_Named<MODEL, RESULT, IClassicSingleAndClausesNamed<MODEL,RESULT>>(andClauses, makeGetterExpression(getter));
 	}
 	
 	// ------------------------  OR ------------------------
@@ -67,7 +71,7 @@ final class ClassicSingleNamedResult<MODEL, RESULT>
 
 		final Classic_Collector_Or_Named_Single<MODEL, RESULT> orClauses = new Classic_Collector_Or_Named_Single<>(this);
 		
-		return new Collector_Condition_Comparative<MODEL, RESULT, Integer, IClassicSingleOrClausesNamed<MODEL,RESULT>>(orClauses, makeGetterExpression(getter));
+		return new Condition_ExpressionList_Comparable_Named<MODEL, RESULT, Integer, IClassicSingleOrClausesNamed<MODEL,RESULT>>(orClauses, makeGetterExpression(getter));
 	}
 
 	@Override
@@ -76,7 +80,8 @@ final class ClassicSingleNamedResult<MODEL, RESULT>
 
 		final Classic_Collector_Or_Named_Single<MODEL, RESULT> orClauses = new Classic_Collector_Or_Named_Single<>(this);
 
-		return new Collector_Condition_String<MODEL, RESULT, IClassicSingleOrClausesNamed<MODEL,RESULT>>(orClauses, makeGetterExpression(getter));
+		//return new Collector_Condition_String<MODEL, RESULT, IClassicSingleOrClausesNamed<MODEL,RESULT>>(orClauses, makeGetterExpression(getter));
+		return new Condition_ExpressionList_String_Named<MODEL, RESULT, IClassicSingleOrClausesNamed<MODEL,RESULT>>(orClauses, makeGetterExpression(getter));
 	}
 
 	@Override

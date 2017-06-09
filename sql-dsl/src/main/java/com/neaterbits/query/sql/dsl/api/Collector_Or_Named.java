@@ -41,7 +41,8 @@ abstract class Collector_Or_Named<
 	
 		orClassImplComparable(Expression expression) {
 
-		return new Collector_Condition_Comparative<MODEL, RESULT, RR, OR_CLAUSES>(this, expression);
+		//return new Collector_Condition_Comparative<MODEL, RESULT, RR, OR_CLAUSES>(this, expression);
+		return new Condition_ExpressionList_Comparable_Named<MODEL, RESULT, RR, OR_CLAUSES>(this, expression);
 	}
 
 	private ISharedComparison_Comparable_String_All<MODEL, RESULT, OR_CLAUSES> orClassImplString(Expression expression) {

@@ -70,6 +70,8 @@ abstract class Collector_Functions_Base<
 		UNDECIDED_SQLTIMESTAMP_RET extends ISharedFunction_Next<MODEL, RESULT, UNDECIDED_RET>
 		>
 
+	extends Debug
+
 	implements 
 
 		ISharedFunctions_Arithmetic_Named_All<

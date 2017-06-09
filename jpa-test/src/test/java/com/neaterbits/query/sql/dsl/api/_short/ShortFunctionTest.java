@@ -55,25 +55,26 @@ public class ShortFunctionTest extends BaseJPATest {
 
 		final MultiBuilt<NameLength> acmeQuery = select
 				.list(NameLength.class)
-				
+
 				.map(c::getName).to(NameLength::setName)
 				//.map().modOf(b -> b.lower(Company::getName) ).to(NameLength::setLength)
-				
+
 				//fortsett her, fikse slik at kun returnerer
 				.map().modOf(b -> b.length(c::getName).plus((short)1), 3).to(NameLength::setLength)
-				.where().absOfBigDecimal(b -> b.sqrt(c::getStockPrice)).isEqualTo(new BigDecimal("1.2"))
+				. where()
+					.absOfDouble(b -> b.sqrt(c::getStockPrice)).isEqualTo(11.0)
 
 				.build();
-		
+
 		store(acme1, acme2)
 		.checkListUnordered(acmeQuery, 
-				new NameLength("Acme", 2),  		// (4 + 1) % 3 => 2
-				new NameLength("Acme Inc.", 1)); 	// (9 + 1) % 3 => 1
+				new NameLength("Acme Inc.", 1)  		// (9 + 1) % 3 => 1
+				);
 	}
 	
 
 	@Test // Should not allow .absOfBigDecimal for sqrt() since sqrt() is Double type 
-	public void testShouldNoCompileCondition() {
+	public void testShouldNotCompileCondition() {
 
 		verifyIsNotCompilable(
 				b -> b.addImport(NameLength.class).addImport(Company.class),
@@ -82,7 +83,7 @@ public class ShortFunctionTest extends BaseJPATest {
 				
 				".map(Company::getName).to(NameLength::setName)" +
 				".where().absOfBigDecimal(b -> b.sqrt(Company::getStockPrice)).isEqualTo(new BigDecimal(\"1.2\"))");
-		
+
 		verifyIsNotCompilable(
 				b -> b.addImport(NameLength.class).addImport(Company.class)
 					 .add(Company.class, "c"),

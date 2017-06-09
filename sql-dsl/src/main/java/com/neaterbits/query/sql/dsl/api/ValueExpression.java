@@ -1,6 +1,6 @@
 package com.neaterbits.query.sql.dsl.api;
 
-class ValueExpression extends Expression {
+final class ValueExpression extends Expression {
 
 	private final Comparable<?> value;
 
@@ -20,5 +20,10 @@ class ValueExpression extends Expression {
 	@Override
 	<T, R> R visit(ExpressionVisitor<T, R> visitor, T param) {
 		return visitor.onValue(this, param);
+	}
+
+	@Override
+	public String toString() {
+		return "ValueExpression [value=" + value + "]";
 	}
 }

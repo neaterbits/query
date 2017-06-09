@@ -168,7 +168,7 @@ public class ShortAPITest extends BaseJPATest {
 				    .plusOf(
 					  		e -> e  .abs   (Company::getStockPrice)
 					  				.plus  (new BigDecimal("1.5"))
-					  				.plusOf(e2 -> e2.sqrt(Company::getStockPrice))
+					  				.plusOfDouble(e2 -> e2.sqrt(Company::getStockPrice))
 								
 							    )
 				

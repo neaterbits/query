@@ -13,7 +13,8 @@ final class SQL_Collector_And_Named_Single<
 
 	@Override
 	public ISharedComparison_Comparable_Common_All<MODEL, RESULT, Integer, IClassicSingleAndClausesNamed<MODEL, RESULT>> and(IFunctionInteger<RESULT> getter) {
-		return new Collector_Condition_Comparative<MODEL, RESULT, Integer, IClassicSingleAndClausesNamed<MODEL,RESULT>>(this, makeGetterExpression(getter));
+		//return new Collector_Condition_Comparative<MODEL, RESULT, Integer, IClassicSingleAndClausesNamed<MODEL,RESULT>>(this, makeGetterExpression(getter));
+		return new Condition_ExpressionList_Comparable_Named<MODEL, RESULT, Integer, IClassicSingleAndClausesNamed<MODEL,RESULT>>(this, makeGetterExpression(getter));
 	}
 
 	@Override

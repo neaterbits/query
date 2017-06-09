@@ -5,6 +5,7 @@ import java.util.function.Function;
 import java.util.function.Supplier;
 
 abstract class Collector_Condition_Equality<MODEL, RESULT, R, L extends ISharedLogical_Base<MODEL, RESULT>>
+	extends Debug
 	implements ISharedComparison_Equality_Named<MODEL, RESULT, R, L>,
 			   ISharedComparison_Equality_Alias<MODEL, RESULT, R, L> {
 
@@ -51,6 +52,8 @@ abstract class Collector_Condition_Equality<MODEL, RESULT, R, L extends ISharedL
 	}
 
 	final L addCondition(CollectedCondition_NonNested condition) {
+		
+		enterConditionCalls(condition.toString());
 
 		/*
 		// Call setter to pass on functions
@@ -59,17 +62,28 @@ abstract class Collector_Condition_Equality<MODEL, RESULT, R, L extends ISharedL
 		}
 		*/
 
-		return addConditionInt(condition);
+		final L ret = addConditionInt(condition);
+
+		exitConditionCalls(ret);
+		
+		return ret;
 	}
 	
 	final L addConditionInt(CollectedCondition_NonNested condition) {
 		if (condition == null) {
 			throw new IllegalArgumentException("condition == null");
 		}
+		
+		enterConditionCalls(condition.toString());
+		
 
 		clause.clauseCollector.add(condition);
 		
-		return getLogicalClause();
+		final L ret = getLogicalClause();
+		
+		exitConditionCalls(ret);
+		
+		return ret;
 	}
 	
 	

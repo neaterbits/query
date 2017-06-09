@@ -149,14 +149,12 @@ abstract class Collector_NestedFunctions_Alias<
 	
 	
 	@Override
-	final ISharedFunction_Next<MODEL, RESULT, ISharedFunction_After<MODEL, RESULT>> continueAfterNamedComparableFunctions(
-			Expression expression) {
+	final ISharedFunction_Next<MODEL, RESULT, ISharedFunction_After<MODEL, RESULT>> continueAfterNamedComparableFunctions(Expression expression) {
 		throw new UnsupportedOperationException("N/A");
 	}
 
 	@Override
-	final ISharedFunction_Next<MODEL, RESULT, ISharedFunction_After<MODEL, RESULT>> continueAfterNamedStringFunctions(
-			Expression expression) {
+	final ISharedFunction_Next<MODEL, RESULT, ISharedFunction_After<MODEL, RESULT>> continueAfterNamedStringFunctions(Expression expression) {
 		throw new UnsupportedOperationException("N/A");
 	}
 	
