@@ -443,6 +443,7 @@ public class ShortFunctionTest extends BaseJPATest {
 
 	@Test
 	public void testThatLengthFunctionDoesNotReturnLengthFunction_Named() {
+		
 		verifyIsCompilable(
 				b -> b.addImport(NameLength.class).addImport(Company.class),
 				"list(NameLength.class)" +

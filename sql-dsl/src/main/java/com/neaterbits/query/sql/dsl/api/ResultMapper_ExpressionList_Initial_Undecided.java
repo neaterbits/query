@@ -1163,12 +1163,14 @@ final class ResultMapper_ExpressionList_Initial_Undecided<
 				NAMED_RET,
 				ALIAS_RET,
 				
-				NAMED_STRING_RET,
-				NAMED_STRING_RET,
-				ALIAS_STRING_RET,
-				ALIAS_STRING_RET
+				NAMED_LENGTH_RET,
+				NAMED_LENGTH_RET,
+				ALIAS_LENGTH_RET,
+				ALIAS_LENGTH_RET
 				
 				> length() {
-		return this;
+					
+		// TODO: See if can avoid this cast? Both length() function requires StringResult and so do string functions 
+		return (ISharedMapFunctions_String_StringResult_Undecided)this;
 	}
 }

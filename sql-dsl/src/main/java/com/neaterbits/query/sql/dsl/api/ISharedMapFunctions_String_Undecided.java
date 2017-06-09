@@ -25,8 +25,8 @@ public interface ISharedMapFunctions_String_Undecided<
 					ISharedMapFunctions_String_StringResult_Undecided<
 						MODEL, RESULT,
 						NAMED_RET, ALIAS_RET,
-						NAMED_STRING_RET, NAMED_STRING_RET,
-						ALIAS_STRING_RET, ALIAS_STRING_RET>,
+						NAMED_LENGTH_RET, NAMED_LENGTH_RET,
+						ALIAS_LENGTH_RET, ALIAS_LENGTH_RET>,
 		
 					// eg lower().xyz, return only the functions that return String (so skip length())
 					ISharedMapFunctions_String_StringResult_Undecided<
