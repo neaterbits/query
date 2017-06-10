@@ -157,7 +157,6 @@ public class ShortFunctionTest extends BaseJPATest {
 		
 		MultiBuilt<NameLength> query;
 
-		assertThat(true).isEqualTo(false); // TODO - must pass Undecided versions all along to group-by etc since may use sub-functions all the way
 
 		/*
 		query = select.list(NameLength.class)
@@ -166,19 +165,24 @@ public class ShortFunctionTest extends BaseJPATest {
 				*/
 		
 		query = select.list(NameLength.class)
-			.map().sqrt().length(Company::getName).to(NameLength::setLengthSqrt)
+			.map().sqrtOfInteger(s -> s.length(Company::getName)).to(NameLength::setLengthSqrt)
+			
+			.where().sqrtOfInteger(s -> s.length(Company::getName)).isEqualTo(1.2)
+			.groupBy(1)
+			.having().avg(Company::getStockPrice).isEqualTo(132.2)
+			.orderBy(1)
 			.build();
-	
 		
 		store(acme1, acme2)
 		.checkListUnordered(query, new NameLength(null, 2.0), new NameLength(null, 3.0));
 
+		assertThat(true).isEqualTo(false); // TODO - must pass Undecided versions all along to group-by etc since may use sub-functions all the way
 		
 		query = select.list(NameLength.class)
 				.map().sqrt().length(Company::getName).to(NameLength::setLengthSqrt)
 				.map(Company::getName).to(NameLength::setName)
 				.build();
-			
+
 			store(acme1, acme2)
 			.checkListUnordered(query, new NameLength("Acme", 2.0), new NameLength("Acme Inc.", 3.0));
 	}
@@ -187,9 +191,10 @@ public class ShortFunctionTest extends BaseJPATest {
 	public void testVerifyThatDetectsMixOfNamedAndAliasAtQueryCompileTime() {
 		// Must make sure that throws exception for queries where we cannot detect type differences
 		// at Java compile time, eg two .xyzOf() queries at the same level
+		// eg. whether named or alias
 		assertThat(true).isEqualTo(false);
 	}
-	
+
 	@Test 
 	public void testVerifyMultipleNestedInFirstMapQueryWhenNamedOrAliasNotYetDecided() {
 		
