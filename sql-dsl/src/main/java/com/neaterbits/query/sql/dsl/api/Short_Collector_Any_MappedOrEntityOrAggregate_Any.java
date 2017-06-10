@@ -2,7 +2,6 @@ package com.neaterbits.query.sql.dsl.api;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
-import java.util.Date;
 import java.util.function.Supplier;
 
 abstract class Short_Collector_Any_MappedOrEntityOrAggregate_Any<
@@ -91,10 +90,6 @@ abstract class Short_Collector_Any_MappedOrEntityOrAggregate_Any<
 		// do not set mapping collector
 		
 		//this.gathering = queryCollector.getResult().getGathering();
-	}
-	
-	private EQueryResultGathering getGathering() {
-		return getQueryCollector().getResult().getGathering();
 	}
 	
 		

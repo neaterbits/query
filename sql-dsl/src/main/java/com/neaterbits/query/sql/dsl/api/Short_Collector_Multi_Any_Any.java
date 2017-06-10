@@ -34,7 +34,8 @@ final class Short_Collector_Multi_Any_Any<MODEL, RESULT>
 
 			Void>
 
-	implements IShortResult_Multi_Instance<MODEL, RESULT> {
+	implements IShortResult_Multi_Instance<MODEL, RESULT>,
+		IMappingCollector<MODEL, RESULT> {
 
 
 	private final ECollectionType collectionType;
@@ -303,10 +304,41 @@ final class Short_Collector_Multi_Any_Any<MODEL, RESULT>
 				);
 		};
 		
+		final Supplier<IMappingCollector<MODEL, RESULT>>
 		
-		return new ResultMapper_ExpressionList_Initial_Undecided<>(s1, s2);
+		s3 = () -> {
+			return Short_Collector_Multi_Any_Any.this;
+			/*
+			return new Short_Collector_Multi_Mapped_Undecided<>(
+						getQueryCollector(),
+						new CollectedQueryResult_Mapped_Multi(getResultType(), collectionType)
+				);
+				*/
+		};
+		
+		return new ResultMapper_ExpressionList_Initial_Undecided<>(s1, s2, s3);
 	}
 
+	@Override
+	public final MappingCollector getMappingCollector() {
+		/*
+		if (getGathering() != EQueryResultGathering.MAPPED) {
+			throw new IllegalStateException("Only to be called for mapped queries");
+		}
+		*/
+		
+
+		if (getQueryCollector().getMappings() != null) {
+			throw new IllegalStateException("mappingCollector != null");
+		}
+		
+		final MappingCollector mappingCollector = new MappingCollector();
+		
+		getQueryCollector().setMappings(mappingCollector);
+
+		return mappingCollector;
+	}
+	
 
 	@Override
 	public ISharedFunctions_Transform_Initial_Named<

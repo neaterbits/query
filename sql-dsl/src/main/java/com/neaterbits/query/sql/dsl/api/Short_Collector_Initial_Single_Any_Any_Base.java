@@ -341,9 +341,17 @@ abstract class Short_Collector_Initial_Single_Any_Any_Base<MODEL, RESULT>
 						new CollectedQueryResult_Mapped_Single(getResultType())
 				);
 		};
+
+		final Supplier<IMappingCollector<MODEL, RESULT>>
 		
-		
-		return new ResultMapper_ExpressionList_Initial_Undecided<>(s1, s2);
+		s3 = () -> {
+			return new Short_Collector_Single_Mapped_Undecided_Initial<>(
+						getQueryCollector(),
+						new CollectedQueryResult_Mapped_Single(getResultType())
+				);
+		};
+
+		return new ResultMapper_ExpressionList_Initial_Undecided<>(s1, s2, s3);
 	}
 
 	@Override

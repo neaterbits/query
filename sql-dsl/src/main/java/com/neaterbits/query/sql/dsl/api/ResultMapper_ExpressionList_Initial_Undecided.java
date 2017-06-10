@@ -199,7 +199,10 @@ final class ResultMapper_ExpressionList_Initial_Undecided<
 			>
 
 	
-	implements ISharedMapFunctions_All_Undecided<
+	implements
+		
+	
+		ISharedMapFunctions_All_Undecided<
 			MODEL,
 			RESULT,
 
@@ -354,11 +357,13 @@ final class ResultMapper_ExpressionList_Initial_Undecided<
 	
 	private final Supplier<IMappingCollector<MODEL, RESULT>> getNamed;
 	private final Supplier<IMappingCollector<MODEL, RESULT>> getAliased;
+	private final Supplier<IMappingCollector<MODEL, RESULT>> getUndecided;
 	
 	ResultMapper_ExpressionList_Initial_Undecided(
 				// IMappingCollector<MODEL, RESULT> impl, 
 				Supplier<IMappingCollector<MODEL, RESULT>> getNamed,
-				Supplier<IMappingCollector<MODEL, RESULT>> getAliased) {
+				Supplier<IMappingCollector<MODEL, RESULT>> getAliased,
+				Supplier<IMappingCollector<MODEL, RESULT>> getUndecided) {
 		//super(impl);
 
 		if (getNamed == null) {
@@ -369,8 +374,13 @@ final class ResultMapper_ExpressionList_Initial_Undecided<
 			throw new IllegalArgumentException("getAliased == null");
 		}
 		
+		if (getUndecided == null) {
+			throw new IllegalArgumentException("getUndecided == null");
+		}
+
 		this.getNamed = getNamed;
 		this.getAliased = getAliased;
+		this.getUndecided = getUndecided;
 	}
 	
 	
@@ -387,6 +397,10 @@ final class ResultMapper_ExpressionList_Initial_Undecided<
 			
 		case ALIAS:
 			ret = getAliased.get();
+			break;
+			
+		case UNDECIDED:
+			ret = getUndecided.get();
 			break;
 			
 		default:
@@ -884,6 +898,15 @@ final class ResultMapper_ExpressionList_Initial_Undecided<
 	}
 
 
+	@Override
+	ISharedFunction_Next<MODEL, RESULT, UNDECIDED_RET> getUndecidedComparableFunctionNext(Expression expression) {
+		return new ResultMapper_ExpressionList_Comparable_Undecided<>(expression, getMappingCollector(EFieldAccessType.UNDECIDED));
+	}
+
+	@Override
+	ISharedFunction_Next<MODEL, RESULT, UNDECIDED_RET> getUndecidedStringFunctionNext(Expression expression) {
+		return (ISharedFunction_Next)this;
+	}
 
 	@Override
 	@SuppressWarnings({"unchecked", "rawtypes"})

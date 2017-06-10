@@ -32,4 +32,9 @@ abstract class Collector_Base<MODEL> extends CollectedItem {
 	final Collector_Query<MODEL> getQueryCollector() {
 		return queryCollector;
 	}
+	
+	final EQueryResultGathering getGathering() {
+		return getQueryCollector().getResult().getGathering();
+	}
+
 }
