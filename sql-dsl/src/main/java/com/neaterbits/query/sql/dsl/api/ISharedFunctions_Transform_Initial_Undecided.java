@@ -50,7 +50,7 @@ public interface ISharedFunctions_Transform_Initial_Undecided<
 		
 	extends 
 		ISharedFunctions_Initial_Base<MODEL, RESULT>,
-		ISharedFunctions_All_Transform_Undecided<
+		ISharedFunctions_Transform_Undecided_All<
 			
 			MODEL,
 			RESULT,

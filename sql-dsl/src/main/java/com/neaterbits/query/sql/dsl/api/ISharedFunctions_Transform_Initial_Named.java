@@ -22,6 +22,6 @@ public interface ISharedFunctions_Transform_Initial_Named<
 	>
 
 	extends ISharedFunctions_Initial_Base<MODEL, RESULT>,
-				ISharedFunctions_All_Transform_Named<MODEL, RESULT, RET, LENGTH_RET, BYTE_RET, SHORT_RET, INTEGER_RET, LONG_RET, BIGINTEGER_RET, FLOAT_RET, DOUBLE_RET, BIGDECIMAL_RET, STRING_RET> {
+				ISharedFunctions_Transform_Named_All<MODEL, RESULT, RET, LENGTH_RET, BYTE_RET, SHORT_RET, INTEGER_RET, LONG_RET, BIGINTEGER_RET, FLOAT_RET, DOUBLE_RET, BIGDECIMAL_RET, STRING_RET> {
     
 }

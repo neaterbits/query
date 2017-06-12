@@ -31,7 +31,7 @@ public interface ISharedMapFunctions_Alias<
 	extends 
 
 		// named without no-param (because of signature collision)
-		ISharedFunctions_All_Transform_Alias<MODEL, RESULT, RET, LENGTH_RET, BYTE_RET, SHORT_RET, INT_RET, LONG_RET, BIGINTEGER_RET, FLOAT_RET, DOUBLE_RET, BIGDECIMAL_RET, STRING_RET>,
+		ISharedFunctions_Transform_Alias_All<MODEL, RESULT, RET, LENGTH_RET, BYTE_RET, SHORT_RET, INT_RET, LONG_RET, BIGINTEGER_RET, FLOAT_RET, DOUBLE_RET, BIGDECIMAL_RET, STRING_RET>,
 
 		// Aggregates as well 
 		ISharedFunctions_Aggregate_Alias_All<SUM_LONG_RET, COUNT_RET, BYTE_RET, SHORT_RET, INT_RET, LONG_RET, BIGINTEGER_RET, FLOAT_RET, DOUBLE_RET, BIGDECIMAL_RET, DATE_RET>

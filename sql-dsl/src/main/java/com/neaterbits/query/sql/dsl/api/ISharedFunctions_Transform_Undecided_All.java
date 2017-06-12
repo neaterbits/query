@@ -1,7 +1,6 @@
 package com.neaterbits.query.sql.dsl.api;
 
-@Deprecated // swap out
-public interface ISharedFunctions_All_Transform_Undecided<
+public interface ISharedFunctions_Transform_Undecided_All<
 	MODEL,
 	RESULT,
 	
