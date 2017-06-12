@@ -2,7 +2,7 @@ package com.neaterbits.query.sql.dsl.api;
 
 import java.util.function.Function;
 
-abstract class Shared_PreparedQuery_Base<RESULT_TYPE> implements ISharedPreparedQueryOps<RESULT_TYPE> {
+abstract class Shared_PreparedQuery_Base<RESULT_TYPE> implements ISharedPreparedQuery_Ops<RESULT_TYPE> {
 
 	private final QueryDataSource_Base<?> dataSource;
 	private final PreparedQuery_DS<?> preparedQuery;

@@ -2,7 +2,7 @@ package com.neaterbits.query.sql.dsl.api;
 
 import java.util.function.Function;
 
-public interface ISharedPreparedQueryOps<RESULT_TYPE> {
+public interface ISharedPreparedQuery_Ops<RESULT_TYPE> {
 	
 	RESULT_TYPE execute();
 	
