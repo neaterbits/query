@@ -9,9 +9,9 @@ import java.util.function.Function;
 
 final class Checks {
 
-	static <T> void checkSelectOneOrNull(DataConfig ds, T expected, SingleBuilt<T> query, Function<ISharedPreparedQueryOps<T>, T> execute) {
+	static <T> void checkSelectOneOrNull(DataConfig ds, T expected, SingleBuilt<T> query, Function<ISharedPreparedQuery_Ops<T>, T> execute) {
 		
-		ISharedPreparedQueryOps<T> ops = query.prepare(ds);
+		ISharedPreparedQuery_Ops<T> ops = query.prepare(ds);
 
 		final T result = execute.apply(ops);
     			
@@ -42,11 +42,11 @@ final class Checks {
 	}
 
 
-	static final <T> void checkSelectListUnordered(DataConfig ds, MultiBuilt<T> query, Function<ISharedPreparedQueryOps<List<T>>, List<T>> execute, @SuppressWarnings("unchecked") T ... expected) {
+	static final <T> void checkSelectListUnordered(DataConfig ds, MultiBuilt<T> query, Function<ISharedPreparedQuery_Ops<List<T>>, List<T>> execute, @SuppressWarnings("unchecked") T ... expected) {
 		checkSelectListUnordered(ds, query, execute, Arrays.asList(expected));
 	}
 
-	static final <T> void checkSelectListUnordered(DataConfig ds, MultiBuilt<T> query, Function<ISharedPreparedQueryOps<List<T>>, List<T>> execute, List<T> expected) {
+	static final <T> void checkSelectListUnordered(DataConfig ds, MultiBuilt<T> query, Function<ISharedPreparedQuery_Ops<List<T>>, List<T>> execute, List<T> expected) {
 
 		final List<T> ret = checkSelectListCommon(ds, query, execute, expected);
 		
@@ -59,11 +59,11 @@ final class Checks {
 		assertThat(resultMap).isEqualTo(expectedMap);
 	}
 
-	static <T> void checkSelectListOrdered(DataConfig ds, MultiBuilt<T> query, Function<ISharedPreparedQueryOps<List<T>>, List<T>> execute, @SuppressWarnings("unchecked") T ... expected) {
+	static <T> void checkSelectListOrdered(DataConfig ds, MultiBuilt<T> query, Function<ISharedPreparedQuery_Ops<List<T>>, List<T>> execute, @SuppressWarnings("unchecked") T ... expected) {
 		checkSelectListOrdered(ds, query, execute, Arrays.asList(expected));
 	}
 
-	static <T> void checkSelectListOrdered(DataConfig ds, MultiBuilt<T> query, Function<ISharedPreparedQueryOps<List<T>>, List<T>> execute, List<T> expected) {
+	static <T> void checkSelectListOrdered(DataConfig ds, MultiBuilt<T> query, Function<ISharedPreparedQuery_Ops<List<T>>, List<T>> execute, List<T> expected) {
 
 		final List<T> ret = checkSelectListCommon(ds, query, execute, expected);
 		
@@ -76,10 +76,10 @@ final class Checks {
 		}
 	}
 	
-	static <T> List<T> checkSelectListCommon(DataConfig ds, MultiBuilt<T> query, Function<ISharedPreparedQueryOps<List<T>>, List<T>> execute, List<T> expected) {
+	static <T> List<T> checkSelectListCommon(DataConfig ds, MultiBuilt<T> query, Function<ISharedPreparedQuery_Ops<List<T>>, List<T>> execute, List<T> expected) {
 		
 		
-		ISharedPreparedQueryOps<List<T>> ops = query.prepare(ds);
+		ISharedPreparedQuery_Ops<List<T>> ops = query.prepare(ds);
 
 		final List<T> result = execute.apply(ops);
 

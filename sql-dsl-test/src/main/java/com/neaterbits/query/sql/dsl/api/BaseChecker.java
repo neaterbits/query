@@ -57,7 +57,7 @@ abstract class BaseChecker implements QueryTestDSCheck {
 
 
 	@Override
-	public final <T> void checkOne(SingleBuilt<T> query, Function<ISharedPreparedQueryOps<T>, T> execute, T expected) {
+	public final <T> void checkOne(SingleBuilt<T> query, Function<ISharedPreparedQuery_Ops<T>, T> execute, T expected) {
 		check(ds -> Checks.checkSelectOneOrNull(ds, expected, query, execute));
 	}
 
@@ -87,14 +87,14 @@ abstract class BaseChecker implements QueryTestDSCheck {
 	}
 
 	@Override
-	public final <T> void checkListUnordered(MultiBuilt<T> query, Function<ISharedPreparedQueryOps<List<T>>, List<T>> execute,
+	public final <T> void checkListUnordered(MultiBuilt<T> query, Function<ISharedPreparedQuery_Ops<List<T>>, List<T>> execute,
 			@SuppressWarnings("unchecked") T... expected) {
 
 		check(ds -> Checks.checkSelectListUnordered(ds, query, execute, expected));
 	}
 
 	@Override
-	public final <T> void checkListOrdered(MultiBuilt<T> query, Function<ISharedPreparedQueryOps<List<T>>, List<T>> execute,
+	public final <T> void checkListOrdered(MultiBuilt<T> query, Function<ISharedPreparedQuery_Ops<List<T>>, List<T>> execute,
 			@SuppressWarnings("unchecked") T... expected) {
 		
 		check(ds -> Checks.checkSelectListOrdered(ds, query, execute, expected));
@@ -119,7 +119,7 @@ abstract class BaseChecker implements QueryTestDSCheck {
 
 	@Override
 	public <T extends Comparable<T>> void checkAggregate(SingleBuilt<T> query,
-			Function<ISharedPreparedQueryOps<T>, T> execute, T expected) {
+			Function<ISharedPreparedQuery_Ops<T>, T> execute, T expected) {
 
 		checkOne(query, execute, expected);
 	}
