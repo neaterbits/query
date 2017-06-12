@@ -42,5 +42,5 @@ public interface ISharedLogical_Or_Alias_Base<
 
     ISharedComparison_ByteArray_All<MODEL, RESULT, OR_CLAUSES> or(ISupplierByteArray getter);
 
-	OR_CLAUSES orNest(ISharedNestedAndConsumerAlias<MODEL, RESULT, NESTED_AND_CLAUSES> andBuilder);
+	OR_CLAUSES orNest(ISharedNested_And_Consumer_Alias<MODEL, RESULT, NESTED_AND_CLAUSES> andBuilder);
 }

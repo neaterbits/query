@@ -147,7 +147,7 @@ abstract class Collector_Or_Named<
 	@SuppressWarnings("unchecked")
 	@Override
 	public final OR_CLAUSES orNest(
-			ISharedNestedAndConsumerNamed<MODEL, RESULT, NESTED_AND_CLAUSES> orBuilder) {
+			ISharedNested_And_Consumer_Named<MODEL, RESULT, NESTED_AND_CLAUSES> orBuilder) {
 
 		addNestedAndImpl(orBuilder);
 

@@ -432,13 +432,13 @@ abstract class Collector_And_Or_Named_And_Alias_Base<
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public final NAMED_AND_CLAUSES andNest(ISharedNestedOrConsumerNamed<MODEL, RESULT, NAMED_NESTED_OR_CLAUSES> orBuilder) {
+	public final NAMED_AND_CLAUSES andNest(ISharedNested_Or_Consumer_Named<MODEL, RESULT, NAMED_NESTED_OR_CLAUSES> orBuilder) {
 		return (NAMED_AND_CLAUSES)addNamedNestedOrImpl(orBuilder);
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public final NAMED_OR_CLAUSES orNest(ISharedNestedAndConsumerNamed<MODEL, RESULT, NAMED_NESTED_AND_CLAUSES> andBuilder) {
+	public final NAMED_OR_CLAUSES orNest(ISharedNested_And_Consumer_Named<MODEL, RESULT, NAMED_NESTED_AND_CLAUSES> andBuilder) {
 		return (NAMED_OR_CLAUSES)addNamedNestedAndImpl(andBuilder);
 	}
 
@@ -828,13 +828,13 @@ abstract class Collector_And_Or_Named_And_Alias_Base<
 	
 	@Override
 	@SuppressWarnings("unchecked")
-	public final ALIAS_AND_CLAUSES andNest(ISharedNestedOrConsumerAlias<MODEL, RESULT, ALIAS_NESTED_OR_CLAUSES> orBuilder) {
+	public final ALIAS_AND_CLAUSES andNest(ISharedNested_Or_Consumer_Alias<MODEL, RESULT, ALIAS_NESTED_OR_CLAUSES> orBuilder) {
 		return (ALIAS_AND_CLAUSES)addNestedOrImpl(orBuilder);
 	}
 	
 	@Override
 	@SuppressWarnings("unchecked")
-	public final ALIAS_OR_CLAUSES orNest(ISharedNestedAndConsumerAlias<MODEL, RESULT, ALIAS_NESTED_AND_CLAUSES> andBuilder) {
+	public final ALIAS_OR_CLAUSES orNest(ISharedNested_And_Consumer_Alias<MODEL, RESULT, ALIAS_NESTED_AND_CLAUSES> andBuilder) {
 		return (ALIAS_OR_CLAUSES)addNestedAndImpl(andBuilder);
 	}
 }

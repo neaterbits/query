@@ -61,6 +61,6 @@ public interface ISharedLogical_And_Named_Base<
     
     <T> BYTEARRAY_CLAUSE and(IFunctionByteArray<T> getter);
 
-    AND_CLAUSES andNest(ISharedNestedOrConsumerNamed<MODEL, RESULT, NESTED_OR_CLAUSES> orBuilder);
+    AND_CLAUSES andNest(ISharedNested_Or_Consumer_Named<MODEL, RESULT, NESTED_OR_CLAUSES> orBuilder);
     
 }
