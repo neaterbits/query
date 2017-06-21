@@ -68,7 +68,7 @@ final class Collector_MapFunctions_ExpressionList_Alias<
 		// May be called ".to()" here if we just collect functions 
 		//ISharedResultMapperTo<MODEL, RESULT, Comparable, RET>
 		
-		ISharedResultMap_OpsAndTo_Comparable_Alias<MODEL, RESULT, Integer, RET>
+		ISharedMap_OpsAndTo_Comparable_Alias<MODEL, RESULT, Integer, RET>
 
 {
 

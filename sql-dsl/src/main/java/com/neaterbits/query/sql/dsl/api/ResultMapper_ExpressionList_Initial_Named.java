@@ -38,13 +38,13 @@ abstract class ResultMapper_ExpressionList_Initial_Named<
 		ISharedFunction_After<MODEL, RESULT>,
 		ISharedFunction_After<MODEL, RESULT>,
 		
-		ISharedResultMap_OpsAndTo_Comparable_Named<MODEL, RESULT, Integer, RET>,
-		ISharedResultMap_OpsAndTo_String_Named<MODEL, RESULT, RET>,
+		ISharedMap_OpsAndTo_Comparable_Named<MODEL, RESULT, Integer, RET>,
+		ISharedMap_OpsAndTo_String_Named<MODEL, RESULT, RET>,
 		
 		ISharedFunction_Next<MODEL, RESULT, RET>, ISharedFunction_Next<MODEL, RESULT, RET>,
 
-		ISharedResultMap_OpsAndTo_Comparable_Named<MODEL, RESULT, Integer, RET>,
-		ISharedResultMap_OpsAndTo_String_Named<MODEL, RESULT, RET>,
+		ISharedMap_OpsAndTo_Comparable_Named<MODEL, RESULT, Integer, RET>,
+		ISharedMap_OpsAndTo_String_Named<MODEL, RESULT, RET>,
 
 		
 		SUM_LONG_RET,

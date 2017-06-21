@@ -525,9 +525,41 @@ public class ShortFunctionTest extends BaseJPATest {
 
 	}
 	
-	@Test // Test that cannot combine no-param, integer and other String functions directly
+	// Test that cannot combine no-param, integer and other String functions directly
+	// eg. combining sqrt() and lower() 
+	@Test 
 	public void testCannotCombineNoParamArithmeticAndStringLength() {
-		assertThat(true).isEqualTo(false);
+
+		verifyIsCompilable(
+				b -> b.addImport(NameLength.class).addImport(Company.class),
+				"list(NameLength.class)" +
+				".map().lower(Company::getName).to(NameLength::setName)" +				
+				".map().abs().length(Company::getName).to(NameLength::setLength)"				
+				);
+
+		verifyIsNotCompilable(
+				b -> b.addImport(NameLength.class).addImport(Company.class)
+				.add(Company.class, "c"),
+				"list(NameLength.class)" +
+				".map().lower(Company::getName).to(NameLength::setName)" +				
+				".map().abs().lower(Company::getName).to(NameLength::setLength)"				
+				);
+
+		verifyIsCompilable(
+				b -> b.addImport(NameLength.class).addImport(Company.class)
+				.add(Company.class, "c"),
+				"list(NameLength.class)" +
+				".map().lower(c::getName).to(NameLength::setName)" +				
+				".map().abs().length(c::getName).to(NameLength::setLength)"				
+				);
+		
+		verifyIsNotCompilable(
+				b -> b.addImport(NameLength.class).addImport(Company.class)
+				.add(Company.class, "c"),
+				"list(NameLength.class)" +
+				".map().lower(c::getName).to(NameLength::setName)" +				
+				".map().abs().lower(c::getName).to(NameLength::setLength)"				
+				);
 	}
 
 	@Test // Test that can combine mod and length functions

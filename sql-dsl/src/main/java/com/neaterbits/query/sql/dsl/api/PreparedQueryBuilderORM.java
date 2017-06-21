@@ -699,7 +699,7 @@ final class PreparedQueryBuilderORM<MANAGED, EMBEDDED, IDENTIFIABLE, ATTRIBUTE, 
 				
 
 				// Operator and value
-				final PreparedQueryComparisonRHS preparedCondition = convertCondition(/* null TODO mush have field type for RHS date literals lhs */ null, operator, value, conditionSB);
+				final PreparedQueryComparisonRHS preparedCondition = convertCondition(/* null TODO must have field type for RHS date literals lhs */ null, operator, value, conditionSB);
 
 				//final PreparedQueryConditionComparison prepared = new PreparedQueryConditionComparison(lhsFunctions, lhs, left, preparedCondition);
 				

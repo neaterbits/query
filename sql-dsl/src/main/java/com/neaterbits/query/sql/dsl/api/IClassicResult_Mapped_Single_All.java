@@ -3,7 +3,7 @@ package com.neaterbits.query.sql.dsl.api;
 
 public interface IClassicResult_Mapped_Single_All<MODEL, RESULT>
 	extends ISharedSingleSelectSourceBuilder<MODEL, RESULT>,
-			ISharedResultMap_Initial_NoParam_Undecided1<
+			ISharedMap_Initial_NoParam_Undecided1<
 					MODEL,
 					RESULT,
 					IClassicResult_Mapped_Single_Named<MODEL, RESULT>, 

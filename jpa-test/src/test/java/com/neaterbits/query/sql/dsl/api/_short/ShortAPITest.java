@@ -898,7 +898,7 @@ public class ShortAPITest extends BaseJPATest {
 	}
 	
 	@Test
-	public void testOperatorBoundarites() {
+	public void testOperatorBoundaries() {
 		
 		// Test all > < >= <= etc, but no need to test for all other cases as orthogonal 
 		

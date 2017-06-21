@@ -73,10 +73,14 @@ public class JPAEntityModel implements EntityModel<
 		for (EntityType<?> entity : entities) {
 			ret.add(entity.getJavaType());
 		}
-		
+
 		return ret;
 	}
 
+	@Override
+	public Attribute<?, ?> getIdAttribute(IdentifiableType<?> identifiable) {
+		throw new UnsupportedOperationException("May have to return multiple");
+	}
 
 	@SuppressWarnings({"unchecked", "rawtypes"})
 	@Override
@@ -104,8 +108,6 @@ public class JPAEntityModel implements EntityModel<
 
 		return ((EntityType<?>)managed).getName();
 	}
-
-
 
 	@Override
 	public String getTableName(ManagedType<?> managed) {

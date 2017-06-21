@@ -75,8 +75,8 @@ abstract class Short_Collector_Any_MappedOrEntityOrAggregate_Any<
     // IShortResult_Mapped_Single_All<MODEL, RESULT>
 
 
-		ISharedResultMap_Initial_Named<MODEL, RESULT, NAMED_MAPPED>,
-		ISharedResultMap_Initial_Alias<MODEL, RESULT, ALIAS_MAPPED>
+		ISharedMap_Initial_Named<MODEL, RESULT, NAMED_MAPPED>,
+		ISharedMap_Initial_Alias<MODEL, RESULT, ALIAS_MAPPED>
 		
 	{
 	
@@ -134,82 +134,82 @@ abstract class Short_Collector_Any_MappedOrEntityOrAggregate_Any<
 	}
 
 	@Override
-	public final <T> ISharedResultMap_OpsAndTo_Comparable_Named<MODEL, RESULT, Boolean, NAMED_MAPPED> map(IFunctionBoolean<T> getter) {
+	public final <T> ISharedMap_OpsAndTo_Comparable_Named<MODEL, RESULT, Boolean, NAMED_MAPPED> map(IFunctionBoolean<T> getter) {
 		return new ResultMapper_ExpressionList_Comparable_Named<>(new FieldExpression(getter), this);
 	}
 
 	@Override
-	public final <T> ISharedResultMap_OpsAndTo_Comparable_Named<MODEL, RESULT, Byte, NAMED_MAPPED> map(IFunctionByte<T> getter) {
+	public final <T> ISharedMap_OpsAndTo_Comparable_Named<MODEL, RESULT, Byte, NAMED_MAPPED> map(IFunctionByte<T> getter) {
 		return new ResultMapper_ExpressionList_Comparable_Named<>(new FieldExpression(getter), this);
 	}
 	
 	@Override
-	public final <T> ISharedResultMap_OpsAndTo_Comparable_Named<MODEL, RESULT, Short, NAMED_MAPPED> map(IFunctionShort<T> getter) {
+	public final <T> ISharedMap_OpsAndTo_Comparable_Named<MODEL, RESULT, Short, NAMED_MAPPED> map(IFunctionShort<T> getter) {
 		return new ResultMapper_ExpressionList_Comparable_Named<>(new FieldExpression(getter), this);
 	}
 
 	@Override
-	public final <T> ISharedResultMap_OpsAndTo_Comparable_Named<MODEL, RESULT, Integer, NAMED_MAPPED> map(IFunctionInteger<T> getter) {
+	public final <T> ISharedMap_OpsAndTo_Comparable_Named<MODEL, RESULT, Integer, NAMED_MAPPED> map(IFunctionInteger<T> getter) {
 		return new ResultMapper_ExpressionList_Comparable_Named<>(new FieldExpression(getter), this);
 	}
 
 	@Override
-	public final <T> ISharedResultMap_OpsAndTo_Comparable_Named<MODEL, RESULT, Long, NAMED_MAPPED> map(IFunctionLong<T> getter) {
+	public final <T> ISharedMap_OpsAndTo_Comparable_Named<MODEL, RESULT, Long, NAMED_MAPPED> map(IFunctionLong<T> getter) {
 		return new ResultMapper_ExpressionList_Comparable_Named<>(new FieldExpression(getter), this);
 	}
 
 	@Override
-	public final <T> ISharedResultMap_OpsAndTo_Comparable_Named<MODEL, RESULT, BigInteger, NAMED_MAPPED> map(IFunctionBigInteger<T> getter) {
+	public final <T> ISharedMap_OpsAndTo_Comparable_Named<MODEL, RESULT, BigInteger, NAMED_MAPPED> map(IFunctionBigInteger<T> getter) {
 		return new ResultMapper_ExpressionList_Comparable_Named<>(new FieldExpression(getter), this);
 	}
 
 	@Override
-	public final <T> ISharedResultMap_OpsAndTo_Comparable_Named<MODEL, RESULT, Float, NAMED_MAPPED> map(IFunctionFloat<T> getter) {
+	public final <T> ISharedMap_OpsAndTo_Comparable_Named<MODEL, RESULT, Float, NAMED_MAPPED> map(IFunctionFloat<T> getter) {
 		return new ResultMapper_ExpressionList_Comparable_Named<>(new FieldExpression(getter), this);
 	}
 	
 	@Override
-	public final <T> ISharedResultMap_OpsAndTo_Comparable_Named<MODEL, RESULT, Double, NAMED_MAPPED> map(IFunctionDouble<T> getter) {
+	public final <T> ISharedMap_OpsAndTo_Comparable_Named<MODEL, RESULT, Double, NAMED_MAPPED> map(IFunctionDouble<T> getter) {
 		return new ResultMapper_ExpressionList_Comparable_Named<>(new FieldExpression(getter), this);
 	}
 	
 	@Override
-	public final <T> ISharedResultMap_OpsAndTo_Comparable_Named<MODEL, RESULT, BigDecimal, NAMED_MAPPED> map(IFunctionBigDecimal<T> getter) {
+	public final <T> ISharedMap_OpsAndTo_Comparable_Named<MODEL, RESULT, BigDecimal, NAMED_MAPPED> map(IFunctionBigDecimal<T> getter) {
 		return new ResultMapper_ExpressionList_Comparable_Named<>(new FieldExpression(getter), this);
 	}
 
 	@Override
-	public final <T> ISharedResultMap_OpsAndTo_String_Named<MODEL, RESULT, NAMED_MAPPED> map(IFunctionString<T> getter) {
+	public final <T> ISharedMap_OpsAndTo_String_Named<MODEL, RESULT, NAMED_MAPPED> map(IFunctionString<T> getter) {
 		return new ResultMapper_ExpressionList_String_Named<>(new FieldExpression(getter), this);
 	}
 
 	@Override
-	public final <T> ISharedResultMap_OpsAndTo_Comparable_Named<MODEL, RESULT, java.util.Date, NAMED_MAPPED> map(IFunctionDate<T> getter) {
+	public final <T> ISharedMap_OpsAndTo_Comparable_Named<MODEL, RESULT, java.util.Date, NAMED_MAPPED> map(IFunctionDate<T> getter) {
 		return new ResultMapper_ExpressionList_Comparable_Named<>(new FieldExpression(getter), this);
 	}
 
 	@Override
-	public final <T> ISharedResultMap_OpsAndTo_Comparable_Named<MODEL, RESULT, java.util.Calendar, NAMED_MAPPED> map(IFunctionCalendar<T> getter) {
+	public final <T> ISharedMap_OpsAndTo_Comparable_Named<MODEL, RESULT, java.util.Calendar, NAMED_MAPPED> map(IFunctionCalendar<T> getter) {
 		return new ResultMapper_ExpressionList_Comparable_Named<>(new FieldExpression(getter), this);
 	}
 
 	@Override
-	public final <T> ISharedResultMap_OpsAndTo_SQLTimeType_Named<MODEL, RESULT, java.sql.Date, NAMED_MAPPED> map(IFunctionSQLDate<T> getter) {
+	public final <T> ISharedMap_OpsAndTo_SQLTimeType_Named<MODEL, RESULT, java.sql.Date, NAMED_MAPPED> map(IFunctionSQLDate<T> getter) {
 		return new ResultMapper_ExpressionList_SQLTimeType_Named<>(new FieldExpression(getter), this);
 	}
 
 	@Override
-	public final <T> ISharedResultMap_OpsAndTo_SQLTimeType_Named<MODEL, RESULT, java.sql.Time, NAMED_MAPPED> map(IFunctionSQLTime<T> getter) {
+	public final <T> ISharedMap_OpsAndTo_SQLTimeType_Named<MODEL, RESULT, java.sql.Time, NAMED_MAPPED> map(IFunctionSQLTime<T> getter) {
 		return new ResultMapper_ExpressionList_SQLTimeType_Named<>(new FieldExpression(getter), this);
 	}
 
 	@Override
-	public final <T> ISharedResultMap_OpsAndTo_SQLTimeType_Named<MODEL, RESULT, java.sql.Timestamp, NAMED_MAPPED> map(IFunctionSQLTimestamp<T> getter) {
+	public final <T> ISharedMap_OpsAndTo_SQLTimeType_Named<MODEL, RESULT, java.sql.Timestamp, NAMED_MAPPED> map(IFunctionSQLTimestamp<T> getter) {
 		return new ResultMapper_ExpressionList_SQLTimeType_Named<>(new FieldExpression(getter), this);
 	}
 
 	@Override
-	public final <R> ISharedResultMap_To<MODEL, RESULT, R, ALIAS_MAPPED> map(Supplier<R> getter) {
+	public final <R> ISharedMap_To<MODEL, RESULT, R, ALIAS_MAPPED> map(Supplier<R> getter) {
 		return new ResultMapperToImpl<>(new FieldExpression(getter), this);
 	}
 	

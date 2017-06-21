@@ -23,8 +23,8 @@ final class ResultMapper_ExpressionList_Comparable_Alias<
 			ISharedFunction_After<MODEL, RESULT>, // Undecided
 			
 			ISharedFunction_Next<MODEL, RESULT, RET>, ISharedFunction_Next<MODEL, RESULT, RET>, // Named
-			ISharedResultMap_OpsAndTo_Comparable_Alias<MODEL, RESULT, R, RET>, ISharedFunction_Next<MODEL, RESULT, RET>, // String
-			ISharedResultMap_OpsAndTo_Comparable_Alias<MODEL, RESULT, R, RET>, ISharedFunction_Next<MODEL, RESULT, RET>, // String
+			ISharedMap_OpsAndTo_Comparable_Alias<MODEL, RESULT, R, RET>, ISharedFunction_Next<MODEL, RESULT, RET>, // String
+			ISharedMap_OpsAndTo_Comparable_Alias<MODEL, RESULT, R, RET>, ISharedFunction_Next<MODEL, RESULT, RET>, // String
 			
 			ISharedFunction_Next<MODEL, RESULT, ISharedFunction_After<MODEL, RESULT>>,
 			ISharedFunction_Next<MODEL, RESULT, ISharedFunction_After<MODEL, RESULT>>,
@@ -45,24 +45,24 @@ final class ResultMapper_ExpressionList_Comparable_Alias<
 			ISharedFunction_Next<MODEL, RESULT, ISharedFunction_After<MODEL, RESULT>>,
 			ISharedFunction_Next<MODEL, RESULT, ISharedFunction_After<MODEL, RESULT>>,
 			
-			ISharedResultMap_OpsAndTo_Comparable_Alias<MODEL, RESULT, Long, RET>,
-			ISharedResultMap_OpsAndTo_Comparable_Alias<MODEL, RESULT, Long, RET>,
-			ISharedResultMap_OpsAndTo_Comparable_Alias<MODEL, RESULT, Integer, RET>,
+			ISharedMap_OpsAndTo_Comparable_Alias<MODEL, RESULT, Long, RET>,
+			ISharedMap_OpsAndTo_Comparable_Alias<MODEL, RESULT, Long, RET>,
+			ISharedMap_OpsAndTo_Comparable_Alias<MODEL, RESULT, Integer, RET>,
 			
-			ISharedResultMap_OpsAndTo_Comparable_Alias<MODEL, RESULT, Byte, RET>,
-			ISharedResultMap_OpsAndTo_Comparable_Alias<MODEL, RESULT, Short, RET>,
-			ISharedResultMap_OpsAndTo_Comparable_Alias<MODEL, RESULT, Integer, RET>,
-			ISharedResultMap_OpsAndTo_Comparable_Alias<MODEL, RESULT, Long, RET>,
-			ISharedResultMap_OpsAndTo_Comparable_Alias<MODEL, RESULT, BigInteger, RET>,
-			ISharedResultMap_OpsAndTo_Comparable_Alias<MODEL, RESULT, Float, RET>,
-			ISharedResultMap_OpsAndTo_Comparable_Alias<MODEL, RESULT, Double, RET>,
-			ISharedResultMap_OpsAndTo_Comparable_Alias<MODEL, RESULT, BigDecimal, RET>,
-			ISharedResultMap_OpsAndTo_Comparable_Alias<MODEL, RESULT, String, RET>,
-			ISharedResultMap_OpsAndTo_Comparable_Alias<MODEL, RESULT, java.util.Date, RET>,
-			ISharedResultMap_OpsAndTo_Comparable_Alias<MODEL, RESULT, java.util.Calendar, RET>,
-			ISharedResultMap_OpsAndTo_SQLTimeType_Alias<MODEL, RESULT, java.sql.Date, RET>,
-			ISharedResultMap_OpsAndTo_SQLTimeType_Alias<MODEL, RESULT, java.sql.Time, RET>,
-			ISharedResultMap_OpsAndTo_SQLTimeType_Alias<MODEL, RESULT, java.sql.Timestamp, RET>,
+			ISharedMap_OpsAndTo_Comparable_Alias<MODEL, RESULT, Byte, RET>,
+			ISharedMap_OpsAndTo_Comparable_Alias<MODEL, RESULT, Short, RET>,
+			ISharedMap_OpsAndTo_Comparable_Alias<MODEL, RESULT, Integer, RET>,
+			ISharedMap_OpsAndTo_Comparable_Alias<MODEL, RESULT, Long, RET>,
+			ISharedMap_OpsAndTo_Comparable_Alias<MODEL, RESULT, BigInteger, RET>,
+			ISharedMap_OpsAndTo_Comparable_Alias<MODEL, RESULT, Float, RET>,
+			ISharedMap_OpsAndTo_Comparable_Alias<MODEL, RESULT, Double, RET>,
+			ISharedMap_OpsAndTo_Comparable_Alias<MODEL, RESULT, BigDecimal, RET>,
+			ISharedMap_OpsAndTo_Comparable_Alias<MODEL, RESULT, String, RET>,
+			ISharedMap_OpsAndTo_Comparable_Alias<MODEL, RESULT, java.util.Date, RET>,
+			ISharedMap_OpsAndTo_Comparable_Alias<MODEL, RESULT, java.util.Calendar, RET>,
+			ISharedMap_OpsAndTo_SQLTimeType_Alias<MODEL, RESULT, java.sql.Date, RET>,
+			ISharedMap_OpsAndTo_SQLTimeType_Alias<MODEL, RESULT, java.sql.Time, RET>,
+			ISharedMap_OpsAndTo_SQLTimeType_Alias<MODEL, RESULT, java.sql.Timestamp, RET>,
 			
 			ISharedFunction_Next<MODEL, RESULT, ISharedFunction_After<MODEL, RESULT>>,
 			ISharedFunction_Next<MODEL, RESULT, ISharedFunction_After<MODEL, RESULT>>,
@@ -85,7 +85,7 @@ final class ResultMapper_ExpressionList_Comparable_Alias<
 	
 	>
 
-	implements ISharedResultMap_OpsAndTo_Comparable_Alias<MODEL, RESULT, R, RET>
+	implements ISharedMap_OpsAndTo_Comparable_Alias<MODEL, RESULT, R, RET>
 
 {
 	private final IMappingCollector<MODEL, RESULT> impl;

@@ -153,7 +153,7 @@ abstract class ResultMapper_ExpressionList_Base<
 				
 				> 
 
-		implements ISharedResultMap_To<MODEL, RESULT, R, OPERAND_RET> {
+		implements ISharedMap_To<MODEL, RESULT, R, OPERAND_RET> {
 
 	//private final IMappingCollector<MODEL, RESULT> impl;
 			

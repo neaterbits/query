@@ -6,6 +6,6 @@ public interface IClassicResult_Mapped_Multi_Named<MODEL, RESULT>
 	
 			IClassic_From_MultiMapped_Named<MODEL, RESULT>,
 	
-			ISharedResultMap_Initial_Named<MODEL, RESULT, IClassicResult_Mapped_Multi_Named<MODEL,RESULT>>{
+			ISharedMap_Initial_Named<MODEL, RESULT, IClassicResult_Mapped_Multi_Named<MODEL,RESULT>>{
 
 }

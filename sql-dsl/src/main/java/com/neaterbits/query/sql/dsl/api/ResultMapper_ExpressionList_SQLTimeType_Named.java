@@ -41,9 +41,9 @@ public class ResultMapper_ExpressionList_SQLTimeType_Named<
 		ISharedFunction_Next<MODEL, RESULT, RET>,
 		ISharedFunction_Next<MODEL, RESULT, RET>,
 		ISharedFunction_Next<MODEL, RESULT, RET>,
-		ISharedResultMap_OpsAndTo_SQLTimeType_Named<MODEL, RESULT, java.sql.Date, RET>,
-		ISharedResultMap_OpsAndTo_SQLTimeType_Named<MODEL, RESULT, java.sql.Time, RET>,
-		ISharedResultMap_OpsAndTo_SQLTimeType_Named<MODEL, RESULT, java.sql.Timestamp, RET>,
+		ISharedMap_OpsAndTo_SQLTimeType_Named<MODEL, RESULT, java.sql.Date, RET>,
+		ISharedMap_OpsAndTo_SQLTimeType_Named<MODEL, RESULT, java.sql.Time, RET>,
+		ISharedMap_OpsAndTo_SQLTimeType_Named<MODEL, RESULT, java.sql.Timestamp, RET>,
 		
 	
 		ISharedFunction_Next<MODEL, RESULT, ISharedFunction_After<MODEL, RESULT>>,
@@ -86,7 +86,7 @@ public class ResultMapper_ExpressionList_SQLTimeType_Named<
 		
 	>
 	
-	implements ISharedResultMap_OpsAndTo_SQLTimeType_Named<MODEL, RESULT, R, RET>
+	implements ISharedMap_OpsAndTo_SQLTimeType_Named<MODEL, RESULT, R, RET>
 
 {
 	private final IMappingCollector<MODEL, RESULT> impl;

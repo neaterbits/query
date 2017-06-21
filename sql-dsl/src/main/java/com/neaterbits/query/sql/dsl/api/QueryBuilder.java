@@ -1,26 +1,26 @@
 package com.neaterbits.query.sql.dsl.api;
 
-final class QueryBuilder {
+public final class QueryBuilder {
 
 	final StringBuilder sb;
 
-	QueryBuilder() {
+	public QueryBuilder() {
 		this.sb = new StringBuilder();
 	}
 	
-	QueryBuilder append(String s) {
+	public QueryBuilder append(String s) {
 		sb.append(s);
 		
 		return this;
 	}
 
-	QueryBuilder append(char c) {
+	public QueryBuilder append(char c) {
 		sb.append(c);
 		
 		return this;
 	}
 	
-	boolean isEmpty() {
+	public boolean isEmpty() {
 		return sb.length() == 0;
 	}
 
