@@ -98,20 +98,20 @@ final class Short_Collector_Single_Mapped_Named_Initial<MODEL, RESULT>
 				ISharedResultMap_OpsAndTo_Comparable_Named<MODEL, RESULT, Date, IShortResult_Mapped_Single_Named<MODEL, RESULT>>,
 				ISharedResultMap_OpsAndTo_String_Named<MODEL, RESULT, IShortResult_Mapped_Single_Named<MODEL, RESULT>>,
 					
-				ISharedResultMapperTo<MODEL, RESULT, Long, IShortResult_Mapped_Single_Named<MODEL, RESULT>>,
-				ISharedResultMapperTo<MODEL, RESULT, Long, IShortResult_Mapped_Single_Named<MODEL, RESULT>>,
-				ISharedResultMapperTo<MODEL, RESULT, Integer, IShortResult_Mapped_Single_Named<MODEL, RESULT>>,
+				ISharedResultMap_To<MODEL, RESULT, Long, IShortResult_Mapped_Single_Named<MODEL, RESULT>>,
+				ISharedResultMap_To<MODEL, RESULT, Long, IShortResult_Mapped_Single_Named<MODEL, RESULT>>,
+				ISharedResultMap_To<MODEL, RESULT, Integer, IShortResult_Mapped_Single_Named<MODEL, RESULT>>,
 				
-				ISharedResultMapperTo<MODEL, RESULT, Byte, IShortResult_Mapped_Single_Named<MODEL, RESULT>>,
-				ISharedResultMapperTo<MODEL, RESULT, Short, IShortResult_Mapped_Single_Named<MODEL, RESULT>>,
-				ISharedResultMapperTo<MODEL, RESULT, Integer, IShortResult_Mapped_Single_Named<MODEL, RESULT>>,
-				ISharedResultMapperTo<MODEL, RESULT, Long, IShortResult_Mapped_Single_Named<MODEL, RESULT>>,
-				ISharedResultMapperTo<MODEL, RESULT, BigInteger, IShortResult_Mapped_Single_Named<MODEL, RESULT>>,
-				ISharedResultMapperTo<MODEL, RESULT, Float, IShortResult_Mapped_Single_Named<MODEL, RESULT>>,
-				ISharedResultMapperTo<MODEL, RESULT, Double, IShortResult_Mapped_Single_Named<MODEL, RESULT>>,
-				ISharedResultMapperTo<MODEL, RESULT, BigDecimal, IShortResult_Mapped_Single_Named<MODEL, RESULT>>,
-				ISharedResultMapperTo<MODEL, RESULT, Date, IShortResult_Mapped_Single_Named<MODEL, RESULT>>,
-				ISharedResultMapperTo<MODEL, RESULT, String, IShortResult_Mapped_Single_Named<MODEL, RESULT>>
+				ISharedResultMap_To<MODEL, RESULT, Byte, IShortResult_Mapped_Single_Named<MODEL, RESULT>>,
+				ISharedResultMap_To<MODEL, RESULT, Short, IShortResult_Mapped_Single_Named<MODEL, RESULT>>,
+				ISharedResultMap_To<MODEL, RESULT, Integer, IShortResult_Mapped_Single_Named<MODEL, RESULT>>,
+				ISharedResultMap_To<MODEL, RESULT, Long, IShortResult_Mapped_Single_Named<MODEL, RESULT>>,
+				ISharedResultMap_To<MODEL, RESULT, BigInteger, IShortResult_Mapped_Single_Named<MODEL, RESULT>>,
+				ISharedResultMap_To<MODEL, RESULT, Float, IShortResult_Mapped_Single_Named<MODEL, RESULT>>,
+				ISharedResultMap_To<MODEL, RESULT, Double, IShortResult_Mapped_Single_Named<MODEL, RESULT>>,
+				ISharedResultMap_To<MODEL, RESULT, BigDecimal, IShortResult_Mapped_Single_Named<MODEL, RESULT>>,
+				ISharedResultMap_To<MODEL, RESULT, Date, IShortResult_Mapped_Single_Named<MODEL, RESULT>>,
+				ISharedResultMap_To<MODEL, RESULT, String, IShortResult_Mapped_Single_Named<MODEL, RESULT>>
 	
 		>
 	

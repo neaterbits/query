@@ -2,7 +2,7 @@ package com.neaterbits.query.sql.dsl.api;
 
 public interface IShortResult_Mapped_Multi_All<MODEL, RESULT> 
 
-	extends ISharedResultMapper_Undecided<
+	extends ISharedResultMap_Initial_NoParam_Undecided1<
 			MODEL,
 			
 			RESULT, 

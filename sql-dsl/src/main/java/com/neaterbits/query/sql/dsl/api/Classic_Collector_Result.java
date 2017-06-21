@@ -27,8 +27,8 @@ abstract class Classic_Collector_Result<
 	// all classic-queries can have 'from' at beginning, so collect that
 	extends Classic_Collector_SelectSource<MODEL, RESULT, ENTITY_NAMED_WHERE_OR_JOIN, ENTITY_ALIAS_WHERE_OR_JOIN, AFTER_GROUP_BY> 
 
-	implements ISharedResultMapper_Named<MODEL, RESULT, MAPPED_SOURCE_NAMED>,
-			   ISharedResultMapper_Alias<MODEL, RESULT, MAPPED_SOURCE_ALIAS> {
+	implements ISharedResultMap_Initial_Named<MODEL, RESULT, MAPPED_SOURCE_NAMED>,
+			   ISharedResultMap_Initial_Alias<MODEL, RESULT, MAPPED_SOURCE_ALIAS> {
 	
 	
 	abstract Classic_Collector_MapToResult_Base<MODEL, RESULT, NAMED_MAP_RESULT, MAPPED_NAMED_WHERE_OR_JOIN, MAPPED_ALIAS_WHERE_OR_JOIN, AFTER_GROUP_BY> createMapToResult();
@@ -139,7 +139,7 @@ abstract class Classic_Collector_Result<
 	}
 
 	@Override
-	public final <R> ISharedResultMapperTo<MODEL, RESULT, R, MAPPED_SOURCE_ALIAS> map(Supplier<R> getter) {
+	public final <R> ISharedResultMap_To<MODEL, RESULT, R, MAPPED_SOURCE_ALIAS> map(Supplier<R> getter) {
 		return new ResultMapperToImpl<>(new FieldExpression(getter), createMapToResult());
 	}
 }

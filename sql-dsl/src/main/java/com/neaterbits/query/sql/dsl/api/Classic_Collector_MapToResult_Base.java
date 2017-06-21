@@ -18,7 +18,7 @@ abstract class Classic_Collector_MapToResult_Base<
 	extends Classic_Collector_SelectSource<MODEL, RESULT, NAMED_WHERE_OR_JOIN, ALIAS_WHERE_OR_JOIN, AFTER_GROUP_BY> 
 
 	implements IMappingCollector<MODEL, RESULT>,
-		ISharedResultMapper_Named<MODEL, RESULT, NAMED_MAP_RESULT>
+		ISharedResultMap_Initial_Named<MODEL, RESULT, NAMED_MAP_RESULT>
 {
 
 	Classic_Collector_MapToResult_Base(ClassicSelect select, CollectedQueryResult result, ModelCompiler<MODEL> modelCompiler) {

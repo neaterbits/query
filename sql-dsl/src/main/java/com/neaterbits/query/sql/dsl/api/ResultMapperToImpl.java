@@ -11,7 +11,7 @@ import java.util.function.BiConsumer;
 
 
 		extends CollectedItem
-		implements ISharedResultMapperTo<MODEL, RESULT, R, SOURCE> {
+		implements ISharedResultMap_To<MODEL, RESULT, R, SOURCE> {
 
 	
 	private final Expression expression;

@@ -62,8 +62,8 @@ abstract class Short_Collector_Any_Any_Any<
 			
 			AFTER_GROUP_BY>
 
-	implements ISharedResultMapper_Named<MODEL, RESULT, MAPPED_SOURCE_NAMED>,
-			   ISharedResultMapper_Alias<MODEL, RESULT, MAPPED_SOURCE_ALIAS> {
+	implements ISharedResultMap_Initial_Named<MODEL, RESULT, MAPPED_SOURCE_NAMED>,
+			   ISharedResultMap_Initial_Alias<MODEL, RESULT, MAPPED_SOURCE_ALIAS> {
 
 		
 	// abstract-method to call whenever collected-result is available at a later time
@@ -194,7 +194,7 @@ abstract class Short_Collector_Any_Any_Any<
 	}
 
 	@Override
-	public final <R> ISharedResultMapperTo<MODEL, RESULT, R, MAPPED_SOURCE_ALIAS> map(Supplier<R> getter) {
+	public final <R> ISharedResultMap_To<MODEL, RESULT, R, MAPPED_SOURCE_ALIAS> map(Supplier<R> getter) {
 		return new ResultMapperToImpl<>(new FieldExpression(getter), getMapToResultAlias());
 	}
 }

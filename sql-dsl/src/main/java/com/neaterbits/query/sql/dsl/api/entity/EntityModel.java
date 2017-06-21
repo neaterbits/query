@@ -38,6 +38,8 @@ public interface EntityModel<MANAGED, EMBEDDED, IDENTIFIABLE, ATTRIBUTE, ATTRIBU
 	EMBEDDED getEmbeddedIdType(IDENTIFIABLE identifiable);
 	
 	ScalarType getScalarIdType(IDENTIFIABLE identifiable);
+	
+	ATTRIBUTE getIdAttribute(IDENTIFIABLE identifiable);
 
 	AttributeType getAttributeType(ATTRIBUTE attribute);
 
@@ -55,6 +57,7 @@ public interface EntityModel<MANAGED, EMBEDDED, IDENTIFIABLE, ATTRIBUTE, ATTRIBU
 	
 	ATTRIBUTE getAssociationTargetAttribute(ATTRIBUTE attribute);
 
+	
 	
 	// TODO: can be removed or refactored to pass MANAGED?
 	String getEntityFieldNameForGetter(Class<?> type, Method getter);

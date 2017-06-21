@@ -3,7 +3,7 @@ package com.neaterbits.query.sql.dsl.api;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 
-public interface ISharedResultMapper_Named<MODEL, RESULT, SOURCE extends ISharedSelectSourceBuilder<MODEL, RESULT>> {
+public interface ISharedResultMap_Initial_Named<MODEL, RESULT, SOURCE extends ISharedSelectSourceBuilder<MODEL, RESULT>> {
 
 	<T> ISharedResultMap_OpsAndTo_Comparable_Named<MODEL, RESULT, Boolean, 		SOURCE>		map(IFunctionBoolean<T> getter);
 	<T> ISharedResultMap_OpsAndTo_Comparable_Named<MODEL, RESULT, Byte, 		SOURCE>     map(IFunctionByte<T> getter);

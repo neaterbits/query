@@ -75,8 +75,8 @@ abstract class Short_Collector_Any_MappedOrEntityOrAggregate_Any<
     // IShortResult_Mapped_Single_All<MODEL, RESULT>
 
 
-		ISharedResultMapper_Named<MODEL, RESULT, NAMED_MAPPED>,
-		ISharedResultMapper_Alias<MODEL, RESULT, ALIAS_MAPPED>
+		ISharedResultMap_Initial_Named<MODEL, RESULT, NAMED_MAPPED>,
+		ISharedResultMap_Initial_Alias<MODEL, RESULT, ALIAS_MAPPED>
 		
 	{
 	
@@ -209,7 +209,7 @@ abstract class Short_Collector_Any_MappedOrEntityOrAggregate_Any<
 	}
 
 	@Override
-	public final <R> ISharedResultMapperTo<MODEL, RESULT, R, ALIAS_MAPPED> map(Supplier<R> getter) {
+	public final <R> ISharedResultMap_To<MODEL, RESULT, R, ALIAS_MAPPED> map(Supplier<R> getter) {
 		return new ResultMapperToImpl<>(new FieldExpression(getter), this);
 	}
 	

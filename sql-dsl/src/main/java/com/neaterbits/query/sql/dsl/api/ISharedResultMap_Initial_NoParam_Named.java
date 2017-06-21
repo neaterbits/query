@@ -4,13 +4,13 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.Date;
 
-public interface ISharedResult_Mapped_Named_Base<
+public interface ISharedResultMap_Initial_NoParam_Named<
 		MODEL, 
 		RESULT,
-		RET extends ISharedResult_Mapped_Named_Base<MODEL, RESULT, RET>>
+		RET extends ISharedResultMap_Initial_NoParam_Named<MODEL, RESULT, RET>>
 
 	extends 
-			ISharedResultMapper_Named<MODEL, RESULT, RET>,
+			ISharedResultMap_Initial_Named<MODEL, RESULT, RET>,
 			
 			ISharedSelectSourceBuilder<MODEL, RESULT> { // TODO: really select-source? needed for type-checking{
 
@@ -34,20 +34,20 @@ public interface ISharedResult_Mapped_Named_Base<
 		ISharedResultMap_OpsAndTo_Comparable_Named<MODEL, RESULT, Date, 	   RET>,
 		ISharedResultMap_OpsAndTo_String_Named<MODEL, RESULT, RET>,
 		
-		ISharedResultMapperTo<MODEL, RESULT, Long, 		 RET>,
-		ISharedResultMapperTo<MODEL, RESULT, Long, 		 RET>,
-		ISharedResultMapperTo<MODEL, RESULT, Integer, 	 RET>,
+		ISharedResultMap_To<MODEL, RESULT, Long, 		 RET>,
+		ISharedResultMap_To<MODEL, RESULT, Long, 		 RET>,
+		ISharedResultMap_To<MODEL, RESULT, Integer, 	 RET>,
 		
-		ISharedResultMapperTo<MODEL, RESULT, Byte, 	 	RET>,
-		ISharedResultMapperTo<MODEL, RESULT, Short, 	 RET>,
-		ISharedResultMapperTo<MODEL, RESULT, Integer, 	 RET>,
-		ISharedResultMapperTo<MODEL, RESULT, Long, 		 RET>,
-		ISharedResultMapperTo<MODEL, RESULT, BigInteger, RET>,
-		ISharedResultMapperTo<MODEL, RESULT, Float, 	 RET>,
-		ISharedResultMapperTo<MODEL, RESULT, Double,     RET>,
-		ISharedResultMapperTo<MODEL, RESULT, BigDecimal, RET>,
-		ISharedResultMapperTo<MODEL, RESULT, Date, 	     RET>,
-		ISharedResultMapperTo<MODEL, RESULT, String, 	 RET>
+		ISharedResultMap_To<MODEL, RESULT, Byte, 	 	RET>,
+		ISharedResultMap_To<MODEL, RESULT, Short, 	 RET>,
+		ISharedResultMap_To<MODEL, RESULT, Integer, 	 RET>,
+		ISharedResultMap_To<MODEL, RESULT, Long, 		 RET>,
+		ISharedResultMap_To<MODEL, RESULT, BigInteger, RET>,
+		ISharedResultMap_To<MODEL, RESULT, Float, 	 RET>,
+		ISharedResultMap_To<MODEL, RESULT, Double,     RET>,
+		ISharedResultMap_To<MODEL, RESULT, BigDecimal, RET>,
+		ISharedResultMap_To<MODEL, RESULT, Date, 	     RET>,
+		ISharedResultMap_To<MODEL, RESULT, String, 	 RET>
 	> map();
 	
 }

@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.function.BiConsumer;
+import java.util.function.Function;
 
 public class EntityModelUtil<MANAGED, EMBEDDED, IDENTIFIABLE, ATTRIBUTE, COLL extends Collection<ATTRIBUTE>> 
 	implements IEntityModelUtil {
@@ -121,10 +122,30 @@ public class EntityModelUtil<MANAGED, EMBEDDED, IDENTIFIABLE, ATTRIBUTE, COLL ex
 		return ret;
 	}
 	
-	private BiConsumer<Object, Object> getSetter(Member member) {
-	
-		final BiConsumer<Object, Object> ret;
+	private static String getAttributeMethodSuffix(String methodName) {
 		
+		final String suffix;
+			
+		if (methodName.startsWith("get")) {
+			suffix = methodName.substring(3);
+		}
+		else if (methodName.startsWith("set")) {
+			suffix = methodName.substring(2);
+		}
+		else {
+			throw new IllegalStateException("Method name is not a getter ot setter: " + methodName);
+		}
+
+		return suffix;
+	}
+	
+	public static Object getMemberValue(Object instance, Member member) {
+		return getGetter(member).apply(instance);
+	}
+	
+	
+	private static Function<Object, Object> getGetter(Member member) {
+		final Function<Object, Object> ret;
 		
 		if (member instanceof Field) {
 			throw new UnsupportedOperationException("TODO - does not support fields");
@@ -133,18 +154,42 @@ public class EntityModelUtil<MANAGED, EMBEDDED, IDENTIFIABLE, ATTRIBUTE, COLL ex
 			final Method method = (Method)member;
 			final String methodName = method.getName();
 			
-			final String suffix;
+			final String suffix = getAttributeMethodSuffix(methodName);
 			
+			Method getter;
+			try {
+				getter = method.getDeclaringClass().getMethod("get" + suffix, method.getReturnType());
+			} catch (NoSuchMethodException | SecurityException ex) {
+				throw new IllegalStateException("No setter for for getter " + method, ex);
+			}
+
+			ret = (instance) -> {
+				try {
+					return getter.invoke(instance);
+				} catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException ex) {
+					throw new IllegalStateException("Failed to invoke setter " + getter, ex);
+				}
+			};
+		}
+		else {
+			throw new UnsupportedOperationException("Unknown member type " + member.getClass());
+		}
+
+		return ret;
+	}
+	
+	private static BiConsumer<Object, Object> getSetter(Member member) {
+	
+		final BiConsumer<Object, Object> ret;
+		
+		if (member instanceof Field) {
+			throw new UnsupportedOperationException("TODO - does not support fields");
+		}
+		else if (member instanceof Method) {
+			final Method method = (Method)member;
+			final String methodName = method.getName();
 			
-			if (methodName.startsWith("get")) {
-				suffix = methodName.substring(3);
-			}
-			else if (methodName.startsWith("set")) {
-				suffix = methodName.substring(2);
-			}
-			else {
-				throw new IllegalStateException("Method name is not a getter: " + method);
-			}
+			final String suffix = getAttributeMethodSuffix(methodName);
 			
 			Method setter;
 			try {

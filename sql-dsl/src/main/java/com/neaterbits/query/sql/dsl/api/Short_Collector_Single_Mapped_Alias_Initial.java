@@ -55,24 +55,24 @@ final class Short_Collector_Single_Mapped_Alias_Initial<MODEL, RESULT>
 				ISharedResultMap_OpsAndTo_SQLTimeType_Alias<MODEL, RESULT, java.sql.Timestamp, IShortResult_Mapped_Single_Alias<MODEL, RESULT>>,
 				
 				
-				ISharedResultMapperTo<MODEL, RESULT, Long, IShortResult_Mapped_Single_Alias<MODEL, RESULT>>,
-				ISharedResultMapperTo<MODEL, RESULT, Long, IShortResult_Mapped_Single_Alias<MODEL, RESULT>>,
-				ISharedResultMapperTo<MODEL, RESULT, Integer, IShortResult_Mapped_Single_Alias<MODEL, RESULT>>,
+				ISharedResultMap_To<MODEL, RESULT, Long, IShortResult_Mapped_Single_Alias<MODEL, RESULT>>,
+				ISharedResultMap_To<MODEL, RESULT, Long, IShortResult_Mapped_Single_Alias<MODEL, RESULT>>,
+				ISharedResultMap_To<MODEL, RESULT, Integer, IShortResult_Mapped_Single_Alias<MODEL, RESULT>>,
 				
-				ISharedResultMapperTo<MODEL, RESULT, Byte, IShortResult_Mapped_Single_Alias<MODEL, RESULT>>,
-				ISharedResultMapperTo<MODEL, RESULT, Short, IShortResult_Mapped_Single_Alias<MODEL, RESULT>>,
-				ISharedResultMapperTo<MODEL, RESULT, Integer, IShortResult_Mapped_Single_Alias<MODEL, RESULT>>,
-				ISharedResultMapperTo<MODEL, RESULT, Long, IShortResult_Mapped_Single_Alias<MODEL, RESULT>>,
-				ISharedResultMapperTo<MODEL, RESULT, BigInteger, IShortResult_Mapped_Single_Alias<MODEL, RESULT>>,
-				ISharedResultMapperTo<MODEL, RESULT, Float, IShortResult_Mapped_Single_Alias<MODEL, RESULT>>,
-				ISharedResultMapperTo<MODEL, RESULT, Double, IShortResult_Mapped_Single_Alias<MODEL, RESULT>>,
-				ISharedResultMapperTo<MODEL, RESULT, BigDecimal, IShortResult_Mapped_Single_Alias<MODEL, RESULT>>,
-				ISharedResultMapperTo<MODEL, RESULT, String, IShortResult_Mapped_Single_Alias<MODEL, RESULT>>,
-				ISharedResultMapperTo<MODEL, RESULT, java.util.Date, IShortResult_Mapped_Single_Alias<MODEL, RESULT>>,
-				ISharedResultMapperTo<MODEL, RESULT, java.util.Calendar, IShortResult_Mapped_Single_Alias<MODEL, RESULT>>,
-				ISharedResultMapperTo<MODEL, RESULT, java.sql.Date, IShortResult_Mapped_Single_Alias<MODEL, RESULT>>,
-				ISharedResultMapperTo<MODEL, RESULT, java.sql.Time, IShortResult_Mapped_Single_Alias<MODEL, RESULT>>,
-				ISharedResultMapperTo<MODEL, RESULT, java.sql.Timestamp, IShortResult_Mapped_Single_Alias<MODEL, RESULT>>
+				ISharedResultMap_To<MODEL, RESULT, Byte, IShortResult_Mapped_Single_Alias<MODEL, RESULT>>,
+				ISharedResultMap_To<MODEL, RESULT, Short, IShortResult_Mapped_Single_Alias<MODEL, RESULT>>,
+				ISharedResultMap_To<MODEL, RESULT, Integer, IShortResult_Mapped_Single_Alias<MODEL, RESULT>>,
+				ISharedResultMap_To<MODEL, RESULT, Long, IShortResult_Mapped_Single_Alias<MODEL, RESULT>>,
+				ISharedResultMap_To<MODEL, RESULT, BigInteger, IShortResult_Mapped_Single_Alias<MODEL, RESULT>>,
+				ISharedResultMap_To<MODEL, RESULT, Float, IShortResult_Mapped_Single_Alias<MODEL, RESULT>>,
+				ISharedResultMap_To<MODEL, RESULT, Double, IShortResult_Mapped_Single_Alias<MODEL, RESULT>>,
+				ISharedResultMap_To<MODEL, RESULT, BigDecimal, IShortResult_Mapped_Single_Alias<MODEL, RESULT>>,
+				ISharedResultMap_To<MODEL, RESULT, String, IShortResult_Mapped_Single_Alias<MODEL, RESULT>>,
+				ISharedResultMap_To<MODEL, RESULT, java.util.Date, IShortResult_Mapped_Single_Alias<MODEL, RESULT>>,
+				ISharedResultMap_To<MODEL, RESULT, java.util.Calendar, IShortResult_Mapped_Single_Alias<MODEL, RESULT>>,
+				ISharedResultMap_To<MODEL, RESULT, java.sql.Date, IShortResult_Mapped_Single_Alias<MODEL, RESULT>>,
+				ISharedResultMap_To<MODEL, RESULT, java.sql.Time, IShortResult_Mapped_Single_Alias<MODEL, RESULT>>,
+				ISharedResultMap_To<MODEL, RESULT, java.sql.Timestamp, IShortResult_Mapped_Single_Alias<MODEL, RESULT>>
 
 		> map() {
 

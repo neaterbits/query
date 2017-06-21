@@ -63,8 +63,6 @@ public class JPAEntityModel implements EntityModel<
 		this.metamodel = metamodel;
 	}
 
-	
-	
 
 	@Override
 	public Set<Class<?>> getAllManagedTypes() {

@@ -8,7 +8,7 @@ public interface ISharedResultMap_To_Comparable_Alias<
 	
 	extends
 		ISharedFunction_Next<MODEL, RESULT, RET>,
-		ISharedResultMapperTo<MODEL, RESULT, R, RET> // Can always do "to" instead of op
+		ISharedResultMap_To<MODEL, RESULT, R, RET> // Can always do "to" instead of op
 
 {
 
