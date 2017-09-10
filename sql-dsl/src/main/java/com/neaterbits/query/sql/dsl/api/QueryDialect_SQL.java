@@ -11,9 +11,9 @@ abstract class QueryDialect_SQL extends QueryDialect_Base {
 
 	abstract ConditionStringBuilder makeConditionStringBuilder(QueryParametersDistinct distinctParams);
 	
-	abstract void appendAliasFieldReference(QueryBuilder sb, FieldReferenceAlias ref);
+	abstract void appendAliasFieldReference(QueryBuilder sb, FieldReference_Alias ref);
 
-	abstract void appendEntityFieldReference(QueryBuilder sb, FieldReferenceEntity ref);
+	abstract void appendEntityFieldReference(QueryBuilder sb, FieldReference_Entity ref);
 	
 	
 	/**
@@ -126,11 +126,11 @@ abstract class QueryDialect_SQL extends QueryDialect_Base {
 	}
 	
 	final void appendFieldReference(QueryBuilder s, FieldReference r) {
-		if (r instanceof FieldReferenceAlias) {
-			appendAliasFieldReference(s, (FieldReferenceAlias)r);
+		if (r instanceof FieldReference_Alias) {
+			appendAliasFieldReference(s, (FieldReference_Alias)r);
 		}
-		else if (r instanceof FieldReferenceEntity) {
-			appendEntityFieldReference(s, (FieldReferenceEntity)r);
+		else if (r instanceof FieldReference_Entity) {
+			appendEntityFieldReference(s, (FieldReference_Entity)r);
 		}
 		else {
 			throw new UnsupportedOperationException("Unknown field reference type " + r.getClass().getName());

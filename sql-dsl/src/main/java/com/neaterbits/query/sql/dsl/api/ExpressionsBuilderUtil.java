@@ -112,11 +112,11 @@ final class ExpressionsBuilderUtil {
 		
 		switch (fieldReferenceType) {
 		case ALIAS:
-			ret = new FieldReferenceAlias(source.getName(), columnName);
+			ret = new FieldReference_Alias(source.getName(), columnName);
 			break;
 			
 		case NAMED:
-			ret = new FieldReferenceEntity(source.getType(), source.getName(), columnName);
+			ret = new FieldReference_Entity(source.getType(), source.getName(), columnName);
 			break;
 			
 		default:

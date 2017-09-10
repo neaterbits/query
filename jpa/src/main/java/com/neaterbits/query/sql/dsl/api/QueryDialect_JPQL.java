@@ -79,12 +79,12 @@ final class QueryDialect_JPQL extends QueryDialect_SQL {
 	}
 
 	@Override
-	public void appendAliasFieldReference(QueryBuilder sb, FieldReferenceAlias ref) {
+	public void appendAliasFieldReference(QueryBuilder sb, FieldReference_Alias ref) {
 		appendFieldReferenceStatic(sb, ref);
 	}
 
 	@Override
-	public void appendEntityFieldReference(QueryBuilder sb, FieldReferenceEntity ref) {
+	public void appendEntityFieldReference(QueryBuilder sb, FieldReference_Entity ref) {
 		appendFieldReferenceStatic(sb, ref);
 	}
 

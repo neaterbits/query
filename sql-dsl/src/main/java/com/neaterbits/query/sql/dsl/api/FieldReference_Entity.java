@@ -1,9 +1,9 @@
 package com.neaterbits.query.sql.dsl.api;
 
-final class FieldReferenceEntity extends FieldReference {
+final class FieldReference_Entity extends FieldReference {
 	private final Class<?> javaType;
 
-	FieldReferenceEntity(Class<?> javaType, String varName, String columnName) {
+	FieldReference_Entity(Class<?> javaType, String varName, String columnName) {
 		super(varName, columnName);
 
 		if (javaType == null) {

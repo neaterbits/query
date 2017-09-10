@@ -350,12 +350,12 @@ final class QueryDialect_ANSI_SQL extends QueryDialect_SQL {
 	}
 
 	@Override
-	public void appendAliasFieldReference(QueryBuilder sb, FieldReferenceAlias r) {
+	public void appendAliasFieldReference(QueryBuilder sb, FieldReference_Alias r) {
 		sb.append(r.getVarName()).append(".").append(r.getColumnName());
 	}
 	
 	@Override
-	public void appendEntityFieldReference(QueryBuilder sb, FieldReferenceEntity r) {
+	public void appendEntityFieldReference(QueryBuilder sb, FieldReference_Entity r) {
 		final String tableName = getTableName(r.getJavaType());
 		
 		sb.append(tableName).append(".").append(r.getColumnName());
