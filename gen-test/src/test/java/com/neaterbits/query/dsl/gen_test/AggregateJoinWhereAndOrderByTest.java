@@ -15,6 +15,9 @@ public class AggregateJoinWhereAndOrderByTest extends GEN_BaseTestCase {
     public void testAggregateSingleNamed() {
 
     	verifyIsCompilable(
+    			b -> b
+    				.addImport(LandPlot.class)
+    				.addImport(Farm.class),
 				"sum(LandPlot::getHectares)" +
 				".innerJoin(Farm::getLandPlots)" +
 				".where(LandPlot::getHectares).isGreaterThan(new BigDecimal(\"99.9\"))" +
@@ -22,6 +25,9 @@ public class AggregateJoinWhereAndOrderByTest extends GEN_BaseTestCase {
 				);
 		
 		verifyIsNotCompilable(
+    			b -> b
+					.addImport(LandPlot.class)
+					.addImport(Farm.class),
 				"sum(LandPlot::getHectares)" +
 				".innerJoin(Farm::getLandPlots)" +
 				".where(LandPlot::getHectares).isGreaterThan(new BigDecimal(\"99.9\"))" +

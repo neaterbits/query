@@ -1,7 +1,5 @@
 package com.neaterbits.query.dsl.gen_test;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 import org.junit.Test;
 
 import com.neaterbits.query.jpatest.GEN_BaseTestCase;
@@ -16,10 +14,14 @@ public class AggregateJoinWhereGroupByTest extends GEN_BaseTestCase {
     public void testAggregateSingleNamed() {
 
     	verifyIsCompilable(
+    			b -> b.addImport(LandPlot.class)
+    				  .addImport(Farm.class),
 				"sum(LandPlot::getHectares)" +
 				".innerJoin(Farm::getLandPlots)");
 		
 		verifyIsNotCompilable(
+    			b -> b.addImport(LandPlot.class)
+				  .addImport(Farm.class),
 				"sum(LandPlot::getHectares)" +
 				".innerJoin(Farm::getLandPlots)" +
 				".groupBy(LandPlot::getHectares)");

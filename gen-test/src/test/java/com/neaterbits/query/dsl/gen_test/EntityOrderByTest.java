@@ -14,9 +14,11 @@ public class EntityOrderByTest extends GEN_BaseTestCase {
     public void testEntitySingleNamed() {
     	// Should test that is not compilable
 		verifyIsCompilable(
+				b -> b.addImport(Farm.class),
 				"one(Farm.class)");
 		
 		verifyIsNotCompilable(
+				b -> b.addImport(Farm.class),
 				"one(Farm.class)" + 
 				".orderBy(Farm::getName)");		
     }
@@ -25,11 +27,11 @@ public class EntityOrderByTest extends GEN_BaseTestCase {
     @Test
     public void testEntitySingleAlias() {
 		verifyIsCompilable(
-				Farm.class, "f",
+				b -> b.add(Farm.class, "f"),
 				"one(f)");
 		
 		verifyIsNotCompilable(
-				Farm.class, "f",
+				b -> b.add(Farm.class, "f"),
 				"one(f)" + 
 				".orderBy(f::getName)");		
     }

@@ -13,6 +13,7 @@ public class EntityOrderByDescTest extends GEN_BaseTestCase {
     @Test
     public void testEntitySingleNamed() {
 		verifyIsCompilable(
+				b -> b.addImport(Farm.class),
 				"one(Farm.class)");
 		
 		verifyIsNotCompilable(

@@ -2,6 +2,7 @@ package com.neaterbits.query.sql.dsl.api;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -177,15 +178,21 @@ public abstract class CompilabilityTest {
 		final File classFile = new File(file.getParentFile(), classFileName); 
 
 		boolean ret = false;
+		
+		final ByteArrayOutputStream out = new ByteArrayOutputStream();
+		final ByteArrayOutputStream err = new ByteArrayOutputStream();
 
 		try (FileInputStream inputStream = new FileInputStream(file)){
 			final int exitCode = ToolProvider.getSystemJavaCompiler().run(
 					System.in,
-					System.out,
-					System.err,
+					out,
+					err,
 					file.getAbsolutePath());
 
 			ret = exitCode == 0;
+
+			System.out.println("## got output\n" + new String(out.toByteArray()));
+			System.out.println("## got err\n" + new String(err.toByteArray()));
 
 			if (ret && !classFile.exists()) {
 				throw new RuntimeException("Returned OK but no class file at " + classFile.getAbsolutePath());
@@ -196,7 +203,7 @@ public abstract class CompilabilityTest {
 		}
 		finally {
 			file.delete();
-			
+
 			// Delete class file too
 			classFile.delete();
 		}

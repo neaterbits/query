@@ -6,6 +6,7 @@ import com.neaterbits.query.jpatest.GEN_BaseTestCase;
 import com.neaterbits.query.sql.dsl.api.MultiBuilt;
 import com.neaterbits.query.test.model.Farm;
 import com.neaterbits.query.test.model.mapped.FarmInfo;
+import com.neaterbits.query.test.model.mapped.FarmLand;
 
 
 public class MappedWhereOrGroupByTest extends GEN_BaseTestCase {
@@ -13,12 +14,18 @@ public class MappedWhereOrGroupByTest extends GEN_BaseTestCase {
     @Test
     public void testMappedSingleNamed() {
 		verifyIsCompilable(
+				b -> b
+					.addImport(FarmInfo.class)
+					.addImport(Farm.class),
 				"one(FarmInfo.class)" +
 				".map(Farm::getFarmId).to(FarmInfo::setFarmId)" +
 				".where(Farm::getName).startsWith(\"Farm\")" +
 				".or(Farm::getName).startsWith(\"Other\")");
 
 		verifyIsCompilable(
+				b -> b
+					.addImport(FarmInfo.class)
+					.addImport(Farm.class),
 				"list(FarmInfo.class)" +
 				".map(Farm::getFarmId).to(FarmInfo::setFarmId)" +
 				".where(Farm::getName).startsWith(\"Farm\")" +
@@ -27,6 +34,9 @@ public class MappedWhereOrGroupByTest extends GEN_BaseTestCase {
 						);
 		
 		verifyIsNotCompilable(
+				b -> b
+					.addImport(FarmInfo.class)
+					.addImport(Farm.class),
 				"one(FarmInfo.class)" + 
 				".map(Farm::getFarmId).to(FarmInfo::setFarmId)" +
 				".where(Farm::getName).startsWith(\"Farm\")" +
@@ -37,7 +47,8 @@ public class MappedWhereOrGroupByTest extends GEN_BaseTestCase {
     @Test
     public void testMappedSingleAlias() {
 		verifyIsCompilable(
-		    	Farm.class, "f",
+				b -> b.addImport(FarmInfo.class)
+					  .add(Farm.class, "f"),
 				"one(FarmInfo.class)" +
 				".map(f::getFarmId).to(FarmInfo::setFarmId)" +
 				".where(f::getName).startsWith(\"Farm\")" +
@@ -45,7 +56,8 @@ public class MappedWhereOrGroupByTest extends GEN_BaseTestCase {
 				);
 
 		verifyIsCompilable(
-		    	Farm.class, "f",
+				b -> b.addImport(FarmInfo.class)
+				  .add(Farm.class, "f"),
 				"list(FarmInfo.class)" +
 				".map(f::getFarmId).to(FarmInfo::setFarmId)" +
 				".where(f::getName).startsWith(\"Farm\")" +						
@@ -53,7 +65,8 @@ public class MappedWhereOrGroupByTest extends GEN_BaseTestCase {
 				".groupBy(f::getFarmId)");
 
 		verifyIsNotCompilable(
-				Farm.class, "f",
+				b -> b.addImport(FarmInfo.class)
+				  .add(Farm.class, "f"),
 				"one(FarmInfo.class)" + 
 				".map(f::getFarmId).to(FarmInfo::setFarmId)" +
 				".where(f::getName).startsWith(\"Farm\")" +						

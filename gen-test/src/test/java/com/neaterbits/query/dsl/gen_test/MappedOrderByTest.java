@@ -14,16 +14,22 @@ public class MappedOrderByTest extends GEN_BaseTestCase {
     @Test
     public void testMappedSingleNamed() {
 		verifyIsCompilable(
+				b -> b.addImport(FarmInfo.class)
+					  .addImport(Farm.class),
 				"one(FarmInfo.class)" +
 				".map(Farm::getName).to(FarmInfo::setName)");
 
 		verifyIsCompilable(
+				b -> b.addImport(FarmInfo.class)
+				      .addImport(Farm.class),
 				"list(FarmInfo.class)" +
 				".map(Farm::getName).to(FarmInfo::setName)" +
 				".orderBy(Farm::getName)"
 						);
 		
 		verifyIsNotCompilable(
+				b -> b.addImport(FarmInfo.class)
+				      .addImport(Farm.class),
 				"one(FarmInfo.class)" + 
 				".map(Farm::getName).to(FarmInfo::setName)" +
 				".orderBy(Farm::getName)");		
@@ -33,18 +39,21 @@ public class MappedOrderByTest extends GEN_BaseTestCase {
     @Test
     public void testMappedSingleAlias() {
 		verifyIsCompilable(
-		    	Farm.class, "f",
+				b -> b.addImport(FarmInfo.class)
+					  .add(Farm.class, "f"),
 				"one(FarmInfo.class)" +
 				".map(f::getName).to(FarmInfo::setName)");
 
 		verifyIsCompilable(
-		    	Farm.class, "f",
+				b -> b.addImport(FarmInfo.class)
+		    		  .add(Farm.class, "f"),
 				"list(FarmInfo.class)" +
 				".map(f::getName).to(FarmInfo::setName)" + 
 				".orderBy(f::getName)");
 
 		verifyIsNotCompilable(
-				Farm.class, "f",
+				b -> b.addImport(FarmInfo.class)
+					  .add(Farm.class, "f"),
 				"one(FarmInfo.class)" + 
 				".map(f::getName).to(FarmInfo::setName)" +
 				".orderBy(f::getName)");		
@@ -54,12 +63,15 @@ public class MappedOrderByTest extends GEN_BaseTestCase {
     @Test
     public void testMappedMultiNamed() {
 		verifyIsCompilable(
+				b -> b.addImport(FarmInfo.class)
+					  .addImport(Farm.class),
 				"list(FarmInfo.class)" +
 				".map(Farm::getName).to(FarmInfo::setName)" +
 				".orderBy(Farm::getName)");
 		
 		verifyIsNotCompilable(
-				Farm.class, "f",
+				b -> b.addImport(FarmInfo.class)
+					  .add(Farm.class, "f"),
 				"list(FarmInfo.class)" + 
 				".map(Farm::getName).to(FarmInfo::setName)" +
 				".orderBy(f::getName)");		
@@ -142,13 +154,15 @@ public class MappedOrderByTest extends GEN_BaseTestCase {
     @Test
     public void testMappedMultiAlias() {
 		verifyIsCompilable(
-				Farm.class, "f",
+				b -> b.addImport(FarmInfo.class)
+					  .add(Farm.class, "f"),
 				"list(FarmInfo.class)" +
 				".map(f::getName).to(FarmInfo::setName)" +
 				".orderBy(f::getName)");
 		
 		verifyIsNotCompilable(
-				Farm.class, "f",
+				b -> b.addImport(FarmInfo.class)
+					  .add(Farm.class, "f"),
 				"list(FarmInfo.class)" + 
 				".map(f::getName).to(FarmInfo::setName)" +
 				".orderBy(Farm::getName)");
