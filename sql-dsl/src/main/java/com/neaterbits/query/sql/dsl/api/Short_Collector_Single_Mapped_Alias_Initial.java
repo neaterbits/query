@@ -29,7 +29,7 @@ final class Short_Collector_Single_Mapped_Alias_Initial<MODEL, RESULT>
 	*/
 
 	@Override
-	public ISharedMapFunctions_All_Alias<
+	public ISharedMap_Functions_All_Alias<
 				MODEL,
 				RESULT,
 				

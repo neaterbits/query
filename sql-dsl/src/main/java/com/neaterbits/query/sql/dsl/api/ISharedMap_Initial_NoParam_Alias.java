@@ -12,7 +12,7 @@ public interface ISharedMap_Initial_NoParam_Alias<
 		ISharedMap_Initial_Alias<MODEL, RESULT, RET>,
 		ISharedSelectSourceBuilder<MODEL, RESULT> { // TODO: really select-source? needed for type-checking{
 		
-		ISharedMapFunctions_All_Alias<
+		ISharedMap_Functions_All_Alias<
 			MODEL,
 			RESULT,
 			

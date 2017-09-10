@@ -1,6 +1,6 @@
 package com.neaterbits.query.sql.dsl.api;
 
-public interface ISharedMapFunctions_All_Alias<
+public interface ISharedMap_Functions_All_Alias<
 		MODEL,
 		RESULT,
 		
