@@ -9,7 +9,7 @@ package com.neaterbits.query.sql.dsl.api;
  *
  */
 
-public interface ISharedMapFunctions_All_Undecided<
+public interface ISharedMap_Functions_All_Undecided<
 		MODEL,
 		RESULT,
 
@@ -128,7 +128,7 @@ public interface ISharedMapFunctions_All_Undecided<
 
 	extends
 	
-		ISharedMapFunctions_Numeric_Undecided<
+		ISharedMap_Functions_Numeric_Undecided<
 			MODEL,
 			RESULT,
 			
@@ -147,7 +147,7 @@ public interface ISharedMapFunctions_All_Undecided<
 			NO_PARAM_UNDECIDED_SUM_LONG_RET, NO_PARAM_UNDECIDED_COUNT_RET, NO_PARAM_UNDECIDED_LENGTH_RET, NO_PARAM_UNDECIDED_BYTE_RET, NO_PARAM_UNDECIDED_SHORT_RET, NO_PARAM_UNDECIDED_INT_RET, NO_PARAM_UNDECIDED_LONG_RET, NO_PARAM_UNDECIDED_BIGINTEGER_RET, NO_PARAM_UNDECIDED_FLOAT_RET, NO_PARAM_UNDECIDED_DOUBLE_RET, NO_PARAM_UNDECIDED_BIGDECIMAL_RET, NO_PARAM_UNDECIDED_DATE_RET
 			>,
 			
-		ISharedMapFunctions_String_Undecided<
+		ISharedMap_Functions_String_Undecided<
 			MODEL,
 			RESULT,
 

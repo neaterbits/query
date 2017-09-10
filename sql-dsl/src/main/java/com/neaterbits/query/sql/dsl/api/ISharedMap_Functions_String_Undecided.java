@@ -1,6 +1,6 @@
 package com.neaterbits.query.sql.dsl.api;
 
-public interface ISharedMapFunctions_String_Undecided<
+public interface ISharedMap_Functions_String_Undecided<
 		MODEL,
 		RESULT,
 		
@@ -22,14 +22,14 @@ public interface ISharedMapFunctions_String_Undecided<
 			ISharedFunctions_String_NoParam_Base<
 					MODEL,
 					RESULT,
-					ISharedMapFunctions_String_StringResult_Undecided<
+					ISharedMap_Functions_String_StringResult_Undecided<
 						MODEL, RESULT,
 						NAMED_RET, ALIAS_RET,
 						NAMED_LENGTH_RET, NAMED_LENGTH_RET,
 						ALIAS_LENGTH_RET, ALIAS_LENGTH_RET>,
 		
 					// eg lower().xyz, return only the functions that return String (so skip length())
-					ISharedMapFunctions_String_StringResult_Undecided<
+					ISharedMap_Functions_String_StringResult_Undecided<
 						MODEL, RESULT,
 						NAMED_RET, ALIAS_RET,
 						NAMED_STRING_RET, NAMED_STRING_RET,

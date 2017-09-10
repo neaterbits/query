@@ -57,7 +57,7 @@ final class Collector_MapFunctions_ExpressionList_Named<
 			SUM_LONG_RET, COUNT_RET, LENGTH_RET, BYTE_RET, SHORT_RET, INT_RET, LONG_RET, BIGINTEGER_RET, FLOAT_RET, DOUBLE_RET, BIGDECIMAL_RET, STRING_RET, DATE_RET, CALENDAR_RET, SQLDATE_RET, SQLTIME_RET, SQLTIMESTAMP_RET
 		>
 
-	implements ISharedMapFunctions_All_Named<MODEL, RESULT, RET,
+	implements ISharedMap_Functions_All_Named<MODEL, RESULT, RET,
 			SUM_LONG_RET, COUNT_RET, LENGTH_RET, BYTE_RET, SHORT_RET, INT_RET, LONG_RET, BIGINTEGER_RET, FLOAT_RET, DOUBLE_RET, BIGDECIMAL_RET, DATE_RET, STRING_RET,
 			NO_PARAM_SUM_LONG_RET, NO_PARAM_COUNT_RET, NO_PARAM_LENGTH_RET, NO_PARAM_BYTE_RET, NO_PARAM_SHORT_RET, NO_PARAM_INT_RET, NO_PARAM_LONG_RET, NO_PARAM_BIGINTEGER_RET, NO_PARAM_FLOAT_RET, NO_PARAM_DOUBLE_RET, NO_PARAM_BIGDECIMAL_RET, NO_PARAM_DATE_RET, NO_PARAM_STRING_RET>,
 		
@@ -76,7 +76,7 @@ final class Collector_MapFunctions_ExpressionList_Named<
 	}
 
 	@Override
-	public ISharedMapFunctions_Numeric_Named<
+	public ISharedMap_Functions_Numeric_Named<
 			MODEL, RESULT, RET,
 			NO_PARAM_SUM_LONG_RET, NO_PARAM_COUNT_RET, NO_PARAM_LENGTH_RET,
 			
@@ -90,7 +90,7 @@ final class Collector_MapFunctions_ExpressionList_Named<
 	}
 
 	@Override
-	public ISharedMapFunctions_Numeric_Named<
+	public ISharedMap_Functions_Numeric_Named<
 			MODEL, RESULT, RET, 
 			NO_PARAM_DOUBLE_RET, NO_PARAM_DOUBLE_RET, NO_PARAM_DOUBLE_RET,
 			NO_PARAM_DOUBLE_RET, NO_PARAM_DOUBLE_RET, NO_PARAM_DOUBLE_RET, NO_PARAM_DOUBLE_RET, NO_PARAM_DOUBLE_RET, NO_PARAM_DOUBLE_RET, NO_PARAM_DOUBLE_RET, NO_PARAM_DOUBLE_RET, NO_PARAM_DOUBLE_RET,
@@ -102,22 +102,22 @@ final class Collector_MapFunctions_ExpressionList_Named<
 
 			
 	@Override
-	public ISharedMapFunctions_String_StringResult_Named<MODEL, RESULT, RET, STRING_RET, NO_PARAM_STRING_RET> lower() {
+	public ISharedMap_Functions_String_StringResult_Named<MODEL, RESULT, RET, STRING_RET, NO_PARAM_STRING_RET> lower() {
 		return super.lowerNamedNoParam();
 	}
 
 	@Override
-	public ISharedMapFunctions_String_StringResult_Named<MODEL, RESULT, RET, STRING_RET, NO_PARAM_STRING_RET> upper() {
+	public ISharedMap_Functions_String_StringResult_Named<MODEL, RESULT, RET, STRING_RET, NO_PARAM_STRING_RET> upper() {
 		return super.upperNamedNoParam();
 	}
 
 	@Override
-	public ISharedMapFunctions_String_StringResult_Named<MODEL, RESULT, RET, STRING_RET, NO_PARAM_STRING_RET> trim() {
+	public ISharedMap_Functions_String_StringResult_Named<MODEL, RESULT, RET, STRING_RET, NO_PARAM_STRING_RET> trim() {
 		return super.trimNamedNoParam();
 	}
 
 	@Override
-	public ISharedMapFunctions_String_StringResult_Named<
+	public ISharedMap_Functions_String_StringResult_Named<
 			MODEL,
 			RESULT,
 			RET,

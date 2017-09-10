@@ -192,7 +192,7 @@ abstract class Short_Collector_Initial_Single_Any_Any_Base<MODEL, RESULT>
 	
 
 	@Override
-	public ISharedMapFunctions_All_Undecided<
+	public ISharedMap_Functions_All_Undecided<
 			MODEL,
 			RESULT,
 			

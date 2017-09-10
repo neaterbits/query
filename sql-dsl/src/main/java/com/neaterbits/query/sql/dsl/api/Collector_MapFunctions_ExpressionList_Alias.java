@@ -78,7 +78,7 @@ final class Collector_MapFunctions_ExpressionList_Alias<
 	}
 	
 	@Override
-	public ISharedMapFunctions_Numeric_Alias<
+	public ISharedMap_Functions_Numeric_Alias<
 			MODEL, RESULT, RET,
 			NO_PARAM_SUM_LONG_RET, NO_PARAM_COUNT_RET, NO_PARAM_LENGTH_RET,
 			NO_PARAM_BYTE_RET, NO_PARAM_SHORT_RET, NO_PARAM_INT_RET, NO_PARAM_LONG_RET, NO_PARAM_BIGINTEGER_RET, NO_PARAM_FLOAT_RET, NO_PARAM_DOUBLE_RET, NO_PARAM_BIGDECIMAL_RET, NO_PARAM_DATE_RET, NO_PARAM_CALENDAR_RET, NO_PARAM_SQLDATE_RET, NO_PARAM_SQLTIME_RET, NO_PARAM_SQLTIMESTAMP_RET,
@@ -90,7 +90,7 @@ final class Collector_MapFunctions_ExpressionList_Alias<
 	}
 	
 	@Override
-	public ISharedMapFunctions_Numeric_Alias<
+	public ISharedMap_Functions_Numeric_Alias<
 			MODEL, RESULT, RET,
 			NO_PARAM_DOUBLE_RET, NO_PARAM_DOUBLE_RET, NO_PARAM_DOUBLE_RET,
 			NO_PARAM_DOUBLE_RET, NO_PARAM_DOUBLE_RET, NO_PARAM_DOUBLE_RET, NO_PARAM_DOUBLE_RET, NO_PARAM_DOUBLE_RET, NO_PARAM_DOUBLE_RET, NO_PARAM_DOUBLE_RET, NO_PARAM_DOUBLE_RET, NO_PARAM_DOUBLE_RET, NO_PARAM_DOUBLE_RET, NO_PARAM_DOUBLE_RET, NO_PARAM_DOUBLE_RET, NO_PARAM_DOUBLE_RET,
@@ -102,7 +102,7 @@ final class Collector_MapFunctions_ExpressionList_Alias<
 	}
 
 	@Override
-	public ISharedMapFunctions_String_StringResult_Alias<
+	public ISharedMap_Functions_String_StringResult_Alias<
 			MODEL, 
 			RESULT,
 			RET, 
@@ -114,7 +114,7 @@ final class Collector_MapFunctions_ExpressionList_Alias<
 	}
 
 	@Override
-	public ISharedMapFunctions_String_StringResult_Alias<
+	public ISharedMap_Functions_String_StringResult_Alias<
 			MODEL,
 			RESULT,
 			RET, 
@@ -126,7 +126,7 @@ final class Collector_MapFunctions_ExpressionList_Alias<
 	}
 
 	@Override
-	public ISharedMapFunctions_String_StringResult_Alias<
+	public ISharedMap_Functions_String_StringResult_Alias<
 			MODEL,
 			RESULT,
 			RET, 
@@ -138,7 +138,7 @@ final class Collector_MapFunctions_ExpressionList_Alias<
 	}
 
 	@Override
-	public ISharedMapFunctions_String_StringResult_Alias<
+	public ISharedMap_Functions_String_StringResult_Alias<
 			MODEL,
 			RESULT,
 			RET,

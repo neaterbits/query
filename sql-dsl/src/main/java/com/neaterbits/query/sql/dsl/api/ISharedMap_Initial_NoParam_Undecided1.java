@@ -21,7 +21,7 @@ public interface ISharedMap_Initial_NoParam_Undecided1<MODEL, RESULT,
 			
 			
 	// All functions - aggregate, string, datetime and aggregated
-	ISharedMapFunctions_All_Undecided<
+	ISharedMap_Functions_All_Undecided<
 				MODEL,
 				RESULT,
 

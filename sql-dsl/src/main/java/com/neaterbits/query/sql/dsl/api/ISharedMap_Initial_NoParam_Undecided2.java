@@ -18,7 +18,7 @@ public interface ISharedMap_Initial_NoParam_Undecided2<
 	ISharedMap_Initial_NoParam_Undecided1<MODEL, RESULT, NAMED_RET, ALIAS_RET, UNDECIDED_RET>,
 	ISharedSelectSourceBuilder<MODEL, RESULT> { // TODO: really select-source? needed for type-checking{
 	
-	ISharedMapFunctions_All_Undecided<
+	ISharedMap_Functions_All_Undecided<
 		MODEL,
 		RESULT,
 		

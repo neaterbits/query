@@ -14,7 +14,7 @@ public interface ISharedMap_Initial_NoParam_Named<
 			
 			ISharedSelectSourceBuilder<MODEL, RESULT> { // TODO: really select-source? needed for type-checking{
 
-	ISharedMapFunctions_All_Named<
+	ISharedMap_Functions_All_Named<
 		MODEL,
 		RESULT,
 		RET,

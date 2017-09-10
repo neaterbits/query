@@ -1,6 +1,6 @@
 package com.neaterbits.query.sql.dsl.api;
 
-public interface ISharedMapFunctions_String_Named<
+public interface ISharedMap_Functions_String_Named<
 		MODEL,
 		RESULT,
 		RET extends ISharedFunction_After<MODEL, RESULT>,
@@ -14,14 +14,14 @@ public interface ISharedMapFunctions_String_Named<
 		extends ISharedFunctions_String_Named_All<MODEL, RESULT, RET, LENGTH_RET, STRING_RET>,
  			    ISharedFunctions_String_NoParam_Base<MODEL, RESULT,
  			    
- 			    ISharedMapFunctions_String_StringResult_Named<
+ 			    ISharedMap_Functions_String_StringResult_Named<
 			    	MODEL, RESULT,
 			    	RET,
 			    	LENGTH_RET,
 			    	NO_PARAM_LENGTH_RET>
 			    , 			    
  			    
- 			    ISharedMapFunctions_String_StringResult_Named<
+ 			    ISharedMap_Functions_String_StringResult_Named<
  			    	MODEL, RESULT,
  			    	RET,
  			    	STRING_RET,

@@ -61,7 +61,7 @@ final class Classic_Collector_MultiResult<MODEL, RESULT>
 	}
 
 	@Override
-	public ISharedMapFunctions_All_Undecided<
+	public ISharedMap_Functions_All_Undecided<
 				MODEL,
 				RESULT,
 				IClassicResult_Mapped_Multi_Named<MODEL, RESULT>,

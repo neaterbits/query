@@ -3,9 +3,9 @@ package com.neaterbits.query.sql.dsl.api;
 public interface ISharedFunctions_Arithmetic_Named_All<
 		MODEL,
 		RESULT,
-		
+
 		RET extends ISharedFunction_After<MODEL, RESULT>,
-		
+
 		BYTE_RET  		extends ISharedFunction_Next<MODEL, RESULT, RET>,
 		SHORT_RET  		extends ISharedFunction_Next<MODEL, RESULT, RET>,
 		INTEGER_RET  	extends ISharedFunction_Next<MODEL, RESULT, RET>,
@@ -14,15 +14,14 @@ public interface ISharedFunctions_Arithmetic_Named_All<
 		FLOAT_RET 	 	extends ISharedFunction_Next<MODEL, RESULT, RET>,
 		DOUBLE_RET   	extends ISharedFunction_Next<MODEL, RESULT, RET>,
 		BIGDECIMAL_RET  extends ISharedFunction_Next<MODEL, RESULT, RET>
-
 	> 
 
 	extends ISharedFunctions_Arithmetic_Named_Base<
 		MODEL,
 		RESULT,
-		
+
 		RET,
-		
+
 		BYTE_RET,
 		SHORT_RET,
 		INTEGER_RET,
@@ -43,7 +42,6 @@ public interface ISharedFunctions_Arithmetic_Named_All<
 	BIGDECIMAL_RET 	absOfBigDecimal(ISharedSubOperandsFunction_BigDecimal_Named<MODEL, RESULT> sub);
 	
 	// sqrt always returns double
-	
 	DOUBLE_RET 	sqrtOfByte(ISharedSubOperandsFunction_Byte_Named<MODEL, RESULT> sub);
 	DOUBLE_RET 	sqrtOfShort(ISharedSubOperandsFunction_Short_Named<MODEL, RESULT> sub);
 	DOUBLE_RET 	sqrtOfInteger(ISharedSubOperandsFunction_Integer_Named<MODEL, RESULT> sub);

@@ -62,7 +62,7 @@ final class Classic_Collector_SingleResult<MODEL, RESULT>
 		return new CollectedQueryResult_Entity_Single(getSelectSource());
 	}
 	@Override
-	public ISharedMapFunctions_All_Undecided<
+	public ISharedMap_Functions_All_Undecided<
 			MODEL,
 			RESULT, 
 			

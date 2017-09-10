@@ -24,7 +24,7 @@ final class Short_Collector_Multi_Mapped_Named_Initial<MODEL, RESULT>
 	}
 
 	@Override
-	public ISharedMapFunctions_All_Named<
+	public ISharedMap_Functions_All_Named<
 			MODEL,
 			RESULT,
 			IShortResult_Mapped_Multi_Named<MODEL, RESULT>,

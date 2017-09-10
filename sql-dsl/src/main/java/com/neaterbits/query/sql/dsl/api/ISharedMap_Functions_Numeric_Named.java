@@ -1,6 +1,6 @@
 package com.neaterbits.query.sql.dsl.api;
 
-public interface ISharedMapFunctions_Numeric_Named<
+public interface ISharedMap_Functions_Numeric_Named<
 	MODEL,
 	RESULT,
 	
@@ -43,7 +43,7 @@ public interface ISharedMapFunctions_Numeric_Named<
 	
 		ISharedFunctions_Arithmetic_NoParam_Base<MODEL, RESULT,
 		
-			ISharedMapFunctions_Numeric_Named<
+			ISharedMap_Functions_Numeric_Named<
 			
 					MODEL, RESULT, RET,
 			
@@ -56,13 +56,13 @@ public interface ISharedMapFunctions_Numeric_Named<
 		
 			// for sqrt()
 			
-			ISharedMapFunctions_Numeric_Named<MODEL, RESULT, RET,
+			ISharedMap_Functions_Numeric_Named<MODEL, RESULT, RET,
 			
 				NO_PARAM_DOUBLE_RET, NO_PARAM_DOUBLE_RET, NO_PARAM_DOUBLE_RET, NO_PARAM_DOUBLE_RET, NO_PARAM_DOUBLE_RET, NO_PARAM_DOUBLE_RET, NO_PARAM_DOUBLE_RET, NO_PARAM_DOUBLE_RET, NO_PARAM_DOUBLE_RET, NO_PARAM_DOUBLE_RET, NO_PARAM_DOUBLE_RET, NO_PARAM_DOUBLE_RET, 
 				NO_PARAM_DOUBLE_RET, NO_PARAM_DOUBLE_RET, NO_PARAM_DOUBLE_RET, NO_PARAM_DOUBLE_RET, NO_PARAM_DOUBLE_RET, NO_PARAM_DOUBLE_RET, NO_PARAM_DOUBLE_RET, NO_PARAM_DOUBLE_RET, NO_PARAM_DOUBLE_RET, NO_PARAM_DOUBLE_RET, NO_PARAM_DOUBLE_RET, NO_PARAM_DOUBLE_RET>
 		>,
 		ISharedFunctions_String_NumericResult_NoParam_Base<MODEL, RESULT, 
-			ISharedMapFunctions_String_StringResult_Named<
+			ISharedMap_Functions_String_StringResult_Named<
 		    	MODEL, RESULT,
 		    	RET,
 		    	LENGTH_RET,

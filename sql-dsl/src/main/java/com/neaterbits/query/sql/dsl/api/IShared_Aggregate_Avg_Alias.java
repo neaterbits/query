@@ -5,7 +5,7 @@ public interface IShared_Aggregate_Avg_Alias<BYTE_RET, SHORT_RET, INT_RET, LONG_
 	// Always retuns double, to be consistent with JPA
 	// TODO is this a good idea? Shouldn't avg of double return BigDecimal? 
 	
-	// TODO: Organize result valuse as for sum()?
+	// TODO: Organize result values as for sum()?
 
 	DOUBLE_RET 	avg(ISupplierByte field);
 	

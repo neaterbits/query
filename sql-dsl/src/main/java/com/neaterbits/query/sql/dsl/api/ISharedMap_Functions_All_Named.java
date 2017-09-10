@@ -1,6 +1,6 @@
 package com.neaterbits.query.sql.dsl.api;
 
-public interface ISharedMapFunctions_All_Named<
+public interface ISharedMap_Functions_All_Named<
 		MODEL,
 		RESULT,
 
@@ -39,12 +39,12 @@ public interface ISharedMapFunctions_All_Named<
 		
 		extends
 		
-			ISharedMapFunctions_Numeric_Named<MODEL, RESULT, RET,
+			ISharedMap_Functions_Numeric_Named<MODEL, RESULT, RET,
 			
 				SUM_LONG_RET, COUNT_RET, LENGTH_RET, BYTE_RET, SHORT_RET, INT_RET, LONG_RET, BIGINTEGER_RET, FLOAT_RET, DOUBLE_RET, BIGDECIMAL_RET, DATE_RET,
 				NO_PARAM_SUM_LONG_RET, NO_PARAM_COUNT_RET, NO_PARAM_LENGTH_RET, NO_PARAM_BYTE_RET, NO_PARAM_SHORT_RET, NO_PARAM_INT_RET, NO_PARAM_LONG_RET, NO_PARAM_BIGINTEGER_RET, NO_PARAM_FLOAT_RET, NO_PARAM_DOUBLE_RET, NO_PARAM_BIGDECIMAL_RET, NO_PARAM_DATE_RET>,
 
-			ISharedMapFunctions_String_Named<MODEL, RESULT, RET, LENGTH_RET, STRING_RET, NO_PARAM_LENGTH_RET, NO_PARAM_STRING_RET>
+			ISharedMap_Functions_String_Named<MODEL, RESULT, RET, LENGTH_RET, STRING_RET, NO_PARAM_LENGTH_RET, NO_PARAM_STRING_RET>
 
 			 {
 

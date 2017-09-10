@@ -1,6 +1,6 @@
 package com.neaterbits.query.sql.dsl.api;
 
-public interface ISharedMapFunctions_Numeric_Undecided<
+public interface ISharedMap_Functions_Numeric_Undecided<
 
 		MODEL,
 		RESULT,
@@ -122,7 +122,7 @@ public interface ISharedMapFunctions_Numeric_Undecided<
 		// For recursive no-params - but only to other numeric functions, not to string ones 
 		ISharedFunctions_Arithmetic_NoParam_Base<
 			MODEL, RESULT, 
-			ISharedMapFunctions_Numeric_Undecided<
+			ISharedMap_Functions_Numeric_Undecided<
 					MODEL, 
 					RESULT,
 					
@@ -142,7 +142,7 @@ public interface ISharedMapFunctions_Numeric_Undecided<
 			// Hack - for sqrt(), we always return double-typem, so all input types must be converted to whatever is DOUBLE_TYPE
 			// (which may not be double() if some function earlier have swapped DOUBLE_TYPE for something different)
 					
-			ISharedMapFunctions_Numeric_Undecided<
+			ISharedMap_Functions_Numeric_Undecided<
 					MODEL, 
 					RESULT,
 					
@@ -163,7 +163,7 @@ public interface ISharedMapFunctions_Numeric_Undecided<
 					MODEL,
 					RESULT,
 					
-					ISharedMapFunctions_Numeric_Undecided<
+					ISharedMap_Functions_Numeric_Undecided<
 							MODEL, 
 							RESULT,
 							
@@ -180,7 +180,7 @@ public interface ISharedMapFunctions_Numeric_Undecided<
 					,
 					
 					// Sum, cast all to long exception Double and BigDecimal
-					ISharedMapFunctions_Numeric_Undecided<
+					ISharedMap_Functions_Numeric_Undecided<
 						MODEL, 
 						RESULT,
 						
@@ -197,7 +197,7 @@ public interface ISharedMapFunctions_Numeric_Undecided<
 					,
 					
 					// Count, always return long-type for all values
-					ISharedMapFunctions_Numeric_Undecided<
+					ISharedMap_Functions_Numeric_Undecided<
 						MODEL, 
 						RESULT,
 						

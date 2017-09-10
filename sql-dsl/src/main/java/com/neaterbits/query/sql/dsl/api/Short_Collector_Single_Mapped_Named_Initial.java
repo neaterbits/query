@@ -77,7 +77,7 @@ final class Short_Collector_Single_Mapped_Named_Initial<MODEL, RESULT>
 	}
 
 	@Override
-	public ISharedMapFunctions_All_Named<
+	public ISharedMap_Functions_All_Named<
 				MODEL,
 				RESULT,
 				

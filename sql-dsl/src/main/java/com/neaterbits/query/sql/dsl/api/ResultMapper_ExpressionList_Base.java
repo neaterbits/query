@@ -210,7 +210,7 @@ abstract class ResultMapper_ExpressionList_Base<
 	private class ResultMapper_Named_Functions extends
 	
 		NamedFunctions<
-			ISharedMapFunctions_Numeric_Named<
+			ISharedMap_Functions_Numeric_Named<
 				MODEL,
 				RESULT,
 				
@@ -245,7 +245,7 @@ abstract class ResultMapper_ExpressionList_Base<
 				NAMED_DATE_RET
 			
 			>,
-			ISharedMapFunctions_Numeric_Named<
+			ISharedMap_Functions_Numeric_Named<
 				MODEL,
 				RESULT,
 				
@@ -291,14 +291,14 @@ abstract class ResultMapper_ExpressionList_Base<
 				NAMED_DOUBLE_RET
 				
 			>,
-		    ISharedMapFunctions_String_StringResult_Named<
+		    ISharedMap_Functions_String_StringResult_Named<
 			    	MODEL,
 			    	RESULT,
 			    	NAMED_RET,
 			    	NAMED_STRING_RET,
 			    	NAMED_STRING_RET
 		    >,
-		    ISharedMapFunctions_String_StringResult_Named<
+		    ISharedMap_Functions_String_StringResult_Named<
 				MODEL,
 				RESULT,
 				NAMED_RET,
@@ -308,7 +308,7 @@ abstract class ResultMapper_ExpressionList_Base<
 				>
 		>
 
-	implements ISharedMapFunctions_Numeric_Named<
+	implements ISharedMap_Functions_Numeric_Named<
 				MODEL,
 				RESULT,
 				
@@ -343,7 +343,7 @@ abstract class ResultMapper_ExpressionList_Base<
 				NAMED_DATE_RET
 				
 				>,
-		ISharedMapFunctions_String_Named<
+		ISharedMap_Functions_String_Named<
 			MODEL,
 			RESULT,
 
@@ -354,7 +354,7 @@ abstract class ResultMapper_ExpressionList_Base<
 			NAMED_LENGTH_RET,
 			NAMED_STRING_RET
 			>,
-		ISharedMapFunctions_String_StringResult_Named<
+		ISharedMap_Functions_String_StringResult_Named<
 			MODEL,
 			RESULT,
 			NAMED_RET,
@@ -378,7 +378,7 @@ abstract class ResultMapper_ExpressionList_Base<
 	private class ResultMapper_Alias_Functions extends
 	
 		AliasFunctions<  
-			ISharedMapFunctions_Numeric_Alias<
+			ISharedMap_Functions_Numeric_Alias<
 				MODEL,
 				RESULT,
 				
@@ -421,7 +421,7 @@ abstract class ResultMapper_ExpressionList_Base<
 				ALIAS_SQLTIMESTAMP_RET
 			
 			>,
-			ISharedMapFunctions_Numeric_Alias<
+			ISharedMap_Functions_Numeric_Alias<
 				MODEL,
 				RESULT,
 				
@@ -466,7 +466,7 @@ abstract class ResultMapper_ExpressionList_Base<
 				ALIAS_DOUBLE_RET
 				
 			>,
-			ISharedMapFunctions_String_StringResult_Alias<
+			ISharedMap_Functions_String_StringResult_Alias<
 				MODEL,
 				RESULT,
 	
@@ -475,7 +475,7 @@ abstract class ResultMapper_ExpressionList_Base<
 				ALIAS_STRING_RET,
 				ALIAS_STRING_RET
 			>,
-			ISharedMapFunctions_String_StringResult_Alias<
+			ISharedMap_Functions_String_StringResult_Alias<
 				MODEL,
 				RESULT,
 				ALIAS_RET,
@@ -485,7 +485,7 @@ abstract class ResultMapper_ExpressionList_Base<
 			>
 		>
 	
-	implements ISharedMapFunctions_Numeric_Alias<
+	implements ISharedMap_Functions_Numeric_Alias<
 				MODEL,
 				RESULT,
 				
@@ -529,7 +529,7 @@ abstract class ResultMapper_ExpressionList_Base<
 				
 				>,
 				
-		ISharedMapFunctions_String_Alias<
+		ISharedMap_Functions_String_Alias<
 				MODEL,
 				RESULT,
 
@@ -540,7 +540,7 @@ abstract class ResultMapper_ExpressionList_Base<
 				ALIAS_LENGTH_RET,
 				ALIAS_STRING_RET
 				>,				
-		ISharedMapFunctions_String_StringResult_Alias<
+		ISharedMap_Functions_String_StringResult_Alias<
 				MODEL,
 				RESULT,
 				ALIAS_RET,
@@ -567,7 +567,7 @@ abstract class ResultMapper_ExpressionList_Base<
 		UndecidedFunctions<
 		
 			// arithmetic same type
-			ISharedMapFunctions_Numeric_Undecided<
+			ISharedMap_Functions_Numeric_Undecided<
 				MODEL,
 				RESULT,
 				
@@ -661,7 +661,7 @@ abstract class ResultMapper_ExpressionList_Base<
 			>,
 				
 			// sqrt()
-			ISharedMapFunctions_Numeric_Undecided<
+			ISharedMap_Functions_Numeric_Undecided<
 				MODEL,
 				RESULT,
 				
@@ -758,7 +758,7 @@ abstract class ResultMapper_ExpressionList_Base<
 				UNDECIDED_DOUBLE_RET
 			>,
 			// aggregate same type
-			ISharedMapFunctions_Numeric_Undecided<
+			ISharedMap_Functions_Numeric_Undecided<
 				MODEL,
 				RESULT,
 				
@@ -851,7 +851,7 @@ abstract class ResultMapper_ExpressionList_Base<
 				UNDECIDED_DATE_RET
 			>,
 			// aggregate sum()
-			ISharedMapFunctions_Numeric_Undecided<
+			ISharedMap_Functions_Numeric_Undecided<
 				MODEL,
 				RESULT,
 				
@@ -948,7 +948,7 @@ abstract class ResultMapper_ExpressionList_Base<
 				UNDECIDED_DATE_RET
 			>,
 			// aggregate count()
-			ISharedMapFunctions_Numeric_Undecided<
+			ISharedMap_Functions_Numeric_Undecided<
 				MODEL,
 				RESULT,
 				
@@ -1044,7 +1044,7 @@ abstract class ResultMapper_ExpressionList_Base<
 				UNDECIDED_COUNT_RET,
 				UNDECIDED_COUNT_RET
 			>,
-			ISharedMapFunctions_String_StringResult_Undecided<
+			ISharedMap_Functions_String_StringResult_Undecided<
 				MODEL,
 				RESULT,
 	
@@ -1057,7 +1057,7 @@ abstract class ResultMapper_ExpressionList_Base<
 				ALIAS_STRING_RET,
 				ALIAS_STRING_RET
 			>,
-			ISharedMapFunctions_String_StringResult_Undecided<
+			ISharedMap_Functions_String_StringResult_Undecided<
 				MODEL,
 				RESULT,
 				
@@ -1081,7 +1081,7 @@ abstract class ResultMapper_ExpressionList_Base<
 			>
 		>
 	
-	implements ISharedMapFunctions_Numeric_Undecided<
+	implements ISharedMap_Functions_Numeric_Undecided<
 				MODEL,
 				RESULT,
 				
@@ -1175,7 +1175,7 @@ abstract class ResultMapper_ExpressionList_Base<
 				UNDECIDED_DATE_RET
 				>,
 				
-		ISharedMapFunctions_String_Undecided<
+		ISharedMap_Functions_String_Undecided<
 				MODEL,
 				RESULT,
 	
@@ -1187,7 +1187,7 @@ abstract class ResultMapper_ExpressionList_Base<
 				ALIAS_LENGTH_RET,
 				ALIAS_STRING_RET
 				>,				
-		ISharedMapFunctions_String_StringResult_Undecided<
+		ISharedMap_Functions_String_StringResult_Undecided<
 				MODEL,
 				RESULT,
 				
